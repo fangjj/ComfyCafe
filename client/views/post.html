@@ -1,0 +1,17 @@
+<template name="post">
+  {{> topBar}}
+  <main>
+    <div class="medium">
+      {{#with fileObj}}
+        {{#if isImage}}
+          <img src="{{this.url}}">
+        {{/if}}
+        {{#if isVideo}}
+          <video id="video{{id}}" class="video-js vjs-default-skin" src="{{this.url}}">
+            <source src="{{this.url}}" type="{{original.type}}">
+          </video>
+        {{/if}}
+      {{/with}}
+    </div>
+  </main>
+</template>

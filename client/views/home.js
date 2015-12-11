@@ -1,9 +1,3 @@
-Template.home.helpers({
-  myAppVariable: function() {
-    return Session.get('myAppVariable');
-  }
-});
-
 function addFile (file, template) {
   // These aren't enforced!
 	var maxFileSize = 16000000;
@@ -25,20 +19,16 @@ function addFile (file, template) {
           type: "success",
           message: "Uploaded successfully!"
         };
+        Meteor.call("addPost", fileObj._id, function (err, name) {
+          Router.go("post.view", {name: name});
+        });
 			}
-      console.log(status);
 		});
 	};
 	reader.readAsDataURL(file);
 }
 
 Template.home.events({
-  'click button': function(event, template) {
-    var data = Meteor.call("generateName", function (err, data) {
-      Session.set('myAppVariable', data);
-    });
-  },
-
   "dropped .dropzone": function (event, template) {
     FS.Utility.eachFile(event, function (file) { addFile(file, template) });
   },

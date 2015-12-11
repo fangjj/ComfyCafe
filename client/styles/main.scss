@@ -11,6 +11,7 @@ body {
   background: url(/images/my-little-plaid-dark.png) #282323;
 
   font-family: "Slabo 27px";
+  font-size: 18px;
 }
 
 #topBar {
@@ -42,6 +43,14 @@ main {
   padding: 16px;
 
   width: calc(100% - 256px);
+
+  img {
+    display: block;
+
+    margin: 0 auto;
+
+    max-width: 100%;
+  }
 }
 
 .dropzone {
@@ -89,4 +98,20 @@ a:not, a:visited {
 
 a:hover, a:active {
   color: #29D6BB;
+}
+
+video {
+  display: block;
+
+	max-width: 100%;
+	max-height: 100%;
+
+	cursor: default;
+
+	background: transparent;
+}
+
+.video-js {
+	width: 100% !important;
+	height: 100% !important;
 }

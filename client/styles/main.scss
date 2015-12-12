@@ -112,7 +112,7 @@ a:not, a:visited {
 }
 
 a:hover, a:active {
-  color: #29D6BB;
+  color: #29D6D6;
 }
 
 video {
@@ -133,4 +133,16 @@ video {
 
 .material-tooltip .backdrop {
   background: $fg-color;
+}
+
+ul.posts {
+  margin: 0;
+
+  li:nth-child(odd) {
+    background: rgba(#666, 0.2);
+  }
+
+  li {
+    padding: 12px;
+  }
 }

@@ -1,0 +1,12 @@
+<template name="index">
+  {{> topBar}}
+  <main>
+    <ul class="posts">
+      {{#each posts}}
+        <li>
+          <a href="{{pathFor route='post.view' name=name}}">{{name}}</a>
+        </li>
+      {{/each}}
+    </ul>
+  </main>
+</template>

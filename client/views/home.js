@@ -28,6 +28,14 @@ function addFile (file, template) {
 	reader.readAsDataURL(file);
 }
 
+Template.home.onRendered(function () {
+	$(".tooltipped").tooltip({delay: 50});
+});
+
+Template.home.onDestroyed(function () {
+	$(".tooltipped").tooltip("remove");
+});
+
 Template.home.events({
   "dropped .dropzone": function (event, template) {
     FS.Utility.eachFile(event, function (file) { addFile(file, template) });

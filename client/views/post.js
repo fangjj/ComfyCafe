@@ -16,6 +16,10 @@ Template.post.onRendered(function () {
   }
 });
 
+Template.post.onDestroyed(function () {
+	$(".tooltipped").tooltip("remove");
+});
+
 Template.post.helpers({
   fileObj: function () {
     return Media.findOne(this.medium);
@@ -28,7 +32,6 @@ Template.post.helpers({
 Template.post.events({
   "click #fabDelete": function (event, template) {
     Meteor.call("deletePost", this._id, function () {
-      $(".tooltipped").tooltip("remove");
       Router.go("home");
     });
   }

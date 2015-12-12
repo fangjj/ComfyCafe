@@ -136,7 +136,7 @@ video {
   background: $fg-color;
 }
 
-ul.posts {
+ul.posts, ul.invites {
   margin: 0;
 
   li:nth-child(odd) {
@@ -153,4 +153,10 @@ ul.posts {
 
   font-size: 28px;
   text-align: center;
+}
+
+.deleteInvite {
+  float: right;
+
+  cursor: pointer;
 }

@@ -6,6 +6,10 @@
         <li>
           <a href="{{pathFor route='post.view' name=name}}">{{name}}</a>
         </li>
+      {{else}}
+        <div class="uhoh">
+          There aren't any posts!
+        </div>
       {{/each}}
     </ul>
   </main>

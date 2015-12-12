@@ -5,3 +5,7 @@ Meteor.publish("posts", function () {
 Meteor.publish("media", function () {
 	return Media.find();
 });
+
+Meteor.publish("invites", function () {
+	return Invites.find({ uploader: this.userId });
+});

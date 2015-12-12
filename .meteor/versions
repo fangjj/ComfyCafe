@@ -64,6 +64,7 @@ iron:url@1.0.11
 jagi:astronomy@1.2.6
 jagi:astronomy-validators@1.1.2
 jagi:reactive-map@2.0.0
+jaywon:meteor-node-uuid@1.0.1
 jquery@1.11.4
 launch-screen@1.0.4
 livedata@1.0.15

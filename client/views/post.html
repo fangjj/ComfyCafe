@@ -1,24 +1,22 @@
 <template name="post">
   {{> topBar}}
   <main>
-    {{#if fileObj}}
     <div class="medium">
       {{#with fileObj}}
         {{#if isImage}}
           <img src="{{this.url}}">
         {{/if}}
         {{#if isVideo}}
-          <video id="video{{id}}" class="video-js vjs-default-skin" src="{{this.url}}">
+          <video id="video{{id}}" src="{{this.url}}" controls>
             <source src="{{this.url}}" type="{{original.type}}">
           </video>
         {{/if}}
+      {{else}}
+        <div class="uhoh">
+          404
+        </div>
       {{/with}}
     </div>
-    {{else}}
-      <div class="uhoh">
-        404
-      </div>
-    {{/if}}
   </main>
   {{#if isOwner}}
     <div id="fabDelete" class="fixed-action-btn">

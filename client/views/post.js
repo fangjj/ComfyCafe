@@ -3,17 +3,6 @@ Meteor.subscribe("media");
 
 Template.post.onRendered(function () {
   $(".tooltipped").tooltip({delay: 50});
-
-  var video = $("video");
-  if (video.length) {
-    videojs(video[0], {
-      controls: true,
-      autoplay: false,
-      preload: "auto"
-    }, function () {
-
-    });
-  }
 });
 
 Template.post.onDestroyed(function () {

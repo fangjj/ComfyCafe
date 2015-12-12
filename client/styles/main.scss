@@ -2,16 +2,31 @@
 @import url("//fonts.googleapis.com/css?family=Material+Icons|Slabo+27px");
 
 $text-color: #EEF4EE;
+$fg-color: #211E1E;
+$bg-color: #282323;
+
+html {
+  width: 100%;
+  height: 100%;
+}
 
 body {
   margin-top: 64px;
   margin-bottom: 64px;
 
+  width: 100%;
+
   color: $text-color;
-  background: url(/images/my-little-plaid-dark.png) #282323;
+  background: url(/images/my-little-plaid-dark.png) $bg-color;
 
   font-family: "Slabo 27px";
   font-size: 18px;
+
+  > .row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 #topBar {
@@ -78,8 +93,8 @@ main {
   }
 }
 
-.z-depth-1 {
-  background: #211E1E;
+.z-depth-1:not(button) {
+  background: $fg-color;
 }
 
 h3 {
@@ -114,4 +129,8 @@ video {
 .video-js {
 	width: 100% !important;
 	height: 100% !important;
+}
+
+.material-tooltip .backdrop {
+  background: $fg-color;
 }

@@ -6,9 +6,17 @@ Meteor.users.deny({
   }
 });
 
-Posts.permit(["insert", "update", "remove"]).ifLoggedIn().apply();
+Security.defineMethod("ifCreated", {
+  fetch: ["uploader"],
+  deny: function (type, arg, userId, doc) {
+    return userId !== doc.uploader;
+  }
+});
 
-Media.files.permit(["insert", "update", "remove"]).ifLoggedIn().apply();
+Posts.permit(["insert"]).ifLoggedIn().apply();
+Posts.permit(["remove"]).ifLoggedIn().ifCreated().apply();
+
+Media.files.permit(["insert", "update"]).ifLoggedIn().apply();
 Media.allow({
   download: function(userId, fileObj) {
     return true;

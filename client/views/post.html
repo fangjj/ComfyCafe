@@ -14,4 +14,11 @@
       {{/with}}
     </div>
   </main>
+  {{#if isOwner}}
+    <div id="fabDelete" class="fixed-action-btn">
+      <a class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="left" data-tooltip="Delete {{name}}?">
+        <i class="material-icons">delete</i>
+      </a>
+    </div>
+  {{/if}}
 </template>

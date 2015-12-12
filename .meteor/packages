@@ -13,6 +13,5 @@ useraccounts:materialize
 useraccounts:iron-routing
 jagi:astronomy
 jagi:astronomy-validators
-aldeed:template-extension
 standard-minifiers
 jaywon:meteor-node-uuid

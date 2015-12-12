@@ -1,6 +1,3 @@
-Meteor.subscribe("posts");
-Meteor.subscribe("media");
-
 Template.post.onRendered(function () {
   $(".tooltipped").tooltip({delay: 50});
 });

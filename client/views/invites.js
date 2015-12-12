@@ -1,5 +1,3 @@
-Meteor.subscribe("invites");
-
 Template.invites.onRendered(function () {
 	$(".tooltipped").tooltip({delay: 50});
 });

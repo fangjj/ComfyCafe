@@ -26,6 +26,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    > div {
+      background: $fg-color;
+    }
   }
 }
 
@@ -37,7 +41,8 @@ body {
   padding-right: 14px;
 
   .brand-logo {
-    opacity: 0.9;
+
+    font-size: 32px;
 
     &:hover {
       opacity: 1;
@@ -46,6 +51,12 @@ body {
 
   a {
     color: $text-color;
+  }
+
+  li {
+    span {
+      font-size: 20px;
+    }
   }
 }
 
@@ -58,6 +69,8 @@ main {
   padding: 16px;
 
   width: calc(100% - 256px);
+
+  background: $fg-color;
 
   img {
     display: block;
@@ -93,14 +106,18 @@ main {
   }
 }
 
-.z-depth-1:not(button) {
-  background: $fg-color;
-}
-
 h3 {
   margin-bottom: 22px;
 
   text-align: center;
+}
+
+#at-nav-button {
+  margin-left: 12px;
+  margin-right: 12px;
+  margin-top: -4px;
+
+  padding-top: 2px;
 }
 
 .at-pwd-link {

@@ -11,10 +11,9 @@ Meteor.publish("media", function () {
 	return Media.find();
 });
 
-Meteor.publish("medium", function (name) {
-	check(name, String);
-	var post = Posts.findOne({name: name});
-	return Media.find({ _id: post.medium });
+Meteor.publish("medium", function (mediumId) {
+	check(mediumId, String);
+	return Media.find({ _id: mediumId });
 });
 
 Meteor.publish("invites", function () {

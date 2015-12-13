@@ -28,6 +28,10 @@ function addFile (file, template) {
 	reader.readAsDataURL(file);
 }
 
+Template.home.onCreated(function () {
+	this.isUploading = new ReactiveVar(false);
+});
+
 Template.home.onRendered(function () {
 	$(".tooltipped").tooltip({delay: 50});
 });
@@ -36,11 +40,23 @@ Template.home.onDestroyed(function () {
 	$(".tooltipped").tooltip("remove");
 });
 
+Template.home.helpers({
+	isUploading: function () {
+		return Template.instance().isUploading.get();
+	}
+});
+
 Template.home.events({
   "dropped .dropzone": function (event, template) {
-    FS.Utility.eachFile(event, function (file) { addFile(file, template) });
+		Template.instance().isUploading.set(true);
+    FS.Utility.eachFile(event, function (file) {
+			addFile(file, template);
+		});
   },
   "change .addFile": function (event, template) {
-    FS.Utility.eachFile(event, function (file) { addFile(file, template) });
+		Template.instance().isUploading.set(true);
+    FS.Utility.eachFile(event, function (file) {
+			addFile(file, template);
+		});
   }
 });

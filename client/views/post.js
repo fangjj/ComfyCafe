@@ -16,6 +16,11 @@ Template.post.helpers({
 });
 
 Template.post.events({
+  "click #fabReroll": function (event, template) {
+    Meteor.call("rerollPost", this._id, function (err, name) {
+      Router.go("post.view", {name: name});
+    });
+  },
   "click #fabDelete": function (event, template) {
     Meteor.call("deletePost", this._id, function () {
       Router.go("home");

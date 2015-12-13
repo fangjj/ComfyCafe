@@ -19,10 +19,14 @@
     </div>
   </main>
   {{#if isOwner}}
-    <div id="fabDelete" class="fixed-action-btn">
-      <a class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="left" data-tooltip="Delete {{name}}?">
-        <i class="material-icons">delete</i>
+    <div id="fabModify" class="fixed-action-btn">
+      <a class="btn-floating btn-large">
+        <i class="large material-icons">mode_edit</i>
       </a>
+      <ul>
+        <li><a id="fabDelete" class="btn-floating red waves-effect waves-light tooltipped" data-position="left" data-tooltip="Delete {{name}}?"><i class="material-icons">delete</i></a></li>
+        <li><a id="fabReroll" class="btn-floating blue waves-effect waves-light tooltipped" data-position="left" data-tooltip="Reroll!"><i class="material-icons">casino</i></a></li>
+      </ul>
     </div>
   {{/if}}
 </template>

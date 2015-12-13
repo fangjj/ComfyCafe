@@ -1,10 +1,10 @@
 Meteor.publish("posts", function () {
-	return Posts.find();
+	return Posts.find({ uploader: this.userId });
 });
 
 Meteor.publish("post", function (name) {
 	check(name, String);
-	return Posts.find({name: name});
+	return Posts.find({ name: name });
 });
 
 Meteor.publish("media", function () {

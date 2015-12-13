@@ -1,9 +1,15 @@
 <template name="home">
   {{> topBar}}
   <main>
-    <div class="dropzone">
-      <input class="addFile" type="file" title="...or just click here.">
-      Drop files here!
-    </div>
+    {{#if currentUser}}
+      <div class="dropzone">
+        <input class="addFile" type="file" title="...or just click here.">
+        Drop files here!
+      </div>
+    {{else}}
+      <div class="uhoh">
+        You aren't logged in, so you're powerless!
+      </div>
+    {{/if}}
   </main>
 </template>

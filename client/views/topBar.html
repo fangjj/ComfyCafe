@@ -3,18 +3,20 @@
 		<div class="nav-wrapper">
 			<a class="brand-logo center hide-on-small-only" href="/">TeruImages</a>
 			<ul class="right">
-				<li>
-					<a href="{{pathFor route='post.list'}}" class="waves-effect waves-teal">
-						<i class="material-icons left">view_list</i>
-						<span class="hide-on-med-and-down">Posts</span>
-					</a>
-				</li>
-				<li>
-					<a href="{{pathFor route='invites'}}" class="waves-effect waves-teal">
-						<i class="material-icons left">weekend</i>
-						<span class="hide-on-med-and-down">Invites</span>
-					</a>
-				</li>
+				{{#if currentUser}}
+					<li>
+						<a href="{{pathFor route='post.list'}}" class="waves-effect waves-teal">
+							<i class="material-icons left">view_list</i>
+							<span class="hide-on-med-and-down">Posts</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{pathFor route='invites'}}" class="waves-effect waves-teal">
+							<i class="material-icons left">weekend</i>
+							<span class="hide-on-med-and-down">Invites</span>
+						</a>
+					</li>
+				{{/if}}
 				<li>
 					{{> atNavButton}}
 				</li>

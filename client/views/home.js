@@ -19,9 +19,17 @@ function addFile (file, template) {
           type: "success",
           message: "Uploaded successfully!"
         };
-        Meteor.call("addPost", fileObj._id, function (err, name) {
-          Router.go("post.view", {name: name});
-        });
+
+				var cursor = Media.find(fileObj._id);
+        var liveQuery = cursor.observe({
+          changed: function(newImage, oldImage) {
+            if (newImage.isUploaded()) {
+							Meteor.call("addPost", file._id, function (err, name) {
+								Router.go("post.view", {name: name});
+							});
+            }
+          }
+        });				
 			}
 		});
 	};

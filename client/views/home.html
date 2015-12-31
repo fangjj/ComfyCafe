@@ -49,6 +49,9 @@
             </div>
           </div>
         {{/unless}}
+        {{#each files}}
+          <p>{{percent_uploaded}}</p>
+        {{/each}}
       </div>
     {{else}}
       <div class="uhoh">

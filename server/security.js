@@ -16,10 +16,11 @@ Posts.permit(["remove"]).ifLoggedIn().ifCreated().apply();
 
 Invites.permit(["insert"]).ifLoggedIn().apply();
 Invites.permit(["update", "remove"]).ifLoggedIn().ifCreated().apply();
-
+/*
 Media.files.permit(["insert", "update"]).ifLoggedIn().apply();
 Media.allow({
   download: function(userId, fileObj) {
     return true;
   }
 });
+*/

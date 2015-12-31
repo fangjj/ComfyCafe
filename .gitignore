@@ -24,3 +24,5 @@ node_modules
 .git
 .build*
 packages/
+settings.json
+settings.*.json

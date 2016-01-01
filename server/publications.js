@@ -1,21 +1,15 @@
 Meteor.publish("posts", function () {
+	//Meteor._sleepForMs(2000);
 	return Posts.find({ uploader: this.userId });
 });
 
 Meteor.publish("post", function (name) {
 	check(name, String);
+	//Meteor._sleepForMs(2000);
 	return Posts.find({ name: name });
 });
 
-Meteor.publish("media", function () {
-	return Media.find();
-});
-
-Meteor.publish("medium", function (mediumId) {
-	check(mediumId, String);
-	return Media.find({ _id: mediumId });
-});
-
 Meteor.publish("invites", function () {
+	//Meteor._sleepForMs(2000);
 	return Invites.find({ uploader: this.userId });
 });

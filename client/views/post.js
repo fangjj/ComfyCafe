@@ -7,8 +7,14 @@ Template.post.onDestroyed(function () {
 });
 
 Template.post.helpers({
-  fileObj: function () {
-    return Media.findOne(this.medium);
+  exists: function () {
+    return _.has(this, "medium") && this.medium.url;
+  },
+  isImage: function () {
+    return this.medium.type.split("/")[0] === "image";
+  },
+  isVideo: function () {
+    return this.medium.type.split("/")[0] === "video";
   },
   isOwner: function () {
     return Meteor.userId() === this.uploader;
@@ -22,6 +28,7 @@ Template.post.events({
     });
   },
   "click #fabDelete": function (event, template) {
+    var self = this;
     Meteor.call("deletePost", this._id, function () {
       Router.go("home");
     });

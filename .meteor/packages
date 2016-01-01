@@ -14,3 +14,4 @@ standard-minifiers
 jaywon:meteor-node-uuid
 reactive-var
 vsivsi:file-collection
+teruko:s3

@@ -30,7 +30,6 @@ var addFile = function (event, template) {
 		files: files,
 		path: ""
 	}, function (err, results) {
-		uploadToggle(false);
 		Meteor.call("addPost", results, function (err, name) {
 			Router.go("post.view", {name: name});
 		});

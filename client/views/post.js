@@ -7,8 +7,12 @@ Template.post.onDestroyed(function () {
 });
 
 Template.post.helpers({
-  fileObj: function () {
-    return Media.findOne(this.medium);
+  isImage: function () {
+    console.log(this);
+    return this.medium.type.split("/")[0] === "image";
+  },
+  isVideo: function () {
+    return this.medium.type.split("/")[0] === "video";
   },
   isOwner: function () {
     return Meteor.userId() === this.uploader;

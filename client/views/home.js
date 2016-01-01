@@ -30,12 +30,11 @@ Template.home.events({
 		S3.upload({
       files: files,
       path: ""
-    }, function (e, r) {
+    }, function (err, results) {
 			uploadToggle(false);
-			/*
-			Meteor.call("addPost", file._id, function (err, name) {
+			Meteor.call("addPost", results, function (err, name) {
 				Router.go("post.view", {name: name});
-			});*/
+			});
     });
   },
   "change .addFile": function (event, template) {

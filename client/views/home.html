@@ -48,10 +48,13 @@
               </div>
             </div>
           </div>
+
+          {{#each files}}
+            <div class="progress">
+              <div class="determinate" style="width: {{percent_uploaded}}%"></div>
+            </div>
+          {{/each}}
         {{/unless}}
-        {{#each files}}
-          <p>{{percent_uploaded}}</p>
-        {{/each}}
       </div>
     {{else}}
       <div class="uhoh">

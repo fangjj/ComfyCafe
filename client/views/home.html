@@ -4,7 +4,7 @@
     {{#if currentUser}}
       <div class="dropzone">
         {{#unless isUploading}}
-          <input class="addFile" type="file" title="...or just click here.">
+          <input class="addFile" type="file" title="...or just click here." multiple>
           Drop files here!
         {{else}}
           <div class="preloader-wrapper big active">

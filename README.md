@@ -2,13 +2,6 @@
 
 WARNING: All users are assumed to be trusted.
 
-Users of Amazon's S3 would likely prefer to use lepozepo:s3 over teruko:s3, as the latter is oriented towards DreamHost/Ceph. The API is the same (as is 98% of the source), so it's a drop-in replacement.
-
-```
-meteor remove teruko:s3
-meteor add lepozepo:s3
-```
-
 S3 configuration is of the following format:
 
 ```

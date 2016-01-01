@@ -7,8 +7,10 @@ Template.post.onDestroyed(function () {
 });
 
 Template.post.helpers({
+  exists: function () {
+    return _.has(this, "medium") && this.medium.url;
+  },
   isImage: function () {
-    console.log(this);
     return this.medium.type.split("/")[0] === "image";
   },
   isVideo: function () {

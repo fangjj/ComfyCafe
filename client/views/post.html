@@ -2,13 +2,19 @@
   {{> topBar}}
   <main>
     <div class="medium">
-      {{#if isImage}}
-        <img src="{{medium.url}}">
-      {{/if}}
-      {{#if isVideo}}
-        <video id="video{{medium._id}}" src="{{medium.url}}" controls>
-          <source src="{{medium.url}}" type="{{medium.type}}">
-        </video>
+      {{#if exists}}
+        {{#if isImage}}
+          <img src="{{medium.url}}">
+        {{/if}}
+        {{#if isVideo}}
+          <video id="video{{medium._id}}" src="{{medium.url}}" controls>
+            <source src="{{medium.url}}" type="{{medium.type}}">
+          </video>
+        {{/if}}
+      {{else}}
+        <div class="uhoh">
+          404 - Dead Forever
+        </div>
       {{/if}}
     </div>
   </main>

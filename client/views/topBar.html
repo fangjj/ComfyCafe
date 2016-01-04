@@ -1,13 +1,19 @@
 <template name="topBar">
 	<nav id="topBar">
 		<div class="nav-wrapper">
-			<a class="brand-logo center hide-on-small-only" href="/">TeruImages</a>
+			<a class="brand-logo left" href="/">TeruImages</a>
 			<ul class="right">
 				{{#if currentUser}}
 					<li>
 						<a href="{{pathFor route='post.list'}}" class="waves-effect waves-teal">
 							<i class="material-icons left">view_list</i>
 							<span class="hide-on-med-and-down">Posts</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{pathFor route='favorites'}}" class="waves-effect waves-teal">
+							<i class="material-icons left">star</i>
+							<span class="hide-on-med-and-down">Favorites</span>
 						</a>
 					</li>
 					<li>

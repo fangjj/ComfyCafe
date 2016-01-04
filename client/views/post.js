@@ -17,11 +17,17 @@ Template.post.helpers({
     return this.medium.type.split("/")[0] === "video";
   },
   isOwner: function () {
-    return Meteor.userId() === this.uploader;
+    return !Meteor.userId() === this.uploader;
+  },
+  favorited: function () {
+    return _.contains(this.favorited, Meteor.userId());
   }
 });
 
 Template.post.events({
+  "click #fabFavorite": function (event, template) {
+    Meteor.call("favoritePost", this._id, ! _.contains(this.favorited, Meteor.userId()));
+  },
   "click #fabReroll": function (event, template) {
     Meteor.call("rerollPost", this._id, function (err, name) {
       Router.go("post.view", {name: name});

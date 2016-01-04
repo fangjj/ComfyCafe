@@ -9,6 +9,13 @@ Meteor.publish("post", function (name) {
 	return Posts.find({ name: name });
 });
 
+Meteor.publish("favorites", function () {
+	//Meteor._sleepForMs(2000);
+	if (this.userId) {
+		return Posts.find({ favorited: this.userId });
+	}
+});
+
 Meteor.publish("invites", function () {
 	//Meteor._sleepForMs(2000);
 	return Invites.find({ uploader: this.userId });

@@ -1,0 +1,16 @@
+<template name="favorites">
+  {{> topBar}}
+  <main>
+    <ul class="posts">
+      {{#each posts}}
+        <li>
+          <a href="{{pathFor route='post.view' name=name}}">{{name}}</a>
+        </li>
+      {{else}}
+        <div class="uhoh">
+          You haven't favorited anything!
+        </div>
+      {{/each}}
+    </ul>
+  </main>
+</template>

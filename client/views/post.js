@@ -17,7 +17,7 @@ Template.post.helpers({
     return this.medium.type.split("/")[0] === "video";
   },
   isOwner: function () {
-    return !Meteor.userId() === this.uploader;
+    return Meteor.userId() === this.uploader;
   },
   favorited: function () {
     return _.contains(this.favorited, Meteor.userId());

@@ -29,16 +29,18 @@
       </ul>
     </div>
   {{else}}
-    <div id="fabFavorite" class="fixed-action-btn">
-      <a class="btn-floating btn-large">
-        <i class="large material-icons">
-          {{#if favorited}}
-            star
-          {{else}}
-            star_border
-          {{/if}}
-        </i>
-      </a>
-    </div>
+    {{#if currentUser}}
+      <div id="fabFavorite" class="fixed-action-btn">
+        <a class="btn-floating btn-large">
+          <i class="large material-icons">
+            {{#if favorited}}
+              star
+            {{else}}
+              star_border
+            {{/if}}
+          </i>
+        </a>
+      </div>
+    {{/if}}
   {{/if}}
 </template>

@@ -1,7 +1,3 @@
-Template.post.onCreated(function () {
-  console.log(this.data, this.data.medium);
-});
-
 Template.post.onRendered(function () {
   $(".tooltipped").tooltip({delay: 50});
 });

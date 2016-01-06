@@ -43,7 +43,7 @@ iron:location@1.0.11
 iron:middleware-stack@1.0.11
 iron:router@1.0.12
 iron:url@1.0.11
-jagi:astronomy@1.2.6
+jagi:astronomy@1.2.10
 jagi:astronomy-validators@1.1.2
 jagi:reactive-map@2.0.0
 jaywon:meteor-node-uuid@1.0.1
@@ -91,9 +91,9 @@ tracker@1.0.9
 ui@1.0.8
 underscore@1.0.4
 url@1.0.5
-useraccounts:core@1.13.0
-useraccounts:iron-routing@1.13.0
-useraccounts:materialize@1.13.0
+useraccounts:core@1.13.1
+useraccounts:iron-routing@1.13.1
+useraccounts:materialize@1.13.1
 vsivsi:file-collection@1.2.2
 webapp@1.2.3
 webapp-hashing@1.0.5

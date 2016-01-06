@@ -11,6 +11,11 @@
             <source src="/gridfs/media/{{md5}}" type="{{type}}">
           </video>
         {{/if}}
+        {{#if isAudio}}
+          <audio id="audio{{_id}}" src="/gridfs/media/{{md5}}" controls>
+            <source src="/gridfs/media/{{md5}}" type="{{type}}">
+          </audio>
+        {{/if}}
       {{else}}
         <div class="uhoh">
           404 - Dead Forever

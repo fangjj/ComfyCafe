@@ -13,6 +13,9 @@ Template.post.helpers({
   isVideo: function () {
     return this.contentType.split("/")[0] === "video";
   },
+  isAudio: function () {
+    return this.contentType.split("/")[0] === "audio";
+  },
   isOwner: function () {
     return Meteor.userId() === this.uploader;
   },

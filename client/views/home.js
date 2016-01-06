@@ -5,6 +5,7 @@ Deps.autorun(function () {
 
 Template.home.onCreated(function () {
 	this.isUploading = new ReactiveVar(false);
+	this.progress = new ReactiveVar(0);
 });
 
 Template.home.onRendered(function () {
@@ -35,7 +36,7 @@ Template.home.onRendered(function () {
 								Router.go("post.view", { name: name });
 							});
 						} else {
-							console.log(newImage.length, file.size);
+							self.progress.set(file.size / newImage.length * 100);
 						}
 					}
 				});
@@ -51,5 +52,8 @@ Template.home.onDestroyed(function () {
 Template.home.helpers({
 	isUploading: function () {
 		return Template.instance().isUploading.get();
+	},
+	progress: function () {
+		return Template.instance().progress.get();
 	}
 });

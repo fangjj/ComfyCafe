@@ -4,56 +4,12 @@
     {{#if currentUser}}
       <div class="dropzone">
         {{#unless isUploading}}
-          <input class="addFile" type="file" title="...or just click here." multiple>
-          Drop files here!
+          <input class="addFile" type="file" title="...or just click here.">
+          Drop a file here!
         {{else}}
-          <div class="preloader-wrapper big active">
-            <div class="spinner-layer spinner-blue">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
-            </div>
-
-            <div class="spinner-layer spinner-red">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
-            </div>
-
-            <div class="spinner-layer spinner-yellow">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
-            </div>
-
-            <div class="spinner-layer spinner-green">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
-            </div>
+          <div class="progress">
+            <div class="determinate" style="width: {{progress}}%"></div>
           </div>
-
-          {{#each files}}
-            <div class="progress">
-              <div class="determinate" style="width: {{percent_uploaded}}%"></div>
-            </div>
-          {{/each}}
         {{/unless}}
       </div>
     {{else}}

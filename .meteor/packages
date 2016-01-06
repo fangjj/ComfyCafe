@@ -2,7 +2,6 @@ standard-app-packages
 iron:router
 fourseven:scss
 accounts-password
-audit-argument-checks
 ongoworks:security
 raix:ui-dropped-event
 meteorhacks:fast-render

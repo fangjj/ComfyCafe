@@ -10,7 +10,6 @@ Meteor.publish("post", function (name) {
 });
 
 Meteor.publish("media", function (clientUserId) {
-	check(clientUserId, String);
 	if (clientUserId === this.userId) {
 		return media.find({ "metadata._Resumable": { $exists: false }, "metadata.owner": this.userId });
 	} else {

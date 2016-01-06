@@ -2,20 +2,20 @@
   {{> topBar}}
   <main>
     <div class="medium">
-      {{#if exists}}
+      {{#with medium}}
         {{#if isImage}}
-          <img src="{{medium.url}}">
+          <img src="/gridfs/media/{{md5}}">
         {{/if}}
         {{#if isVideo}}
-          <video id="video{{medium._id}}" src="{{medium.url}}" controls>
-            <source src="{{medium.url}}" type="{{medium.type}}">
+          <video id="video{{_id}}" src="/gridfs/media/{{md5}}" controls>
+            <source src="/gridfs/media/{{md5}}" type="{{type}}">
           </video>
         {{/if}}
       {{else}}
         <div class="uhoh">
           404 - Dead Forever
         </div>
-      {{/if}}
+      {{/with}}
     </div>
   </main>
   {{#if isOwner}}

@@ -41,6 +41,12 @@ body {
   padding-right: 14px;
 
   .brand-logo {
+    left: 0;
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none;
 
     font-size: 32px;
 
@@ -79,6 +85,18 @@ main {
 
     max-width: 100%;
   }
+}
+
+#loadingSpinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
 }
 
 .dropzone {

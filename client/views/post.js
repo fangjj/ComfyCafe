@@ -7,14 +7,11 @@ Template.post.onDestroyed(function () {
 });
 
 Template.post.helpers({
-  exists: function () {
-    return _.has(this, "medium") && this.medium.url;
-  },
   isImage: function () {
-    return this.medium.type.split("/")[0] === "image";
+    return this.contentType.split("/")[0] === "image";
   },
   isVideo: function () {
-    return this.medium.type.split("/")[0] === "video";
+    return this.contentType.split("/")[0] === "video";
   },
   isOwner: function () {
     return Meteor.userId() === this.uploader;

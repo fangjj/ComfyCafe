@@ -2,45 +2,47 @@
   {{> topBar}}
   <main>
     <div class="medium">
-      {{#if exists}}
+      {{#with medium}}
         {{#if isImage}}
-          <img src="{{medium.url}}">
+          <img src="/gridfs/media/{{md5}}">
         {{/if}}
         {{#if isVideo}}
-          <video id="video{{medium._id}}" src="{{medium.url}}" controls>
-            <source src="{{medium.url}}" type="{{medium.type}}">
+          <video id="video{{_id}}" src="/gridfs/media/{{md5}}" controls>
+            <source src="/gridfs/media/{{md5}}" type="{{type}}">
           </video>
         {{/if}}
       {{else}}
         <div class="uhoh">
           404 - Dead Forever
         </div>
-      {{/if}}
+      {{/with}}
     </div>
   </main>
-  {{#if isOwner}}
-    <div id="fabModify" class="fixed-action-btn">
-      <a class="btn-floating btn-large">
-        <i class="large material-icons">mode_edit</i>
-      </a>
-      <ul>
-        <li><a id="fabDelete" class="btn-floating red waves-effect waves-light tooltipped" data-position="left" data-tooltip="Delete {{name}}?"><i class="material-icons">delete</i></a></li>
-        <li><a id="fabReroll" class="btn-floating blue waves-effect waves-light tooltipped" data-position="left" data-tooltip="Reroll name!"><i class="material-icons">casino</i></a></li>
-      </ul>
-    </div>
-  {{else}}
-    {{#if currentUser}}
-      <div id="fabFavorite" class="fixed-action-btn">
+  {{#with post}}
+    {{#if isOwner}}
+      <div id="fabModify" class="fixed-action-btn">
         <a class="btn-floating btn-large">
-          <i class="large material-icons">
-            {{#if favorited}}
-              star
-            {{else}}
-              star_border
-            {{/if}}
-          </i>
+          <i class="large material-icons">mode_edit</i>
         </a>
+        <ul>
+          <li><a id="fabDelete" class="btn-floating red waves-effect waves-light tooltipped" data-position="left" data-tooltip="Delete {{name}}?"><i class="material-icons">delete</i></a></li>
+          <li><a id="fabReroll" class="btn-floating blue waves-effect waves-light tooltipped" data-position="left" data-tooltip="Reroll name!"><i class="material-icons">casino</i></a></li>
+        </ul>
       </div>
+    {{else}}
+      {{#if currentUser}}
+        <div id="fabFavorite" class="fixed-action-btn">
+          <a class="btn-floating btn-large">
+            <i class="large material-icons">
+              {{#if favorited}}
+                star
+              {{else}}
+                star_border
+              {{/if}}
+            </i>
+          </a>
+        </div>
+      {{/if}}
     {{/if}}
-  {{/if}}
+  {{/with}}
 </template>

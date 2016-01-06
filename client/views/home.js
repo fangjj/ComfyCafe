@@ -35,13 +35,15 @@ Template.home.onRendered(function () {
 							Meteor.call("addPost", file.uniqueIdentifier, function (err, name) {
 								Router.go("post.view", { name: name });
 							});
-						} else {
-							self.progress.set(file.size / newImage.length * 100);
 						}
 					}
 				});
 			}
 		);
+	});
+
+	media.resumable.on("progress", function () {
+		self.progress.set(media.resumable.progress() * 100);
 	});
 });
 

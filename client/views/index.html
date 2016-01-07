@@ -8,9 +8,21 @@
         </li>
       {{else}}
         <div class="uhoh">
-          You haven't uploaded anything!
+          {{#if currentUser}}
+            You haven't uploaded anything!
+          {{else}}
+            You aren't logged in, so you're powerless!
+          {{/if}}
         </div>
       {{/each}}
     </ul>
   </main>
+  {{#if currentUser}}
+    <div id="fabUpload" class="fixed-action-btn">
+      <a class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="left" data-tooltip="Upload a file!">
+        <i class="material-icons">add</i>
+        <input class="addFile" type="file" title="...or just click here.">
+      </a>
+    </div>
+  {{/if}}
 </template>

@@ -1,4 +1,4 @@
-Template.home.onRendered(function () {
+Template.index.onRendered(function () {
 	var self = this;
 
 	$(".tooltipped").tooltip({delay: 50});
@@ -6,6 +6,6 @@ Template.home.onRendered(function () {
 	media.resumable.assignBrowse($(".addFile"));
 });
 
-Template.home.onDestroyed(function () {
+Template.index.onDestroyed(function () {
 	$(".tooltipped").tooltip("remove");
 });

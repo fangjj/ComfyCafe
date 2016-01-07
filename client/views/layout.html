@@ -9,4 +9,9 @@
 
 <template name="layout">
   {{> yield}}
+  {{#if isUploading}}
+    <div class="progress bottom">
+      <div class="determinate" style="width: {{progress}}%"></div>
+    </div>
+  {{/if}}
 </template>

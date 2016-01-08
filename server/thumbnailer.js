@@ -50,6 +50,10 @@ var addedFileJob = function(file) {
       return console.error("Error locking file document in job creation: ", err);
     }
     if (doc) {
+      if (file.contentType.split("/")[0] !== "image") {
+        return console.log('Input file is not supported: ' + file.contentType);
+      }
+
       outputFileId = media.insert({
         filename: "tn_" + file.filename + ".png",
         contentType: 'image/png',
@@ -57,6 +61,7 @@ var addedFileJob = function(file) {
       });
       job = new Job(jobs, 'makeThumb', {
         owner: file.metadata.owner,
+        contentType: file.contentType,
         inputFileId: file._id,
         outputFileId: outputFileId
       });
@@ -142,7 +147,6 @@ var fileObserve = media.find({
 
 var worker = function (job, cb) {
   return exec('gm version', Meteor.bindEnvironment(function(err) {
-    var inStream;
     if (err) {
       console.warn('Graphicsmagick is not installed!\n', err);
       job.fail("Error running graphicsmagick: " + err, {
@@ -150,6 +154,7 @@ var worker = function (job, cb) {
       });
       return cb();
     }
+
     job.log("Beginning work on thumbnail image: " + (job.data.inputFileId.toHexString()), {
       level: 'info',
       data: {
@@ -158,7 +163,8 @@ var worker = function (job, cb) {
       },
       echo: true
     });
-    inStream = media.findOneStream({
+
+    var inStream = media.findOneStream({
       _id: job.data.inputFileId
     });
     if (!inStream) {
@@ -167,7 +173,16 @@ var worker = function (job, cb) {
       });
       return cb();
     }
+
+    if (job.data.contentType.split("/")[0] !== "image") {
+      job.fail('Input file is not supported: ' + job.data.contentType, {
+        fatal: true
+      });
+      return cb();
+    }
+
     job.progress(20, 100);
+
     return gm(inStream).resize(256, 256).stream('png', Meteor.bindEnvironment(function(err, stdout, stderr) {
       var outStream;
       stderr.pipe(process.stderr);

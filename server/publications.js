@@ -29,7 +29,7 @@ Meteor.publish("jobs", function (clientUserId) {
   if (this.userId === clientUserId) {
     return jobs.find({ "data.owner": this.userId });
   } else {
-		
+
   }
 });
 
@@ -38,6 +38,14 @@ Meteor.publish("favorites", function () {
 	//Meteor._sleepForMs(2000);
 	if (this.userId) {
 		return Posts.find({ favorited: this.userId });
+	}
+});
+
+
+Meteor.publish("favoriteMedia", function () {
+	//Meteor._sleepForMs(2000);
+	if (this.userId) {
+		return media.find({ "metadata.favorited": this.userId });
 	}
 });
 

@@ -25,6 +25,15 @@ Meteor.publish("medium", function (name) {
 	return media.find({ "metadata.post": name });
 });
 
+Meteor.publish("jobs", function (clientUserId) {
+  if (this.userId === clientUserId) {
+    return jobs.find({ "data.owner": this.userId });
+  } else {
+		
+  }
+});
+
+
 Meteor.publish("favorites", function () {
 	//Meteor._sleepForMs(2000);
 	if (this.userId) {

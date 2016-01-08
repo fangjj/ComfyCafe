@@ -187,7 +187,9 @@ var worker = function (job, cb) {
       var outStream;
       stderr.pipe(process.stderr);
       if (err) {
-        job.fail("Error running graphicsmagick: " + err);
+        job.fail("Error running graphicsmagick: " + err, {
+          fatal: true
+        });
         return cb();
       } else {
         outStream = media.upsertStream({

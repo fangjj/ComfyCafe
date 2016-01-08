@@ -1,5 +1,6 @@
 Deps.autorun(function () {
   Meteor.subscribe("media", Meteor.userId());
+  Meteor.subscribe("jobs", Meteor.userId());
   $.cookie("X-Auth-Token", Accounts._storedLoginToken());
 });
 

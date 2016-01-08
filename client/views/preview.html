@@ -1,5 +1,16 @@
 <template name="preview">
   <li>
-    <a href="{{pathFor route='post.view' name=name}}">{{name}}</a>
+    <a href="{{pathFor route='post.view' name=name}}">
+      <div class="thumbnailContainer">
+        {{#with thumbnail}}
+          <img class="thumbnail" src="/gridfs/media/{{md5}}" alt="Generating thumbnail...">
+        {{else}}
+          <div class="thumbnail"></div>
+        {{/with}}
+      </div>
+      <div class="label">
+        {{name}}
+      </div>
+    </a>
   </li>
 </template>

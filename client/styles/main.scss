@@ -1,3 +1,4 @@
+@import "_mixins.scss";
 @import "materialize/_materialize.scss";
 @import url("//fonts.googleapis.com/css?family=Material+Icons|Slabo+27px");
 
@@ -189,6 +190,10 @@ ul.posts, ul.invites {
   }
 }
 
+ul.posts {
+  @include gallery;
+}
+
 .uhoh {
   padding: 12px;
 
@@ -200,4 +205,22 @@ ul.posts, ul.invites {
   float: right;
 
   cursor: pointer;
+}
+
+.container {
+	margin: 0 auto;
+
+	max-width: 100%;
+}
+
+.block {
+	display: block;
+	float: left;
+
+	margin: 6px;
+
+	width: 256px;
+	height: 256px;
+
+	border-radius: 1px;
 }

@@ -286,6 +286,10 @@ var worker = function (job, cb) {
   job.fail("Input file is not supported: " + job.data.contentType, {
     fatal: true
   });
+  media.update(
+    { _id: job.data.outputFileId },
+    { $set: { "metadata.terminated": true } }
+  );
   return cb();
 };
 

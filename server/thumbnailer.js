@@ -174,11 +174,14 @@ var worker = function (job, cb) {
       try {
         var transcoder = new ffmpeg(inStream);
         transcoder.captureFrame(0);
-        transcoder.stream().pipe(outStream, function () {
+        var stream = transcoder.stream();
+        stream.pipe(outStream);
+
+        stream.on("finish", Meteor.bindEnvironment(function () {
           media.update(
             { _id: job.data.inputFileId },
-            { $set: { "metadata.thumbComplete": true }
-          });
+            { $set: { "metadata.thumbComplete": true } }
+          );
 
           job.log("Finished work on thumbnail image: " + (job.data.outputFileId.toHexString()), {
             level: "info",
@@ -189,15 +192,15 @@ var worker = function (job, cb) {
             echo: true
           });
 
-          job.done(file);
-          return cb();
-        });
+          job.done();
+        }));
       } catch (e) {
         job.fail("Error running ffmpeg: " + e, {
           fatal: true
         });
         return cb();
       }
+      return cb();
     }();
   }
 
@@ -255,8 +258,8 @@ var worker = function (job, cb) {
 
               media.update(
                 { _id: job.data.inputFileId },
-                { $set: { "metadata.thumbComplete": true }
-              });
+                { $set: { "metadata.thumbComplete": true } }
+              );
 
               job.log("Finished work on thumbnail image: " + (job.data.outputFileId.toHexString()), {
                 level: 'info',

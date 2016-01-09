@@ -27,7 +27,8 @@ THE SOFTWARE.
 
 var exec = Meteor.npmRequire("child_process").exec;
 var gm = Meteor.npmRequire("gm").subClass({imageMagick: true});
-var ffmpeg = Meteor.npmRequire("stream-transcoder");
+var fs = Meteor.npmRequire("fs");
+var tmp = Meteor.npmRequire("tmp");
 
 jobs.setLogStream(process.stdout);
 jobs.promote(2500);
@@ -156,8 +157,7 @@ var worker = function (job, cb) {
     echo: true
   });
 
-  // MP4 is not presently supported https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/issues/353
-  if (job.data.contentType.split("/")[0] === "video" && job.data.contentType !== "video/mp4") {
+  if (job.data.contentType.split("/")[0] === "video") {
     return function () {
       var inStream = media.findOneStream({
         _id: job.data.inputFileId
@@ -171,13 +171,17 @@ var worker = function (job, cb) {
 
       job.progress(80, 100);
 
-      try {
-        var transcoder = new ffmpeg(inStream);
-        transcoder.captureFrame(0);
-        var stream = transcoder.stream();
-        stream.pipe(outStream);
+      var tmpFile = tmp.fileSync();
+      var wstream = fs.createWriteStream(tmpFile.name);
+      inStream.pipe(wstream);
+      wstream.on("finish", Meteor.bindEnvironment(function () {
+        var tmpThumbFile = tmp.fileSync({ postfix: ".png" });
 
-        stream.on("finish", Meteor.bindEnvironment(function () {
+        exec("ffmpeg -y -i " + tmpFile.name + " -frames:v 1 " + tmpThumbFile.name,
+        Meteor.bindEnvironment(function(err) {
+          var rstream = fs.createReadStream(tmpThumbFile.name);
+          rstream.pipe(outStream);
+
           media.update(
             { _id: job.data.inputFileId },
             { $set: { "metadata.thumbComplete": true } }
@@ -194,13 +198,9 @@ var worker = function (job, cb) {
 
           job.done();
         }));
-      } catch (e) {
-        job.fail("Error running ffmpeg: " + e, {
-          fatal: true
-        });
+
         return cb();
-      }
-      return cb();
+      }));
     }();
   }
 

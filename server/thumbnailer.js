@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 var exec = Meteor.npmRequire("child_process").exec;
 var gm = Meteor.npmRequire("gm").subClass({imageMagick: true});
+var ffmpeg = Meteor.npmRequire("stream-transcoder");
 
 jobs.setLogStream(process.stdout);
 jobs.promote(2500);
@@ -50,8 +51,8 @@ var addedFileJob = function(file) {
       return console.error("Error locking file document in job creation: ", err);
     }
     if (doc) {
-      if (file.contentType.split("/")[0] !== "image") {
-        return console.log('Input file is not supported: ' + file.contentType);
+      if (! _.contains(["image", "video"], file.contentType.split("/")[0])) {
+        return console.error('Input file is not supported: ' + file.contentType);
       }
 
       outputFileId = media.insert({
@@ -146,90 +147,143 @@ var fileObserve = media.find({
 });
 
 var worker = function (job, cb) {
-  return exec('gm version', Meteor.bindEnvironment(function(err) {
-    if (err) {
-      console.warn('Graphicsmagick is not installed!\n', err);
-      job.fail("Error running graphicsmagick: " + err, {
-        fatal: true
+  job.log("contentType: " + job.data.contentType, {
+    level: "info",
+    data: {
+      input: job.data.inputFileId,
+      output: job.data.outputFileId
+    },
+    echo: true
+  });
+
+  // MP4 is not presently supported https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/issues/353
+  if (job.data.contentType.split("/")[0] === "video" && job.data.contentType !== "video/mp4") {
+    return function () {
+      var inStream = media.findOneStream({
+        _id: job.data.inputFileId
       });
-      return cb();
-    }
 
-    job.log("Beginning work on thumbnail image: " + (job.data.inputFileId.toHexString()), {
-      level: 'info',
-      data: {
-        input: job.data.inputFileId,
-        output: job.data.outputFileId
-      },
-      echo: true
-    });
+      job.progress(20, 100);
 
-    var inStream = media.findOneStream({
-      _id: job.data.inputFileId
-    });
-    if (!inStream) {
-      job.fail('Input file not found', {
-        fatal: true
+      var outStream = media.upsertStream({
+        _id: job.data.outputFileId
       });
-      return cb();
-    }
 
-    if (job.data.contentType.split("/")[0] !== "image") {
-      job.fail('Input file is not supported: ' + job.data.contentType, {
-        fatal: true
-      });
-      return cb();
-    }
+      job.progress(80, 100);
 
-    job.progress(20, 100);
+      try {
+        var transcoder = new ffmpeg(inStream);
+        transcoder.captureFrame(0);
+        transcoder.stream().pipe(outStream, function () {
+          media.update(
+            { _id: job.data.inputFileId },
+            { $set: { "metadata.thumbComplete": true }
+          });
 
-    return gm(inStream).resize(256, 256 [
-      "-filter", "lanczos", "-coalesce"
-    ]).stream(Meteor.bindEnvironment(function(err, stdout, stderr) {
-      var outStream;
-      stderr.pipe(process.stderr);
-      if (err) {
-        job.fail("Error running graphicsmagick: " + err, {
+          job.log("Finished work on thumbnail image: " + (job.data.outputFileId.toHexString()), {
+            level: "info",
+            data: {
+              input: job.data.inputFileId,
+              output: job.data.outputFileId
+            },
+            echo: true
+          });
+
+          job.done(file);
+          return cb();
+        });
+      } catch (e) {
+        job.fail("Error running ffmpeg: " + e, {
           fatal: true
         });
         return cb();
-      } else {
-        outStream = media.upsertStream({
-          _id: job.data.outputFileId
-        }, {}, function(err, file) {
-          if (err) {
-            job.fail("" + err);
-          } else if (file.length === 0) {
-            job.fail('Empty output from graphicsmagick!');
-          } else {
-            job.progress(80, 100);
-            media.update({
-              _id: job.data.inputFileId
-            }, {
-              $set: {
-                'metadata.thumbComplete': true
-              }
-            });
-            job.log("Finished work on thumbnail image: " + (job.data.outputFileId.toHexString()), {
-              level: 'info',
-              data: {
-                input: job.data.inputFileId,
-                output: job.data.outputFileId
-              },
-              echo: true
-            });
-            job.done(file);
-          }
-          return cb();
-        });
-        if (!outStream) {
-          job.fail('Output file not found');
-          return cb();
-        }
-        return stdout.pipe(outStream);
       }
+    }();
+  }
+
+  if (job.data.contentType.split("/")[0] === "image") {
+    return exec('gm version', Meteor.bindEnvironment(function(err) {
+      if (err) {
+        console.warn('ImageMagick is not installed!\n', err);
+        job.fail("Error running ImageMagick: " + err, {
+          fatal: true
+        });
+        return cb();
+      }
+
+      job.log("Beginning work on thumbnail image: " + (job.data.inputFileId.toHexString()), {
+        level: 'info',
+        data: {
+          input: job.data.inputFileId,
+          output: job.data.outputFileId
+        },
+        echo: true
+      });
+
+      var inStream = media.findOneStream({
+        _id: job.data.inputFileId
+      });
+      if (!inStream) {
+        job.fail('Input file not found', {
+          fatal: true
+        });
+        return cb();
+      }
+
+      job.progress(20, 100);
+
+      return gm(inStream).resize(256, 256 [
+        "-filter", "lanczos", "-coalesce"
+      ]).stream(Meteor.bindEnvironment(function (err, stdout, stderr) {
+        var outStream;
+        stderr.pipe(process.stderr);
+        if (err) {
+          job.fail("Error running ImageMagick: " + err, {
+            fatal: true
+          });
+          return cb();
+        } else {
+          outStream = media.upsertStream({
+            _id: job.data.outputFileId
+          }, {}, function(err, file) {
+            if (err) {
+              job.fail("" + err);
+            } else if (file.length === 0) {
+              job.fail('Empty output from ImageMagick!');
+            } else {
+              job.progress(80, 100);
+
+              media.update(
+                { _id: job.data.inputFileId },
+                { $set: { "metadata.thumbComplete": true }
+              });
+
+              job.log("Finished work on thumbnail image: " + (job.data.outputFileId.toHexString()), {
+                level: 'info',
+                data: {
+                  input: job.data.inputFileId,
+                  output: job.data.outputFileId
+                },
+                echo: true
+              });
+              job.done(file);
+            }
+            return cb();
+          });
+          if (!outStream) {
+            job.fail('Output file not found');
+            return cb();
+          }
+          return stdout.pipe(outStream);
+        }
+      }));
     }));
-  }));
+  }
+
+  job.fail("Input file is not supported: " + job.data.contentType, {
+    fatal: true
+  });
+  return cb();
 };
 
 var workers = jobs.processJobs("makeThumb", {

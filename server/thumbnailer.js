@@ -25,8 +25,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-gm = Meteor.npmRequire("gm");
-exec = Meteor.npmRequire("child_process").exec;
+var exec = Meteor.npmRequire("child_process").exec;
+var gm = Meteor.npmRequire("gm").subClass({imageMagick: true});
 
 jobs.setLogStream(process.stdout);
 jobs.promote(2500);
@@ -183,7 +183,9 @@ var worker = function (job, cb) {
 
     job.progress(20, 100);
 
-    return gm(inStream).resize(256, 256).stream('png', Meteor.bindEnvironment(function(err, stdout, stderr) {
+    return gm(inStream).resize(256, 256 [
+      "-filter", "lanczos", "-coalesce"
+    ]).stream(Meteor.bindEnvironment(function(err, stdout, stderr) {
       var outStream;
       stderr.pipe(process.stderr);
       if (err) {

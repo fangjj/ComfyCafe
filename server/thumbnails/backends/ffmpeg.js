@@ -27,6 +27,6 @@ var getVideoPreview = function (inStream, outStream, callback) {
 getVideoThumbnail = function (inStream, outStream, width, height) {
   return getVideoPreview(inStream, outStream, function (tmpPreviewFile) {
     var rstream = fs.createReadStream(tmpPreviewFile.name);
-    genericImageResize(rstream, outStream, width, height);
+    sharpImageResize(rstream, outStream, width, height);
   });
 };

@@ -25,37 +25,28 @@ genericImageResize = function (job, inStream, outStream, width, height, callback
     return gm(inStream).resize(width, height).stream("png",
     Meteor.bindEnvironment(function (err, stdout, stderr) {
       stderr.pipe(process.stderr);
-      if (err) {
-        job.fail("Error running ImageMagick: " + err, {
-          fatal: true
+      stdout.pipe(outStream);
+
+      outStream.on("finish", Meteor.bindEnvironment(function () {
+        job.progress(80, 100);
+
+        media.update(
+          { _id: job.data.inputFileId },
+          { $set: { "metadata.thumbComplete": true } }
+        );
+
+        job.log("Finished work on thumbnail image: " + (job.data.outputFileId.toHexString()), {
+          level: 'info',
+          data: {
+            input: job.data.inputFileId,
+            output: job.data.outputFileId
+          },
+          echo: true
         });
+        job.done();
+
         return callback();
-      } else {
-        outStream = media.upsertStream({
-          _id: job.data.outputFileId
-        }, {}, function(err, file) {
-          job.progress(80, 100);
-
-          media.update(
-            { _id: job.data.inputFileId },
-            { $set: { "metadata.thumbComplete": true } }
-          );
-
-          job.log("Finished work on thumbnail image: " + (job.data.outputFileId.toHexString()), {
-            level: 'info',
-            data: {
-              input: job.data.inputFileId,
-              output: job.data.outputFileId
-            },
-            echo: true
-          });
-          job.done(file);
-
-          return callback();
-        });
-
-        return stdout.pipe(outStream);
-      }
+      }));
     }));
   }));
 };

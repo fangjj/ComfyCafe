@@ -142,7 +142,7 @@ var fileObserve = media.find({
   removed: removedFileJob
 });
 
-var worker = function (job, cb) {
+var worker = function (job, callback) {
   job.log("contentType: " + job.data.contentType, {
     level: "info",
     data: {
@@ -153,21 +153,23 @@ var worker = function (job, cb) {
   });
 
   if (job.data.contentType.split("/")[0] === "video") {
-    return getVideoPreview(job, cb);
+    return getVideoPreview(job, callback);
   }
 
   if (job.data.contentType.split("/")[0] === "image") {
-    return genericImageResize(job, cb, 256, 256);
+    return genericImageResize(job, 256, 256, callback);
   }
 
   job.fail("Input file is not supported: " + job.data.contentType, {
     fatal: true
   });
+
   media.update(
     { _id: job.data.outputFileId },
     { $set: { "metadata.terminated": true } }
   );
-  return cb();
+
+  return callback();
 };
 
 var workers = jobs.processJobs("makeThumb", {

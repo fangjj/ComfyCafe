@@ -2,7 +2,7 @@ var exec = Meteor.npmRequire("child_process").exec;
 var fs = Meteor.npmRequire("fs");
 var tmp = Meteor.npmRequire("tmp");
 
-getVideoPreview = function (job, cb) {
+getVideoPreview = function (job, callback) {
   var inStream = media.findOneStream({
     _id: job.data.inputFileId
   });
@@ -43,6 +43,6 @@ getVideoPreview = function (job, cb) {
       job.done();
     }));
 
-    return cb();
+    return callback();
   }));
 };

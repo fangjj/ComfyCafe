@@ -1,14 +1,14 @@
 var exec = Meteor.npmRequire("child_process").exec;
 var gm = Meteor.npmRequire("gm").subClass({imageMagick: true});
 
-genericImageResize = function (job, cb, width, height) {
+genericImageResize = function (job, width, height, callback) {
   return exec('gm version', Meteor.bindEnvironment(function(err) {
     if (err) {
       console.warn('ImageMagick is not installed!\n', err);
       job.fail("Error running ImageMagick: " + err, {
         fatal: true
       });
-      return cb();
+      return callback();
     }
 
     job.log("Beginning work on thumbnail image: " + (job.data.inputFileId.toHexString()), {
@@ -27,7 +27,7 @@ genericImageResize = function (job, cb, width, height) {
       job.fail('Input file not found', {
         fatal: true
       });
-      return cb();
+      return callback();
     }
 
     job.progress(20, 100);
@@ -40,7 +40,7 @@ genericImageResize = function (job, cb, width, height) {
         job.fail("Error running ImageMagick: " + err, {
           fatal: true
         });
-        return cb();
+        return callback();
       } else {
         outStream = media.upsertStream({
           _id: job.data.outputFileId
@@ -67,11 +67,11 @@ genericImageResize = function (job, cb, width, height) {
             });
             job.done(file);
           }
-          return cb();
+          return callback();
         });
         if (!outStream) {
           job.fail('Output file not found');
-          return cb();
+          return callback();
         }
         return stdout.pipe(outStream);
       }

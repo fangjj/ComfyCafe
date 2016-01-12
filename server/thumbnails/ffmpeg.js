@@ -2,17 +2,7 @@ var exec = Meteor.npmRequire("child_process").exec;
 var fs = Meteor.npmRequire("fs");
 var tmp = Meteor.npmRequire("tmp");
 
-getVideoPreview = function (job, callback) {
-  var inStream = media.findOneStream({
-    _id: job.data.inputFileId
-  });
-
-  job.progress(20, 100);
-
-  var outStream = media.upsertStream({
-    _id: job.data.outputFileId
-  });
-
+getVideoPreview = function (job, inStream, outStream, callback) {
   job.progress(80, 100);
 
   var tmpFile = tmp.fileSync();

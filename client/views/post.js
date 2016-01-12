@@ -1,4 +1,6 @@
 Template.post.onRendered(function () {
+  setTitle(this.data.post.name);
+
   $(".tooltipped").tooltip({delay: 50});
 });
 

@@ -55,7 +55,7 @@ thumbnailWorker = function (job, callback) {
   job.progress(20, 100);
 
   if (job.data.contentType.split("/")[0] === "video") {
-    return getVideoPreview(inStream, outStream, 256, 256);
+    return getVideoThumbnail(inStream, outStream, 256, 256);
   }
 
   if (job.data.contentType.split("/")[0] === "image") {

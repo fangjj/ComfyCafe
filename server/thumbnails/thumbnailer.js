@@ -1,6 +1,6 @@
 /*
 Presently largely copy-pasted from
-https://github.com/vsivsi/meteor-file-job-sample-app/blob/master/LICENSE
+https://github.com/vsivsi/meteor-file-job-sample-app/
 
 Copyright (C) 2014-2015 by Vaughn Iverson
 

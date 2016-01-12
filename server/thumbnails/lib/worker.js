@@ -42,7 +42,8 @@ thumbnailWorker = function (job, callback) {
       level: "info",
       data: {
         input: job.data.inputFileId,
-        output: job.data.outputFileId
+        output: job.data.outputFileId,
+        contentType: job.data.contentType
       },
       echo: true
     });

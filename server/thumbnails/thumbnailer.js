@@ -53,10 +53,17 @@ var addedFileJob = function(file) {
 
       var outputMetadata = file.metadata;
       outputMetadata.master = false;
+      var outputExt = "";
+      var outputContentType = file.contentType;
+
+      if (file.contentType.split("/")[0] === "video") {
+        outputExt = ".png";
+        outputContentType = "image/png";
+      }
 
       outputFileId = media.insert({
-        filename: "tn_" + file.filename + ".png",
-        contentType: 'image/png',
+        filename: "tn_" + file.filename + outputExt,
+        contentType: outputContentType,
         metadata: file.metadata
       });
 
@@ -66,6 +73,7 @@ var addedFileJob = function(file) {
         inputFileId: file._id,
         outputFileId: outputFileId
       });
+
       if (jobId = job.delay(5000).retry({
         wait: 20000,
         retries: 5

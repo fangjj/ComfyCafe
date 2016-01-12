@@ -235,9 +235,8 @@ var worker = function (job, cb) {
 
       job.progress(20, 100);
 
-      return gm(inStream).resize(256, 256 [
-        "-filter", "lanczos", "-coalesce"
-      ]).stream(Meteor.bindEnvironment(function (err, stdout, stderr) {
+      return gm(inStream).resize(256, 256).stream("png",
+      Meteor.bindEnvironment(function (err, stdout, stderr) {
         var outStream;
         stderr.pipe(process.stderr);
         if (err) {

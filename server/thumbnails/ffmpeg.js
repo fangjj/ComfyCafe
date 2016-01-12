@@ -9,25 +9,22 @@ var ffmpegGetFirstFrame = function (inName, outName, callback) {
   );
 };
 
-getVideoPreview = function (job, inStream, outStream, callback) {
+getVideoPreview = function (inStream, outStream, width, height) {
   var tmpFile = tmp.fileSync();
   var wstream = fs.createWriteStream(tmpFile.name);
 
   inStream.pipe(wstream);
 
   wstream.on("finish", Meteor.bindEnvironment(function () {
-    job.progress(40, 100);
-
     var tmpThumbFile = tmp.fileSync({ postfix: ".png" });
 
     ffmpegGetFirstFrame(tmpFile.name, tmpThumbFile.name, function (err) {
-      job.progress(80, 100);
-      getVideoThumbnail(job, tmpThumbFile, outStream, callback);
+      getVideoThumbnail(tmpThumbFile, outStream, width, height);
     });
   }));
 };
 
-getVideoThumbnail = function (job, tmpThumbFile, outStream, callback) {
+getVideoThumbnail = function (tmpThumbFile, outStream, width, height) {
   var rstream = fs.createReadStream(tmpThumbFile.name);
-  return genericImageResize(job, rstream, outStream, 256, 256, callback);
+  return genericImageResize(rstream, outStream, 256, 256);
 };

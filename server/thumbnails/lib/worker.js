@@ -55,11 +55,11 @@ thumbnailWorker = function (job, callback) {
   job.progress(20, 100);
 
   if (job.data.contentType.split("/")[0] === "video") {
-    return getVideoPreview(job, inStream, outStream, callback);
+    return getVideoPreview(inStream, outStream, 256, 256);
   }
 
   if (job.data.contentType.split("/")[0] === "image") {
-    return genericImageResize(job, inStream, outStream, 256, 256, callback);
+    return genericImageResize(inStream, outStream, 256, 256);
   }
 
   job.fail("Input file is not supported: " + job.data.contentType, {

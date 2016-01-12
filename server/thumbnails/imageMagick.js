@@ -7,26 +7,4 @@ genericImageResize = function (job, inStream, outStream, width, height, callback
       stdout.pipe(outStream);
     }
   ));
-
-  outStream.on("finish", Meteor.bindEnvironment(function () {
-    job.progress(80, 100);
-
-    media.update(
-      { _id: job.data.inputFileId },
-      { $set: { "metadata.thumbComplete": true } }
-    );
-
-    job.log("Finished work on thumbnail image: " + (job.data.outputFileId.toHexString()), {
-      level: 'info',
-      data: {
-        input: job.data.inputFileId,
-        output: job.data.outputFileId,
-        contentType: job.data.contentType
-      },
-      echo: true
-    });
-    job.done();
-
-    return callback();
-  }));
 };

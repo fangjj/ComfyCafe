@@ -30,6 +30,27 @@ thumbnailWorker = function (job, callback) {
     job.fail("Output file not found", { fatal: true });
     return callback();
   }
+  outStream.on("finish", Meteor.bindEnvironment(function () {
+    job.progress(90, 100);
+
+    media.update(
+      { _id: job.data.inputFileId },
+      { $set: { "metadata.thumbComplete": true } }
+    );
+
+    job.log("Finished work on thumbnail image: " + (job.data.outputFileId.toHexString()), {
+      level: "info",
+      data: {
+        input: job.data.inputFileId,
+        output: job.data.outputFileId
+      },
+      echo: true
+    });
+
+    job.done();
+
+    callback();
+  }));
 
   job.progress(20, 100);
 

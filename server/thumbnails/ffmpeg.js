@@ -22,31 +22,12 @@ getVideoPreview = function (job, inStream, outStream, callback) {
 
     ffmpegGetFirstFrame(tmpFile.name, tmpThumbFile.name, function (err) {
       job.progress(80, 100);
-
-      var rstream = fs.createReadStream(tmpThumbFile.name);
-      rstream.pipe(outStream);
+      getVideoThumbnail(job, tmpThumbFile, outStream, callback);
     });
   }));
+};
 
-  outStream.on("finish", Meteor.bindEnvironment(function () {
-    job.progress(90, 100);
-
-    media.update(
-      { _id: job.data.inputFileId },
-      { $set: { "metadata.thumbComplete": true } }
-    );
-
-    job.log("Finished work on thumbnail image: " + (job.data.outputFileId.toHexString()), {
-      level: "info",
-      data: {
-        input: job.data.inputFileId,
-        output: job.data.outputFileId
-      },
-      echo: true
-    });
-
-    job.done();
-
-    callback();
-  }));
+getVideoThumbnail = function (job, tmpThumbFile, outStream, callback) {
+  var rstream = fs.createReadStream(tmpThumbFile.name);
+  return genericImageResize(job, rstream, outStream, 256, 256, callback);
 };

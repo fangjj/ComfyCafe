@@ -1,9 +1,10 @@
 thumbnailWorker = function (job, callback) {
-  job.log("contentType: " + job.data.contentType, {
+  job.log("Beginning work on thumbnail: " + (job.data.inputFileId.toHexString()), {
     level: "info",
     data: {
       input: job.data.inputFileId,
-      output: job.data.outputFileId
+      output: job.data.outputFileId,
+      contentType: job.data.contentType
     },
     echo: true
   });

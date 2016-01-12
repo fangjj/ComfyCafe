@@ -25,10 +25,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-jobs.setLogStream(process.stdout);
-jobs.promote(2500);
-jobs.startJobServer();
-
 var addedFileJob = function(file) {
   return media.rawCollection().findAndModify({
     _id: new MongoInternals.NpmModule.ObjectID(file._id.toHexString()),

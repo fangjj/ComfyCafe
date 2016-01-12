@@ -1,5 +1,6 @@
 Deps.autorun(function () {
   Meteor.subscribe("media", Meteor.userId());
+  Meteor.subscribe("jobs", Meteor.userId());
   $.cookie("X-Auth-Token", Accounts._storedLoginToken());
 });
 
@@ -18,7 +19,10 @@ Template.layout.onRendered(function () {
 		media.insert({
 				_id: file.uniqueIdentifier,
 				filename: file.fileName,
-				contentType: file.file.type
+				contentType: file.file.type,
+        metadata: {
+          master: true
+        }
 			}, function (err, _id) {
 				if (err) { return console.error("File creation failed!", err); }
 				media.resumable.upload();

@@ -51,11 +51,15 @@ var addedFileJob = function(file) {
         return console.error('Input file is not supported: ' + file.contentType);
       }
 
+      var outputMetadata = file.metadata;
+      outputMetadata.master = false;
+
       outputFileId = media.insert({
         filename: "tn_" + file.filename + ".png",
         contentType: 'image/png',
         metadata: file.metadata
       });
+
       job = new Job(jobs, 'makeThumb', {
         owner: file.metadata.owner,
         contentType: file.contentType,
@@ -130,8 +134,8 @@ var fileObserve = media.find({
   "metadata._Resumable": {
     $exists: false
   },
-  "metadata.thumbOf": {
-    $exists: false
+  "metadata.master": {
+    $eq: true
   },
   "metadata.post": {
     $exists: true

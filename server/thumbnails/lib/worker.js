@@ -59,7 +59,7 @@ thumbnailWorker = function (job, callback) {
   }
 
   if (job.data.contentType.split("/")[0] === "image") {
-    return genericImageResize(inStream, outStream, 256, 256);
+    return sharpImageResize(inStream, outStream, 256, 256);
   }
 
   job.fail("Input file is not supported: " + job.data.contentType, {

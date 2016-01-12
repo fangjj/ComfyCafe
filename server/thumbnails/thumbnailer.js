@@ -25,11 +25,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var exec = Meteor.npmRequire("child_process").exec;
-var gm = Meteor.npmRequire("gm").subClass({imageMagick: true});
-var fs = Meteor.npmRequire("fs");
-var tmp = Meteor.npmRequire("tmp");
-
 jobs.setLogStream(process.stdout);
 jobs.promote(2500);
 jobs.startJobServer();
@@ -158,128 +153,11 @@ var worker = function (job, cb) {
   });
 
   if (job.data.contentType.split("/")[0] === "video") {
-    return function () {
-      var inStream = media.findOneStream({
-        _id: job.data.inputFileId
-      });
-
-      job.progress(20, 100);
-
-      var outStream = media.upsertStream({
-        _id: job.data.outputFileId
-      });
-
-      job.progress(80, 100);
-
-      var tmpFile = tmp.fileSync();
-      var wstream = fs.createWriteStream(tmpFile.name);
-      inStream.pipe(wstream);
-      wstream.on("finish", Meteor.bindEnvironment(function () {
-        var tmpThumbFile = tmp.fileSync({ postfix: ".png" });
-
-        exec("ffmpeg -y -i " + tmpFile.name + " -frames:v 1 " + tmpThumbFile.name,
-        Meteor.bindEnvironment(function(err) {
-          var rstream = fs.createReadStream(tmpThumbFile.name);
-          rstream.pipe(outStream);
-
-          media.update(
-            { _id: job.data.inputFileId },
-            { $set: { "metadata.thumbComplete": true } }
-          );
-
-          job.log("Finished work on thumbnail image: " + (job.data.outputFileId.toHexString()), {
-            level: "info",
-            data: {
-              input: job.data.inputFileId,
-              output: job.data.outputFileId
-            },
-            echo: true
-          });
-
-          job.done();
-        }));
-
-        return cb();
-      }));
-    }();
+    return getVideoPreview(job, cb);
   }
 
   if (job.data.contentType.split("/")[0] === "image") {
-    return exec('gm version', Meteor.bindEnvironment(function(err) {
-      if (err) {
-        console.warn('ImageMagick is not installed!\n', err);
-        job.fail("Error running ImageMagick: " + err, {
-          fatal: true
-        });
-        return cb();
-      }
-
-      job.log("Beginning work on thumbnail image: " + (job.data.inputFileId.toHexString()), {
-        level: 'info',
-        data: {
-          input: job.data.inputFileId,
-          output: job.data.outputFileId
-        },
-        echo: true
-      });
-
-      var inStream = media.findOneStream({
-        _id: job.data.inputFileId
-      });
-      if (!inStream) {
-        job.fail('Input file not found', {
-          fatal: true
-        });
-        return cb();
-      }
-
-      job.progress(20, 100);
-
-      return gm(inStream).resize(256, 256).stream("png",
-      Meteor.bindEnvironment(function (err, stdout, stderr) {
-        var outStream;
-        stderr.pipe(process.stderr);
-        if (err) {
-          job.fail("Error running ImageMagick: " + err, {
-            fatal: true
-          });
-          return cb();
-        } else {
-          outStream = media.upsertStream({
-            _id: job.data.outputFileId
-          }, {}, function(err, file) {
-            if (err) {
-              job.fail("" + err);
-            } else if (file.length === 0) {
-              job.fail('Empty output from ImageMagick!');
-            } else {
-              job.progress(80, 100);
-
-              media.update(
-                { _id: job.data.inputFileId },
-                { $set: { "metadata.thumbComplete": true } }
-              );
-
-              job.log("Finished work on thumbnail image: " + (job.data.outputFileId.toHexString()), {
-                level: 'info',
-                data: {
-                  input: job.data.inputFileId,
-                  output: job.data.outputFileId
-                },
-                echo: true
-              });
-              job.done(file);
-            }
-            return cb();
-          });
-          if (!outStream) {
-            job.fail('Output file not found');
-            return cb();
-          }
-          return stdout.pipe(outStream);
-        }
-      }));
-    }));
+    return genericImageResize(job, cb, 256, 256);
   }
 
   job.fail("Input file is not supported: " + job.data.contentType, {

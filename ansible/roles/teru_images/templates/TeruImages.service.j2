@@ -4,6 +4,7 @@ Description=TeruImages
 [Service]
 ExecStart=/usr/local/bin/node /srv/TeruImages/bundle/main.js
 Restart=always
+User=teruimages
 
 StandardOutput=syslog
 StandardError=syslog

@@ -3,9 +3,11 @@
   apt: pkg=imagemagick state=latest
 - name: ensure ffmpeg is at the latest version
   apt: pkg=ffmpeg state=latest
-- name: create happy little TeruImages directory
-  file: path=/srv/TeruImages state=directory
 
+- name: Add group "teruimages"
+  group: name=teruimages
+- name: Add user "teruimages"
+  user: name=teruimages group=teruimages home=/srv/TeruImages/
 - name: copy TeruImages systemd unit file
   template: src=TeruImages.service.j2 dest=/etc/systemd/system/TeruImages.service
   notify:

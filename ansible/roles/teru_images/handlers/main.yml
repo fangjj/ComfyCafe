@@ -1,0 +1,5 @@
+---
+- name: start TeruImages
+  service: name=TeruImages state=started enabled=yes
+- name: restart TeruImages
+  service: name=TeruImages state=restarted

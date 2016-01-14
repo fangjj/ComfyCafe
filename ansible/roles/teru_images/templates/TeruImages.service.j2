@@ -1,0 +1,19 @@
+[Unit]
+Description=TeruImages
+
+[Service]
+ExecStart=/usr/local/bin/node /srv/TeruImages/bundle/main.js
+Restart=always
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=TeruImages
+
+Environment=ROOT_URL={{ root_url }}
+Environment=PORT={{ meteor_port }}
+Environment=NODE_ENV=production
+Environment=MONGO_URL={{ mongo_url }}
+Environment=METEOR_SETTINGS={{ meteor_settings }}
+
+[Install]
+WantedBy=multi-user.target

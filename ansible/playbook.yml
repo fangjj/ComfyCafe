@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: yes
+  roles:
+    - meteor
+    - mongodb
+    - nginx
+    - teru_images

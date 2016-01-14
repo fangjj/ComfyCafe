@@ -23,6 +23,7 @@ node_modules
 .npm
 .git
 .build*
+.vagrant
 packages/
 settings.json
 settings.*.json

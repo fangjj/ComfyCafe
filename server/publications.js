@@ -20,7 +20,7 @@ Meteor.publish("media", function (clientUserId) {
 	}
 });
 
-Meteor.publish("medium", function (name) {
+Meteor.publish("postMedia", function (name) {
 	check(name, String);
 	return media.find({ "metadata.post": name });
 });
@@ -33,14 +33,12 @@ Meteor.publish("jobs", function (clientUserId) {
   }
 });
 
-
 Meteor.publish("favorites", function () {
 	//Meteor._sleepForMs(2000);
 	if (this.userId) {
 		return Posts.find({ favorited: this.userId });
 	}
 });
-
 
 Meteor.publish("favoriteMedia", function () {
 	//Meteor._sleepForMs(2000);

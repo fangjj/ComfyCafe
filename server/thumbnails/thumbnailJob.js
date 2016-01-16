@@ -138,9 +138,7 @@ var fileObserve = media.find({
   "metadata._Resumable": {
     $exists: false
   },
-  "metadata.master": {
-    $eq: true
-  },
+  "metadata.master": true,
   "metadata.post": {
     $exists: true
   }

@@ -18,6 +18,3 @@ jagi:astronomy-timestamp-behavior
 vsivsi:job-collection
 meteorhacks:npm
 npm-container
-velocity:helpers
-velocity:html-reporter
-sanjo:jasmine

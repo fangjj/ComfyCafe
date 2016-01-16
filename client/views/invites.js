@@ -1,6 +1,4 @@
 Template.invites.onRendered(function () {
-	setTitle("Invites");
-
 	$(".tooltipped").tooltip({delay: 50});
 });
 

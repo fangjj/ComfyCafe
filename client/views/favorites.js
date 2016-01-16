@@ -1,6 +1,4 @@
 Template.favorites.onRendered(function () {
-  setTitle("Favorites");
-
   $(".tooltipped").tooltip({delay: 50});
 });
 

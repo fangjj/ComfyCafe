@@ -17,27 +17,27 @@
   apt: pkg=git state=latest
   when: useGit
 - name: pull from TeruImages repo
-  git: repo={{ repository }} dest=/srv/TeruImages/src
+  git: repo={{ repository }} dest=/srv/TeruImages/src version=develop
+  register: pulled
   when: useGit
 - name: build Meteor bundle
   command: /usr/local/bin/meteor build --directory /srv/TeruImages
   args:
     chdir: /srv/TeruImages/src
   register: bundle
-  when: useGit
+  when: useGit and pulled.changed
 
 - name: copy Meteor bundle
   copy: src=../TeruImages.tar.gz dest=/srv/TeruImages/TeruImages.tar.gz
   register: bundle
   when: not useGit
-
 - name: unpack Meteor bundle
   unarchive: src=/srv/TeruImages/TeruImages.tar.gz dest=/srv/TeruImages copy=false
-  when: bundle.changed
+  when: not useGit and bundle.changed
+
 - name: install nodejs packages
   command: /usr/local/bin/npm install
   args:
     chdir: /srv/TeruImages/bundle/programs/server
-  when: bundle.changed
   notify:
   - restart TeruImages

@@ -1,5 +1,6 @@
 [Unit]
 Description=TeruImages
+After=mongodb.service
 
 [Service]
 ExecStart=/usr/local/bin/node /srv/TeruImages/bundle/main.js

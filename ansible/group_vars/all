@@ -2,7 +2,7 @@ local: true
 cores: 4
 makej: 5
 
-domain: teru.sexy
+domain: localhost
 default_server: true
 ssl_cert: /etc/letsencrypt/live/teru.sexy/fullchain.pem
 ssl_key: /etc/letsencrypt/live/teru.sexy/privkey.pem
@@ -13,5 +13,7 @@ meteor_port: 3000
 mongo_url: mongodb://localhost:27017/TeruImages
 meteor_settings: "{}"
 
+# Note that on-server building is not actually supported, so useGit should always be false. Always.
+# Instead, you should run `meteor build .` from the project root.
 repository: https://phab.teru.sexy/diffusion/IMAGES/teruimages.git
 useGit: false

@@ -13,7 +13,7 @@ Template.preview.helpers({
     var thumb = media.findOne(
       { "metadata.thumbOf": new Mongo.ObjectID(this.medium) }
     );
-    if (! thumb.metadata.terminated) {
+    if (thumb && ! thumb.metadata.terminated) {
       return thumb;
     }
   }

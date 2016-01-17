@@ -30,7 +30,7 @@
 - name: copy Meteor bundle
   copy: src=../TeruImages.tar.gz dest=/srv/TeruImages/TeruImages.tar.gz
   register: bundle
-  when: not useGit
+  when: not useGit and local
 - name: unpack Meteor bundle
   unarchive: src=/srv/TeruImages/TeruImages.tar.gz dest=/srv/TeruImages copy=false
   when: not useGit and bundle.changed

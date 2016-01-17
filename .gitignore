@@ -25,5 +25,6 @@ node_modules
 .build*
 .vagrant
 packages/
+bundle/
 settings.json
 settings.*.json

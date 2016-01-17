@@ -13,6 +13,9 @@ meteor_port: 3000
 mongo_url: mongodb://localhost:27017/TeruImages
 meteor_settings: "{}"
 
+rsync_user: root
+ssh_port: 22
+
 # Note that on-server building is not actually supported, so useGit should always be false. Always.
 # Instead, you should run `meteor build .` from the project root.
 repository: https://phab.teru.sexy/diffusion/IMAGES/teruimages.git

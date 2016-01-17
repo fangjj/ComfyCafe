@@ -7,7 +7,6 @@ Template.preview.helpers({
     var medium = media.findOne(
       { _id: new Mongo.ObjectID(Template.instance().data.medium) }
     );
-    console.log(medium);
     return _.has(medium.metadata, "thumbComplete") && medium.metadata.thumbComplete;
   },
   thumbnail: function () {

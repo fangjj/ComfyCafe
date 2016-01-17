@@ -3,8 +3,14 @@
 @import url("//fonts.googleapis.com/css?family=Material+Icons|Slabo+27px");
 
 $text-color: #EEF4EE;
+$sg-color: #424242;
 $fg-color: #211E1E;
 $bg-color: #282323;
+
+$elements: content, grid-items, accountActions, accountActionsArrow, viewer-overlay, viewer;
+
+@import "_avatar.scss";
+@import "_accountActions.scss";
 
 html {
   width: 100%;
@@ -60,7 +66,7 @@ body {
     color: $text-color;
   }
 
-  li {
+  ul.topLevel li {
     span {
       font-size: 20px;
     }
@@ -140,7 +146,7 @@ h3 {
   text-align: center;
 }
 
-#at-nav-button {
+#topLogin #at-nav-button {
   margin-left: 12px;
   margin-right: 12px;
   margin-top: -4px;

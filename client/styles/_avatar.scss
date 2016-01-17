@@ -1,0 +1,65 @@
+.avatar {
+	display: block;
+
+	&.center {
+		margin: 0 auto;
+	}
+
+	&.large {
+		position: absolute;
+		left: 0;
+		top: 0;
+
+		height: 100%;
+	}
+
+	&.small {
+		$size: 81px;
+
+		position: absolute;
+		left: 16px;
+		top: 7px + 16px;
+
+		width: $size;
+		height: $size;
+
+		border-radius: $size;
+	}
+
+	&.smaller {
+		$size: 64px;
+
+		position: relative;
+		left: 10px;
+		top: 10px;
+
+		float: left;
+
+		width: $size;
+		height: $size;
+
+		border-radius: $size;
+	}
+
+	&.icon {
+		$size: 36px;
+
+		float: left;
+
+		margin-right: 10px;
+
+		width: $size;
+		height: $size;
+
+		border-radius: $size;
+	}
+
+	&.topBar {
+		$size: 50px;
+
+		width: $size;
+		height: $size;
+
+		border-radius: $size;
+	}
+}

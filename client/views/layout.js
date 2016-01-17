@@ -35,7 +35,10 @@ Template.layout.onRendered(function () {
 							liveQuery.stop();
 							self.isUploading.set(false);
               self.progress.set(0);
-							Meteor.call("addPost", file.uniqueIdentifier, function (err, name) {
+							Meteor.call("addPost", {
+                mediumId: file.uniqueIdentifier,
+                tags: ""
+              }, function (err, name) {
 								Router.go("post.view", { name: name });
 							});
 						}

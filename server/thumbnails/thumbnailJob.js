@@ -1,5 +1,5 @@
 /*
-Presently largely copy-pasted from
+Partially copy-pasted from
 https://github.com/vsivsi/meteor-file-job-sample-app/
 
 Copyright (C) 2014-2015 by Vaughn Iverson
@@ -26,28 +26,25 @@ THE SOFTWARE.
 */
 
 var addedFileJob = function(file) {
-  return media.rawCollection().findAndModify({
-    _id: new MongoInternals.NpmModule.ObjectID(file._id.toHexString()),
-    'metadata._Job': {
-      $exists: false
-    }
-  }, [], {
-    $set: {
-      'metadata._Job': null
-    }
-  }, {
-    w: 1
-  }, Meteor.bindEnvironment(function(err, doc) {
-    var job, jobId, outputFileId;
+  return media.rawCollection().findAndModify(
+    {
+      _id: new MongoInternals.NpmModule.ObjectID(file._id.toHexString()),
+      "metadata._Job": { $exists: false }
+    },
+    [],
+    { $set: { "metadata._Job": null } },
+    // in case you forget what this is... https://docs.mongodb.org/manual/reference/write-concern/
+    { w: 1 },
+  Meteor.bindEnvironment(function (err, doc) {
     if (err) {
       return console.error("Error locking file document in job creation: ", err);
     }
     if (doc) {
       if (! _.contains(["image", "video"], file.contentType.split("/")[0])) {
-        return console.error('Input file is not supported: ' + file.contentType);
+        return console.error("Input file is not supported: " + file.contentType);
       }
 
-      var outputMetadata = file.metadata;
+      var outputMetadata = _.clone(file.metadata);
       outputMetadata.master = false;
       var outputExt = "";
       var outputContentType = file.contentType;
@@ -57,37 +54,38 @@ var addedFileJob = function(file) {
         outputContentType = "image/png";
       }
 
-      outputFileId = media.insert({
+      var outputFileId = media.insert({
         filename: "tn_" + file.filename + outputExt,
         contentType: outputContentType,
-        metadata: file.metadata
+        metadata: outputMetadata
       });
 
-      job = new Job(jobs, 'makeThumb', {
+      var job = new Job(jobs, "makeThumb", {
         owner: file.metadata.owner,
         contentType: file.contentType,
         inputFileId: file._id,
         outputFileId: outputFileId
       });
 
-      if (jobId = job.delay(5000).retry({
+      var jobId = job.delay(0).retry({
         wait: 20000,
         retries: 5
-      }).save()) {
-        media.update({
-          _id: file._id
-        }, {
-          $set: {
-            'metadata._Job': jobId,
-            'metadata.thumb': outputFileId
-          }
-        });
+      }).save();
+
+      if (jobId) {
+        media.update(
+          { _id: file._id },
+          { $set: {
+            "metadata._Job": jobId,
+            "metadata.thumb": outputFileId
+          } }
+        );
         return media.update({
           _id: outputFileId
         }, {
           $set: {
-            'metadata._Job': jobId,
-            'metadata.thumbOf': file._id
+            "metadata._Job": jobId,
+            "metadata.thumbOf": file._id
           }
         });
       } else {
@@ -98,30 +96,25 @@ var addedFileJob = function(file) {
 };
 
 var removedFileJob = function (file) {
-  var job, ref, ref1, thumb;
-  if ((ref = file.metadata) != null ? ref._Job : void 0) {
-    if (job = jobs.findOne({
-      _id: file.metadata._Job,
-      status: {
-        $in: jobs.jobStatusCancellable
-      }
-    }, {
-      fields: {
-        log: 0
-      }
-    })) {
+  if (file.metadata && file.metadata._Job) {
+    var job = jobs.findOne(
+      {
+        _id: file.metadata._Job,
+        status: { $in: jobs.jobStatusCancellable }
+      },
+      { fields: { log: 0 } }
+    );
+
+    if (job) {
       console.log("Cancelling the job for the removed file!", job._id);
-      job.cancel(function(err, res) {
-        return media.remove({
-          _id: job.data.outputFileId
-        });
+      job.cancel(function (err, res) {
+        return media.remove({ _id: job.data.outputFileId });
       });
     }
   }
-  if (((ref1 = file.metadata) !== null ? ref1.thumb : void 0) !== null) {
-    return thumb = media.remove({
-      _id: file.metadata.thumb
-    });
+
+  if (file.metadata && file.metadata.thumb) {
+    return media.remove({ _id: file.metadata.thumb });
   }
 };
 
@@ -134,15 +127,13 @@ var changedFileJob = function(oldFile, newFile) {
   }
 };
 
-var fileObserve = media.find({
-  "metadata._Resumable": {
-    $exists: false
-  },
-  "metadata.master": true,
-  "metadata.post": {
-    $exists: true
+var fileObserve = media.find(
+  {
+    "metadata._Resumable": { $exists: false },
+    "metadata.master": true,
+    "metadata.post": { $exists: true }
   }
-}).observe({
+).observe({
   added: addedFileJob,
   changed: changedFileJob,
   removed: removedFileJob

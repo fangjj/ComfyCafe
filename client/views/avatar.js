@@ -3,11 +3,8 @@ Template.avatar.helpers({
 		return _.has(this.profile, "avatar");
 	},
 	md5: function () {
-		var sizeKey = {
-			"topBar": "topBar"
-		}[this.class];
-
-		if (! sizeKey) {
+		// While we're presently using fullsize for center, that will change in the future...
+		if (this.class === "center") {
 			return media.findOne(
 				{ _id: this.profile.avatar }
 			).md5;
@@ -15,7 +12,7 @@ Template.avatar.helpers({
 			return media.findOne(
 				{
 					"metadata.thumbOf": this.profile.avatar,
-					"metadata.sizeKey": sizeKey
+					"metadata.sizeKey": this.class
 				}
 			).md5;
 		}

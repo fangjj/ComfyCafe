@@ -28,6 +28,15 @@ avatarUpload = function (self, file) {
 
 Template.profile.onRendered(function () {
 	media.resumable.assignBrowse($(".addAvatar"));
+
+	$(".avatar.center").cropper({
+	  aspectRatio: 1,
+		viewMode: 3,
+	  crop: function (event) {
+			var canvas = $(".avatar.center").cropper("getCroppedCanvas");
+			console.log(canvas.toDataURL());
+	  }
+	});
 });
 
 Template.profile.helpers({

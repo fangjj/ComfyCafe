@@ -46,13 +46,8 @@ var addedFileJob = function(file) {
 
       var outputMetadata = _.clone(file.metadata);
       outputMetadata.master = false;
-      var outputExt = "";
-      var outputContentType = file.contentType;
-
-      if (file.contentType.split("/")[0] === "video") {
-        outputExt = ".png";
-        outputContentType = "image/png";
-      }
+      var outputExt = ".png";
+      var outputContentType = "image/png";
 
       var outputFileId = media.insert({
         filename: "tn_" + file.filename + outputExt,

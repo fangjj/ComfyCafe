@@ -3,8 +3,7 @@ Template.avatar.helpers({
 		return _.has(this.profile, "avatar");
 	},
 	md5: function () {
-		// While we're presently using fullsize for center, that will change in the future...
-		if (this.class === "center") {
+		if (this.class === "fullsize") {
 			return media.findOne(
 				{ _id: this.profile.avatar }
 			).md5;

@@ -1,7 +1,9 @@
 <template name="profile">
 	<main>
-		<h2>{{username}}</h2>
-		{{> avatar class="center" profile=profile title=username}}
+		<header>
+			<h2>{{username}}</h2>
+		</header>
+		{{> avatar class="large" profile=profile title=username}}
 		<div class="file-field input-field">
       <div class="btn">
         <span>File</span>

@@ -5,6 +5,10 @@ thumbnailPolicies = {
     }
   },
   "avatar": {
+    "large": {
+      size: [512, 512],
+      preserveFormat: true
+    },
     "topBar": {
       size: [50, 50],
       preserveFormat: true

@@ -1,16 +1,11 @@
 .avatar {
 	display: block;
 
-	&.center {
-		margin: 0 auto;
-	}
-
 	&.large {
-		position: absolute;
-		left: 0;
-		top: 0;
+		margin: 0 auto;
 
-		height: 100%;
+		width: 512px;
+		height: 512px;
 	}
 
 	&.small {
@@ -61,5 +56,13 @@
 		height: $size;
 
 		border-radius: $size;
+	}
+
+	&.fill {
+		position: absolute;
+		left: 0;
+		top: 0;
+
+		height: 100%;
 	}
 }

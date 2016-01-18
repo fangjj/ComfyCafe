@@ -3,6 +3,7 @@ thumbnailPolicies = {
     "tn256x256": [256, 256]
   },
   "avatar": {
-    "tn50x50": [50, 50]
+    "tn50x50": [50, 50],
+    "favicon": [16, 16]
   }
 };

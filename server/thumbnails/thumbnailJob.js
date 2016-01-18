@@ -2,10 +2,10 @@ var addedFileJob = function (file) {
   return media.rawCollection().findAndModify(
     {
       _id: new MongoInternals.NpmModule.ObjectID(file._id.toHexString()),
-      "metadata._Job": { $exists: false }
+      "metadata._Jobs": { $exists: false }
     },
     [],
-    { $set: { "metadata._Job": null } },
+    { $set: { "metadata._Jobs": [] } },
     // in case you forget what this is... https://docs.mongodb.org/manual/reference/write-concern/
     { w: 1 },
   Meteor.bindEnvironment(function (err, doc) {
@@ -36,48 +36,48 @@ var addedFileJob = function (file) {
         });
 
         thumbnails[key] = outputFileId;
+
+        var job = new Job(jobs, "makeThumb", {
+          owner: file.metadata.owner,
+          contentType: file.contentType,
+          inputFileId: file._id,
+          outputFileId: outputFileId,
+          size: size
+        });
+
+        var jobId = job.delay(0).retry({
+          wait: 20000,
+          retries: 5
+        }).save();
+
+        if (jobId) {
+          media.update(
+            { _id: file._id },
+            {
+              $push: { "metadata._Jobs": jobId },
+              $set: { "metadata.thumbnails": thumbnails }
+            }
+          );
+          return media.update(
+            { _id: outputFileId },
+            { $set: {
+              "metadata._Job": jobId,
+              "metadata.thumbOf": file._id
+            } }
+          );
+        } else {
+          return console.error("Error saving new job for file " + file._id);
+        }
       });
-
-      var job = new Job(jobs, "makeThumb", {
-        owner: file.metadata.owner,
-        contentType: file.contentType,
-        inputFileId: file._id,
-        thumbnailPolicy: file.metadata.thumbnailPolicy,
-        thumbnails: thumbnails
-      });
-
-      var jobId = job.delay(0).retry({
-        wait: 20000,
-        retries: 5
-      }).save();
-
-      if (jobId) {
-        media.update(
-          { _id: file._id },
-          { $set: {
-            "metadata._Job": jobId,
-            "metadata.thumbnails": thumbnails
-          } }
-        );
-        return media.update(
-          { _id: { $in: _.values(thumbnails) } },
-          { $set: {
-            "metadata._Job": jobId,
-            "metadata.thumbOf": file._id
-          } }
-        );
-      } else {
-        return console.error("Error saving new job for file " + file._id);
-      }
     }
   }));
 };
 
 var removedFileJob = function (file) {
-  if (file.metadata && file.metadata._Job) {
+  if (file.metadata && file.metadata._Jobs) {
     var job = jobs.findOne(
       {
-        _id: file.metadata._Job,
+        _id: { $in: file.metadata._Jobs },
         status: { $in: jobs.jobStatusCancellable }
       },
       { fields: { log: 0 } }
@@ -98,13 +98,9 @@ var removedFileJob = function (file) {
 
 var changedFileJob = function(oldFile, newFile) {
   if (oldFile.md5 !== newFile.md5) {
-    if (oldFile.metadata._Job !== null) {
+    if (oldFile.metadata._Jobs) {
       removedFileJob(oldFile);
     }
-    return addedFileJob(newFile);
-  }
-
-  if (_.contains(_.values(newFile.metadata.thumbnails), null)) {
     return addedFileJob(newFile);
   }
 };

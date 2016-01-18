@@ -1,6 +1,6 @@
 avatarUpload = function (self, file) {
 	self.isUploading.set(true);
-	avatars.insert({
+	media.insert({
 			_id: file.uniqueIdentifier,
 			filename: file.fileName,
 			contentType: file.file.type,
@@ -9,9 +9,9 @@ avatarUpload = function (self, file) {
 			}
 		}, function (err, _id) {
 			if (err) { return console.error("File creation failed!", err); }
-			avatars.resumable.upload();
+			media.resumable.upload();
 
-			var cursor = avatars.find({ _id: _id });
+			var cursor = media.find({ _id: _id });
 			var liveQuery = cursor.observe({
 				changed: function(newImage, oldImage) {
 					if (newImage.length === file.size) {
@@ -27,7 +27,7 @@ avatarUpload = function (self, file) {
 };
 
 Template.profile.onRendered(function () {
-	avatars.resumable.assignBrowse($(".addAvatar"));
+	media.resumable.assignBrowse($(".addAvatar"));
 });
 
 Template.profile.helpers({

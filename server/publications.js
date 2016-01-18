@@ -1,14 +1,3 @@
-Meteor.publish("avatars", function (clientUserId) {
-	if (clientUserId === this.userId) {
-		return avatars.find({ "metadata._Resumable": { $exists: false }, "metadata.owner": this.userId });
-	} else {
-		// Prevent client race condition:
-		// This is triggered when publish is rerun with a new
-		// userId before client has resubscribed with that userId
-		return null;
-	}
-});
-
 Meteor.publish("posts", function () {
 	//Meteor._sleepForMs(2000);
 	return Posts.find({ uploader: this.userId });

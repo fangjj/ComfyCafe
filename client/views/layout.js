@@ -1,7 +1,6 @@
 Deps.autorun(function () {
   document.title = Session.get("pageTitle") || "TeruImages";
   Meteor.subscribe("media", Meteor.userId());
-  Meteor.subscribe("avatars", Meteor.userId());
   Meteor.subscribe("jobs", Meteor.userId());
   $.cookie("X-Auth-Token", Accounts._storedLoginToken());
 });
@@ -46,17 +45,19 @@ Template.layout.onRendered(function () {
 
 	media.resumable.assignDrop($("html"));
 	media.resumable.on("fileAdded", function (file) {
-		mediaUpload(self, file);
+    // The file's entrypoint; used to route storage actions.
+    var source = file.container.className;
+
+    if (source === "addAvatar") {
+      // This is definitely an avatar!
+      avatarUpload(self, file);
+    } else {
+      // This is... everything else!
+      mediaUpload(self, file);
+    }
 	});
 	media.resumable.on("progress", function () {
 		self.progress.set(media.resumable.progress() * 100);
-	});
-
-  avatars.resumable.on("fileAdded", function (file) {
-    avatarUpload(self, file);
-  });
-	avatars.resumable.on("progress", function () {
-		self.progress.set(avatars.resumable.progress() * 100);
 	});
 });
 

@@ -12,7 +12,9 @@ mediaUpload = function (self, file) {
       filename: file.fileName,
       contentType: file.file.type,
       metadata: {
-        master: true
+        thumbnails: {
+          tn250x250: undefined
+        }
       }
     }, function (err, _id) {
       if (err) { return console.error("File creation failed!", err); }

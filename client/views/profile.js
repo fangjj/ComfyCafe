@@ -5,8 +5,10 @@ avatarUpload = function (self, file) {
 			filename: file.fileName,
 			contentType: file.file.type,
 			metadata: {
-				master: true
-			}
+        thumbnails: {
+          tn50x50: undefined
+        }
+      }
 		}, function (err, _id) {
 			if (err) { return console.error("File creation failed!", err); }
 			media.resumable.upload();

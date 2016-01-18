@@ -48,7 +48,7 @@ Template.layout.onRendered(function () {
     // The file's entrypoint; used to route storage actions.
     var source = file.file.source || file.container.className;
 
-    if (source === "addAvatar") {
+    if (source === "avatar") {
       // This is definitely an avatar!
       avatarUpload(self, file);
     } else {

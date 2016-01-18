@@ -51,6 +51,7 @@ var addToCropzone = function (event, template) {
 
 			}).cropper("reset").cropper("replace", reader.result).cropper(cropperOptions);
 		} else {
+			$(".cropzone").addClass("active");
 			$(".newAvatar").attr("src", reader.result);
 			$(".newAvatar").cropper(cropperOptions);
 		}
@@ -65,7 +66,7 @@ Template.profile.events({
 		var canvas = $(".newAvatar").cropper("getCroppedCanvas");
 		canvas.toBlob(function (blob) {
 			blob.name = "avatar.png";
-			blob.source = "addAvatar";
+			blob.source = "avatar";
 			media.resumable.addFile(blob);
 		});
 	}

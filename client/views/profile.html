@@ -2,10 +2,21 @@
 	<main>
 		<h2>{{username}}</h2>
 		{{> avatar class="center" profile=profile title=username}}
+		<div class="file-field input-field">
+      <div class="btn">
+        <span>File</span>
+        <input class="addAvatar" type="file">
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text">
+      </div>
+    </div>
 		<div class="cropzone">
 			<img class="newAvatar">
 		</div>
-		<input class="addAvatar" type="file" name="avatar">
-		<button class="setAvatar">Crop</button>
+		<a class="setAvatar waves-effect waves-light btn">
+			<i class="material-icons left">crop</i>
+			Crop
+		</a>
 	</main>
 </template>

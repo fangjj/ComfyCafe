@@ -9,9 +9,13 @@ Template.topBar.onRendered(function () {
 
 Template.topBar.events({
 	"click #accountActionsToggle": function (event, template) {
-		event.preventDefault();
-		event.stopPropagation();
-		$(".accountActions").fadeToggle("fast");
+		if (event.which === 2) {
+			// Middle mouse click
+		} else {
+			event.preventDefault();
+			event.stopPropagation();
+			$(".accountActions").fadeToggle("fast");
+		}
 	},
 	"click .accountActions": function (event, template) {
 		event.stopPropagation();

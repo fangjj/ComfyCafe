@@ -23,7 +23,7 @@
 						</a>
 					</li>
 					<li>
-						<a id="accountActionsToggle" class="waves-effect waves-teal">
+						<a id="accountActionsToggle" class="waves-effect waves-teal" href="{{pathFor route='user.view' username=currentUser.username}}">
 							{{> avatar class="topBar" profile=currentUser.profile title=currentUser.username}}
 						</a>
 					</li>
@@ -33,7 +33,7 @@
 					</li>
 				{{/if}}
 			</ul>
-			
+
 			<div id="accountActionsArrow" class="accountActions"></div>
 			<div id="accountActions" class="accountActions">
 				<ul>

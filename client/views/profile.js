@@ -36,15 +36,24 @@ Template.profile.helpers({
 	}
 });
 
+var cropperOptions = {
+	aspectRatio: 1,
+	dragMode: "move"
+};
+
 var addToCropzone = function (event, template) {
 	var files = getFiles(event);
 	var reader  = new FileReader();
 	reader.onloadend = function () {
-		$(".newAvatar").attr("src", reader.result);
-		$(".newAvatar").cropper({
-			aspectRatio: 1,
-			dragMode: "move"
-		});
+		var cropperInitialized = $(".newAvatar").hasClass("cropper-hidden");
+		if (cropperInitialized) {
+			$(".newAvatar").one("built.cropper", function () {
+
+			}).cropper("reset").cropper("replace", reader.result).cropper(cropperOptions);
+		} else {
+			$(".newAvatar").attr("src", reader.result);
+			$(".newAvatar").cropper(cropperOptions);
+		}
 	}
 	reader.readAsDataURL(files[0]);
 };

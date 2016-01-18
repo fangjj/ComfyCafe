@@ -34,7 +34,9 @@ Template.profile.onRendered(function () {
 		viewMode: 3,
 	  crop: function (event) {
 			var canvas = $(".avatar.center").cropper("getCroppedCanvas");
-			console.log(canvas.toDataURL());
+			canvas.toBlob(function (blob) {
+				console.log(blob);
+			});
 	  }
 	});
 });

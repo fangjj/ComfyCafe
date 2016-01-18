@@ -13,7 +13,7 @@ mediaUpload = function (self, file) {
       contentType: file.file.type,
       metadata: {
         thumbnails: {
-          tn250x250: undefined
+          tn256x256: null
         }
       }
     }, function (err, _id) {

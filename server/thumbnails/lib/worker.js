@@ -1,78 +1,90 @@
 thumbnailWorker = function (job, callback) {
-  job.log("Beginning work on thumbnail: " + (job.data.inputFileId.toHexString()), {
-    level: "info",
-    data: {
-      input: job.data.inputFileId,
-      output: job.data.outputFileId,
-      contentType: job.data.contentType
-    },
-    echo: true
-  });
-
-  var inStream = media.findOneStream({
-    _id: job.data.inputFileId
-  });
+  var inStream = media.findOneStream({ _id: job.data.inputFileId });
   if (! inStream) {
     job.fail("Input file not found", { fatal: true });
     return callback();
   }
 
-  var outStream = media.upsertStream({
-    _id: job.data.outputFileId
-  }, {}, function (err, file) {
-    if (err) {
-      job.fail("" + err);
-    } else if (file.length === 0) {
-      job.fail("Empty output from thumbnail backend!");
-    }
-  });
-  if (! outStream) {
-    job.fail("Output file not found", { fatal: true });
-    return callback();
+  job.progress(20, 100);
+
+  var contentType = job.data.contentType.split("/");
+  var backend;
+
+  if (contentType[0] === "video") {
+    backend = getVideoThumbnail;
   }
-  outStream.on("finish", Meteor.bindEnvironment(function () {
-    job.progress(90, 100);
+
+  if (contentType[0] === "image") {
+    backend = sharpImageResize;
+  }
+
+  if (! backend) {
+    job.fail("Input file is not supported: " + job.data.contentType, {
+      fatal: true
+    });
 
     media.update(
-      { _id: job.data.inputFileId },
-      { $set: { "metadata.thumbComplete": true } }
+      { _id: { $in: _.values(job.data.sizes) } },
+      { $set: { "metadata.terminated": true } }
     );
 
-    job.log("Finished work on thumbnail image: " + (job.data.outputFileId.toHexString()), {
+    return callback();
+  }
+
+  _.each(job.data.sizes, function (outputFileId, key) {
+    var size = _.map(key.slice(2).split("x"), function (n) {
+      return parseInt(n);
+    });
+
+    job.log("Beginning work on thumbnail: " + (job.data.inputFileId.toHexString()), {
       level: "info",
       data: {
         input: job.data.inputFileId,
-        output: job.data.outputFileId,
+        output: outputFileId,
+        size: size,
         contentType: job.data.contentType
       },
       echo: true
     });
 
-    job.done();
+    var outStream = media.upsertStream({
+      _id: outputFileId
+    }, {}, function (err, file) {
+      if (err) {
+        job.fail("" + err);
+      } else if (file.length === 0) {
+        job.fail("Empty output from thumbnail backend!");
+      }
+    });
+    if (! outStream) {
+      job.fail("Output file not found", { fatal: true });
+      return callback();
+    }
+    outStream.on("finish", Meteor.bindEnvironment(function () {
+      job.progress(90, 100);
 
-    callback();
-  }));
+      media.update(
+        { _id: outputFileId },
+        { $set: { "metadata.thumbComplete": true } }
+      );
 
-  job.progress(20, 100);
+      job.log("Finished work on thumbnail image: " + outputFileId, {
+        level: "info",
+        data: {
+          input: job.data.inputFileId,
+          output: outputFileId,
+          size: size,
+          contentType: job.data.contentType
+        },
+        echo: true
+      });
 
-  var contentType = job.data.contentType.split("/");
+      // This is a problem
+      job.done();
 
-  if (contentType[0] === "video") {
-    return getVideoThumbnail(inStream, outStream, 256, 256);
-  }
+      callback();
+    }));
 
-  if (contentType[0] === "image") {
-    return sharpImageResize(inStream, outStream, 256, 256);
-  }
-
-  job.fail("Input file is not supported: " + job.data.contentType, {
-    fatal: true
+    backend(inStream, outStream, size[0], size[1]);
   });
-
-  media.update(
-    { _id: job.data.outputFileId },
-    { $set: { "metadata.terminated": true } }
-  );
-
-  return callback();
 };

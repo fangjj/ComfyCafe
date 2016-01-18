@@ -1,31 +1,4 @@
-/*
-Partially copy-pasted from
-https://github.com/vsivsi/meteor-file-job-sample-app/
-
-Copyright (C) 2014-2015 by Vaughn Iverson
-
-meteor-file-job-sample-app is free software released under the MIT/X11 license:
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-*/
-
-var addedFileJob = function(file) {
+var addedFileJob = function (file) {
   return media.rawCollection().findAndModify(
     {
       _id: new MongoInternals.NpmModule.ObjectID(file._id.toHexString()),
@@ -45,26 +18,35 @@ var addedFileJob = function(file) {
       }
 
       var outputMetadata = _.clone(file.metadata);
-      outputMetadata.master = false;
-      var outputExt = "";
-      var outputContentType = file.contentType;
+      delete outputMetadata.thumbnails;
+      var outputExt = ".png";
+      var outputContentType = "image/png";
 
-      if (file.contentType.split("/")[0] === "video") {
-        outputExt = ".png";
-        outputContentType = "image/png";
-      }
+      var sizes = {};
 
-      var outputFileId = media.insert({
-        filename: "tn_" + file.filename + outputExt,
-        contentType: outputContentType,
-        metadata: outputMetadata
+      _.each(file.metadata.thumbnails, function (value, key) {
+        if (! value) {
+          outputMetadata.sizeKey = key;
+          outputMetadata.size = _.map(key.slice(2).split("x"), function (n) {
+            return parseInt(n);
+          });
+
+          var outputFileId = media.insert({
+            filename: key + "-" + file.filename + outputExt,
+            contentType: outputContentType,
+            metadata: outputMetadata
+          });
+
+          file.metadata.thumbnails[key] = outputFileId;
+          sizes[key] = outputFileId;
+        }
       });
 
       var job = new Job(jobs, "makeThumb", {
         owner: file.metadata.owner,
         contentType: file.contentType,
         inputFileId: file._id,
-        outputFileId: outputFileId
+        sizes: sizes
       });
 
       var jobId = job.delay(0).retry({
@@ -77,17 +59,16 @@ var addedFileJob = function(file) {
           { _id: file._id },
           { $set: {
             "metadata._Job": jobId,
-            "metadata.thumb": outputFileId
+            "metadata.thumbnails": file.metadata.thumbnails
           } }
         );
-        return media.update({
-          _id: outputFileId
-        }, {
-          $set: {
+        return media.update(
+          { _id: { $in: _.values(sizes) } },
+          { $set: {
             "metadata._Job": jobId,
             "metadata.thumbOf": file._id
-          }
-        });
+          } }
+        );
       } else {
         return console.error("Error saving new job for file " + file._id);
       }
@@ -125,13 +106,17 @@ var changedFileJob = function(oldFile, newFile) {
     }
     return addedFileJob(newFile);
   }
+
+  if (_.contains(_.values(newFile.metadata.thumbnails), null)) {
+    return addedFileJob(newFile);
+  }
 };
 
 var fileObserve = media.find(
   {
     "metadata._Resumable": { $exists: false },
-    "metadata.master": true,
-    "metadata.post": { $exists: true }
+    "metadata.thumbnails": { $exists: true },
+    "metadata.bound": true
   }
 ).observe({
   added: addedFileJob,

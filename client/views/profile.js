@@ -6,7 +6,7 @@ avatarUpload = function (self, file) {
 			contentType: file.file.type,
 			metadata: {
         thumbnails: {
-          tn50x50: undefined
+          tn50x50: null
         }
       }
 		}, function (err, _id) {

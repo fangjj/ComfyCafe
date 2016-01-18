@@ -74,8 +74,6 @@ var addedFileJob = function (file) {
 };
 
 var removedFileJob = function (file) {
-  // also borken
-
   if (file.metadata && file.metadata._Job) {
     var job = jobs.findOne(
       {
@@ -88,13 +86,13 @@ var removedFileJob = function (file) {
     if (job) {
       console.log("Cancelling the job for the removed file!", job._id);
       job.cancel(function (err, res) {
-        return media.remove({ _id: job.data.outputFileId });
+        return media.remove({ _id: { $in: _.values(job.data.thumbnails) } });
       });
     }
   }
 
-  if (file.metadata && file.metadata.thumb) {
-    return media.remove({ _id: file.metadata.thumb });
+  if (file.metadata && file.metadata.thumbnails) {
+    return media.remove({ _id: { $in: _.values(file.metadata.thumbnails) } });
   }
 };
 

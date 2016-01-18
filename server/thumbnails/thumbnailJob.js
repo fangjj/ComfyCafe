@@ -19,34 +19,31 @@ var addedFileJob = function (file) {
 
       var outputMetadata = _.clone(file.metadata);
       delete outputMetadata.thumbnails;
+      delete outputMetadata.thumbnailPolicy;
       var outputExt = ".png";
       var outputContentType = "image/png";
 
-      var sizes = {};
+      var sizes = thumbnailPolicies[file.metadata.thumbnailPolicy];
+      var thumbnails = {};
+      _.each(sizes, function (size, key) {
+        outputMetadata.sizeKey = key;
+        outputMetadata.size = size;
 
-      _.each(file.metadata.thumbnails, function (value, key) {
-        if (! value) {
-          outputMetadata.sizeKey = key;
-          outputMetadata.size = _.map(key.slice(2).split("x"), function (n) {
-            return parseInt(n);
-          });
+        var outputFileId = media.insert({
+          filename: key + "-" + file.filename + outputExt,
+          contentType: outputContentType,
+          metadata: outputMetadata
+        });
 
-          var outputFileId = media.insert({
-            filename: key + "-" + file.filename + outputExt,
-            contentType: outputContentType,
-            metadata: outputMetadata
-          });
-
-          file.metadata.thumbnails[key] = outputFileId;
-          sizes[key] = outputFileId;
-        }
+        thumbnails[key] = outputFileId;
       });
 
       var job = new Job(jobs, "makeThumb", {
         owner: file.metadata.owner,
         contentType: file.contentType,
         inputFileId: file._id,
-        sizes: sizes
+        thumbnailPolicy: file.metadata.thumbnailPolicy,
+        thumbnails: thumbnails
       });
 
       var jobId = job.delay(0).retry({
@@ -59,11 +56,11 @@ var addedFileJob = function (file) {
           { _id: file._id },
           { $set: {
             "metadata._Job": jobId,
-            "metadata.thumbnails": file.metadata.thumbnails
+            "metadata.thumbnails": thumbnails
           } }
         );
         return media.update(
-          { _id: { $in: _.values(sizes) } },
+          { _id: { $in: _.values(thumbnails) } },
           { $set: {
             "metadata._Job": jobId,
             "metadata.thumbOf": file._id
@@ -77,6 +74,8 @@ var addedFileJob = function (file) {
 };
 
 var removedFileJob = function (file) {
+  // also borken
+
   if (file.metadata && file.metadata._Job) {
     var job = jobs.findOne(
       {
@@ -115,7 +114,7 @@ var changedFileJob = function(oldFile, newFile) {
 var fileObserve = media.find(
   {
     "metadata._Resumable": { $exists: false },
-    "metadata.thumbnails": { $exists: true },
+    "metadata.thumbnailPolicy": { $exists: true },
     "metadata.bound": true
   }
 ).observe({

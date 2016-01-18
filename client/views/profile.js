@@ -5,9 +5,7 @@ avatarUpload = function (self, file) {
 			filename: file.fileName,
 			contentType: file.file.type,
 			metadata: {
-        thumbnails: {
-          tn50x50: null
-        }
+      	thumbnailPolicy: "avatar"
       }
 		}, function (err, _id) {
 			if (err) { return console.error("File creation failed!", err); }

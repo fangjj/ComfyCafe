@@ -24,17 +24,15 @@ thumbnailWorker = function (job, callback) {
     });
 
     media.update(
-      { _id: { $in: _.values(job.data.sizes) } },
+      { _id: { $in: _.values(job.data.thumbnails) } },
       { $set: { "metadata.terminated": true } }
     );
 
     return callback();
   }
 
-  _.each(job.data.sizes, function (outputFileId, key) {
-    var size = _.map(key.slice(2).split("x"), function (n) {
-      return parseInt(n);
-    });
+  _.each(job.data.thumbnails, function (outputFileId, key) {
+    var size = thumbnailPolicies[job.data.thumbnailPolicy][key];
 
     job.log("Beginning work on thumbnail: " + (job.data.inputFileId.toHexString()), {
       level: "info",

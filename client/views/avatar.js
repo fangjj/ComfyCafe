@@ -4,7 +4,7 @@ Template.avatar.helpers({
 	},
 	md5: function () {
 		var sizeKey = {
-			"topBar": "tn50x50"
+			"topBar": "topBar"
 		}[this.class];
 
 		if (! sizeKey) {

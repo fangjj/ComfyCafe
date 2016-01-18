@@ -23,11 +23,16 @@ var addedFileJob = function (file) {
       var outputExt = ".png";
       var outputContentType = "image/png";
 
-      var sizes = thumbnailPolicies[file.metadata.thumbnailPolicy];
+      var policy = thumbnailPolicies[file.metadata.thumbnailPolicy];
       var thumbnails = {};
-      _.each(sizes, function (size, key) {
+      _.each(policy, function (config, key) {
         outputMetadata.sizeKey = key;
-        outputMetadata.size = size;
+        outputMetadata.size = config.size;
+
+        if (config.preserveFormat) {
+          outputExt = "";
+          outputContentType = file.contentType;
+        }
 
         var outputFileId = media.insert({
           filename: key + "-" + file.filename + outputExt,
@@ -42,7 +47,7 @@ var addedFileJob = function (file) {
           contentType: file.contentType,
           inputFileId: file._id,
           outputFileId: outputFileId,
-          size: size
+          policy: config
         });
 
         var jobId = job.delay(0).retry({

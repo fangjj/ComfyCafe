@@ -4,7 +4,7 @@ thumbnailWorker = function (job, callback) {
     data: {
       input: job.data.inputFileId,
       output: job.data.outputFileId,
-      size: job.data.size,
+      policy: job.data.policy,
       contentType: job.data.contentType
     },
     echo: true
@@ -20,7 +20,11 @@ thumbnailWorker = function (job, callback) {
   }
 
   if (contentType[0] === "image") {
-    backend = sharpImageResize;
+    if (job.data.policy.preserveFormat) {
+      backend = magickImageResize;
+    } else {
+      backend = sharpImageResize;
+    }
   }
 
   if (! backend) {
@@ -68,7 +72,7 @@ thumbnailWorker = function (job, callback) {
       data: {
         input: job.data.inputFileId,
         output: job.data.outputFileId,
-        size: job.data.size,
+        policy: job.data.policy,
         contentType: job.data.contentType
       },
       echo: true
@@ -79,5 +83,5 @@ thumbnailWorker = function (job, callback) {
     callback();
   }));
 
-  backend(inStream, outStream, job.data.size[0], job.data.size[1]);
+  backend(inStream, outStream, job.data.policy.size[0], job.data.policy.size[1]);
 };

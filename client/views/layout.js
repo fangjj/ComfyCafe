@@ -46,7 +46,7 @@ Template.layout.onRendered(function () {
 	media.resumable.assignDrop($("html"));
 	media.resumable.on("fileAdded", function (file) {
     // The file's entrypoint; used to route storage actions.
-    var source = file.container.className;
+    var source = file.file.source || file.container.className;
 
     if (source === "addAvatar") {
       // This is definitely an avatar!

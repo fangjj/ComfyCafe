@@ -27,18 +27,7 @@ avatarUpload = function (self, file) {
 };
 
 Template.profile.onRendered(function () {
-	media.resumable.assignBrowse($(".addAvatar"));
 
-	$(".avatar.center").cropper({
-	  aspectRatio: 1,
-		viewMode: 3,
-	  crop: function (event) {
-			var canvas = $(".avatar.center").cropper("getCroppedCanvas");
-			canvas.toBlob(function (blob) {
-				console.log(blob);
-			});
-	  }
-	});
 });
 
 Template.profile.helpers({
@@ -47,6 +36,28 @@ Template.profile.helpers({
 	}
 });
 
-Template.profile.events({
+var addToCropzone = function (event, template) {
+	var files = getFiles(event);
+	var reader  = new FileReader();
+	reader.onloadend = function () {
+		$(".newAvatar").attr("src", reader.result);
+		$(".newAvatar").cropper({
+			aspectRatio: 1,
+			dragMode: "move"
+		});
+	}
+	reader.readAsDataURL(files[0]);
+};
 
+Template.profile.events({
+	"dropped .cropzone": addToCropzone,
+	"change .addAvatar": addToCropzone,
+	"click .setAvatar": function (event, template) {
+		var canvas = $(".newAvatar").cropper("getCroppedCanvas");
+		canvas.toBlob(function (blob) {
+			blob.name = "avatar.png";
+			blob.source = "addAvatar";
+			media.resumable.addFile(blob);
+		});
+	}
 });

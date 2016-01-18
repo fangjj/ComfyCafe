@@ -2,6 +2,10 @@
 	<main>
 		<h2>{{username}}</h2>
 		{{> avatar class="center" profile=profile title=username}}
+		<div class="cropzone">
+			<img class="newAvatar">
+		</div>
 		<input class="addAvatar" type="file" name="avatar">
+		<button class="setAvatar">Crop</button>
 	</main>
 </template>

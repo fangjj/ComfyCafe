@@ -55,11 +55,13 @@ thumbnailWorker = function (job, callback) {
 
   job.progress(20, 100);
 
-  if (job.data.contentType.split("/")[0] === "video") {
+  var contentType = job.data.contentType.split("/");
+
+  if (contentType[0] === "video") {
     return getVideoThumbnail(inStream, outStream, 256, 256);
   }
 
-  if (job.data.contentType.split("/")[0] === "image") {
+  if (contentType[0] === "image") {
     return sharpImageResize(inStream, outStream, 256, 256);
   }
 

@@ -26,6 +26,10 @@ avatarUpload = function (self, file) {
 	);
 };
 
+Template.profile.onCreated(function () {
+	this.isChangingAvatar = new ReactiveVar(false);
+});
+
 Template.profile.onRendered(function () {
 
 });
@@ -36,6 +40,9 @@ Template.profile.helpers({
 	},
 	hasAvatar: function () {
 		return _.has(this.profile, "avatar");
+	},
+	isChangingAvatar: function () {
+		return Template.instance().isChangingAvatar.get();
 	}
 });
 
@@ -64,9 +71,13 @@ var addToCropzone = function (event, template) {
 };
 
 Template.profile.events({
+	"click .toggleChangeAvatar": function (event, template) {
+		Template.instance().isChangingAvatar.set(! Template.instance().isChangingAvatar.get());
+	},
 	"dropped .cropzone": addToCropzone,
 	"change .addAvatar": addToCropzone,
 	"click .setAvatar": function (event, template) {
+		Template.instance().isChangingAvatar.set(false);
 		var canvas = $(".newAvatar").cropper("getCroppedCanvas");
 		canvas.toBlob(function (blob) {
 			blob.name = "avatar.png";

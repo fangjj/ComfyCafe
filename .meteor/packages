@@ -18,3 +18,5 @@ jagi:astronomy-timestamp-behavior
 vsivsi:job-collection
 meteorhacks:npm
 npm-container
+jonblum:jquery-cropper
+jparker:crypto-sha256

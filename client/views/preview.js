@@ -1,20 +1,11 @@
-Template.preview.onCreated(function () {
-
-});
-
 Template.preview.helpers({
-  thumbComplete: function () {
-    var medium = media.findOne(
-      { _id: new Mongo.ObjectID(Template.instance().data.medium) }
-    );
-    return _.has(medium.metadata, "thumbComplete") && medium.metadata.thumbComplete;
+  thumbTerminated: function () {
+    var med = this.medium;
+    return med.thumbnails && med.thumbnails.list && med.thumbnails.list.terminated;
   },
   thumbnail: function () {
-    var thumb = media.findOne(
-      { "metadata.thumbOf": new Mongo.ObjectID(this.medium) }
-    );
-    if (thumb && ! thumb.metadata.terminated) {
-      return thumb;
+    if (this.medium.thumbnails) {
+      return this.medium.thumbnails.list;
     }
   }
 });

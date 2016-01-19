@@ -41,7 +41,8 @@ Template.profile.helpers({
 
 var cropperOptions = {
 	aspectRatio: 1,
-	dragMode: "move"
+	dragMode: "move",
+	toggleDragModeOnDblclick: false
 };
 
 var addToCropzone = function (event, template) {

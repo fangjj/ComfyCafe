@@ -23,7 +23,7 @@
 
 	border-style: solid;
 	border-width: 0 16px 16px 16px;
-	border-color: transparent transparent $fg-color transparent;
+	border-color: transparent transparent $sg-color transparent;
 }
 
 #accountActions {
@@ -37,7 +37,7 @@
 
 	width: 270px;
 
-	background: $fg-color;
+	background: $sg-color;
 
 	li, li a {
 		width: 100%;

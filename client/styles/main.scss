@@ -191,12 +191,14 @@ h3 {
   margin-bottom: 18px;
 }
 
-a:not, a:visited {
-  color: #29BED6;
-}
+a:not(.btn) {
+  &:link, &:visited {
+    color: #29BED6;
+  }
 
-a:hover, a:active {
-  color: #29D6D6;
+  &:hover, &:active {
+    color: #29D6D6;
+  }
 }
 
 video, audio {

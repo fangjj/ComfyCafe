@@ -47,7 +47,8 @@ var addedFileJob = function (file) {
           contentType: file.contentType,
           inputFileId: file._id,
           outputFileId: outputFileId,
-          policy: config
+          policyName: file.metadata.thumbnailPolicy,
+          sizeKey: key
         });
 
         var jobId = job.delay(0).retry({

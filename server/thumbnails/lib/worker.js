@@ -1,10 +1,12 @@
 thumbnailWorker = function (job, callback) {
+  var policy = thumbnailPolicies[job.data.policyName][job.data.sizeKey];
+
   job.log("Beginning work on thumbnail: " + (job.data.inputFileId.toHexString()), {
     level: "info",
     data: {
       input: job.data.inputFileId,
       output: job.data.outputFileId,
-      policy: job.data.policy,
+      policy: policy,
       contentType: job.data.contentType
     },
     echo: true
@@ -20,7 +22,7 @@ thumbnailWorker = function (job, callback) {
   }
 
   if (contentType[0] === "image") {
-    if (job.data.policy.preserveFormat) {
+    if (policy.preserveFormat) {
       backend = magickImageResize;
     } else {
       backend = sharpImageResize;
@@ -72,16 +74,16 @@ thumbnailWorker = function (job, callback) {
       data: {
         input: job.data.inputFileId,
         output: job.data.outputFileId,
-        policy: job.data.policy,
+        policy: policy,
         contentType: job.data.contentType
       },
       echo: true
     });
 
     job.done();
-
+    policy.success(job);
     callback();
   }));
 
-  backend(inStream, outStream, job.data.policy.size[0], job.data.policy.size[1]);
+  backend(inStream, outStream, policy.size[0], policy.size[1]);
 };

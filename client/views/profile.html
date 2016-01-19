@@ -4,22 +4,24 @@
 			<h2>{{username}}</h2>
 		</header>
 		{{> avatar class="large" profile=profile title=username}}
-		<div class="file-field input-field">
-      <div class="btn">
-        <span>File</span>
-        <input class="addAvatar" type="file">
-      </div>
-      <div class="file-path-wrapper">
-        <input class="file-path validate" type="text">
-      </div>
-    </div>
-		<div class="cropzone">
-			<input class="addAvatar" type="file">
-			<img class="newAvatar">
-		</div>
-		<a class="setAvatar waves-effect waves-light btn">
-			<i class="material-icons left">crop</i>
-			Crop
-		</a>
+		{{#if isOwner}}
+			<div class="file-field input-field">
+	      <div class="btn">
+	        <span>File</span>
+	        <input class="addAvatar" type="file">
+	      </div>
+	      <div class="file-path-wrapper">
+	        <input class="file-path validate" type="text">
+	      </div>
+	    </div>
+			<div class="cropzone">
+				<input class="addAvatar" type="file">
+				<img class="newAvatar">
+			</div>
+			<a class="setAvatar waves-effect waves-light btn">
+				<i class="material-icons left">crop</i>
+				Crop
+			</a>
+		{{/if}}
 	</main>
 </template>

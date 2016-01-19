@@ -5,6 +5,12 @@
 		</header>
 		{{> avatar class="large" profile=profile title=username}}
 		{{#if isOwner}}
+			{{#if hasAvatar}}
+				<a class="deleteAvatar waves-effect waves-light btn">
+					<i class="material-icons left">delete</i>
+					Delete Current Avatar
+				</a>
+			{{/if}}
 			<div class="file-field input-field">
 	      <div class="btn">
 	        <span>File</span>

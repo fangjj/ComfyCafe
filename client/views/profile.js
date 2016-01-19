@@ -33,6 +33,9 @@ Template.profile.onRendered(function () {
 Template.profile.helpers({
 	isOwner: function () {
     return this._id === Meteor.userId();
+	},
+	hasAvatar: function () {
+		return _.has(this.profile, "avatar");
 	}
 });
 
@@ -69,5 +72,8 @@ Template.profile.events({
 			blob.source = "avatar";
 			media.resumable.addFile(blob);
 		});
+	},
+	"click .deleteAvatar": function (event, template) {
+		Meteor.call("deleteAvatar");
 	}
 });

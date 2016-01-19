@@ -1,7 +1,6 @@
 <template name="avatar">
-	{{#if hasAvatar}}
+	{{#if hasAvatars}}
 		<img class="avatar {{class}}" src="/gridfs/media/{{md5}}" title="{{title}}">
-	{{else}}
-		<canvas class="avatar {{class}} djentCanvas" title="{{title}}"></canvas>
 	{{/if}}
+	<canvas class="avatar {{class}} djentCanvas" title="{{title}}"></canvas>
 </template>

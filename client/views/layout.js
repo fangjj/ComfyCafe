@@ -46,7 +46,16 @@ Template.layout.onRendered(function () {
 	media.resumable.assignDrop($("html"));
 	media.resumable.on("fileAdded", function (file) {
     // The file's entrypoint; used to route storage actions.
-    var source = file.file.source || file.container.className;
+    var source = file.file.source;
+    if (! source) {
+      if (file.container) {
+        source = file.container.className;
+      } else {
+        // file.container is undefined in Firefox for some reason...
+        // but since there are only two cases, we can just go to default.
+        source = "default";
+      }
+    }
 
     if (source === "avatar") {
       // This is definitely an avatar!

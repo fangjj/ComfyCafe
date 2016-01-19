@@ -11,6 +11,12 @@
 	padding-bottom: 10px;
 }
 
+@media only screen and (max-width: 600px) {
+	#accountActionsToggle {
+		margin-top: -5px;
+	}
+}
+
 #accountActionsArrow {
 	z-index: index($elements, accountActionsArrow);
 

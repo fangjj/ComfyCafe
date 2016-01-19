@@ -19,7 +19,7 @@ var avatarCallback = function (job) {
 
 thumbnailPolicies = {
   "postMedium": {
-    "tn256x256": {
+    "list": {
       size: [256, 256]
     }
   },

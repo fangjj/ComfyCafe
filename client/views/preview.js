@@ -7,7 +7,7 @@ Template.preview.helpers({
     var thumb = media.findOne(
       {
         "metadata.thumbOf": new Mongo.ObjectID(Template.instance().data.medium),
-        "metadata.sizeKey": "tn256x256"
+        "metadata.sizeKey": "list"
       }
     );
     return _.has(thumb.metadata, "thumbComplete") && thumb.metadata.thumbComplete;
@@ -16,7 +16,7 @@ Template.preview.helpers({
     var thumb = media.findOne(
       {
         "metadata.thumbOf": new Mongo.ObjectID(this.medium),
-        "metadata.sizeKey": "tn256x256"
+        "metadata.sizeKey": "list"
       }
     );
     if (thumb && ! thumb.metadata.terminated) {

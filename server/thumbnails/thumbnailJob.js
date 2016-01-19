@@ -13,10 +13,6 @@ var addedFileJob = function (file) {
       return console.error("Error locking file document in job creation: ", err);
     }
     if (doc) {
-      if (! _.contains(["image", "video"], file.contentType.split("/")[0])) {
-        return console.error("Input file is not supported: " + file.contentType);
-      }
-
       var outputMetadata = _.clone(file.metadata);
       delete outputMetadata.thumbnails;
       delete outputMetadata.thumbnailPolicy;

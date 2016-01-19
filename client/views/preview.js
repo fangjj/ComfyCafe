@@ -1,12 +1,11 @@
-Template.preview.onCreated(function () {
-  console.log(this.data);
-});
-
 Template.preview.helpers({
-  thumbComplete: function () {
-    return _.has(this.medium.thumbnails, "list");
+  thumbTerminated: function () {
+    var med = this.medium;
+    return med.thumbnails && med.thumbnails.list && med.thumbnails.list.terminated;
   },
   thumbnail: function () {
-    return this.medium.thumbnails.list;
+    if (this.medium.thumbnails) {
+      return this.medium.thumbnails.list;
+    }
   }
 });

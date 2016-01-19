@@ -35,16 +35,18 @@ thumbnailWorker = function (job, callback) {
     });
 
     media.update(
-      { _id: { $in: _.values(job.data.thumbnails) } },
+      { _id: job.data.outputFileId },
       { $set: { "metadata.terminated": true } }
     );
 
+    policy.fail(job);
     return callback();
   }
 
   var inStream = media.findOneStream({ _id: job.data.inputFileId });
   if (! inStream) {
     job.fail("Input file not found", { fatal: true });
+    policy.fail(job);
     return callback();
   }
 
@@ -59,6 +61,7 @@ thumbnailWorker = function (job, callback) {
   });
   if (! outStream) {
     job.fail("Output file not found", { fatal: true });
+    policy.fail(job);
     return callback();
   }
   outStream.on("finish", Meteor.bindEnvironment(function () {

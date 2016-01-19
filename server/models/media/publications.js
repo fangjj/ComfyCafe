@@ -8,15 +8,3 @@ Meteor.publish("media", function (clientUserId) {
 		return null;
 	}
 });
-
-Meteor.publish("postMedia", function (name) {
-	check(name, String);
-	return media.find({ "metadata.post": name });
-});
-
-Meteor.publish("favoriteMedia", function () {
-	//Meteor._sleepForMs(2000);
-	if (this.userId) {
-		return media.find({ "metadata.favorited": this.userId });
-	}
-});

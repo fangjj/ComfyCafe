@@ -1,26 +1,12 @@
 Template.preview.onCreated(function () {
-
+  console.log(this.data);
 });
 
 Template.preview.helpers({
   thumbComplete: function () {
-    var thumb = media.findOne(
-      {
-        "metadata.thumbOf": new Mongo.ObjectID(Template.instance().data.medium),
-        "metadata.sizeKey": "list"
-      }
-    );
-    return _.has(thumb.metadata, "thumbComplete") && thumb.metadata.thumbComplete;
+    return _.has(this.medium.thumbnails, "list");
   },
   thumbnail: function () {
-    var thumb = media.findOne(
-      {
-        "metadata.thumbOf": new Mongo.ObjectID(this.medium),
-        "metadata.sizeKey": "list"
-      }
-    );
-    if (thumb && ! thumb.metadata.terminated) {
-      return thumb;
-    }
+    return this.medium.thumbnails.list;
   }
 });

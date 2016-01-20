@@ -2,9 +2,9 @@
   <li>
     <a href="{{pathFor route='post.view' name=name}}">
       <div class="thumbnailContainer">
-        {{#with thumbnail}}
-          {{#if thumbComplete}}
-              <img class="thumbnail" src="/gridfs/media/{{md5}}">
+        {{#unless thumbTerminated}}
+          {{#with thumbnail}}
+            <img class="thumbnail" src="/gridfs/media/{{md5}}">
           {{else}}
             <div class="preloader-wrapper big active">
               <div class="spinner-layer spinner-blue-only">
@@ -17,12 +17,12 @@
                 </div>
               </div>
             </div>
-          {{/if}}
+          {{/with}}
         {{else}}
           <div class="thumbnail">
             <i class="material-icons large">image</i>
           </div>
-        {{/with}}
+        {{/unless}}
       </div>
       <div class="label">
         {{name}}

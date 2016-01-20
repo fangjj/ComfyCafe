@@ -3,8 +3,14 @@
 @import url("//fonts.googleapis.com/css?family=Material+Icons|Slabo+27px");
 
 $text-color: #EEF4EE;
+$sg-color: #333333;
 $fg-color: #211E1E;
 $bg-color: #282323;
+
+$elements: content, grid-items, accountActions, accountActionsArrow, viewer-overlay, viewer;
+
+@import "_avatar.scss";
+@import "_accountActions.scss";
 
 html {
   width: 100%;
@@ -27,6 +33,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    margin-top: 200px;
 
     > div {
       background: $fg-color;
@@ -60,7 +68,7 @@ body {
     color: $text-color;
   }
 
-  li {
+  ul.topLevel li {
     span {
       font-size: 20px;
     }
@@ -109,7 +117,7 @@ main {
   height: 7px;
 }
 
-.dropzone {
+.dropzone, .cropzone {
   position: relative;
 
   padding: 24px;
@@ -120,6 +128,35 @@ main {
   border: 2px dashed rgba(64, 64, 64, 1);
 
   cursor: pointer;
+
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+
+  input[type=file] {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+    cursor: pointer;
+  }
+}
+
+.cropzone {
+  margin: 0 auto;
+
+  width: 512px;
+  height: 512px;
+
+  cursor: default;
+
+  &.active {
+    padding: 0;
+  }
 }
 
 .addFile {
@@ -140,7 +177,7 @@ h3 {
   text-align: center;
 }
 
-#at-nav-button {
+#topLogin #at-nav-button {
   margin-left: 12px;
   margin-right: 12px;
   margin-top: -4px;
@@ -153,12 +190,14 @@ h3 {
   margin-bottom: 18px;
 }
 
-a:not, a:visited {
-  color: #29BED6;
-}
+a:not(.btn) {
+  &:link, &:visited {
+    color: #29BED6;
+  }
 
-a:hover, a:active {
-  color: #29D6D6;
+  &:hover, &:active {
+    color: #29D6D6;
+  }
 }
 
 video, audio {
@@ -176,6 +215,10 @@ video, audio {
 
 .material-tooltip .backdrop {
   background: $fg-color;
+}
+
+header {
+  text-align: center;
 }
 
 ul.posts, ul.invites {
@@ -233,4 +276,8 @@ ul.posts {
 	height: 256px;
 
 	border-radius: 1px;
+}
+
+.toolbox {
+  margin-top: 26px;
 }

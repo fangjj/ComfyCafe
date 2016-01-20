@@ -96,6 +96,29 @@ main {
   }
 }
 
+.postInfo {
+  display: flex;
+  align-items: center;
+  align-content: left;
+
+  @extend .z-depth-1;
+
+  margin: 0 auto;
+  margin-top: 24px;
+
+  padding: 16px;
+
+  width: 85%;
+
+  background: $fg-color;
+
+  .info {
+    margin-left: 16px;
+
+    font-size: 20px;
+  }
+}
+
 #loadingSpinner {
   display: flex;
   align-items: center;

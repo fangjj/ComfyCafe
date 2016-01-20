@@ -23,6 +23,13 @@
       {{/with}}
     </div>
   </main>
+  <div class="postInfo">
+    {{> avatar class="small" profile=currentUser.profile title=currentUser.username}}
+    <div class="info">
+      by <a href="{{pathFor route='user.view' username=currentUser.username}}">{{currentUser.username}}</a>
+      at <time>{{createdAt}}</time>
+    </div>
+  </div>
   {{#if isOwner}}
     <div id="fabModify" class="fixed-action-btn">
       <a class="btn-floating btn-large">

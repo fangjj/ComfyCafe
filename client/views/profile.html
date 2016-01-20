@@ -3,7 +3,9 @@
 		<header>
 			<h2>{{username}}</h2>
 		</header>
-		{{#if isOwner}}
+		{{#unless isOwner}}
+			{{> avatar class="large" profile=profile title=username}}
+		{{else}}
 			{{#unless isChangingAvatar}}
 				{{> avatar class="large" profile=profile title=username}}
 				<div class="toolbox">
@@ -41,6 +43,6 @@
 					Crop
 				</a>
 			{{/unless}}
-		{{/if}}
+		{{/unless}}
 	</main>
 </template>

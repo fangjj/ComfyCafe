@@ -27,7 +27,9 @@ Template.post.helpers({
     return _.contains(this.favorited, Meteor.userId());
   },
   subscribed: function () {
-    return _.contains(Meteor.user().profile.subscriptions, this.uploader._id);
+    if (Meteor.userId()) {
+      return _.contains(Meteor.user().profile.subscriptions, this.uploader._id);
+    }
   },
   showInfoBox: function () {
     return Boolean(this.medium);

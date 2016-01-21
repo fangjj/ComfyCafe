@@ -1,9 +1,10 @@
 Template.topBar.onRendered(function () {
 	$("html").click(function () {
-		var acc = $(".accountActions, .notifications");
-		if (acc.css("display") !== "none") {
-			acc.fadeOut("fast");
-		}
+		_.each([$(".notifications"), $(".accountActions")], function (value) {
+			if (value.css("display") !== "none") {
+				value.fadeOut("fast");
+			}
+		});
 	});
 });
 

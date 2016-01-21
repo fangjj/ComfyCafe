@@ -25,6 +25,9 @@
 					<li>
 						<a id="notificationListToggle" class="waves-effect waves-teal">
 							<i class="material-icons">notifications</i>
+							{{#if notifications.count}}
+								<span class="push teal">{{notifications.count}}</span>
+							{{/if}}
 						</a>
 					</li>
 					<li>

@@ -2,6 +2,30 @@
   display: none;
 }
 
+#notificationListToggle {
+  position: relative;
+
+  .push {
+    display: inline-block;
+
+    position: absolute;
+    left: 30px;
+    bottom: 16px;
+
+    padding-left: 4px;
+    padding-right: 4px;
+
+    height: 16px;
+    min-width: 16px;
+
+    font-size: 16px !important;
+    line-height: 16px;
+    text-align: center;
+
+    border-radius: 8px;
+  }
+}
+
 #notificationArrow {
 	z-index: index($elements, accountActionsArrow);
 

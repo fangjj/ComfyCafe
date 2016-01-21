@@ -15,3 +15,10 @@ Meteor.publish("favorites", function () {
 		return Posts.find({ favorited: this.userId });
 	}
 });
+
+Meteor.publish("subscribedPosts", function (currentUser) {
+	//Meteor._sleepForMs(2000);
+	if (this.userId) {
+		return Posts.find({ "uploader.profile.subscribers": this.userId });
+	}
+});

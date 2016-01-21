@@ -1,0 +1,13 @@
+<template name="subscriptions">
+  <main>
+    <ul class="posts">
+      {{#each posts}}
+        {{> preview}}
+      {{else}}
+        <div class="uhoh">
+          You haven't subscribed to anyone!
+        </div>
+      {{/each}}
+    </ul>
+  </main>
+</template>

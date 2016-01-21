@@ -42,9 +42,7 @@ Template.post.helpers({
 
 Template.post.events({
   "click .toggleSubscription": function (event, template) {
-    Meteor.call("toggleSubscription", this.uploader._id, function (err, add) {
-
-    });
+    Meteor.call("toggleSubscription", this.uploader._id);
   },
   "click #fabFavorite": function (event, template) {
     Meteor.call("favoritePost", this._id, ! _.contains(this.favorited, Meteor.userId()));

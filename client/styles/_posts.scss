@@ -30,6 +30,20 @@ ul.posts {
 
     .btn {
       margin-top: 6px;
+
+      .hover {
+        display: none;
+      }
+
+      &:hover {
+        .hover {
+          display: inline-block;
+        }
+
+        .nothover {
+          display: none;
+        }
+      }
     }
   }
 }

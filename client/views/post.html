@@ -33,15 +33,18 @@
         at <time>{{createdAt}}</time>
         <br>
         {{#unless isOwner}}
-          <a class="toggleSubscription waves-effect waves-light btn">
-            {{#unless subscribed}}
+          {{#unless subscribed}}
+            <a class="toggleSubscription waves-effect waves-light btn">
               <i class="material-icons left">add_box</i>
               Subscribe
-            {{else}}
-              <i class="material-icons left">indeterminate_check_box</i>
-              Unsubscribe
-            {{/unless}}
-          </a>
+            </a>
+          {{else}}
+            <a class="toggleSubscription waves-effect waves-light btn grey darken-2">
+              <i class="material-icons left nothover">check_box</i>
+              <i class="material-icons left hover">cancel</i>
+              Subscribed
+            </a>
+          {{/unless}}
         {{/unless}}
       </div>
     </div>

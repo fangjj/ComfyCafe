@@ -1,6 +1,6 @@
 Meteor.publish("allPosts", function () {
 	//Meteor._sleepForMs(2000);
-	return Posts.find({});
+	return Posts.find({ private: false });
 });
 
 Meteor.publish("yourPosts", function () {
@@ -24,6 +24,11 @@ Meteor.publish("favorites", function () {
 Meteor.publish("subscribedPosts", function (currentUser) {
 	//Meteor._sleepForMs(2000);
 	if (this.userId) {
-		return Posts.find({ "uploader.profile.subscribers": this.userId });
+		return Posts.find(
+			{
+				"uploader.profile.subscribers": this.userId,
+				private: false
+			}
+		);
 	}
 });

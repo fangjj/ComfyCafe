@@ -1,0 +1,61 @@
+$tag-bg: #CFF7FF;
+$tag-bg-adj: #E2FFDB;
+$tag-bg-character: #EBE4FF;
+$tag-bg-meta: #FFFEE4;
+$tag-bg-dangerous: #FFDCE7;
+
+.taglet {
+	@include tag($tag-bg);
+
+	&.noun, &.generic {
+		@include tag($tag-bg);
+	}
+
+	&.adj {
+		@include tag($tag-bg-adj);
+	}
+
+	&.character {
+		@include tag($tag-bg-character);
+	}
+
+	&.meta {
+		@include tag($tag-bg-meta);
+	}
+
+	&.dangerous {
+		@include tag($tag-bg-dangerous);
+	}
+}
+
+.tagTree {
+	margin-left: 12px;
+	margin-right: 12px;
+	margin-top: 12px;
+
+	line-height: 36px;
+
+	> ul {
+		margin-bottom: 16px;
+
+		> li {
+			position: relative;
+
+			vertical-align: top;
+
+			&:not(.meta) {
+				display: inline-block;
+
+				margin-right: 9px;
+
+				padding-left: 9px;
+
+				border-left: 1px solid rgba($text-color, 0.7);
+			}
+		}
+
+		ul {
+			margin-left: 32px;
+		}
+	}
+}

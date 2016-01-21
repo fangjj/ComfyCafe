@@ -1,6 +1,6 @@
 # TeruImages
 
-WARNING: All users are assumed to be trusted. Will that change eventually? Probably.
+WARNING: All users are assumed to be trusted. This will change soon.
 
 ![](https://teru.sexy/gridfs/media/ced007e50eb50b013e0f7aebd63f9095)
 

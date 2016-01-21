@@ -1,3 +1,15 @@
+@mixin vanillaLinks() {
+  a:not(.btn) {
+    &:link, &:visited {
+      color: #29BED6;
+    }
+
+    &:hover, &:active {
+      color: #29D6D6;
+    }
+  }
+}
+
 @mixin list() {
   margin: 0;
 

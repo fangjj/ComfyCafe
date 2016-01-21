@@ -57,9 +57,13 @@
 
 	li {
     padding-left: 16px;
-    padding-right: 16px;
+    padding-right: 42px;
 
 		width: 100%;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 	}
 
   a {
@@ -75,6 +79,10 @@
   }
 
   i {
+    position: absolute;
+    right: 6px;
+    top: 0;
+
     font-size: 22px;
 
     cursor: pointer;

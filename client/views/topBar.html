@@ -23,8 +23,11 @@
 						</a>
 					</li>
 					<li>
-						<a href="#!" class="waves-effect waves-teal tooltipped" data-position="bottom" data-tooltip="Notifications">
+						<a id="notificationListToggle" class="waves-effect waves-teal">
 							<i class="material-icons">notifications</i>
+							{{#if notifications.count}}
+								<span class="push teal">{{notifications.count}}</span>
+							{{/if}}
 						</a>
 					</li>
 					<li>
@@ -38,6 +41,17 @@
 					</li>
 				{{/if}}
 			</ul>
+
+			<div id="notificationArrow" class="notifications"></div>
+			<div id="notificationList" class="notifications">
+				<ul>
+					{{#each notifications}}
+						{{> notification}}
+					{{else}}
+						<li>No notifications.</li>
+					{{/each}}
+				</ul>
+			</div>
 
 			<div id="accountActionsArrow" class="accountActions"></div>
 			<div id="accountActions" class="accountActions">

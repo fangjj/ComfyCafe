@@ -30,7 +30,7 @@
       </a>
       <div class="info">
         by <a href="{{pathFor route='user.view' username=uploader.username}}">{{uploader.username}}</a>
-        at <time>{{createdAt}}</time>
+        <time datetime="{{isoDate createdAt}}">{{prettifyDate createdAt}}</time>
         <br>
         {{#unless isOwner}}
           {{#unless subscribed}}

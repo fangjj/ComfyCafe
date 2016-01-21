@@ -20,3 +20,4 @@ meteorhacks:npm
 npm-container
 jonblum:jquery-cropper
 jparker:crypto-sha256
+momentjs:moment

@@ -6,6 +6,10 @@ Template.post.onDestroyed(function () {
 	$(".tooltipped").tooltip("remove");
 });
 
+var isOwner = function (self) {
+  return self.uploader && Meteor.userId() === self.uploader._id;
+};
+
 Template.post.helpers({
   isImage: function () {
     return this.contentType.split("/")[0] === "image";
@@ -17,10 +21,16 @@ Template.post.helpers({
     return this.contentType.split("/")[0] === "audio";
   },
   isOwner: function () {
-    return Meteor.userId() === this.uploader;
+    return isOwner(this);
   },
   favorited: function () {
     return _.contains(this.favorited, Meteor.userId());
+  },
+  showEditButton: function () {
+    return isOwner(this);
+  },
+  showFavoriteButton: function () {
+    return ! isOwner(this) && Meteor.userId() && this.medium;
   }
 });
 

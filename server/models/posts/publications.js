@@ -1,6 +1,6 @@
 Meteor.publish("posts", function () {
 	//Meteor._sleepForMs(2000);
-	return Posts.find({ uploader: this.userId });
+	return Posts.find({ "uploader._id": this.userId });
 });
 
 Meteor.publish("post", function (name) {

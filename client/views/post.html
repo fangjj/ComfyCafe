@@ -23,14 +23,16 @@
       {{/with}}
     </div>
   </main>
-  <div class="postInfo">
-    {{> avatar class="small" profile=currentUser.profile title=currentUser.username}}
-    <div class="info">
-      by <a href="{{pathFor route='user.view' username=currentUser.username}}">{{currentUser.username}}</a>
-      at <time>{{createdAt}}</time>
+  {{#if medium}}
+    <div class="postInfo">
+      {{> avatar class="small" profile=uploader.profile title=uploader.username}}
+      <div class="info">
+        by <a href="{{pathFor route='user.view' username=uploader.username}}">{{uploader.username}}</a>
+        at <time>{{createdAt}}</time>
+      </div>
     </div>
-  </div>
-  {{#if isOwner}}
+  {{/if}}
+  {{#if showEditButton}}
     <div id="fabModify" class="fixed-action-btn">
       <a class="btn-floating btn-large">
         <i class="large material-icons">mode_edit</i>
@@ -40,19 +42,18 @@
         <li><a id="fabReroll" class="btn-floating blue waves-effect waves-light tooltipped" data-position="left" data-tooltip="Reroll name!"><i class="material-icons">casino</i></a></li>
       </ul>
     </div>
-  {{else}}
-    {{#if currentUser}}
-      <div id="fabFavorite" class="fixed-action-btn">
-        <a class="btn-floating btn-large">
-          <i class="large material-icons">
-            {{#if favorited}}
-              star
-            {{else}}
-              star_border
-            {{/if}}
-          </i>
-        </a>
-      </div>
-    {{/if}}
+  {{/if}}
+  {{#if showFavoriteButton}}
+    <div id="fabFavorite" class="fixed-action-btn">
+      <a class="btn-floating btn-large">
+        <i class="large material-icons">
+          {{#if favorited}}
+            star
+          {{else}}
+            star_border
+          {{/if}}
+        </i>
+      </a>
+    </div>
   {{/if}}
 </template>

@@ -10,8 +10,12 @@
   user: name=teruimages group=teruimages home=/srv/TeruImages/
 - name: copy TeruImages systemd unit file
   template: src=TeruImages.service.j2 dest=/etc/systemd/system/TeruImages.service
+  register: service_file
   notify:
   - start TeruImages
+- name: systemctl daemon-reload
+  shell: systemctl daemon-reload
+  when: service_file.changed
 
 - name: ensure git is at the latest version
   apt: pkg=git state=latest

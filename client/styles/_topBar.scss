@@ -1,0 +1,32 @@
+#topBar {
+  position: absolute;
+  top: 0;
+
+  padding-left: 14px;
+  padding-right: 14px;
+
+  .brand-logo {
+    left: 0;
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none;
+
+    font-size: 32px;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  a {
+    color: $text-color;
+  }
+
+  ul.topLevel li {
+    span {
+      font-size: 20px;
+    }
+  }
+}

@@ -3,6 +3,7 @@ cores: 4
 makej: 5
 
 domain: localhost
+ddp_domain: localhost
 default_server: true
 ssl_cert: /etc/letsencrypt/live/teru.sexy/fullchain.pem
 ssl_key: /etc/letsencrypt/live/teru.sexy/privkey.pem
@@ -11,6 +12,7 @@ hsts_max_age: 31536000 # set to 0 to disable, 31536000 for 1 year, etc.
 root_url: http://localhost:9000 // use HTTPS if not local! i.e. https://teru.sexy
 meteor_port: 3000
 mongo_url: mongodb://localhost:27017/TeruImages
+ddp_url: http://localhost
 meteor_settings: "{}"
 
 rsync_user: root

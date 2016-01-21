@@ -2,6 +2,7 @@ Accounts.onCreateUser(function (options, user) {
   if (options.profile) {
     user.profile = options.profile;
     user.profile.sassyHash = CryptoJS.SHA256(user.emails[0].address).toString();
+    user.profile.privateByDefault = true;
   }
   return user;
 });

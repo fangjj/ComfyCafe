@@ -5,9 +5,15 @@
 			<ul class="right topLevel">
 				{{#if currentUser}}
 					<li>
-						<a href="{{pathFor route='post.list'}}" class="waves-effect waves-teal">
-							<i class="material-icons left">view_list</i>
-							<span class="hide-on-med-and-down">Posts</span>
+						<a href="{{pathFor route='post.all'}}" class="waves-effect waves-teal">
+							<i class="material-icons left">view_comfy</i>
+							<span class="hide-on-med-and-down">Browse</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{pathFor route='subscriptions'}}" class="waves-effect waves-teal">
+							<i class="material-icons left">local_dining</i>
+							<span class="hide-on-med-and-down">Subscriptions</span>
 						</a>
 					</li>
 					<li>
@@ -17,13 +23,15 @@
 						</a>
 					</li>
 					<li>
-						<a href="{{pathFor route='invites'}}" class="waves-effect waves-teal">
-							<i class="material-icons left">weekend</i>
-							<span class="hide-on-med-and-down">Invites</span>
+						<a id="notificationListToggle" class="waves-effect waves-teal">
+							<i class="material-icons">notifications</i>
+							{{#if notifications.count}}
+								<span class="push teal">{{notifications.count}}</span>
+							{{/if}}
 						</a>
 					</li>
 					<li>
-						<a id="accountActionsToggle" class="waves-effect waves-teal" href="{{pathFor route='user.view' username=currentUser.username}}">
+						<a id="accountActionsToggle" class="waves-effect waves-teal" href="{{pathFor route='profile' username=currentUser.username}}">
 							{{> avatar class="topBar" profile=currentUser.profile title=currentUser.username}}
 						</a>
 					</li>
@@ -34,13 +42,36 @@
 				{{/if}}
 			</ul>
 
+			<div id="notificationArrow" class="notifications"></div>
+			<div id="notificationList" class="notifications">
+				<ul>
+					{{#each notifications}}
+						{{> notification}}
+					{{else}}
+						<li>No notifications.</li>
+					{{/each}}
+				</ul>
+			</div>
+
 			<div id="accountActionsArrow" class="accountActions"></div>
 			<div id="accountActions" class="accountActions">
 				<ul>
 					<li>
-						<a href="{{pathFor route='user.view' username=currentUser.username}}" class="waves-effect waves-teal">
+						<a href="{{pathFor route='profile' username=currentUser.username}}" class="waves-effect waves-teal">
 							<i class="material-icons left">account_circle</i>
 							<span>View Profile</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{pathFor route='post.list'}}" class="waves-effect waves-teal">
+							<i class="material-icons left">view_comfy</i>
+							<span class="hide-on-med-and-down">Manage Posts</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{pathFor route='invites'}}" class="waves-effect waves-teal">
+							<i class="material-icons left">weekend</i>
+							<span>Manage Invites</span>
 						</a>
 					</li>
 					<li>

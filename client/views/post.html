@@ -23,12 +23,19 @@
       {{/with}}
     </div>
   </main>
-  {{#if medium}}
+  {{#if showInfoBox}}
     <div class="postInfo">
       {{> avatar class="small" profile=uploader.profile title=uploader.username}}
       <div class="info">
         by <a href="{{pathFor route='user.view' username=uploader.username}}">{{uploader.username}}</a>
         at <time>{{createdAt}}</time>
+        <br>
+        {{#unless isOwner}}
+          <a class="waves-effect waves-light btn">
+            <i class="material-icons left">add_box</i>
+            Subscribe
+          </a>
+        {{/unless}}
       </div>
     </div>
   {{/if}}

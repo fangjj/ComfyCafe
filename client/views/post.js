@@ -26,6 +26,9 @@ Template.post.helpers({
   favorited: function () {
     return _.contains(this.favorited, Meteor.userId());
   },
+  showInfoBox: function () {
+    return Boolean(this.medium);
+  },
   showEditButton: function () {
     return isOwner(this);
   },

@@ -43,13 +43,9 @@
 			<div id="notificationList" class="notifications">
 				<ul>
 					{{#each notifications}}
-						<li>
-							<a href="{{pathFor route='user.view' username=from.username}}">{{from.username}}</a>
-							{{msg}}!
-							<i class="material-icons small right">cancel</i>
-						</li>
+						{{> notification}}
 					{{else}}
-						No notifications.
+						<li>No notifications.</li>
 					{{/each}}
 				</ul>
 			</div>

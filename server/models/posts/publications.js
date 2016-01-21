@@ -1,4 +1,9 @@
-Meteor.publish("posts", function () {
+Meteor.publish("allPosts", function () {
+	//Meteor._sleepForMs(2000);
+	return Posts.find({});
+});
+
+Meteor.publish("yourPosts", function () {
 	//Meteor._sleepForMs(2000);
 	return Posts.find({ "uploader._id": this.userId });
 });

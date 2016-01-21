@@ -26,6 +26,9 @@ Template.post.helpers({
   favorited: function () {
     return _.contains(this.favorited, Meteor.userId());
   },
+  subscribed: function () {
+    return _.contains(Meteor.user().profile.subscriptions, this.uploader._id);
+  },
   showInfoBox: function () {
     return Boolean(this.medium);
   },
@@ -38,6 +41,11 @@ Template.post.helpers({
 });
 
 Template.post.events({
+  "click .toggleSubscription": function (event, template) {
+    Meteor.call("toggleSubscription", this.uploader._id, function (err, add) {
+
+    });
+  },
   "click #fabFavorite": function (event, template) {
     Meteor.call("favoritePost", this._id, ! _.contains(this.favorited, Meteor.userId()));
   },

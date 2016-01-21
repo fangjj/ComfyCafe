@@ -25,15 +25,22 @@
   </main>
   {{#if showInfoBox}}
     <div class="postInfo">
-      {{> avatar class="small" profile=uploader.profile title=uploader.username}}
+      <a href="{{pathFor route='user.view' username=uploader.username}}">
+        {{> avatar class="small" profile=uploader.profile title=uploader.username}}
+      </a>
       <div class="info">
         by <a href="{{pathFor route='user.view' username=uploader.username}}">{{uploader.username}}</a>
         at <time>{{createdAt}}</time>
         <br>
         {{#unless isOwner}}
-          <a class="waves-effect waves-light btn">
-            <i class="material-icons left">add_box</i>
-            Subscribe
+          <a class="toggleSubscription waves-effect waves-light btn">
+            {{#unless subscribed}}
+              <i class="material-icons left">add_box</i>
+              Subscribe
+            {{else}}
+              <i class="material-icons left">indeterminate_check_box</i>
+              Unsubscribe
+            {{/unless}}
           </a>
         {{/unless}}
       </div>

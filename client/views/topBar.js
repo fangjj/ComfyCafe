@@ -1,16 +1,10 @@
 Template.topBar.onRendered(function () {
-	$(".tooltipped").tooltip({delay: 50});
-
 	$("html").click(function () {
 		var acc = $(".accountActions, .notifications");
 		if (acc.css("display") !== "none") {
 			acc.fadeOut("fast");
 		}
 	});
-});
-
-Template.topBar.onDestroyed(function () {
-	$(".tooltipped").tooltip("remove");
 });
 
 Template.topBar.helpers({

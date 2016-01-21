@@ -5,21 +5,26 @@
 			<ul class="right topLevel">
 				{{#if currentUser}}
 					<li>
-						<a href="{{pathFor route='post.all'}}" class="waves-effect waves-teal">
+						<a href="{{pathFor route='post.all'}}" class="waves-effect waves-teal tooltipped" data-position="bottom" data-tooltip="Browse Posts">
 							<i class="material-icons left">view_comfy</i>
 							<span class="hide-on-med-and-down">Browse</span>
 						</a>
 					</li>
 					<li>
-						<a href="{{pathFor route='subscriptions'}}" class="waves-effect waves-teal">
+						<a href="{{pathFor route='subscriptions'}}" class="waves-effect waves-teal tooltipped" data-position="bottom" data-tooltip="View Subscriptions">
 							<i class="material-icons left">local_dining</i>
 							<span class="hide-on-med-and-down">Subscriptions</span>
 						</a>
 					</li>
 					<li>
-						<a href="{{pathFor route='favorites'}}" class="waves-effect waves-teal">
+						<a href="{{pathFor route='favorites'}}" class="waves-effect waves-teal tooltipped" data-position="bottom" data-tooltip="View Favorites">
 							<i class="material-icons left">star</i>
 							<span class="hide-on-med-and-down">Favorites</span>
+						</a>
+					</li>
+					<li>
+						<a href="#!" class="waves-effect waves-teal tooltipped" data-position="bottom" data-tooltip="Notifications">
+							<i class="material-icons">notifications</i>
 						</a>
 					</li>
 					<li>

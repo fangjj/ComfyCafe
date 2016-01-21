@@ -23,12 +23,6 @@
 						</a>
 					</li>
 					<li>
-						<a href="{{pathFor route='invites'}}" class="waves-effect waves-teal">
-							<i class="material-icons left">weekend</i>
-							<span class="hide-on-med-and-down">Invites</span>
-						</a>
-					</li>
-					<li>
 						<a id="accountActionsToggle" class="waves-effect waves-teal" href="{{pathFor route='user.view' username=currentUser.username}}">
 							{{> avatar class="topBar" profile=currentUser.profile title=currentUser.username}}
 						</a>
@@ -53,6 +47,12 @@
 						<a href="{{pathFor route='settings'}}" class="waves-effect waves-teal">
 							<i class="material-icons left">settings</i>
 							<span>Edit Settings</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{pathFor route='invites'}}" class="waves-effect waves-teal">
+							<i class="material-icons left">weekend</i>
+							<span>Manage Invites</span>
 						</a>
 					</li>
 				</ul>

@@ -1,10 +1,24 @@
 <template name="settings">
   <main>
-    <div class="uhoh">
-      I haven't actually added any settings.
-      <div class="smaller">
-        Developing quality software takes time...
+    <div class="settings">
+      Default visibility for posts
+      <div class="switch">
+        <label>
+          Private
+          <input name="privateByDefault" type="checkbox" value="{{currentUser.profile.privateByDefault}}">
+          <span class="lever"></span>
+          Public
+        </label>
       </div>
     </div>
+
+    <a class="cancel waves-effect waves-light btn grey darken-2">
+      <i class="material-icons left">cancel</i>
+      Cancel
+    </a>
+    <a class="submit waves-effect waves-light btn">
+      <i class="material-icons left">done</i>
+      Submit
+    </a>
   </main>
 </template>

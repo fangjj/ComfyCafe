@@ -25,11 +25,11 @@
   </main>
   {{#if showInfoBox}}
     <div class="postInfo">
-      <a href="{{pathFor route='user.view' username=uploader.username}}">
+      <a href="{{pathFor route='profile' username=uploader.username}}">
         {{> avatar class="small" profile=uploader.profile title=uploader.username}}
       </a>
       <div class="info">
-        by <a href="{{pathFor route='user.view' username=uploader.username}}">{{uploader.username}}</a>
+        by <a href="{{pathFor route='profile' username=uploader.username}}">{{uploader.username}}</a>
         <time datetime="{{isoDate createdAt}}">{{prettifyDate createdAt}}</time>
         <br>
         {{#unless isOwner}}

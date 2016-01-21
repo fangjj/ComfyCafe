@@ -1,6 +1,6 @@
 <template name="notification">
   <li>
-    <a href="{{pathFor route='user.view' username=from.username}}">{{from.username}}</a>
+    <a href="{{pathFor route='profile' username=from.username}}">{{from.username}}</a>
     {{msg}}!
     <i class="deleteNotification material-icons small right">cancel</i>
   </li>

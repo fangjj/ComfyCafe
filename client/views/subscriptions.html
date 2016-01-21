@@ -5,7 +5,11 @@
         {{> preview}}
       {{else}}
         <div class="uhoh">
-          You haven't subscribed to anyone!
+          {{#if currentUser.profile.subscriptions}}
+            None of your subscriptions have posted anything...
+          {{else}}
+            You haven't subscribed to anyone!
+          {{/if}}
         </div>
       {{/each}}
     </ul>

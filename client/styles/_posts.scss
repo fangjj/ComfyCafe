@@ -1,0 +1,35 @@
+ul.posts {
+  @include list;
+  @include gallery;
+
+  a .material-icons {
+    color: $text-color;
+  }
+}
+
+.postInfo {
+  display: flex;
+  align-items: center;
+  align-content: left;
+
+  @extend .z-depth-1;
+
+  margin: 0 auto;
+  margin-top: 24px;
+
+  padding: 16px;
+
+  width: 85%;
+
+  background: $fg-color;
+
+  .info {
+    margin-left: 16px;
+
+    font-size: 20px;
+
+    .btn {
+      margin-top: 6px;
+    }
+  }
+}

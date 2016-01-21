@@ -1,3 +1,15 @@
+@mixin list() {
+  margin: 0;
+
+  li:nth-child(even) {
+    background: rgba(#666, 0.2);
+  }
+
+  li {
+    padding: 12px;
+  }
+}
+
 @mixin gallery() {
   display: flex;
   flex-direction: row;

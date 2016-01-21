@@ -1,0 +1,9 @@
+ul.invites {
+  @include list;
+}
+
+.deleteInvite {
+  float: right;
+
+  cursor: pointer;
+}

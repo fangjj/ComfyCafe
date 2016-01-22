@@ -74,6 +74,10 @@ $tag-bg-dangerous: #FFDCE7;
 
 			vertical-align: top;
 
+			&:first-child {
+				padding-top: 4px;
+			}
+
 			&:not(.meta) {
 				margin-right: 9px;
 

@@ -31,7 +31,6 @@ $tag-bg-dangerous: #FFDCE7;
 .tagTree {
 	margin-left: 32px;
 	margin-right: 12px;
-	//margin-top: 12px;
 
   font-size: 20px;
   line-height: 36px;
@@ -51,22 +50,33 @@ $tag-bg-dangerous: #FFDCE7;
   }
 
 	> ul {
-		margin-bottom: 16px;
-
 		> li {
 			position: relative;
 
 			vertical-align: top;
 
 			&:not(.meta) {
-				display: inline-block;
-
 				margin-right: 9px;
 
 				padding-left: 9px;
 
 				border-left: 1px solid rgba($text-color, 0.7);
 			}
+		}
+
+		.toplevel, ul li {
+			display: flex;
+			flex-direction: row;
+			justify-content: left;
+			align-content: center;
+
+			height: 36px;
+		}
+
+		.with {
+			position: absolute;
+
+			margin-left: 2px;
 		}
 
 		ul {

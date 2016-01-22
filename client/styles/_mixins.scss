@@ -64,8 +64,12 @@
 	padding-left: 4px;
 	padding-right: 4px;
 
+  height: 32px;
+
 	color: $bg-color !important;
 	background-color: rgba($background, 0.75);
+
+  line-height: 32px;
 
 	border: 1px solid mix($background, $bg-color, 60);
 

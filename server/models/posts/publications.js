@@ -21,6 +21,11 @@ Meteor.publish("favorites", function () {
 	}
 });
 
+Meteor.publish("searchPosts", function (tagStr) {
+	console.log(tagStr);
+	return queryTags(tagStr);
+});
+
 Meteor.publish("subscribedPosts", function (currentUser) {
 	//Meteor._sleepForMs(2000);
 	if (this.userId) {

@@ -35,7 +35,10 @@ $tag-bg-dangerous: #FFDCE7;
   font-size: 20px;
   line-height: 36px;
 
+	/*
   i.left {
+		display: none;
+
 		position: absolute;
 		left: -28px;
 
@@ -48,6 +51,27 @@ $tag-bg-dangerous: #FFDCE7;
 		user-select: none;
 		user-select: none;
   }
+	*/
+
+	.addTag {
+		padding-left: 3px;
+		padding-right: 3px;
+		&:hover {
+			padding-left: 2px;
+			padding-right: 2px;
+		}
+
+		cursor: pointer;
+
+		i {
+			text-align: center;
+			line-height: 26px;
+		}
+	}
+
+	.new:empty {
+		min-width: 44px;
+	}
 
 	> ul {
 		margin-top: 12px;
@@ -67,7 +91,7 @@ $tag-bg-dangerous: #FFDCE7;
 			}
 		}
 
-		.toplevel, ul li {
+		.root, .descriptor {
 			display: flex;
 			flex-direction: row;
 			justify-content: left;

@@ -58,6 +58,8 @@
 }
 
 @mixin tag($background) {
+  @include contentEditable(rgba($sg-color, 0.6));
+
 	margin-right: 4px;
 
 	padding: 2px;
@@ -69,7 +71,7 @@
 	color: $bg-color !important;
 	background-color: rgba($background, 0.75);
 
-  line-height: 32px;
+  line-height: 28px;
 
 	border: 1px solid mix($background, $bg-color, 60);
 

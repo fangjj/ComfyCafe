@@ -11,6 +11,7 @@ $elements: content, grid-items, accountActions, accountActionsArrow, viewer-over
 
 @import "_accountActions.scss";
 @import "_avatars.scss";
+@import "_contentEditable.scss";
 @import "_invites.scss";
 @import "_loading.scss";
 @import "_login.scss";
@@ -27,6 +28,7 @@ html {
 
 body {
   @include vanillaLinks;
+  @include contentEditable(rgba($text-color, 0.7));
 
   margin-top: 64px;
   margin-bottom: 64px;
@@ -68,6 +70,10 @@ main {
   margin: 0;
 
   height: 7px;
+}
+
+.material-tooltip {
+  font-size: 19px;
 }
 
 .dropzone, .cropzone {

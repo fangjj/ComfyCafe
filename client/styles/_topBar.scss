@@ -33,9 +33,11 @@
   }
 
   .searchButton {
-    z-index: index($elements, searchButtons);
+    z-index: index($elements, searchButtons) + 1;
 
     position: relative;
+
+    color: $text-color;
 
     label {
       position: absolute;
@@ -68,6 +70,10 @@
     z-index: index($elements, search);
 
     background: $sg-color;
+  }
+
+  &:not(:focus) {
+    width: 35%;
   }
 
   // Begin sadness

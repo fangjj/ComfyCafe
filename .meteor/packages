@@ -22,3 +22,4 @@ jparker:crypto-sha256
 momentjs:moment
 force-ssl
 seba:minifiers-autoprefixer
+manuel:reactivearray

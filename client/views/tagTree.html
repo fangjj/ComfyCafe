@@ -5,9 +5,14 @@
 				{{!-- Tragically mangled by inline-block whitespace --}}
 				{{#each humanizedTags.nouns}}
 					<li>
-						{{#each adjectives}}<a class="taglet adj" href="/q/?search={{name}}+{{../name}}" title="{{definition}}">{{name}}</a>{{/each}}<a class="taglet {{type}}" href="/q/?search={{name}}" title="{{definition}}">{{name}}</a> {{#if descriptors}}with{{/if}}
+						{{#each adjectives}}<a class="taglet adj" href="/q/?search={{name}}+{{../name}}" title="{{definition}}">{{name}}</a>{{/each}}{{#each newAdjectives}}<a class="taglet adj" href="/q/?search={{name}}+{{../name}}" title="{{definition}}">{{name}}</a>{{/each}}<a class="taglet {{type}}" href="/q/?search={{name}}" title="{{definition}}">{{name}}</a> {{#if descriptors}}with{{/if}}<i class="addTag material-icons right">add_circle</i>
 						<ul>
 							{{#each descriptors}}
+								<li>
+									{{#each adjectives}}<a class="taglet adj" href="/q/?search={{name}}+{{../name}}" title="{{definition}}">{{name}}</a>{{/each}}<a class="taglet {{type}}" href="/q/?search={{name}}" title="{{definition}}">{{name}}</a>
+								</li>
+							{{/each}}
+							{{#each newDescriptors}}
 								<li>
 									{{#each adjectives}}<a class="taglet adj" href="/q/?search={{name}}+{{../name}}" title="{{definition}}">{{name}}</a>{{/each}}<a class="taglet {{type}}" href="/q/?search={{name}}" title="{{definition}}">{{name}}</a>
 								</li>

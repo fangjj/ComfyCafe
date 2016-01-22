@@ -12,7 +12,7 @@ tagTreeToStr = function (template) {
 
     var first = true;
 
-    var rootNoun = subTree.children(".noun:not(.addNoun)");
+    var rootNoun = subTree.children(".noun:not(.addRootNoun)");
     var rootNounText = tagFromElem(rootNoun);
 
     if (rootNounText) {
@@ -51,11 +51,16 @@ tagTreeToStr = function (template) {
           str += nounText;
         }
       });
-    }
 
-    str += ";";
+      str += ";";
+    }
   });
 
   // Remove this after increasing parseTagStr's tolerance.
-  return slice(str, undefined, -1);
+  str = str.trim();
+  if (str.slice(-1) === ";") {
+    str = slice(str, undefined, -1);
+  }
+
+  return str;
 };

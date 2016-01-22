@@ -35,7 +35,7 @@ $tag-bg-dangerous: #FFDCE7;
   font-size: 20px;
   line-height: 36px;
 
-	.addAdj, .addNoun {
+	.addAdj, .addNoun, .addRootNoun {
 		padding-left: 3px;
 		padding-right: 3px;
 		&:hover {
@@ -55,8 +55,14 @@ $tag-bg-dangerous: #FFDCE7;
 		}
 	}
 
-	.new:empty {
-		min-width: 44px;
+	.taglet.new:empty {
+		&.adj {
+			min-width: 34px;
+		}
+
+		&.noun {
+			min-width: 50px;
+		}
 	}
 
 	> ul {

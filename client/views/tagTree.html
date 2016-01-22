@@ -36,6 +36,13 @@
 						</ul>
 					</li>
 				{{/each}}
+				{{#if isEditing}}
+					<li>
+						<span class="root">
+							<a class="taglet noun addRootNoun" title="Add noun"><i class="material-icons">add</i></a>
+						</span>
+					</li>
+				{{/if}}
 			</ul>
 			{{#if isEditing}}
 				<div class="formActions">

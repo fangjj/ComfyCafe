@@ -16,21 +16,39 @@ Template.tagTree.helpers({
 	}
 });
 
-var removeNewTags = function () {
-  $(".taglet.new").remove();
+var removeNewTags = function (template) {
+  template.$(".new, .dynamic").remove();
 };
 
 Template.tagTree.events({
   "click .addAdj": function (event, template) {
-    $(event.currentTarget).after('<a class="taglet adj new" data-placeholder="new" contenteditable></a>');
+    $(event.currentTarget).after('<a class="taglet adj new" data-placeholder="adj" contenteditable></a>');
   },
   "click .addNoun": function (event, template) {
     // Remember when logic and views were truly separate?
     // Because I don't.
     $(event.currentTarget).parent().before('' +
-      '<li class="descriptor">' +
-        '<a class="taglet adj addAdj" title="Add adjective"><i class="material-icons">add</i></a>' +
-        '<a class="taglet noun new" data-placeholder="new" contenteditable></a>' +
+      '<li class="descriptor new">' +
+        '<a class="taglet adj addAdj dynamic" title="Add adjective"><i class="material-icons">add</i></a>' +
+        '<a class="taglet adj new" data-placeholder="adj" contenteditable></a>' +
+        '<a class="taglet noun new" data-placeholder="noun" contenteditable></a>' +
+      '</li>'
+    );
+  },
+  "click .addRootNoun": function (event, template) {
+    // And it gets worse. Might ReactJS give us a better time for our view layer?
+    $(event.currentTarget).parent().parent().before('' +
+      '<li class="new">' +
+        '<span class="root">' +
+          '<a class="taglet adj addAdj dynamic" title="Add adjective"><i class="material-icons">add</i></a>' +
+          '<a class="taglet adj new" data-placeholder="adj" contenteditable></a>' +
+          '<a class="taglet noun new" data-placeholder="noun" contenteditable></a>' +
+        '</span>' +
+        '<ul>' +
+          '<li class="descriptor">' +
+            '<a class="taglet noun addNoun dynamic" title="Add noun"><i class="material-icons">add</i></a>' +
+          '</li>' +
+        '</ul>' +
       '</li>'
     );
   },
@@ -42,11 +60,11 @@ Template.tagTree.events({
     console.log(tagStr);
     Meteor.call("addTags", this._id, tagStr, function () {
       template.isEditing.set(false);
-      $(".taglet.new").remove();
+      removeNewTags(template);
     });
   },
   "click .cancel": function (event, template) {
     template.isEditing.set(false);
-    $(".taglet.new").remove();
+    removeNewTags(template);
   }
 });

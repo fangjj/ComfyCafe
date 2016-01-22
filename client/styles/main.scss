@@ -10,7 +10,7 @@ $bg-color: #282323;
 $muted-light: rgba($text-color, 0.7);
 $muted-dark: rgba($sg-color, 0.6);
 
-$elements: content, grid-items, accountActions, accountActionsArrow, viewer-overlay, viewer;
+$elements: content, grid-items, searchInactive, logo, search, searchButtons, accountActions, accountActionsArrow, viewer-overlay, viewer;
 
 @import "_accountActions.scss";
 @import "_avatars.scss";
@@ -106,6 +106,10 @@ main {
     opacity: 0;
     cursor: pointer;
   }
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px $fg-color inset;
 }
 
 .cropzone {

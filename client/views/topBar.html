@@ -1,21 +1,33 @@
 <template name="topBar">
 	<nav id="topBar">
 		<div class="nav-wrapper">
-			<a class="brand-logo left hide-on-small-only" href="/">TeruImages</a>
+			<ul class="left topLevel">
+				<li>
+					<a class="waves-effect waves-teal searchButton">
+						<i class="material-icons">search</i>
+						<label for="search"></label>
+					</a>
+				</li>
+			</ul>
+
+			<a class="brand-logo center hide-on-small-only" href="/">TeruImages</a>
+
 			<ul class="right topLevel">
 				{{#if currentUser}}
 					<li>
-						<a href="{{pathFor route='post.all'}}" class="waves-effect waves-teal">
-							<i class="material-icons left">view_comfy</i>
-							<span class="hide-on-med-and-down">Browse</span>
-						</a>
-					</li>
-					<li>
 						<a href="{{pathFor route='subscriptions'}}" class="waves-effect waves-teal">
 							<i class="material-icons left">local_dining</i>
-							<span class="hide-on-med-and-down">Subscriptions</span>
+							<span class="hide-on-med-and-down">Feed</span>
 						</a>
 					</li>
+				{{/if}}
+				<li>
+					<a href="{{pathFor route='post.all'}}" class="waves-effect waves-teal">
+						<i class="material-icons left">view_comfy</i>
+						<span class="hide-on-med-and-down">Browse</span>
+					</a>
+				</li>
+				{{#if currentUser}}
 					<li>
 						<a id="notificationListToggle" class="waves-effect waves-teal">
 							<i class="material-icons">notifications</i>
@@ -87,6 +99,13 @@
 					</div>
 				</div>
 			</div>
+
+			<form id="searchForm">
+				<div class="input-field">
+					<input id="search" type="search">
+					<i class="material-icons searchClose">close</i>
+				</div>
+			</form>
 		</div>
 	</nav>
 </template>

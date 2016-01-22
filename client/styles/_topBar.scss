@@ -6,12 +6,10 @@
   padding-right: 14px;
 
   .brand-logo {
-    left: 0;
-    -webkit-transform: none;
-    -moz-transform: none;
-    -ms-transform: none;
-    -o-transform: none;
-    transform: none;
+    z-index: index($elements, logo);
+
+    //left: 0;
+    //transform: none;
 
     font-size: 32px;
 
@@ -28,5 +26,76 @@
     span {
       font-size: 20px;
     }
+
+    > a {
+      z-index: index($elements, logo);
+    }
   }
+
+  .searchButton {
+    z-index: index($elements, searchButtons);
+
+    position: relative;
+
+    label {
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      width: 100%;
+      height: 100%;
+
+      opacity: 0;
+    }
+  }
+
+  .searchClose {
+    z-index: index($elements, searchButtons);
+
+    visibility: hidden;
+  }
+}
+
+#search {
+  z-index: index($elements, searchInactive);
+
+  position: absolute;
+  top: 0;
+
+  color: $text-color;
+
+  &:focus {
+    z-index: index($elements, search);
+
+    background: $sg-color;
+  }
+
+  // Begin sadness
+
+  &:-webkit-autofill:not(:focus) {
+    -webkit-box-shadow: 0 0 0px 1000px $primary-color inset;
+  }
+
+  &:hover:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px $primary-color inset;
+  }
+
+  &:focus:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px $sg-color inset;
+  }
+
+  &:focus:hover:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px $sg-color inset;
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    transition: background-color 600s ease-in-out 0s;
+  }
+
+  -webkit-text-fill-color: $text-color !important;
+
+  // End sadness
 }

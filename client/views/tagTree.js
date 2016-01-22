@@ -24,6 +24,7 @@ Template.tagTree.events({
     var self = this;
 
     template.isEditing.set(true);
+    /*
     template.newAdjectives.push({
       name: "gay",
       definition: "u kno boi"
@@ -43,5 +44,12 @@ Template.tagTree.events({
         }
       ]
     });
+    */
+  },
+  "click .submit": function (event, template) {
+    Meteor.call("addTags", this._id, tagTreeToStr(template));
+  },
+  "click .cancel": function (event, template) {
+
   }
 });

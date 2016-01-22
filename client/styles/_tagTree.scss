@@ -29,15 +29,18 @@ $tag-bg-dangerous: #FFDCE7;
 }
 
 .tagTree {
-	margin-left: 12px;
+	margin-left: 32px;
 	margin-right: 12px;
-	margin-top: 12px;
+	//margin-top: 12px;
 
   font-size: 20px;
   line-height: 36px;
 
-  i {
-		margin-left: 6px;
+  i.left {
+		position: absolute;
+		left: -28px;
+
+		margin-right: 6px;
 
     font-size: 20px;
     line-height: 36px;

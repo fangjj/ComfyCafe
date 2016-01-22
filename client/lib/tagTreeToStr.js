@@ -12,11 +12,11 @@ tagTreeToStr = function (template) {
 
     var first = true;
 
-    var rootNoun = subTree.children(".noun");
+    var rootNoun = subTree.children(".noun:not(.addNoun)");
     var rootNounText = tagFromElem(rootNoun);
 
     if (rootNounText) {
-      var rootAdjectives = subTree.children(".adj:not(.addTag)");
+      var rootAdjectives = subTree.children(".adj:not(.addAdj)");
 
       rootAdjectives.each(function () {
         var rootAdjText = tagFromElem($(this));
@@ -30,11 +30,11 @@ tagTreeToStr = function (template) {
       descriptors.each(function () {
         var descriptor = $(this);
 
-        var noun = descriptor.children(".noun");
+        var noun = descriptor.children(".noun:not(.addNoun)");
         var nounText = tagFromElem(noun);
 
         if (nounText) {
-          var adjectives = descriptor.children(".adj:not(.addTag)");
+          var adjectives = descriptor.children(".adj:not(.addAdj)");
 
           if (first) {
             str += " with ";

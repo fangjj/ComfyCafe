@@ -6,7 +6,7 @@
 					<li>
 						<span class="root">
 							{{#if isEditing}}
-								<a class="taglet adj addTag"><i class="material-icons">add</i></a>
+								<a class="taglet adj addAdj" title="Add adjective"><i class="material-icons">add</i></a>
 							{{/if}}
 							{{#each adjectives}}
 								<a class="taglet adj" href="/q/?search={{name}}+{{../name}}" title="{{definition}}" contenteditable="{{isEditing}}">{{name}}</a>
@@ -19,12 +19,20 @@
 						<ul>
 							{{#each descriptors}}
 								<li class="descriptor">
+									{{#if isEditing}}
+										<a class="taglet adj addAdj" title="Add adjective"><i class="material-icons">add</i></a>
+									{{/if}}
 									{{#each adjectives}}
 										<a class="taglet adj" href="/q/?search={{name}}+{{../name}}" title="{{definition}}" contenteditable="{{isEditing}}">{{name}}</a>
 									{{/each}}
 									<a class="taglet noun {{type}}" href="/q/?search={{name}}" title="{{definition}}" contenteditable="{{isEditing}}">{{name}}</a>
 								</li>
 							{{/each}}
+							{{#if isEditing}}
+								<li class="descriptor">
+									<a class="taglet noun addNoun" title="Add noun"><i class="material-icons">add</i></a>
+								</li>
+							{{/if}}
 						</ul>
 					</li>
 				{{/each}}

@@ -21,8 +21,18 @@ var removeNewTags = function () {
 };
 
 Template.tagTree.events({
-  "click .addTag": function (event, template) {
+  "click .addAdj": function (event, template) {
     $(event.currentTarget).after('<a class="taglet adj new" data-placeholder="new" contenteditable></a>');
+  },
+  "click .addNoun": function (event, template) {
+    // Remember when logic and views were truly separate?
+    // Because I don't.
+    $(event.currentTarget).parent().before('' +
+      '<li class="descriptor">' +
+        '<a class="taglet adj addAdj" title="Add adjective"><i class="material-icons">add</i></a>' +
+        '<a class="taglet noun new" data-placeholder="new" contenteditable></a>' +
+      '</li>'
+    );
   },
   "click a[contenteditable=true]": function (event, template) {
     event.preventDefault();

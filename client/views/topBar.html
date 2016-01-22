@@ -15,14 +15,14 @@
 			<ul class="right topLevel">
 				{{#if currentUser}}
 					<li>
-						<a href="{{pathFor route='subscriptions'}}" class="waves-effect waves-teal">
+						<a href="{{pathFor route='feed'}}" class="waves-effect waves-teal">
 							<i class="material-icons left">local_dining</i>
 							<span class="hide-on-med-and-down">Feed</span>
 						</a>
 					</li>
 				{{/if}}
 				<li>
-					<a href="{{pathFor route='post.all'}}" class="waves-effect waves-teal">
+					<a href="{{pathFor route='browse'}}" class="waves-effect waves-teal">
 						<i class="material-icons left">view_comfy</i>
 						<span class="hide-on-med-and-down">Browse</span>
 					</a>
@@ -69,7 +69,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="{{pathFor route='post.list'}}" class="waves-effect waves-teal">
+						<a href="{{pathFor route='yourPosts'}}" class="waves-effect waves-teal">
 							<i class="material-icons left">view_comfy</i>
 							<span class="hide-on-med-and-down">Manage Posts</span>
 						</a>

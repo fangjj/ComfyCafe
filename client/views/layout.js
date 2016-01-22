@@ -30,7 +30,7 @@ mediaUpload = function (self, file) {
               mediumId: file.uniqueIdentifier,
               tags: "tagme"
             }, function (err, name) {
-              Router.go("post.view", { name: name });
+              Router.go("post", { name: name });
             });
           }
         }

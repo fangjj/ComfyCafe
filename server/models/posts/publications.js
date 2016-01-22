@@ -1,3 +1,9 @@
+Meteor.publish("post", function (name) {
+	check(name, String);
+	//Meteor._sleepForMs(2000);
+	return Posts.find({ name: name });
+});
+
 Meteor.publish("allPosts", function () {
 	//Meteor._sleepForMs(2000);
 	return Posts.find({ private: false });
@@ -8,10 +14,18 @@ Meteor.publish("yourPosts", function () {
 	return Posts.find({ "uploader._id": this.userId });
 });
 
-Meteor.publish("post", function (name) {
-	check(name, String);
-	//Meteor._sleepForMs(2000);
-	return Posts.find({ name: name });
+Meteor.publish("postFeed", function (currentUser) {
+	if (this.userId) {
+		return Posts.find(
+			{ $or: [
+				{ "uploader._id": this.userId },
+				{
+					"uploader.profile.subscribers": this.userId,
+					private: false
+				}
+			] }
+		);
+	}
 });
 
 Meteor.publish("favorites", function () {
@@ -24,16 +38,4 @@ Meteor.publish("favorites", function () {
 Meteor.publish("searchPosts", function (tagStr) {
 	console.log(tagStr);
 	return queryTags(tagStr);
-});
-
-Meteor.publish("subscribedPosts", function (currentUser) {
-	//Meteor._sleepForMs(2000);
-	if (this.userId) {
-		return Posts.find(
-			{
-				"uploader.profile.subscribers": this.userId,
-				private: false
-			}
-		);
-	}
 });

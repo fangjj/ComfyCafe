@@ -17,12 +17,6 @@
 						</a>
 					</li>
 					<li>
-						<a href="{{pathFor route='favorites'}}" class="waves-effect waves-teal">
-							<i class="material-icons left">star</i>
-							<span class="hide-on-med-and-down">Favorites</span>
-						</a>
-					</li>
-					<li>
 						<a id="notificationListToggle" class="waves-effect waves-teal">
 							<i class="material-icons">notifications</i>
 							{{#if notifications.count}}
@@ -66,6 +60,12 @@
 						<a href="{{pathFor route='post.list'}}" class="waves-effect waves-teal">
 							<i class="material-icons left">view_comfy</i>
 							<span class="hide-on-med-and-down">Manage Posts</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{pathFor route='favorites'}}" class="waves-effect waves-teal">
+							<i class="material-icons left">star</i>
+							<span class="hide-on-med-and-down">Favorites (Deprecated)</span>
 						</a>
 					</li>
 					<li>

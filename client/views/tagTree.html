@@ -4,8 +4,8 @@
 			<ul>
 				{{#each humanizedTags.nouns}}
 					<li>
+						<i class="addTag material-icons left">add_circle</i>
 						<span class="toplevel">
-							<i class="addTag material-icons left">add_circle</i>
 							{{#if isEditing}}
 								<a class="taglet adj new" contenteditable>new</a>
 							{{/if}}
@@ -30,16 +30,18 @@
 					</li>
 				{{/each}}
 			</ul>
+			{{#if isEditing}}
+				<div class="formActions">
+					<a class="cancel waves-effect waves-light btn grey darken-2">
+						<i class="material-icons left">cancel</i>
+						Cancel
+					</a>
+					<a class="submit waves-effect waves-light btn">
+						<i class="material-icons left">done</i>
+						Save
+					</a>
+				</div>
+			{{/if}}
 		</div>
-		{{#if isEditing}}
-			<a class="cancel waves-effect waves-light btn grey darken-2">
-				<i class="material-icons left">cancel</i>
-				Cancel
-			</a>
-			<a class="submit waves-effect waves-light btn">
-				<i class="material-icons left">done</i>
-				Save
-			</a>
-		{{/if}}
 	{{/if}}
 </template>

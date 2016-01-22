@@ -71,7 +71,7 @@ Template.post.events({
   "click #fabDelete": function (event, template) {
     var self = this;
     Meteor.call("deletePost", this._id, function () {
-      Router.go("yourPosts");
+      Router.go("feed");
     });
   }
 });

@@ -44,8 +44,8 @@
 					</li>
 				{{/if}}
 			</ul>
-			{{#if isEditing}}
-				<div class="formActions">
+			<div class="formActions">
+				{{#if isEditing}}
 					<a class="cancel waves-effect waves-light btn grey darken-2">
 						<i class="material-icons left">cancel</i>
 						Cancel
@@ -54,8 +54,13 @@
 						<i class="material-icons left">done</i>
 						Save
 					</a>
-				</div>
-			{{/if}}
+				{{else}}
+					<a class="ediTags waves-effect waves-light btn pink lighten-2">
+						<i class="material-icons left">loyalty</i>
+						Edit Tags
+					</a>
+				{{/if}}
+			</div>
 		</div>
 	{{/if}}
 </template>

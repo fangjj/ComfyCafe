@@ -2,14 +2,6 @@ Template.tagTree.onCreated(function () {
   this.isEditing = new ReactiveVar(false);
 });
 
-Template.tagTree.onRendered(function () {
-  var self = this;
-
-  $("#fabTag").click(function () {
-    self.isEditing.set(true);
-  });
-});
-
 Template.tagTree.helpers({
   isEditing: function () {
 		return Template.instance().isEditing.get();
@@ -21,6 +13,9 @@ var removeNewTags = function (template) {
 };
 
 Template.tagTree.events({
+  "click .ediTags": function (event, template) {
+    template.isEditing.set(true);
+  },
   "click .addAdj": function (event, template) {
     $(event.currentTarget).after('<a class="taglet adj new" data-placeholder="adj" contenteditable></a>');
   },

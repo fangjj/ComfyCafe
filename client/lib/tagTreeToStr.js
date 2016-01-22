@@ -13,31 +13,45 @@ tagTreeToStr = function (template) {
     var first = true;
 
     var rootNoun = subTree.children(".noun");
-    var rootAdjectives = subTree.children(".adj:not(.addTag)");
+    var rootNounText = tagFromElem(rootNoun);
 
-    rootAdjectives.each(function () {
-      str += tagFromElem($(this)) + " ";
-    });
-    str += tagFromElem(rootNoun);
+    if (rootNounText) {
+      var rootAdjectives = subTree.children(".adj:not(.addTag)");
 
-    var descriptors = subTree.parent().find("ul > li.descriptor");
-    descriptors.each(function () {
-      var descriptor = $(this);
-
-      var noun = descriptor.children(".noun");
-      var adjectives = descriptor.children(".adj:not(.addTag)");
-
-      if (first) {
-        str += " with ";
-        first = false;
-      } else {
-        str += " and ";
-      }
-      adjectives.each(function () {
-        str += tagFromElem($(this)) + " ";
+      rootAdjectives.each(function () {
+        var rootAdjText = tagFromElem($(this));
+        if (rootAdjText) {
+          str += rootAdjText + " ";
+        }
       });
-      str += tagFromElem(noun);
-    });
+      str += rootNounText;
+
+      var descriptors = subTree.parent().find("ul > li.descriptor");
+      descriptors.each(function () {
+        var descriptor = $(this);
+
+        var noun = descriptor.children(".noun");
+        var nounText = tagFromElem(noun);
+
+        if (nounText) {
+          var adjectives = descriptor.children(".adj:not(.addTag)");
+
+          if (first) {
+            str += " with ";
+            first = false;
+          } else {
+            str += " and ";
+          }
+          adjectives.each(function () {
+            var adjText = tagFromElem($(this));
+            if (adjText) {
+              str += adjText + " ";
+            }
+          });
+          str += nounText;
+        }
+      });
+    }
 
     str += ";";
   });

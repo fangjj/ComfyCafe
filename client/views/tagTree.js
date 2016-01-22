@@ -28,7 +28,9 @@ Template.tagTree.events({
     event.preventDefault();
   },
   "click .submit": function (event, template) {
-    Meteor.call("addTags", this._id, tagTreeToStr(template), function () {
+    var tagStr = tagTreeToStr(template);
+    console.log(tagStr);
+    Meteor.call("addTags", this._id, tagStr, function () {
       template.isEditing.set(false);
       $(".taglet.new").remove();
     });

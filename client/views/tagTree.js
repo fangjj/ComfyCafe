@@ -16,6 +16,10 @@ Template.tagTree.helpers({
 	}
 });
 
+var removeNewTags = function () {
+  $(".taglet.new").remove();
+};
+
 Template.tagTree.events({
   "click .addTag": function (event, template) {
     $(event.currentTarget).after('<a class="taglet adj new" data-placeholder="new" contenteditable></a>');
@@ -26,9 +30,11 @@ Template.tagTree.events({
   "click .submit": function (event, template) {
     Meteor.call("addTags", this._id, tagTreeToStr(template), function () {
       template.isEditing.set(false);
+      $(".taglet.new").remove();
     });
   },
   "click .cancel": function (event, template) {
     template.isEditing.set(false);
+    $(".taglet.new").remove();
   }
 });

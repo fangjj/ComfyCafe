@@ -9,9 +9,9 @@
 								<a class="taglet adj addAdj" title="Add adjective"><i class="material-icons">add</i></a>
 							{{/if}}
 							{{#each adjectives}}
-								<a class="taglet adj" href="/q/?search={{name}}+{{../name}}" title="{{definition}}" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
+								<a class="taglet adj" href="/q/{{name}}+{{../name}}" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
 							{{/each}}
-							<a class="taglet noun {{type}}" href="/q/?search={{name}}" title="{{definition}}" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
+							<a class="taglet noun {{type}}" href="/q/{{name}}" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
 							<span class="with">
 								{{#if descriptors}}with{{/if}}
 							</span>
@@ -23,9 +23,9 @@
 										<a class="taglet adj addAdj" title="Add adjective"><i class="material-icons">add</i></a>
 									{{/if}}
 									{{#each adjectives}}
-										<a class="taglet adj" href="/q/?search={{name}}+{{../name}}" title="{{definition}}" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
+										<a class="taglet adj" href="/q/{{name}}+{{../name}}" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
 									{{/each}}
-									<a class="taglet noun {{type}}" href="/q/?search={{name}}" title="{{definition}}" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
+									<a class="taglet noun {{type}}" href="/q/{{name}}" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
 								</li>
 							{{/each}}
 							{{#if isEditing}}

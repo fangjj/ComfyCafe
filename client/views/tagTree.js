@@ -46,10 +46,15 @@ Template.tagTree.events({
     });
     */
   },
+  "click a[contenteditable=true]": function (event, template) {
+    event.preventDefault();
+  },
   "click .submit": function (event, template) {
-    Meteor.call("addTags", this._id, tagTreeToStr(template));
+    Meteor.call("addTags", this._id, tagTreeToStr(template), function () {
+      template.isEditing.set(false);
+    });
   },
   "click .cancel": function (event, template) {
-
+    template.isEditing.set(false);
   }
 });

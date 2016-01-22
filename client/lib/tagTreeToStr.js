@@ -1,27 +1,31 @@
+var tagFromElem = function (elem) {
+  return elem.text().trim().replace(" ", "-");
+};
+
 tagTreeToStr = function (template) {
   var str = "";
 
   var tree = template.$(".tagTree");
-  var subTrees = tree.children("ul").children("li");
+  var subTrees = tree.find("ul > li > .root");
   subTrees.each(function () {
     var subTree = $(this);
 
     var first = true;
 
     var rootNoun = subTree.children(".noun");
-    var rootAdjectives = subTree.children(".adj");
+    var rootAdjectives = subTree.children(".adj:not(.addTag)");
 
     rootAdjectives.each(function () {
-      str += $(this).text() + " ";
+      str += tagFromElem($(this)) + " ";
     });
-    str += rootNoun.text();
+    str += tagFromElem(rootNoun);
 
-    var descriptors = subTree.children("ul").children("li");
+    var descriptors = subTree.parent().find("ul > li.descriptor");
     descriptors.each(function () {
       var descriptor = $(this);
 
       var noun = descriptor.children(".noun");
-      var adjectives = descriptor.children(".adj");
+      var adjectives = descriptor.children(".adj:not(.addTag)");
 
       if (first) {
         str += " with ";
@@ -30,9 +34,9 @@ tagTreeToStr = function (template) {
         str += " and ";
       }
       adjectives.each(function () {
-        str += $(this).text() + " ";
+        str += tagFromElem($(this)) + " ";
       });
-      str += noun.text();
+      str += tagFromElem(noun);
     });
 
     str += ";";

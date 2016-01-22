@@ -4,10 +4,9 @@
 			<ul>
 				{{#each humanizedTags.nouns}}
 					<li>
-						<i class="addTag material-icons left">add_circle</i>
-						<span class="toplevel">
+						<span class="root">
 							{{#if isEditing}}
-								<a class="taglet adj new" contenteditable>new</a>
+								<a class="taglet adj addTag"><i class="material-icons">add</i></a>
 							{{/if}}
 							{{#each adjectives}}
 								<a class="taglet adj" href="/q/?search={{name}}+{{../name}}" title="{{definition}}" contenteditable="{{isEditing}}">{{name}}</a>
@@ -19,7 +18,7 @@
 						</span>
 						<ul>
 							{{#each descriptors}}
-								<li>
+								<li class="descriptor">
 									{{#each adjectives}}
 										<a class="taglet adj" href="/q/?search={{name}}+{{../name}}" title="{{definition}}" contenteditable="{{isEditing}}">{{name}}</a>
 									{{/each}}

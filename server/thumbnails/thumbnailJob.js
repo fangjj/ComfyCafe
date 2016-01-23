@@ -76,21 +76,23 @@ var addedFileJob = function (file) {
 };
 
 var removedFileJob = function (file) {
-  if (file.metadata && file.metadata._Jobs) {
-    var job = jobs.findOne(
-      {
-        _id: { $in: file.metadata._Jobs },
-        status: { $in: jobs.jobStatusCancellable }
-      },
-      { fields: { log: 0 } }
-    );
+  if (file.metadata) {
+    _.each(file.metadata._Jobs, function (jobId) {
+      var job = jobs.findOne(
+        {
+          _id: jobId,
+          status: { $in: jobs.jobStatusCancellable }
+        },
+        { fields: { log: 0 } }
+      );
 
-    if (job) {
-      console.log("Cancelling the job for the removed file!", job._id);
-      job.cancel(function (err, res) {
-        return media.remove({ _id: { $in: _.values(job.data.thumbnails) } });
-      });
-    }
+      if (job) {
+        console.log("Cancelling the job for the removed file!", job._id);
+        job.cancel(function (err, res) {
+          return media.remove({ _id: { $in: _.values(job.data.thumbnails) } });
+        });
+      }
+    });
   }
 
   if (file.metadata && file.metadata.thumbnails) {

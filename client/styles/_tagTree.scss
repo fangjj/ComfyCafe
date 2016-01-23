@@ -1,0 +1,119 @@
+$tag-bg: #CFF7FF;
+$tag-bg-adj: #E2FFDB;
+$tag-bg-character: #EBE4FF;
+$tag-bg-meta: #FFFEE4;
+$tag-bg-dangerous: #FFDCE7;
+
+.taglet {
+	@include tag($tag-bg);
+
+	&.noun, &.generic {
+		@include tag($tag-bg);
+	}
+
+	&.adj {
+		@include tag($tag-bg-adj);
+	}
+
+	&.character {
+		@include tag($tag-bg-character);
+	}
+
+	&.meta {
+		@include tag($tag-bg-meta);
+	}
+
+	&.dangerous {
+		@include tag($tag-bg-dangerous);
+	}
+}
+
+.tagTree {
+	margin-left: 32px;
+	margin-right: 12px;
+
+  font-size: 20px;
+  line-height: 36px;
+
+	.addNoun, .addRootNoun {
+		padding-left: 3px;
+		padding-right: 3px;
+		&:hover {
+			padding-left: 2px;
+			padding-right: 2px;
+		}
+
+		opacity: 0.8;
+
+		cursor: pointer;
+
+		i {
+			text-align: center;
+			line-height: 26px;
+		}
+	}
+
+	.taglet:empty {
+		&.meta {
+			min-width: 51px;
+		}
+
+		&.adj {
+			min-width: 90px;
+		}
+
+		&.noun {
+			min-width: 50px;
+		}
+	}
+
+	.metaRow {
+		margin-top: 12px;
+	}
+
+	> ul {
+		display: flex;
+	  align-items: top;
+	  align-content: left;
+	  flex-wrap: wrap;
+
+		margin-top: 12px;
+		margin-bottom: 0;
+
+		> li {
+			position: relative;
+
+			vertical-align: top;
+
+			margin-right: 16px;
+			margin-bottom: 18px;
+
+			padding-left: 9px;
+
+			border-left: 1px solid rgba($text-color, 0.7);
+		}
+
+		.root, .descriptor {
+			display: flex;
+			flex-direction: row;
+			justify-content: left;
+			align-content: center;
+
+			height: 36px;
+		}
+
+		.with {
+			position: absolute;
+
+			margin-left: 2px;
+		}
+
+		ul {
+			margin-left: 32px;
+		}
+	}
+
+	.formActions {
+		margin-bottom: 12px;
+	}
+}

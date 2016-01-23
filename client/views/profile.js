@@ -43,6 +43,11 @@ Template.profile.helpers({
 	},
 	isChangingAvatar: function () {
 		return Template.instance().isChangingAvatar.get();
+	},
+	subscribed: function () {
+		if (Meteor.userId()) {
+			return _.contains(Meteor.user().profile.subscriptions, this._id);
+		}
 	}
 });
 
@@ -71,6 +76,9 @@ var addToCropzone = function (event, template) {
 };
 
 Template.profile.events({
+	"click .toggleSubscription": function (event, template) {
+    Meteor.call("toggleSubscription", this._id);
+  },
 	"click .toggleChangeAvatar": function (event, template) {
 		Template.instance().isChangingAvatar.set(! Template.instance().isChangingAvatar.get());
 	},

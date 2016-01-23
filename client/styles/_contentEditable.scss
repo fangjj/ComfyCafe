@@ -1,0 +1,6 @@
+@mixin contentEditable($color) {
+  &[contentEditable]:empty:not(:focus):before {
+    content: attr(data-placeholder);
+    color: $color;
+  }
+}

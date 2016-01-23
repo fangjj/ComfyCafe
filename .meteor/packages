@@ -9,7 +9,6 @@ useraccounts:materialize
 useraccounts:iron-routing
 jagi:astronomy
 jagi:astronomy-validators
-standard-minifiers
 jaywon:meteor-node-uuid
 reactive-var
 vsivsi:file-collection
@@ -22,3 +21,5 @@ jonblum:jquery-cropper
 jparker:crypto-sha256
 momentjs:moment
 force-ssl
+seba:minifiers-autoprefixer
+risul:jsondiffpatch

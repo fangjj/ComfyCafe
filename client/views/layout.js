@@ -26,8 +26,11 @@ mediaUpload = function (self, file) {
             liveQuery.stop();
             self.isUploading.set(false);
             self.progress.set(0);
-            Meteor.call("addPost", file.uniqueIdentifier, function (err, name) {
-              Router.go("post.view", { name: name });
+            Meteor.call("addPost", {
+              mediumId: file.uniqueIdentifier,
+              tags: "tagme"
+            }, function (err, name) {
+              Router.go("post", { name: name });
             });
           }
         }

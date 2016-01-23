@@ -7,16 +7,22 @@ $sg-color: #333333;
 $fg-color: #211E1E;
 $bg-color: #282323;
 
-$elements: content, grid-items, accountActions, accountActionsArrow, viewer-overlay, viewer;
+$muted-light: rgba($text-color, 0.7);
+$muted-dark: rgba($sg-color, 0.6);
+
+$elements: content, grid-items, searchInactive, logo, search, searchButtons, accountActions, accountActionsArrow, viewer-overlay, viewer;
 
 @import "_accountActions.scss";
 @import "_avatars.scss";
+@import "_contentEditable.scss";
 @import "_invites.scss";
 @import "_loading.scss";
 @import "_login.scss";
 @import "_notifications.scss";
 @import "_posts.scss";
 @import "_settings.scss";
+@import "_subscribe.scss";
+@import "_tagTree.scss";
 @import "_topBar.scss";
 
 html {
@@ -26,6 +32,7 @@ html {
 
 body {
   @include vanillaLinks;
+  @include contentEditable($muted-light);
 
   margin-top: 64px;
   margin-bottom: 64px;
@@ -69,6 +76,10 @@ main {
   height: 7px;
 }
 
+.material-tooltip {
+  font-size: 19px;
+}
+
 .dropzone, .cropzone {
   position: relative;
 
@@ -96,6 +107,10 @@ main {
     opacity: 0;
     cursor: pointer;
   }
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px $fg-color inset;
 }
 
 .cropzone {

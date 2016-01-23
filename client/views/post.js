@@ -65,13 +65,13 @@ Template.post.events({
   "click #fabPrivate": setPrivacy(true),
   "click #fabReroll": function (event, template) {
     Meteor.call("rerollPost", this._id, function (err, name) {
-      Router.go("post.view", {name: name});
+      Router.go("post", {name: name});
     });
   },
   "click #fabDelete": function (event, template) {
     var self = this;
     Meteor.call("deletePost", this._id, function () {
-      Router.go("post.list");
+      Router.go("feed");
     });
   }
 });

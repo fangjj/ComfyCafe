@@ -35,7 +35,7 @@ $tag-bg-dangerous: #FFDCE7;
   font-size: 20px;
   line-height: 36px;
 
-	.addAdj, .addNoun, .addRootNoun {
+	.addNoun, .addRootNoun {
 		padding-left: 3px;
 		padding-right: 3px;
 		&:hover {
@@ -48,21 +48,27 @@ $tag-bg-dangerous: #FFDCE7;
 		cursor: pointer;
 
 		i {
-			//color: $muted-dark;
-
 			text-align: center;
 			line-height: 26px;
 		}
 	}
 
-	.taglet.new:empty {
+	.taglet:empty {
+		&.meta {
+			min-width: 51px;
+		}
+
 		&.adj {
-			min-width: 34px;
+			min-width: 90px;
 		}
 
 		&.noun {
 			min-width: 50px;
 		}
+	}
+
+	.metaRow {
+		margin-top: 12px;
 	}
 
 	> ul {
@@ -79,15 +85,12 @@ $tag-bg-dangerous: #FFDCE7;
 
 			vertical-align: top;
 
+			margin-right: 16px;
 			margin-bottom: 18px;
 
-			&:not(.meta) {
-				margin-right: 16px;
+			padding-left: 9px;
 
-				padding-left: 9px;
-
-				border-left: 1px solid rgba($text-color, 0.7);
-			}
+			border-left: 1px solid rgba($text-color, 0.7);
 		}
 
 		.root, .descriptor {

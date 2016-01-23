@@ -1,28 +1,31 @@
 <template name="tagTree">
 	{{#if tags.text}}
 		<div class="tagTree">
+			{{#if isEditing}}
+				<div class="metaRow">
+					<a class="taglet meta" data-placeholder="meta" contenteditable="{{isEditing}}">{{#each meta}}{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}{{/each}}</a>
+				</div>
+			{{/if}}
 			<ul>
 				{{#each humanizedTags.nouns}}
 					<li>
-						<span class="root">
-							{{#if isEditing}}
-								<a class="taglet adj addAdj" title="Add adjective"><i class="material-icons">add</i></a>
-							{{/if}}
-							{{#each adjectives}}
-								<a class="taglet adj" href="/q/{{name}}+{{../name}}" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
-							{{/each}}
-							<a class="taglet noun {{type}}" href="/q/{{name}}" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
-						</span>
+						<div class="root">
+							<a class="taglet adj" data-placeholder="adjectives" contenteditable="{{isEditing}}">
+								{{#each adjectives}}
+									{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}
+								{{/each}}
+							</a>
+							<a class="taglet noun {{type}}" href="/q/{{name}}" data-placeholder="noun" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
+						</div>
 						<ul>
 							{{#each descriptors}}
 								<li class="descriptor">
-									{{#if isEditing}}
-										<a class="taglet adj addAdj" title="Add adjective"><i class="material-icons">add</i></a>
-									{{/if}}
-									{{#each adjectives}}
-										<a class="taglet adj" href="/q/{{name}}+{{../name}}" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
-									{{/each}}
-									<a class="taglet noun {{type}}" href="/q/{{name}}" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
+									<a class="taglet adj" data-placeholder="adjectives" contenteditable="{{isEditing}}">
+										{{#each adjectives}}
+											{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}
+										{{/each}}
+									</a>
+									<a class="taglet noun {{type}}" href="/q/{{name}}" data-placeholder="noun" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
 								</li>
 							{{/each}}
 							{{#if isEditing}}

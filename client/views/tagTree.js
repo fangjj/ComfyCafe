@@ -16,16 +16,12 @@ Template.tagTree.events({
   "click .ediTags": function (event, template) {
     template.isEditing.set(true);
   },
-  "click .addAdj": function (event, template) {
-    $(event.currentTarget).after('<a class="taglet adj new" data-placeholder="adj" contenteditable></a>');
-  },
   "click .addNoun": function (event, template) {
     // Remember when logic and views were truly separate?
     // Because I don't.
     $(event.currentTarget).parent().before('' +
       '<li class="descriptor new">' +
-        '<a class="taglet adj addAdj dynamic" title="Add adjective"><i class="material-icons">add</i></a>' +
-        '<a class="taglet adj new" data-placeholder="adj" contenteditable></a>' +
+        '<a class="taglet adj new" data-placeholder="adjectives" contenteditable></a>' +
         '<a class="taglet noun new" data-placeholder="noun" contenteditable></a>' +
       '</li>'
     );
@@ -35,8 +31,7 @@ Template.tagTree.events({
     $(event.currentTarget).parent().parent().before('' +
       '<li class="new">' +
         '<span class="root">' +
-          '<a class="taglet adj addAdj dynamic" title="Add adjective"><i class="material-icons">add</i></a>' +
-          '<a class="taglet adj new" data-placeholder="adj" contenteditable></a>' +
+          '<a class="taglet adj new" data-placeholder="adjectives" contenteditable></a>' +
           '<a class="taglet noun new" data-placeholder="noun" contenteditable></a>' +
         '</span>' +
         '<ul>' +

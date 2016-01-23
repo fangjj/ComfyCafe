@@ -1,5 +1,5 @@
 var tagFromElem = function (elem) {
-  return elem.text().trim().replace(" ", "-");
+  return elem.text().trim().replace(/\s+/g, " ");
 };
 
 tagTreeToStr = function (template) {

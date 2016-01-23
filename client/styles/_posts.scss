@@ -49,3 +49,42 @@ ul.posts {
     }
   }
 }
+
+.tags {
+  @extend .z-depth-1;
+
+  margin: 0 auto;
+  margin-top: 24px;
+
+  padding: 16px;
+
+  width: 85%;
+
+  background: $fg-color;
+
+  .info {
+    margin-left: 16px;
+
+    font-size: 20px;
+
+    .btn {
+      margin-top: 6px;
+
+      width: 217px;
+
+      .hover {
+        display: none;
+      }
+
+      &:hover {
+        .hover {
+          display: inline-block;
+        }
+
+        .nothover {
+          display: none;
+        }
+      }
+    }
+  }
+}

@@ -66,20 +66,23 @@ $tag-bg-dangerous: #FFDCE7;
 	}
 
 	> ul {
+		display: flex;
+	  align-items: top;
+	  align-content: left;
+	  flex-wrap: wrap;
+
 		margin-top: 12px;
-		margin-bottom: 12px;
+		margin-bottom: 0;
 
 		> li {
 			position: relative;
 
 			vertical-align: top;
 
-			&:first-child {
-				padding-top: 4px;
-			}
+			margin-bottom: 18px;
 
 			&:not(.meta) {
-				margin-right: 9px;
+				margin-right: 16px;
 
 				padding-left: 9px;
 

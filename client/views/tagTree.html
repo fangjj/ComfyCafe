@@ -1,11 +1,6 @@
 <template name="tagTree">
 	{{#if tags.text}}
 		<div class="tagTree">
-			{{#if isEditing}}
-				<div class="metaRow">
-					<a class="taglet meta" data-placeholder="meta" contenteditable="{{isEditing}}">{{#each meta}}{{#if isEditing}}{{name}} {{else}}{{name}} {{/if}}{{/each}}</a>
-				</div>
-			{{/if}}
 			<ul>
 				{{#each humanizedTags.nouns}}
 					<li>

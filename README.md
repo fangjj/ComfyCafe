@@ -2,7 +2,7 @@
 
 WARNING: All users are assumed to be trusted. This will change soon.
 
-![](https://teru.sexy/gridfs/media/c121a4a8d5b9248786c8b4bf8425b44a)
+![](https://teru.sexy/gridfs/media/3813abeb67df38a94a8d29e5a84922a0)
 
 New exciting dependencies:
 - libvips 8.0.0+

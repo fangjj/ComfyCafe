@@ -3,28 +3,24 @@
 		<div class="tagTree">
 			{{#if isEditing}}
 				<div class="metaRow">
-					<a class="taglet meta" data-placeholder="meta" contenteditable="{{isEditing}}">{{#each meta}}{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}{{/each}}</a>
+					<a class="taglet meta" data-placeholder="meta" contenteditable="{{isEditing}}">{{#each meta}}{{#if isEditing}}{{name}} {{else}}{{name}} {{/if}}{{/each}}</a>
 				</div>
 			{{/if}}
 			<ul>
 				{{#each humanizedTags.nouns}}
 					<li>
 						<div class="root">
-							<a class="taglet adj" data-placeholder="adjectives" contenteditable="{{isEditing}}">
-								{{#each adjectives}}
-									{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}
-								{{/each}}
-							</a>
+							{{#if showAdjectives adjectives}}
+								<a class="taglet adj" data-placeholder="adjectives" contenteditable="{{isEditing}}">{{#each adjectives}}{{#if isEditing}}{{name}} {{else}}{{name}} {{/if}}{{/each}}</a>
+							{{/if}}
 							<a class="taglet noun {{type}}" href="/q/{{name}}" data-placeholder="noun" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
 						</div>
 						<ul>
 							{{#each descriptors}}
 								<li class="descriptor">
-									<a class="taglet adj" data-placeholder="adjectives" contenteditable="{{isEditing}}">
-										{{#each adjectives}}
-											{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}
-										{{/each}}
-									</a>
+									{{#if showAdjectives adjectives}}
+										<a class="taglet adj" data-placeholder="adjectives" contenteditable="{{isEditing}}">{{#each adjectives}}{{#if isEditing}}{{name}} {{else}}{{name}} {{/if}}{{/each}}</a>
+									{{/if}}
 									<a class="taglet noun {{type}}" href="/q/{{name}}" data-placeholder="noun" contenteditable="{{isEditing}}">{{#if isEditing}}{{name}}{{else}}{{name}}{{/if}}</a>
 								</li>
 							{{/each}}
@@ -55,7 +51,7 @@
 						Save
 					</a>
 				{{else}}
-					<a class="ediTags waves-effect waves-light btn pink lighten-2">
+					<a class="editTags waves-effect waves-light btn pink lighten-2">
 						<i class="material-icons left">loyalty</i>
 						Edit Tags
 					</a>

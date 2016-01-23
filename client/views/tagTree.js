@@ -5,7 +5,10 @@ Template.tagTree.onCreated(function () {
 Template.tagTree.helpers({
   isEditing: function () {
 		return Template.instance().isEditing.get();
-	}
+	},
+  showAdjectives: function (adjs) {
+    return ! _.isEmpty(adjs) || Template.instance().isEditing.get();
+  }
 });
 
 var removeNewTags = function (template) {
@@ -13,7 +16,7 @@ var removeNewTags = function (template) {
 };
 
 Template.tagTree.events({
-  "click .ediTags": function (event, template) {
+  "click .editTags": function (event, template) {
     template.isEditing.set(true);
   },
   "click .addNoun": function (event, template) {

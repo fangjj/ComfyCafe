@@ -7,13 +7,10 @@ raix:ui-dropped-event
 meteorhacks:fast-render
 useraccounts:materialize
 useraccounts:iron-routing
-jagi:astronomy
-jagi:astronomy-validators
 jaywon:meteor-node-uuid
 reactive-var
 vsivsi:file-collection
 benjaminrh:jquery-cookie
-jagi:astronomy-timestamp-behavior
 vsivsi:job-collection
 meteorhacks:npm
 npm-container

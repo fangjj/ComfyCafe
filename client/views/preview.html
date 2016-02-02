@@ -1,6 +1,6 @@
 <template name="preview">
   <li>
-    <a href="{{pathFor route='post' name=name}}">
+    <a href="{{pathFor route='post' postId=_id}}">
       <div class="thumbnailContainer">
         {{#unless thumbTerminated}}
           {{#with thumbnail}}
@@ -23,9 +23,6 @@
             <i class="material-icons large">image</i>
           </div>
         {{/unless}}
-      </div>
-      <div class="label">
-        {{name}}
       </div>
     </a>
   </li>

@@ -1,7 +1,7 @@
-Meteor.publish("post", function (name) {
-	check(name, String);
+Meteor.publish("post", function (postId) {
+	check(postId, String);
 	//Meteor._sleepForMs(2000);
-	return Posts.find({ name: name });
+	return Posts.find({ _id: postId });
 });
 
 Meteor.publish("allPosts", function () {

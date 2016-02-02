@@ -8,7 +8,9 @@ generateDjenticon = function (userId, sassyHash) {
     filename: "djenticon.svg",
     contentType: "image/svg+xml",
     metadata: {
-      owner: userId
+      owner: userId,
+      avatarFor: userId,
+      djenticon: true
     }
   }, function (err, file) {
     Meteor.users.update(

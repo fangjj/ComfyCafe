@@ -4,7 +4,7 @@
 			<h2>{{username}}</h2>
 		</header>
 		{{#unless isOwner}}
-			{{> avatar class="large" id=_id profile=profile title=username}}
+			{{> reactiveAvatar class="large" profile=profile title=username}}
 			<div class="toolbox">
 				{{#unless subscribed}}
 					<a class="toggleSubscription waves-effect waves-light btn">
@@ -22,7 +22,7 @@
 			</div>
 		{{else}}
 			{{#unless isChangingAvatar}}
-				{{> avatar class="large" id=_id profile=profile title=username}}
+				{{> reactiveAvatar class="large" profile=profile title=username}}
 				<div class="toolbox">
 					<a class="toggleChangeAvatar waves-effect waves-light btn">
 						<i class="material-icons left">image</i>

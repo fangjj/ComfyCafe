@@ -29,8 +29,8 @@ mediaUpload = function (self, file) {
             Meteor.call("addPost", {
               mediumId: file.uniqueIdentifier,
               tags: "tagme"
-            }, function (err, name) {
-              Router.go("post", { name: name });
+            }, function (err, postId) {
+              Router.go("post", { postId: postId });
             });
           }
         }

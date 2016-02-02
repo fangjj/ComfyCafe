@@ -4,7 +4,7 @@
       <div class="thumbnailContainer">
         {{#unless thumbTerminated}}
           {{#with thumbnail}}
-            <img class="thumbnail" src="/gridfs/media/{{md5}}">
+            <img class="thumbnail" src="/gridfs/media/post/{{../_id}}?thumb=list">
           {{else}}
             <div class="preloader-wrapper big active">
               <div class="spinner-layer spinner-blue-only">

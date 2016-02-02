@@ -3,6 +3,9 @@ Accounts.onCreateUser(function (options, user) {
     user.profile = options.profile;
     user.profile.sassyHash = CryptoJS.SHA256(user.emails[0].address).toString();
     user.profile.privateByDefault = true;
+
+    // Generate default avatar.
+    generateDjenticon(user._id, user.profile.sassyHash);
   }
   return user;
 });

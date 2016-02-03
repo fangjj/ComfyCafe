@@ -19,7 +19,7 @@ Template.post.helpers({
   },
   subscribed: function () {
     if (Meteor.userId()) {
-      return _.contains(Meteor.user().profile.subscriptions, this.uploader._id);
+      return _.contains(Meteor.user().subscriptions, this.uploader._id);
     }
   },
   showInfoBox: function () {

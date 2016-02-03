@@ -16,13 +16,11 @@ Meteor.publish("yourPosts", function () {
 
 Meteor.publish("postFeed", function () {
 	this.autorun(function (computation) {
-		var user = Meteor.users.findOne(this.userId, {
-			"profile.subscriptions": true
-		});
+		var user = Meteor.users.findOne(this.userId, { subscriptions: true });
 		return Posts.find(
 			{ $or: [
 				{ "uploader._id": this.userId },
-				{ "uploader._id": { $in: user && user.profile.subscriptions || [] } }
+				{ "uploader._id": { $in: user && user.subscriptions || [] } }
 			] }
 		);
 	});

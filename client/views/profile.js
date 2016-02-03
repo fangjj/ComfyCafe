@@ -46,7 +46,7 @@ Template.profile.helpers({
 	},
 	subscribed: function () {
 		if (Meteor.userId()) {
-			return _.contains(Meteor.user().profile.subscriptions, this._id);
+			return _.contains(Meteor.user().subscriptions, this._id);
 		}
 	}
 });

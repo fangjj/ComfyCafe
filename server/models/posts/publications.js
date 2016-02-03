@@ -6,7 +6,7 @@ Meteor.publish("post", function (postId) {
 
 Meteor.publish("allPosts", function () {
 	//Meteor._sleepForMs(2000);
-	return Posts.find({ private: false });
+	return Posts.find();
 });
 
 Meteor.publish("yourPosts", function () {
@@ -19,10 +19,7 @@ Meteor.publish("postFeed", function (currentUser) {
 		return Posts.find(
 			{ $or: [
 				{ "uploader._id": this.userId },
-				{
-					"uploader.profile.subscribers": this.userId,
-					private: false
-				}
+				{ "uploader.profile.subscribers": this.userId }
 			] }
 		);
 	}

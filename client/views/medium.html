@@ -1,0 +1,15 @@
+<template name="medium">
+  {{#if isImage}}
+    <img src="/gridfs/media/{{md5}}">
+  {{/if}}
+  {{#if isVideo}}
+    <video id="video{{_id}}" src="/gridfs/media/{{md5}}" controls>
+      <source src="/gridfs/media/{{md5}}" type="{{type}}">
+    </video>
+  {{/if}}
+  {{#if isAudio}}
+    <audio id="audio{{_id}}" src="/gridfs/media/{{md5}}" controls>
+      <source src="/gridfs/media/{{md5}}" type="{{type}}">
+    </audio>
+  {{/if}}
+</template>

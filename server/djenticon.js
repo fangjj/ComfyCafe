@@ -1,8 +1,8 @@
 var jdenticon = Meteor.npmRequire("jdenticon");
 
-generateDjenticon = function (userId, sassyHash) {
+generateDjenticon = function (userId, hash) {
   var size = thumbnailPolicies.avatar.large.size[0];
-  var djent = jdenticon.toSvg(sassyHash, size);
+  var djent = jdenticon.toSvg(hash, size);
 
   var djentStream = media.upsertStream({
     filename: "djenticon.svg",

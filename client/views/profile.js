@@ -39,7 +39,7 @@ Template.profile.helpers({
     return this._id === Meteor.userId();
 	},
 	hasAvatar: function () {
-		return _.has(this.profile, "avatar");
+		return _.has(this, "avatar");
 	},
 	isChangingAvatar: function () {
 		return Template.instance().isChangingAvatar.get();

@@ -3,6 +3,10 @@ Meteor.publish("user", function (username) {
 	//Meteor._sleepForMs(2000);
 	return Meteor.users.find(
 		{ username: username },
-		{ username: true, profile: true }
+		{
+			username: true,
+			profile: true,
+			avatars: true
+		}
 	);
 });

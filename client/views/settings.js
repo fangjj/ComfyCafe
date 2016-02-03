@@ -1,6 +1,6 @@
 Template.settings.helpers({
-	privateByDefaultChecked: function () {
-    if (! Meteor.user().profile.privateByDefault) {
+	dummyChecked: function () {
+    if (! Meteor.user().profile.dummy) {
       return "checked";
     }
 	}
@@ -9,7 +9,7 @@ Template.settings.helpers({
 Template.settings.events({
 	"click .submit": function (event, template) {
 		Meteor.call("applySettings", {
-      privateByDefault: ! template.$("input[name=privateByDefault]").is(":checked")
+      dummy: ! template.$("input[name=dummy]").is(":checked")
     }, function () {
       Router.go("profile", {username: Meteor.user().username});
     });

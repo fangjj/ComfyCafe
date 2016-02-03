@@ -16,7 +16,7 @@ generateDjenticon = function (userId, hash) {
     Meteor.users.update(
       { _id: userId },
       { $set: {
-        "profile.defaultAvatar": file._id
+        defaultAvatar: file._id
       } }
     );
   });

@@ -42,18 +42,6 @@ Template.post.helpers({
   }
 });
 
-var setPrivacy = function (state) {
-  return function (event, template) {
-    Meteor.call("setPostVisibility", {
-      postId: this._id,
-      private: state
-    }, function () {
-      $(".tooltipped").tooltip("remove");
-      $(".tooltipped").tooltip({delay: 50});
-    });
-  };
-};
-
 Template.post.events({
   "click .toggleSubscription": function (event, template) {
     Meteor.call("toggleSubscription", this.uploader._id);
@@ -61,8 +49,6 @@ Template.post.events({
   "click #fabFavorite": function (event, template) {
     Meteor.call("favoritePost", this._id, ! _.contains(this.favorited, Meteor.userId()));
   },
-  "click #fabPublic": setPrivacy(false),
-  "click #fabPrivate": setPrivacy(true),
   "click #fabDelete": function (event, template) {
     var self = this;
     Meteor.call("deletePost", this._id, function () {

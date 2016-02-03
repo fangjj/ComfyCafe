@@ -4,7 +4,6 @@ fourseven:scss
 accounts-password
 ongoworks:security
 raix:ui-dropped-event
-meteorhacks:fast-render
 useraccounts:materialize
 useraccounts:iron-routing
 jaywon:meteor-node-uuid
@@ -20,3 +19,4 @@ momentjs:moment
 force-ssl
 seba:minifiers-autoprefixer
 risul:jsondiffpatch
+peerlibrary:reactive-publish

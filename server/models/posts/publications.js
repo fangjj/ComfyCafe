@@ -14,15 +14,18 @@ Meteor.publish("yourPosts", function () {
 	return Posts.find({ "uploader._id": this.userId });
 });
 
-Meteor.publish("postFeed", function (currentUser) {
-	if (this.userId) {
+Meteor.publish("postFeed", function () {
+	this.autorun(function (computation) {
+		var user = Meteor.users.findOne(this.userId, {
+			"profile.subscriptions": true
+		});
 		return Posts.find(
 			{ $or: [
 				{ "uploader._id": this.userId },
-				{ "uploader.profile.subscribers": this.userId }
+				{ "uploader._id": { $in: user && user.profile.subscriptions || [] } }
 			] }
 		);
-	}
+	});
 });
 
 Meteor.publish("favorites", function () {

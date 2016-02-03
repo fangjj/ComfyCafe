@@ -16,7 +16,7 @@ Meteor.publish("yourPosts", function () {
 
 Meteor.publish("postFeed", function () {
 	this.autorun(function (computation) {
-		var user = Meteor.users.findOne(this.userId, { subscriptions: true });
+		var user = Meteor.users.findOne(this.userId, { fields: { subscriptions: 1 } });
 		return Posts.find(
 			{ $or: [
 				{ "uploader._id": this.userId },

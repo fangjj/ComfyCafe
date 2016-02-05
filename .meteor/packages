@@ -20,3 +20,5 @@ force-ssl
 seba:minifiers-autoprefixer
 risul:jsondiffpatch
 peerlibrary:reactive-publish
+teru:invites
+teru:utility

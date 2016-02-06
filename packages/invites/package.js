@@ -17,6 +17,7 @@ Package.onUse(function(api) {
     "ecmascript",
     "mongo",
     "iron:router",
+    "jaywon:meteor-node-uuid",
     "teru:utility"
   ], ["client", "server"]);
 

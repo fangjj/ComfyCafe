@@ -22,6 +22,7 @@ Package.onUse(function(api) {
   api.use([
     "ecmascript",
     "mongo",
+    "vsivsi:job-collection",
     "teru:media",
     "teru:jobs"
   ], ["server"]);

@@ -6,11 +6,9 @@ ongoworks:security
 raix:ui-dropped-event
 useraccounts:materialize
 useraccounts:iron-routing
-jaywon:meteor-node-uuid
 reactive-var
 vsivsi:file-collection
 benjaminrh:jquery-cookie
-vsivsi:job-collection
 meteorhacks:npm
 npm-container
 jonblum:jquery-cropper
@@ -18,7 +16,6 @@ jparker:crypto-sha256
 momentjs:moment
 force-ssl
 seba:minifiers-autoprefixer
-risul:jsondiffpatch
 peerlibrary:reactive-publish
 teru:invites
 teru:utility

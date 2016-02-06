@@ -21,12 +21,21 @@ media = new FileCollection("media",
         }
       },
       { method: "get",
+        path: "/id/:id",
+        lookup: lookupGenerator(function (params, query) {
+          return { $or: [
+            { _id: new Mongo.ObjectID(params.id) },
+            { "metadata.thumbOf": new Mongo.ObjectID(params.id) }
+          ] };
+        })
+      },
+      { method: "get",
         path: "/user/:userId",
         lookup: function (params, query) {
           var doc = lookupGenerator(function () {
             return {};
           })(params, query);
-          
+
           return {
             "metadata.avatarFor": params.userId,
             $or: [

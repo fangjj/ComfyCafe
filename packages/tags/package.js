@@ -26,6 +26,10 @@ Package.onUse(function(api) {
     "lib/urlify.js"
   ], ["client", "server"]);
 
+  api.addFiles([
+    "client/lib/tagTreeToStr.js"
+  ], ["client"]);
+
   api.export([
     "parseTagStr",
     "getDefaultTagObj",
@@ -35,6 +39,10 @@ Package.onUse(function(api) {
     "tagStrToUrl",
     "tagStrFromUrl"
   ], ["client", "server"]);
+
+  api.export([
+    "tagTreeToStr",
+  ], ["client"]);
 });
 
 Package.onTest(function(api) {

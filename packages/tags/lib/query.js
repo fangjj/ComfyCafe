@@ -140,7 +140,7 @@ queryTags = function (tagStr) {
   console.log("================== TAGS ====================================");
   prettyPrint(tagObj);
 
-  var queryDoc = { private: false };
+  var queryDoc = {};
 
   authorQuery = {};
   if (tagObj.authors) {

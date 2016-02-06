@@ -17,18 +17,20 @@ Package.onUse(function(api) {
 
   api.addFiles([
     "lib/prettyPrint.js",
-    "lib/setTitle.js"
+    "lib/setTitle.js",
+    "lib/slice.js"
   ], ["client", "server"]);
 
   api.export([
     "prettyPrint",
-    "setTitle"
+    "setTitle",
+    "slice"
   ], ["client", "server"]);
 });
 
 Package.onTest(function(api) {
   api.use("ecmascript");
   api.use("tinytest");
-  api.use("teru:common");
+  api.use("teru:utility");
   api.addFiles("common-tests.js");
 });

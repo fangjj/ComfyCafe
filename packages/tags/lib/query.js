@@ -123,53 +123,55 @@ var queryGenerator = function (queryDoc, coll, positive) {
   });
 };
 
-queryTags = function (tagStr) {
-  // Parse tagStr if it isn't already parsed.
-  var tagObj;
-  if (typeof tagStr === "object") {
-    tagObj = tagStr;
-  } else {
-    tagObj = parseTagStr(tagStr);
-  }
+queryTagsGenerator = function (coll) {
+  return function (tagStr) {
+    // Parse tagStr if it isn't already parsed.
+    var tagObj;
+    if (typeof tagStr === "object") {
+      tagObj = tagStr;
+    } else {
+      tagObj = parseTagStr(tagStr);
+    }
 
-  if (! tagObj) {
-    tagObj = {};
-  }
+    if (! tagObj) {
+      tagObj = {};
+    }
 
-  // So pretty!
-  console.log("================== TAGS ====================================");
-  prettyPrint(tagObj);
+    // So pretty!
+    console.log("================== TAGS ====================================");
+    prettyPrint(tagObj);
 
-  var queryDoc = {};
+    var queryDoc = {};
 
-  authorQuery = {};
-  if (tagObj.authors) {
-    // If we're querying for authors, only return posts with all of those authors.
-    authorQuery.$all = tagObj.authors;
-  }
-  if (tagObj.filteredAuthors) {
-    // If we're excluding some authors, don't return posts with any of those authors.
-    authorQuery.$nin = tagObj.filteredAuthors;
-  }
-  if (! _.isEmpty(authorQuery)) {
-    queryDoc["tags.authors"] = authorQuery;
-  }
+    authorQuery = {};
+    if (tagObj.authors) {
+      // If we're querying for authors, only return posts with all of those authors.
+      authorQuery.$all = tagObj.authors;
+    }
+    if (tagObj.filteredAuthors) {
+      // If we're excluding some authors, don't return posts with any of those authors.
+      authorQuery.$nin = tagObj.filteredAuthors;
+    }
+    if (! _.isEmpty(authorQuery)) {
+      queryDoc["tags.authors"] = authorQuery;
+    }
 
-  // Now we're ready for the meat of the query.
-  // We're passing false, since this is the stuff we don't want to match.
-  queryGenerator(queryDoc, tagObj.filters, false);
-  // This takes true, since we want to match these.
-  queryGenerator(queryDoc, tagObj.nouns, true);
+    // Now we're ready for the meat of the query.
+    // We're passing false, since this is the stuff we don't want to match.
+    queryGenerator(queryDoc, tagObj.filters, false);
+    // This takes true, since we want to match these.
+    queryGenerator(queryDoc, tagObj.nouns, true);
 
-  console.log("================== QUERY ===================================");
-  prettyPrint(queryDoc);
+    console.log("================== QUERY ===================================");
+    prettyPrint(queryDoc);
 
-  var posts = Posts.find(queryDoc, { sort: { createdAt: -1, name: 1 } });
+    var results = coll.find(queryDoc, { sort: { createdAt: -1, name: 1 } });
 
-  console.log("================== RESULTS =================================");
-  prettyPrint(posts.map(function (post) {
-    return post.tags.text;
-  }));
+    console.log("================== RESULTS =================================");
+    prettyPrint(results.map(function (result) {
+      return result.tags.text;
+    }));
 
-  return posts;
+    return results;
+  };
 };

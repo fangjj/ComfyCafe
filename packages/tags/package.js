@@ -31,7 +31,7 @@ Package.onUse(function(api) {
     "getDefaultTagObj",
     "humanizeTags",
     "humanizeTagStr",
-    "queryTags",
+    "queryTagsGenerator",
     "tagStrToUrl",
     "tagStrFromUrl"
   ], ["client", "server"]);

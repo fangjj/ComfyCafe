@@ -11,10 +11,12 @@ Template.settings.events({
 		Meteor.call("applySettings", {
       dummy: ! template.$("input[name=dummy]").is(":checked")
     }, function () {
-      Router.go("profile", {username: Meteor.user().username});
+			var path = FlowRouter.path("profile", {username: Meteor.user().username});
+      FlowRouter.go(path);
     });
 	},
 	"click .cancel": function (event, template) {
-		Router.go("profile", {username: Meteor.user().username});
+		var path = FlowRouter.path("profile", {username: Meteor.user().username});
+		FlowRouter.go(path);
 	}
 });

@@ -30,7 +30,8 @@ mediaUpload = function (self, file) {
               mediumId: file.uniqueIdentifier,
               tags: "tagme"
             }, function (err, postId) {
-              Router.go("post", { postId: postId });
+              var path = FlowRouter.path("post", { postId: postId });
+              FlowRouter.go(path);
             });
           }
         }

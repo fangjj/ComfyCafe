@@ -1,67 +1,76 @@
 <template name="post">
-  <main>
-    <div class="medium">
-      {{#with medium}}
-        {{> medium}}
-      {{else}}
-        <div class="uhoh">
-          404 - Dead Forever
-        </div>
-      {{/with}}
-    </div>
-  </main>
-  {{#if showInfoBox}}
-    <div class="postInfo">
-      <a href="{{pathFor route='profile' username=uploader.username}}">
-        {{> avatar class="small" id=uploader._id profile=uploader.profile title=uploader.username}}
-      </a>
-      <div class="info">
-        by <a href="{{pathFor route='profile' username=uploader.username}}">{{uploader.username}}</a>
-        <time datetime="{{isoDate createdAt}}">{{prettifyDate createdAt}}</time>
-        <br>
-        {{#unless isOwner}}
-          {{#unless subscribed}}
-            <a class="toggleSubscription waves-effect waves-light btn">
-              <i class="material-icons left">add_box</i>
-              Subscribe
-            </a>
-          {{else}}
-            <a class="toggleSubscription waves-effect waves-light btn grey darken-2">
-              <i class="material-icons left nothover">check_box</i>
-              <span class="nothover">Subscribed</span>
-              <i class="material-icons left hover">indeterminate_check_box</i>
-              <span class="hover">Unsubscribe</span>
-            </a>
-          {{/unless}}
-        {{/unless}}
+  {{#if Template.subscriptionsReady}}
+    <main>
+      <div class="medium">
+        {{#with post}}
+          {{#with medium}}
+            {{> medium}}
+          {{/with}}
+        {{else}}
+          <div class="uhoh">
+            404 - Dead Forever
+          </div>
+        {{/with}}
       </div>
-    </div>
+    </main>
+  {{else}}
+    {{> loading}}
+  {{/if}}
 
-    <div class="tags">
-      {{> tagTree}}
-    </div>
-  {{/if}}
-  {{#if showEditButton}}
-    <div id="fabModify" class="fixed-action-btn">
-      <a class="btn-floating btn-large">
-        <i class="large material-icons">mode_edit</i>
-      </a>
-      <ul>
-        <li><a id="fabDelete" class="btn-floating red waves-effect waves-light tooltipped" data-position="left" data-tooltip="Delete {{name}}?"><i class="material-icons">delete</i></a></li>
-      </ul>
-    </div>
-  {{/if}}
-  {{#if showFavoriteButton}}
-    <div id="fabFavorite" class="fixed-action-btn">
-      <a class="btn-floating btn-large">
-        <i class="large material-icons">
-          {{#if favorited}}
-            star
-          {{else}}
-            star_border
-          {{/if}}
-        </i>
-      </a>
-    </div>
-  {{/if}}
+  {{#with post}}
+    {{#if showInfoBox}}
+      <div class="postInfo">
+        <a href="{{pathFor route='profile' username=uploader.username}}">
+          {{> avatar class="small" id=uploader._id profile=uploader.profile title=uploader.username}}
+        </a>
+        <div class="info">
+          by <a href="{{pathFor route='profile' username=uploader.username}}">{{uploader.username}}</a>
+          <time datetime="{{isoDate createdAt}}">{{prettifyDate createdAt}}</time>
+          <br>
+          {{#unless isOwner}}
+            {{#unless subscribed}}
+              <a class="toggleSubscription waves-effect waves-light btn">
+                <i class="material-icons left">add_box</i>
+                Subscribe
+              </a>
+            {{else}}
+              <a class="toggleSubscription waves-effect waves-light btn grey darken-2">
+                <i class="material-icons left nothover">check_box</i>
+                <span class="nothover">Subscribed</span>
+                <i class="material-icons left hover">indeterminate_check_box</i>
+                <span class="hover">Unsubscribe</span>
+              </a>
+            {{/unless}}
+          {{/unless}}
+        </div>
+      </div>
+
+      <div class="tags">
+        {{> tagTree}}
+      </div>
+    {{/if}}
+    {{#if showEditButton}}
+      <div id="fabModify" class="fixed-action-btn">
+        <a class="btn-floating btn-large">
+          <i class="large material-icons">mode_edit</i>
+        </a>
+        <ul>
+          <li><a id="fabDelete" class="btn-floating red waves-effect waves-light tooltipped" data-position="left" data-tooltip="Delete {{name}}?"><i class="material-icons">delete</i></a></li>
+        </ul>
+      </div>
+    {{/if}}
+    {{#if showFavoriteButton}}
+      <div id="fabFavorite" class="fixed-action-btn">
+        <a class="btn-floating btn-large">
+          <i class="large material-icons">
+            {{#if favorited}}
+              star
+            {{else}}
+              star_border
+            {{/if}}
+          </i>
+        </a>
+      </div>
+    {{/if}}
+  {{/with}}
 </template>

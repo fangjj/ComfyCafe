@@ -9,7 +9,8 @@ Template.topBar.onRendered(function () {
 
   $("#searchForm").submit(function (event) {
 		event.preventDefault();
-		Router.go("search", {rawTagStr: tagStrToUrl($("#search").val())});
+    var path = FlowRouter.path("search", {rawTagStr: tagStrToUrl($("#search").val())});
+		FlowRouter.go(path);
 	});
 });
 

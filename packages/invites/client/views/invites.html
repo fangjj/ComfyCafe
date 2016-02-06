@@ -1,5 +1,6 @@
 <template name="invites">
-  <main>
+  {{#if Template.subscriptionsReady}}
+    <main>
       <ul class="invites">
         {{#each invites}}
           <li>
@@ -12,7 +13,11 @@
           </div>
         {{/each}}
       </ul>
-  </main>
+    </main>
+  {{else}}
+    {{> loading}}
+  {{/if}}
+
   <div id="fabInvite" class="fixed-action-btn">
     <a class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="left" data-tooltip="Invite someone new :^)">
       <i class="material-icons">add</i>

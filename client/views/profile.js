@@ -27,6 +27,11 @@ avatarUpload = function (self, file) {
 };
 
 Template.profile.onCreated(function () {
+	var self = this;
+	self.autorun(function () {
+		self.subscribe("user", FlowRouter.getParam("username"));
+	});
+
 	this.isChangingAvatar = new ReactiveVar(false);
 });
 
@@ -35,6 +40,10 @@ Template.profile.onRendered(function () {
 });
 
 Template.profile.helpers({
+	user: function () {
+		return Meteor.users.findOne({ username: FlowRouter.getParam("username") });
+	},
+
 	isOwner: function () {
     return this._id === Meteor.userId();
 	},

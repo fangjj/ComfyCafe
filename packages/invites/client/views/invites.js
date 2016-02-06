@@ -1,9 +1,22 @@
+Template.invites.onCreated(function () {
+	var self = this;
+	self.autorun(function () {
+		self.subscribe("invites");
+	});
+});
+
 Template.invites.onRendered(function () {
 	$(".tooltipped").tooltip({delay: 50});
 });
 
 Template.invites.onDestroyed(function () {
 	$(".tooltipped").tooltip("remove");
+});
+
+Template.invites.helpers({
+	invites: function () {
+		return Invites.find();
+	}
 });
 
 Template.invites.events({

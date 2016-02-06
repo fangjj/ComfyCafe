@@ -1,11 +1,10 @@
 standard-app-packages
-iron:router
 fourseven:scss
 accounts-password
 ongoworks:security
 raix:ui-dropped-event
 useraccounts:materialize
-useraccounts:iron-routing
+useraccounts:flow-routing
 reactive-var
 vsivsi:file-collection
 benjaminrh:jquery-cookie
@@ -23,3 +22,7 @@ teru:media
 teru:thumbnails
 teru:jobs
 teru:tags
+kadira:flow-router
+kadira:blaze-layout
+arillo:flow-router-helpers
+settinghead:auto-nprogress

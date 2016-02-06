@@ -16,8 +16,9 @@ Package.onUse(function(api) {
   api.use([
     "ecmascript",
     "mongo",
-    "iron:router",
     "jaywon:meteor-node-uuid",
+    "kadira:flow-router",
+    "kadira:blaze-layout",
     "teru:utility"
   ], ["client", "server"]);
 

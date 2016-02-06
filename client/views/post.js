@@ -1,3 +1,10 @@
+Template.post.onCreated(function () {
+  var self = this;
+  self.autorun(function () {
+    self.subscribe("post", FlowRouter.getParam("postId"));
+  });
+});
+
 Template.post.onRendered(function () {
   $(".tooltipped").tooltip({delay: 50});
 });
@@ -11,6 +18,10 @@ var isOwner = function (self) {
 };
 
 Template.post.helpers({
+  post: function () {
+    return Posts.findOne({ _id: FlowRouter.getParam("postId") });
+  },
+
   isOwner: function () {
     return isOwner(this);
   },
@@ -43,7 +54,8 @@ Template.post.events({
   "click #fabDelete": function (event, template) {
     var self = this;
     Meteor.call("deletePost", this._id, function () {
-      Router.go("feed");
+      var path = FlowRouter.path("feed");
+      FlowRouter.go(path);
     });
   }
 });

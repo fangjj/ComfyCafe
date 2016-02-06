@@ -16,24 +16,26 @@ Meteor.publish("yourPosts", function () {
 
 Meteor.publish("postFeed", function () {
 	this.autorun(function (computation) {
-		var user = Meteor.users.findOne(this.userId, { fields: { subscriptions: 1 } });
-		return Posts.find(
-			{ $or: [
-				{ "uploader._id": this.userId },
-				{ "uploader._id": { $in: user && user.subscriptions || [] } }
-			] }
-		);
+		if (this.userId) {
+			var user = Meteor.users.findOne(this.userId, { fields: { subscriptions: 1 } });
+			return Posts.find(
+				{ $or: [
+					{ "uploader._id": this.userId },
+					{ "uploader._id": { $in: user && user.subscriptions || [] } }
+				] }
+			);
+		} else {
+			return Posts.find();
+		}
 	});
 });
 
 Meteor.publish("favorites", function () {
-	//Meteor._sleepForMs(2000);
 	if (this.userId) {
 		return Posts.find({ favorited: this.userId });
 	}
 });
 
 Meteor.publish("searchPosts", function (tagStr) {
-	console.log(tagStr);
 	return queryTags(tagStr);
 });

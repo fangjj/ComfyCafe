@@ -1,13 +1,17 @@
 <template name="favorites">
-  <main>
-    <ul class="posts">
-      {{#each posts}}
-        {{> preview}}
-      {{else}}
-        <div class="uhoh">
-          You haven't favorited anything!
-        </div>
-      {{/each}}
-    </ul>
-  </main>
+  {{#if Template.subscriptionsReady}}
+    <main>
+      <ul class="posts">
+        {{#each posts}}
+          {{> preview}}
+        {{else}}
+          <div class="uhoh">
+            You haven't favorited anything!
+          </div>
+        {{/each}}
+      </ul>
+    </main>
+  {{else}}
+    {{> loading}}
+  {{/if}}
 </template>

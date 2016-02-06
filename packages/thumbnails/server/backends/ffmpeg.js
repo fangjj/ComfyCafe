@@ -1,6 +1,6 @@
-var exec = Meteor.npmRequire("child_process").exec;
-var fs = Meteor.npmRequire("fs");
-var tmp = Meteor.npmRequire("tmp");
+var exec = Npm.require("child_process").exec;
+var fs = Npm.require("fs");
+var tmp = Npm.require("tmp");
 
 var ffmpegGetFirstFrame = function (inName, outName, callback) {
   exec(

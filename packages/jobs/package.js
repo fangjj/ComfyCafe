@@ -1,8 +1,8 @@
 Package.describe({
-  name: "teru:thumbnails",
+  name: "teru:jobs",
   version: "0.0.1",
   // Brief, one-line summary of the package.
-  summary: "Internal thumbnailing package for TeruImages.",
+  summary: "",
   // URL to the Git repository containing the source code for this package.
   git: "",
   // By default, Meteor will default to using README.md for documentation.
@@ -10,34 +10,30 @@ Package.describe({
   documentation: "README.md"
 });
 
-Npm.depends({
-  "gm": "1.12.1",
-  "sharp": "0.12.2",
-  "tmp": "0.0.28"
-});
-
 Package.onUse(function(api) {
   api.versionsFrom("1.2.1");
 
   api.use([
     "ecmascript",
-    "mongo",
-    "teru:media",
-    "teru:jobs"
-  ], ["server"]);
+    "vsivsi:job-collection"
+  ], ["client", "server"]);
 
   api.addFiles([
-    "server/backends/imageMagick.js",
-    "server/backends/sharp.js",
-    "server/backends/ffmpeg.js",
-    "server/worker.js",
-    "server/thumbnailJob.js"
+    "lib/collection.js"
+  ], ["client", "server"]);
+
+  api.addFiles([
+    "server/security.js",
+    "server/publications.js",
+    "server/garbageCollection.js"
   ], ["server"]);
+
+  api.export("jobs", ["client", "server"]);
 });
 
 Package.onTest(function(api) {
   api.use("ecmascript");
   api.use("tinytest");
-  api.use("teru:thumbnails");
-  api.addFiles("thumbnails-tests.js");
+  api.use("teru:jobs");
+  api.addFiles("jobs-tests.js");
 });

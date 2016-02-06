@@ -1,4 +1,4 @@
-var gm = Meteor.npmRequire("gm").subClass({imageMagick: true});
+var gm = Npm.require("gm").subClass({imageMagick: true});
 
 magickImageResize = function (inStream, outStream, width, height) {
   gm(inStream).resize(width, height).stream(Meteor.bindEnvironment(

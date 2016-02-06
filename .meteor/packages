@@ -23,3 +23,5 @@ peerlibrary:reactive-publish
 teru:invites
 teru:utility
 teru:media
+teru:thumbnails
+teru:jobs

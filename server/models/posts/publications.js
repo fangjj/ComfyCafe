@@ -31,13 +31,11 @@ Meteor.publish("postFeed", function () {
 });
 
 Meteor.publish("favorites", function () {
-	//Meteor._sleepForMs(2000);
 	if (this.userId) {
 		return Posts.find({ favorited: this.userId });
 	}
 });
 
 Meteor.publish("searchPosts", function (tagStr) {
-	console.log(tagStr);
 	return queryTags(tagStr);
 });

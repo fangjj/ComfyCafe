@@ -1,24 +1,29 @@
 <template name="index">
-  <main>
-    <ul class="posts">
-      {{#if currentUser}}
-        {{#each posts}}
-          {{> preview}}
+  {{#if Template.subscriptionsReady}}
+    <main>
+      <ul class="posts">
+        {{#if currentUser}}
+          {{#each posts}}
+            {{> preview}}
+          {{else}}
+            <div class="uhoh">
+              You haven't uploaded anything!
+              <div class="smaller">
+                To upload a file, either press the button in the bottom right corner, or just drop a file anywhere.
+              </div>
+            </div>
+          {{/each}}
         {{else}}
           <div class="uhoh">
-            You haven't uploaded anything!
-            <div class="smaller">
-              To upload a file, either press the button in the bottom right corner, or just drop a file anywhere.
-            </div>
+            You aren't logged in, so you're powerless!
           </div>
-        {{/each}}
-      {{else}}
-        <div class="uhoh">
-          You aren't logged in, so you're powerless!
-        </div>
-      {{/if}}
-    </ul>
-  </main>
+        {{/if}}
+      </ul>
+    </main>
+  {{else}}
+    {{> loading}}
+  {{/if}}
+
   {{#if currentUser}}
     <div id="fabUpload" class="fixed-action-btn">
       <a class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="left" data-tooltip="Upload a file! You can also just drop one anywhere.">

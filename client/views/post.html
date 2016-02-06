@@ -1,9 +1,11 @@
 <template name="post">
-  {{#with post}}
+  {{#if Template.subscriptionsReady}}
     <main>
       <div class="medium">
-        {{#with medium}}
-          {{> medium}}
+        {{#with post}}
+          {{#with medium}}
+            {{> medium}}
+          {{/with}}
         {{else}}
           <div class="uhoh">
             404 - Dead Forever
@@ -11,6 +13,11 @@
         {{/with}}
       </div>
     </main>
+  {{else}}
+    {{> loading}}
+  {{/if}}
+
+  {{#with post}}
     {{#if showInfoBox}}
       <div class="postInfo">
         <a href="{{pathFor route='profile' username=uploader.username}}">

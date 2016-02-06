@@ -94,6 +94,7 @@ templating-tools@1.0.0
 teru:invites@0.0.1
 teru:jobs@0.0.1
 teru:media@0.0.1
+teru:notifications@0.0.1
 teru:tags@0.0.1
 teru:thumbnails@0.0.1
 teru:utility@0.0.1

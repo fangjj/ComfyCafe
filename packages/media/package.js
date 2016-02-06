@@ -1,8 +1,8 @@
 Package.describe({
-  name: "teru:thumbnails",
+  name: "teru:media",
   version: "0.0.1",
   // Brief, one-line summary of the package.
-  summary: "Internal thumbnailing package for TeruImages.",
+  summary: "Internal media package for TeruImages.",
   // URL to the Git repository containing the source code for this package.
   git: "",
   // By default, Meteor will default to using README.md for documentation.
@@ -15,15 +15,33 @@ Package.onUse(function(api) {
 
   api.use([
     "ecmascript",
-    "teru:media"
+    "mongo",
+    "vsivsi:file-collection"
   ], ["client", "server"]);
 
-  api.addFiles("thumbnails.js");
+  api.addFiles([
+    "lib/collection.js"
+  ], ["client", "server"]);
+
+  api.addFiles([
+    "server/security.js",
+    "server/publications.js"
+  ], ["server"]);
+
+  api.addFiles([
+    "client/lib/eachFile.js"
+  ], ["client"]);
+
+  api.export("media", ["client", "server"]);
+  api.export([
+    "getFiles",
+    "eachFile"
+  ], ["client"]);
 });
 
 Package.onTest(function(api) {
   api.use("ecmascript");
   api.use("tinytest");
-  api.use("thumbnails");
-  api.addFiles("thumbnails-tests.js");
+  api.use("teru:media");
+  api.addFiles("media-tests.js");
 });

@@ -35,13 +35,13 @@ Package.onUse(function(api) {
   ], ["client", "server"]);
 
   api.addFiles([
-    "server/publications.js",
     "server/security.js",
+    "server/publications.js"
   ], ["server"]);
 
   api.addFiles([
     "client/views/invites.html",
-    "client/views/invites.js",
+    "client/views/invites.js"
   ], ["client"]);
 
   api.export("Invites", ["client", "server"]);

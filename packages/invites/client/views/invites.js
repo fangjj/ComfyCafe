@@ -13,6 +13,12 @@ Template.invites.onDestroyed(function () {
 	$(".tooltipped").tooltip("remove");
 });
 
+Template.invites.helpers({
+	invites: function () {
+		return Invites.find();
+	}
+});
+
 Template.invites.events({
   "click #fabInvite": function (event, template) {
     Meteor.call("addInvite", function () {});

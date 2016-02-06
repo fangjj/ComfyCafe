@@ -1,3 +1,10 @@
+Template.post.onCreated(function () {
+  var self = this;
+  self.autorun(function () {
+    self.subscribe("post", FlowRouter.getParam("postId"));
+  });
+});
+
 Template.post.onRendered(function () {
   $(".tooltipped").tooltip({delay: 50});
 });

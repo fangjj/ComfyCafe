@@ -1,3 +1,10 @@
+Template.invites.onCreated(function () {
+	var self = this;
+	self.autorun(function () {
+		self.subscribe("invites");
+	});
+});
+
 Template.invites.onRendered(function () {
 	$(".tooltipped").tooltip({delay: 50});
 });

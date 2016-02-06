@@ -23,3 +23,5 @@ teru:media
 teru:thumbnails
 teru:jobs
 teru:tags
+kadira:flow-router
+kadira:blaze-layout

@@ -40,6 +40,10 @@ Template.profile.onRendered(function () {
 });
 
 Template.profile.helpers({
+	user: function () {
+		return Meteor.users.findOne({ username: FlowRouter.getParam("username") });
+	},
+
 	isOwner: function () {
     return this._id === Meteor.userId();
 	},

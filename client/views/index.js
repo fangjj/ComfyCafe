@@ -17,3 +17,20 @@ Template.index.onRendered(function () {
 Template.index.onDestroyed(function () {
 	$(".tooltipped").tooltip("remove");
 });
+
+Template.index.helpers({
+	posts: function () {
+		return Posts.find(
+			{ },
+			{ sort: { createdAt: -1, _id: 1 }
+		});
+	}
+	/* for manage posts view
+	posts: function () {
+		return Posts.find(
+			{ "uploader._id": Meteor.userId() },
+			{ sort: { createdAt: -1, name: 1 } }
+		);
+	}
+	*/
+});

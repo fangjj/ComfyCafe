@@ -1,24 +1,26 @@
 <template name="settings">
-  <main>
-    <div class="settings">
-      Are you gay?
-      <div class="switch">
-        <label>
-          Yes
-          <input name="dummy" type="checkbox" checked="{{dummyChecked}}">
-          <span class="lever"></span>
-          Yes
-        </label>
+  {{#with currentUser}}
+    <main>
+      <div class="settings">
+        Are you gay?
+        <div class="switch">
+          <label>
+            Yes
+            <input name="dummy" type="checkbox" checked="{{dummyChecked}}">
+            <span class="lever"></span>
+            Yes
+          </label>
+        </div>
       </div>
-    </div>
 
-    <a class="cancel waves-effect waves-light btn grey darken-2">
-      <i class="material-icons left">cancel</i>
-      Cancel
-    </a>
-    <a class="submit waves-effect waves-light btn">
-      <i class="material-icons left">done</i>
-      Submit
-    </a>
-  </main>
+      <a class="cancel waves-effect waves-light btn grey darken-2">
+        <i class="material-icons left">cancel</i>
+        Cancel
+      </a>
+      <a class="submit waves-effect waves-light btn">
+        <i class="material-icons left">done</i>
+        Submit
+      </a>
+    </main>
+  {{/with}}
 </template>

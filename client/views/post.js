@@ -18,6 +18,10 @@ var isOwner = function (self) {
 };
 
 Template.post.helpers({
+  post: function () {
+    return Posts.findOne({ _id: FlowRouter.getParam("postId") });
+  },
+
   isOwner: function () {
     return isOwner(this);
   },

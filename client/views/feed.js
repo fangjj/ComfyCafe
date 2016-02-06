@@ -16,3 +16,15 @@ Template.feed.onRendered(function () {
 Template.feed.onDestroyed(function () {
 	$(".tooltipped").tooltip("remove");
 });
+
+Template.feed.helpers({
+	posts: function () {
+		return Posts.find(
+			{ $or: [
+				{ "uploader._id": Meteor.userId() },
+				{ "uploader._id": { $in: Meteor.user().subscriptions || [] } }
+			] },
+			{ sort: { createdAt: -1, name: 1 } }
+		);
+	}
+});

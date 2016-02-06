@@ -12,3 +12,12 @@ Template.favorites.onRendered(function () {
 Template.favorites.onDestroyed(function () {
 	$(".tooltipped").tooltip("remove");
 });
+
+Template.favorites.helpers({
+  posts: function () {
+    return Posts.find(
+      { favorited: Meteor.userId() },
+      { sort: { createdAt: -1, name: 1 } }
+    );
+  }
+});

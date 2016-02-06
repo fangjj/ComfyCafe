@@ -27,7 +27,7 @@
 </body>
 
 <template name="layout">
-  {{> yield}}
+  {{> Template.dynamic template=content}}
   {{#if isUploading}}
     <div class="progress bottom">
       <div class="determinate" style="width: {{progress}}%"></div>

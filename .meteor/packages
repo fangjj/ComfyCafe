@@ -5,7 +5,7 @@ accounts-password
 ongoworks:security
 raix:ui-dropped-event
 useraccounts:materialize
-useraccounts:iron-routing
+useraccounts:flow-routing
 reactive-var
 vsivsi:file-collection
 benjaminrh:jquery-cookie

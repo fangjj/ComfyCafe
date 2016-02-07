@@ -27,3 +27,5 @@ kadira:blaze-layout
 arillo:flow-router-helpers
 settinghead:auto-nprogress
 teru:notifications
+kadira:react-layout
+react

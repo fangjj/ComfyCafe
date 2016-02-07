@@ -35,14 +35,6 @@ FlowRouter.route("/posts", {
   }
 });
 
-FlowRouter.route("/favorites/", {
-  name: "favorites",
-  action: function () {
-    setTitle("Favorites");
-    BlazeLayout.render("layout", {content: "favorites"});
-  }
-});
-
 FlowRouter.route("/u/:username", {
   name: "profile",
   action: function () {

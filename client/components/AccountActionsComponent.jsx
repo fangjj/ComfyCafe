@@ -28,12 +28,6 @@ AccountActionsComponent = React.createClass({
             </a>
           </li>
           <li>
-            <a href={favoritesUrl} className="waves-effect waves-teal">
-              <i className="material-icons left">star</i>
-              <span>Favorites (Deprecated)</span>
-            </a>
-          </li>
-          <li>
             <a href={invitesUrl} className="waves-effect waves-teal">
               <i className="material-icons left">weekend</i>
               <span>Manage Invites</span>

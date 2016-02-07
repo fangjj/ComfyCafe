@@ -41,6 +41,10 @@ Template.post.helpers({
   },
   showFavoriteButton: function () {
     return ! isOwner(this) && Meteor.userId() && this.medium;
+  },
+
+  AvatarComponent() {
+    return AvatarComponent;
   }
 });
 

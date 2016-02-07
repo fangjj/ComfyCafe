@@ -6,7 +6,9 @@
 					<h2>{{username}}</h2>
 				</header>
 				{{#unless isOwner}}
-					{{> reactiveAvatar class="large" id=_id avatars=avatars title=username}}
+					<div>
+						{{> React component=ReactiveAvatarComponent class="large" id=_id avatars=avatars title=username}}
+					</div>
 					<div class="toolbox">
 						{{#unless subscribed}}
 							<a class="toggleSubscription waves-effect waves-light btn">
@@ -24,7 +26,9 @@
 					</div>
 				{{else}}
 					{{#unless isChangingAvatar}}
-						{{> reactiveAvatar class="large" id=_id avatars=avatars title=username}}
+						<div>
+							{{> React component=ReactiveAvatarComponent class="large" id=_id avatars=avatars title=username}}
+						</div>
 						<div class="toolbox">
 							<a class="toggleChangeAvatar waves-effect waves-light btn">
 								<i class="material-icons left">image</i>

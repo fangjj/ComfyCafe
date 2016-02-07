@@ -57,6 +57,10 @@ Template.profile.helpers({
 		if (Meteor.userId()) {
 			return _.contains(Meteor.user().subscriptions, this._id);
 		}
+	},
+
+	ReactiveAvatarComponent() {
+		return ReactiveAvatarComponent;
 	}
 });
 

@@ -1,5 +1,5 @@
 MainLayout = React.createClass({
-  render: function () {
+  render() {
     return <div>
       <header>
         bleep bloop

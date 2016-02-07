@@ -20,6 +20,10 @@ Template.topBar.helpers({
       { to: Meteor.userId() },
       { sort: { createdAt: -1 } }
     );
+  },
+
+  ReactiveAvatarComponent() {
+    return ReactiveAvatarComponent;
   }
 });
 

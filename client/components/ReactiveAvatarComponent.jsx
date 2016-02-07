@@ -1,8 +1,8 @@
 ReactiveAvatarComponent = React.createClass({
   render() {
     var hasAvatars = Boolean(this.props.avatars);
-    var md5 = (this.props.avatars[this.props.class] || this.props.avatars.fullsize).md5;
     if (hasAvatars) {
+      var md5 = (this.props.avatars[this.props.class] || this.props.avatars.fullsize).md5;
   		return <img
         className={"avatar " + this.props.class}
         src={"/gridfs/media/" + md5}

@@ -1,4 +1,8 @@
 NotificationComponent = React.createClass({
+  delete(event) {
+    event.stopPropagation();
+    Meteor.call("deleteNotification", this.props.notification._id);
+  },
   render() {
     var notification = this.props.notification;
     var sender = notification.from;
@@ -6,12 +10,7 @@ NotificationComponent = React.createClass({
     return <li title={sender.username + " " + notification.msg + "!"}>
       <a href={senderUrl}>{sender.username}</a>
       {notification.msg}!
-      <i className="deleteNotification material-icons small right">cancel</i>
+      <i className="deleteNotification material-icons small right" onClick={this.delete}>cancel</i>
     </li>;
   }
 });
-/*
-"click .deleteNotification": function (event, template) {
-  event.stopPropagation();
-  Meteor.call("deleteNotification", this._id);
-}*/

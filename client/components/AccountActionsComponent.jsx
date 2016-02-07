@@ -5,7 +5,7 @@ AccountActionsComponent = React.createClass({
       classes = "accountActions active";
     }
 
-    var profileUrl = FlowRouter.path("profile", {username: Meteor.user().username});
+    var profileUrl = FlowRouter.path("profile", {username: this.props.currentUser.username});
     var yourPostsUrl = FlowRouter.path("yourPosts");
     var favoritesUrl = FlowRouter.path("favorites");
     var invitesUrl = FlowRouter.path("invites");

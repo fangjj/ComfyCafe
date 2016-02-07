@@ -1,14 +1,8 @@
 AccountActionsButton = React.createClass({
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    return {
-      currentUser: Meteor.user()
-    };
-  },
   toggleActionsVisbility(event) {
     if (event.button === 1) {
       // Middle mouse click
-      var path = FlowRouter.path("profile", {username: this.data.currentUser.username});
+      var path = FlowRouter.path("profile", {username: this.props.currentUser.username});
       window.open(path);
     } else {
       event.preventDefault();
@@ -20,9 +14,9 @@ AccountActionsButton = React.createClass({
     return <a id="accountActionsToggle" className="waves-effect waves-teal" onClick={this.toggleActionsVisbility}>
       <ReactiveAvatarComponent
         class="topBar"
-        id={this.data.currentUser._id}
-        avatars={this.data.currentUser.avatars}
-        title={this.data.currentUser.username}
+        id={this.props.currentUser._id}
+        avatars={this.props.currentUser.avatars}
+        title={this.props.currentUser.username}
       />
     </a>;
   }

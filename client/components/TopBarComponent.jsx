@@ -7,7 +7,8 @@ TopBarComponent = React.createClass({
       notifications: Notifications.find(
         { to: Meteor.userId() },
         { sort: { createdAt: -1 } }
-      ).fetch()
+      ).fetch(),
+      currentUser: Meteor.user()
     };
   },
   getInitialState() {
@@ -40,7 +41,7 @@ TopBarComponent = React.createClass({
     var actionButton;
     var loginButton;
 
-    if (Meteor.userId()) {
+    if (this.data.currentUser) {
       var feedUrl = FlowRouter.path("feed");
       feedButton = 	<li>
         <a href={feedUrl} className="waves-effect waves-teal">
@@ -57,7 +58,7 @@ TopBarComponent = React.createClass({
         </li>;
       }
       actionButton = <li>
-        <AccountActionsButton action={this.toggleAccountActions} />
+        <AccountActionsButton action={this.toggleAccountActions} currentUser={this.data.currentUser} />
       </li>;
     } else {
       loginButton = <li id="topLogin" className="waves-effect waves-teal">
@@ -95,6 +96,7 @@ TopBarComponent = React.createClass({
         />
 
         <AccountActionsComponent
+          currentUser={this.data.currentUser}
           visible={this.state.showAccountActions}
         />
 

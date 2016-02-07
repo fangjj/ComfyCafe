@@ -2,7 +2,7 @@ MainLayout = React.createClass({
   render() {
     return <div>
       <header>
-        bleep bloop
+        <TopBarComponent />
       </header>
       <main>
         {this.props.content}

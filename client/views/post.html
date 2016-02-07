@@ -3,9 +3,9 @@
     <main>
       <div class="medium">
         {{#with post}}
-          {{#with medium}}
-            {{> medium}}
-          {{/with}}
+          <div>
+            {{> React component=MediumComponent medium=medium}}
+          </div>
         {{else}}
           <div class="uhoh">
             404 - Dead Forever

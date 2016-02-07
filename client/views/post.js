@@ -45,6 +45,9 @@ Template.post.helpers({
 
   AvatarComponent() {
     return AvatarComponent;
+  },
+  MediumComponent() {
+    return MediumComponent;
   }
 });
 

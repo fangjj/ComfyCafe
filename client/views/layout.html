@@ -24,10 +24,12 @@
 </head>
 
 <body>
-  {{> topBar}}
 </body>
 
 <template name="layout">
+  <header>
+    {{> React component=TopBarComponent}}
+  </header>
   {{> Template.dynamic template=content}}
   {{#if isUploading}}
     <div class="progress bottom">

@@ -1,6 +1,5 @@
 Tracker.autorun(function () {
   document.title = Session.get("pageTitle") || "TeruImages";
-  Meteor.subscribe("notifications");
   Meteor.subscribe("media", Meteor.userId());
   Meteor.subscribe("jobs", Meteor.userId());
   $.cookie("X-Auth-Token", Accounts._storedLoginToken());
@@ -81,5 +80,9 @@ Template.layout.helpers({
 	},
 	progress: function () {
 		return Template.instance().progress.get();
-	}
+	},
+
+  TopBarComponent() {
+    return TopBarComponent;
+  }
 });

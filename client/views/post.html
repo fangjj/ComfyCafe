@@ -7,30 +7,22 @@
             {{> React component=MediumComponent medium=medium}}
           </div>
         {{else}}
-          <div class="uhoh">
-            404 - Dead Forever
+          <div>
+            {{> React component=Inline404Component}}
           </div>
         {{/with}}
       </div>
     </main>
   {{else}}
-    {{> loading}}
+    <div>
+      {{> React component=LoadingSpinnerComponent}}
+    </div>
   {{/if}}
 
   {{#with post}}
     {{#if showInfoBox}}
-      <div class="postInfo">
-        <a href="{{pathFor route='profile' username=uploader.username}}">
-          {{> React component=AvatarComponent class="small" id=uploader._id profile=uploader.profile title=uploader.username}}
-        </a>
-        <div class="info">
-          by <a href="{{pathFor route='profile' username=uploader.username}}">{{uploader.username}}</a>
-          <time datetime="{{isoDate createdAt}}">{{prettifyDate createdAt}}</time>
-          <br>
-          <div>
-            {{> React component=SubscriptionButton owner=uploader}}
-          </div>
-        </div>
+      <div>
+        {{> React component=PostInfoBoxComponent post=this}}
       </div>
 
       <div class="tags">
@@ -38,26 +30,13 @@
       </div>
     {{/if}}
     {{#if showEditButton}}
-      <div id="fabModify" class="fixed-action-btn">
-        <a class="btn-floating btn-large">
-          <i class="large material-icons">mode_edit</i>
-        </a>
-        <ul>
-          <li><a id="fabDelete" class="btn-floating red waves-effect waves-light tooltipped" data-position="left" data-tooltip="Delete {{name}}?"><i class="material-icons">delete</i></a></li>
-        </ul>
-      </div>
+    <div>
+      {{> React component=PostModifyFAB post=this}}
+    </div>
     {{/if}}
     {{#if showFavoriteButton}}
-      <div id="fabFavorite" class="fixed-action-btn">
-        <a class="btn-floating btn-large">
-          <i class="large material-icons">
-            {{#if favorited}}
-              star
-            {{else}}
-              star_border
-            {{/if}}
-          </i>
-        </a>
+      <div>
+        {{> React component=FavoriteFAB post=this userId=currentUser._id}}
       </div>
     {{/if}}
   {{/with}}

@@ -25,9 +25,6 @@ Template.post.helpers({
   isOwner: function () {
     return isOwner(this);
   },
-  favorited: function () {
-    return _.contains(this.favorited, Meteor.userId());
-  },
   showInfoBox: function () {
     return Boolean(this.medium);
   },
@@ -44,20 +41,19 @@ Template.post.helpers({
   MediumComponent() {
     return MediumComponent;
   },
-  SubscriptionButton() {
-    return SubscriptionButton;
-  }
-});
-
-Template.post.events({
-  "click #fabFavorite": function (event, template) {
-    Meteor.call("favoritePost", this._id, ! _.contains(this.favorited, Meteor.userId()));
+  Inline404Component() {
+    return Inline404Component;
   },
-  "click #fabDelete": function (event, template) {
-    var self = this;
-    Meteor.call("deletePost", this._id, function () {
-      var path = FlowRouter.path("feed");
-      FlowRouter.go(path);
-    });
+  LoadingSpinnerComponent() {
+    return LoadingSpinnerComponent;
+  },
+  PostInfoBoxComponent() {
+    return PostInfoBoxComponent;
+  },
+  FavoriteFAB() {
+    return FavoriteFAB;
+  },
+  PostModifyFAB() {
+    return PostModifyFAB;
   }
 });

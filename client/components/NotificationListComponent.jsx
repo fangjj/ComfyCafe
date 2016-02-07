@@ -1,16 +1,20 @@
 NotificationListComponent = React.createClass({
   renderNotifications() {
-    if (this.data.notifications) {
-      return this.data.notifications.map((notification) => {
+    if (this.props.notifications) {
+      return this.props.notifications.map((notification) => {
         return <NotificationComponent notification={notification} />;
       });
     }
     return <li>No notifications.</li>;
   },
   render() {
+    var classes = "notifications";
+    if (this.props.visible) {
+      classes = "notifications active";
+    }
     return <div>
-      <div id="notificationArrow" className="notifications"></div>
-      <div id="notificationList" className="notifications">
+      <div id="notificationArrow" className={classes}></div>
+      <div id="notificationList" className={classes}>
         <ul>
           {this.renderNotifications()}
         </ul>

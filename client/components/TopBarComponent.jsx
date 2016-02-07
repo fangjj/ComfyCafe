@@ -10,6 +10,16 @@ TopBarComponent = React.createClass({
       ).fetch()
     };
   },
+  getInitialState() {
+    return {
+      showNotificationList: false
+    };
+  },
+  toggleNotificationList() {
+    this.setState({
+      showNotificationList: ! this.state.showNotificationList
+    });
+  },
   renderRight() {
     var browseUrl = FlowRouter.path("browse");
 
@@ -34,7 +44,10 @@ TopBarComponent = React.createClass({
       </li>;
       if (! this.data.loading) {
         notificationButton = <li>
-          <NotificationButton notifications={this.data.notifications} />
+          <NotificationButton
+            notifications={this.data.notifications}
+            action={this.toggleNotificationList}
+          />
         </li>;
       }
       actionButton = <li>
@@ -69,6 +82,11 @@ TopBarComponent = React.createClass({
   			<a className="brand-logo center hide-on-small-only" href="/">TeruImages</a>
 
   		  {this.renderRight()}
+
+        <NotificationListComponent
+          notifications={this.data.notifications}
+          visible={this.state.showNotificationList}
+        />
 
   			<form id="searchForm">
   				<div className="input-field">

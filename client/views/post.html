@@ -27,21 +27,9 @@
           by <a href="{{pathFor route='profile' username=uploader.username}}">{{uploader.username}}</a>
           <time datetime="{{isoDate createdAt}}">{{prettifyDate createdAt}}</time>
           <br>
-          {{#unless isOwner}}
-            {{#unless subscribed}}
-              <a class="toggleSubscription waves-effect waves-light btn">
-                <i class="material-icons left">add_box</i>
-                Subscribe
-              </a>
-            {{else}}
-              <a class="toggleSubscription waves-effect waves-light btn grey darken-2">
-                <i class="material-icons left nothover">check_box</i>
-                <span class="nothover">Subscribed</span>
-                <i class="material-icons left hover">indeterminate_check_box</i>
-                <span class="hover">Unsubscribe</span>
-              </a>
-            {{/unless}}
-          {{/unless}}
+          <div>
+            {{> React component=SubscriptionButton owner=uploader}}
+          </div>
         </div>
       </div>
 

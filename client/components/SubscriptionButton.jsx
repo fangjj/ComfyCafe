@@ -1,15 +1,24 @@
 SubscriptionButton = React.createClass({
+  mixins: [ReactMeteorData],
+  getMeteorData() {
+    return {
+      currentUser: Meteor.user()
+    };
+  },
+  toggleSubscription(event) {
+    Meteor.call("toggleSubscription", this.props.owner._id);
+  },
   render() {
-    var isOwner = this.props.owner._id === Meteor.userId();
-    var subscribed = Meteor.userId() && _.contains(Meteor.user().subscriptions, this.props.owner._id);
+    var isOwner = this.props.owner._id === this.data.currentUser._id;
+    var subscribed = this.data.currentUser && _.contains(this.data.currentUser.subscriptions, this.props.owner._id);
     if (! isOwner) {
       if (! subscribed) {
-        return <a className="toggleSubscription waves-effect waves-light btn">
+        return <a className="toggleSubscription waves-effect waves-light btn" onClick={this.toggleSubscription}>
           <i className="material-icons left">add_box</i>
           Subscribe
         </a>;
       } else {
-        return <a className="toggleSubscription waves-effect waves-light btn grey darken-2">
+        return <a className="toggleSubscription waves-effect waves-light btn grey darken-2"  onClick={this.toggleSubscription}>
           <i className="material-icons left nothover">check_box</i>
           <span className="nothover">Subscribed</span>
           <i className="material-icons left hover">indeterminate_check_box</i>

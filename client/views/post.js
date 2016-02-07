@@ -28,11 +28,6 @@ Template.post.helpers({
   favorited: function () {
     return _.contains(this.favorited, Meteor.userId());
   },
-  subscribed: function () {
-    if (Meteor.userId()) {
-      return _.contains(Meteor.user().subscriptions, this.uploader._id);
-    }
-  },
   showInfoBox: function () {
     return Boolean(this.medium);
   },
@@ -48,13 +43,13 @@ Template.post.helpers({
   },
   MediumComponent() {
     return MediumComponent;
+  },
+  SubscriptionButton() {
+    return SubscriptionButton;
   }
 });
 
 Template.post.events({
-  "click .toggleSubscription": function (event, template) {
-    Meteor.call("toggleSubscription", this.uploader._id);
-  },
   "click #fabFavorite": function (event, template) {
     Meteor.call("favoritePost", this._id, ! _.contains(this.favorited, Meteor.userId()));
   },

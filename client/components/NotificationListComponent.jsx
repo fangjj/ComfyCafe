@@ -1,8 +1,8 @@
 NotificationListComponent = React.createClass({
   renderNotifications() {
-    if (this.props.notifications) {
+    if (this.props.notifications.length) {
       return this.props.notifications.map((notification) => {
-        return <NotificationComponent notification={notification} />;
+        return <NotificationComponent notification={notification} key={notification._id} />;
       });
     }
     return <li>No notifications.</li>;

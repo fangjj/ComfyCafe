@@ -1,3 +1,14 @@
+/*
+How can we replace this?
+$("html").click(function () {
+  _.each([$(".notifications"), $(".accountActions")], function (value) {
+    if (value.css("display") !== "none") {
+      value.fadeOut("fast");
+    }
+  });
+});
+*/
+
 TopBarComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -14,8 +25,17 @@ TopBarComponent = React.createClass({
   getInitialState() {
     return {
       showNotificationList: false,
-      showAccountActions: false
+      showAccountActions: false,
+      query: ""
     };
+  },
+  handleSearchInput(event) {
+    this.setState({query: event.target.value})
+  },
+  search(event) {
+    event.preventDefault();
+    var path = FlowRouter.path("search", {rawTagStr: tagStrToUrl(this.state.query)});
+    FlowRouter.go(path);
   },
   toggleNotificationList() {
     this.setState({
@@ -100,9 +120,9 @@ TopBarComponent = React.createClass({
           visible={this.state.showAccountActions}
         />
 
-  			<form id="searchForm">
+        <form id="searchForm" onSubmit={this.search}>
   				<div className="input-field">
-  					<input id="search" type="search" />
+  					<input id="search" type="search" onChange={this.handleSearchInput} />
   					<i className="material-icons searchClose">close</i>
   				</div>
   			</form>

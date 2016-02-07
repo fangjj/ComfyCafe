@@ -24,7 +24,7 @@ Template.index.helpers({
 			{ },
 			{ sort: { createdAt: -1, _id: 1 }
 		});
-	}
+	},
 	/* for manage posts view
 	posts: function () {
 		return Posts.find(
@@ -33,4 +33,8 @@ Template.index.helpers({
 		);
 	}
 	*/
+
+	PostPreviewComponent() {
+		return PostPreviewComponent;
+	}
 });

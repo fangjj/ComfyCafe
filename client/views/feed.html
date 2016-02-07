@@ -3,7 +3,9 @@
     <main>
       <ul class="posts">
         {{#each posts}}
-          {{> preview}}
+          <div>
+            {{> React component=PostPreviewComponent post=this}}
+          </div>
         {{else}}
           <div class="uhoh">
             {{#if currentUser.profile.subscriptions}}

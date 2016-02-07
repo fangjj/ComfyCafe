@@ -24,5 +24,9 @@ Template.search.helpers({
   },
   isReady: function () {
     return Template.instance().ready.get();
-  }
+  },
+
+  PostPreviewComponent() {
+		return PostPreviewComponent;
+	}
 });

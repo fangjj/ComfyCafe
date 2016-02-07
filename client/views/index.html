@@ -4,7 +4,9 @@
       <ul class="posts">
         {{#if currentUser}}
           {{#each posts}}
-            {{> preview}}
+            <div>
+              {{> React component=PostPreviewComponent post=this}}
+            </div>
           {{else}}
             <div class="uhoh">
               You haven't uploaded anything!

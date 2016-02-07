@@ -19,5 +19,9 @@ Template.favorites.helpers({
       { favorited: Meteor.userId() },
       { sort: { createdAt: -1, name: 1 } }
     );
+  },
+
+  PostPreviewComponent() {
+    return PostPreviewComponent;
   }
 });

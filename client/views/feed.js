@@ -26,5 +26,9 @@ Template.feed.helpers({
 			] },
 			{ sort: { createdAt: -1, name: 1 } }
 		);
+	},
+
+	PostPreviewComponent() {
+		return PostPreviewComponent;
 	}
 });

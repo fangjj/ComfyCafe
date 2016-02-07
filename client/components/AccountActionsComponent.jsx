@@ -1,5 +1,10 @@
 AccountActionsComponent = React.createClass({
   render() {
+    var classes = "accountActions";
+    if (this.props.visible) {
+      classes = "accountActions active";
+    }
+
     var profileUrl = FlowRouter.path("profile", {username: Meteor.user().username});
     var yourPostsUrl = FlowRouter.path("yourPosts");
     var favoritesUrl = FlowRouter.path("favorites");
@@ -7,8 +12,8 @@ AccountActionsComponent = React.createClass({
     var settingsUrl = FlowRouter.path("settings");
 
     return <div>
-      <div id="accountActionsArrow" className="accountActions"></div>
-      <div id="accountActions" className="accountActions">
+      <div id="accountActionsArrow" className={classes}></div>
+      <div id="accountActions" className={classes}>
         <ul>
           <li>
             <a href={profileUrl} className="waves-effect waves-teal">

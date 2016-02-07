@@ -12,12 +12,18 @@ TopBarComponent = React.createClass({
   },
   getInitialState() {
     return {
-      showNotificationList: false
+      showNotificationList: false,
+      showAccountActions: false
     };
   },
   toggleNotificationList() {
     this.setState({
       showNotificationList: ! this.state.showNotificationList
+    });
+  },
+  toggleAccountActions() {
+    this.setState({
+      showAccountActions: ! this.state.showAccountActions
     });
   },
   renderRight() {
@@ -51,7 +57,7 @@ TopBarComponent = React.createClass({
         </li>;
       }
       actionButton = <li>
-        <AccountActionsButton />
+        <AccountActionsButton action={this.toggleAccountActions} />
       </li>;
     } else {
       loginButton = <li id="topLogin" className="waves-effect waves-teal">
@@ -86,6 +92,10 @@ TopBarComponent = React.createClass({
         <NotificationListComponent
           notifications={this.data.notifications}
           visible={this.state.showNotificationList}
+        />
+
+        <AccountActionsComponent
+          visible={this.state.showAccountActions}
         />
 
   			<form id="searchForm">

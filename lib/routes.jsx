@@ -23,7 +23,11 @@ FlowRouter.route("/browse", {
   name: "browse",
   action: function () {
     setTitle();
-    BlazeLayout.render("layout", {content: "index"});
+    ReactLayout.render(MainLayout, {
+      content: <BrowsePostsComponent />,
+      // Handle this better!
+      fab: <UploadFAB />
+    });
   }
 });
 

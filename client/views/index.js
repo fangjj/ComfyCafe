@@ -36,5 +36,8 @@ Template.index.helpers({
 
 	PostPreviewComponent() {
 		return PostPreviewComponent;
+	},
+	UploadFAB() {
+		return UploadFAB;
 	}
 });

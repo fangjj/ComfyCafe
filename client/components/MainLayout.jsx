@@ -7,6 +7,7 @@ MainLayout = React.createClass({
       <main>
         {this.props.content}
       </main>
+      {this.props.fab}
       <footer>
         © 2016 Pepperoni Pizza Inc.
       </footer>

@@ -1,4 +1,24 @@
 TagRootComponent = React.createClass({
+  getInitialState() {
+    return {
+      newDescriptors: []
+    }
+  },
+  addDescriptor() {
+    var newDescriptors = this.state.newDescriptors.slice();
+    newDescriptors.push(null);
+    this.setState({
+      newDescriptors: newDescriptors
+    });
+  },
+  renderNewDescriptors() {
+    var self = this;
+    if (this.props.editable) {
+      return this.state.newDescriptors.map((descriptor) => {
+        return <TagNewDescriptorComponent />;
+      });
+    }
+  },
   renderDescriptors(descriptors) {
     var self = this;
     return descriptors.map((descriptor) => {
@@ -6,29 +26,36 @@ TagRootComponent = React.createClass({
     });
   },
   render() {
+    var isNew = this.props.new;
     var noun = this.props.noun;
 
-    var adjectives;
-    var showAdjectives = ! _.isEmpty(noun.adjectives) || this.props.editable;
-    if (showAdjectives) {
-      adjectives = <TagAdjectivesComponent adjectives={noun.adjectives} editable={this.props.editable} />;
+    var rootClause;
+    if (! isNew) {
+      rootClause = <TagRootClauseComponent noun={noun} editable={this.props.editable} />;
+    } else {
+      rootClause = <TagNewRootClauseComponent editable={this.props.editable} />;
     }
 
-    var addNoun;
+    var descriptors = [];
+    if (! isNew) {
+      descriptors = noun.descriptors;
+    }
+
+    var addDescriptorBtn;
     if (this.props.editable) {
-      addNoun = <li className="descriptor">
-        <a className="taglet noun addNoun" title="Add noun"><i className="material-icons">add</i></a>
+      addDescriptorBtn = <li className="descriptor">
+        <a className="taglet noun addNoun" title="Add noun" onClick={this.addDescriptor}>
+          <i className="material-icons">add</i>
+        </a>
       </li>;
     }
 
     return <li>
-      <div className="root">
-        {adjectives}
-        <TagNounComponent noun={noun} editable={this.props.editable} />
-      </div>
+      {rootClause}
       <ul>
-        {this.renderDescriptors(noun.descriptors)}
-        {addNoun}
+        {this.renderNewDescriptors()}
+        {this.renderDescriptors(descriptors)}
+        {addDescriptorBtn}
       </ul>
     </li>;
   }

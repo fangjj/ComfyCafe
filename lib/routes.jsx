@@ -82,14 +82,6 @@ FlowRouter.route("/p/:postId", {
   name: "post",
   action: function () {
     setTitle(FlowRouter.getParam("postId"));
-    BlazeLayout.render("layout", {content: "post"});
-  }
-});
-
-FlowRouter.route("/react/:postId", {
-  name: "react",
-  action: function () {
-    setTitle();
     ReactLayout.render(MainLayout, {
       content: <PostComponent />
     });

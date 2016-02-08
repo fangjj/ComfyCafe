@@ -37,7 +37,7 @@ PostComponent = React.createClass({
       <figure className="medium">
         {medium}
       </figure>
-      <PostInfoBoxComponent post={this.data.post} />
+      <PostInfoBoxComponent post={this.data.post} currentUser={this.data.currentUser} />
       <div className="tags">
         <TagTreeComponent tags={this.data.post.tags} humanizedTags={this.data.post.humanizedTags} />
       </div>

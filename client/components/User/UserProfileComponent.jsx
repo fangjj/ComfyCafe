@@ -13,6 +13,19 @@ UserProfileComponent = React.createClass({
       isChangingAvatar: false
     }
   },
+  startChangingAvatar(event) {
+    this.setState({
+      isChangingAvatar: true
+    });
+  },
+  stopChangingAvatar(event) {
+    this.setState({
+      isChangingAvatar: false
+    });
+  },
+  deleteAvatar(event) {
+    Meteor.call("deleteAvatar");
+  },
   render() {
     if (this.data.loading) {
       return <LoadingSpinnerComponent />;
@@ -31,14 +44,14 @@ UserProfileComponent = React.createClass({
 
       var deleteButton;
       if (hasAvatar) {
-        deleteButton = <a className="deleteAvatar waves-effect waves-light btn red darken-3">
+        deleteButton = <a className="deleteAvatar waves-effect waves-light btn red darken-3" onClick={this.deleteAvatar}>
           <i className="material-icons left">delete</i>
           Delete Avatar
         </a>;
       }
 
       toolbox = <div className="toolbox">
-        <a className="toggleChangeAvatar waves-effect waves-light btn">
+        <a className="toggleChangeAvatar waves-effect waves-light btn" onClick={this.startChangingAvatar}>
           <i className="material-icons left">image</i>
           Change Avatar
         </a>

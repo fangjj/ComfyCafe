@@ -50,6 +50,9 @@ Template.post.helpers({
   PostInfoBoxComponent() {
     return PostInfoBoxComponent;
   },
+  TagTreeComponent() {
+    return TagTreeComponent;
+  },
   FavoriteFAB() {
     return FavoriteFAB;
   },

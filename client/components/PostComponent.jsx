@@ -38,7 +38,9 @@ PostComponent = React.createClass({
         {medium}
       </figure>
       <PostInfoBoxComponent post={this.data.post} />
-      <div className="tags"></div>
+      <div className="tags">
+        <TagTreeComponent tags={this.data.post.tags} humanizedTags={this.data.post.humanizedTags} />
+      </div>
       {fab}
     </article>;
   }

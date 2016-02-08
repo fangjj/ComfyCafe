@@ -26,10 +26,10 @@
       </div>
 
       <div class="tags">
-        {{> tagTree}}
+        {{> React component=TagTreeComponent tags=this.tags humanizedTags=this.humanizedTags}}
       </div>
     {{/if}}
-    
+
     {{#if showEditButton}}
     <div>
       {{> React component=PostModifyFAB post=this}}

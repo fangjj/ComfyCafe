@@ -7,7 +7,7 @@ MainLayout = React.createClass({
   },
   componentDidMount() {
     var self = this;
-    media.resumable.assignDrop($("html"));
+    media.resumable.assignDrop(document.querySelector("html"));
     media.resumable.on("fileAdded", function (file) {
       // The file's entrypoint; used to route storage actions.
       var source = file.file.source;
@@ -45,7 +45,7 @@ MainLayout = React.createClass({
         <TopBarComponent />
       </header>
       <main>
-        {this.props.content}
+        {this.props.main}
       </main>
       {this.props.fab}
       <footer>

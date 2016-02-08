@@ -2,13 +2,13 @@ TagDescriptorComponent = React.createClass({
   render() {
     var descriptor = this.props.descriptor;
     var adjectives;
-    var showAdjectives = ! _.isEmpty(descriptor.adjectives) || this.props.editable;
+    var showAdjectives = ! _.isEmpty(descriptor.adjectives);
     if (showAdjectives) {
-      adjectives = <TagAdjectivesComponent adjectives={descriptor.adjectives} editable={this.props.editable} />;
+      adjectives = <TagAdjectivesComponent adjectives={descriptor.adjectives} />;
     }
     return <li className="descriptor">
       {adjectives}
-      <TagNounComponent noun={descriptor} editable={this.props.editable} />
+      <TagNounComponent noun={descriptor} />
     </li>;
   }
 });

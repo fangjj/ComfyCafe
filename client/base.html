@@ -24,15 +24,5 @@
 </head>
 
 <body>
+  <div id="react-root"></div>
 </body>
-
-<template name="layout">
-  <header>
-  </header>
-  {{> Template.dynamic template=content}}
-  {{#if isUploading}}
-    <div class="progress bottom">
-      <div class="determinate" style="width: {{progress}}%"></div>
-    </div>
-  {{/if}}
-</template>

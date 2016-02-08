@@ -1,3 +1,4 @@
+//media.resumable.assignBrowse($(".addFile"));
 UploadFAB = React.createClass({
   render() {
     return <div id="fabUpload" className="fixed-action-btn">

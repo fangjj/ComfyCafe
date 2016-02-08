@@ -1,4 +1,4 @@
-BrowsePostsComponent = React.createClass({
+PostBrowseComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var handle = Meteor.subscribe("allPosts");

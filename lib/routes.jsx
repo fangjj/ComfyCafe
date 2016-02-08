@@ -12,9 +12,15 @@ FlowRouter.route("/", {
   action: function () {
     setTitle();
     if (Meteor.userId()) {
-      BlazeLayout.render("layout", {content: "feed"});
+      ReactLayout.render(MainLayout, {
+        content: <PostFeedComponent />,
+        // Handle this better!
+        fab: <UploadFAB />
+      });
     } else {
-      BlazeLayout.render("layout", {content: "index"});
+      ReactLayout.render(MainLayout, {
+        content: <PostBrowseComponent />
+      });
     }
   }
 });
@@ -24,7 +30,7 @@ FlowRouter.route("/browse", {
   action: function () {
     setTitle();
     ReactLayout.render(MainLayout, {
-      content: <BrowsePostsComponent />,
+      content: <PostBrowseComponent />,
       // Handle this better!
       fab: <UploadFAB />
     });
@@ -35,7 +41,11 @@ FlowRouter.route("/posts", {
   name: "yourPosts",
   action: function () {
     setTitle("Manage Posts");
-    BlazeLayout.render("layout", {content: "index"});
+    ReactLayout.render(MainLayout, {
+      content: <PostBrowseComponent />,
+      // Handle this better!
+      fab: <UploadFAB />
+    });
   }
 });
 
@@ -60,7 +70,9 @@ FlowRouter.route("/q/:rawTagStr", {
   action: function () {
     var tagStr = tagStrFromUrl(FlowRouter.getParam("rawTagStr"));
     setTitle("Search: " + tagStr);
-    BlazeLayout.render("layout", {content: "search"});
+    ReactLayout.render(MainLayout, {
+      content: <PostSearchComponent />
+    });
   }
 });
 

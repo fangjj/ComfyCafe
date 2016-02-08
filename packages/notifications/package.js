@@ -22,10 +22,6 @@ Package.onUse(function(api) {
     "ongoworks:security"
   ], ["server"]);
 
-  api.use([
-    "templating"
-  ], ["client"]);
-
   api.addFiles([
     "lib/collection.js",
     "lib/methods.js"
@@ -35,11 +31,6 @@ Package.onUse(function(api) {
     "server/security.js",
     "server/publications.js"
   ], ["server"]);
-
-  api.addFiles([
-    "client/views/notification.html",
-    "client/views/notification.js"
-  ], ["client"]);
 
   api.export("Notifications", ["client", "server"]);
 });

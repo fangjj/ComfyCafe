@@ -98,6 +98,7 @@ srp@1.0.4
 standard-app-packages@1.0.6
 templating@1.1.5
 templating-tools@1.0.0
+teru:components@0.0.1
 teru:invites@0.0.1
 teru:jobs@0.0.1
 teru:media@0.0.1

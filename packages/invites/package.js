@@ -16,7 +16,6 @@ Package.onUse(function(api) {
   api.use([
     "ecmascript",
     "mongo",
-    "react",
     "jaywon:meteor-node-uuid",
     "teru:utility"
   ], ["client", "server"]);
@@ -26,6 +25,7 @@ Package.onUse(function(api) {
   ], ["server"]);
 
   api.use([
+    "react",
     "teru:components"
   ], ["client"]);
 

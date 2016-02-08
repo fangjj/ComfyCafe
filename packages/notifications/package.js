@@ -22,6 +22,11 @@ Package.onUse(function(api) {
     "ongoworks:security"
   ], ["server"]);
 
+  api.use([
+    "react",
+    "teru:components"
+  ], ["client"]);
+
   api.addFiles([
     "lib/collection.js",
     "lib/methods.js"
@@ -32,7 +37,19 @@ Package.onUse(function(api) {
     "server/publications.js"
   ], ["server"]);
 
+  api.addFiles([
+    "client/components/NotificationButton.jsx",
+    "client/components/NotificationComponent.jsx",
+    "client/components/NotificationListComponent.jsx"
+  ], ["client"]);
+
   api.export("Notifications", ["client", "server"]);
+
+  api.export([
+    "NotificationButton",
+    "NotificationComponent",
+    "NotificationListComponent"
+  ], ["client"]);
 });
 
 Package.onTest(function(api) {

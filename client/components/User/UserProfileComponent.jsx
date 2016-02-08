@@ -69,7 +69,7 @@ UserProfileComponent = React.createClass({
       </div>;
     } else {
       content = <div className="content">
-        <AvatarCropperComponent />
+        <AvatarCropperComponent cancelAction={this.stopChangingAvatar} />
       </div>;
     }
 

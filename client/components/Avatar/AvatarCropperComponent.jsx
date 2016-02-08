@@ -1,52 +1,67 @@
-var cropperOptions = {
-	aspectRatio: 1,
-	dragMode: "move",
-	toggleDragModeOnDblclick: false
-};
-
 AvatarCropperComponent = React.createClass({
+	getInitialState() {
+		return {
+			occupado: false,
+			src: null
+		};
+	},
   addToCropzone(event) {
+		var self = this;
     var files = getFiles(event);
     var reader  = new FileReader();
     reader.onloadend = function () {
-      var cropperInitialized = $(".newAvatar").hasClass("cropper-hidden");
-      if (cropperInitialized) {
-        $(".newAvatar").one("built.cropper", function () {
-
-        }).cropper("reset").cropper("replace", reader.result).cropper(cropperOptions);
-      } else {
-        $(".cropzone").addClass("active");
-        $(".newAvatar").attr("src", reader.result);
-        $(".newAvatar").cropper(cropperOptions);
-      }
+			self.setState({
+				occupado: true,
+				src: reader.result
+			});
     }
     reader.readAsDataURL(files[0]);
   },
   save(event) {
-    //Template.instance().isChangingAvatar.set(false);
-    var canvas = $(".newAvatar").cropper("getCroppedCanvas");
+		var canvas = this.refs.cropper.getCroppedCanvas();
     canvas.toBlob(function (blob) {
       blob.name = "avatar.png";
       blob.source = "avatar";
       media.resumable.addFile(blob);
     });
+
+		this.cancel(event);
   },
+	cancel(event) {
+		this.setState({
+			occupado: true
+		});
+
+		// I don't think cancelAction will ever be absent; I just did this because it's funny.
+		(this.props.cancelAction || (() => {}))();
+	},
   render() {
+		var cropper;
+		if (this.state.occupado) {
+			cropper = <CropperComponent
+				ref="cropper"
+				src={this.state.src}
+				aspectRatio={1}
+				dragMode="move"
+				toggleDragModeOnDblclick={false}
+			/>;
+		}
     return <div className="avatarCropper">
-      <div className="cropzone">
-        <input className="addAvatar" type="file" />
+			{cropper}
+      <div className="cropzone" onDrop={this.addToCropzone}>
+        <input className="addAvatar" type="file" onChange={this.addToCropzone} />
         <img className="newAvatar" />
       </div>
       <div className="file-field input-field">
         <div className="btn">
           <span>File</span>
-          <input className="addAvatar" type="file" />
+          <input className="addAvatar" type="file" onChange={this.addToCropzone} />
         </div>
         <div className="file-path-wrapper">
           <input className="file-path validate" type="text" />
         </div>
       </div>
-      <a className="toggleChangeAvatar waves-effect waves-light btn grey darken-2">
+      <a className="toggleChangeAvatar waves-effect waves-light btn grey darken-2" onClick={this.cancel}>
         <i className="material-icons left">cancel</i>
         Cancel
       </a>

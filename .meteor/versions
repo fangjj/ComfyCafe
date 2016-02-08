@@ -74,7 +74,6 @@ peerlibrary:reactive-mongo@0.1.1
 peerlibrary:reactive-publish@0.2.0
 peerlibrary:server-autorun@0.5.2
 promise@0.5.1
-raix:ui-dropped-event@0.0.7
 random@1.0.5
 rate-limit@1.0.0
 react@0.14.3

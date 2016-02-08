@@ -2,7 +2,6 @@ standard-app-packages
 fourseven:scss
 accounts-password
 ongoworks:security
-raix:ui-dropped-event
 useraccounts:materialize
 useraccounts:flow-routing
 reactive-var

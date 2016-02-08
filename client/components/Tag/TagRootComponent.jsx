@@ -1,16 +1,15 @@
 TagRootComponent = React.createClass({
   componentWillMount() {
-    var state = {};
+    this.ids = {};
     this.props.noun.descriptors.map((descriptor) => {
-      state[descriptor.name + "Id"] = _.uniqueId();
+      this.ids[descriptor.name] = _.uniqueId();
     });
-    this.setState(state);
   },
   renderDescriptors(descriptors) {
     return descriptors.map((descriptor) => {
       return <TagDescriptorComponent
         descriptor={descriptor}
-        key={this.state[descriptor.name + "Id"]}
+        key={this.ids[descriptor.name]}
       />;
     });
   },

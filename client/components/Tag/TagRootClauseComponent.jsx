@@ -3,19 +3,16 @@ TagRootClauseComponent = React.createClass({
     var noun = this.props.noun;
 
     var adjectives;
-    var showAdjectives = ! _.isEmpty(noun.adjectives) || this.props.editable;
+    var showAdjectives = ! _.isEmpty(noun.adjectives);
     if (showAdjectives) {
-      adjectives = <TagAdjectivesComponent adjectives={noun.adjectives} editable={this.props.editable} />;
+      adjectives = <TagAdjectivesComponent adjectives={noun.adjectives} />;
     }
 
     var classes = "root";
-    if (this.props.new) {
-      classes += " new";
-    }
 
     return <div className="root">
       {adjectives}
-      <TagNounComponent noun={noun} editable={this.props.editable} />
+      <TagNounComponent noun={noun} />
     </div>;
   }
 });

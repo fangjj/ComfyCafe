@@ -1,27 +1,7 @@
 PostBrowseComponent = React.createClass({
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    var handle = Meteor.subscribe("allPosts");
-    return {
-      loading: ! handle.ready(),
-      posts: Posts.find(
-  			{ },
-  			{ sort: { createdAt: -1, _id: 1 }
-  		}).fetch(),
-      currentUser: Meteor.user()
-    };
-  },
   render() {
-    if (this.data.loading) {
-      return <LoadingSpinnerComponent />;
-    }
-
-    if (! this.data.currentUser) {
-      return <PowerlessComponent />;
-    }
-
-    if (this.data.posts.length) {
-      return <PostGalleryComponent posts={this.data.posts} />;
+    if (this.props.posts.length) {
+      return <PostGalleryComponent posts={this.props.posts} />;
     } else {
       return <div className="uhoh">
         You haven't uploaded anything!

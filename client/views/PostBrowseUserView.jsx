@@ -1,7 +1,7 @@
-PostBrowseView = {
+PostBrowseUserView = {
   layout: MainLayout,
   content: {
-    main: <PostBrowseComponent />,
+    main: <PostBrowseUserComponent />,
     fab: <UploadFAB />
   }
 };

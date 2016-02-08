@@ -11,7 +11,7 @@ PostInfoBoxComponent = React.createClass({
 
     var subButton;
     if (! isOwner) {
-      subButton = <SubscriptionButton owner={owner} />;
+      subButton = <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />;
     }
 
     return <div className="postInfo">

@@ -53,7 +53,9 @@ FlowRouter.route("/u/:username", {
   name: "profile",
   action: function () {
     setTitle(FlowRouter.getParam("username"));
-    BlazeLayout.render("layout", {content: "profile"});
+    ReactLayout.render(MainLayout, {
+      content: <UserProfileComponent />
+    });
   }
 });
 

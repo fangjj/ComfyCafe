@@ -89,3 +89,13 @@ FlowRouter.route("/p/:postId", {
     });
   }
 });
+
+FlowRouter.route("/loading", {
+  name: "loading",
+  action: function () {
+    setTitle("Loading");
+    ReactLayout.render(MainLayout, {
+      content: <LoadingSpinnerComponent />
+    });
+  }
+});

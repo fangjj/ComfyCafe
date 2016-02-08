@@ -61,7 +61,9 @@ FlowRouter.route("/settings", {
   name: "settings",
   action: function () {
     setTitle("Settings");
-    BlazeLayout.render("layout", {content: "settings"});
+    ReactLayout.render(MainLayout, {
+      content: <UserSettingsComponent />
+    });
   }
 });
 

@@ -20,9 +20,7 @@ PostFeedComponent = React.createClass({
     }
 
     if (! this.data.currentUser) {
-      return <div className="uhoh">
-        You aren't logged in, so you're powerless!
-      </div>;
+      return <PowerlessComponent />;
     }
 
     if (this.data.posts.length) {

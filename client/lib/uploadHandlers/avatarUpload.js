@@ -1,5 +1,5 @@
 avatarUpload = function (self, file) {
-	self.isUploading.set(true);
+	self.setState({isUploading: true});
 	media.insert({
 			_id: file.uniqueIdentifier,
 			filename: file.fileName,
@@ -16,8 +16,10 @@ avatarUpload = function (self, file) {
 				changed: function(newImage, oldImage) {
 					if (newImage.length === file.size) {
 						liveQuery.stop();
-						self.isUploading.set(false);
-						self.progress.set(0);
+						self.setState({
+              isUploading: false,
+              progress: 0
+            });
 						Meteor.call("setAvatar", file.uniqueIdentifier);
 					}
 				}

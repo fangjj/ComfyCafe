@@ -6,7 +6,6 @@ useraccounts:materialize
 useraccounts:flow-routing
 reactive-var
 vsivsi:file-collection
-benjaminrh:jquery-cookie
 meteorhacks:npm
 npm-container
 jparker:crypto-sha256
@@ -30,3 +29,4 @@ react
 gwendall:blaze-to-react
 cosmos:browserify
 jonblum:jquery-cropper
+chuangbo:cookie

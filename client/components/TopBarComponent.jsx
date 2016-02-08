@@ -69,6 +69,7 @@ TopBarComponent = React.createClass({
           <span className="hide-on-med-and-down">Feed</span>
         </a>
       </li>;
+
       if (! this.data.loading) {
         notificationButton = <li>
           <NotificationButton
@@ -95,6 +96,23 @@ TopBarComponent = React.createClass({
     </ul>;
   },
   render() {
+    var notificationList;
+    var actionList;
+
+    if (this.data.currentUser) {
+      if (! this.data.loading) {
+        notificationList = <NotificationListComponent
+          notifications={this.data.notifications}
+          visible={this.state.showNotificationList}
+        />;
+      }
+
+      actionList = <AccountActionsComponent
+        currentUser={this.data.currentUser}
+        visible={this.state.showAccountActions}
+      />;
+    }
+
     return <nav id="topBar">
   		<div className="nav-wrapper">
   			<ul className="left topLevel">
@@ -110,15 +128,8 @@ TopBarComponent = React.createClass({
 
   		  {this.renderRight()}
 
-        <NotificationListComponent
-          notifications={this.data.notifications}
-          visible={this.state.showNotificationList}
-        />
-
-        <AccountActionsComponent
-          currentUser={this.data.currentUser}
-          visible={this.state.showAccountActions}
-        />
+        {notificationList}
+        {actionList}
 
         <form id="searchForm" onSubmit={this.search}>
   				<div className="input-field">

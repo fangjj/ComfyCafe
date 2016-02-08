@@ -1,7 +1,17 @@
 TagTreeComponent = React.createClass({
+  componentWillMount() {
+    var state = {};
+    this.props.humanizedTags.nouns.map((noun) => {
+      state[noun.name + "Id"] = _.uniqueId();
+    });
+    this.setState(state);
+  },
   renderRoots() {
     return this.props.humanizedTags.nouns.map((noun) => {
-      return <TagRootComponent noun={noun} />;
+      return <TagRootComponent
+        noun={noun}
+        key={this.state[noun.name + "Id"]}
+      />;
     });
   },
   render() {

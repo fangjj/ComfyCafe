@@ -19,12 +19,26 @@ Package.onUse(function(api) {
     "teru:utility"
   ], ["client", "server"]);
 
+  api.use([
+    "react",
+    "teru:components"
+  ], ["client"]);
+
   api.addFiles([
     "lib/parser.js",
     "lib/humanizer.js",
     "lib/query.js",
     "lib/urlify.js"
   ], ["client", "server"]);
+
+  api.addFiles([
+    "client/components/TagNounComponent.jsx",
+    "client/components/TagAdjectivesComponent.jsx",
+    "client/components/TagDescriptorComponent.jsx",
+    "client/components/TagRootClauseComponent.jsx",
+    "client/components/TagRootComponent.jsx",
+    "client/components/TagTreeComponent.jsx"
+  ], ["client"]);
 
   api.export([
     "parseTagStr",
@@ -35,6 +49,15 @@ Package.onUse(function(api) {
     "tagStrToUrl",
     "tagStrFromUrl"
   ], ["client", "server"]);
+
+  api.export([
+    "TagNounComponent",
+    "TagAdjectivesComponent",
+    "TagDescriptorComponent",
+    "TagRootClauseComponent",
+    "TagRootComponent",
+    "TagTreeComponent"
+  ], ["client"]);
 });
 
 Package.onTest(function(api) {

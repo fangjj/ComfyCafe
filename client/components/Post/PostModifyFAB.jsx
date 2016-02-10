@@ -6,6 +6,7 @@ PostModifyFAB = React.createClass({
       </a>
       <ul>
         <PostDeleteInnerFAB post={this.props.post} />
+        <PostRerollInnerFAB post={this.props.post} />
       </ul>
     </div>;
   }

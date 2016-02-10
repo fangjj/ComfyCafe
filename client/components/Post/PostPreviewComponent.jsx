@@ -4,6 +4,9 @@ PostPreviewComponent = React.createClass({
       username: this.props.post.uploader.username,
       postName: this.props.post.name
     });
+    var postUrl = FlowRouter.path("postPerma", {
+      postId: this.props.post._id,
+    });
     return <li>
       <a href={postUrl}>
         <ThumbnailComponent medium={this.props.post.medium} size="list" />

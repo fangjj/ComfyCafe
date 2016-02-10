@@ -1,12 +1,19 @@
-#__blaze-root > .row {
+main > div > .row {
+  @include content;
+
   display: flex;
   align-items: center;
   justify-content: center;
 
-  margin-top: 200px;
+  background-color: transparent;
+  box-shadow: none;
 
   > div {
-    background: $fg-color;
+    &.col.s12.m8.push-m2.push-l4.l4.z-depth-1 {
+      width: 40%;
+    }
+
+    background-color: $fg-color;
   }
 }
 

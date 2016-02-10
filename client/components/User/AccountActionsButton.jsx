@@ -2,8 +2,6 @@ AccountActionsButton = React.createClass({
   toggleActionsVisbility(event) {
     if (event.button === 1) {
       // Middle mouse click
-      var path = FlowRouter.path("profile", {username: this.props.currentUser.username});
-      window.open(path);
     } else {
       event.preventDefault();
       event.stopPropagation();
@@ -13,7 +11,7 @@ AccountActionsButton = React.createClass({
   render() {
     return <a id="accountActionsToggle"
       className="ignore-react-onclickoutside waves-effect waves-teal"
-      target="_blank"
+      href={FlowRouter.path("profile", {username: this.props.currentUser.username})}
       onClick={this.toggleActionsVisbility}
     >
       <ReactiveAvatarComponent

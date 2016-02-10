@@ -3,8 +3,8 @@ AccountActionsButton = React.createClass({
     if (event.button === 1) {
       // Middle mouse click
     } else {
-      event.preventDefault();
-      event.stopPropagation();
+      event.nativeEvent.preventDefault();
+      event.nativeEvent.stopPropagation();
       this.props.action();
     }
   },

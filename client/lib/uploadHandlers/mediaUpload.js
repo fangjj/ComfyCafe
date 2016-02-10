@@ -23,8 +23,11 @@ mediaUpload = function (self, file) {
             Meteor.call("addPost", {
               mediumId: file.uniqueIdentifier,
               tags: "tagme"
-            }, function (err, postId) {
-              var path = FlowRouter.path("post", { postId: postId });
+            }, function (err, name) {
+              var path = FlowRouter.path("post", {
+                username: Meteor.user().username,
+                postName: name
+              });
               FlowRouter.go(path);
             });
           }

@@ -1,7 +1,19 @@
-Meteor.publish("post", function (postId) {
+Meteor.publish("postPerma", function (postId) {
 	check(postId, String);
 	//Meteor._sleepForMs(2000);
 	return Posts.find({ _id: postId });
+});
+
+Meteor.publish("post", function (username, postName) {
+	check(username, String);
+	check(postName, String);
+	//Meteor._sleepForMs(2000);
+	return Posts.find(
+		{
+			"uploader.username": username,
+			name: postName
+		}
+	);
 });
 
 Meteor.publish("allPosts", function () {

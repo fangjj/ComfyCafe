@@ -1,10 +1,25 @@
 PostComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    var handle = Meteor.subscribe("post", FlowRouter.getParam("postId"));
+    var id = FlowRouter.getParam("postId");
+    var handle;
+    var doc = {};
+    if (id) {
+      handle = Meteor.subscribe("postPerma", FlowRouter.getParam("postId"));
+      doc = { _id: id };
+    } else {
+      handle = Meteor.subscribe("post",
+        FlowRouter.getParam("username"),
+        FlowRouter.getParam("postName"),
+      );
+      doc = {
+        "uploader.username": FlowRouter.getParam("username"),
+        name: FlowRouter.getParam("postName")
+      };
+    }
     return {
       loading: ! handle.ready(),
-      post: Posts.findOne({ _id: FlowRouter.getParam("postId") }),
+      post: Posts.findOne(doc),
       currentUser: Meteor.user()
     };
   },

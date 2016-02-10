@@ -44,7 +44,7 @@ main {
   z-index: index($elements, main);
 
   // When did this happen? https://www.w3.org/TR/css3-values/#viewport-relative-lengths
-  min-height: calc(100vh - 132px);
+  min-height: calc(100vh - 170px);
 }
 
 .progress.bottom {

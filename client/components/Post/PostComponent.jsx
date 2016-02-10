@@ -48,6 +48,8 @@ PostComponent = React.createClass({
       fab = <FavoriteFAB post={this.data.post} userId={this.data.currentUser._id} />;
     }
 
+    setPattern(this.data.post.name);
+
     return <article className="post">
       <figure className="medium">
         {medium}

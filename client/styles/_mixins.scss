@@ -51,8 +51,10 @@
   align-content: center;
 
   li {
-    width: 240px + 42px;
-    height: 240px + 42px;
+    $size: 240px;
+
+    width: $size + 42px;
+    height: $size + 42px;
 
     text-align: center;
 
@@ -62,12 +64,12 @@
       justify-content: center;
 
       width: 100%;
-      height: 240px;
+      height: $size;
     }
 
 		.thumbnail {
-			max-width: 240px;
-			max-height: 240px;
+			max-width: $size;
+			max-height: $size;
 			width: auto;
 			height: auto;
 		}

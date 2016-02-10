@@ -88,7 +88,7 @@ TopBarComponent = React.createClass({
     var notificationList;
     var actionList;
 
-    if (this.data.currentUser) {
+    if (this.data.currentUse && _.has(this.data.currentUser, "profile")) {
       if (! this.data.loading) {
         notificationList = <NotificationListComponent
           notifications={this.data.notifications}

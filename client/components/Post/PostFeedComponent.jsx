@@ -7,7 +7,7 @@ PostFeedComponent = React.createClass({
       posts: Posts.find(
   			{ $or: [
   				{ "uploader._id": Meteor.userId() },
-  				{ "uploader._id": { $in: Meteor.user().subscriptions || [] } }
+  				{ "uploader._id": { $in: Meteor.user() && Meteor.user().subscriptions || [] } }
   			] },
   			{ sort: { createdAt: -1, name: 1 } }
   		).fetch(),

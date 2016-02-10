@@ -50,7 +50,9 @@ TopBarComponent = React.createClass({
     var actionButton;
     var loginButton;
 
-    if (this.data.currentUser) {
+    if (! this.data.loading
+      && this.data.currentUser && _.has(this.data.currentUser, "profile")
+    ) {
       var feedUrl = FlowRouter.path("feed");
       feedButton = 	<li>
         <a href={feedUrl} className="waves-effect waves-teal">
@@ -59,14 +61,13 @@ TopBarComponent = React.createClass({
         </a>
       </li>;
 
-      if (! this.data.loading) {
-        notificationButton = <li>
-          <NotificationButton
-            notifications={this.data.notifications}
-            action={this.toggleNotificationList}
-          />
-        </li>;
-      }
+      notificationButton = <li>
+        <NotificationButton
+          notifications={this.data.notifications}
+          action={this.toggleNotificationList}
+        />
+      </li>;
+
       actionButton = <li>
         <AccountActionsButton action={this.toggleAccountActions} currentUser={this.data.currentUser} />
       </li>;
@@ -88,14 +89,14 @@ TopBarComponent = React.createClass({
     var notificationList;
     var actionList;
 
-    if (this.data.currentUse && _.has(this.data.currentUser, "profile")) {
-      if (! this.data.loading) {
-        notificationList = <NotificationListComponent
-          notifications={this.data.notifications}
-          visible={this.state.showNotificationList}
-          action={this.toggleNotificationList}
-        />;
-      }
+    if (! this.data.loading
+      && this.data.currentUser && _.has(this.data.currentUser, "profile")
+    ) {
+      notificationList = <NotificationListComponent
+        notifications={this.data.notifications}
+        visible={this.state.showNotificationList}
+        action={this.toggleNotificationList}
+      />;
 
       actionList = <AccountActionsComponent
         currentUser={this.data.currentUser}

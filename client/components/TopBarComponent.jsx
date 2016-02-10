@@ -12,7 +12,7 @@ $("html").click(function () {
 TopBarComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    var handle = Meteor.subscribe("notifications");
+    var handle = Meteor.subscribe("notifications", Meteor.userId());
     return {
       loading: ! handle.ready(),
       notifications: Notifications.find(

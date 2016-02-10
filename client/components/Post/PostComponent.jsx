@@ -13,7 +13,7 @@ PostComponent = React.createClass({
       return <LoadingSpinnerComponent />;
     }
 
-    var isOwner = this.data.post.uploader
+    var isOwner = this.data.currentUser
       && this.data.currentUser._id === this.data.post.uploader._id;
     var showEditButton = isOwner;
     var showFavoriteButton = ! isOwner && this.data.currentUser && this.data.post.medium;

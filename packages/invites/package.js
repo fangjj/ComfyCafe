@@ -17,8 +17,6 @@ Package.onUse(function(api) {
     "ecmascript",
     "mongo",
     "jaywon:meteor-node-uuid",
-    "kadira:flow-router",
-    "kadira:blaze-layout",
     "teru:utility"
   ], ["client", "server"]);
 
@@ -27,13 +25,13 @@ Package.onUse(function(api) {
   ], ["server"]);
 
   api.use([
-    "templating"
+    "react",
+    "teru:components"
   ], ["client"]);
 
   api.addFiles([
     "lib/collection.js",
     "lib/methods.js",
-    "lib/routes.js"
   ], ["client", "server"]);
 
   api.addFiles([
@@ -42,11 +40,15 @@ Package.onUse(function(api) {
   ], ["server"]);
 
   api.addFiles([
-    "client/views/invites.html",
-    "client/views/invites.js"
+    "client/components/InviteComponent.jsx",
+    "client/components/InviteFAB.jsx",
+    "client/components/InviteListComponent.jsx",
+    "client/views/InviteListView.jsx"
   ], ["client"]);
 
   api.export("Invites", ["client", "server"]);
+
+  api.export("InviteListView", ["client"]);
 });
 
 Package.onTest(function(api) {

@@ -23,7 +23,8 @@ Package.onUse(function(api) {
   ], ["server"]);
 
   api.use([
-    "templating"
+    "react",
+    "teru:components"
   ], ["client"]);
 
   api.addFiles([
@@ -37,11 +38,18 @@ Package.onUse(function(api) {
   ], ["server"]);
 
   api.addFiles([
-    "client/views/notification.html",
-    "client/views/notification.js"
+    "client/components/NotificationButton.jsx",
+    "client/components/NotificationComponent.jsx",
+    "client/components/NotificationListComponent.jsx"
   ], ["client"]);
 
   api.export("Notifications", ["client", "server"]);
+
+  api.export([
+    "NotificationButton",
+    "NotificationComponent",
+    "NotificationListComponent"
+  ], ["client"]);
 });
 
 Package.onTest(function(api) {

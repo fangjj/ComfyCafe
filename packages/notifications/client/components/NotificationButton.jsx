@@ -10,11 +10,14 @@ NotificationButton = React.createClass({
     } else {
       event.preventDefault();
       event.stopPropagation();
-      this.props.action();
+      this.props.action("btn");
     }
   },
   render() {
-    return <a id="notificationListToggle" className="waves-effect waves-teal" onClick={this.toggleListVisibility}>
+    return <a id="notificationListToggle"
+      className="ignore-react-onclickoutside waves-effect waves-teal"
+      onClick={this.toggleListVisibility}
+    >
       <i className="material-icons">notifications</i>
       {this.renderCount()}
     </a>;

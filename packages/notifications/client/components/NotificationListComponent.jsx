@@ -2,7 +2,7 @@ NotificationListComponent = React.createClass({
   mixins: [OnClickOutside],
   handleClickOutside(event) {
     if (this.props.visible) {
-      this.props.action();
+      this.props.action("out");
     }
   },
   renderNotifications() {

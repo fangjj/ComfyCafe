@@ -7,11 +7,14 @@ AccountActionsButton = React.createClass({
     } else {
       event.preventDefault();
       event.stopPropagation();
-      this.props.action();
+      this.props.action("btn");
     }
   },
   render() {
-    return <a id="accountActionsToggle" className="waves-effect waves-teal" onClick={this.toggleActionsVisbility}>
+    return <a id="accountActionsToggle"
+      className="ignore-react-onclickoutside waves-effect waves-teal"
+      onClick={this.toggleActionsVisbility}
+    >
       <ReactiveAvatarComponent
         class="topBar"
         id={this.props.currentUser._id}

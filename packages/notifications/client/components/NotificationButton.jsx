@@ -5,13 +5,9 @@ NotificationButton = React.createClass({
     }
   },
   toggleListVisibility(event) {
-    if (event.which === 2) {
-      // Middle mouse click
-    } else {
-      event.preventDefault();
-      event.stopPropagation();
-      this.props.action("btn");
-    }
+    event.preventDefault();
+    event.stopPropagation();
+    this.props.action();
   },
   render() {
     return <a id="notificationListToggle"

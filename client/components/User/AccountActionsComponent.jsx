@@ -2,7 +2,7 @@ AccountActionsComponent = React.createClass({
   mixins: [OnClickOutside],
   handleClickOutside(event) {
     if (this.props.visible) {
-      this.props.action("out");
+      this.props.action();
     }
   },
   render() {

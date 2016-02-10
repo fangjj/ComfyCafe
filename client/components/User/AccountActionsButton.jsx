@@ -7,12 +7,13 @@ AccountActionsButton = React.createClass({
     } else {
       event.preventDefault();
       event.stopPropagation();
-      this.props.action("btn");
+      this.props.action();
     }
   },
   render() {
     return <a id="accountActionsToggle"
       className="ignore-react-onclickoutside waves-effect waves-teal"
+      target="_blank"
       onClick={this.toggleActionsVisbility}
     >
       <ReactiveAvatarComponent

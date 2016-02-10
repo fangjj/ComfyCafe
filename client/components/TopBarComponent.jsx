@@ -1,14 +1,3 @@
-/*
-How can we replace this?
-$("html").click(function () {
-  _.each([$(".notifications"), $(".accountActions")], function (value) {
-    if (value.css("display") !== "none") {
-      value.fadeOut("fast");
-    }
-  });
-});
-*/
-
 TopBarComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -104,12 +93,14 @@ TopBarComponent = React.createClass({
         notificationList = <NotificationListComponent
           notifications={this.data.notifications}
           visible={this.state.showNotificationList}
+          action={this.toggleNotificationList}
         />;
       }
 
       actionList = <AccountActionsComponent
         currentUser={this.data.currentUser}
         visible={this.state.showAccountActions}
+        action={this.toggleAccountActions}
       />;
     }
 

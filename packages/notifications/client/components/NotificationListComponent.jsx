@@ -1,4 +1,10 @@
 NotificationListComponent = React.createClass({
+  mixins: [OnClickOutside],
+  handleClickOutside(event) {
+    if (this.props.visible) {
+      this.props.action();
+    }
+  },
   renderNotifications() {
     if (this.props.notifications.length) {
       return this.props.notifications.map((notification) => {

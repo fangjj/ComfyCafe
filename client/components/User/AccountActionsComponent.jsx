@@ -1,4 +1,10 @@
 AccountActionsComponent = React.createClass({
+  mixins: [OnClickOutside],
+  handleClickOutside(event) {
+    if (this.props.visible) {
+      this.props.action();
+    }
+  },
   render() {
     var classes = "accountActions";
     if (this.props.visible) {

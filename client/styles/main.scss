@@ -30,7 +30,6 @@ body {
   @include contentEditable($muted-light);
 
   margin-top: 64px;
-  margin-bottom: 64px;
 
   width: 100%;
 
@@ -43,6 +42,9 @@ body {
 
 main {
   z-index: index($elements, main);
+
+  // When did this happen? https://www.w3.org/TR/css3-values/#viewport-relative-lengths
+  min-height: calc(100vh - 132px);
 }
 
 .progress.bottom {

@@ -1,25 +1,20 @@
 @import "_mixins.scss";
 @import "materialize/_materialize.scss";
-@import url("//fonts.googleapis.com/css?family=Material+Icons|Slabo+27px");
 
-$text-color: #EEF4EE;
-$sg-color: #333333;
-$fg-color: #211E1E;
-$bg-color: #282323;
-
-$muted-light: rgba($text-color, 0.7);
-$muted-dark: rgba($sg-color, 0.6);
-
-$elements: content, grid-items, searchInactive, logo, search, searchButtons, accountActions, accountActionsArrow, viewer-overlay, viewer;
+@import "_fonts.scss";
+@import "_colors.scss";
+@import "_zIndex.scss";
 
 @import "_accountActions.scss";
 @import "_avatars.scss";
 @import "_contentEditable.scss";
+@import "_footer.scss";
 @import "_invites.scss";
 @import "_loading.scss";
 @import "_login.scss";
 @import "_notifications.scss";
 @import "_posts.scss";
+@import "_profile.scss";
 @import "_settings.scss";
 @import "_subscribe.scss";
 @import "_tagTree.scss";
@@ -47,24 +42,7 @@ body {
 }
 
 main {
-  @extend .z-depth-1;
-
-  margin: 0 auto;
-  margin-top: 100px;
-
-  padding: 16px;
-
-  width: 85%;
-
-  background: $fg-color;
-
-  img {
-    display: block;
-
-    margin: 0 auto;
-
-    max-width: 100%;
-  }
+  z-index: index($elements, main);
 }
 
 .progress.bottom {
@@ -166,7 +144,7 @@ header {
 }
 
 .uhoh {
-  padding: 12px;
+  @include content;
 
   font-size: 28px;
   text-align: center;

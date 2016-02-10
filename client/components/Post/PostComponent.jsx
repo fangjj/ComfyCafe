@@ -33,14 +33,14 @@ PostComponent = React.createClass({
       fab = <FavoriteFAB post={this.data.post} userId={this.data.currentUser._id} />;
     }
 
-    return <article>
+    return <article className="post">
       <figure className="medium">
         {medium}
       </figure>
       <PostInfoBoxComponent post={this.data.post} currentUser={this.data.currentUser} />
-      <div className="tags">
+      <section className="tagBox">
         <TagTreeComponent tags={this.data.post.tags} humanizedTags={this.data.post.humanizedTags} />
-      </div>
+      </section>
       {fab}
     </article>;
   }

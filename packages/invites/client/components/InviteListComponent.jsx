@@ -23,12 +23,16 @@ InviteListComponent = React.createClass({
     }
 
     if (this.data.invites.length) {
-      return <ul className="invites">
-        {this.renderInvites()}
-      </ul>;
+      return <div className="inviteList">
+          <ul className="invites">
+          {this.renderInvites()}
+        </ul>
+      </div>;
     } else {
-      return <div className="uhoh">
-        You don't have any open invites.
+      return <div className="inviteList">
+        <div className="uhoh">
+          You don't have any open invites.
+        </div>
       </div>;
     }
   }

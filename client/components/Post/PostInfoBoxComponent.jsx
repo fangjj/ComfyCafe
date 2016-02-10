@@ -14,7 +14,7 @@ PostInfoBoxComponent = React.createClass({
       subButton = <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />;
     }
 
-    return <div className="postInfo">
+    return <section className="infoBox">
       <a href={ownerUrl}>
         <AvatarComponent class="small" id={owner._id} profile={owner.profile} title={owner.username} />
       </a>
@@ -23,6 +23,6 @@ PostInfoBoxComponent = React.createClass({
         <br />
         {subButton}
       </div>
-    </div>;
+    </section>;
   }
 });

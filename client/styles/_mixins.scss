@@ -10,6 +10,27 @@
   }
 }
 
+@mixin content  {
+  @extend .z-depth-1;
+
+  margin: 0 auto;
+  margin-top: 100px;
+
+  padding: 16px;
+
+  width: 85%;
+
+  background: $fg-color;
+
+  img {
+    display: block;
+
+    margin: 0 auto;
+
+    max-width: 100%;
+  }
+}
+
 @mixin list() {
   margin: 0;
 

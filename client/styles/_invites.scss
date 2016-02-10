@@ -1,5 +1,9 @@
-ul.invites {
-  @include list;
+.inviteList {
+  @include content;
+
+  ul {
+    @include list;
+  }
 }
 
 .deleteInvite {

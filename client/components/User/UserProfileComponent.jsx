@@ -73,11 +73,11 @@ UserProfileComponent = React.createClass({
       </div>;
     }
 
-    return <article>
+    return <div className="profile">
       <header>
   			<h2>{user.username}</h2>
   		</header>
 			{content}
-    </article>;
+    </div>;
   }
 });

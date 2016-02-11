@@ -53,37 +53,22 @@ TopBarComponent = React.createClass({
   renderLeftSub() {
     if (this.userReady()) {
       return [
-        <li key="topBarArtBtn">
-          <ArtButton />
-        </li>,
-        <li key="topBarBlogBtn">
-          <BlogButton />
-        </li>,
-        <li key="topBarTagBtn">
-          <TagButton />
-        </li>
+        <TopBarArtButton key="topBarArtBtn" />,
+        <TopBarBlogButton key="topBarBlogBtn" />,
+        <TopBarTagButton key="topBarTagBtn" />
       ];
     }
   },
   renderLeft() {
     return <ul className="left topLevel">
-      <li className="searchButton">
-        <a className="waves-effect waves-teal">
-          <i className="material-icons">search</i>
-          <label htmlFor="search"></label>
-        </a>
-      </li>
+      <TopBarSearchButton />
       {this.renderLeftSub()}
     </ul>;
   },
   renderRightSub() {
     if (this.userReady()) {
       return [
-        <li key="topBarForumBtn">
-          <a href={""} className="waves-effect waves-teal">
-            <i className="material-icons">forum</i>
-          </a>
-        </li>,
+        <TopBarChatButton key="topBarForumBtn" />,
         <li key="topBarNotifBtn">
           <NotificationButton
             notifications={this.data.notifications}
@@ -104,9 +89,7 @@ TopBarComponent = React.createClass({
   },
   renderRight() {
     return <ul className="right topLevel">
-      <li>
-        <ExploreButton />
-      </li>
+      <TopBarExploreButton />
       {this.renderRightSub()}
     </ul>;
   },

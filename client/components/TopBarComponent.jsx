@@ -18,6 +18,10 @@ TopBarComponent = React.createClass({
       query: ""
     };
   },
+  userReady() {
+    return ! this.data.loading
+      && this.data.currentUser && _.has(this.data.currentUser, "profile");
+  },
   handleSearchInput(event) {
     this.setState({query: event.target.value})
   },
@@ -46,62 +50,71 @@ TopBarComponent = React.createClass({
     }
     this.setState(obj);
   },
-  renderRight() {
-    var browseUrl = FlowRouter.path("browse");
-
-    var feedButton;
-    var browseButton = <li>
-      <a href={browseUrl} className="waves-effect waves-teal">
-        <i className="material-icons left">view_comfy</i>
-        <span className="hide-on-med-and-down">Browse</span>
-      </a>
-    </li>;
-    var notificationButton;
-    var actionButton;
-    var loginButton;
-
-    if (! this.data.loading
-      && this.data.currentUser && _.has(this.data.currentUser, "profile")
-    ) {
-      var feedUrl = FlowRouter.path("feed");
-      feedButton = 	<li>
-        <a href={feedUrl} className="waves-effect waves-teal">
-          <i className="material-icons left">local_dining</i>
-          <span className="hide-on-med-and-down">Feed</span>
-        </a>
-      </li>;
-
-      notificationButton = <li>
-        <NotificationButton
-          notifications={this.data.notifications}
-          action={this.toggleNotificationList}
-        />
-      </li>;
-
-      actionButton = <li>
-        <AccountActionsButton action={this.toggleAccountActions} currentUser={this.data.currentUser} />
-      </li>;
-    } else {
-      loginButton = <li id="topLogin" className="waves-effect waves-teal">
-        <BlazeToReact blazeTemplate="atNavButton"/>
-      </li>;
+  renderLeftSub() {
+    if (this.userReady()) {
+      return [
+        <li key="topBarArtBtn">
+          <ArtButton />
+        </li>,
+        <li key="topBarBlogBtn">
+          <BlogButton />
+        </li>,
+        <li key="topBarTagBtn">
+          <TagButton />
+        </li>
+      ];
     }
-
+  },
+  renderLeft() {
+    return <ul className="left topLevel">
+      <li className="searchButton">
+        <a className="waves-effect waves-teal">
+          <i className="material-icons">search</i>
+          <label htmlFor="search"></label>
+        </a>
+      </li>
+      {this.renderLeftSub()}
+    </ul>;
+  },
+  renderRightSub() {
+    if (this.userReady()) {
+      return [
+        <li key="topBarForumBtn">
+          <a href={""} className="waves-effect waves-teal">
+            <i className="material-icons">forum</i>
+          </a>
+        </li>,
+        <li key="topBarNotifBtn">
+          <NotificationButton
+            notifications={this.data.notifications}
+            action={this.toggleNotificationList}
+          />
+        </li>,
+        <li key="topBarAcctBtn">
+          <AccountActionsButton action={this.toggleAccountActions} currentUser={this.data.currentUser} />
+        </li>
+      ];
+    } else {
+      return [
+        <li id="topLogin" className="waves-effect waves-teal" key="topBarLoginBtn">
+          <BlazeToReact blazeTemplate="atNavButton"/>
+        </li>
+      ];
+    }
+  },
+  renderRight() {
     return <ul className="right topLevel">
-      {feedButton}
-      {browseButton}
-      {notificationButton}
-      {actionButton}
-      {loginButton}
+      <li>
+        <ExploreButton />
+      </li>
+      {this.renderRightSub()}
     </ul>;
   },
   render() {
     var notificationList;
     var actionList;
 
-    if (! this.data.loading
-      && this.data.currentUser && _.has(this.data.currentUser, "profile")
-    ) {
+    if (this.userReady()) {
       notificationList = <NotificationListComponent
         notifications={this.data.notifications}
         visible={this.state.showNotificationList}
@@ -117,14 +130,7 @@ TopBarComponent = React.createClass({
 
     return <nav id="topBar">
   		<div className="nav-wrapper">
-  			<ul className="left topLevel">
-  				<li className="searchButton">
-  					<a className="waves-effect waves-teal">
-  						<i className="material-icons">search</i>
-  						<label htmlFor="search"></label>
-  					</a>
-  				</li>
-  			</ul>
+        {this.renderLeft()}
 
   			<a className="brand-logo center hide-on-small-only" href="/">TeruImages</a>
 

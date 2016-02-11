@@ -27,14 +27,24 @@ TopBarComponent = React.createClass({
     FlowRouter.go(path);
   },
   toggleNotificationList() {
-    this.setState({
-      showNotificationList: ! this.state.showNotificationList
-    });
+    var result = ! this.state.showNotificationList;
+    var obj = {
+      showNotificationList: result
+    };
+    if (result && this.state.showAccountActions) {
+      obj.showAccountActions = false;
+    }
+    this.setState(obj);
   },
   toggleAccountActions() {
-    this.setState({
-      showAccountActions: ! this.state.showAccountActions
-    });
+    var result = ! this.state.showAccountActions;
+    var obj = {
+      showAccountActions: result
+    };
+    if (result && this.state.showNotificationList) {
+      obj.showNotificationList = false;
+    }
+    this.setState(obj);
   },
   renderRight() {
     var browseUrl = FlowRouter.path("browse");

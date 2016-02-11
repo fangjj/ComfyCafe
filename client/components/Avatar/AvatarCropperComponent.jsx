@@ -45,13 +45,14 @@ AvatarCropperComponent = React.createClass({
 				dragMode="move"
 				toggleDragModeOnDblclick={false}
 			/>;
+		} else {
+			cropper = <div className="cropzone" onDrop={this.addToCropzone}>
+        <input className="addAvatar" type="file" onChange={this.addToCropzone} />
+        <img className="newAvatar" />
+      </div>;
 		}
     return <div className="avatarCropper">
 			{cropper}
-      <div className="cropzone" onDrop={this.addToCropzone}>
-        <input className="addAvatar" type="file" onChange={this.addToCropzone} />
-        <img className="newAvatar" />
-      </div>
       <div className="file-field input-field">
         <div className="btn">
           <span>File</span>

@@ -12,12 +12,8 @@
 }
 
 .postForm {
-  .medium {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .mediumContent {
+  .mediumContainer {
+    .medium {
       max-width: 512px;
     }
   }

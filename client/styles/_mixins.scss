@@ -21,14 +21,6 @@
   width: 85%;
 
   background: $fg-color;
-
-  img {
-    display: block;
-
-    margin: 0 auto;
-
-    max-width: 100%;
-  }
 }
 
 @mixin list() {

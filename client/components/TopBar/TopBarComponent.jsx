@@ -1,7 +1,7 @@
 TopBarComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    var handle = Meteor.subscribe("notifications", Meteor.userId());
+    var handle = Meteor.withoutBar.subscribe("notifications", Meteor.userId());
     return {
       loading: ! handle.ready(),
       notifications: Notifications.find(

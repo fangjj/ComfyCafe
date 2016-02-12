@@ -43,9 +43,23 @@
   }
 
   .infoBox {
-    display: flex;
-    align-items: center;
-    align-content: left;
+    .meta {
+      display: flex;
+      align-items: center;
+      align-content: left;
+    }
+
+    .description {
+      &:not(:empty) {
+        margin-top: 16px;
+
+        $pad: 24px;
+        padding: $pad;
+        padding-bottom: $pad - 16px;
+
+        border-top: 1px solid rgba($muted-light, 0.5);
+      }
+    }
   }
 
   .tagBox {

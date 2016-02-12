@@ -15,13 +15,18 @@ PostInfoBoxComponent = React.createClass({
     }
 
     return <section className="infoBox">
-      <a href={ownerUrl}>
-        <AvatarComponent class="small" id={owner._id} profile={owner.profile} title={owner.username} />
-      </a>
-      <div className="info">
-        by <a href={ownerUrl}>{owner.username}</a> <time dateTime={isoDate}>{prettyDate}</time>
-        <br />
-        {subButton}
+      <div className="meta">
+        <a href={ownerUrl}>
+          <AvatarComponent class="small" id={owner._id} profile={owner.profile} title={owner.username} />
+        </a>
+        <div className="info">
+          by <a href={ownerUrl}>{owner.username}</a> <time dateTime={isoDate}>{prettyDate}</time>
+          <br />
+          {subButton}
+        </div>
+      </div>
+      <div className="description">
+        {post.description}
       </div>
     </section>;
   }

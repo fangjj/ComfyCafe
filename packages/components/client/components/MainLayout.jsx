@@ -49,7 +49,11 @@ MainLayout = React.createClass({
   },
   renderPostForm() {
     if (this.state.mediumId) {
-      return <PostFormComponent mediumId={this.state.mediumId} destroy={this.destroyPostForm} />;
+      return <PostFormComponent
+        mediumId={this.state.mediumId}
+        destroy={this.destroyPostForm}
+        open={true}
+      />;
     }
   },
   render() {

@@ -10,7 +10,6 @@ let {
 PostUpdateFormComponent = React.createClass({
   getInitialState() {
     return {
-      open: true,
       visibility: this.props.post.visibility,
       description: this.props.post.description,
       tags: this.props.post.tags.text
@@ -37,7 +36,7 @@ PostUpdateFormComponent = React.createClass({
       description: this.state.description,
       tags: this.state.tags
     }, (err) => {
-      this.props.destroy();
+      this.props.close();
     });
   },
   render() {
@@ -54,7 +53,7 @@ PostUpdateFormComponent = React.createClass({
       />,
     ];
 
-    return <Dialog title="Edit Post" actions={actions} modal={true} open={this.state.open}>
+    return <Dialog title="Edit Post" actions={actions} modal={true} open={this.props.open}>
       <form>
         <div>
           <SelectField value={this.state.visibility} onChange={this.handleVisibility}>

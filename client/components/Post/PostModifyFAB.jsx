@@ -12,12 +12,12 @@ PostModifyFAB = React.createClass({
   showPostForm() {
     this.setState({showForm: true});
   },
-  destroyPostForm() {
+  hidePostForm() {
     this.setState({showForm: false});
   },
   renderPostForm() {
     if (this.state.showForm) {
-      return <PostUpdateFormComponent post={this.props.post} destroy={this.destroyPostForm} />;
+      return ;
     }
   },
   render() {
@@ -25,7 +25,7 @@ PostModifyFAB = React.createClass({
       <FloatingActionButton secondary={true} onClick={this.showPostForm}>
         <FontIcon className="material-icons">edit</FontIcon>
       </FloatingActionButton>
-      {this.renderPostForm()}
+      <PostUpdateFormComponent post={this.props.post} close={this.hidePostForm} open={this.state.showForm} />
     </div>;
   }
 });

@@ -1,3 +1,8 @@
+let {
+  RaisedButton,
+  FontIcon
+} = mui;
+
 AvatarCropperComponent = React.createClass({
 	getInitialState() {
 		return {
@@ -62,14 +67,15 @@ AvatarCropperComponent = React.createClass({
           <input className="file-path validate" type="text" />
         </div>
       </div>
-      <a className="toggleChangeAvatar waves-effect waves-light btn grey darken-2" onClick={this.cancel}>
-        <i className="material-icons left">cancel</i>
-        Cancel
-      </a>
-      <a className="setAvatar waves-effect waves-light btn" onClick={this.save}>
-        <i className="material-icons left">crop</i>
-        Crop
-      </a>
+			<CancelButton
+				onTouchTap={this.cancel}
+			/>
+			<RaisedButton
+				label="Crop"
+				secondary={true}
+				icon={<FontIcon className="material-icons">crop</FontIcon>}
+				onTouchTap={this.save}
+			/>
     </div>;
   }
 });

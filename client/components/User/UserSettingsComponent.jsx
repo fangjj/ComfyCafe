@@ -1,3 +1,9 @@
+let {
+  Toggle,
+  RaisedButton,
+  FontIcon
+} = mui;
+
 UserSettingsComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -43,24 +49,22 @@ UserSettingsComponent = React.createClass({
     }
 
     return <div className="settings">
-      Are you gay?
-      <SwitchInputComponent
-        name="dummy"
-        off="Yes"
-        on="Yes"
-        checked={this.state.dummyChecked}
-        onChange={this.handleDummy}
+      <Toggle
+        label="Receive gay flirtation"
+        defaultToggled={this.state.dummyChecked}
+        onToggle={this.handleDummy}
       />
 
       <div className="actions">
-        <a className="cancel waves-effect waves-light btn grey darken-2" onClick={this.cancel}>
-          <i className="material-icons left">cancel</i>
-          Cancel
-        </a>
-        <a className="submit waves-effect waves-light btn" onClick={this.submit}>
-          <i className="material-icons left">done</i>
-          Submit
-        </a>
+        <CancelButton
+          onTouchTap={this.cancel}
+        />
+        <RaisedButton
+          label="Submit"
+          secondary={true}
+          icon={<FontIcon className="material-icons">done</FontIcon>}
+          onTouchTap={this.submit}
+        />
       </div>
     </div>;
   }

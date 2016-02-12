@@ -1,3 +1,8 @@
+let {
+  RaisedButton,
+  FontIcon
+} = mui;
+
 UserProfileComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -40,21 +45,24 @@ UserProfileComponent = React.createClass({
         <SubscriptionButton owner={user} currentUser={this.data.currentUser} />
       </div>;
     } else {
-      var hasAvatar = _.has(user, "avatar");
+      var hasAvatar = _.has(user, "avatars");
 
       var deleteButton;
       if (hasAvatar) {
-        deleteButton = <a className="deleteAvatar waves-effect waves-light btn red darken-3" onClick={this.deleteAvatar}>
-          <i className="material-icons left">delete</i>
-          Delete Avatar
-        </a>;
+        deleteButton = <DangerButton
+          label="Delete Avatar"
+          iconName="delete"
+          onTouchTap={this.deleteAvatar}
+        />;
       }
 
       toolbox = <div className="toolbox">
-        <a className="toggleChangeAvatar waves-effect waves-light btn" onClick={this.startChangingAvatar}>
-          <i className="material-icons left">image</i>
-          Change Avatar
-        </a>
+        <RaisedButton
+          label="Change Avatar"
+          secondary={true}
+          icon={<FontIcon className="material-icons">image</FontIcon>}
+          onTouchTap={this.startChangingAvatar}
+        />
         {deleteButton}
       </div>;
     }

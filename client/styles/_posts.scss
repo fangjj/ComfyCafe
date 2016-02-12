@@ -17,7 +17,9 @@
     align-items: center;
     justify-content: center;
 
-    width: 100%;
+    .mediumContent {
+      max-width: 512px;
+    }
   }
 }
 

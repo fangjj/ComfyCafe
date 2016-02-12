@@ -1,4 +1,9 @@
 PostInfoBoxComponent = React.createClass({
+  delete() {
+    Meteor.call("deletePost", this.props.post._id, function () {
+      FlowRouter.go("/");
+    });
+  },
   render() {
     var post = this.props.post;
 
@@ -12,6 +17,12 @@ PostInfoBoxComponent = React.createClass({
     var subButton;
     if (! isOwner) {
       subButton = <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />;
+    } else {
+      subButton = <SublteDangerButton
+        label="Delete Post"
+        iconName="delete"
+        onTouchTap={this.delete}
+      />;
     }
 
     return <section className="infoBox">

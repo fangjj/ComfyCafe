@@ -26,9 +26,10 @@ PostFormComponent = React.createClass({
     return <PostDialog
       title="Create Post"
       open={this.props.open}
+      modal={true}
       handleClose={this.props.handleClose}
       handleSubmit={this.handleSubmit}
-      post={this.props.post}
+      medium={this.data.medium}
     />;
   }
 });

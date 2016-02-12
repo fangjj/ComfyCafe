@@ -11,6 +11,16 @@
   }
 }
 
+.postForm {
+  .medium {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+  }
+}
+
 .post {
   > figure, > section {
     @include content;

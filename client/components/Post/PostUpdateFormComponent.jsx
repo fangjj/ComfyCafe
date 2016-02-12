@@ -8,6 +8,7 @@ PostUpdateFormComponent = React.createClass({
     return <PostDialog
       title="Edit Post"
       open={this.props.open}
+      modal={false}
       handleClose={this.props.handleClose}
       handleSubmit={this.handleSubmit}
       post={this.props.post}

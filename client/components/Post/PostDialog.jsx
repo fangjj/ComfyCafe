@@ -36,6 +36,13 @@ PostDialog = React.createClass({
       tags: this.state.tags
     });
   },
+  renderMedium() {
+    if (this.props.medium) {
+      return <div className="medium">
+        <MediumComponent medium={this.props.medium} />
+      </div>;
+    }
+  },
   render() {
     const actions = [
       <FlatButton
@@ -50,7 +57,16 @@ PostDialog = React.createClass({
       />,
     ];
 
-    return <Dialog title="Edit Post" actions={actions} modal={true} open={this.props.open}>
+    return <Dialog
+      className="postForm"
+      title={this.props.title}
+      actions={actions}
+      modal={this.props.modal}
+      open={this.props.open}
+      autoScrollBodyContent={true}
+      onRequestClose={this.props.handleClose}
+    >
+      {this.renderMedium()}
       <PostInnerFormComponent
         visibility={this.state.visibility}
         handleVisibility={this.handleVisibility}

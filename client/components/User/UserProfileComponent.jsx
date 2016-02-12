@@ -27,7 +27,7 @@ UserProfileComponent = React.createClass({
     Meteor.call("deleteAvatar");
   },
   render() {
-    if (this.data.loading) {
+    if (this.data.loading || ! _.has(this.data.currentUser, "profile")) {
       return <LoadingSpinnerComponent />;
     }
 

@@ -38,19 +38,19 @@ UserSettingsComponent = React.createClass({
       return <PowerlessComponent />;
     }
 
+    if (! _.has(this.data.currentUser, "profile")) {
+      return <LoadingSpinnerComponent />;
+    }
+
     return <div className="settings">
       Are you gay?
-      <div className="switch">
-        <label>
-          Yes
-          <input name="dummy" type="checkbox"
-            checked={this.state.dummyChecked}
-            onChange={this.handleDummy}
-          />
-          <span className="lever"></span>
-          Yes
-        </label>
-      </div>
+      <SwitchInputComponent
+        name="dummy"
+        off="Yes"
+        on="Yes"
+        checked={this.state.dummyChecked}
+        onChange={this.handleDummy}
+      />
 
       <div className="actions">
         <a className="cancel waves-effect waves-light btn grey darken-2" onClick={this.cancel}>

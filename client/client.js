@@ -3,4 +3,5 @@ Tracker.autorun(function () {
   Meteor.subscribe("media", Meteor.userId());
   Meteor.subscribe("jobs", Meteor.userId());
   Cookie.set("X-Auth-Token", Accounts._storedLoginToken());
+  injectTapEventPlugin();
 });

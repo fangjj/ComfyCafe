@@ -1,4 +1,4 @@
-mediaUpload = function (self, file) {
+mediaUpload = function (self, file, callback) {
   self.setState({isUploading: true});
   media.insert({
       _id: file.uniqueIdentifier,
@@ -20,16 +20,7 @@ mediaUpload = function (self, file) {
               isUploading: false,
               progress: 0
             });
-            Meteor.call("addPost", {
-              mediumId: file.uniqueIdentifier,
-              tags: "tagme"
-            }, function (err, name) {
-              var path = FlowRouter.path("post", {
-                username: Meteor.user().username,
-                postName: name
-              });
-              FlowRouter.go(path);
-            });
+            callback(file.uniqueIdentifier);
           }
         }
       });

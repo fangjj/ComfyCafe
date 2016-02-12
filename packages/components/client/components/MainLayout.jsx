@@ -1,8 +1,17 @@
 MainLayout = React.createClass({
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+  getChildContext(){
+    return {
+      muiTheme: mui.Styles.ThemeManager.getMuiTheme(mui.Styles.DarkRawTheme)
+    }
+  },
   getInitialState() {
     return {
       isUploading: false,
-      progress: 0
+      progress: 0,
+      postId: undefined
     };
   },
   componentDidMount() {
@@ -26,12 +35,22 @@ MainLayout = React.createClass({
         avatarUpload(self, file);
       } else {
         // This is... everything else!
-        mediaUpload(self, file);
+        mediaUpload(self, file, function (id) {
+          self.setState({mediumId: id});
+        });
       }
     });
     media.resumable.on("progress", function () {
       self.setState({progress: media.resumable.progress() * 100});
     });
+  },
+  destroyPostForm() {
+    this.setState({mediumId: undefined});
+  },
+  renderPostForm() {
+    if (this.state.mediumId) {
+      return <PostFormComponent mediumId={this.state.mediumId} destroy={this.destroyPostForm} />;
+    }
   },
   render() {
     var progressBar;
@@ -48,6 +67,7 @@ MainLayout = React.createClass({
         {this.props.main}
       </main>
       {this.props.fab}
+      {this.renderPostForm()}
       <footer>
         © 2016 Pepperoni Pizza Inc.
       </footer>

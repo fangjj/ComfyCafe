@@ -33,7 +33,9 @@ PostInfoBoxComponent = React.createClass({
         <div className="info">
           by <a href={ownerUrl}>{owner.username}</a> <time dateTime={isoDate}>{prettyDate}</time>
           <br />
-          {subButton}
+          <div className="action">
+            {subButton}
+          </div>
         </div>
       </div>
       <div className="description">

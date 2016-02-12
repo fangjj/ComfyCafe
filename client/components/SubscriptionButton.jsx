@@ -9,17 +9,18 @@ SubscriptionButton = React.createClass({
   },
   getInitialState() {
     return {
-      hover: false
+      notHover: true
     };
   },
   toggleSubscription(event) {
     Meteor.call("toggleSubscription", this.props.owner._id);
   },
   toggleHover() {
-    this.setState({hover: ! this.state.hover});
+    this.setState({notHover: ! this.state.notHover});
   },
   render() {
-    var subscribed = this.props.currentUser && _.contains(this.props.currentUser.subscriptions, this.props.owner._id);
+    var subscribed = this.props.currentUser
+      && _.contains(this.props.currentUser.subscriptions, this.props.owner._id);
     if (! subscribed) {
       return <RaisedButton
         className="toggleSubscription"
@@ -32,7 +33,7 @@ SubscriptionButton = React.createClass({
     } else {
       var label;
       var icon;
-      if (! this.state.hover) {
+      if (this.state.notHover) {
         label = "Subscribed";
         icon = "check_box";
       } else {

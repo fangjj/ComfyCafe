@@ -18,6 +18,7 @@ Package.onUse(function(api) {
   api.addFiles([
     "adjectives.js",
     "nouns.js",
+    "nsfwNouns.js",
     "nameGenerator.js"
   ], ["client", "server"]);
 

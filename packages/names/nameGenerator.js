@@ -7,18 +7,30 @@ var takeAdj = function (pool) {
   }
 };
 
-generateName = function (delim, adjCount) {
-  if (typeof delim === "undefined") {
-    delim = "";
-  }
-  if (typeof adjCount === "undefined") {
-    adjCount = 2;
+generateName = function (options) {
+  if (typeof options === "undefined") {
+    options = {};
   }
 
-  adjs = [];
-  for (var i = 0; i < adjCount; ++i) {
+  if (typeof options.delim === "undefined") {
+    options.delim = "";
+  }
+  if (typeof options.adjCount === "undefined") {
+    options.adjCount = 2;
+  }
+  if (typeof options.nsfw === "undefined") {
+    options.nsfw = false;
+  }
+
+  var adjs = [];
+  for (var i = 0; i < options.adjCount; ++i) {
     adjs.push(takeAdj(adjs));
   }
-  noun = _.sample(nouns);
-  return adjs.join(delim) + delim + noun;
+  var noun;
+  if (! options.nsfw) {
+    noun = _.sample(nouns);
+  } else {
+    noun = _.sample(nouns.concat(nsfwNouns));
+  }
+  return adjs.join(options.delim) + options.delim + noun;
 };

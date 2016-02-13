@@ -115,7 +115,7 @@ TopBarComponent = React.createClass({
   		<div className="nav-wrapper">
         {this.renderLeft()}
 
-  			<a className="brand-logo center hide-on-small-only" href="/">TeruImages</a>
+  			<a className="brand-logo center hide-on-small-only" href="/">ComfyCafé</a>
 
   		  {this.renderRight()}
 

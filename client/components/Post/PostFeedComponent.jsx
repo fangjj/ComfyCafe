@@ -32,7 +32,7 @@ PostFeedComponent = React.createClass({
       } else {
         msg = "You haven't subscribed to anyone!";
       }
-      return <div class="uhoh">
+      return <div className="uhoh">
         {msg}
       </div>;
     }

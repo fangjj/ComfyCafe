@@ -3,26 +3,25 @@ let {
   FontIcon
 } = mui;
 
-PostModifyFAB = React.createClass({
+BlogPostFAB = React.createClass({
   getInitialState() {
     return {
       showForm: false
     };
   },
-  showPostForm() {
+  showBlogForm() {
     this.setState({showForm: true});
   },
-  hidePostForm() {
+  hideBlogForm() {
     this.setState({showForm: false});
   },
   render() {
     return <div className="fixed-action-btn">
-      <FloatingActionButton secondary={true} onClick={this.showPostForm}>
-        <FontIcon className="material-icons">edit</FontIcon>
+      <FloatingActionButton secondary={true} onClick={this.showBlogForm}>
+        <FontIcon className="material-icons">add</FontIcon>
       </FloatingActionButton>
-      <PostUpdateFormComponent
-        post={this.props.post}
-        handleClose={this.hidePostForm}
+      <BlogForm
+        handleClose={this.hideBlogForm}
         open={this.state.showForm}
       />
     </div>;

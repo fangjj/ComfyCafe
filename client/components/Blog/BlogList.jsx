@@ -1,5 +1,5 @@
 BlogList = React.createClass({
-  /*mixins: [ReactMeteorData],
+  mixins: [ReactMeteorData],
   getMeteorData() {
     var handle = Meteor.subscribe("blogFeed");
     return {
@@ -13,30 +13,35 @@ BlogList = React.createClass({
       ).fetch(),
       currentUser: Meteor.user()
     };
-  },*/
+  },
   renderPosts() {
-    /*if (this.data.posts.length) {
+    if (this.data.posts.length) {
       return this.data.posts.map((post) => {
-        return <BlogPost post={post} key={post._id} />;
+        return <BlogListItem post={post} key={post._id} />;
       });
     }
-    return <li>No posts.</li>;*/
-    var posts = [
-      {body: "topkek", _id: 0},
-      {body: "kektop", _id: 1}
-    ];
-    return posts.map((post) => {
-      return <BlogPost post={post} key={post._id} />;
-    });
+    return <li>No posts.</li>;
   },
   render() {
-    /*if (this.data.loading) {
+    if (this.data.loading) {
       return <LoadingSpinnerComponent />;
     }
 
     if (! this.data.currentUser) {
       return <PowerlessComponent />;
-    }*/
+    }
+
+    if (! this.data.posts.length) {
+      var msg;
+      if (this.data.currentUser.subscriptions.length) {
+        msg = "None of your subscriptions have posted anything...";
+      } else {
+        msg = "You haven't subscribed to anyone!";
+      }
+      return <div className="uhoh">
+        {msg}
+      </div>;
+    }
 
     return <ol className="blog">
       {this.renderPosts()}

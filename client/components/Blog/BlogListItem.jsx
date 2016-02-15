@@ -6,14 +6,6 @@ BlogListItem = React.createClass({
       return <BlogMoreMenu post={this.props.post} currentUser={this.props.currentUser} />;
     }
   },
-  renderBody() {
-    var para = this.props.post.body.split("\n").map((line) => {
-      return <p>{line}</p>;
-    });
-    return <div className="body">
-      {para}
-    </div>;
-  },
   render() {
     var post = this.props.post;
 
@@ -40,7 +32,7 @@ BlogListItem = React.createClass({
             </div>
             {this.renderMoreMenu()}
           </div>
-          {this.renderBody()}
+          <TextBody text={this.props.post.body} className="body" />
         </div>
       </article>
     </li>;

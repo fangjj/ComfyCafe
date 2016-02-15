@@ -21,9 +21,10 @@ Meteor.publish("allPosts", function () {
 	return Posts.find();
 });
 
-Meteor.publish("yourPosts", function () {
+Meteor.publish("artBy", function (username) {
 	//Meteor._sleepForMs(2000);
-	return Posts.find({ "uploader._id": this.userId });
+	check(username, String);
+	return Posts.find({ "uploader.username": username });
 });
 
 Meteor.publish("postFeed", function () {

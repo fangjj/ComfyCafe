@@ -51,7 +51,7 @@ PostComponent = React.createClass({
     setPattern(this.data.post.name);
 
     return <article className="post">
-      <figure className="medium">
+      <figure>
         {medium}
       </figure>
       <PostInfoBoxComponent post={this.data.post} currentUser={this.data.currentUser} />

@@ -47,6 +47,10 @@ main {
   min-height: calc(100vh - 170px);
 }
 
+article > figure {
+  @include content;
+}
+
 .progress.bottom {
   position: fixed;
   bottom: 0;

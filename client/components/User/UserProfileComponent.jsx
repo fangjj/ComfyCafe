@@ -41,8 +41,27 @@ UserProfileComponent = React.createClass({
 
     var toolbox;
     if (! isOwner) {
+      var artPath = FlowRouter.path("artBy", {username: this.data.user.username});
+      var blogPath = FlowRouter.path("blogBy", {username: this.data.user.username});
       toolbox = <div className="toolbox">
         <SubscriptionButton owner={user} currentUser={this.data.currentUser} />
+        <br />
+        <RaisedButton
+          label="View Art"
+          labelStyle={{fontSize: "18px"}}
+          secondary={true}
+          icon={<FontIcon className="material-icons">palette</FontIcon>}
+          linkButton={true}
+          href={artPath}
+        />
+        <RaisedButton
+          label="View Blog"
+          labelStyle={{fontSize: "18px"}}
+          secondary={true}
+          icon={<FontIcon className="material-icons">import_contacts</FontIcon>}
+          linkButton={true}
+          href={blogPath}
+        />
       </div>;
     } else {
       var hasAvatar = _.has(user, "avatars");

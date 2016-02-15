@@ -17,7 +17,7 @@ BlogList = React.createClass({
   renderPosts() {
     if (this.data.posts.length) {
       return this.data.posts.map((post) => {
-        return <BlogListItem post={post} key={post._id} />;
+        return <BlogListItem post={post} currentUser={this.data.currentUser} key={post._id} />;
       });
     }
     return <li>No posts.</li>;

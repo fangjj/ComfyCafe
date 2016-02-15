@@ -17,7 +17,7 @@ BlogPostFAB = React.createClass({
   },
   render() {
     return <div className="fixed-action-btn">
-      <FloatingActionButton secondary={true} onClick={this.showBlogForm}>
+      <FloatingActionButton secondary={true} onTouchTap={this.showBlogForm}>
         <FontIcon className="material-icons">add</FontIcon>
       </FloatingActionButton>
       <BlogForm

@@ -19,6 +19,22 @@
 
     width: 100%;
 
+    .top {
+      display: flex;
+      align-items: left;
+      align-content: left;
+
+      position: relative;
+
+      width: 100%;
+
+      .more {
+        position: absolute;
+        right: 0;
+        top: -8px;
+      }
+    }
+
     .body {
       margin-top: 8px;
 

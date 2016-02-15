@@ -1,10 +1,16 @@
 BlogListItem = React.createClass({
+  renderMoreMenu() {
+    var isOwner = this.props.currentUser
+      && this.props.currentUser._id === this.props.post.owner._id;
+    if (isOwner) {
+      return <BlogMoreMenu post={this.props.post} currentUser={this.props.currentUser} />;
+    }
+  },
   render() {
     var post = this.props.post;
 
     var owner = post.owner;
     var ownerUrl = FlowRouter.path("profile", {username: owner.username});
-    var isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
 
     var isoDate = moment(post.createdAt).toISOString();
     var prettyDate = moment(post.createdAt).fromNow();
@@ -19,9 +25,12 @@ BlogListItem = React.createClass({
           </a>
         </div>
         <div className="rightSide">
-          <div className="info">
-            by <a href={ownerUrl}>{owner.username}</a> <time dateTime={isoDate}>{prettyDate}</time>
-            &nbsp;<a href={permaLink}>(link)</a>
+          <div className="top">
+            <div className="info">
+              by <a href={ownerUrl}>{owner.username}</a> <time dateTime={isoDate}>{prettyDate}</time>
+              &nbsp;<a href={permaLink}>(link)</a>
+            </div>
+            {this.renderMoreMenu()}
           </div>
           <div className="body">
             {this.props.post.body}

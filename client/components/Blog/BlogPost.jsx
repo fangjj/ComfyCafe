@@ -38,7 +38,7 @@ BlogPost = React.createClass({
     }
 
     return <ol className="blog">
-      <BlogListItem post={this.data.post} />
+      <BlogListItem post={this.data.post} currentUser={this.data.currentUser} />
       {fab}
     </ol>;
   }

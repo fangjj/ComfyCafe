@@ -5,7 +5,7 @@ let {
 
 SubscriptionButton = React.createClass({
   style: {
-    width: 180
+    width: 170
   },
   getInitialState() {
     return {

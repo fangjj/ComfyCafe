@@ -1,6 +1,6 @@
 TopBarArtButton = React.createClass({
   render() {
-    var path = FlowRouter.path("feed");
+    var path = FlowRouter.path("art");
     return <li>
       <a href={path} className="waves-effect waves-teal">
         <i className="material-icons left">palette</i>

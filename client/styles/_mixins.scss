@@ -35,6 +35,22 @@
   }
 }
 
+@mixin contentList() {
+  list-style: none;
+
+  li {
+    @include content;
+  }
+
+  li:not(:first-child) {
+    margin-top: 0;
+  }
+
+  li:nth-child(even) {
+    background: #2E2C2C;
+  }
+}
+
 @mixin gallery() {
   display: flex;
   flex-direction: row;

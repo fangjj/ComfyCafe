@@ -43,9 +43,9 @@ Meteor.publish("postFeed", function () {
 	});
 });
 
-Meteor.publish("favorites", function () {
+Meteor.publish("likes", function () {
 	if (this.userId) {
-		return Posts.find({ favorited: this.userId });
+		return Posts.find({ likes: this.userId });
 	}
 });
 

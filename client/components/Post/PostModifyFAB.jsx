@@ -21,7 +21,7 @@ PostModifyFAB = React.createClass({
     }
   },
   render() {
-    return <div id="fabModify" className="fixed-action-btn">
+    return <div className="fixed-action-btn">
       <FloatingActionButton secondary={true} onClick={this.showPostForm}>
         <FontIcon className="material-icons">edit</FontIcon>
       </FloatingActionButton>

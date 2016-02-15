@@ -45,7 +45,7 @@ PostComponent = React.createClass({
       fab = <PostModifyFAB post={this.data.post} />;
     }
     if (showFavoriteButton) {
-      fab = <FavoriteFAB post={this.data.post} userId={this.data.currentUser._id} />;
+      fab = <PostLikeFAB post={this.data.post} userId={this.data.currentUser._id} />;
     }
 
     setPattern(this.data.post.name);

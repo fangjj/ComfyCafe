@@ -4,6 +4,14 @@ PostInfoBoxComponent = React.createClass({
       FlowRouter.go("/");
     });
   },
+  renderDescription() {
+    var para = this.props.post.description.split("\n").map((line) => {
+      return <p>{line}</p>;
+    });
+    return <div className="description">
+      {para}
+    </div>;
+  },
   render() {
     var post = this.props.post;
 
@@ -38,9 +46,7 @@ PostInfoBoxComponent = React.createClass({
           </div>
         </div>
       </div>
-      <div className="description">
-        {post.description}
-      </div>
+      {this.renderDescription()}
     </section>;
   }
 });

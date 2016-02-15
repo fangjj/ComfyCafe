@@ -41,6 +41,14 @@
       padding-top: 8px;
 
       border-top: 1px solid rgba($muted-light, 0.5);
+
+      p {
+        margin-bottom: 0;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
     }
   }
 }

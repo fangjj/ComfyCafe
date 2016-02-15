@@ -38,11 +38,7 @@ BlogPost = React.createClass({
     }
 
     return <ol className="blog">
-      <li>
-        <article className="content">
-          {this.data.post.body}
-        </article>
-      </li>
+      <BlogListItem post={this.data.post} />
       {fab}
     </ol>;
   }

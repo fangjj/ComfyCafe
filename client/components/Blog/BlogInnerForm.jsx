@@ -1,23 +1,14 @@
 let {
-  TextField,
-  SelectField,
-  MenuItem
+  TextField
 } = mui;
 
 BlogInnerForm = React.createClass({
   render() {
     return <div>
-      <div>
-        <SelectField
-          value={this.props.visibility}
-          onChange={this.props.handleVisibility}
-          fullWidth={true}
-        >
-          <MenuItem value="public" primaryText="Public" />
-          <MenuItem value="friends" primaryText="Friends" />
-          <MenuItem value="unlisted" primaryText="Unlisted" />
-        </SelectField>
-      </div>
+      <SelectVisibility
+        visibility={this.props.visibility}
+        onChange={this.props.handleVisibility}
+      />
       <br />
       <TextField
         hintText="Body"

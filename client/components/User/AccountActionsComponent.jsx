@@ -12,7 +12,9 @@ AccountActionsComponent = React.createClass({
     }
 
     var profileUrl = FlowRouter.path("profile", {username: this.props.currentUser.username});
-    var yourPostsUrl = FlowRouter.path("yourPosts");
+    var likesUrl = FlowRouter.path("likes");
+    var yourArtUrl = FlowRouter.path("artBy", {username: this.props.currentUser.username});
+    var yourBlogUrl = FlowRouter.path("blogBy", {username: this.props.currentUser.username});
     var favoritesUrl = FlowRouter.path("favorites");
     var invitesUrl = FlowRouter.path("invites");
     var settingsUrl = FlowRouter.path("settings");
@@ -24,25 +26,37 @@ AccountActionsComponent = React.createClass({
           <li>
             <a href={profileUrl} className="waves-effect waves-teal">
               <i className="material-icons left">account_circle</i>
-              <span>View Profile</span>
+              <span>Profile</span>
             </a>
           </li>
           <li>
-            <a href={yourPostsUrl} className="waves-effect waves-teal">
+            <a href={likesUrl} className="waves-effect waves-teal">
+              <i className="material-icons left">favorite</i>
+              <span>Likes</span>
+            </a>
+          </li>
+          <li>
+            <a href={yourArtUrl} className="waves-effect waves-teal">
               <i className="material-icons left">view_comfy</i>
-              <span>Manage Posts</span>
+              <span>Your Art</span>
+            </a>
+          </li>
+          <li>
+            <a href={yourBlogUrl} className="waves-effect waves-teal">
+              <i className="material-icons left">view_list</i>
+              <span>Your Blog</span>
             </a>
           </li>
           <li>
             <a href={invitesUrl} className="waves-effect waves-teal">
               <i className="material-icons left">weekend</i>
-              <span>Manage Invites</span>
+              <span>Beta Invites</span>
             </a>
           </li>
           <li>
             <a href={settingsUrl} className="waves-effect waves-teal">
               <i className="material-icons left">settings</i>
-              <span>Edit Settings</span>
+              <span>Settings</span>
             </a>
           </li>
         </ul>

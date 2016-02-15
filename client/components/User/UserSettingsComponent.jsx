@@ -105,7 +105,7 @@ UserSettingsComponent = React.createClass({
         message="Settings saved successfully."
         autoHideDuration={4000}
         onRequestClose={this.handleSnackbarRequestClose}
-        bodyStyle={{backgroundColor: "#ABEDAE"}}
+        bodyStyle={{backgroundColor: "#237B4C"}}
       />
     </div>;
   }

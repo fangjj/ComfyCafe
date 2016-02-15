@@ -6,7 +6,7 @@ let {
 
 BlogInnerForm = React.createClass({
   render() {
-    return <form>
+    return <div>
       <div>
         <SelectField
           value={this.props.visibility}
@@ -29,6 +29,6 @@ BlogInnerForm = React.createClass({
         onChange={this.props.handleBody}
         fullWidth={true}
       />
-    </form>;
+  </div>;
   }
 });

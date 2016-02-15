@@ -6,7 +6,7 @@ let {
 
 PostInnerFormComponent = React.createClass({
   render() {
-    return <form>
+    return <div>
       <div>
         <SelectField
           value={this.props.visibility}
@@ -40,6 +40,6 @@ PostInnerFormComponent = React.createClass({
         onChange={this.props.handleTags}
         fullWidth={true}
       />
-    </form>;
+  </div>;
   }
 });

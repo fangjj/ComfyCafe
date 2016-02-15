@@ -1,16 +1,17 @@
-BlogForm = React.createClass({
+BlogUpdateForm = React.createClass({
   handleSubmit(data) {
-    Meteor.call("addBlogPost", data, (err, name) => {
+    Meteor.call("updateBlogPost", this.props.post._id, data, (err) => {
       this.props.handleClose();
     });
   },
   render() {
     return <BlogDialog
-      title="Write Blog Post"
+      title="Edit Blog Post"
       open={this.props.open}
       modal={false}
       handleClose={this.props.handleClose}
       handleSubmit={this.handleSubmit}
+      post={this.props.post}
     />;
   }
 });

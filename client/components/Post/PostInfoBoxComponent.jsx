@@ -1,7 +1,7 @@
 PostInfoBoxComponent = React.createClass({
   delete() {
     Meteor.call("deletePost", this.props.post._id, function () {
-      FlowRouter.go("/");
+      FlowRouter.go(Session.get("previousPath"));
     });
   },
   render() {

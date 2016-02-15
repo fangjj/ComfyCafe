@@ -25,6 +25,7 @@ SubscriptionButton = React.createClass({
       return <RaisedButton
         className="toggleSubscription"
         label="Subscribe"
+        labelStyle={{fontSize: "18px"}}
         secondary={true}
         icon={<FontIcon className="material-icons">add_box</FontIcon>}
         style={this.style}
@@ -43,6 +44,7 @@ SubscriptionButton = React.createClass({
       return <RaisedButton
         className="toggleSubscription grey darken-2"
         label={label}
+        labelStyle={{fontSize: "18px"}}
         icon={<FontIcon className="material-icons">{icon}</FontIcon>}
         style={this.style}
         onTouchTap={this.toggleSubscription}

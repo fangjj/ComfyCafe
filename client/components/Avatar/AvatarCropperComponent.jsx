@@ -72,6 +72,7 @@ AvatarCropperComponent = React.createClass({
 			/>
 			<RaisedButton
 				label="Crop"
+        labelStyle={{fontSize: "18px"}}
 				secondary={true}
 				icon={<FontIcon className="material-icons">crop</FontIcon>}
 				onTouchTap={this.save}

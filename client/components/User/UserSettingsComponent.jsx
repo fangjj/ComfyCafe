@@ -92,6 +92,7 @@ UserSettingsComponent = React.createClass({
         />
         <RaisedButton
           label="Submit"
+          labelStyle={{fontSize: "18px"}}
           secondary={true}
           icon={<FontIcon className="material-icons">done</FontIcon>}
           onTouchTap={this.submit}

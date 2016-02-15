@@ -59,6 +59,7 @@ UserProfileComponent = React.createClass({
       toolbox = <div className="toolbox">
         <RaisedButton
           label="Change Avatar"
+          labelStyle={{fontSize: "18px"}}
           secondary={true}
           icon={<FontIcon className="material-icons">image</FontIcon>}
           onTouchTap={this.startChangingAvatar}

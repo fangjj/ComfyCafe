@@ -47,11 +47,13 @@ PostDialog = React.createClass({
     const actions = [
       <FlatButton
         label="Cancel"
+        labelStyle={{fontSize: "18px"}}
         secondary={true}
         onTouchTap={this.props.handleClose}
       />,
       <FlatButton
         label="Submit"
+        labelStyle={{fontSize: "18px"}}
         primary={true}
         onTouchTap={this.handleSubmit}
       />,

@@ -5,7 +5,10 @@ TopicList = React.createClass({
     var handle = Meteor.subscribe("roomTopics", id);
     return {
       loading: ! handle.ready(),
-      topics: Topics.find({ "room._id": id }).fetch(),
+      topics: Topics.find(
+        { "room._id": id },
+        { sort: { createdAt: -1, name: 1 } }
+      ).fetch(),
       currentUser: Meteor.user()
     };
   },

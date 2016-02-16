@@ -9,7 +9,7 @@ BlogList = React.createClass({
           { "owner._id": Meteor.userId() },
           { "owner._id": { $in: Meteor.user() && Meteor.user().subscriptions || [] } }
         ] },
-        { sort: { createdAt: -1, title: 1 } }
+        { sort: { createdAt: -1, name: 1 } }
       ).fetch(),
       currentUser: Meteor.user()
     };

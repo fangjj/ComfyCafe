@@ -1,0 +1,7 @@
+.roomList {
+  @include content;
+
+  > ul {
+    @include list;
+  }
+}

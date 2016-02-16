@@ -5,7 +5,7 @@ PostComponent = React.createClass({
     var handle;
     var doc = {};
     if (id) {
-      handle = Meteor.subscribe("postPerma", FlowRouter.getParam("postId"));
+      handle = Meteor.subscribe("postPerma", id);
       doc = { _id: id };
     } else {
       handle = Meteor.subscribe("post",

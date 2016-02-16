@@ -5,3 +5,11 @@
     @include list;
   }
 }
+
+.roomView {
+  @include content;
+}
+
+.topics {
+  @include list;
+}

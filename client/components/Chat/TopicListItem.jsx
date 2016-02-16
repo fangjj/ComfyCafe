@@ -9,16 +9,19 @@ TopicListItem = React.createClass({
     var prettyDate = moment(topic.lastActivity).fromNow();
 
     return <li>
-      <div className="leftSIde">
-        <a href={ownerUrl}>
-          <AvatarComponent class="small" id={owner._id} profile={owner.profile} title={owner.username} />
-        </a>
-      </div>
-      <div className="rightSide">
-        <div className="top">
-          <div className="info">
-            {topic.name}
-            &nbsp;| (last activity <time dateTime={isoDate}>{prettyDate}</time>)
+      <div className="flexLayout">
+        <div className="leftSIde">
+          <a href={ownerUrl}>
+            <AvatarComponent class="small" id={owner._id} profile={owner.profile} title={owner.username} />
+          </a>
+        </div>
+        <div className="rightSide">
+          <div className="top">
+            <div className="info">
+              {topic.name}
+              <br />
+              (last activity <time dateTime={isoDate}>{prettyDate}</time>)
+            </div>
           </div>
         </div>
       </div>

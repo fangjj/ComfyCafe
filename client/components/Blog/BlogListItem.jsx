@@ -18,7 +18,7 @@ BlogListItem = React.createClass({
     var permaLink = FlowRouter.path("blogPostPerma", {postId: post._id});
 
     return <li className="blogPost">
-      <article className="content">
+      <article className="flexLayout">
         <div className="leftSIde">
           <a href={ownerUrl}>
             <AvatarComponent class="small" id={owner._id} profile={owner.profile} title={owner.username} />

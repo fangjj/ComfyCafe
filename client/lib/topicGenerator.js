@@ -18,7 +18,7 @@ var actions = [
   "kill",
   "love",
   "make",
-  "fry?i",
+  "fry?frie",
   "bake",
   "smoke",
   "resurrect",
@@ -26,7 +26,8 @@ var actions = [
   "destroy",
   "seduce",
   "analyze",
-  "lambast"
+  "lambast",
+  "kiss?kisse",
 ];
 
 var objects = [
@@ -49,7 +50,8 @@ var objects = [
   "artists",
   "skaters",
   "actors",
-  "losers"
+  "losers",
+  "cupcakes",
 ];
 
 generateTopic = function () {
@@ -62,8 +64,7 @@ generateTopic = function () {
       // Past tense
       if (action.indexOf("?") > -1) {
         // Irregular verbs
-        var split = action.split("?");
-        action = slice(split[0], undefined, -split[1].length) + split[1];
+        action = action.split("?")[1];
       }
       if (slice(action, -1) === "e") {
         // Prevent extra e
@@ -72,11 +73,7 @@ generateTopic = function () {
     } else if (phrase.indexOf("{ACTION}s") > -1) {
       if (action.indexOf("?") > -1) {
         // Irregular verbs
-        var split = action.split("?");
-        action = slice(split[0], undefined, -split[1].length) + split[1];
-        if (slice(action, -1) === "i") {
-          action += "e";
-        }
+        action = action.split("?")[1];
       }
     } else {
       if (action.indexOf("?") > -1) {

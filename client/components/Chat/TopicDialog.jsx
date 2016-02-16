@@ -6,20 +6,25 @@ let {
 
 TopicDialog = React.createClass({
   getInitialState() {
-    if (this.props.room) {
+    if (this.props.topic) {
       return {
         name: this.props.topic.name,
+        nameGenerated: false,
         visibility: this.props.topic.visibility
       };
     } else {
       return {
         name: generateTopic(),
+        nameGenerated: true,
         visibility: "public"
       };
     }
   },
   handleName(event) {
-    this.setState({name: event.target.value});
+    this.setState({
+      name: event.target.value,
+      nameGenerated: false
+    });
   },
   handleVisibility(event, index, value) {
     this.setState({visibility: value});
@@ -29,6 +34,13 @@ TopicDialog = React.createClass({
       name: this.state.name,
       visibility: this.state.visibility
     });
+  },
+  componentWillReceiveProps() {
+    if (this.state.nameGenerated) {
+      this.setState({
+        name: generateTopic()
+      });
+    }
   },
   render() {
     const actions = [

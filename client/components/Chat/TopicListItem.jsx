@@ -1,6 +1,17 @@
 TopicListItem = React.createClass({
+  renderMoreMenu() {
+    var isOwner = this.props.currentUser
+      && this.props.currentUser._id === this.props.topic.owner._id;
+    if (isOwner) {
+      return <TopicMoreMenu topic={this.props.topic} currentUser={this.props.currentUser} />;
+    }
+  },
   render() {
     var topic = this.props.topic;
+    var topicUrl = FlowRouter.path("topic", {
+      roomId: topic.room._id,
+      topicId: topic._id
+    });
 
     var owner = topic.owner;
     var ownerUrl = FlowRouter.path("profile", {username: owner.username});
@@ -18,10 +29,11 @@ TopicListItem = React.createClass({
         <div className="rightSide">
           <div className="top">
             <div className="info">
-              {topic.name}
+              <a href={topicUrl}>{topic.name}</a>
               <br />
               (last activity <time dateTime={isoDate}>{prettyDate}</time>)
             </div>
+            {this.renderMoreMenu()}
           </div>
         </div>
       </div>

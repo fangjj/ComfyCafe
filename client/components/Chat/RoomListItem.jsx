@@ -3,6 +3,13 @@ let {
 } = mui;
 
 RoomListItem = React.createClass({
+  renderMoreMenu() {
+    var isOwner = this.props.currentUser
+      && this.props.currentUser._id === this.props.room.owner._id;
+    if (isOwner) {
+      return <RoomMoreMenu room={this.props.room} currentUser={this.props.currentUser} />;
+    }
+  },
   renderCountLabel() {
     if (this.props.room.topicCount !== 1) {
       return "topics";
@@ -34,6 +41,7 @@ RoomListItem = React.createClass({
               <br />
               (last activity <time dateTime={isoDate}>{prettyDate}</time>)
             </div>
+            {this.renderMoreMenu()}
           </div>
         </div>
       </div>

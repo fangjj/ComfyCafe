@@ -22,9 +22,6 @@ RoomListItem = React.createClass({
 
     var path = FlowRouter.path("room", {roomId: room._id});
 
-    var isoDate = moment(room.lastActivity).toISOString();
-    var prettyDate = moment(room.lastActivity).fromNow();
-
     return <li>
       <div className="flexLayout">
         <div className="leftSIde">
@@ -39,7 +36,7 @@ RoomListItem = React.createClass({
               <br />
               {room.topicCount + " " + this.renderCountLabel()}
               <br />
-              (last activity <time dateTime={isoDate}>{prettyDate}</time>)
+              (last activity <Moment time={room.lastActivity} />)
             </div>
             {this.renderMoreMenu()}
           </div>

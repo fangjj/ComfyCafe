@@ -16,9 +16,6 @@ TopicListItem = React.createClass({
     var owner = topic.owner;
     var ownerUrl = FlowRouter.path("profile", {username: owner.username});
 
-    var isoDate = moment(topic.lastActivity).toISOString();
-    var prettyDate = moment(topic.lastActivity).fromNow();
-
     return <li>
       <div className="flexLayout">
         <div className="leftSIde">
@@ -31,7 +28,7 @@ TopicListItem = React.createClass({
             <div className="info">
               <a href={topicUrl}>{topic.name}</a>
               <br />
-              (last activity <time dateTime={isoDate}>{prettyDate}</time>)
+              (last activity <Moment time={topic.lastActivity} />)
             </div>
             {this.renderMoreMenu()}
           </div>

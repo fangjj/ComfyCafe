@@ -18,7 +18,7 @@ var actions = [
   "kill",
   "love",
   "make",
-  "fry",
+  "fry?i",
   "bake",
   "smoke",
   "resurrect",
@@ -41,6 +41,7 @@ var objects = [
   "skeletons",
   "ogres",
   "gnomes",
+  "dragons",
   "unicorns",
   "politicians",
   "musicians",
@@ -55,11 +56,39 @@ generateTopic = function () {
   var phrase = _.sample(phrases);
   var action = _.sample(actions);
   var object = _.sample(objects);
-  phrase = phrase.replace("{ACTION}", action);
-  if (slice(action, -1) == "e") {
-    // Prevent extra e in past tense
-    phrase = phrase.replace(action + "ed", action + "d");
+
+  if (phrase.indexOf("{ACTION}") > -1) {
+    if (phrase.indexOf("{ACTION}ed") > -1) {
+      // Past tense
+      if (action.indexOf("?") > -1) {
+        // Irregular verbs
+        var split = action.split("?");
+        action = slice(split[0], undefined, -split[1].length) + split[1];
+      }
+      if (slice(action, -1) === "e") {
+        // Prevent extra e
+        action = slice(action, undefined, -1);
+      }
+    } else if (phrase.indexOf("{ACTION}s") > -1) {
+      if (action.indexOf("?") > -1) {
+        // Irregular verbs
+        var split = action.split("?");
+        action = slice(split[0], undefined, -split[1].length) + split[1];
+        if (slice(action, -1) === "i") {
+          action += "e";
+        }
+      }
+    } else {
+      if (action.indexOf("?") > -1) {
+        action = action.split("?")[0];
+      }
+    }
+    phrase = phrase.replace("{ACTION}", action);
   }
-  phrase = phrase.replace("{OBJECT}", object);
+
+  if (phrase.indexOf("{OBJECT}") > -1) {
+    phrase = phrase.replace("{OBJECT}", object);
+  }
+
   return phrase;
 };

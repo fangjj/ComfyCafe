@@ -89,14 +89,14 @@ UserProfileComponent = React.createClass({
 
     var content;
     if (! this.state.isChangingAvatar) {
-      content = <div className="content">
+      content = <div>
         <ReactiveAvatarComponent class="large"
           id={user._id} avatars={user.avatars} title={user.username}
         />
         {toolbox}
       </div>;
     } else {
-      content = <div className="content">
+      content = <div>
         <AvatarCropperComponent cancelAction={this.stopChangingAvatar} />
       </div>;
     }

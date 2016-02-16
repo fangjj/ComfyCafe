@@ -54,6 +54,10 @@ article > figure {
   @include content;
 }
 
+.content {
+  @include content;
+}
+
 .progress.bottom {
   position: fixed;
   bottom: 0;

@@ -22,16 +22,12 @@ BlogList = React.createClass({
     }
     return <li>No posts.</li>;
   },
-  render() {
-    if (this.data.loading) {
-      return <LoadingSpinnerComponent />;
-    }
-
-    if (! this.data.currentUser) {
-      return <PowerlessComponent />;
-    }
-
-    if (! this.data.posts.length) {
+  renderInner() {
+    if (this.data.posts.length) {
+      return <ol className="blog">
+        {this.renderPosts()}
+      </ol>
+    } else {
       var msg;
       if (this.data.currentUser.subscriptions.length) {
         msg = "None of your subscriptions have posted anything...";
@@ -42,9 +38,19 @@ BlogList = React.createClass({
         {msg}
       </div>;
     }
+  },
+  render() {
+    if (this.data.loading) {
+      return <LoadingSpinnerComponent />;
+    }
 
-    return <ol className="blog">
-      {this.renderPosts()}
-    </ol>;
+    if (! this.data.currentUser) {
+      return <PowerlessComponent />;
+    }
+
+    return <div>
+      {this.renderInner()}
+      <BlogPostFAB />
+    </div>;
   }
 });

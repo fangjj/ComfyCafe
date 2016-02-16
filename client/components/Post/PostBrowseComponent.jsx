@@ -1,5 +1,5 @@
 PostBrowseComponent = React.createClass({
-  render() {
+  renderInner() {
     if (this.props.posts.length) {
       return <PostGalleryComponent posts={this.props.posts} />;
     } else {
@@ -10,5 +10,11 @@ PostBrowseComponent = React.createClass({
         </div>
       </div>;
     }
+  },
+  render() {
+    return <div>
+      {this.renderInner()}
+      <UploadFAB />
+    </div>;
   }
 });

@@ -13,6 +13,17 @@ InviteListComponent = React.createClass({
       return <InviteComponent invite={invite} key={invite._id} />;
     });
   },
+  renderInner() {
+    if (this.data.invites.length) {
+      return <ul className="invites">
+        {this.renderInvites()}
+      </ul>;
+    } else {
+      return <div className="uhoh">
+        You don't have any open invites.
+      </div>;
+    }
+  },
   render() {
     if (this.data.loading) {
       return <LoadingSpinnerComponent />;
@@ -22,18 +33,9 @@ InviteListComponent = React.createClass({
       return <PowerlessComponent />;
     }
 
-    if (this.data.invites.length) {
-      return <div className="inviteList">
-          <ul className="invites">
-          {this.renderInvites()}
-        </ul>
-      </div>;
-    } else {
-      return <div className="inviteList">
-        <div className="uhoh">
-          You don't have any open invites.
-        </div>
-      </div>;
-    }
+    return <div className="inviteList">
+      {this.renderInner()}
+      <InviteFAB />
+    </div>;
   }
 });

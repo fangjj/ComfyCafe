@@ -28,6 +28,7 @@ RoomList = React.createClass({
       <ul>
         {this.renderRooms()}
       </ul>
+      <RoomFAB />
     </div>;
   }
 });

@@ -14,15 +14,7 @@ PostFeedComponent = React.createClass({
       currentUser: Meteor.user()
     };
   },
-  render() {
-    if (this.data.loading) {
-      return <LoadingSpinnerComponent />;
-    }
-
-    if (! this.data.currentUser) {
-      return <PowerlessComponent />;
-    }
-
+  renderInner() {
     if (this.data.posts.length) {
       return <PostGalleryComponent posts={this.data.posts} />;
     } else {
@@ -36,5 +28,19 @@ PostFeedComponent = React.createClass({
         {msg}
       </div>;
     }
+  },
+  render() {
+    if (this.data.loading) {
+      return <LoadingSpinnerComponent />;
+    }
+
+    if (! this.data.currentUser) {
+      return <PowerlessComponent />;
+    }
+
+    return <div>
+      {this.renderInner()}
+      <UploadFAB />
+    </div>;
   }
 });

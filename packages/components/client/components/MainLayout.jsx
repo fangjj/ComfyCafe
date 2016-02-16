@@ -79,7 +79,6 @@ MainLayout = React.createClass({
       <main>
         {this.props.main}
       </main>
-      {this.props.fab}
       {this.renderPostForm()}
       <footer>
         © 2016 Pepperoni Pizza Inc.

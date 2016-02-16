@@ -21,7 +21,7 @@ Room = React.createClass({
 
     return <div className="roomView">
       {this.data.room.name}
-      <TopicList topics={this.data.room.topics} currentUser={this.data.currentUser} />
+      <TopicList />
       {this.renderFAB()}
     </div>;
   }

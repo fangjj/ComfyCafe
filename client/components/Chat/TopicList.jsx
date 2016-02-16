@@ -1,8 +1,18 @@
 TopicList = React.createClass({
+  mixins: [ReactMeteorData],
+  getMeteorData() {
+    var id = FlowRouter.getParam("roomId");
+    var handle = Meteor.subscribe("roomTopics", id);
+    return {
+      loading: ! handle.ready(),
+      topics: Topics.find({ "room._id": id }).fetch(),
+      currentUser: Meteor.user()
+    };
+  },
   renderTopics() {
-    if (this.props.topics) {
-      return this.props.topics.map((topic) => {
-        return <TopicListItem topic={topic} currentUser={this.props.currentUser} key={topic._id} />;
+    if (this.data.topics.length) {
+      return this.data.topics.map((topic) => {
+        return <TopicListItem topic={topic} currentUser={this.data.currentUser} key={topic._id} />;
       });
     }
     return <li>No topics.</li>;

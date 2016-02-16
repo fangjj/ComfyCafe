@@ -13,7 +13,7 @@ TopicDialog = React.createClass({
       };
     } else {
       return {
-        name: generateName({adjCount: 2, delim: " "}),
+        name: generateTopic(),
         visibility: "public"
       };
     }

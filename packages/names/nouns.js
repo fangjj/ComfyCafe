@@ -101,6 +101,7 @@ nouns = [
   "Horseradish",
   "Queen",
   "Goat",
+  "Airhead",
   "Kitten",
   "Tilapia",
   "Deviant",

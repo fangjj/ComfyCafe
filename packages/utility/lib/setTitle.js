@@ -1,7 +1,7 @@
 setTitle = function (title) {
   if (Meteor.isClient) {
     if (! title) {
-      title = "TeruImages";
+      title = "ComfyCafé";
     }
     Session.set("pageTitle", title);
   }

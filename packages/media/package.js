@@ -2,7 +2,7 @@ Package.describe({
   name: "teru:media",
   version: "0.0.1",
   // Brief, one-line summary of the package.
-  summary: "Internal media package for TeruImages.",
+  summary: "Internal media package for ComfyCafé.",
   // URL to the Git repository containing the source code for this package.
   git: "",
   // By default, Meteor will default to using README.md for documentation.

@@ -1,4 +1,5 @@
 let {
+  TextField,
   SelectField,
   MenuItem,
   Toggle,
@@ -17,6 +18,8 @@ UserSettingsComponent = React.createClass({
   getInitialState() {
     return {
       snackbarOpen: false,
+      displayName: "",
+      blurb: "",
       defaultPage: "art",
       nsfwNameGen: false
     };
@@ -25,6 +28,12 @@ UserSettingsComponent = React.createClass({
     this.setState({
       snackbarOpen: false
     });
+  },
+  handleDisplayName(event) {
+    this.setState({displayName: event.target.value})
+  },
+  handleBlurb(event) {
+    this.setState({blurb: event.target.value})
   },
   handleDefaultPage(event, index, value) {
     this.setState({defaultPage: value})
@@ -35,6 +44,8 @@ UserSettingsComponent = React.createClass({
   submit(event) {
     var self = this;
     Meteor.call("applySettings", {
+      displayName: this.state.displayName,
+      blurb: this.state.blurb,
       defaultPage: this.state.defaultPage,
       nsfwNameGen: this.state.nsfwNameGen
     }, () => {
@@ -50,6 +61,14 @@ UserSettingsComponent = React.createClass({
     let obj = {};
 
     if (this.data.currentUser && _.has(this.data.currentUser, "profile")) {
+      if (_.has(this.data.currentUser.profile, "displayName")) {
+        obj.displayName = this.data.currentUser.profile.displayName;
+      }
+
+      if (_.has(this.data.currentUser.profile, "blurb")) {
+        obj.blurb = this.data.currentUser.profile.blurb;
+      }
+
       if (_.has(this.data.currentUser.profile, "defaultPage")) {
         obj.defaultPage = this.data.currentUser.profile.defaultPage;
       }
@@ -71,6 +90,26 @@ UserSettingsComponent = React.createClass({
     }
 
     return <div className="settings">
+      <TextField
+        hintText="Display Name"
+        defaultValue={this.state.displayName}
+        floatingLabelText="Display Name"
+        floatingLabelStyle={{fontSize: "20px"}}
+        onChange={this.handleDisplayName}
+        fullWidth={true}
+      />
+
+      <TextField
+        hintText="Blurb"
+        defaultValue={this.state.blurb}
+        floatingLabelText="Blurb"
+        floatingLabelStyle={{fontSize: "20px"}}
+        multiLine={true}
+        rows={4}
+        onChange={this.handleBlurb}
+        fullWidth={true}
+      />
+
       <SelectField
         value={this.state.defaultPage}
         onChange={this.handleDefaultPage}

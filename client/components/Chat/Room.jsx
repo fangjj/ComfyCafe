@@ -19,6 +19,8 @@ Room = React.createClass({
       return <LoadingSpinnerComponent />;
     }
 
+    setTitle(this.data.room.name);
+
     return <div className="roomView">
       {this.data.room.name}
       <TopicList />

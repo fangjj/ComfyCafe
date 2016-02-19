@@ -58,6 +58,14 @@ article > figure {
   @include content;
 }
 
+.list {
+  @include list;
+}
+
+.contentList {
+  @include contentList;
+}
+
 .progress.bottom {
   position: fixed;
   bottom: 0;

@@ -15,7 +15,7 @@ PostInfoBoxComponent = React.createClass({
     if (! isOwner) {
       subButton = <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />;
     } else {
-      subButton = <SublteDangerButton
+      subButton = <SubtleDangerButton
         label="Delete Post"
         iconName="delete"
         onTouchTap={this.delete}
@@ -28,7 +28,7 @@ PostInfoBoxComponent = React.createClass({
           <AvatarComponent class="small" id={owner._id} profile={owner.profile} title={owner.username} />
         </a>
         <div className="info">
-          by <a href={ownerUrl}>{owner.username}</a> <Moment time={post.createdAt} />
+          by <UserLink user={owner} /> <Moment time={post.createdAt} />
           <br />
           <div className="action">
             {subButton}

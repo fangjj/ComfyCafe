@@ -27,7 +27,7 @@ BlogListItem = React.createClass({
         <div className="rightSide">
           <div className="top">
             <div className="info">
-              by <a href={ownerUrl}>{owner.username}</a> <time dateTime={isoDate}>{prettyDate}</time>
+              by <UserLink user={owner} /> <time dateTime={isoDate}>{prettyDate}</time>
               &nbsp;<a href={permaLink}>(link)</a>
             </div>
             {this.renderMoreMenu()}

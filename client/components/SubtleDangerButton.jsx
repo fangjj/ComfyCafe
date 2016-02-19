@@ -3,7 +3,7 @@ let {
   FontIcon
 } = mui;
 
-SublteDangerButton = React.createClass({
+SubtleDangerButton = React.createClass({
   getInitialState() {
     return {
       hover: false

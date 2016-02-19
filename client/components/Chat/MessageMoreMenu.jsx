@@ -18,7 +18,7 @@ MessageMoreMenu = React.createClass({
     this.setState({showForm: false});
   },
   delete() {
-    Meteor.call("deleteMessage", this.props.message.topic._id, this.props.message._id);
+    Meteor.call("deleteMessage", this.props.message._id);
   },
   render() {
     var msg = this.props.message;

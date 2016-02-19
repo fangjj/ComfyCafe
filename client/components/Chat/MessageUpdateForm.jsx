@@ -1,6 +1,6 @@
 MessageUpdateForm = React.createClass({
   handleSubmit(data) {
-    Meteor.call("updateMessage", this.props.message.topic._id, this.props.message._id, data, (err) => {
+    Meteor.call("updateMessage", this.props.message._id, data, (err) => {
       this.props.handleClose();
     });
   },

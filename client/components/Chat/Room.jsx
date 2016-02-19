@@ -19,12 +19,16 @@ Room = React.createClass({
       return <LoadingSpinnerComponent />;
     }
 
-    setTitle(this.data.room.name);
+    var room = this.data.room;
 
-    return <div className="roomView">
-      {this.data.room.name}
+    setTitle(room.name);
+
+    return <section className="roomView content">
+      <header>
+        <h2>{room.name}</h2>
+      </header>
       <TopicList />
       {this.renderFAB()}
-    </div>;
+    </section>;
   }
 });

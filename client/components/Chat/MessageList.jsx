@@ -7,7 +7,7 @@ MessageList = React.createClass({
       loading: ! handle.ready(),
       messages: Messages.find(
         { "topic._id": id },
-        { sort: { createdAt: -1, name: 1 } }
+        { sort: { createdAt: 1 } }
       ).fetch(),
       currentUser: Meteor.user()
     };

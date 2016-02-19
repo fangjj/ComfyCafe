@@ -61,7 +61,6 @@ TopBarComponent = React.createClass({
   },
   renderLeft() {
     return <ul className="left topLevel">
-      <TopBarSearchButton />
       {this.renderLeftSub()}
     </ul>;
   },
@@ -121,13 +120,6 @@ TopBarComponent = React.createClass({
 
         {notificationList}
         {actionList}
-
-        <form id="searchForm" onSubmit={this.search}>
-  				<div className="input-field">
-  					<input id="search" type="search" onChange={this.handleSearchInput} />
-  					<i className="material-icons searchClose">close</i>
-  				</div>
-  			</form>
   		</div>
   	</nav>;
   }

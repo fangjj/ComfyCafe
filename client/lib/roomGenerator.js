@@ -288,6 +288,7 @@ var things = [
   "Counselors",
   "Heist",
   "Plan",
+  "Foundation",
 ];
 
 generateRoom = function () {

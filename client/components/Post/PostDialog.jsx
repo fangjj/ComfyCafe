@@ -9,8 +9,8 @@ PostDialog = React.createClass({
     if (this.props.post) {
       return {
         visibility: this.props.post.visibility,
-        description: this.props.post.description,
-        tags: this.props.post.tags.text
+        description: this.props.post.description || "",
+        tags: this.props.post.tags.text || ""
       };
     } else {
       return {

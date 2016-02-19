@@ -118,6 +118,7 @@ var adjs1 = [
   "Eastern",
   "Platinum",
   "Fraudulent",
+  "Top Secret",
 ];
 
 var adjs2 = [

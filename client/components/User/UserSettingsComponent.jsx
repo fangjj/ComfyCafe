@@ -21,6 +21,7 @@ UserSettingsComponent = React.createClass({
       displayName: "",
       blurb: "",
       defaultPage: "art",
+      uploadAction: "redirect",
       nsfwNameGen: false
     };
   },
@@ -38,6 +39,9 @@ UserSettingsComponent = React.createClass({
   handleDefaultPage(event, index, value) {
     this.setState({defaultPage: value})
   },
+  handleUploadAction(event, index, value) {
+    this.setState({uploadAction: value})
+  },
   handleNsfwNameGen(event) {
     this.setState({nsfwNameGen: event.target.checked})
   },
@@ -47,6 +51,7 @@ UserSettingsComponent = React.createClass({
       displayName: this.state.displayName,
       blurb: this.state.blurb,
       defaultPage: this.state.defaultPage,
+      uploadAction: this.state.uploadAction,
       nsfwNameGen: this.state.nsfwNameGen
     }, () => {
 	    this.setState({snackbarOpen: true});
@@ -71,6 +76,10 @@ UserSettingsComponent = React.createClass({
 
       if (_.has(this.data.currentUser.profile, "defaultPage")) {
         obj.defaultPage = this.data.currentUser.profile.defaultPage;
+      }
+
+      if (_.has(this.data.currentUser.profile, "uploadAction")) {
+        obj.uploadAction = this.data.currentUser.profile.uploadAction;
       }
 
       if (_.has(this.data.currentUser.profile, "nsfwNameGen")) {
@@ -118,13 +127,23 @@ UserSettingsComponent = React.createClass({
         <MenuItem value="art" primaryText="Art" />
         <MenuItem value="blog" primaryText="Blog" />
       </SelectField>
+      <br />
+      <SelectField
+        value={this.state.uploadAction}
+        onChange={this.handleUploadAction}
+        floatingLabelText="After creating a post..."
+      >
+        <MenuItem value="redirect" primaryText="Redirect to the post" />
+        <MenuItem value="tab" primaryText="Open post in a new tab" />
+        <MenuItem value="nothing" primaryText="Do nothing" />
+      </SelectField>
 
       <Toggle
         label="Enable NSFW name generation"
         defaultToggled={this.state.nsfwNameGen}
         onToggle={this.handleNsfwNameGen}
       />
-
+      <br />
       <div className="actions">
         <CancelButton
           onTouchTap={this.cancel}

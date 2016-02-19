@@ -9,17 +9,22 @@ RoomDialog = React.createClass({
     if (this.props.room) {
       return {
         name: this.props.room.name,
+        nameGenerated: false,
         visibility: this.props.room.visibility
       };
     } else {
       return {
-        name: generateName({adjCount: 2, delim: " "}),
+        name: generateRoom(),
+        nameGenerated: true,
         visibility: "public"
       };
     }
   },
   handleName(event) {
-    this.setState({name: event.target.value});
+    this.setState({
+      name: event.target.value,
+      nameGenerated: false
+    });
   },
   handleVisibility(event, index, value) {
     this.setState({visibility: value});
@@ -29,6 +34,13 @@ RoomDialog = React.createClass({
       name: this.state.name,
       visibility: this.state.visibility
     });
+  },
+  componentWillReceiveProps() {
+    if (this.state.nameGenerated) {
+      this.setState({
+        name: generateRoom()
+      });
+    }
   },
   render() {
     const actions = [

@@ -31,6 +31,11 @@ UserProfileComponent = React.createClass({
   deleteAvatar(event) {
     Meteor.call("deleteAvatar");
   },
+  renderForm(isOwner) {
+    if (isOwner) {
+      return <UserProfileForm currentUser={this.data.user} />;
+    }
+  },
   render() {
     if (this.data.loading || ! _.has(this.data.currentUser, "profile")) {
       return <LoadingSpinnerComponent />;
@@ -94,7 +99,6 @@ UserProfileComponent = React.createClass({
           id={user._id} avatars={user.avatars} title={user.username}
         />
         {toolbox}
-        <UserProfileForm currentUser={user} />
       </div>;
     } else {
       content = <div>
@@ -107,6 +111,7 @@ UserProfileComponent = React.createClass({
   			<h2>{user.username}</h2>
   		</header>
 			{content}
+      {this.renderForm(isOwner)}
     </div>;
   }
 });

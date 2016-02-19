@@ -47,7 +47,7 @@ UserSettingsComponent = React.createClass({
   },
   submit(event) {
     var self = this;
-    Meteor.call("applySettings", {
+    Meteor.call("updateSettings", {
       displayName: this.state.displayName,
       blurb: this.state.blurb,
       defaultPage: this.state.defaultPage,
@@ -58,32 +58,22 @@ UserSettingsComponent = React.createClass({
     });
   },
   cancel(event) {
-    // should go to last
-    var path = FlowRouter.path("profile", {username: this.data.currentUser.username});
-    FlowRouter.go(path);
+    FlowRouter.go(Session.get("previousPath"));
   },
   componentWillMount() {
     let obj = {};
 
-    if (this.data.currentUser && _.has(this.data.currentUser, "profile")) {
-      if (_.has(this.data.currentUser.profile, "displayName")) {
-        obj.displayName = this.data.currentUser.profile.displayName;
+    if (this.data.currentUser && _.has(this.data.currentUser, "settings")) {
+      if (_.has(this.data.currentUser.settings, "defaultPage")) {
+        obj.defaultPage = this.data.currentUser.settings.defaultPage;
       }
 
-      if (_.has(this.data.currentUser.profile, "blurb")) {
-        obj.blurb = this.data.currentUser.profile.blurb;
+      if (_.has(this.data.currentUser.settings, "uploadAction")) {
+        obj.uploadAction = this.data.currentUser.settings.uploadAction;
       }
 
-      if (_.has(this.data.currentUser.profile, "defaultPage")) {
-        obj.defaultPage = this.data.currentUser.profile.defaultPage;
-      }
-
-      if (_.has(this.data.currentUser.profile, "uploadAction")) {
-        obj.uploadAction = this.data.currentUser.profile.uploadAction;
-      }
-
-      if (_.has(this.data.currentUser.profile, "nsfwNameGen")) {
-        obj.nsfwNameGen = this.data.currentUser.profile.nsfwNameGen;
+      if (_.has(this.data.currentUser.settings, "nsfwNameGen")) {
+        obj.nsfwNameGen = this.data.currentUser.settings.nsfwNameGen;
       }
 
       this.setState(obj);
@@ -99,26 +89,6 @@ UserSettingsComponent = React.createClass({
     }
 
     return <div className="settings">
-      <TextField
-        hintText="Display Name"
-        defaultValue={this.state.displayName}
-        floatingLabelText="Display Name"
-        floatingLabelStyle={{fontSize: "20px"}}
-        onChange={this.handleDisplayName}
-        fullWidth={true}
-      />
-
-      <TextField
-        hintText="Blurb"
-        defaultValue={this.state.blurb}
-        floatingLabelText="Blurb"
-        floatingLabelStyle={{fontSize: "20px"}}
-        multiLine={true}
-        rows={4}
-        onChange={this.handleBlurb}
-        fullWidth={true}
-      />
-
       <SelectField
         value={this.state.defaultPage}
         onChange={this.handleDefaultPage}
@@ -148,11 +118,8 @@ UserSettingsComponent = React.createClass({
         <CancelButton
           onTouchTap={this.cancel}
         />
-        <RaisedButton
-          label="Submit"
-          labelStyle={{fontSize: "18px"}}
-          secondary={true}
-          icon={<FontIcon className="material-icons">done</FontIcon>}
+        <SubmitButton
+          label="Save"
           onTouchTap={this.submit}
         />
       </div>

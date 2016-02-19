@@ -19,7 +19,7 @@ PostFormComponent = React.createClass({
         redirect() { FlowRouter.go(path) },
         tab() { window.open(path) },
         nothing() {}
-      }[this.data.currentUser.profile.uploadAction || "redirect"]();
+      }[this.data.currentUser.settings.uploadAction || "redirect"]();
     });
   },
   render() {

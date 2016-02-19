@@ -94,6 +94,7 @@ UserProfileComponent = React.createClass({
           id={user._id} avatars={user.avatars} title={user.username}
         />
         {toolbox}
+        <UserProfileForm currentUser={user} />
       </div>;
     } else {
       content = <div>

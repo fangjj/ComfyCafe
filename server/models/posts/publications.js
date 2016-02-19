@@ -10,7 +10,7 @@ Meteor.publish("post", function (username, postName) {
 	//Meteor._sleepForMs(2000);
 	return Posts.find(
 		{
-			"uploader.username": username,
+			"owner.username": username,
 			name: postName
 		}
 	);
@@ -24,7 +24,7 @@ Meteor.publish("allPosts", function () {
 Meteor.publish("artBy", function (username) {
 	//Meteor._sleepForMs(2000);
 	check(username, String);
-	return Posts.find({ "uploader.username": username });
+	return Posts.find({ "owner.username": username });
 });
 
 Meteor.publish("postFeed", function () {
@@ -33,8 +33,8 @@ Meteor.publish("postFeed", function () {
 			var user = Meteor.users.findOne(this.userId, { fields: { subscriptions: 1 } });
 			return Posts.find(
 				{ $or: [
-					{ "uploader._id": this.userId },
-					{ "uploader._id": { $in: user && user.subscriptions || [] } }
+					{ "owner._id": this.userId },
+					{ "owner._id": { $in: user && user.subscriptions || [] } }
 				] }
 			);
 		} else {

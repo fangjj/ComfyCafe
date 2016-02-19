@@ -21,7 +21,8 @@ Package.onUse(function(api) {
   ], ["client", "server"]);
 
   api.use([
-    "ongoworks:security"
+    "ongoworks:security",
+    "teru:utility"
   ], ["server"]);
 
   api.use([

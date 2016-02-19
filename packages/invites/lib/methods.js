@@ -7,7 +7,7 @@ Meteor.methods({
 		Invites.insert(
 			{
 				key: uuid.v4(),
-				uploader: Meteor.userId()
+				owner: Meteor.userId()
 			}
 		);
 	},
@@ -16,7 +16,7 @@ Meteor.methods({
 
 		var invite = Invites.findOne({ key: key });
 
-		if (! invite.uploader === Meteor.userId()) {
+		if (! invite.owner === Meteor.userId()) {
 			throw new Meteor.Error("not-authorized");
 		}
 

@@ -7,7 +7,7 @@ PostInfoBoxComponent = React.createClass({
   render() {
     var post = this.props.post;
 
-    var owner = post.uploader;
+    var owner = post.owner;
     var ownerUrl = FlowRouter.path("profile", {username: owner.username});
     var isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
 

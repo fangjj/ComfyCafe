@@ -13,7 +13,7 @@ PostComponent = React.createClass({
         FlowRouter.getParam("postName"),
       );
       doc = {
-        "uploader.username": FlowRouter.getParam("username"),
+        "owner.username": FlowRouter.getParam("username"),
         name: FlowRouter.getParam("postName")
       };
     }
@@ -29,7 +29,7 @@ PostComponent = React.createClass({
     }
 
     var isOwner = this.data.currentUser
-      && this.data.currentUser._id === this.data.post.uploader._id;
+      && this.data.currentUser._id === this.data.post.owner._id;
     var showEditButton = isOwner;
     var showFavoriteButton = ! isOwner && this.data.currentUser && this.data.post.medium;
 

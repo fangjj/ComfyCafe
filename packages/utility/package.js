@@ -15,17 +15,29 @@ Package.onUse(function(api) {
 
   api.use("ecmascript");
 
+  api.use([
+    "ongoworks:security"
+  ], "server");
+
   api.addFiles([
     "lib/prettyPrint.js",
     "lib/setTitle.js",
     "lib/slice.js"
   ], ["client", "server"]);
 
+  api.addFiles([
+    "server/security.js"
+  ], "server");
+
   api.export([
     "prettyPrint",
     "setTitle",
     "slice"
   ], ["client", "server"]);
+
+  api.export([
+    "ifOwner"
+  ], "server");
 });
 
 Package.onTest(function(api) {

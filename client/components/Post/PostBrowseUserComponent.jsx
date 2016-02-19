@@ -5,7 +5,7 @@ PostBrowseUserComponent = React.createClass({
     return {
       loading: ! handle.ready(),
       posts: Posts.find(
-        { "uploader.username": FlowRouter.getParam("username") },
+        { "owner.username": FlowRouter.getParam("username") },
   			{ sort: { createdAt: -1, _id: 1 }
   		}).fetch(),
       currentUser: Meteor.user()

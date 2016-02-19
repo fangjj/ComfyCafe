@@ -9,13 +9,26 @@ Room = React.createClass({
       currentUser: Meteor.user()
     };
   },
+  renderMoreMenu() {
+    var isOwner = this.data.currentUser
+      && this.data.currentUser._id === this.data.room.owner._id;
+    if (isOwner) {
+      return <div className="topRight">
+        <RoomMoreMenu
+          room={this.data.room}
+          currentUser={this.data.currentUser}
+          redirect={true}
+        />
+      </div>;
+    }
+  },
   renderFAB() {
     if (this.data.currentUser) {
       return <TopicFAB room={this.data.room} />;
     }
   },
   render() {
-    if (this.data.loading) {
+    if (this.data.loading || ! this.data.room) {
       return <LoadingSpinnerComponent />;
     }
 
@@ -25,6 +38,7 @@ Room = React.createClass({
 
     return <section className="roomView content">
       <header>
+        {this.renderMoreMenu()}
         <h2>{room.name}</h2>
       </header>
       <TopicList />

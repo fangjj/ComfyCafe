@@ -18,7 +18,12 @@ TopicMoreMenu = React.createClass({
     this.setState({showForm: false});
   },
   delete() {
-    Meteor.call("deleteTopic", this.props.topic._id);
+    Meteor.call("deleteTopic", this.props.topic._id, () => {
+      if (this.props.redirect) {
+        var path = FlowRouter.path("room", {roomId: this.props.topic.room._id});
+        FlowRouter.go(path);
+      }
+    });
   },
   render() {
     var topic = this.props.topic;

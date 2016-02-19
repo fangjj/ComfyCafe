@@ -18,7 +18,12 @@ RoomMoreMenu = React.createClass({
     this.setState({showForm: false});
   },
   delete() {
-    Meteor.call("deleteRoom", this.props.room._id);
+    Meteor.call("deleteRoom", this.props.room._id, () => {
+      if (this.props.redirect) {
+        var path = FlowRouter.path("roomList");
+        FlowRouter.go(path);
+      }
+    });
   },
   render() {
     var room = this.props.room;

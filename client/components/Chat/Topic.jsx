@@ -28,7 +28,7 @@ Topic = React.createClass({
     }
   },
   render() {
-    if (this.data.loading || ! this.data.topics) {
+    if (this.data.loading || ! this.data.topic) {
       return <LoadingSpinnerComponent />;
     }
 

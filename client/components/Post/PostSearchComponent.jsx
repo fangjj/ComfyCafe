@@ -5,7 +5,7 @@ PostSearchComponent = React.createClass({
     var handle = Meteor.subscribe("searchPosts", tagStr);
     return {
       loading: ! handle.ready(),
-      posts: queryTags(tagStr).fetch()
+      posts: queryTags(tagStr, Meteor.userId()).fetch()
     };
   },
   render() {

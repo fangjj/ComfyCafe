@@ -18,13 +18,26 @@ Meteor.publish("post", function (username, postName) {
 
 Meteor.publish("allPosts", function () {
 	//Meteor._sleepForMs(2000);
-	return Posts.find();
+	return Posts.find({
+		$or: [
+			{ visibility: { $ne: "unlisted" } },
+			{ "owner._id": this.userId }
+		]
+	});
 });
 
 Meteor.publish("artBy", function (username) {
 	//Meteor._sleepForMs(2000);
 	check(username, String);
-	return Posts.find({ "owner.username": username });
+	return Posts.find(
+		{
+			"owner.username": username,
+			$or: [
+				{ visibility: { $ne: "unlisted" } },
+				{ "owner._id": this.userId }
+			]
+		}
+	);
 });
 
 Meteor.publish("postFeed", function () {
@@ -34,7 +47,10 @@ Meteor.publish("postFeed", function () {
 			return Posts.find(
 				{ $or: [
 					{ "owner._id": this.userId },
-					{ "owner._id": { $in: user && user.subscriptions || [] } }
+					{
+						"owner._id": { $in: user && user.subscriptions || [] },
+						visibility: { $ne: "unlisted" }
+					}
 				] }
 			);
 		} else {
@@ -50,5 +66,5 @@ Meteor.publish("likes", function () {
 });
 
 Meteor.publish("searchPosts", function (tagStr) {
-	return queryTags(tagStr);
+	return queryTags(tagStr, this.userId);
 });

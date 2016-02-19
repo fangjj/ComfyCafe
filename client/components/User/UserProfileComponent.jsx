@@ -32,7 +32,7 @@ UserProfileComponent = React.createClass({
     Meteor.call("deleteAvatar");
   },
   renderForm(isOwner) {
-    if (isOwner) {
+    if (isOwner && ! this.state.isChangingAvatar) {
       return <UserProfileForm currentUser={this.data.user} />;
     }
   },

@@ -4,7 +4,7 @@ PostPreviewComponent = React.createClass({
       username: this.props.post.owner.username,
       postName: this.props.post.name
     });
-    return <li>
+    return <li className={"postPreview " + this.props.post.visibility}>
       <a href={postUrl}>
         <ThumbnailComponent medium={this.props.post.medium} size="list" />
         <div className="label">

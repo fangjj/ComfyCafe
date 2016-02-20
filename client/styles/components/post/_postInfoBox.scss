@@ -4,6 +4,11 @@
   }
 
   .body {
+    &:empty {
+      // Fancy!
+      display: none;
+    }
+
     &:not(:empty) {
       margin-top: 16px;
 

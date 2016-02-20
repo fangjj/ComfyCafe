@@ -1,4 +1,26 @@
+@mixin genericFlex {
+  .body {
+    margin-top: 8px;
+
+    padding-top: 8px;
+
+    border-top: 1px solid rgba($muted-light, 0.5);
+
+    p {
+      margin-bottom: 0;
+
+      word-break: break-word;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
 .flexLayout {
+  @include genericFlex;
+
   display: flex;
   align-items: left;
   align-content: left;
@@ -28,23 +50,14 @@
         top: -8px;
       }
     }
-
-    .body {
-      margin-top: 8px;
-
-      padding-top: 8px;
-
-      border-top: 1px solid rgba($muted-light, 0.5);
-
-      p {
-        margin-bottom: 0;
-
-        word-break: break-word;
-
-        &:first-child {
-          margin-top: 0;
-        }
-      }
-    }
   }
+}
+
+.flexColumn {
+  @include genericFlex;
+  
+  display: flex;
+  align-items: left;
+  align-content: left;
+  flex-direction: column;
 }

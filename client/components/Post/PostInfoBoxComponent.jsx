@@ -23,19 +23,27 @@ PostInfoBoxComponent = React.createClass({
     }
 
     return <section className="infoBox content">
-      <div className="meta">
-        <a href={ownerUrl}>
-          <AvatarComponent class="small" id={owner._id} profile={owner.profile} title={owner.username} />
-        </a>
-        <div className="info">
-          by <UserLink user={owner} /> <Moment time={post.createdAt} />
-          <br />
-          <div className="action">
-            {subButton}
+      <div className="flexColumn">
+        <div className="flexLayout">
+          <div className="leftSIde">
+            <a href={ownerUrl}>
+              <AvatarComponent class="small" id={owner._id} profile={owner.profile} title={owner.username} />
+            </a>
+          </div>
+          <div className="rightSide">
+            <div className="top">
+              <div className="info">
+                by <UserLink user={owner} /> <Moment time={post.createdAt} />
+              </div>
+              {/*this.renderMoreMenu()*/}
+            </div>
+            <div className="action">
+              {subButton}
+            </div>
           </div>
         </div>
+        <TextBody text={this.props.post.description} className="body" />
       </div>
-      <TextBody text={this.props.post.description} className="description" />
     </section>;
   }
 });

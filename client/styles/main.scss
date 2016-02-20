@@ -9,22 +9,3 @@
 @import "layouts/_all.scss";
 @import "components/_all.scss";
 @import "_global.scss";
-
-@import "_accountActions.scss";
-@import "_invites.scss";
-@import "_login.scss";
-@import "_medium.scss";
-@import "_notifications.scss";
-@import "_settings.scss";
-
-.addFile {
-  position: absolute;
-  left: 0;
-  top: 0;
-
-  width: 100%;
-  height: 100%;
-
-  opacity: 0;
-  cursor: pointer;
-}

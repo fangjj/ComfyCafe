@@ -9,7 +9,6 @@ AccountActionsButton = React.createClass({
     }
   },
   render() {
-
     return <NativeListener onClick={this.toggleActionsVisbility}>
       <a id="accountActionsToggle"
         className="ignore-react-onclickoutside waves-effect waves-teal"

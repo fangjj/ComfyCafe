@@ -1,5 +1,6 @@
 Meteor.startup(function(){
-  injectTapEventPlugin();  
+  injectTapEventPlugin();
+  hotkey.activate();
 });
 
 Tracker.autorun(function () {

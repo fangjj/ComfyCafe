@@ -1,12 +1,11 @@
 Moonbox = React.createClass({
-  /*
-  mixins: [OnClickOutside],
-  handleClickOutside(event) {
-    if (this.props.open) {
-      this.props.onClose();
+  mixins: [hotkey.Mixin("handleHotkey")],
+  handleHotkey(event) {
+    if (event.keyCode === 27) {
+      this.handleClose();
     }
-  },*/
-  preClose() {
+  },
+  handleClose() {
     $(this.refs.image).panzoom("reset");
     this.props.onClose();
   },
@@ -27,9 +26,11 @@ Moonbox = React.createClass({
     return <div
       className="moonbox center"
       style={{display: this.props.open ? "flex" : "none"}}
-      onTouchTap={this.preClose}
+      onTouchTap={this.handleClose}
     >
-      <img src={this.props.src} ref="image" />
+      <div className="container center">
+        <img src={this.props.src} ref="image" />
+      </div>
     </div>;
   }
 });

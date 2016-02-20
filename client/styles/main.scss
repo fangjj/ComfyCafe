@@ -9,3 +9,7 @@
 @import "layouts/_all.scss";
 @import "components/_all.scss";
 @import "_global.scss";
+
+.fixed-action-btn {
+  z-index: index($elements, fab);
+}

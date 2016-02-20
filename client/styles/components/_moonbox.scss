@@ -10,4 +10,17 @@
   height: 100vh;
 
   background-color: rgba($bg-color, 0.7);
+
+  .container {
+    // Use image aspect ratio instead of 1:1
+    width: 100%;
+    height: 100vh;
+
+    object-fit: contain;
+
+    img {
+      max-width: calc(100% - 100px);
+      max-height: calc(100% - 100px);
+    }
+  }
 }

@@ -1,3 +1,6 @@
+import React from "react";
+import {ReactMeteorData} from "meteor/react-meteor-data";
+
 BlogPost = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -37,7 +40,7 @@ BlogPost = React.createClass({
       fab = <BlogPostEditFAB post={this.data.post} />;
     }
 
-    return <ol className="blog">
+    return <ol className="contentList">
       <BlogListItem post={this.data.post} currentUser={this.data.currentUser} />
       {fab}
     </ol>;

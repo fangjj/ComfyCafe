@@ -1,0 +1,37 @@
+.post .infoBox {
+  .meta {
+    display: flex;
+    align-items: center;
+    align-content: left;
+  }
+
+  .info {
+    margin-left: 16px;
+
+    font-size: 20px;
+
+    .action {
+      margin-top: 12px;
+    }
+  }
+
+  .description {
+    &:not(:empty) {
+      margin-top: 16px;
+
+      $pad: 24px;
+      padding: $pad;
+      padding-bottom: $pad - 16px;
+
+      border-top: 1px solid rgba($muted-light, 0.5);
+    }
+
+    p {
+      margin-bottom: 0;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+}

@@ -50,7 +50,7 @@ PostComponent = React.createClass({
 
     setPattern(this.data.post.name);
 
-    return <article className="contentLayout">
+    return <article className="post contentLayout">
       <figure className="content">
         {medium}
       </figure>

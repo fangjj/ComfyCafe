@@ -16,6 +16,7 @@ Moonbox = React.createClass({
       var delta = event.delta || event.originalEvent.wheelDelta;
       var zoomOut = delta ? delta < 0 : event.originalEvent.deltaY > 0;
       $panzoom.panzoom("zoom", zoomOut, {
+        minScale: 1,
         increment: 0.12,
         animate: false,
         focal: event

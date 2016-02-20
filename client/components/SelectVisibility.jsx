@@ -14,7 +14,7 @@ SelectVisibility = React.createClass({
         floatingLabelStyle={{fontSize: "20px"}}
       >
         <MenuItem value="public" primaryText="Public" />
-        <MenuItem value="friends" primaryText="Friends" />
+        {/*<MenuItem value="friends" primaryText="Friends" />*/}
         <MenuItem value="unlisted" primaryText="Unlisted" />
       </SelectField>
     </div>;

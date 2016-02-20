@@ -16,9 +16,9 @@ PostSearchComponent = React.createClass({
     if (this.data.posts.length) {
       return <PostGalleryComponent posts={this.data.posts} />;
     } else {
-      return <div className="uhoh">
+      return <Uhoh>
         No results!
-      </div>;
+      </Uhoh>;
     }
   }
 });

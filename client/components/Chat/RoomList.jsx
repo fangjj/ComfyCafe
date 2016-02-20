@@ -24,8 +24,8 @@ RoomList = React.createClass({
       return <LoadingSpinnerComponent />;
     }
 
-    return <div className="roomList">
-      <ul>
+    return <div className="content">
+      <ul className="list">
         {this.renderRooms()}
       </ul>
       <RoomFAB />

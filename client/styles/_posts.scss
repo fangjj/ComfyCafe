@@ -1,10 +1,5 @@
 .postGallery {
-  @include content;
-
   ul {
-    @include list;
-    @include gallery;
-
     a .material-icons {
       color: $text-color;
     }
@@ -44,12 +39,6 @@
 
 .post {
   > figure, > section {
-    @include content;
-
-    &:not(:first-child) {
-      margin-top: 24px;
-    }
-
     .info {
       margin-left: 16px;
 

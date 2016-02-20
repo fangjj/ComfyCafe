@@ -1,7 +1,7 @@
 Inline404Component = React.createClass({
   render() {
-    return <div className="uhoh">
+    return <Uhoh>
       404 - Dead Forever
-    </div>;
+    </Uhoh>;
   }
 });

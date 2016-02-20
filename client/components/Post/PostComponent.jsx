@@ -50,12 +50,12 @@ PostComponent = React.createClass({
 
     setPattern(this.data.post.name);
 
-    return <article className="post">
-      <figure>
+    return <article className="contentLayout">
+      <figure className="content">
         {medium}
       </figure>
       <PostInfoBoxComponent post={this.data.post} currentUser={this.data.currentUser} />
-      <section className="tagBox">
+      <section className="tagBox content">
         <TagTreeComponent tags={this.data.post.tags} humanizedTags={this.data.post.humanizedTags} />
       </section>
       {fab}

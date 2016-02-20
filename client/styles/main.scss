@@ -1,16 +1,11 @@
-@import "_mixins.scss";
 @import "materialize/_materialize.scss";
 
-@import "_fonts.scss";
-@import "_colors.scss";
-@import "_zIndex.scss";
+@import "variables/_all.scss";
+@import "mixins/_all.scss";
+@import "layouts/_all.scss";
 
 @import "_accountActions.scss";
 @import "_avatars.scss";
-@import "_blog.scss";
-@import "_chat.scss";
-@import "_contentEditable.scss";
-@import "_flexLayout.scss";
 @import "_footer.scss";
 @import "_invites.scss";
 @import "_loading.scss";
@@ -18,7 +13,6 @@
 @import "_medium.scss";
 @import "_notifications.scss";
 @import "_posts.scss";
-@import "_profile.scss";
 @import "_settings.scss";
 @import "_tagTree.scss";
 @import "_topBar.scss";
@@ -30,7 +24,6 @@ html {
 
 body {
   @include vanillaLinks;
-  @include contentEditable($muted-light);
 
   margin-top: 64px;
 
@@ -50,22 +43,6 @@ main {
   min-height: calc(100vh - 170px);
 }
 
-article > figure {
-  @include content;
-}
-
-.content {
-  @include content;
-}
-
-.list {
-  @include list;
-}
-
-.contentList {
-  @include contentList;
-}
-
 .progress.bottom {
   position: fixed;
   bottom: 0;
@@ -73,10 +50,6 @@ article > figure {
   margin: 0;
 
   height: 7px;
-}
-
-.material-tooltip {
-  font-size: 19px;
 }
 
 .dropzone, .cropzone {
@@ -156,17 +129,11 @@ video, audio {
 	background: transparent;
 }
 
-.material-tooltip .backdrop {
-  background: $fg-color;
-}
-
 header {
   text-align: center;
 }
 
 .uhoh {
-  @include content;
-
   font-size: 28px;
   text-align: center;
 

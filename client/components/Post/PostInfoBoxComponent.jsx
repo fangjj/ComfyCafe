@@ -22,7 +22,7 @@ PostInfoBoxComponent = React.createClass({
       />;
     }
 
-    return <section className="infoBox">
+    return <section className="infoBox content">
       <div className="meta">
         <a href={ownerUrl}>
           <AvatarComponent class="small" id={owner._id} profile={owner.profile} title={owner.username} />

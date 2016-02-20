@@ -106,7 +106,7 @@ UserProfileComponent = React.createClass({
       </div>;
     }
 
-    return <div className="profile">
+    return <div className="content">
       <header>
   			<h2>{user.username}</h2>
   		</header>

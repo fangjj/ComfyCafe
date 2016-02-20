@@ -1,11 +1,3 @@
-.inviteList {
-  @include content;
-
-  ul {
-    @include list;
-  }
-}
-
 .deleteInvite {
   float: right;
 

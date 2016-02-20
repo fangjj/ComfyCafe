@@ -24,7 +24,7 @@ BlogList = React.createClass({
   },
   renderInner() {
     if (this.data.posts.length) {
-      return <ol className="blog">
+      return <ol className="contentList">
         {this.renderPosts()}
       </ol>
     } else {
@@ -34,9 +34,9 @@ BlogList = React.createClass({
       } else {
         msg = "You haven't subscribed to anyone!";
       }
-      return <div className="uhoh">
+      return <Uhoh>
         {msg}
-      </div>;
+      </Uhoh>;
     }
   },
   render() {

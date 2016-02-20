@@ -15,13 +15,13 @@ InviteListComponent = React.createClass({
   },
   renderInner() {
     if (this.data.invites.length) {
-      return <ul className="invites">
+      return <ul className="list">
         {this.renderInvites()}
       </ul>;
     } else {
-      return <div className="uhoh">
+      return <Uhoh>
         You don't have any open invites.
-      </div>;
+      </Uhoh>;
     }
   },
   render() {
@@ -33,7 +33,7 @@ InviteListComponent = React.createClass({
       return <PowerlessComponent />;
     }
 
-    return <div className="inviteList">
+    return <div className="content">
       {this.renderInner()}
       <InviteFAB />
     </div>;

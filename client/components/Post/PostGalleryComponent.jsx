@@ -8,8 +8,8 @@ PostGalleryComponent = React.createClass({
   },
   render() {
     var posts = this.props.posts;
-    return <div className="postGallery">
-      <ul className="posts">
+    return <div className="content">
+      <ul className="gallery">
         {this.renderPosts()}
       </ul>
     </div>;

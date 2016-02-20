@@ -17,9 +17,9 @@ PostBrowseLikesComponent = React.createClass({
     }
 
     if (! this.data.posts.length) {
-      return <div className="uhoh">
+      return <Uhoh>
         You haven't liked any art yet!
-      </div>;
+      </Uhoh>;
     }
 
     return <PostBrowseComponent

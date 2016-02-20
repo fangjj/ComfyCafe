@@ -88,7 +88,7 @@ UserSettingsComponent = React.createClass({
       return <LoadingSpinnerComponent />;
     }
 
-    return <div className="settings">
+    return <div className="settings content">
       <SelectField
         value={this.state.defaultPage}
         onChange={this.handleDefaultPage}

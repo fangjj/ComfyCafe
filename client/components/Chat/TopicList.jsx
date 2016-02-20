@@ -21,7 +21,7 @@ TopicList = React.createClass({
     return <li>No topics.</li>;
   },
   render() {
-    return <ol className="topics">
+    return <ol className="list">
       {this.renderTopics()}
     </ol>;
   }

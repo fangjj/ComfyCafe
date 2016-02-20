@@ -1,7 +1,7 @@
 PowerlessComponent = React.createClass({
   render() {
-    return <div className="uhoh">
+    return <Uhoh>
       You aren't logged in, so you're powerless!
-    </div>;
+    </Uhoh>;
   }
 });

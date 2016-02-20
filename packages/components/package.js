@@ -34,6 +34,7 @@ Package.onUse(function(api) {
     "client/components/RainbowSpinnerComponent.jsx",
     "client/components/LoadingSpinnerComponent.jsx",
     "client/components/PowerlessComponent.jsx",
+    "client/components/Uhoh.jsx",
     "client/components/MainLayout.jsx",
   ], "client");
 
@@ -43,6 +44,7 @@ Package.onUse(function(api) {
     "RainbowSpinnerComponent",
     "LoadingSpinnerComponent",
     "PowerlessComponent",
+    "Uhoh",
     "MainLayout"
   ], "client");
 });

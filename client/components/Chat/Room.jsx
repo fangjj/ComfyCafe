@@ -36,7 +36,7 @@ Room = React.createClass({
 
     setTitle(room.name);
 
-    return <section className="roomView content">
+    return <section className="content">
       <header>
         {this.renderMoreMenu()}
         <h2>{room.name}</h2>

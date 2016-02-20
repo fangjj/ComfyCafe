@@ -5,6 +5,11 @@
   padding-left: 14px;
   padding-right: 14px;
 
+  .hotdog {
+    cursor: pointer;
+    user-select: none;
+  }
+
   .brand-logo {
     z-index: index($elements, logo);
 
@@ -55,6 +60,12 @@
     z-index: index($elements, searchButtons);
 
     visibility: hidden;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  #topBar i.left {
+    margin-right: 0;
   }
 }
 

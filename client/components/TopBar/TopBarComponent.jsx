@@ -13,6 +13,7 @@ TopBarComponent = React.createClass({
   },
   getInitialState() {
     return {
+      showMobileMenu: false,
       showNotificationList: false,
       showAccountActions: false,
       query: ""
@@ -21,6 +22,11 @@ TopBarComponent = React.createClass({
   userReady() {
     return ! this.data.loading
       && this.data.currentUser && _.has(this.data.currentUser, "profile");
+  },
+  handleHotdog() {
+    this.setState({
+      showMobileMenu: ! this.state.showMobileMenu
+    });
   },
   handleSearchInput(event) {
     this.setState({query: event.target.value})
@@ -60,7 +66,7 @@ TopBarComponent = React.createClass({
     }
   },
   renderLeft() {
-    return <ul className="left topLevel">
+    return <ul className="left topLevel hide-on-small-only">
       {this.renderLeftSub()}
     </ul>;
   },
@@ -112,6 +118,17 @@ TopBarComponent = React.createClass({
 
     return <nav id="topBar">
   		<div className="nav-wrapper">
+        <a
+          className="hotdog ignore-react-onclickoutside button-collapse hide-on-med-and-up"
+          onTouchTap={this.handleHotdog}
+        >
+          <i className="material-icons">menu</i>
+        </a>
+        <TopBarMenu
+          open={this.state.showMobileMenu}
+          onClose={this.handleHotdog}
+        />
+
         {this.renderLeft()}
 
   			<a className="brand-logo center hide-on-small-only" href="/">ComfyCafé</a>

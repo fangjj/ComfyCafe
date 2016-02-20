@@ -21,6 +21,10 @@ TopicList = React.createClass({
     return <li>No topics.</li>;
   },
   render() {
+    if (this.data.loading) {
+      return <InlineLoadingSpinner />;
+    }
+
     return <ol className="list">
       {this.renderTopics()}
     </ol>;

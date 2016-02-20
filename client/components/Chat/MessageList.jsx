@@ -21,6 +21,10 @@ MessageList = React.createClass({
     return <li>No messages.</li>;
   },
   render() {
+    if (this.data.loading) {
+      return <InlineLoadingSpinner />;
+    }
+
     return <ol className="list">
       {this.renderMsg()}
     </ol>;

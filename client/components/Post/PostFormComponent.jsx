@@ -30,7 +30,7 @@ PostFormComponent = React.createClass({
     return <PostDialog
       title="Create Post"
       open={this.props.open}
-      modal={true}
+      modal={false}
       handleClose={this.props.handleClose}
       handleSubmit={this.handleSubmit}
       medium={this.data.medium}

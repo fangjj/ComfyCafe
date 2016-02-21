@@ -20,7 +20,8 @@ Package.onUse(function(api) {
   ], ["client", "server"]);
 
   api.addFiles([
-    "lib/collection.js"
+    "lib/collection.js",
+    "lib/methods.js"
   ], ["client", "server"]);
 
   api.addFiles([

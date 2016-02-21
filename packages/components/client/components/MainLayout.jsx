@@ -56,12 +56,19 @@ MainLayout = React.createClass({
   destroyPostForm() {
     this.setState({mediumId: undefined});
   },
+  freeMedium() {
+    if (this.state.mediumId) {
+      Meteor.call("freeMedium", this.state.mediumId);
+    }
+    this.destroyPostForm();
+  },
   renderPostForm() {
     if (this.state.mediumId) {
       return <PostFormComponent
         mediumId={this.state.mediumId}
         destroy={this.destroyPostForm}
         open={true}
+        handleClose={this.freeMedium}
       />;
     }
   },

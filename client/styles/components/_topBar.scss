@@ -2,8 +2,6 @@
   @extend .z-depth-1;
   @include subtleLinks;
 
-  $height: 64px;
-
   position: absolute;
   top: 0;
 
@@ -11,7 +9,7 @@
   padding-right: 14px;
 
   width: 100%;
-  height: $height;
+  height: $top-nav-height;
 
   background-color: $primary-color;
 
@@ -24,7 +22,7 @@
 
     float: left;
 
-    height: $height;
+    height: $top-nav-height;
 
     color: $text-color;
 
@@ -33,7 +31,7 @@
 
     i {
       font-size: 42px;
-      line-height: $height;
+      line-height: $top-nav-height;
     }
   }
 
@@ -57,7 +55,7 @@
 
     margin: 0;
 
-    height: $height;
+    height: $top-nav-height;
 
     &.leftSide {
       float: left;
@@ -72,40 +70,5 @@
       align-content: left;
       justify-content: right;
     }
-
-    li {
-      z-index: index($elements, topNavItems);
-
-      height: $height;
-
-      line-height: $height;
-
-      span {
-        font-size: 20px;
-      }
-
-      > a {
-        padding-left: 16px;
-        padding-right: 16px;
-
-        height: $height;
-
-        color: $text-color;
-
-        i {
-          &.left {
-            margin-right: 10px;
-          }
-
-          line-height: $height;
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (min-width: 601px) {
-  .topNav i.left {
-    margin-right: 0 !important;
   }
 }

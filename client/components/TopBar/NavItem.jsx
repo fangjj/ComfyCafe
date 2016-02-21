@@ -48,8 +48,13 @@ NavItem = React.createClass({
       style.backgroundColor = hoverColor;
     }
 
+    var classes = "navItem";
+    if (this.props.className) {
+      classes += " " + this.props.className;
+    }
+
     return <li
-        className={this.props.className}
+        className={classes}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
         style={style}

@@ -31,7 +31,9 @@ NavItem = React.createClass({
     const textColor = this.state.muiTheme.rawTheme.palette.textColor;
     const hoverColor = mui.Utils.ColorManipulator.fade(textColor, 0.1);
 
-    var style = {};
+    var style = {
+      transition: mui.Styles.Transitions.easeOut()
+    };
     if (this.state.hovered) {
       style.backgroundColor = hoverColor;
     }

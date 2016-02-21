@@ -98,9 +98,7 @@ UserProfileComponent = React.createClass({
     var content;
     if (! this.state.isChangingAvatar) {
       content = <div>
-        <ReactiveAvatarComponent class="large"
-          id={user._id} avatars={user.avatars} title={user.username}
-        />
+        <DirectAvatar size="large" user={user} />
         {toolbox}
       </div>;
     } else {

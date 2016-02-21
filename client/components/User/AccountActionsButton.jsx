@@ -14,12 +14,7 @@ AccountActionsButton = React.createClass({
         className="ignore-react-onclickoutside waves-effect waves-teal"
         href={FlowRouter.path("profile", {username: this.props.currentUser.username})}
       >
-        <ReactiveAvatarComponent
-          class="topBar"
-          id={this.props.currentUser._id}
-          avatars={this.props.currentUser.avatars}
-          title={this.props.currentUser.username}
-        />
+        <DirectAvatar size="topBar" user={this.props.currentUser} />
       </a>
     </NativeListener>;
   }

@@ -13,7 +13,7 @@ ThumbnailComponent = React.createClass({
         let thumb = medium.thumbnails[size];
         thumbnail = <img
           className="thumbnail"
-          src={"/gridfs/media/id/" + thumb._id + "?thumb=" + size}
+          src={"/gridfs/media/id/" + thumb._id + "?size=" + size}
         />;
       } else {
         thumbnail = <SpinnerComponent />;

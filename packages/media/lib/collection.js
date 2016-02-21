@@ -1,11 +1,11 @@
 var lookupGenerator = function (docGen) {
   return function (params, query) {
-    var thumb = query.thumb;
+    var size = query.size;
     var doc = docGen(params, query);
-    if (! thumb) {
+    if (! size) {
       doc["metadata.thumbnailPolicy"] = { $exists: true };
     } else {
-      doc["metadata.sizeKey"] = thumb;
+      doc["metadata.sizeKey"] = size;
     }
     return doc;
   };
@@ -34,6 +34,25 @@ media = new FileCollection("media",
         lookup: function (params, query) {
           var doc = lookupGenerator(function () {
             return {};
+          })(params, query);
+
+          return {
+            "metadata.avatarFor": params.userId,
+            $or: [
+              doc,
+              { "metadata.djenticon": true }
+            ]
+          };
+        }
+      },
+      { method: "get",
+        path: "/user/:userId/:id",
+        lookup: function (params, query) {
+          var doc = lookupGenerator(function () {
+            return { $or: [
+              { _id: new Mongo.ObjectID(params.id) },
+              { "metadata.thumbOf": new Mongo.ObjectID(params.id) }
+            ] };
           })(params, query);
 
           return {

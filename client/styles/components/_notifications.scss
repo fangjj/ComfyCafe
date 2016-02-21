@@ -37,7 +37,7 @@
 }
 
 #notificationArrow {
-	z-index: index($elements, accountActionsArrow);
+	z-index: index($elements, topMenuArrow);
 
 	position: absolute;
 	right: 16px/2 + 50px*1.5; // Don't ask how this is derived
@@ -55,7 +55,7 @@
 	@extend .z-depth-2;
   @include vanillaLinks;
 
-	z-index: index($elements, accountActions);
+	z-index: index($elements, topMenu);
 
 	position: absolute;
 	right: 16px/2 + 50px*1.5;

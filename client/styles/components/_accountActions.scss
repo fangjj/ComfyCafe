@@ -1,15 +1,5 @@
 .accountActions {
-  visibility: hidden;
-  opacity: 0;
-
-  transition: visibility 0s, opacity 0.2s linear;
-
-  &.active {
-    visibility: visible;
-    opacity: 1;
-
-    transition: visibility 0s, opacity 0.2s linear;
-  }
+  @include topMenu;
 }
 
 #accountActionsToggle {
@@ -19,7 +9,7 @@
 }
 
 #accountActionsArrow {
-	z-index: index($elements, accountActionsArrow);
+	z-index: index($elements, topMenuArrow);
 
 	position: absolute;
 	right: 10px + 50px/2 - 2px;
@@ -36,7 +26,7 @@
 #accountActions {
 	@extend .z-depth-2;
 
-	z-index: index($elements, accountActions);
+	z-index: index($elements, topMenu);
 
 	position: absolute;
 	right: 10px + 50px/2 - 16px;

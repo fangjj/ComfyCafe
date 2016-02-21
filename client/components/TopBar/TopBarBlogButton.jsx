@@ -4,6 +4,7 @@ TopBarBlogButton = React.createClass({
       label="Blog"
       iconName="import_contacts"
       href={FlowRouter.path("blog")}
+      className="hide-on-small-only" 
     />;
   }
 });

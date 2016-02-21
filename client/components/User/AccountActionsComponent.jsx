@@ -5,13 +5,6 @@ let {
   FontIcon
 } = mui;
 
-let style = {
-  menu: {
-    zIndex: 100,
-    borderRadius: 0
-  }
-};
-
 AccountActionsComponent = React.createClass({
   mixins: [OnClickOutside],
   handleClickOutside(event) {
@@ -35,7 +28,7 @@ AccountActionsComponent = React.createClass({
 
     return <div>
       <div id="accountActionsArrow" className={classes}></div>
-      <Menu id="accountActions" className={classes} style={style.menu} autoWidth={false}>
+      <Menu id="accountActions" className={classes} autoWidth={false}>
         <MenuItem
           primaryText="Profile"
           leftIcon={<FontIcon className="material-icons">account_circle</FontIcon>}

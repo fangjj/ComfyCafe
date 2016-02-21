@@ -16,6 +16,7 @@ TopBarComponent = React.createClass({
       showMobileMenu: false,
       showNotificationList: false,
       showAccountActions: false,
+      visibleMenu: null,
       query: ""
     };
   },
@@ -27,6 +28,13 @@ TopBarComponent = React.createClass({
     this.setState({
       showMobileMenu: ! this.state.showMobileMenu
     });
+    /*var set = null;
+    if (this.state.visibleMenu !== "hotdog") {
+
+    }
+    this.setState({
+      visibleMenu: this.state.showMobileMenu
+    });*/
   },
   handleSearchInput(event) {
     this.setState({query: event.target.value})
@@ -66,7 +74,17 @@ TopBarComponent = React.createClass({
     }
   },
   renderLeft() {
-    return <ul className="leftSide topLevel hide-on-small-only">
+    return <ul className="leftSide topLevel">
+      <NavItem className="hotdog ignore-react-onclickoutside hide-on-med-and-up">
+        <a onTouchTap={this.handleHotdog} className="waves-effect waves-teal">
+          <i className="material-icons">menu</i>
+        </a>
+      </NavItem>
+      <TopBarMenu
+        open={this.state.showMobileMenu}
+        onClose={this.handleHotdog}
+      />
+
       {this.renderLeftSub()}
     </ul>;
   },
@@ -119,17 +137,6 @@ TopBarComponent = React.createClass({
   },
   render() {
     return <nav className="topNav">
-      <a
-        className="hotdog ignore-react-onclickoutside hide-on-med-and-up"
-        onTouchTap={this.handleHotdog}
-      >
-        <i className="material-icons">menu</i>
-      </a>
-      <TopBarMenu
-        open={this.state.showMobileMenu}
-        onClose={this.handleHotdog}
-      />
-
       {this.renderLeft()}
 
       <div className="logoWrapper center hide-on-small-only">

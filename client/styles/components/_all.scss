@@ -1,6 +1,9 @@
 @import "post/_all.scss";
 
+@import "_topMenu.scss";
 @import "_accountActions.scss";
+@import "_notifications.scss";
+
 @import "_avatar.scss";
 @import "_dropzone.scss";
 @import "_fileButton.scss";
@@ -11,7 +14,6 @@
 @import "_medium.scss";
 @import "_moonbox.scss";
 @import "_navItem.scss";
-@import "_notifications.scss";
 @import "_progress.scss";
 @import "_settings.scss";
 @import "_topBar.scss";

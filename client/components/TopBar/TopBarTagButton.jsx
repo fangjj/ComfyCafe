@@ -4,6 +4,7 @@ TopBarTagButton = React.createClass({
       label="Tags"
       iconName="style"
       href={FlowRouter.path("pizza")}
+      className="hide-on-small-only" 
     />;
   }
 });

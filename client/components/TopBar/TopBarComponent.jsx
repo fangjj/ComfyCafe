@@ -74,15 +74,15 @@ TopBarComponent = React.createClass({
     if (this.userReady()) {
       return [
         <TopBarChatButton key="topBarForumBtn" />,
-        <li key="topBarNotifBtn">
+        <NavItem key="topBarNotifBtn">
           <NotificationButton
             notifications={this.data.notifications}
             action={this.toggleNotificationList}
           />
-        </li>,
-        <li key="topBarAcctBtn">
+        </NavItem>,
+        <NavItem key="topBarAcctBtn">
           <AccountActionsButton action={this.toggleAccountActions} currentUser={this.data.currentUser} />
-        </li>
+        </NavItem>
       ];
     } else {
       return [

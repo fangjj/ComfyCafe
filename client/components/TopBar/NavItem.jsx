@@ -27,6 +27,16 @@ NavItem = React.createClass({
       return <span className="hide-on-med-and-down">{this.props.label}</span>;
     }
   },
+  renderInner() {
+    if (this.props.children) {
+      return this.props.children;
+    } else {
+      return <a href={this.props.href} className="waves-effect waves-teal">
+        {this.renderIcon()}
+        {this.renderLabel()}
+      </a>;
+    }
+  },
   render() {
     const textColor = this.state.muiTheme.rawTheme.palette.textColor;
     const hoverColor = mui.Utils.ColorManipulator.fade(textColor, 0.1);
@@ -44,10 +54,7 @@ NavItem = React.createClass({
         onMouseLeave={this.handleMouseLeave}
         style={style}
       >
-      <a href={this.props.href} className="waves-effect waves-teal">
-        {this.renderIcon()}
-        {this.renderLabel()}
-      </a>
+        {this.renderInner()}
     </li>;
   }
 });

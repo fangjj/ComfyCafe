@@ -12,6 +12,9 @@ AccountActionsComponent = React.createClass({
       this.props.action();
     }
   },
+  logOut() {
+    Meteor.logout();
+  },
   render() {
     var classes = "topMenu";
     if (this.props.visible) {
@@ -59,9 +62,11 @@ AccountActionsComponent = React.createClass({
           leftIconName="settings"
           href={settingsUrl}
         />
-        <MenuItem>
-          <BlazeToReact blazeTemplate="atNavButton"/>
-        </MenuItem>
+        <TopMenuItem
+          primaryText="Sign Out"
+          leftIconName="directions_run"
+          onTouchTap={this.logOut}
+        />
       </Menu>
     </div>;
   }

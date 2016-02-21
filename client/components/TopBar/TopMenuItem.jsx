@@ -17,6 +17,7 @@ TopMenuItem = React.createClass({
       primaryText={this.props.primaryText}
       leftIcon={leftIcon}
       rightIcon={rightIcon}
+      onTouchTap={this.props.onTouchTap}
     >
       <a className="fill" href={this.props.href}></a>
     </MenuItem>;

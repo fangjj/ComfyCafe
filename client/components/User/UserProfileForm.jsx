@@ -66,7 +66,6 @@ UserProfileForm = React.createClass({
 
     return <div>
       <TextField
-        hintText="Display Name"
         defaultValue={this.state.displayName}
         floatingLabelText="Display Name"
         floatingLabelStyle={{fontSize: "20px"}}
@@ -75,7 +74,6 @@ UserProfileForm = React.createClass({
       />
 
       <TextField
-        hintText="Blurb"
         defaultValue={this.state.blurb}
         floatingLabelText="Blurb"
         floatingLabelStyle={{fontSize: "20px"}}

@@ -15,7 +15,7 @@ BlogList = React.createClass({
     };
   },
   renderPosts() {
-    if (this.data.posts.length) {
+    if (this.data.posts && this.data.posts.length) {
       return this.data.posts.map((post) => {
         return <BlogListItem post={post} currentUser={this.data.currentUser} key={post._id} />;
       });
@@ -23,7 +23,7 @@ BlogList = React.createClass({
     return <li>No posts.</li>;
   },
   renderInner() {
-    if (this.data.posts.length) {
+    if (this.data.posts && this.data.posts.length) {
       return <ol className="contentList">
         {this.renderPosts()}
       </ol>

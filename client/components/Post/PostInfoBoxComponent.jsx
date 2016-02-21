@@ -1,4 +1,18 @@
+let {
+  RaisedButton,
+  FontIcon
+} = mui;
+
 PostInfoBoxComponent = React.createClass({
+  reroll() {
+    Meteor.call("rerollPost", this.props.post._id, (err, name) => {
+      const path = FlowRouter.path("post", {
+        username: this.props.currentUser.username,
+        postName: name
+      });
+      FlowRouter.go(path);
+    });
+  },
   delete() {
     Meteor.call("deletePost", this.props.post._id, function () {
       FlowRouter.go(Session.get("previousPath"));
@@ -15,11 +29,18 @@ PostInfoBoxComponent = React.createClass({
     if (! isOwner) {
       subButton = <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />;
     } else {
-      subButton = <SubtleDangerButton
-        label="Delete Post"
-        iconName="delete"
-        onTouchTap={this.delete}
-      />;
+      subButton = <div>
+        <SubmitButton
+          label="Reroll"
+          iconName="casino"
+          onTouchTap={this.reroll}
+        />
+        <SubtleDangerButton
+          label="Delete"
+          iconName="delete"
+          onTouchTap={this.delete}
+        />
+      </div>;
     }
 
     return <section className="infoBox content">

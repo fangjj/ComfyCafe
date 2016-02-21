@@ -28,17 +28,14 @@ PostComponent = React.createClass({
       return <LoadingSpinnerComponent />;
     }
 
+    if (! this.data.post) {
+      return <Inline404Component />;
+    }
+
     var isOwner = this.data.currentUser
       && this.data.currentUser._id === this.data.post.owner._id;
     var showEditButton = isOwner;
     var showFavoriteButton = ! isOwner && this.data.currentUser && this.data.post.medium;
-
-    var medium;
-    if (this.data.post) {
-      medium = <MediumComponent medium={this.data.post.medium} />;
-    } else {
-      medium = <Inline404Component />;
-    }
 
     var fab;
     if (showEditButton) {
@@ -52,7 +49,7 @@ PostComponent = React.createClass({
 
     return <article className="post contentLayout">
       <figure className="content">
-        {medium}
+        <MediumComponent medium={this.data.post.medium} />
       </figure>
       <PostInfoBoxComponent post={this.data.post} currentUser={this.data.currentUser} />
       <section className="tagBox content">

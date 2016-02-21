@@ -11,7 +11,6 @@ PostInnerFormComponent = React.createClass({
       />
       <br />
       <TextField
-        hintText="Description"
         defaultValue={this.props.description}
         floatingLabelText="Description"
         floatingLabelStyle={{fontSize: "20px"}}
@@ -22,7 +21,6 @@ PostInnerFormComponent = React.createClass({
       />
       <br />
       <TextField
-        hintText="Tags"
         defaultValue={this.props.tags}
         floatingLabelText="Tags"
         floatingLabelStyle={{fontSize: "20px"}}

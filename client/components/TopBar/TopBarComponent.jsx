@@ -24,18 +24,6 @@ TopBarComponent = React.createClass({
     return ! this.data.loading
       && this.data.currentUser && _.has(this.data.currentUser, "profile");
   },
-  handleHotdog() {
-    this.setState({
-      showMobileMenu: ! this.state.showMobileMenu
-    });
-    /*var set = null;
-    if (this.state.visibleMenu !== "hotdog") {
-
-    }
-    this.setState({
-      visibleMenu: this.state.showMobileMenu
-    });*/
-  },
   handleSearchInput(event) {
     this.setState({query: event.target.value})
   },
@@ -44,12 +32,31 @@ TopBarComponent = React.createClass({
     var path = FlowRouter.path("search", {rawTagStr: tagStrToUrl(this.state.query)});
     FlowRouter.go(path);
   },
+  handleHotdog() {
+    var result = ! this.state.showMobileMenu;
+    var obj = {
+      showMobileMenu: result
+    };
+    if (result) {
+      obj.showAccountActions = false;
+      obj.showNotificationList = false;
+    }
+    this.setState(obj);
+    /*var set = null;
+    if (this.state.visibleMenu !== "hotdog") {
+
+    }
+    this.setState({
+      visibleMenu: this.state.showMobileMenu
+    });*/
+  },
   toggleNotificationList() {
     var result = ! this.state.showNotificationList;
     var obj = {
       showNotificationList: result
     };
-    if (result && this.state.showAccountActions) {
+    if (result) {
+      obj.showMobileMenu = false;
       obj.showAccountActions = false;
     }
     this.setState(obj);
@@ -59,7 +66,8 @@ TopBarComponent = React.createClass({
     var obj = {
       showAccountActions: result
     };
-    if (result && this.state.showNotificationList) {
+    if (result) {
+      obj.showMobileMenu = false;
       obj.showNotificationList = false;
     }
     this.setState(obj);

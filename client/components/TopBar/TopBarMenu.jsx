@@ -21,26 +21,26 @@ TopBarMenu = React.createClass({
     return <div className={classes}>
       <div id="mobileMenuArrow" className={classes}></div>
       <Menu id="mobileMenu" className={classes} autoWidth={false}>
-        <MenuItem
+        <TopMenuItem
           primaryText="Art"
-          leftIcon={<FontIcon className="material-icons">palette</FontIcon>}
-          onTouchTap={() => { FlowRouter.go(FlowRouter.path("art")) }}
+          leftIconName="palette"
+          href={FlowRouter.path("art")}
         />
-        <MenuItem
+        <TopMenuItem
           primaryText="Blog"
-          leftIcon={<FontIcon className="material-icons">import_contacts</FontIcon>}
-          onTouchTap={() => { FlowRouter.go(FlowRouter.path("blog")) }}
+          leftIconName="import_contacts"
+          href={FlowRouter.path("blog")}
         />
-        <MenuItem
+        <TopMenuItem
           primaryText="Tags"
-          leftIcon={<FontIcon className="material-icons">style</FontIcon>}
-          onTouchTap={() => { FlowRouter.go(FlowRouter.path("pizza")) }}
+          leftIconName="style"
+          href={FlowRouter.path("pizza")}
         />
         <Divider />
-        <MenuItem
+        <TopMenuItem
           primaryText="Explore"
-          leftIcon={<FontIcon className="material-icons">explore</FontIcon>}
-          onTouchTap={() => { FlowRouter.go(FlowRouter.path("explore")) }}
+          leftIconName="explore"
+          href={FlowRouter.path("explore")}
         />
       </Menu>
     </div>;

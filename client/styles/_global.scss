@@ -50,3 +50,12 @@ header {
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px $fg-color inset;
 }
+
+a.fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+}

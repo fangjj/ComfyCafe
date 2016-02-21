@@ -29,35 +29,35 @@ AccountActionsComponent = React.createClass({
     return <div>
       <div id="accountActionsArrow" className={classes}></div>
       <Menu id="accountActions" className={classes} autoWidth={false}>
-        <MenuItem
+        <TopMenuItem
           primaryText="Profile"
-          leftIcon={<FontIcon className="material-icons">account_circle</FontIcon>}
-          onTouchTap={() => { FlowRouter.go(profileUrl) }}
+          leftIconName="account_circle"
+          href={profileUrl}
         />
-        <MenuItem
+        <TopMenuItem
           primaryText="Likes"
-          leftIcon={<FontIcon className="material-icons">favorite</FontIcon>}
-          onTouchTap={() => { FlowRouter.go(likesUrl) }}
+          leftIconName="favorite"
+          href={likesUrl}
         />
-        <MenuItem
+        <TopMenuItem
           primaryText="Your Art"
-          leftIcon={<FontIcon className="material-icons">view_comfy</FontIcon>}
-          onTouchTap={() => { FlowRouter.go(yourArtUrl) }}
+          leftIconName="view_comfy"
+          href={yourArtUrl}
         />
-        <MenuItem
+        <TopMenuItem
           primaryText="Your Blog"
-          leftIcon={<FontIcon className="material-icons">view_list</FontIcon>}
-          onTouchTap={() => { FlowRouter.go(yourBlogUrl) }}
+          leftIconName="view_list"
+          href={yourBlogUrl}
         />
-        <MenuItem
+        <TopMenuItem
           primaryText="Beta Invites"
-          leftIcon={<FontIcon className="material-icons">weekend</FontIcon>}
-          onTouchTap={() => { FlowRouter.go(invitesUrl) }}
+          leftIconName="weekend"
+          href={invitesUrl}
         />
-        <MenuItem
+        <TopMenuItem
           primaryText="Settings"
-          leftIcon={<FontIcon className="material-icons">settings</FontIcon>}
-          onTouchTap={() => { FlowRouter.go(settingsUrl) }}
+          leftIconName="settings"
+          href={settingsUrl}
         />
         <MenuItem>
           <BlazeToReact blazeTemplate="atNavButton"/>

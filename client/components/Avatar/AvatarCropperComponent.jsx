@@ -44,6 +44,7 @@ AvatarCropperComponent = React.createClass({
 		var cropper;
 		if (this.state.occupado) {
 			cropper = <CropperComponent
+        className="cropzone"
 				ref="cropper"
 				src={this.state.src}
 				aspectRatio={1}

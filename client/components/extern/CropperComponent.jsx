@@ -190,7 +190,7 @@ CropperComponent = React.createClass({
 
   render() {
     return (
-      <div {...this.props} src={null} crossOrigin={null} alt={null}>
+      <div {...this.props} src={null} crossOrigin={null} alt={null} style={{}}>
         <img
           crossOrigin={this.props.crossOrigin}
           ref='img'

@@ -1,0 +1,72 @@
+#notificationListToggle {
+  position: relative;
+
+  .push {
+    display: inline-block;
+
+    position: absolute;
+    left: 32px;
+    bottom: 14px;
+
+    padding-left: 4px;
+    padding-right: 4px;
+
+    height: 16px;
+    min-width: 16px;
+
+    font-size: 16px !important;
+    line-height: 16px;
+    text-align: center;
+
+    border-radius: 8px;
+  }
+}
+
+#notificationArrow {
+	z-index: index($elements, topMenuArrow);
+
+	position: absolute;
+	right: 16px/2 + 50px*1.78; // What am I even doing?
+	top: 60px;
+
+	width: 0;
+	height: 0;
+
+	border-style: solid;
+	border-width: 0 16px 16px 16px;
+	border-color: transparent transparent $sg-color transparent;
+}
+
+#notificationList {
+	@extend .z-depth-2;
+  @include vanillaLinks;
+
+	z-index: index($elements, topMenu);
+
+	position: absolute;
+	right: 16px/2 + 50px*1.5;
+	top: 60px + 16px;
+
+	width: 270px;
+
+	border-radius: 0 !important;
+
+	li {
+    position: relative;
+
+    padding-left: 16px;
+    padding-right: 42px;
+
+		width: 100%;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    text-align: left;
+	}
+
+  a {
+    margin-right: 3px;
+  }
+}

@@ -1,0 +1,31 @@
+main > div > .row {
+  @include content;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: transparent;
+  box-shadow: none;
+
+  > div {
+    &.col.s12.m8.push-m2.push-l4.l4.z-depth-1 {
+      width: 40%;
+    }
+
+    background-color: $fg-color;
+  }
+}
+
+#topLogin #at-nav-button {
+  margin-left: 12px;
+  margin-right: 12px;
+  margin-top: -4px;
+
+  padding-top: 2px;
+}
+
+.at-pwd-link {
+  margin-top: -16px;
+  margin-bottom: 18px;
+}

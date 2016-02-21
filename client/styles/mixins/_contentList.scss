@@ -1,0 +1,23 @@
+@mixin contentList() {
+  margin: 0;
+
+  padding: 0;
+
+  list-style: none;
+
+  li {
+    @include content;
+  }
+
+  li:not(:first-child) {
+    margin-top: 0;
+  }
+
+  li:nth-child(even) {
+    background: #2E2C2C;
+  }
+}
+
+.contentList {
+  @include contentList;
+}

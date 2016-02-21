@@ -1,8 +1,12 @@
 Accounts.onCreateUser(function (options, user) {
   if (options.profile) {
     user.profile = options.profile;
-    user.profile.sassyHash = CryptoJS.SHA256(user.emails[0].address).toString();
-    user.profile.privateByDefault = true;
+
+    user.inviteKey = options.profile.key;
+    delete user.profile.key;
+
+    // Generate default avatar.
+    generateDjenticon(user._id, CryptoJS.SHA256(user.emails[0].address).toString());
   }
   return user;
 });
@@ -12,8 +16,8 @@ Accounts.validateNewUser(function (user) {
     // Always allow registration if this is the first user.
     return true;
   }
-  if (Invites.findOne({ key: user.profile.key })) {
-    Invites.remove({ key: user.profile.key });
+  if (Invites.findOne({ key: user.inviteKey })) {
+    Invites.remove({ key: user.inviteKey });
     return true;
   }
   throw new Meteor.Error(403, "Registration key is invalid.");

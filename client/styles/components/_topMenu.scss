@@ -1,0 +1,48 @@
+@mixin topMenu {
+  z-index: index($elements, topMenuContainer);
+
+  visibility: hidden;
+  opacity: 0;
+
+  transition: visibility 0s, opacity 0.2s linear;
+
+  &.active {
+    visibility: visible;
+    opacity: 1;
+
+    transition: visibility 0s, opacity 0.2s linear;
+  }
+}
+
+.topMenu {
+  @include topMenu;
+}
+
+#mobileMenuArrow {
+	z-index: index($elements, topMenuArrow);
+
+	position: absolute;
+	left: 10px + 50px/2; // This is the exact number. Don't question me!
+	top: 60px;
+
+	width: 0;
+	height: 0;
+
+	border-style: solid;
+	border-width: 0 16px 16px 16px;
+	border-color: transparent transparent $sg-color transparent;
+}
+
+#mobileMenu {
+  @extend .z-depth-2;
+
+	z-index: index($elements, topMenu);
+
+	position: absolute;
+	left: -(28px + 50px/2); // Contrary to popular belief, 50/2 is not a significant constant.
+	top: 60px + 16px;
+
+	//width: 270px;
+
+  border-radius: 0 !important;
+}

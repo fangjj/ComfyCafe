@@ -1,0 +1,17 @@
+AvatarComponent = React.createClass({
+  render() {
+    const user = this.props.user;
+    let url;
+    if (user.profile.avatar) {
+      url = "/gridfs/media/user/" + user._id + "/" + user.profile.avatar._id;
+    } else {
+      url = "/gridfs/media/djent/" + user._id;
+    }
+    url += "?size=" + this.props.size;
+    return <img
+      className={"avatar " + this.props.size}
+      src={url}
+      title={user.profile.displayName || user.username}
+    />;
+  }
+});

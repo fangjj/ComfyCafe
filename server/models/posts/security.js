@@ -1,2 +1,2 @@
 Posts.permit(["insert"]).ifLoggedIn().apply();
-Posts.permit(["remove"]).ifLoggedIn().ifUploaded().apply();
+Posts.permit(["remove"]).ifLoggedIn().ifOwner().apply();

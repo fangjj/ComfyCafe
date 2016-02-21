@@ -1,118 +1,107 @@
-#topBar {
+.topNav {
+  @extend .z-depth-1;
+  @include subtleLinks;
+
+  $height: 64px;
+
   position: absolute;
   top: 0;
 
   padding-left: 14px;
   padding-right: 14px;
 
+  width: 100%;
+  height: $height;
+
+  background-color: $primary-color;
+
   .hotdog {
+    z-index: index($elements, topNavItems);
+
+    float: left;
+
+    height: $height;
+
+    color: $text-color;
+
     cursor: pointer;
     user-select: none;
+
+    i {
+      font-size: 42px;
+      line-height: $height;
+    }
+  }
+
+  .logoWrapper {
+    z-index: index($elements, topNavLogo);
+
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
   }
 
   .brand-logo {
-    z-index: index($elements, logo);
-
-    //left: 0;
-    //transform: none;
-
     font-size: 32px;
-
-    &:hover {
-      opacity: 1;
-    }
   }
 
-  a {
-    color: $text-color;
-  }
+  .topLevel {
+    display: flex;
 
-  ul.topLevel li {
-    span {
-      font-size: 20px;
+    margin: 0;
+
+    height: $height;
+
+    &.leftSide {
+      float: left;
+
+      align-content: left;
+      justify-content: left;
     }
 
-    > a {
-      z-index: index($elements, logo);
+    &.rightSide {
+      float: right;
+
+      align-content: left;
+      justify-content: right;
     }
-  }
 
-  .searchButton {
-    z-index: index($elements, searchButtons) + 1;
+    li {
+      z-index: index($elements, topNavItems);
 
-    position: relative;
+      height: $height;
 
-    color: $text-color;
+      line-height: $height;
 
-    label {
-      position: absolute;
-      left: 0;
-      top: 0;
+      span {
+        font-size: 20px;
+      }
 
-      width: 100%;
-      height: 100%;
+      > a {
+        padding-left: 12px;
+        padding-right: 12px;
 
-      opacity: 0;
+        height: $height;
+
+        color: $text-color;
+
+        i {
+          &.left {
+            margin-right: 10px;
+          }
+
+          line-height: $height;
+        }
+      }
     }
-  }
-
-  .searchClose {
-    z-index: index($elements, searchButtons);
-
-    visibility: hidden;
   }
 }
 
 @media only screen and (min-width: 601px) {
-  #topBar i.left {
+  .topNav i.left {
     margin-right: 0;
   }
-}
-
-#search {
-  z-index: index($elements, searchInactive);
-
-  position: absolute;
-  top: 0;
-
-  color: $text-color;
-
-  &:focus {
-    z-index: index($elements, search);
-
-    background: $sg-color;
-  }
-
-  &:not(:focus) {
-    width: 35%;
-  }
-
-  // Begin sadness
-
-  &:-webkit-autofill:not(:focus) {
-    -webkit-box-shadow: 0 0 0px 1000px $primary-color inset;
-  }
-
-  &:hover:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px $primary-color inset;
-  }
-
-  &:focus:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px $sg-color inset;
-  }
-
-  &:focus:hover:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px $sg-color inset;
-  }
-
-  &:-webkit-autofill,
-  &:-webkit-autofill:hover,
-  &:-webkit-autofill:focus,
-  &:-webkit-autofill:active {
-    transition: background-color 600s ease-in-out 0s;
-  }
-
-  -webkit-text-fill-color: $text-color !important;
-
-  // End sadness
 }

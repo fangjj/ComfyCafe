@@ -66,7 +66,7 @@ TopBarComponent = React.createClass({
     }
   },
   renderLeft() {
-    return <ul className="left topLevel hide-on-small-only">
+    return <ul className="leftSide topLevel hide-on-small-only">
       {this.renderLeftSub()}
     </ul>;
   },
@@ -93,12 +93,6 @@ TopBarComponent = React.createClass({
     }
   },
   renderRight() {
-    return <ul className="right topLevel">
-      <TopBarExploreButton />
-      {this.renderRightSub()}
-    </ul>;
-  },
-  render() {
     var notificationList;
     var actionList;
 
@@ -116,28 +110,33 @@ TopBarComponent = React.createClass({
       />;
     }
 
-    return <nav id="topBar">
-  		<div className="nav-wrapper">
-        <a
-          className="hotdog ignore-react-onclickoutside button-collapse hide-on-med-and-up"
-          onTouchTap={this.handleHotdog}
-        >
-          <i className="material-icons">menu</i>
-        </a>
-        <TopBarMenu
-          open={this.state.showMobileMenu}
-          onClose={this.handleHotdog}
-        />
+    return <ul className="rightSide topLevel">
+      <TopBarExploreButton />
+      {this.renderRightSub()}
+      {notificationList}
+      {actionList}
+    </ul>;
+  },
+  render() {
+    return <nav className="topNav">
+      <a
+        className="hotdog ignore-react-onclickoutside hide-on-med-and-up"
+        onTouchTap={this.handleHotdog}
+      >
+        <i className="material-icons">menu</i>
+      </a>
+      <TopBarMenu
+        open={this.state.showMobileMenu}
+        onClose={this.handleHotdog}
+      />
 
-        {this.renderLeft()}
+      {this.renderLeft()}
 
-  			<a className="brand-logo center hide-on-small-only" href="/">ComfyCafé</a>
+      <div className="logoWrapper center hide-on-small-only">
+        <a className="brand-logo" href="/">ComfyCafé</a>
+      </div>
 
-  		  {this.renderRight()}
-
-        {notificationList}
-        {actionList}
-  		</div>
+		  {this.renderRight()}
   	</nav>;
   }
 });

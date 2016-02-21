@@ -4,5 +4,5 @@ setPattern = function (str) {
   $("body").css("background-image", pattern.toDataUrl());
 
   var color = tinycolor(pattern.color);
-  $("#topBar").css("background-color", color.desaturate(5).darken(15));
+  $(".topNav").css("background-color", color.desaturate(5).darken(15));
 };

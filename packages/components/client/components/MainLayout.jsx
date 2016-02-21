@@ -2,7 +2,7 @@ MainLayout = React.createClass({
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
-  getChildContext(){
+  getChildContext() {
     var theme = mui.Styles.ThemeManager.getMuiTheme(mui.Styles.DarkRawTheme);
     theme = mui.Styles.ThemeManager.modifyRawThemeFontFamily(theme, "Slabo 27px");
     theme = mui.Styles.ThemeManager.modifyRawThemePalette(theme, {

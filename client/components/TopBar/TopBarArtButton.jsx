@@ -1,11 +1,9 @@
 TopBarArtButton = React.createClass({
   render() {
-    var path = FlowRouter.path("art");
-    return <li>
-      <a href={path} className="waves-effect waves-teal">
-        <i className="material-icons left">palette</i>
-        <span className="hide-on-med-and-down">Art</span>
-      </a>
-    </li>;
+    return <NavItem 
+      label="Art"
+      iconName="palette"
+      href={FlowRouter.path("art")}
+    />;
   }
 });

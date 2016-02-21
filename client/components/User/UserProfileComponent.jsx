@@ -44,6 +44,9 @@ UserProfileComponent = React.createClass({
     var user = this.data.user;
     var isOwner = this.data.currentUser && this.data.currentUser._id === user._id;
 
+    var displayName = user.profile.displayName || user.username;
+    setTitle(displayName);
+
     var toolbox;
     if (! isOwner) {
       var artPath = FlowRouter.path("artBy", {username: this.data.user.username});
@@ -108,7 +111,7 @@ UserProfileComponent = React.createClass({
 
     return <div className="content">
       <header>
-  			<h2>{user.username}</h2>
+  			<h2>{displayName}</h2>
   		</header>
 			{content}
       {this.renderForm(isOwner)}

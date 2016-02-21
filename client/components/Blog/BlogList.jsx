@@ -48,8 +48,6 @@ BlogList = React.createClass({
       return <PowerlessComponent />;
     }
 
-    console.log(this.data.posts);
-
     return <div>
       {this.renderInner()}
       <BlogPostFAB />

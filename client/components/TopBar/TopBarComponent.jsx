@@ -90,9 +90,9 @@ TopBarComponent = React.createClass({
       ];
     } else {
       return [
-        <li id="topLogin" className="waves-effect waves-teal" key="topBarLoginBtn">
+        <NavItem id="topLogin" key="topBarLoginBtn">
           <BlazeToReact blazeTemplate="atNavButton"/>
-        </li>
+        </NavItem>
       ];
     }
   },

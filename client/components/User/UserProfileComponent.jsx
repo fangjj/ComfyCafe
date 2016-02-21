@@ -76,7 +76,7 @@ UserProfileComponent = React.createClass({
 
       var deleteButton;
       if (hasAvatar) {
-        deleteButton = <DangerButton
+        deleteButton = <SubtleDangerButton
           label="Delete Avatar"
           iconName="delete"
           onTouchTap={this.deleteAvatar}

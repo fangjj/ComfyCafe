@@ -1,7 +1,8 @@
 Accounts.onCreateUser(function (options, user) {
   if (options.profile) {
     user.profile = options.profile;
-
+    user.settings = {};
+    
     user.inviteKey = options.profile.key;
     delete user.profile.key;
 

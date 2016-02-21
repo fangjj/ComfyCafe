@@ -4,6 +4,11 @@ let {
   RaisedButton
 } = mui;
 
+const defaultState = {
+  visibility: "public",
+  body: ""
+};
+
 BlogDialog = React.createClass({
   getInitialState() {
     if (this.props.post) {
@@ -12,10 +17,7 @@ BlogDialog = React.createClass({
         body: this.props.post.body
       };
     } else {
-      return {
-        visibility: "public",
-        body: ""
-      };
+      return defaultState;
     }
   },
   handleVisibility(event, index, value) {
@@ -29,6 +31,10 @@ BlogDialog = React.createClass({
       visibility: this.state.visibility,
       body: this.state.body
     });
+
+    if (! this.props.post) {
+      this.setState(defaultState);
+    }
   },
   render() {
     const actions = [

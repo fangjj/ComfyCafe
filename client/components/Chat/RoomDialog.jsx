@@ -4,6 +4,12 @@ let {
   RaisedButton
 } = mui;
 
+const defaultState = {
+  name: generateRoom(),
+  nameGenerated: true,
+  visibility: "public"
+};
+
 RoomDialog = React.createClass({
   getInitialState() {
     if (this.props.room) {
@@ -13,11 +19,7 @@ RoomDialog = React.createClass({
         visibility: this.props.room.visibility
       };
     } else {
-      return {
-        name: generateRoom(),
-        nameGenerated: true,
-        visibility: "public"
-      };
+      return defaultState;
     }
   },
   handleName(event) {
@@ -34,6 +36,10 @@ RoomDialog = React.createClass({
       name: this.state.name,
       visibility: this.state.visibility
     });
+
+    if (! this.props.room) {
+      this.setState(defaultState);
+    }
   },
   componentWillReceiveProps() {
     if (this.state.nameGenerated) {

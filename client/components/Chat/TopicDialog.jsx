@@ -4,6 +4,12 @@ let {
   RaisedButton
 } = mui;
 
+const defaultState = {
+  name: generateTopic(),
+  nameGenerated: true,
+  visibility: "public"
+};
+
 TopicDialog = React.createClass({
   getInitialState() {
     if (this.props.topic) {
@@ -13,11 +19,7 @@ TopicDialog = React.createClass({
         visibility: this.props.topic.visibility
       };
     } else {
-      return {
-        name: generateTopic(),
-        nameGenerated: true,
-        visibility: "public"
-      };
+      return defaultState;
     }
   },
   handleName(event) {
@@ -34,6 +36,10 @@ TopicDialog = React.createClass({
       name: this.state.name,
       visibility: this.state.visibility
     });
+
+    if (! this.props.topic) {
+      this.setState(defaultState);
+    }
   },
   componentWillReceiveProps() {
     if (this.state.nameGenerated) {

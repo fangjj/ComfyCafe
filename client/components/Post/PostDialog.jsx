@@ -4,6 +4,12 @@ let {
   RaisedButton
 } = mui;
 
+const defaultState = {
+  visibility: "public",
+  description: "",
+  tags: "tagme"
+};
+
 PostDialog = React.createClass({
   getInitialState() {
     if (this.props.post) {
@@ -13,11 +19,7 @@ PostDialog = React.createClass({
         tags: this.props.post.tags.text || ""
       };
     } else {
-      return {
-        visibility: "public",
-        description: "",
-        tags: "tagme"
-      };
+      return defaultState;
     }
   },
   handleVisibility(event, index, value) {
@@ -35,6 +37,10 @@ PostDialog = React.createClass({
       description: this.state.description,
       tags: this.state.tags
     });
+
+    if (! this.props.post) {
+      this.setState(defaultState);
+    }
   },
   renderMedium() {
     if (this.props.medium) {

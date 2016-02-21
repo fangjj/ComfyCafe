@@ -4,6 +4,10 @@ let {
   RaisedButton
 } = mui;
 
+const defaultState = {
+  body: ""
+};
+
 MessageDialog = React.createClass({
   getInitialState() {
     if (this.props.message) {
@@ -11,9 +15,7 @@ MessageDialog = React.createClass({
         body: this.props.message.body
       };
     } else {
-      return {
-        body: ""
-      };
+      return defaultState;
     }
   },
   handleBody(event) {
@@ -25,6 +27,10 @@ MessageDialog = React.createClass({
     this.props.handleSubmit({
       body: this.state.body
     });
+
+    if (! this.props.message) {
+      this.setState(defaultState);
+    }
   },
   render() {
     const actions = [

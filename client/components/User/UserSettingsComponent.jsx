@@ -18,8 +18,6 @@ UserSettingsComponent = React.createClass({
   getInitialState() {
     return {
       snackbarOpen: false,
-      displayName: "",
-      blurb: "",
       defaultPage: "art",
       uploadAction: "redirect",
       nsfwNameGen: false
@@ -29,12 +27,6 @@ UserSettingsComponent = React.createClass({
     this.setState({
       snackbarOpen: false
     });
-  },
-  handleDisplayName(event) {
-    this.setState({displayName: event.target.value})
-  },
-  handleBlurb(event) {
-    this.setState({blurb: event.target.value})
   },
   handleDefaultPage(event, index, value) {
     this.setState({defaultPage: value})
@@ -48,8 +40,6 @@ UserSettingsComponent = React.createClass({
   submit(event) {
     var self = this;
     Meteor.call("updateSettings", {
-      displayName: this.state.displayName,
-      blurb: this.state.blurb,
       defaultPage: this.state.defaultPage,
       uploadAction: this.state.uploadAction,
       nsfwNameGen: this.state.nsfwNameGen

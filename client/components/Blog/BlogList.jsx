@@ -15,7 +15,7 @@ BlogList = React.createClass({
     };
   },
   renderPosts() {
-    if (this.data.posts && this.data.posts.length) {
+    if (this.data.posts.length) {
       return this.data.posts.map((post) => {
         return <BlogListItem post={post} currentUser={this.data.currentUser} key={post._id} />;
       });
@@ -23,13 +23,13 @@ BlogList = React.createClass({
     return <li>No posts.</li>;
   },
   renderInner() {
-    if (this.data.posts && this.data.posts.length) {
+    if (this.data.posts.length) {
       return <ol className="contentList">
         {this.renderPosts()}
       </ol>
     } else {
       var msg;
-      if (this.data.currentUser.subscriptions.length) {
+      if (this.data.currentUser.subscriptions && this.data.currentUser.subscriptions.length) {
         msg = "None of your subscriptions have posted anything...";
       } else {
         msg = "You haven't subscribed to anyone!";
@@ -47,6 +47,8 @@ BlogList = React.createClass({
     if (! this.data.currentUser) {
       return <PowerlessComponent />;
     }
+
+    console.log(this.data.posts);
 
     return <div>
       {this.renderInner()}

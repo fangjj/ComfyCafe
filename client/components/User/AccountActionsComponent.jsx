@@ -1,8 +1,6 @@
 let {
   Menu,
-  MenuItem,
-  Divider,
-  FontIcon
+  Divider
 } = mui;
 
 AccountActionsComponent = React.createClass({

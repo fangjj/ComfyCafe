@@ -75,26 +75,34 @@ TopBarComponent = React.createClass({
     </ul>;
   },
   renderRightSub() {
-    if (this.userReady()) {
-      return [
-        <TopBarChatButton key="topBarForumBtn" />,
-        <NavItem key="topBarNotifBtn">
-          <NotificationButton
-            notifications={this.data.notifications}
-            action={this.toggleNotificationList}
-          />
-        </NavItem>,
-        <NavItem key="topBarAcctBtn">
-          <AccountActionsButton action={this.toggleAccountActions} currentUser={this.data.currentUser} />
-        </NavItem>
-      ];
-    } else {
+    if (this.data.loading) {
+      return;
+    }
+
+    if (! this.data.currentUser) {
       return [
         <NavItem id="topLogin" key="topBarLoginBtn">
           <BlazeToReact blazeTemplate="atNavButton"/>
         </NavItem>
       ];
     }
+
+    if (! _.has(this.data.currentUser, "profile")) {
+      return;
+    }
+    
+    return [
+      <TopBarChatButton key="topBarForumBtn" />,
+      <NavItem key="topBarNotifBtn">
+        <NotificationButton
+          notifications={this.data.notifications}
+          action={this.toggleNotificationList}
+        />
+      </NavItem>,
+      <NavItem key="topBarAcctBtn">
+        <AccountActionsButton action={this.toggleAccountActions} currentUser={this.data.currentUser} />
+      </NavItem>
+    ];
   },
   renderRight() {
     var notificationList;

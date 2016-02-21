@@ -32,45 +32,23 @@ TopBarComponent = React.createClass({
     var path = FlowRouter.path("search", {rawTagStr: tagStrToUrl(this.state.query)});
     FlowRouter.go(path);
   },
-  handleHotdog() {
-    var result = ! this.state.showMobileMenu;
-    var obj = {
-      showMobileMenu: result
-    };
-    if (result) {
-      obj.showAccountActions = false;
-      obj.showNotificationList = false;
-    }
-    this.setState(obj);
-    /*var set = null;
-    if (this.state.visibleMenu !== "hotdog") {
-
+  genericHandleMenuButton(name) {
+    var set = null;
+    if (this.state.visibleMenu !== name) {
+      set = name;
     }
     this.setState({
-      visibleMenu: this.state.showMobileMenu
-    });*/
+      visibleMenu: set
+    });
+  },
+  handleHotdog() {
+    this.genericHandleMenuButton("hotdog");
   },
   toggleNotificationList() {
-    var result = ! this.state.showNotificationList;
-    var obj = {
-      showNotificationList: result
-    };
-    if (result) {
-      obj.showMobileMenu = false;
-      obj.showAccountActions = false;
-    }
-    this.setState(obj);
+    this.genericHandleMenuButton("notifications");
   },
   toggleAccountActions() {
-    var result = ! this.state.showAccountActions;
-    var obj = {
-      showAccountActions: result
-    };
-    if (result) {
-      obj.showMobileMenu = false;
-      obj.showNotificationList = false;
-    }
-    this.setState(obj);
+    this.genericHandleMenuButton("account");
   },
   renderLeftSub() {
     if (this.userReady()) {
@@ -89,7 +67,7 @@ TopBarComponent = React.createClass({
         </a>
       </NavItem>
       <TopBarMenu
-        open={this.state.showMobileMenu}
+        open={this.state.visibleMenu === "hotdog"}
         onClose={this.handleHotdog}
       />
 
@@ -125,13 +103,13 @@ TopBarComponent = React.createClass({
     if (this.userReady()) {
       notificationList = <NotificationListComponent
         notifications={this.data.notifications}
-        visible={this.state.showNotificationList}
+        visible={this.state.visibleMenu === "notifications"}
         action={this.toggleNotificationList}
       />;
 
       actionList = <AccountActionsComponent
         currentUser={this.data.currentUser}
-        visible={this.state.showAccountActions}
+        visible={this.state.visibleMenu === "account"}
         action={this.toggleAccountActions}
       />;
     }

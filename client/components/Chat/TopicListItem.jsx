@@ -6,6 +6,13 @@ TopicListItem = React.createClass({
       return <TopicMoreMenu topic={this.props.topic} currentUser={this.props.currentUser} />;
     }
   },
+  renderCountLabel() {
+    if (this.props.topic.messageCount !== 1) {
+      return "messages";
+    } else {
+      return "message";
+    }
+  },
   render() {
     var topic = this.props.topic;
     var topicUrl = FlowRouter.path("topic", {
@@ -27,6 +34,8 @@ TopicListItem = React.createClass({
           <div className="top">
             <div className="info">
               <a href={topicUrl}>{topic.name}</a>
+              <br />
+              {(topic.messageCount || 0) + " " + this.renderCountLabel()}
               <br />
               (last activity <Moment time={topic.lastActivity} />)
             </div>

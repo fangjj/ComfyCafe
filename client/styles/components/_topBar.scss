@@ -15,6 +15,10 @@
 
   background-color: $primary-color;
 
+  .waves-effect {
+    margin-top: -2px;
+  }
+
   .hotdog {
     z-index: index($elements, topNavItems);
 

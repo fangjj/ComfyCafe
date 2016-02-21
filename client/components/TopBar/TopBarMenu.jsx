@@ -11,11 +11,8 @@ let style = {
     left: "19px",
     top: "45px",
     zIndex: 100,
-  },
-  rightIcon: {
-    textAlign: "center",
-    lineHeight: "24px",
-  },
+    borderRadius: 0
+  }
 };
 
 TopBarMenu = React.createClass({

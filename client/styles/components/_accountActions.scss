@@ -22,7 +22,7 @@
 	z-index: index($elements, accountActionsArrow);
 
 	position: absolute;
-	right: 10px + 50px/2 - 16px;
+	right: 10px + 50px/2 - 2px;
 	top: 60px;
 
 	width: 0;
@@ -44,17 +44,7 @@
 
 	width: 270px;
 
-	background: $sg-color;
-
-	li, li a {
-		width: 100%;
-
-    text-align: left;
-	}
-
-	.row {
-		margin-bottom: 0;
-	}
+  border-radius: 0 !important;
 
 	#at-nav-button {
 		width: 100%;

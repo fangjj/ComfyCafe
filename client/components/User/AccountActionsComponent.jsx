@@ -1,3 +1,17 @@
+let {
+  Menu,
+  MenuItem,
+  Divider,
+  FontIcon
+} = mui;
+
+let style = {
+  menu: {
+    zIndex: 100,
+    borderRadius: 0
+  }
+};
+
 AccountActionsComponent = React.createClass({
   mixins: [OnClickOutside],
   handleClickOutside(event) {
@@ -21,51 +35,41 @@ AccountActionsComponent = React.createClass({
 
     return <div>
       <div id="accountActionsArrow" className={classes}></div>
-      <div id="accountActions" className={classes}>
-        <ul>
-          <li>
-            <a href={profileUrl} className="waves-effect waves-teal">
-              <i className="material-icons left">account_circle</i>
-              <span>Profile</span>
-            </a>
-          </li>
-          <li>
-            <a href={likesUrl} className="waves-effect waves-teal">
-              <i className="material-icons left">favorite</i>
-              <span>Likes</span>
-            </a>
-          </li>
-          <li>
-            <a href={yourArtUrl} className="waves-effect waves-teal">
-              <i className="material-icons left">view_comfy</i>
-              <span>Your Art</span>
-            </a>
-          </li>
-          <li>
-            <a href={yourBlogUrl} className="waves-effect waves-teal">
-              <i className="material-icons left">view_list</i>
-              <span>Your Blog</span>
-            </a>
-          </li>
-          <li>
-            <a href={invitesUrl} className="waves-effect waves-teal">
-              <i className="material-icons left">weekend</i>
-              <span>Beta Invites</span>
-            </a>
-          </li>
-          <li>
-            <a href={settingsUrl} className="waves-effect waves-teal">
-              <i className="material-icons left">settings</i>
-              <span>Settings</span>
-            </a>
-          </li>
-        </ul>
-        <div className="row">
-          <div className="col s12">
-            <BlazeToReact blazeTemplate="atNavButton"/>
-          </div>
-        </div>
-      </div>
+      <Menu id="accountActions" className={classes} style={style.menu} autoWidth={false}>
+        <MenuItem
+          primaryText="Profile"
+          leftIcon={<FontIcon className="material-icons">account_circle</FontIcon>}
+          onTouchTap={() => { FlowRouter.go(profileUrl) }}
+        />
+        <MenuItem
+          primaryText="Likes"
+          leftIcon={<FontIcon className="material-icons">favorite</FontIcon>}
+          onTouchTap={() => { FlowRouter.go(likesUrl) }}
+        />
+        <MenuItem
+          primaryText="Your Art"
+          leftIcon={<FontIcon className="material-icons">view_comfy</FontIcon>}
+          onTouchTap={() => { FlowRouter.go(yourArtUrl) }}
+        />
+        <MenuItem
+          primaryText="Your Blog"
+          leftIcon={<FontIcon className="material-icons">view_list</FontIcon>}
+          onTouchTap={() => { FlowRouter.go(yourBlogUrl) }}
+        />
+        <MenuItem
+          primaryText="Beta Invites"
+          leftIcon={<FontIcon className="material-icons">weekend</FontIcon>}
+          onTouchTap={() => { FlowRouter.go(invitesUrl) }}
+        />
+        <MenuItem
+          primaryText="Settings"
+          leftIcon={<FontIcon className="material-icons">settings</FontIcon>}
+          onTouchTap={() => { FlowRouter.go(settingsUrl) }}
+        />
+        <MenuItem>
+          <BlazeToReact blazeTemplate="atNavButton"/>
+        </MenuItem>
+      </Menu>
     </div>;
   }
 });

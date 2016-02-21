@@ -1,3 +1,7 @@
+let {
+  Menu
+} = mui;
+
 NotificationListComponent = React.createClass({
   mixins: [OnClickOutside],
   handleClickOutside(event) {
@@ -14,17 +18,16 @@ NotificationListComponent = React.createClass({
     return <li>No notifications.</li>;
   },
   render() {
-    var classes = "notifications";
+    var classes = "topMenu";
     if (this.props.visible) {
-      classes = "notifications active";
+      classes = "topMenu active";
     }
+
     return <div>
       <div id="notificationArrow" className={classes}></div>
-      <div id="notificationList" className={classes}>
-        <ul>
-          {this.renderNotifications()}
-        </ul>
-      </div>
+      <Menu id="notificationList" className={classes} autoWidth={false}>
+        {this.renderNotifications()}
+      </Menu>
     </div>;
   }
 });

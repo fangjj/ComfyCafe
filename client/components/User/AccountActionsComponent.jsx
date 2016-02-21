@@ -13,9 +13,9 @@ AccountActionsComponent = React.createClass({
     }
   },
   render() {
-    var classes = "accountActions";
+    var classes = "topMenu";
     if (this.props.visible) {
-      classes = "accountActions active";
+      classes = "topMenu active";
     }
 
     var profileUrl = FlowRouter.path("profile", {username: this.props.currentUser.username});

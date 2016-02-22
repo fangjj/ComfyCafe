@@ -14,15 +14,9 @@ InviteListComponent = React.createClass({
     });
   },
   renderInner() {
-    if (this.data.invites.length) {
-      return <ul className="list">
-        {this.renderInvites()}
-      </ul>;
-    } else {
-      return <Uhoh>
-        You don't have any open invites.
-      </Uhoh>;
-    }
+    return <ul className="list">
+      {this.renderInvites()}
+    </ul>;
   },
   render() {
     if (this.data.loading) {
@@ -33,9 +27,15 @@ InviteListComponent = React.createClass({
       return <PowerlessComponent />;
     }
 
-    return <div className="content">
-      {this.renderInner()}
-      <InviteFAB />
-    </div>;
+    if (this.data.invites.length) {
+      return <div className="content">
+        {this.renderInner()}
+        <InviteFAB />
+      </div>;
+    } else {
+      return <Uhoh>
+        You don't have any open invites.
+      </Uhoh>;
+    }
   }
 });

@@ -1,7 +1,19 @@
 Moment = React.createClass({
+  mixins: [SetIntervalMixin],
+  getInitialState() {
+    return {
+      prettyDate: moment(this.props.time).fromNow()
+    }
+  },
+  componentDidMount() {
+    this.setInterval(() => {
+      this.setState({
+        prettyDate: moment(this.props.time).fromNow()
+      });
+    }, 5000);
+  },
   render() {
-    var isoDate = moment(this.props.time).toISOString();
-    var prettyDate = moment(this.props.time).fromNow();
-    return <time dateTime={isoDate}>{prettyDate}</time>;
+    const isoDate = moment(this.props.time).toISOString();
+    return <time dateTime={isoDate}>{this.state.prettyDate}</time>;
   }
 });

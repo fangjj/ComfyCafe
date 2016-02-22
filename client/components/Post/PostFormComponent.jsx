@@ -1,7 +1,7 @@
 PostFormComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    var handle = Meteor.withoutBar.subscribe("media", Meteor.userId());
+    var handle = Meteor.subscribe("media", Meteor.userId());
     return {
       loading: ! handle.ready(),
       medium: media.findOne({ _id: new Mongo.ObjectID(this.props.mediumId) }),

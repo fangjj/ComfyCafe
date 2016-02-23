@@ -16,10 +16,6 @@ PostBrowseAllComponent = React.createClass({
       return <LoadingSpinnerComponent />;
     }
 
-    if (! this.data.currentUser) {
-      return <PowerlessComponent />;
-    }
-
     return <PostBrowseComponent
       posts={this.data.posts}
       currentUser={this.data.currentUser}

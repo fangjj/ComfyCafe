@@ -79,7 +79,7 @@ MainLayout = React.createClass({
         <div className="determinate" style={{width: this.state.progress + "%"}}></div>
       </div>;
     }
-    return <div>
+    return <div onDrop={this.test}>
       <header>
         <TopBarComponent />
       </header>

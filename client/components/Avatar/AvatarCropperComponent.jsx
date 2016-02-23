@@ -11,6 +11,8 @@ AvatarCropperComponent = React.createClass({
 		};
 	},
   addToCropzone(event) {
+    event.preventDefault();
+    event.stopPropagation();
 		var self = this;
     var files = getFiles(event);
     var reader  = new FileReader();
@@ -40,11 +42,14 @@ AvatarCropperComponent = React.createClass({
 		// I don't think cancelAction will ever be absent; I just did this because it's funny.
 		(this.props.cancelAction || (() => {}))();
 	},
+  componentDidMount() {
+    //media.resumable.assignDrop(document.querySelector("html"));
+  },
   render() {
 		var cropper;
 		if (this.state.occupado) {
 			cropper = <CropperComponent
-        className="cropzone"
+        className="cropzone active"
 				ref="cropper"
 				src={this.state.src}
 				aspectRatio={1}
@@ -52,10 +57,13 @@ AvatarCropperComponent = React.createClass({
 				toggleDragModeOnDblclick={false}
 			/>;
 		} else {
-			cropper = <div className="cropzone" onDrop={this.addToCropzone}>
-        <input className="addAvatar" type="file" onChange={this.addToCropzone} />
-        <img className="newAvatar" />
-      </div>;
+      // Use NativeListener to prevent bubbling to the global dropzone on <html>
+      cropper = <NativeListener onDrop={this.addToCropzone}>
+        <div className="cropzone">
+          <input className="addAvatar" type="file" onChange={this.addToCropzone} />
+          <img className="newAvatar" />
+        </div>
+      </NativeListener>;
 		}
     return <div className="avatarCropper">
 			{cropper}

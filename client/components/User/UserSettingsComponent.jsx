@@ -48,7 +48,7 @@ UserSettingsComponent = React.createClass({
     });
   },
   cancel(event) {
-    FlowRouter.go(Session.get("previousPath"));
+    goBack();
   },
   componentWillMount() {
     let obj = {};

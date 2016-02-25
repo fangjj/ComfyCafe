@@ -13,16 +13,16 @@ TagTreeComponent = React.createClass({
       />;
     });
   },
-  render() {
-    var tags = this.props.tags;
-    var humanizedTags = this.props.humanizedTags;
-
-    if (tags.text) {
-  		return <div className="tagTree">
-  			<ul>
-  				{this.renderRoots()}
-  			</ul>
-  		</div>;
+  renderInner() {
+    if (this.props.tags.text) {
+      return <ul>
+        {this.renderRoots()}
+      </ul>;
     }
+  },
+  render() {
+		return <div className="tagTree">
+			{this.renderInner()}
+		</div>;
   }
 });

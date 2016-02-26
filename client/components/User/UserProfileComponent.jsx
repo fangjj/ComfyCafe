@@ -37,7 +37,9 @@ UserProfileComponent = React.createClass({
     }
   },
   render() {
-    if (this.data.loading || ! _.has(this.data.currentUser, "profile")) {
+    if (this.data.loading ||
+      (this.data.currentUser && ! _.has(this.data.currentUser, "profile"))
+    ) {
       return <LoadingSpinnerComponent />;
     }
 

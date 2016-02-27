@@ -1,6 +1,7 @@
 TopicView = {
   layout: MainLayout,
   content: {
-    main: <Topic />
+    main: <Chat />,
+    dense: true
   }
 };

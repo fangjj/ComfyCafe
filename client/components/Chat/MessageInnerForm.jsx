@@ -18,7 +18,6 @@ MessageInnerForm = React.createClass({
         rows={4}
         onChange={this.props.handleBody}
         fullWidth={true}
-        autoFocus={true}
       />
     </div>;
   }

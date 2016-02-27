@@ -40,7 +40,7 @@ Topic = React.createClass({
     var room = topic.room;
     var roomUrl = FlowRouter.path("room", {roomId: room._id});
 
-    return <section className="msgList content">
+    return <section className="msgList">
       <header>
         {this.renderMoreMenu()}
         <h2>{topic.name}</h2>

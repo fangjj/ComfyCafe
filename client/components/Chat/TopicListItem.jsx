@@ -27,7 +27,7 @@ TopicListItem = React.createClass({
       <div className="flexLayout">
         <div className="leftSIde">
           <a href={ownerUrl}>
-            <AvatarComponent size="small" user={owner} />
+            <AvatarComponent size="icon" user={owner} />
           </a>
         </div>
         <div className="rightSide">
@@ -39,7 +39,7 @@ TopicListItem = React.createClass({
               <br />
               (last activity <Moment time={topic.lastActivity} />)
             </div>
-            {this.renderMoreMenu()}
+            {/*this.renderMoreMenu()*/}
           </div>
         </div>
       </div>

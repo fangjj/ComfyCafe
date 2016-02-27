@@ -1,7 +1,5 @@
-@mixin content  {
-  @extend .z-depth-1;
-
-  position: relative;
+@mixin content {
+  @include paper;
 
   margin: 0 auto;
   margin-top: 100px;
@@ -9,8 +7,6 @@
   padding: 16px;
 
   width: 85%;
-
-  background: $fg-color;
 
   .topRight {
     position: absolute;

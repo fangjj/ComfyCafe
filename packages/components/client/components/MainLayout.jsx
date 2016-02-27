@@ -72,6 +72,13 @@ MainLayout = React.createClass({
       />;
     }
   },
+  renderFooter() {
+    if (! this.props.dense) {
+      return <footer>
+        © 2016 Pepperoni Pizza Inc.
+      </footer>;
+    }
+  },
   render() {
     var progressBar;
     if (this.state.isUploading) {
@@ -87,9 +94,7 @@ MainLayout = React.createClass({
         {this.props.main}
       </main>
       {this.renderPostForm()}
-      <footer>
-        © 2016 Pepperoni Pizza Inc.
-      </footer>
+      {this.renderFooter()}
       {progressBar}
     </div>;
   }

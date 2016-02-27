@@ -20,6 +20,15 @@ MessageList = React.createClass({
     }
     return <li>No messages.</li>;
   },
+  renderInput() {
+    if (this.props.currentUser) {
+      return <li>
+        <MessageInlineForm
+          topic={this.props.topic}
+        />
+      </li>;
+    }
+  },
   render() {
     if (this.data.loading) {
       return <InlineLoadingSpinner />;
@@ -27,6 +36,7 @@ MessageList = React.createClass({
 
     return <ol className="list">
       {this.renderMsg()}
+      {this.renderInput()}
     </ol>;
   }
 });

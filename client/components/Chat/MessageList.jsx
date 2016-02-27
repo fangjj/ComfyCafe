@@ -21,16 +21,21 @@ MessageList = React.createClass({
     return <li>No messages.</li>;
   },
   renderTyping() {
-    if (this.props.topic.typing && this.props.topic.typing.length) {
-      let verb = "is";
-      if (this.props.topic.typing.length > 1) {
-        verb = "are";
+    if (this.props.topic.typing) {
+      var typing = _.filter(this.props.topic.typing, (x) => {
+        return x._id !== this.props.currentUser._id;
+      });
+      if (typing.length) {
+        let verb = "is";
+        if (typing.length > 1) {
+          verb = "are";
+        }
+        return <li>
+          {fancyCommaJoin(typing, (x) => {
+            return x.profile.displayName || x.username;
+          })} {verb} typing...
+        </li>;
       }
-      return <li>
-        {fancyCommaJoin(this.props.topic.typing, (x) => {
-          return x.profile.displayName || x.username;
-        })} {verb} typing...
-      </li>;
     }
   },
   renderInput() {

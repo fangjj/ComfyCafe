@@ -42,9 +42,6 @@ AvatarCropperComponent = React.createClass({
 		// I don't think cancelAction will ever be absent; I just did this because it's funny.
 		(this.props.cancelAction || (() => {}))();
 	},
-  componentDidMount() {
-    //media.resumable.assignDrop(document.querySelector("html"));
-  },
   render() {
 		var cropper;
 		if (this.state.occupado) {
@@ -54,7 +51,14 @@ AvatarCropperComponent = React.createClass({
 				src={this.state.src}
 				aspectRatio={1}
 				dragMode="move"
-				toggleDragModeOnDblclick={false}
+        built={function () {
+          this.cropper.setCropBoxData({
+            left: 0,
+            top: 0,
+            width: 512,
+            height: 512
+          });
+        }}
 			/>;
 		} else {
       // Use NativeListener to prevent bubbling to the global dropzone on <html>

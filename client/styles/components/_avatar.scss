@@ -46,6 +46,15 @@
 		border-radius: $size;
 	}
 
+	&.icon {
+		$size: 36px;
+
+		width: $size;
+		height: $size;
+
+		border-radius: $size;
+	}
+
 	&.topBar {
 		$size: 50px;
 

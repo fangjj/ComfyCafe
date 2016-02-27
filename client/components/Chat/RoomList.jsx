@@ -6,7 +6,7 @@ RoomList = React.createClass({
       loading: ! handle.ready(),
       rooms: Rooms.find(
         { },
-        { sort: { lastActivity: -1, name: 1 } }
+        { sort: { lastActivity: -1, createdAt: -1 } }
       ).fetch(),
       currentUser: Meteor.user()
     };

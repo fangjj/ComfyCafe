@@ -7,7 +7,7 @@ TopicList = React.createClass({
       loading: ! handle.ready(),
       topics: Topics.find(
         { "room._id": id },
-        { sort: { createdAt: -1, name: 1 } }
+        { sort: { lastActivity: -1, createdAt: -1 } }
       ).fetch(),
       currentUser: Meteor.user()
     };

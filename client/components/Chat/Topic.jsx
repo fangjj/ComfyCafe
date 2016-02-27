@@ -42,9 +42,8 @@ Topic = React.createClass({
 
     return <section className="msgList">
       <header>
-        {this.renderMoreMenu()}
+        {/*this.renderMoreMenu()*/}
         <h2>{topic.name}</h2>
-        <a className="subtitle" href={roomUrl}>{room.name}</a>
       </header>
       <MessageList
         topic={this.data.topic}

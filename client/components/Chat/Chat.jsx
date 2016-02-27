@@ -1,13 +1,13 @@
 Chat = React.createClass({
   render() {
-    return <div className="denseLayout">
-      <GeminiScrollbar className="col leftCol">
+    return <DenseLayout>
+      <DenseCol className="leftCol">
         <TopicList />
-      </GeminiScrollbar>
+      </DenseCol>
 
-      <GeminiScrollbar className="col mainCol">
+      <DenseCol className="mainCol">
         <Topic />
-      </GeminiScrollbar>
-    </div>;
+      </DenseCol>
+    </DenseLayout>;
   }
 });

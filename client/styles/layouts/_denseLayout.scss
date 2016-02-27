@@ -3,12 +3,10 @@
 
   height: calc(100vh - 64px);
 
-  //overflow: hidden;
-
   background-color: $fg-color;
 
   .col {
-    overflow: hidden;
+    //overflow: hidden;
   }
 
   .leftCol {
@@ -18,8 +16,15 @@
   }
 
   .mainCol {
-    //flex-grow: 1;
-
     width: 80%;
+  }
+
+  .bottomLeft {
+    margin-left: 12px;
+    margin-bottom: 12px;
+
+    .push {
+      @include pushBadge(20px);
+    }
   }
 }

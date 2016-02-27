@@ -19,7 +19,7 @@ MessageListItem = React.createClass({
 
     return <li>
       <div className="flexLayout">
-        <div className="leftSIde">
+        <div className="leftSide">
           <a href={ownerUrl}>
             <AvatarComponent size="small" user={owner} />
           </a>

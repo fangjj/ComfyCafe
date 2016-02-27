@@ -29,6 +29,7 @@ MessageInlineForm = React.createClass({
       body: ""
     });
     Meteor.call("stopTyping", this.props.topic._id);
+    this.props.afterSubmit();
   },
   render() {
     return <div>

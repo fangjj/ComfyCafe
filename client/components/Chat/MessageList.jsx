@@ -32,11 +32,19 @@ MessageList = React.createClass({
       difference: difference
     });
   },
-  clearDifference() {
+  decrementDifference() {
     this.setState({
-      initialCount: this.data.messages.length,
-      difference: 0
+      initialCount: this.state.initialCount + 1,
+      difference: this.state.difference - 1
     });
+  },
+  clearDifference() {
+    if (this.state.difference) {
+      this.setState({
+        initialCount: this.data.messages.length,
+        difference: 0
+      });
+    }
   },
   componentDidMount() {
     window.addEventListener("focus", this.clearDifference);
@@ -83,6 +91,7 @@ MessageList = React.createClass({
       return <li>
         <MessageInlineForm
           topic={this.props.topic}
+          afterSubmit={this.decrementDifference}
         />
       </li>;
     }

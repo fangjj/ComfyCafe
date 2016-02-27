@@ -1,3 +1,3 @@
 generateMessageHint = function () {
-  return "Talk about you feelings";
+  return "Talk about your feelings";
 };

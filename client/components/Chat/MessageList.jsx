@@ -23,6 +23,9 @@ MessageList = React.createClass({
   renderTyping() {
     if (this.props.topic.typing) {
       var typing = _.filter(this.props.topic.typing, (x) => {
+        if (! this.props.currentUser) {
+          return true;
+        }
         return x._id !== this.props.currentUser._id;
       });
       if (typing.length) {

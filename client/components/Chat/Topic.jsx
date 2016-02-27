@@ -9,6 +9,14 @@ Topic = React.createClass({
       currentUser: Meteor.user()
     };
   },
+  updateTitle(n) {
+    const body = this.data.topic.name;
+    let pre = "";
+    if (n) {
+      pre = "(" + n + ") ";
+    }
+    setTitle(pre + body);
+  },
   renderMoreMenu() {
     var isOwner = this.data.currentUser
       && this.data.currentUser._id === this.data.topic.owner._id;
@@ -29,8 +37,6 @@ Topic = React.createClass({
 
     var topic = this.data.topic;
 
-    setTitle(topic.name);
-
     var room = topic.room;
     var roomUrl = FlowRouter.path("room", {roomId: room._id});
 
@@ -44,6 +50,7 @@ Topic = React.createClass({
         topic={this.data.topic}
         messages={this.data.topic.messages}
         currentUser={this.data.currentUser}
+        updateTitle={this.updateTitle}
       />
     </section>;
   }

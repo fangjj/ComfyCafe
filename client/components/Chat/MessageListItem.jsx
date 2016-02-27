@@ -1,4 +1,9 @@
 MessageListItem = React.createClass({
+  onVisibility(visible) {
+    if (visible) {
+      this.props.onVisible();
+    }
+  },
   renderMoreMenu() {
     var isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.message.owner._id;

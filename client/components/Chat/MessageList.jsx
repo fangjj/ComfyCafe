@@ -12,10 +12,47 @@ MessageList = React.createClass({
       currentUser: Meteor.user()
     };
   },
+  getInitialState() {
+    return {
+      initialCount: 0,
+      difference: 0
+    };
+  },
+  componentWillReceiveProps() {
+    let initialCount = this.state.initialCount;
+    if (initialCount === 0) {
+      initialCount = this.data.messages.length;
+      this.setState({
+        initialCount: initialCount
+      });
+    }
+
+    const difference = this.data.messages.length - initialCount;
+    this.setState({
+      difference: difference
+    });
+  },
+  clearDifference() {
+    this.setState({
+      initialCount: this.data.messages.length,
+      difference: 0
+    });
+  },
+  componentDidMount() {
+    window.addEventListener("focus", this.clearDifference);
+  },
+  componentWillUnmount() {
+    window.removeEventListener("focus", this.clearDifference);
+  },
   renderMsg() {
     if (this.data.messages.length) {
       return this.data.messages.map((msg) => {
-        return <MessageListItem message={msg} currentUser={this.props.currentUser} key={msg._id} />;
+        return <MessageListItem
+          message={msg}
+          currentUser={this.props.currentUser}
+          key={msg._id}
+          onVisible={this.decrementDifference}
+        />;
       });
     }
     return <li>No messages.</li>;
@@ -54,6 +91,8 @@ MessageList = React.createClass({
     if (this.data.loading) {
       return <InlineLoadingSpinner />;
     }
+
+    this.props.updateTitle(this.state.difference);
 
     return <ol className="list">
       {this.renderMsg()}

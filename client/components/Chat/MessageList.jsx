@@ -20,6 +20,19 @@ MessageList = React.createClass({
     }
     return <li>No messages.</li>;
   },
+  renderTyping() {
+    if (this.props.topic.typing && this.props.topic.typing.length) {
+      let verb = "is";
+      if (this.props.topic.typing.length > 1) {
+        verb = "are";
+      }
+      return <li>
+        {fancyCommaJoin(this.props.topic.typing, (x) => {
+          return x.profile.displayName || x.username;
+        })} {verb} typing...
+      </li>;
+    }
+  },
   renderInput() {
     if (this.props.currentUser) {
       return <li>
@@ -36,6 +49,7 @@ MessageList = React.createClass({
 
     return <ol className="list">
       {this.renderMsg()}
+      {this.renderTyping()}
       {this.renderInput()}
     </ol>;
   }

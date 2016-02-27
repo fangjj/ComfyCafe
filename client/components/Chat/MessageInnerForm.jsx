@@ -4,11 +4,16 @@ let {
 
 MessageInnerForm = React.createClass({
   render() {
+    let value = {};
+    if (this.props.directValue) {
+      value.value = this.props.body;
+    } else {
+      value.defaultValue = this.props.body;
+    }
     return <div>
       <TextField
-        defaultValue={this.props.body}
-        floatingLabelText="Body"
-        floatingLabelStyle={{fontSize: "20px"}}
+        {...value}
+        hintText={generateMessageHint()}
         multiLine={true}
         rows={4}
         onChange={this.props.handleBody}

@@ -22,11 +22,6 @@ Topic = React.createClass({
       </div>;
     }
   },
-  renderFAB() {
-    if (this.data.currentUser) {
-      return <MessageFAB topic={this.data.topic} />;
-    }
-  },
   render() {
     if (this.data.loading || ! this.data.topic) {
       return <LoadingSpinnerComponent />;
@@ -45,8 +40,11 @@ Topic = React.createClass({
         <h2>{topic.name}</h2>
         <a className="subtitle" href={roomUrl}>{room.name}</a>
       </header>
-      <MessageList messages={this.data.topic.messages} currentUser={this.data.currentUser} />
-      {this.renderFAB()}
+      <MessageList
+        topic={this.data.topic}
+        messages={this.data.topic.messages}
+        currentUser={this.data.currentUser}
+      />
     </section>;
   }
 });

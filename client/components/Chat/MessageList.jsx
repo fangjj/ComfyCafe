@@ -36,7 +36,7 @@ MessageList = React.createClass({
         return <li>
           {fancyCommaJoin(typing, (x) => {
             return x.profile.displayName || x.username;
-          })} {verb} typing...
+          })} {verb} typing<EllipsisAnimation />
         </li>;
       }
     }

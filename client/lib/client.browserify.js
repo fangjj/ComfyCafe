@@ -6,3 +6,5 @@ hotkey = require("react-hotkey");
 injectTapEventPlugin = require("react-tap-event-plugin");
 mui = require("material-ui");
 Ps = require("perfect-scrollbar");
+emojione = require("emojione");
+urlRegex = require("url-regex");

@@ -12,6 +12,7 @@ var phrases = [
   "How do I convince people to {ACTION} {OBJECT}?",
   "Where can you find {OBJECT}?",
   "Why don't I have any {OBJECT}?",
+  "So apparently you can't {ACTION} {OBJECT}",
 ];
 
 var actions = [

@@ -8,5 +8,7 @@
   "react-hotkey": "0.5.0",
   "react-tap-event-plugin": "0.2.2",
   "material-ui": "0.14.4",
-  "perfect-scrollbar": "0.6.10"
+  "perfect-scrollbar": "0.6.10",
+  "emojione": "2.1.1",
+  "url-regex": "3.1.0"
 }

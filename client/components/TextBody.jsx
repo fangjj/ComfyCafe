@@ -3,8 +3,9 @@ TextBody = React.createClass({
     if (! this.props.text) {
       return;
     }
-    return this.props.text.split("\n").map((line) => {
-      return <p key={_.uniqueId()}>{line}</p>;
+    return this.props.text.split("\n").map((para) => {
+      const linked = autolink(para);
+      return <p key={_.uniqueId()}>{linked}</p>;
     });
   },
   render() {

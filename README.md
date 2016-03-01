@@ -10,6 +10,8 @@ WARNING: All users are assumed to be trusted. This will change soon.
 - Randomly generated default chat room names that sometimes sound like actual social awareness organizations
 - Randomly generated default existential topic titles
 
+Emoji provided free by http://emojione.com (http://creativecommons.org/licenses/by/4.0/)
+
 ## Dependencies
 
 - libvips 8.0.0+

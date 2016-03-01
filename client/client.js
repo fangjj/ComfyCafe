@@ -1,6 +1,9 @@
 Meteor.startup(function(){
   injectTapEventPlugin();
   hotkey.activate();
+
+  emojione.imageType = "svg";
+  emojione.imagePathSVG = "/images/emoji/svg/";
 });
 
 Tracker.autorun(function () {

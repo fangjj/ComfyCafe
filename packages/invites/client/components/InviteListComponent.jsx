@@ -35,6 +35,7 @@ InviteListComponent = React.createClass({
     } else {
       return <Uhoh>
         You don't have any open invites.
+        <InviteFAB />
       </Uhoh>;
     }
   }

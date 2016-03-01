@@ -10,5 +10,6 @@
   "material-ui": "0.14.4",
   "perfect-scrollbar": "0.6.10",
   "emojione": "2.1.1",
-  "autolinker.js": "0.7.0"
+  "autolinker.js": "0.7.0",
+  "marked": "0.3.5"
 }

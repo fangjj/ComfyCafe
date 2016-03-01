@@ -8,3 +8,4 @@ mui = require("material-ui");
 Ps = require("perfect-scrollbar");
 emojione = require("emojione");
 Autolinker = require("autolinker.js");
+marked = require("marked");

@@ -2,12 +2,19 @@ Topic = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var id = FlowRouter.getParam("topicId");
-    var handle = Meteor.subscribe("topic", id);
-    return {
-      loading: ! handle.ready(),
-      topic: Topics.findOne({ _id: id }),
-      currentUser: Meteor.user()
-    };
+    if (id) {
+      var handle = Meteor.subscribe("topic", id);
+      return {
+        loading: ! handle.ready(),
+        topic: Topics.findOne({ _id: id }),
+        currentUser: Meteor.user()
+      };
+    } else {
+      return {
+        loading: false,
+        currentUser: Meteor.user()
+      };
+    }
   },
   updateTitle(n) {
     const body = this.data.topic.name;
@@ -31,6 +38,10 @@ Topic = React.createClass({
     }
   },
   render() {
+    if (! FlowRouter.getParam("topicId")) {
+      return <div></div>;
+    }
+
     if (this.data.loading || ! this.data.topic) {
       return <LoadingSpinnerComponent />;
     }

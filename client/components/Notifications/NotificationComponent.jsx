@@ -2,31 +2,30 @@ let {
   FontIcon
 } = mui;
 
-const actionMap = {
-  subscribed(notification) {
-    return "subscribed!";
-  },
-  topicPosted(notification) {
-    const url = FlowRouter.path("topic", {
-      roomId: notification.topic.room._id,
-      topicId: notification.topic._id
-    });
-    return [
-      "posted in ",
-      <a href={url} key={_.uniqueId()}>
-        {notification.topic.name}
-      </a>
-    ];
-  }
-};
-
 NotificationComponent = React.createClass({
+  actionMap: {
+    subscribed() {
+      return "subscribed!";
+    },
+    topicPosted() {
+      const url = FlowRouter.path("topic", {
+        roomId: this.props.notification.topic.room._id,
+        topicId: this.props.notification.topic._id
+      });
+      return [
+        "posted in ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.delete}>
+          {this.props.notification.topic.name}
+        </a>
+      ];
+    }
+  },
   delete(event) {
     event.stopPropagation();
     Meteor.call("deleteNotification", this.props.notification._id);
   },
   renderLabel() {
-    return actionMap[this.props.notification.action](this.props.notification);
+    return this.actionMap[this.props.notification.action].bind(this)();
   },
   render() {
     const rightIcon = <FontIcon

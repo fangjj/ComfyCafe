@@ -9,7 +9,6 @@ roomAdjs1 = [
   "Rainbow",
   "Dreamy",
   "Depraved",
-  "Erudite",
   "Progressive",
   "Traditional",
   "Mysterious",

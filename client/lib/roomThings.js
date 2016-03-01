@@ -73,4 +73,5 @@ roomThings = [
   "Firm",
   "Festival",
   "Committee",
+  "Squad",
 ];

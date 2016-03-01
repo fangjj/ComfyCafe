@@ -26,6 +26,12 @@
     }
   }
 
+  .more {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+  }
+
   .messageForm {
     @include paper;
 

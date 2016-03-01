@@ -53,7 +53,7 @@ Topic = React.createClass({
 
     return <section className="msgList">
       <header>
-        {/*this.renderMoreMenu()*/}
+        {this.renderMoreMenu()}
         <h2>{topic.name}</h2>
       </header>
       <MessageList

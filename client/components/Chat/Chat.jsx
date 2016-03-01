@@ -1,4 +1,10 @@
 Chat = React.createClass({
+  renderMain() {
+    if (FlowRouter.getParam("topicId")) {
+      return <Topic />;
+    }
+    return <Room />;
+  },
   render() {
     return <DenseLayout>
       <DenseCol className="leftCol">
@@ -6,7 +12,7 @@ Chat = React.createClass({
       </DenseCol>
 
       <DenseCol className="mainCol">
-        <Topic />
+        {this.renderMain()}
       </DenseCol>
     </DenseLayout>;
   }

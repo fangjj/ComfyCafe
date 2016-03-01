@@ -30,17 +30,23 @@ TopicList = React.createClass({
   },
   render() {
     if (this.data.loading) {
-      return <InlineLoadingSpinner />;
+      return <DenseLoadingSpinner />;
     }
 
     return <ol className="list">
+      <li className="roomHead">
+        <a href={FlowRouter.path("room", {roomId: this.data.room._id})}>
+          <header>
+            <h2>{this.data.room.name}</h2>
+          </header>
+        </a>
+      </li>
       <li className="roomTools">
-        {/*<TextField
+        <TopicButton room={this.data.room} />
+        <TextField
           hintText="Search"
           fullWidth={true}
-        />*/}
-        <TopicFlatButton room={this.data.room} />
-        <RoomMoreMenu room={this.data.room} />
+        />
       </li>
       {this.renderTopics()}
     </ol>;

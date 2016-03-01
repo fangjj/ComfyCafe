@@ -1,9 +1,9 @@
 let {
-  FlatButton,
+  RaisedButton,
   FontIcon
 } = mui;
 
-TopicFlatButton = React.createClass({
+TopicButton = React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -17,9 +17,10 @@ TopicFlatButton = React.createClass({
   },
   render() {
     return <div>
-      <FlatButton
-        icon={<FontIcon className="material-icons">add</FontIcon>}
+      <SubmitButton
+        iconName="add"
         label="New Topic"
+        style={{width: "100%"}}
         onTouchTap={this.showTopicForm}
       />
       <TopicForm

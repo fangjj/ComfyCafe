@@ -1,4 +1,4 @@
-TopicView = {
+ChatView = {
   layout: MainLayout,
   content: {
     main: <Chat />,

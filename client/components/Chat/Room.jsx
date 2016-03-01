@@ -22,27 +22,20 @@ Room = React.createClass({
       </div>;
     }
   },
-  renderFAB() {
-    if (this.data.currentUser) {
-      return <TopicFAB room={this.data.room} />;
-    }
-  },
   render() {
     if (this.data.loading || ! this.data.room) {
-      return <LoadingSpinnerComponent />;
+      return <DenseLoadingSpinner />;
     }
 
-    var room = this.data.room;
+    const room = this.data.room;
 
     setTitle(room.name);
 
-    return <section className="content">
+    return <div>
       <header>
         {this.renderMoreMenu()}
         <h2>{room.name}</h2>
       </header>
-      <TopicList />
-      {this.renderFAB()}
-    </section>;
+    </div>;
   }
 });

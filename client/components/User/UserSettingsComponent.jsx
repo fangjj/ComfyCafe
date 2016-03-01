@@ -37,12 +37,16 @@ UserSettingsComponent = React.createClass({
   handleNsfwNameGen(event) {
     this.setState({nsfwNameGen: event.target.checked})
   },
+  handleAutoWatch(event) {
+    this.setState({autoWatch: event.target.checked})
+  },
   submit(event) {
     var self = this;
     Meteor.call("updateSettings", {
       defaultPage: this.state.defaultPage,
       uploadAction: this.state.uploadAction,
-      nsfwNameGen: this.state.nsfwNameGen
+      nsfwNameGen: this.state.nsfwNameGen,
+      autoWatch: this.state.autoWatch
     }, () => {
 	    this.setState({snackbarOpen: true});
     });
@@ -64,6 +68,10 @@ UserSettingsComponent = React.createClass({
 
       if (_.has(this.data.currentUser.settings, "nsfwNameGen")) {
         obj.nsfwNameGen = this.data.currentUser.settings.nsfwNameGen;
+      }
+
+      if (_.has(this.data.currentUser.settings, "autoWatch")) {
+        obj.autoWatch = this.data.currentUser.settings.autoWatch;
       }
 
       this.setState(obj);
@@ -102,6 +110,12 @@ UserSettingsComponent = React.createClass({
         label="Enable NSFW name generation"
         defaultToggled={this.state.nsfwNameGen}
         onToggle={this.handleNsfwNameGen}
+      />
+      <br />
+      <Toggle
+        label="Auto-watch topics you post in"
+        defaultToggled={this.state.autoWatch}
+        onToggle={this.handleAutoWatch}
       />
       <br />
       <div className="actions">

@@ -6,19 +6,33 @@ let {
 
 TopicList = React.createClass({
   mixins: [ReactMeteorData],
+  getInitialState() {
+    return {
+      search: null
+    };
+  },
   getMeteorData() {
     var id = FlowRouter.getParam("roomId");
     var handleRoom = Meteor.subscribe("room", id);
     var handleTopics = Meteor.subscribe("roomTopics", id);
+
+    let query = { "room._id": id };
+    if (this.state.search) {
+      query.name = { $regex: this.state.search, $options: "i" };
+    }
+
     return {
       loading: ! handleRoom.ready() || ! handleTopics.ready(),
       room: Rooms.findOne({ _id: id }),
       topics: Topics.find(
-        { "room._id": id },
+        query,
         { sort: { lastActivity: -1, createdAt: -1 } }
       ).fetch(),
       currentUser: Meteor.user()
     };
+  },
+  handleSearch(event) {
+    this.setState({search: event.target.value})
   },
   renderTopics() {
     if (this.data.topics.length) {
@@ -46,6 +60,7 @@ TopicList = React.createClass({
         <TextField
           hintText="Search"
           fullWidth={true}
+          onChange={this.handleSearch}
         />
       </li>
       {this.renderTopics()}

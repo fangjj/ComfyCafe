@@ -1,7 +1,3 @@
-let {
-  Menu
-} = mui;
-
 NotificationListComponent = React.createClass({
   mixins: [OnClickOutside],
   handleClickOutside(event) {
@@ -25,9 +21,9 @@ NotificationListComponent = React.createClass({
 
     return <div>
       <div id="notificationArrow" className={classes}></div>
-      <Menu id="notificationList" className={classes} autoWidth={false}>
+      <ol id="notificationList" className={classes}>
         {this.renderNotifications()}
-      </Menu>
+      </ol>
     </div>;
   }
 });

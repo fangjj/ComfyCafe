@@ -1,5 +1,4 @@
 let {
-  MenuItem,
   FontIcon
 } = mui;
 
@@ -8,7 +7,7 @@ const actionMap = {
     return "subscribed!";
   },
   topicPosted(notification) {
-    return "posted in \"" + notification.topic.name + "\".";
+    return "posted in \"" + notification.topic.name + "\"";
   }
 };
 
@@ -26,9 +25,14 @@ NotificationComponent = React.createClass({
       onTouchTap={this.delete}
     >cancel</FontIcon>;
 
-    return <MenuItem rightIcon={rightIcon} style={{whiteSpace: "normal"}}>
-      <UserLink user={this.props.notification.owner} />
-      {this.renderLabel()}
-    </MenuItem>;
+    return <li rightIcon={rightIcon} style={{whiteSpace: "normal"}}>
+      <div className="notificationInner">
+        <UserLink user={this.props.notification.owner} />
+        {this.renderLabel()}
+      </div>
+      <div className="notificationClose">
+        {rightIcon}
+      </div>
+    </li>;
   }
 });

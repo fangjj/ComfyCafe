@@ -1,10 +1,18 @@
+let {
+  TextField,
+  FlatButton,
+  FontIcon
+} = mui;
+
 TopicList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var id = FlowRouter.getParam("roomId");
-    var handle = Meteor.subscribe("roomTopics", id);
+    var handleRoom = Meteor.subscribe("room", id);
+    var handleTopics = Meteor.subscribe("roomTopics", id);
     return {
-      loading: ! handle.ready(),
+      loading: ! handleRoom.ready() || ! handleTopics.ready(),
+      room: Rooms.findOne({ _id: id }),
       topics: Topics.find(
         { "room._id": id },
         { sort: { lastActivity: -1, createdAt: -1 } }
@@ -26,6 +34,14 @@ TopicList = React.createClass({
     }
 
     return <ol className="list">
+      <li className="roomTools">
+        {/*<TextField
+          hintText="Search"
+          fullWidth={true}
+        />*/}
+        <TopicFlatButton room={this.data.room} />
+        <RoomMoreMenu room={this.data.room} />
+      </li>
       {this.renderTopics()}
     </ol>;
   }

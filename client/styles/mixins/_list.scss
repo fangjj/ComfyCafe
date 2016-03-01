@@ -5,11 +5,11 @@
 
   list-style: none;
 
-  li:nth-child(even) {
+  > li:nth-child(even) {
     background: rgba(#666, 0.2);
   }
 
-  li {
+  > li {
     position: relative;
 
     padding: 12px;

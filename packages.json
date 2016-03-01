@@ -10,5 +10,5 @@
   "material-ui": "0.14.4",
   "perfect-scrollbar": "0.6.10",
   "emojione": "2.1.1",
-  "url-regex": "3.1.0"
+  "autolinker.js": "0.7.0"
 }

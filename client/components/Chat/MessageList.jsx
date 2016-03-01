@@ -45,6 +45,9 @@ MessageList = React.createClass({
         difference: 0
       });
     }
+
+    // Clear notifications
+    Meteor.call("viewTopic", this.props.topic._id);
   },
   componentDidMount() {
     window.addEventListener("focus", this.clearDifference);

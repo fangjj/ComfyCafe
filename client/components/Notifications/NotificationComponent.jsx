@@ -13,7 +13,7 @@ const actionMap = {
     });
     return [
       "posted in ",
-      <a href={url} key={notification._id}>
+      <a href={url} key={_.uniqueId()}>
         {notification.topic.name}
       </a>
     ];

@@ -18,8 +18,11 @@ WatchButton = React.createClass({
   unwatch(event) {
     Meteor.call("unwatchTopic", this.props.topic._id);
   },
-  toggleHover() {
-    this.setState({notHover: ! this.state.notHover});
+  hoverOn() {
+    this.setState({notHover: false});
+  },
+  hoverOff() {
+    this.setState({notHover: true});
   },
   render() {
     const watched = this.props.currentUser
@@ -50,8 +53,8 @@ WatchButton = React.createClass({
         icon={<FontIcon className="material-icons">{icon}</FontIcon>}
         style={this.style}
         onTouchTap={this.unwatch}
-        onMouseEnter={this.toggleHover}
-        onMouseLeave={this.toggleHover}
+        onMouseEnter={this.hoverOn}
+        onMouseLeave={this.hoverOff}
       />;
     }
   }

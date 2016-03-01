@@ -42,6 +42,10 @@ Topic = React.createClass({
 
     return <section className="msgList">
       <header>
+        <WatchButton
+          topic={this.data.topic}
+          currentUser={this.data.currentUser}
+        />
         {this.renderMoreMenu()}
         <h2>{topic.name}</h2>
       </header>

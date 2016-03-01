@@ -27,7 +27,7 @@ MessageList = React.createClass({
       });
     }
 
-    const difference = this.data.messages.length - initialCount;
+    const difference = Math.max(this.data.messages.length - initialCount, 0);
     this.setState({
       difference: difference
     });

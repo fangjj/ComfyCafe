@@ -1,7 +1,5 @@
 let {
-  TextField,
-  FlatButton,
-  FontIcon
+  TextField
 } = mui;
 
 TopicList = React.createClass({

@@ -32,29 +32,53 @@
 	z-index: index($elements, topMenu);
 
 	position: absolute;
-	right: 16px/2 + 50px*1.5;
+	right: 16px/2 + 45px*2;
 	top: 60px + 16px;
+
+  padding: 0;
 
 	width: 270px;
 
+  background-color: $sg-color;
+
 	border-radius: 0 !important;
 
+  list-style: none;
+
 	li {
+    display: flex;
+    align-items: center;
+
     position: relative;
 
     padding-left: 16px;
     padding-right: 42px;
+    padding-top: 12px;
+    padding-bottom: 12px;
 
 		width: 100%;
+    min-height: 48px;
 
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 
     text-align: left;
+
+    &:nth-child(even) {
+      background: rgba(#666, 0.2);
+    }
+
+    a {
+      margin-right: 3px;
+    }
 	}
 
-  a {
-    margin-right: 3px;
+  .notificationClose {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+
+    cursor: pointer;
   }
 }

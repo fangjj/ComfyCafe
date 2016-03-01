@@ -1,24 +1,47 @@
 let {
-  MenuItem,
   FontIcon
 } = mui;
+
+const actionMap = {
+  subscribed(notification) {
+    return "subscribed!";
+  },
+  topicPosted(notification) {
+    const url = FlowRouter.path("topic", {
+      roomId: notification.topic.room._id,
+      topicId: notification.topic._id
+    });
+    return [
+      "posted in ",
+      <a href={url} key={_.uniqueId()}>
+        {notification.topic.name}
+      </a>
+    ];
+  }
+};
 
 NotificationComponent = React.createClass({
   delete(event) {
     event.stopPropagation();
     Meteor.call("deleteNotification", this.props.notification._id);
   },
+  renderLabel() {
+    return actionMap[this.props.notification.action](this.props.notification);
+  },
   render() {
-    var notification = this.props.notification;
-    var sender = notification.from;
-    var senderUrl = FlowRouter.path("profile", {username: sender.username});
     const rightIcon = <FontIcon
       className="material-icons"
       onTouchTap={this.delete}
     >cancel</FontIcon>;
-    return <MenuItem rightIcon={rightIcon}>
-      <a href={senderUrl}>{sender.username}</a>
-      {notification.msg}!
-    </MenuItem>;
+
+    return <li rightIcon={rightIcon} style={{whiteSpace: "normal"}}>
+      <div className="notificationInner">
+        <UserLink user={this.props.notification.owner} />
+        {this.renderLabel()}
+      </div>
+      <div className="notificationClose">
+        {rightIcon}
+      </div>
+    </li>;
   }
 });

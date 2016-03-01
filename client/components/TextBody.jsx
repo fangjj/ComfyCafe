@@ -21,7 +21,8 @@ TextBody = React.createClass({
     this.transform();
   },
   render() {
-    return <div className={this.props.className} ref="body">
+    const classes = classConcat("textBody", this.props.className);
+    return <div className={classes} ref="body">
       {this.props.text}
     </div>;
   }

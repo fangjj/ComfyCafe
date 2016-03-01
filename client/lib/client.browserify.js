@@ -5,3 +5,6 @@ NativeListener = require("react-native-listener");
 hotkey = require("react-hotkey");
 injectTapEventPlugin = require("react-tap-event-plugin");
 mui = require("material-ui");
+Ps = require("perfect-scrollbar");
+emojione = require("emojione");
+Autolinker = require("autolinker.js");

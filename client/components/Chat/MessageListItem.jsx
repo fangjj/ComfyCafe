@@ -1,4 +1,9 @@
 MessageListItem = React.createClass({
+  onVisibility(visible) {
+    if (visible) {
+      this.props.onVisible();
+    }
+  },
   renderMoreMenu() {
     var isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.message.owner._id;
@@ -14,7 +19,7 @@ MessageListItem = React.createClass({
 
     return <li>
       <div className="flexLayout">
-        <div className="leftSIde">
+        <div className="leftSide">
           <a href={ownerUrl}>
             <AvatarComponent size="small" user={owner} />
           </a>

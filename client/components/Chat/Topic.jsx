@@ -2,12 +2,27 @@ Topic = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var id = FlowRouter.getParam("topicId");
-    var handle = Meteor.subscribe("topic", id);
-    return {
-      loading: ! handle.ready(),
-      topic: Topics.findOne({ _id: id }),
-      currentUser: Meteor.user()
-    };
+    if (id) {
+      var handle = Meteor.subscribe("topic", id);
+      return {
+        loading: ! handle.ready(),
+        topic: Topics.findOne({ _id: id }),
+        currentUser: Meteor.user()
+      };
+    } else {
+      return {
+        loading: false,
+        currentUser: Meteor.user()
+      };
+    }
+  },
+  updateTitle(n) {
+    const body = this.data.topic.name;
+    let pre = "";
+    if (n) {
+      pre = "(" + n + ") ";
+    }
+    setTitle(pre + body);
   },
   renderMoreMenu() {
     var isOwner = this.data.currentUser
@@ -23,27 +38,29 @@ Topic = React.createClass({
     }
   },
   render() {
+    if (! FlowRouter.getParam("topicId")) {
+      return <div></div>;
+    }
+
     if (this.data.loading || ! this.data.topic) {
       return <LoadingSpinnerComponent />;
     }
 
     var topic = this.data.topic;
 
-    setTitle(topic.name);
-
     var room = topic.room;
     var roomUrl = FlowRouter.path("room", {roomId: room._id});
 
-    return <section className="msgList content">
+    return <section className="msgList">
       <header>
-        {this.renderMoreMenu()}
+        {/*this.renderMoreMenu()*/}
         <h2>{topic.name}</h2>
-        <a className="subtitle" href={roomUrl}>{room.name}</a>
       </header>
       <MessageList
         topic={this.data.topic}
         messages={this.data.topic.messages}
         currentUser={this.data.currentUser}
+        updateTitle={this.updateTitle}
       />
     </section>;
   }

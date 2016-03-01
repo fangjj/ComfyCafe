@@ -15,10 +15,9 @@ MessageInnerForm = React.createClass({
         {...value}
         hintText={generateMessageHint()}
         multiLine={true}
-        rows={4}
+        rows={3}
         onChange={this.props.handleBody}
         fullWidth={true}
-        autoFocus={true}
       />
     </div>;
   }

@@ -27,7 +27,7 @@ TopicListItem = React.createClass({
       <div className="flexLayout">
         <div className="leftSIde">
           <a href={ownerUrl}>
-            <AvatarComponent size="small" user={owner} />
+            <AvatarComponent size="icon" user={owner} />
           </a>
         </div>
         <div className="rightSide">
@@ -35,13 +35,16 @@ TopicListItem = React.createClass({
             <div className="info">
               <a href={topicUrl}>{topic.name}</a>
               <br />
-              {(topic.messageCount || 0) + " " + this.renderCountLabel()}
-              <br />
-              (last activity <Moment time={topic.lastActivity} />)
+              <Moment time={topic.lastActivity} />
             </div>
-            {this.renderMoreMenu()}
+            {/*this.renderMoreMenu()*/}
           </div>
         </div>
+      </div>
+      <div className="bottomLeft">
+        <span className="push teal">
+          {(topic.messageCount || 0)}
+        </span>
       </div>
     </li>;
   }

@@ -7,7 +7,16 @@ const actionMap = {
     return "subscribed!";
   },
   topicPosted(notification) {
-    return "posted in \"" + notification.topic.name + "\"";
+    const url = FlowRouter.path("topic", {
+      roomId: notification.topic.room._id,
+      topicId: notification.topic._id
+    });
+    return [
+      "posted in ",
+      <a href={url} key={notification._id}>
+        {notification.topic.name}
+      </a>
+    ];
   }
 };
 

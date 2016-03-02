@@ -7,6 +7,29 @@ NotificationComponent = React.createClass({
     subscribed() {
       return "subscribed!";
     },
+    postMentioned() {
+      const url = FlowRouter.path("post", {
+        username: this.props.notification.owner.username,
+        postName: this.props.notification.post.name
+      });
+      return [
+        "mentioned you in ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.delete}>
+          {this.props.notification.post.name}
+        </a>
+      ];
+    },
+    blogMentioned() {
+      const url = FlowRouter.path("blogPostPerma", {
+        postId: this.props.notification.blog._id
+      });
+      return [
+        "mentioned you in ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.delete}>
+          Untitled
+        </a>
+      ];
+    },
     topicPosted() {
       const url = FlowRouter.path("topic", {
         roomId: this.props.notification.topic.room._id,

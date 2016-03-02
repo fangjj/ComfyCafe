@@ -5,7 +5,10 @@ TopBarComponent = React.createClass({
     return {
       loading: ! handle.ready(),
       notifications: Notifications.find(
-        { to: Meteor.userId() },
+        {
+          to: Meteor.userId(),
+          dismissed: { $ne: true }
+        },
         { sort: { createdAt: -1 } }
       ).fetch(),
       currentUser: Meteor.user()

@@ -7,12 +7,16 @@ TextBody = React.createClass({
     ]);
   },
   transform() {
-    $(this.refs.body).html(marked($(this.refs.body).html()));
-    $(this.refs.body).html(Autolinker.link($(this.refs.body).html(), {
+    let $elem = $(this.refs.body);
+    $elem.html(marked($elem.html()));
+    $elem.html(Autolinker.link($elem.html(), {
       newWindow: false,
-      stripPrefix: false
+      stripPrefix: false,
+      twitter: false,
+      hashtag: false
     }));
-    $(this.refs.body).html(emojione.toImage($(this.refs.body).html()));
+    linkMentions($elem);
+    $elem.html(emojione.toImage($elem.html()));
   },
   componentDidMount() {
     this.transform();

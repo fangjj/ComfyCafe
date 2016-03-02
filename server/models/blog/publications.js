@@ -1,17 +1,6 @@
-Meteor.publish("blogPostPerma", function (postId) {
+Meteor.publish("blogPost", function (postId) {
 	check(postId, String);
 	return BlogPosts.find({ _id: postId });
-});
-
-Meteor.publish("blogPost", function (username, postName) {
-	check(username, String);
-	check(postName, String);
-	return BlogPosts.find(
-		{
-			"owner.username": username,
-			name: postName
-		}
-	);
 });
 
 Meteor.publish("allBlogPosts", function () {

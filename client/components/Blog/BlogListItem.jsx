@@ -15,7 +15,7 @@ BlogListItem = React.createClass({
     var isoDate = moment(post.createdAt).toISOString();
     var prettyDate = moment(post.createdAt).fromNow();
 
-    var permaLink = FlowRouter.path("blogPostPerma", {postId: post._id});
+    var permaLink = FlowRouter.path("blogPost", {postId: post._id});
 
     return <li className="blogPost">
       <article className="flexLayout">

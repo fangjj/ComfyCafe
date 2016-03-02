@@ -19,13 +19,11 @@ Package.onUse(function(api) {
     "adjectives.js",
     "nouns.js",
     "nsfwNouns.js",
-    "nameGenerator.js",
-    "nameCycle.js"
+    "nameGenerator.js"
   ], ["client", "server"]);
 
   api.export([
-    "generateName",
-    "nameCycle"
+    "generateName"
   ], ["client", "server"]);
 });
 

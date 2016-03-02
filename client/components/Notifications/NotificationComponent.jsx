@@ -20,7 +20,7 @@ NotificationComponent = React.createClass({
       ];
     },
     blogMentioned() {
-      const url = FlowRouter.path("blogPostPerma", {
+      const url = FlowRouter.path("blogPost", {
         postId: this.props.notification.blog._id
       });
       return [

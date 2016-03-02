@@ -22,7 +22,7 @@ processMentions = function (tag, text, data) {
       insDoc.createdAt = new Date();
       Notifications.upsert(
         doc,
-        insDoc
+        { $set: insDoc }
       );
     }
   });

@@ -14,7 +14,7 @@ NotificationComponent = React.createClass({
       });
       return [
         "mentioned you in ",
-        <a href={url} key={_.uniqueId()} onTouchTap={this.delete}>
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
           {this.props.notification.post.name}
         </a>
       ];
@@ -25,7 +25,7 @@ NotificationComponent = React.createClass({
       });
       return [
         "mentioned you in ",
-        <a href={url} key={_.uniqueId()} onTouchTap={this.delete}>
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
           Untitled
         </a>
       ];
@@ -37,7 +37,7 @@ NotificationComponent = React.createClass({
       });
       return [
         "posted in ",
-        <a href={url} key={_.uniqueId()} onTouchTap={this.delete}>
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
           {this.props.notification.topic.name}
         </a>
       ];
@@ -49,15 +49,15 @@ NotificationComponent = React.createClass({
       });
       return [
         "mentioned you in ",
-        <a href={url} key={_.uniqueId()} onTouchTap={this.delete}>
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
           {this.props.notification.topic.name}
         </a>
       ];
     }
   },
-  delete(event) {
+  dismiss(event) {
     event.stopPropagation();
-    Meteor.call("deleteNotification", this.props.notification._id);
+    Meteor.call("dismissNotification", this.props.notification._id);
   },
   renderLabel() {
     return this.actionMap[this.props.notification.action].bind(this)();
@@ -65,7 +65,7 @@ NotificationComponent = React.createClass({
   render() {
     const rightIcon = <FontIcon
       className="material-icons"
-      onTouchTap={this.delete}
+      onTouchTap={this.dismiss}
     >cancel</FontIcon>;
 
     return <li rightIcon={rightIcon} style={{whiteSpace: "normal"}}>

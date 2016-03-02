@@ -18,6 +18,18 @@ NotificationComponent = React.createClass({
           {this.props.notification.topic.name}
         </a>
       ];
+    },
+    topicMentioned() {
+      const url = FlowRouter.path("topic", {
+        roomId: this.props.notification.topic.room._id,
+        topicId: this.props.notification.topic._id
+      });
+      return [
+        "mentioned you in ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.delete}>
+          {this.props.notification.topic.name}
+        </a>
+      ];
     }
   },
   delete(event) {

@@ -20,7 +20,7 @@ PostModifyFAB = React.createClass({
       <FloatingActionButton secondary={true} onTouchTap={this.showPostForm}>
         <FontIcon className="material-icons">edit</FontIcon>
       </FloatingActionButton>
-      <PostUpdateFormComponent
+      <PostUpdateForm
         post={this.props.post}
         handleClose={this.hidePostForm}
         open={this.state.showForm}

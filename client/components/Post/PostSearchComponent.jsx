@@ -5,7 +5,8 @@ PostSearchComponent = React.createClass({
     var handle = Meteor.subscribe("searchPosts", tagStr);
     return {
       loading: ! handle.ready(),
-      posts: queryTags(tagStr, Meteor.userId()).fetch()
+      posts: queryTags(tagStr, Meteor.userId()).fetch(),
+      currentUser: Meteor.user()
     };
   },
   render() {
@@ -14,7 +15,10 @@ PostSearchComponent = React.createClass({
     }
 
     if (this.data.posts.length) {
-      return <PostGalleryComponent posts={this.data.posts} />;
+      return <PostGallery
+        posts={this.data.posts}
+        currentUser={this.data.currentUser}
+      />;
     } else {
       return <Uhoh>
         No results!

@@ -1,7 +1,10 @@
 PostBrowseComponent = React.createClass({
   renderInner() {
     if (this.props.posts.length) {
-      return <PostGalleryComponent posts={this.props.posts} />;
+      return <PostGallery
+        posts={this.props.posts}
+        currentUser={this.props.currentUser}
+      />;
     } else {
       return <Uhoh>
         You haven't uploaded anything!

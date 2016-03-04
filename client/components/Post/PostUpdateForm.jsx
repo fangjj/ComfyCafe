@@ -1,4 +1,4 @@
-PostUpdateFormComponent = React.createClass({
+PostUpdateForm = React.createClass({
   handleSubmit(data) {
     Meteor.call("updatePost", this.props.post._id, data, (err) => {
       this.props.handleClose();

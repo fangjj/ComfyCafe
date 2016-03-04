@@ -1,8 +1,12 @@
-PostGalleryComponent = React.createClass({
+PostGallery = React.createClass({
   renderPosts() {
     if (this.props.posts.length) {
       return this.props.posts.map((post) => {
-        return <PostPreviewComponent post={post} key={post._id} />;
+        return <PostPreviewComponent
+          post={post}
+          currentUser={this.props.currentUser}
+          key={post._id}
+        />;
       });
     }
   },

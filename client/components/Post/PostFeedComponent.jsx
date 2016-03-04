@@ -16,7 +16,10 @@ PostFeedComponent = React.createClass({
   },
   renderInner() {
     if (this.data.posts.length) {
-      return <PostGalleryComponent posts={this.data.posts} />;
+      return <PostGallery
+        posts={this.data.posts}
+        currentUser={this.data.currentUser}
+      />;
     } else {
       var msg;
       if (this.data.currentUser.subscriptions.length) {

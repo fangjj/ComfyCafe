@@ -51,26 +51,26 @@ UserProfileComponent = React.createClass({
 
     var toolbox;
     if (! isOwner) {
-      var artPath = FlowRouter.path("artBy", {username: this.data.user.username});
-      var blogPath = FlowRouter.path("blogBy", {username: this.data.user.username});
+      var imagesPath = FlowRouter.path("imagesBy", {username: this.data.user.username});
+      var pagesPath = FlowRouter.path("pagesBy", {username: this.data.user.username});
       toolbox = <div className="toolbox">
         <SubscriptionButton owner={user} currentUser={this.data.currentUser} />
         <br />
         <RaisedButton
-          label="View Art"
+          label="View Images"
           labelStyle={{fontSize: "18px"}}
           secondary={true}
-          icon={<FontIcon className="material-icons">palette</FontIcon>}
+          icon={<FontIcon className="material-icons">image</FontIcon>}
           linkButton={true}
-          href={artPath}
+          href={imagesPath}
         />
         <RaisedButton
-          label="View Blog"
+          label="View Pages"
           labelStyle={{fontSize: "18px"}}
           secondary={true}
           icon={<FontIcon className="material-icons">import_contacts</FontIcon>}
           linkButton={true}
-          href={blogPath}
+          href={pagesPath}
         />
       </div>;
     } else {

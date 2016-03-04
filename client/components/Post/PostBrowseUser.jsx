@@ -1,7 +1,7 @@
 PostBrowseUser = React.createClass({
   render() {
     return <PostGallery
-      subName="artBy"
+      subName="imagesBy"
       subData={FlowRouter.getParam("username")}
       fabCond={function () {
         return this.data.currentUser.username === FlowRouter.getParam("username");

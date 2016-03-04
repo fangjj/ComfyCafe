@@ -7,7 +7,7 @@ Meteor.publish("allBlogPosts", function () {
 	return BlogPosts.find();
 });
 
-Meteor.publish("blogBy", function (username) {
+Meteor.publish("pagesBy", function (username) {
 	check(username, String);
 	return BlogPosts.find({ "owner.username": username });
 });

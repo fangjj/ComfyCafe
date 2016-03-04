@@ -1,14 +1,12 @@
-BlogList = React.createClass({
+PagesUser = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    var handle = Meteor.subscribe("blogFeed");
+    const username =  FlowRouter.getParam("username");
+    const handle = Meteor.subscribe("pagesBy", username);
     return {
       loading: ! handle.ready(),
       posts: BlogPosts.find(
-        { $or: [
-          { "owner._id": Meteor.userId() },
-          { "owner._id": { $in: Meteor.user() && Meteor.user().subscriptions || [] } }
-        ] },
+        { "owner.username": username },
         { sort: { createdAt: -1, name: 1 } }
       ).fetch(),
       currentUser: Meteor.user()
@@ -28,19 +26,16 @@ BlogList = React.createClass({
         {this.renderPosts()}
       </ol>
     } else {
-      var msg;
-      if (this.data.currentUser.subscriptions && this.data.currentUser.subscriptions.length) {
-        msg = "None of your subscriptions have posted anything...";
-      } else {
-        msg = "You haven't subscribed to anyone!";
-      }
       return <Uhoh>
-        {msg}
+        {FlowRouter.getParam("username") + " hasn't written any pages yet."}
       </Uhoh>;
     }
   },
   renderFab() {
-    if (this.data.currentUser) {
+    if (muxAnd([
+      this.data.currentUser,
+      this.data.currentUser.username === FlowRouter.getParam("username")
+    ])) {
       return <BlogPostFAB />;
     }
   },

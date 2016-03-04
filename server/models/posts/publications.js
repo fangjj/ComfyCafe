@@ -26,7 +26,7 @@ Meteor.publish("allPosts", function () {
 	});
 });
 
-Meteor.publish("artBy", function (username) {
+Meteor.publish("imagesBy", function (username) {
 	//Meteor._sleepForMs(2000);
 	check(username, String);
 	return Posts.find(

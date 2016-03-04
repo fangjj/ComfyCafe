@@ -5,7 +5,7 @@ PostSearch = React.createClass({
       subName="searchPosts"
       subData={tagStr}
       generateDoc={function () {
-        return queryTags(tagStr, Meteor.userId());
+        return privacyWrap(queryTags(tagStr), Meteor.userId());
       }}
       ifEmpty={function () {
         return <InlineUhoh>

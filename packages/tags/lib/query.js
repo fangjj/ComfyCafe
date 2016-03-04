@@ -124,7 +124,7 @@ var queryGenerator = function (queryDoc, coll, positive) {
 };
 
 queryTagsGenerator = function (coll) {
-  return function (tagStr, userId) {
+  return function (tagStr) {
     // Parse tagStr if it isn't already parsed.
     var tagObj;
     if (typeof tagStr === "object") {
@@ -158,17 +158,6 @@ queryTagsGenerator = function (coll) {
     // This takes true, since we want to match these.
     queryGenerator(queryDoc, tagObj.nouns, true);
 
-    // Add privacy stuff to queryDoc.
-    privyDoc = {
-      $and: [
-        { $or: [
-  				{ visibility: { $ne: "unlisted" } },
-  				{ "owner._id": userId }
-  			] },
-        queryDoc
-      ]
-    };
-
-    return privyDoc;
+    return queryDoc;
   };
 };

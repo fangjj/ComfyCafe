@@ -1,10 +1,10 @@
 TopBarArtButton = React.createClass({
   render() {
     return <NavItem
-      label="Art"
-      iconName="palette"
+      label="Images"
+      iconName="image"
       href={FlowRouter.path("art")}
-      className="hide-on-small-only" 
+      className="hide-on-small-only"
     />;
   }
 });

@@ -22,12 +22,12 @@ TopBarMenu = React.createClass({
       <div id="mobileMenuArrow" className={classes}></div>
       <Menu id="mobileMenu" className={classes} autoWidth={false}>
         <TopMenuItem
-          primaryText="Art"
-          leftIconName="palette"
+          primaryText="Images"
+          leftIconName="image"
           href={FlowRouter.path("art")}
         />
         <TopMenuItem
-          primaryText="Blog"
+          primaryText="Pages"
           leftIconName="import_contacts"
           href={FlowRouter.path("blog")}
         />

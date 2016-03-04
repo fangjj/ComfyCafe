@@ -17,6 +17,9 @@ PostMoreMenu = React.createClass({
   hidePostForm() {
     this.setState({showForm: false});
   },
+  reroll() {
+    Meteor.call("rerollPost", this.props.post._id);
+  },
   delete() {
     Meteor.call("deletePost", this.props.post._id);
   },
@@ -37,6 +40,7 @@ PostMoreMenu = React.createClass({
         targetOrigin={{horizontal: "right", vertical: "top"}}
       >
         <MenuItem primaryText="Edit" onTouchTap={this.showPostForm} />
+        <MenuItem primaryText="Reroll" onTouchTap={this.reroll} />
         <MenuItem primaryText="Delete" onTouchTap={this.delete} />
       </IconMenu>
       <PostUpdateForm

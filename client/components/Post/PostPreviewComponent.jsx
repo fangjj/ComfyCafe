@@ -1,6 +1,5 @@
 PostPreviewComponent = React.createClass({
   renderMoreMenu() {
-    console.log(this.props.currentUser);
     const isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.post.owner._id;
     if (isOwner) {

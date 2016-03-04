@@ -11,7 +11,7 @@ PostGallery = React.createClass({
     }
   },
   getMeteorData() {
-    let doc = this.props.generateDoc();
+    let doc = this.props.generateDoc.bind(this)();
 
     if (this.state.originalOnly) {
       doc.original = { $ne: false };
@@ -40,7 +40,7 @@ PostGallery = React.createClass({
         />;
       });
     } else {
-      return this.props.ifEmpty();
+      return this.props.ifEmpty.bind(this)();
     }
   },
   renderFab() {

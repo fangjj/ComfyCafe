@@ -23,6 +23,11 @@ Post = React.createClass({
       currentUser: Meteor.user()
     };
   },
+  renderLikes() {
+    if (this.data.post.likes && this.data.post.likes.length) {
+      return <PostLikes likes={this.data.post.likes} />;
+    }
+  },
   render() {
     if (this.data.loading) {
       return <LoadingSpinnerComponent />;
@@ -55,6 +60,7 @@ Post = React.createClass({
       <section className="tagBox content">
         <TagTreeComponent tags={this.data.post.tags} humanizedTags={this.data.post.humanizedTags} />
       </section>
+      {this.renderLikes()}
       {fab}
     </article>;
   }

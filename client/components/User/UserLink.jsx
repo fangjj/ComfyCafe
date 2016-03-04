@@ -18,7 +18,7 @@ UserLink = React.createClass({
   render() {
     var user = this.props.user;
     var path = FlowRouter.path("profile", {username: user.username});
-    return <div style={{display: "inline"}}>
+    return <div className="userLink" style={{display: "inline"}}>
       <a href={path} title={user.profile.blurb}>
         {user.profile.displayName || user.username}
       </a>

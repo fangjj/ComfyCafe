@@ -19,13 +19,13 @@ PostInfoBox = React.createClass({
     });
   },
   render() {
-    var post = this.props.post;
+    const post = this.props.post;
 
-    var owner = post.owner;
-    var ownerUrl = FlowRouter.path("profile", {username: owner.username});
-    var isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
+    const owner = post.owner;
+    const ownerUrl = FlowRouter.path("profile", {username: owner.username});
+    const isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
 
-    var subButton;
+    let subButton;
     if (! isOwner) {
       subButton = <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />;
     } else {

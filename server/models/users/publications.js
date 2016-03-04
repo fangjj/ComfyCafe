@@ -22,3 +22,15 @@ Meteor.publish("user", function (username) {
 		} }
 	);
 });
+
+Meteor.publish("users", function (ids) {
+	check(ids, [String]);
+	return Meteor.users.find(
+		{ _id: { $in: ids } },
+		{ fields: {
+			username: 1,
+			profile: 1,
+			avatars: 1
+		} }
+	);
+});

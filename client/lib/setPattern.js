@@ -5,4 +5,6 @@ setPattern = function (str) {
 
   var color = tinycolor(pattern.color);
   $(".topNav").css("background-color", color.desaturate(5).darken(15));
+
+  return color;
 };

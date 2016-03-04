@@ -53,6 +53,27 @@ TopBarComponent = React.createClass({
   toggleAccountActions() {
     this.genericHandleMenuButton("account");
   },
+  update() {
+    if (muxAnd([
+      this.data.currentUser,
+      _.has(this.data.currentUser, "settings"),
+      this.data.currentUser.settings.patternSeed
+    ])) {
+      setPattern(this.data.currentUser.settings.patternSeed);
+    }
+  },
+  componentDidMount() {
+    this.update();
+  },
+  componentDidUpdate() {
+    if (muxAnd([
+      this.data.currentUser,
+      _.has(this.data.currentUser, "settings"),
+      ! this.data.currentUser.settings.preservePattern
+    ])) {
+      this.update();
+    }
+  },
   renderLeftSub() {
     if (this.userReady()) {
       return [

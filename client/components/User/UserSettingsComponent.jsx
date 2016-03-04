@@ -20,7 +20,10 @@ UserSettingsComponent = React.createClass({
       snackbarOpen: false,
       defaultPage: "art",
       uploadAction: "redirect",
-      nsfwNameGen: false
+      nsfwNameGen: false,
+      autoWatch: false,
+      patternSeed: "",
+      preservePattern: false
     };
   },
   handleSnackbarRequestClose() {
@@ -40,13 +43,21 @@ UserSettingsComponent = React.createClass({
   handleAutoWatch(event) {
     this.setState({autoWatch: event.target.checked})
   },
+  handlePatternSeed(event) {
+    this.setState({patternSeed: event.target.value})
+  },
+  handlePreservePattern(event) {
+    this.setState({preservePattern: event.target.checked})
+  },
   submit(event) {
     var self = this;
     Meteor.call("updateSettings", {
       defaultPage: this.state.defaultPage,
       uploadAction: this.state.uploadAction,
       nsfwNameGen: this.state.nsfwNameGen,
-      autoWatch: this.state.autoWatch
+      autoWatch: this.state.autoWatch,
+      patternSeed: this.state.patternSeed,
+      preservePattern: this.state.preservePattern
     }, () => {
 	    this.setState({snackbarOpen: true});
     });
@@ -72,6 +83,14 @@ UserSettingsComponent = React.createClass({
 
       if (_.has(this.data.currentUser.settings, "autoWatch")) {
         obj.autoWatch = this.data.currentUser.settings.autoWatch;
+      }
+
+      if (_.has(this.data.currentUser.settings, "patternSeed")) {
+        obj.patternSeed = this.data.currentUser.settings.patternSeed;
+      }
+
+      if (_.has(this.data.currentUser.settings, "preservePattern")) {
+        obj.preservePattern = this.data.currentUser.settings.preservePattern;
       }
 
       this.setState(obj);
@@ -117,7 +136,24 @@ UserSettingsComponent = React.createClass({
         defaultToggled={this.state.autoWatch}
         onToggle={this.handleAutoWatch}
       />
+
+      <TextField
+        defaultValue={this.state.patternSeed}
+        floatingLabelText="Pattern Seed"
+        floatingLabelStyle={{fontSize: "20px"}}
+        multiLine={true}
+        rows={1}
+        onChange={this.handlePatternSeed}
+        fullWidth={true}
+      />
+
+      <Toggle
+        label="Preserve post patterns across navigation"
+        defaultToggled={this.state.preservePattern}
+        onToggle={this.handlePreservePattern}
+      />
       <br />
+
       <div className="actions">
         <CancelButton
           onTouchTap={this.cancel}

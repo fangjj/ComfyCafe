@@ -2,7 +2,7 @@
 
 WARNING: All users are assumed to be trusted. This will change soon.
 
-![](https://teru.sexy/gridfs/media/b047e4c9480a128e65399cad74fccf83)
+![](https://teru.sexy/gridfs/media/825f2e111a6da8d93569aaf09fbcabca)
 
 - Randomly generated funny post names
 - Randomly generated colorful backgrounds

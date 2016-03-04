@@ -4,33 +4,66 @@ let {
 } = mui;
 
 PostGallery = React.createClass({
+  mixins: [ReactMeteorData],
   getInitialState() {
     return {
       originalOnly: false
     }
   },
+  getMeteorData() {
+    let doc = this.props.generateDoc();
+
+    if (this.state.originalOnly) {
+      doc.original = { $ne: false };
+    }
+
+    let handle = Meteor.subscribe(this.props.subName, this.props.subData);
+    return {
+      loading: ! handle.ready(),
+      posts: Posts.find(
+  			doc,
+  			{ sort: { createdAt: -1, name: 1 } }
+  		).fetch(),
+      currentUser: Meteor.user()
+    };
+  },
   handleOriginalOnly(event) {
-    const originalOnly = event.target.checked;
-    this.setState({originalOnly: originalOnly});
-    this.props.onFilter((filter) => {
-      return {
-        originalOnly: originalOnly
-      };
-    });
+    this.setState({originalOnly: event.target.checked});
   },
   renderPosts() {
-    if (this.props.posts.length) {
-      return this.props.posts.map((post) => {
+    if (this.data.posts.length) {
+      return this.data.posts.map((post) => {
         return <PostPreviewComponent
           post={post}
-          currentUser={this.props.currentUser}
+          currentUser={this.data.currentUser}
           key={post._id}
         />;
       });
+    } else {
+      return this.props.ifEmpty();
+    }
+  },
+  renderFab() {
+    if (this.data.currentUser) {
+      if (this.props.fabCond) {
+        if (this.props.fabCond.bind(this)()) {
+          return <UploadFAB />;
+        }
+      } else if (! this.props.noFab) {
+        return <UploadFAB />;
+      }
     }
   },
   render() {
-    const posts = this.props.posts;
+    if (this.data.loading) {
+      return <LoadingSpinnerComponent />;
+    }
+
+    if (this.props.requireAuth && ! this.data.currentUser) {
+      return <PowerlessComponent />;
+    }
+
+    const posts = this.data.posts;
     return <div className="postGallery content">
       <div className="filter">
         <div>
@@ -50,6 +83,7 @@ PostGallery = React.createClass({
       <ul className="gallery">
         {this.renderPosts()}
       </ul>
+      {this.renderFab()}
     </div>;
   }
 });

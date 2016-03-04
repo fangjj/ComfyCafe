@@ -1,5 +1,8 @@
-fancyCommaJoin = function (arr, map)
-{
+fancyCommaJoin = function (arr, map) {
+  if (typeof map === "undefined") {
+    map = function (x) { return x };
+  }
+
   if (! arr.length) {
     return "";
   }

@@ -20,8 +20,16 @@ TagTreeComponent = React.createClass({
       </ul>;
     }
   },
+  renderAuthors() {
+    if (this.props.tags.authors) {
+      return <div className="metaRow">
+        {"by " + fancyCommaJoin(this.props.tags.authors)}
+      </div>;
+    }
+  },
   render() {
 		return <div className="tagTree">
+      {this.renderAuthors()}
 			{this.renderInner()}
 		</div>;
   }

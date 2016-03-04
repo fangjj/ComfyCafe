@@ -1,4 +1,4 @@
-PostBrowseLikesComponent = React.createClass({
+PostBrowseLikes = React.createClass({
   render() {
     return <PostGallery
       subName="likes"

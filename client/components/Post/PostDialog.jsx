@@ -81,7 +81,7 @@ PostDialog = React.createClass({
       onRequestClose={this.props.handleClose}
     >
       {this.renderMedium()}
-      <PostInnerFormComponent
+      <PostInnerForm
         visibility={this.state.visibility}
         handleVisibility={this.handleVisibility}
         original={this.state.original}

@@ -1,4 +1,4 @@
-PostComponent = React.createClass({
+Post = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var id = FlowRouter.getParam("postId");
@@ -51,7 +51,7 @@ PostComponent = React.createClass({
       <figure className="content">
         <MediumComponent medium={this.data.post.medium} />
       </figure>
-      <PostInfoBoxComponent post={this.data.post} currentUser={this.data.currentUser} />
+      <PostInfoBox post={this.data.post} currentUser={this.data.currentUser} />
       <section className="tagBox content">
         <TagTreeComponent tags={this.data.post.tags} humanizedTags={this.data.post.humanizedTags} />
       </section>

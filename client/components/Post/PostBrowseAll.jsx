@@ -1,4 +1,4 @@
-PostBrowseAllComponent = React.createClass({
+PostBrowseAll = React.createClass({
   render() {
     return <PostGallery
       subName="allPosts"

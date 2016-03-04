@@ -1,4 +1,4 @@
-PostFormComponent = React.createClass({
+PostForm = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var handle = Meteor.subscribe("media", Meteor.userId());

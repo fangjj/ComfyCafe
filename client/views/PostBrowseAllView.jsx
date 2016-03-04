@@ -1,6 +1,6 @@
 PostBrowseAllView = {
   layout: MainLayout,
   content: {
-    main: <PostBrowseAllComponent />
+    main: <PostBrowseAll />
   }
 };

@@ -33,7 +33,7 @@ PostGallery = React.createClass({
   renderPosts() {
     if (this.data.posts.length) {
       return this.data.posts.map((post) => {
-        return <PostPreviewComponent
+        return <PostPreview
           post={post}
           currentUser={this.data.currentUser}
           key={post._id}

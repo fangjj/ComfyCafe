@@ -3,7 +3,7 @@ let {
   Checkbox
 } = mui;
 
-PostInnerFormComponent = React.createClass({
+PostInnerForm = React.createClass({
   render() {
     return <div>
       <SelectVisibility

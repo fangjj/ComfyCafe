@@ -1,6 +1,6 @@
 PostFeedView = {
   layout: MainLayout,
   content: {
-    main: <PostFeedComponent />
+    main: <PostFeed />
   }
 };

@@ -3,7 +3,7 @@ let {
   FontIcon
 } = mui;
 
-PostInfoBoxComponent = React.createClass({
+PostInfoBox = React.createClass({
   reroll() {
     Meteor.call("rerollPost", this.props.post._id, (err, name) => {
       const path = FlowRouter.path("post", {

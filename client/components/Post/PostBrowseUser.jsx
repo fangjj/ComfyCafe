@@ -1,4 +1,4 @@
-PostBrowseUserComponent = React.createClass({
+PostBrowseUser = React.createClass({
   render() {
     return <PostGallery
       subName="artBy"

@@ -1,4 +1,4 @@
-PostFeedComponent = React.createClass({
+PostFeed = React.createClass({
   render() {
     return <PostGallery
       subName="postFeed"

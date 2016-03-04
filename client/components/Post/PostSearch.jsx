@@ -1,4 +1,4 @@
-PostSearchComponent = React.createClass({
+PostSearch = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var tagStr = tagStrFromUrl(FlowRouter.getParam("rawTagStr"));

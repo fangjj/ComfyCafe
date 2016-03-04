@@ -1,6 +1,6 @@
 PostView = {
   layout: MainLayout,
   content: {
-    main: <PostComponent />
+    main: <Post />
   }
 };

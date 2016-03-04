@@ -1,6 +1,6 @@
 PostSearchView = {
   layout: MainLayout,
   content: {
-    main: <PostSearchComponent />
+    main: <PostSearch />
   }
 };

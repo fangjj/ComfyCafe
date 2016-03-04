@@ -1,6 +1,6 @@
 PostBrowseLikesView = {
   layout: MainLayout,
   content: {
-    main: <PostBrowseLikesComponent />
+    main: <PostBrowseLikes />
   }
 };

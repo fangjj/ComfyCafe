@@ -1,14 +1,32 @@
 PostFeedComponent = React.createClass({
   mixins: [ReactMeteorData],
+  getInitialState() {
+    return {
+      filter: {}
+    };
+  },
+  applyFilter(callback) {
+    this.setState({
+      filter: callback(this.state.filter)
+    });
+  },
   getMeteorData() {
-    var handle = Meteor.subscribe("postFeed");
+    let doc = { $or: [
+      { "owner._id": Meteor.userId() },
+      { "owner._id": { $in: Meteor.user() && Meteor.user().subscriptions || [] } }
+    ] };
+
+    if (this.state.filter) {
+      _.each(this.state.filter, (value, key) => {
+        doc[key] = value;
+      });
+    }
+
+    let handle = Meteor.subscribe("postFeed");
     return {
       loading: ! handle.ready(),
       posts: Posts.find(
-  			{ $or: [
-  				{ "owner._id": Meteor.userId() },
-  				{ "owner._id": { $in: Meteor.user() && Meteor.user().subscriptions || [] } }
-  			] },
+  			doc,
   			{ sort: { createdAt: -1, name: 1 } }
   		).fetch(),
       currentUser: Meteor.user()
@@ -19,6 +37,7 @@ PostFeedComponent = React.createClass({
       return <PostGallery
         posts={this.data.posts}
         currentUser={this.data.currentUser}
+        onFilter={this.applyFilter}
       />;
     } else {
       var msg;

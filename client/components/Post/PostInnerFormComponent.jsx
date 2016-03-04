@@ -12,7 +12,7 @@ PostInnerFormComponent = React.createClass({
       />
       <br />
       <Checkbox
-        checked={this.props.original}
+        defaultChecked={this.props.original}
         label="Original content"
         labelStyle={{fontSize: "20px"}}
         onCheck={this.props.handleOriginal}

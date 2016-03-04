@@ -7,7 +7,8 @@ PostGallery = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
-      originalOnly: false
+      originalOnly: false,
+      tagStr: ""
     }
   },
   getMeteorData() {
@@ -16,6 +17,18 @@ PostGallery = React.createClass({
     if (this.state.originalOnly) {
       doc.original = { $ne: false };
     }
+
+    if (this.state.tagStr) {
+      const parsed = queryTags(this.state.tagStr, Meteor.userId());
+      _.each(parsed, (value, key) => {
+        if (_.has(doc, key)) {
+          console.error("PANIC: key " + key + " already present in doc.");
+        }
+        doc[key] = value;
+      });
+    }
+
+    //prettyPrint(doc);
 
     let handle = Meteor.subscribe(this.props.subName, this.props.subData);
     return {
@@ -29,6 +42,9 @@ PostGallery = React.createClass({
   },
   handleOriginalOnly(event) {
     this.setState({originalOnly: event.target.checked});
+  },
+  handleSearch(event) {
+    this.setState({tagStr: event.target.value})
   },
   renderPosts() {
     if (this.data.posts.length) {
@@ -77,6 +93,7 @@ PostGallery = React.createClass({
         <div>
           <TextField
             hintText="Search"
+            onChange={this.handleSearch}
           />
         </div>
       </div>

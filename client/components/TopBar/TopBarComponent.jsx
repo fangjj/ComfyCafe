@@ -19,21 +19,12 @@ TopBarComponent = React.createClass({
       showMobileMenu: false,
       showNotificationList: false,
       showAccountActions: false,
-      visibleMenu: null,
-      query: ""
+      visibleMenu: null
     };
   },
   userReady() {
     return ! this.data.loading
       && this.data.currentUser && _.has(this.data.currentUser, "profile");
-  },
-  handleSearchInput(event) {
-    this.setState({query: event.target.value})
-  },
-  search(event) {
-    event.preventDefault();
-    var path = FlowRouter.path("search", {rawTagStr: tagStrToUrl(this.state.query)});
-    FlowRouter.go(path);
   },
   genericHandleMenuButton(name) {
     var set = null;

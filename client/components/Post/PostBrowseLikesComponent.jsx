@@ -22,9 +22,12 @@ PostBrowseLikesComponent = React.createClass({
       </Uhoh>;
     }
 
-    return <PostBrowseComponent
-      posts={this.data.posts}
-      currentUser={this.data.currentUser}
-    />;
+    return <div>
+      <PostGallery
+        posts={this.data.posts}
+        currentUser={this.data.currentUser}
+        onFilter={this.applyFilter}
+      />
+    </div>;
   }
 });

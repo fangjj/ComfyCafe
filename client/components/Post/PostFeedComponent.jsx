@@ -18,7 +18,9 @@ PostFeedComponent = React.createClass({
 
     if (this.state.filter) {
       _.each(this.state.filter, (value, key) => {
-        doc[key] = value;
+        if (key === "originalOnly" && value) {
+          doc.original = { $ne: false };
+        }
       });
     }
 
@@ -53,10 +55,13 @@ PostFeedComponent = React.createClass({
       </Uhoh>;
     }
 
-    return <PostBrowseComponent
-      posts={this.data.posts}
-      currentUser={this.data.currentUser}
-      onFilter={this.applyFilter}
-    />;
+    return <div>
+      <PostGallery
+        posts={this.data.posts}
+        currentUser={this.data.currentUser}
+        onFilter={this.applyFilter}
+      />
+      <UploadFAB />
+    </div>;
   }
 });

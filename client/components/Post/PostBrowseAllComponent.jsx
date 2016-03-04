@@ -16,9 +16,22 @@ PostBrowseAllComponent = React.createClass({
       return <LoadingSpinnerComponent />;
     }
 
-    return <PostBrowseComponent
-      posts={this.data.posts}
-      currentUser={this.data.currentUser}
-    />;
+    if (! this.data.posts.length) {
+      return <Uhoh>
+        You haven't uploaded anything!
+        <div className="smaller">
+          To upload a file, either press the button in the bottom right corner, or just drop a file anywhere.
+        </div>
+      </Uhoh>;
+    }
+
+    return <div>
+      <PostGallery
+        posts={this.data.posts}
+        currentUser={this.data.currentUser}
+        onFilter={this.applyFilter}
+      />
+      <UploadFAB />
+    </div>;
   }
 });

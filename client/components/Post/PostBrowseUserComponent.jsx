@@ -11,14 +11,31 @@ PostBrowseUserComponent = React.createClass({
       currentUser: Meteor.user()
     };
   },
+  renderFab(username) {
+    if (this.data.currentUser.username === username) {
+      return <UploadFAB />;
+    }
+  },
   render() {
     if (this.data.loading) {
       return <LoadingSpinnerComponent />;
     }
 
-    return <PostBrowseComponent
-      posts={this.data.posts}
-      currentUser={this.data.currentUser}
-    />;
+    const username = FlowRouter.getParam("username");
+
+    if (! this.data.posts.length) {
+      return <Uhoh>
+        {username + " hasn't uploaded anything yet!"}
+      </Uhoh>;
+    }
+
+    return <div>
+      <PostGallery
+        posts={this.data.posts}
+        currentUser={this.data.currentUser}
+        onFilter={this.applyFilter}
+      />
+      {this.renderFab(username)}
+    </div>;
   }
 });

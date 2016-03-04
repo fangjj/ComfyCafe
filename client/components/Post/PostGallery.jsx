@@ -14,7 +14,7 @@ PostGallery = React.createClass({
     this.setState({originalOnly: originalOnly});
     this.props.onFilter((filter) => {
       return {
-        original: originalOnly
+        originalOnly: originalOnly
       };
     });
   },

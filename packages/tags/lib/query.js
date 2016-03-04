@@ -137,10 +137,6 @@ queryTagsGenerator = function (coll) {
       tagObj = {};
     }
 
-    // So pretty!
-    console.log("================== TAGS ====================================");
-    prettyPrint(tagObj);
-
     var queryDoc = {};
 
     authorQuery = {};
@@ -173,16 +169,6 @@ queryTagsGenerator = function (coll) {
       ]
     };
 
-    console.log("================== QUERY ===================================");
-    prettyPrint(privyDoc);
-
-    var results = coll.find(privyDoc, { sort: { createdAt: -1, name: 1 } });
-
-    console.log("================== RESULTS =================================");
-    prettyPrint(results.map(function (result) {
-      return result.tags.text;
-    }));
-
-    return results;
+    return privyDoc;
   };
 };

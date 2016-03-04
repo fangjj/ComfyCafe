@@ -66,5 +66,5 @@ Meteor.publish("likes", function () {
 });
 
 Meteor.publish("searchPosts", function (tagStr) {
-	return queryTags(tagStr, this.userId);
+	return Posts.find(queryTags(tagStr, this.userId));
 });

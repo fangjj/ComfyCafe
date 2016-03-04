@@ -1,5 +1,6 @@
 let {
-  TextField
+  TextField,
+  Checkbox
 } = mui;
 
 PostInnerFormComponent = React.createClass({
@@ -10,6 +11,12 @@ PostInnerFormComponent = React.createClass({
         onChange={this.props.handleVisibility}
       />
       <br />
+      <Checkbox
+        checked={this.props.original}
+        label="Original content"
+        labelStyle={{fontSize: "20px"}}
+        onCheck={this.props.handleOriginal}
+      />
       <TextField
         defaultValue={this.props.description}
         floatingLabelText="Description"

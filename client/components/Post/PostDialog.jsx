@@ -6,6 +6,7 @@ let {
 
 const defaultState = {
   visibility: "public",
+  original: false,
   description: "",
   tags: "tagme"
 };
@@ -15,6 +16,7 @@ PostDialog = React.createClass({
     if (this.props.post) {
       return {
         visibility: this.props.post.visibility,
+        original: this.props.post.original,
         description: this.props.post.description || "",
         tags: this.props.post.tags.text || ""
       };
@@ -25,6 +27,9 @@ PostDialog = React.createClass({
   handleVisibility(event, index, value) {
     this.setState({visibility: value});
   },
+  handleOriginal(event) {
+    this.setState({original: event.target.checked});
+  },
   handleDescription(event) {
     this.setState({description: event.target.value});
   },
@@ -34,6 +39,7 @@ PostDialog = React.createClass({
   handleSubmit() {
     this.props.handleSubmit({
       visibility: this.state.visibility,
+      original: this.state.original,
       description: this.state.description,
       tags: this.state.tags
     });
@@ -78,6 +84,8 @@ PostDialog = React.createClass({
       <PostInnerFormComponent
         visibility={this.state.visibility}
         handleVisibility={this.handleVisibility}
+        original={this.state.original}
+        handleOriginal={this.handleOriginal}
         description={this.state.description}
         handleDescription={this.handleDescription}
         tags={this.state.tags}

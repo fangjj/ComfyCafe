@@ -43,6 +43,11 @@ PostInfoBoxComponent = React.createClass({
       </div>;
     }
 
+    let verb = "uploaded";
+    if (post.original) {
+      verb = "created";
+    }
+
     return <section className="infoBox content">
       <div className="flexColumn">
         <div className="flexLayout">
@@ -54,7 +59,7 @@ PostInfoBoxComponent = React.createClass({
           <div className="rightSide">
             <div className="top">
               <div className="info">
-                by <UserLink user={owner} /> <Moment time={post.createdAt} />
+                {verb} by <UserLink user={owner} /> <Moment time={post.createdAt} />
               </div>
               {/*this.renderMoreMenu()*/}
             </div>

@@ -15,7 +15,8 @@ PostInnerFormComponent = React.createClass({
         floatingLabelText="Description"
         floatingLabelStyle={{fontSize: "20px"}}
         multiLine={true}
-        rows={4}
+        rows={3}
+        rowsMax={7}
         onChange={this.props.handleDescription}
         fullWidth={true}
       />
@@ -25,7 +26,8 @@ PostInnerFormComponent = React.createClass({
         floatingLabelText="Tags"
         floatingLabelStyle={{fontSize: "20px"}}
         multiLine={true}
-        rows={4}
+        rows={1}
+        rowsMax={4}
         onChange={this.props.handleTags}
         fullWidth={true}
       />

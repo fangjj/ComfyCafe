@@ -16,6 +16,7 @@ BlogInnerForm = React.createClass({
         floatingLabelStyle={{fontSize: "20px"}}
         multiLine={true}
         rows={4}
+        rowsMax={10}
         onChange={this.props.handleBody}
         fullWidth={true}
       />

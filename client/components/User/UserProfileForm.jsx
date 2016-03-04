@@ -78,7 +78,7 @@ UserProfileForm = React.createClass({
         floatingLabelText="Blurb"
         floatingLabelStyle={{fontSize: "20px"}}
         multiLine={true}
-        rows={4}
+        rows={1}
         onChange={this.handleBlurb}
         fullWidth={true}
       />

@@ -16,6 +16,7 @@ MessageInnerForm = React.createClass({
         hintText={generateMessageHint()}
         multiLine={true}
         rows={3}
+        rowsMax={10}
         onChange={this.props.handleBody}
         fullWidth={true}
       />

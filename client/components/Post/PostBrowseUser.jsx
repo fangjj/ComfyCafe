@@ -10,9 +10,9 @@ PostBrowseUser = React.createClass({
         return { "owner.username": FlowRouter.getParam("username") };
       }}
       ifEmpty={function () {
-        return <Uhoh>
+        return <InlineUhoh>
           {FlowRouter.getParam("username") + " hasn't uploaded anything yet!"}
-        </Uhoh>;
+        </InlineUhoh>;
       }}
     />;
   }

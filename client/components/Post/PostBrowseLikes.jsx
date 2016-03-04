@@ -8,9 +8,9 @@ PostBrowseLikes = React.createClass({
         return { likes: Meteor.userId() };
       }}
       ifEmpty={function () {
-        return <Uhoh>
+        return <InlineUhoh>
           You haven't liked any art yet!
-        </Uhoh>;
+        </InlineUhoh>;
       }}
     />;
   }

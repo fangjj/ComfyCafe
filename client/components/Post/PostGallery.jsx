@@ -56,6 +56,14 @@ PostGallery = React.createClass({
         />;
       });
     } else {
+      if (muxOr([
+        this.state.originalOnly,
+        this.state.tagStr
+      ])) {
+        return <InlineUhoh>
+          No results.
+        </InlineUhoh>;
+      }
       return this.props.ifEmpty.bind(this)();
     }
   },

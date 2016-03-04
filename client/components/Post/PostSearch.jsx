@@ -8,9 +8,9 @@ PostSearch = React.createClass({
         return queryTags(tagStr, Meteor.userId());
       }}
       ifEmpty={function () {
-        return <Uhoh>
+        return <InlineUhoh>
           No results!
-        </Uhoh>;
+        </InlineUhoh>;
       }}
     />;
   }

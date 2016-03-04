@@ -32,14 +32,16 @@ PostFeedComponent = React.createClass({
       currentUser: Meteor.user()
     };
   },
-  renderInner() {
-    if (this.data.posts.length) {
-      return <PostGallery
-        posts={this.data.posts}
-        currentUser={this.data.currentUser}
-        onFilter={this.applyFilter}
-      />;
-    } else {
+  render() {
+    if (this.data.loading) {
+      return <LoadingSpinnerComponent />;
+    }
+
+    if (! this.data.currentUser) {
+      return <PowerlessComponent />;
+    }
+
+    if (! this.data.posts.length) {
       var msg;
       if (this.data.currentUser.subscriptions.length) {
         msg = "None of your subscriptions have posted anything...";
@@ -50,19 +52,11 @@ PostFeedComponent = React.createClass({
         {msg}
       </Uhoh>;
     }
-  },
-  render() {
-    if (this.data.loading) {
-      return <LoadingSpinnerComponent />;
-    }
 
-    if (! this.data.currentUser) {
-      return <PowerlessComponent />;
-    }
-
-    return <div>
-      {this.renderInner()}
-      <UploadFAB />
-    </div>;
+    return <PostBrowseComponent
+      posts={this.data.posts}
+      currentUser={this.data.currentUser}
+      onFilter={this.applyFilter}
+    />;
   }
 });

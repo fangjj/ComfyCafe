@@ -4,6 +4,7 @@ PostBrowseComponent = React.createClass({
       return <PostGallery
         posts={this.props.posts}
         currentUser={this.props.currentUser}
+        onFilter={this.props.onFilter}
       />;
     } else {
       return <Uhoh>

@@ -118,7 +118,7 @@ TopBarComponent = React.createClass({
         action={this.toggleNotificationList}
       />;
 
-      actionList = <AccountActionsComponent
+      actionList = <AccountActionsList
         currentUser={this.data.currentUser}
         visible={this.state.visibleMenu === "account"}
         action={this.toggleAccountActions}

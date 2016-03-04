@@ -28,8 +28,6 @@ PostGallery = React.createClass({
       });
     }
 
-    //prettyPrint(doc);
-
     let handle = Meteor.subscribe(this.props.subName, this.props.subData);
     return {
       loading: ! handle.ready(),

@@ -3,7 +3,7 @@ let {
   Divider
 } = mui;
 
-AccountActionsComponent = React.createClass({
+AccountActionsList = React.createClass({
   mixins: [OnClickOutside],
   handleClickOutside(event) {
     if (this.props.visible) {
@@ -41,13 +41,13 @@ AccountActionsComponent = React.createClass({
           href={likesUrl}
         />
         <TopMenuItem
-          primaryText="Your Art"
-          leftIconName="view_comfy"
+          primaryText="Your Images"
+          leftIconName="image"
           href={yourArtUrl}
         />
         <TopMenuItem
-          primaryText="Your Blog"
-          leftIconName="view_list"
+          primaryText="Your Pages"
+          leftIconName="import_contacts"
           href={yourBlogUrl}
         />
         <TopMenuItem

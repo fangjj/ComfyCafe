@@ -27,6 +27,17 @@ NotificationComponent = React.createClass({
         />
       ];
     },
+    friendAccepted() {
+      return "accepted your friend request!";
+    },
+    friendRejected() {
+      return [
+        "rejected your friend request. ",
+        <a href="https://youtu.be/W9A52UWmmrE" key={_.uniqueId()}>
+          Chin up!
+        </a>
+      ];
+    },
     postLiked() {
       const url = FlowRouter.path("post", {
         username: this.props.currentUser.username,

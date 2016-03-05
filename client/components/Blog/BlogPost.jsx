@@ -1,25 +1,11 @@
 BlogPost = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    var id = FlowRouter.getParam("postId");
-    var handle;
-    var doc = {};
-    if (id) {
-      handle = Meteor.subscribe("blogPost", FlowRouter.getParam("postId"));
-      doc = { _id: id };
-    } else {
-      handle = Meteor.subscribe("blogPost",
-        FlowRouter.getParam("username"),
-        FlowRouter.getParam("postName"),
-      );
-      doc = {
-        "owner.username": FlowRouter.getParam("username"),
-        name: FlowRouter.getParam("postName")
-      };
-    }
+    const id = FlowRouter.getParam("postId");
+    let handle = Meteor.subscribe("blogPost", id);
     return {
       loading: ! handle.ready(),
-      post: BlogPosts.findOne(doc),
+      post: BlogPosts.findOne({ _id: id }),
       currentUser: Meteor.user()
     };
   },

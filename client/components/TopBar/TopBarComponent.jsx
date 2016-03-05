@@ -114,6 +114,7 @@ TopBarComponent = React.createClass({
     if (this.userReady()) {
       notificationList = <NotificationListComponent
         notifications={this.data.notifications}
+        currentUser={this.data.currentUser}
         visible={this.state.visibleMenu === "notifications"}
         action={this.toggleNotificationList}
       />;

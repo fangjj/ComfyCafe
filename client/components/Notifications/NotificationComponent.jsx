@@ -7,6 +7,18 @@ NotificationComponent = React.createClass({
     subscribed() {
       return "subscribed!";
     },
+    postLiked() {
+      const url = FlowRouter.path("post", {
+        username: this.props.currentUser.username,
+        postName: this.props.notification.post.name
+      });
+      return [
+        "liked ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
+          {this.props.notification.post.name}
+        </a>
+      ];
+    },
     postMentioned() {
       const url = FlowRouter.path("post", {
         username: this.props.notification.owner.username,

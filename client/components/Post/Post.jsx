@@ -65,6 +65,9 @@ Post = React.createClass({
       </figure>
       <PostInfoBox post={this.data.post} currentUser={this.data.currentUser} />
       {this.renderTags()}
+      <section className="comments content">
+        <CommentList post={this.data.post} />
+      </section>
       {this.renderLikes()}
       {fab}
     </article>;

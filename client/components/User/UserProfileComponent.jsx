@@ -55,6 +55,10 @@ UserProfileComponent = React.createClass({
       var pagesPath = FlowRouter.path("pagesBy", {username: this.data.user.username});
       toolbox = <div className="toolbox">
         <SubscriptionButton owner={user} currentUser={this.data.currentUser} />
+        <FriendButton
+          user={user}
+          currentUser={this.data.currentUser}
+        />
         <br />
         <RaisedButton
           label="View Images"

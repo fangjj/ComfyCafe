@@ -1,11 +1,31 @@
 let {
-  FontIcon
+  FontIcon,
+  FlatButton
 } = mui;
 
 NotificationComponent = React.createClass({
   actionMap: {
     subscribed() {
       return "subscribed!";
+    },
+    friendRequest() {
+      return [
+        "wants to be friends! ",
+        <FlatButton
+          label="Accept"
+          key={_.uniqueId()}
+          onTouchTap={() => {
+            Meteor.call("acceptFriendRequest", this.props.notification._id);
+          }}
+        />,
+        <FlatButton
+          label="Reject"
+          key={_.uniqueId()}
+          onTouchTap={() => {
+            Meteor.call("rejectFriendRequest", this.props.notification._id);
+          }}
+        />
+      ];
     },
     postLiked() {
       const url = FlowRouter.path("post", {

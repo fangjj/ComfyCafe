@@ -5,7 +5,8 @@ Meteor.publish(null, function () {
     { fields: {
 			settings: 1,
 			avatars: 1,
-			subscriptions: 1
+			subscriptions: 1,
+      friends: 1
 		} }
 	);
 });

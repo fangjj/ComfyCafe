@@ -45,6 +45,7 @@ FriendButton = React.createClass({
       return <ToggleButton
         active={true}
         deactivate={this.unfriend}
+        dangerous={true}
         labelActivated="Friended"
         iconActivated="sentiment_very_satisfied"
         labelDeactivate="Unfriend"

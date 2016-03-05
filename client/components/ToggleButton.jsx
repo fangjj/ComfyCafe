@@ -26,17 +26,21 @@ ToggleButton = React.createClass({
         onTouchTap={this.props.activate}
       />;
     } else {
+      let classes = "grey darken-2";
       let label;
       let icon;
       if (this.state.notHover) {
         label = this.props.labelActivated;
         icon = this.props.iconActivated;
       } else {
+        if (this.props.dangerous) {
+          classes = "red darken-3";
+        }
         label = this.props.labelDeactivate;
         icon = this.props.iconDeactivate;
       }
       return <RaisedButton
-        className="grey darken-2"
+        className={classes}
         label={label}
         labelStyle={{fontSize: "18px"}}
         icon={<FontIcon className="material-icons">{icon}</FontIcon>}

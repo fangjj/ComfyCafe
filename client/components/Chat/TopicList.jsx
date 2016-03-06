@@ -14,7 +14,13 @@ TopicList = React.createClass({
     var handleRoom = Meteor.subscribe("room", id);
     var handleTopics = Meteor.subscribe("roomTopics", id);
 
-    let query = { "room._id": id };
+    let query = {
+      "room._id": id,
+      $or: [
+        { visibility: { $ne: "unlisted" } },
+        { "owner._id": Meteor.userId() }
+      ]
+    };
     if (this.state.search) {
       query.name = { $regex: this.state.search, $options: "i" };
     }

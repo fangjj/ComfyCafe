@@ -8,7 +8,8 @@ const defaultState = {
   visibility: "public",
   original: false,
   description: "",
-  tags: "tagme"
+  tags: "tagme",
+  pretentiousFilter: "none"
 };
 
 PostDialog = React.createClass({
@@ -17,8 +18,9 @@ PostDialog = React.createClass({
       return {
         visibility: this.props.post.visibility,
         original: this.props.post.original,
-        description: this.props.post.description || "",
-        tags: this.props.post.tags.text || ""
+        description: this.props.post.description || defaultState.description,
+        tags: this.props.post.tags.text || defaultState.tags,
+        pretentiousFilter: this.props.post.pretentiousFilter || defaultState.pretentiousFilter
       };
     } else {
       return defaultState;
@@ -36,12 +38,16 @@ PostDialog = React.createClass({
   handleTags(event) {
     this.setState({tags: event.target.value});
   },
+  handlePretentiousFilter(event, index, value) {
+    this.setState({pretentiousFilter: value});
+  },
   handleSubmit() {
     this.props.handleSubmit({
       visibility: this.state.visibility,
       original: this.state.original,
       description: this.state.description,
-      tags: this.state.tags
+      tags: this.state.tags,
+      pretentiousFilter: this.state.pretentiousFilter
     });
 
     if (! this.props.post) {
@@ -51,7 +57,7 @@ PostDialog = React.createClass({
   renderMedium() {
     if (this.props.medium) {
       return <div className="medium">
-        <MediumComponent medium={this.props.medium} />
+        <Medium medium={this.props.medium} />
       </div>;
     }
   },
@@ -90,6 +96,8 @@ PostDialog = React.createClass({
         handleDescription={this.handleDescription}
         tags={this.state.tags}
         handleTags={this.handleTags}
+        pretentiousFilter={this.state.pretentiousFilter}
+        handlePretentiousFilter={this.handlePretentiousFilter}
       />
     </Dialog>;
   }

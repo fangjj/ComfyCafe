@@ -11,9 +11,10 @@ ThumbnailComponent = React.createClass({
     if (! thumbTerminated) {
       if (medium.thumbnails) {
         let thumb = medium.thumbnails[size];
-        thumbnail = <img
+        thumbnail = <PretentiousImage
           className="thumbnail"
           src={"/gridfs/media/id/" + thumb._id + "?size=" + size}
+          pretentiousFilter={this.props.pretentiousFilter}
         />;
       } else {
         thumbnail = <SpinnerComponent />;

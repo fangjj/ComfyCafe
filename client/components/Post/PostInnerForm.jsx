@@ -38,6 +38,10 @@ PostInnerForm = React.createClass({
         onChange={this.props.handleTags}
         fullWidth={true}
       />
+      <PretentiousFilterSelector
+        pretentiousFilter={this.props.pretentiousFilter}
+        onChange={this.props.handlePretentiousFilter}
+      />
   </div>;
   }
 });

@@ -63,7 +63,10 @@ Post = React.createClass({
 
     return <article className="post contentLayout">
       <figure className="content">
-        <MediumComponent medium={this.data.post.medium} />
+        <Medium
+          medium={this.data.post.medium} 
+          pretentiousFilter={this.data.post.pretentiousFilter}
+        />
       </figure>
       <PostInfoBox post={this.data.post} currentUser={this.data.currentUser} />
       {this.renderTags()}

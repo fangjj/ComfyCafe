@@ -7,15 +7,12 @@ BlogListItem = React.createClass({
     }
   },
   render() {
-    var post = this.props.post;
+    const post = this.props.post;
 
-    var owner = post.owner;
-    var ownerUrl = FlowRouter.path("profile", {username: owner.username});
+    const owner = post.owner;
+    const ownerUrl = FlowRouter.path("profile", {username: owner.username});
 
-    var isoDate = moment(post.createdAt).toISOString();
-    var prettyDate = moment(post.createdAt).fromNow();
-
-    var permaLink = FlowRouter.path("blogPost", {postId: post._id});
+    const permaLink = FlowRouter.path("blogPost", {postId: post._id});
 
     return <li className="blogPost">
       <article className="flexLayout">
@@ -28,11 +25,14 @@ BlogListItem = React.createClass({
           <div className="top">
             <div className="info">
               by <UserLink user={owner} /> <Moment time={post.createdAt} />
-              &nbsp;<a href={permaLink}>(link)</a>
+              &nbsp;<VisibilityLink
+                href={permaLink}
+                visibility={post.visibility}
+              >(link)</VisibilityLink>
             </div>
             {this.renderMoreMenu()}
           </div>
-          <TextBody text={this.props.post.body} className="body" />
+          <TextBody text={post.body} className="body" />
         </div>
       </article>
     </li>;

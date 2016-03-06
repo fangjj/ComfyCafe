@@ -20,8 +20,8 @@ Meteor.publish("allPosts", function () {
 	//Meteor._sleepForMs(2000);
 	return Posts.find({
 		$or: [
-			{ visibility: { $ne: "unlisted" } },
-			{ "owner._id": this.userId }
+			{ "owner._id": this.userId },
+			{ visibility: "public" }
 		]
 	});
 });
@@ -33,8 +33,8 @@ Meteor.publish("imagesBy", function (username) {
 		{
 			"owner.username": username,
 			$or: [
-				{ visibility: { $ne: "unlisted" } },
-				{ "owner._id": this.userId }
+				{ "owner._id": this.userId },
+				{ visibility: "public" }
 			]
 		}
 	);
@@ -43,18 +43,34 @@ Meteor.publish("imagesBy", function (username) {
 Meteor.publish("postFeed", function () {
 	this.autorun(function (computation) {
 		if (this.userId) {
+			var self = this;
+
 			var user = Meteor.users.findOne(this.userId, { fields: { subscriptions: 1 } });
-			return Posts.find(
-				{ $or: [
-					{ "owner._id": this.userId },
-					{
-						"owner._id": { $in: user && user.subscriptions || [] },
-						visibility: { $ne: "unlisted" }
-					}
-				] }
-			);
+
+			var doc = { $or: [
+				{ "owner._id": this.userId },
+				{
+					"owner._id": { $in: user.subscriptions || [] },
+					visibility: "public"
+				}
+			] };
+
+			_.each(user.subscriptions || [], function (subId) {
+				var owner = Meteor.users.findOne(subId, { fields: { friends: 1 } });
+
+				if (owner.friends && _.contains(owner.friends, self.userId)) {
+					doc.$or.push({
+						"owner._id": subId,
+						visibility: "friends"
+					});
+				}
+			});
+
+			prettyPrint(doc);
+
+			return Posts.find(doc);
 		} else {
-			return Posts.find();
+			return Posts.find({ visibility: "public" });
 		}
 	});
 });

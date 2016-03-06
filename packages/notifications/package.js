@@ -18,17 +18,12 @@ Package.onUse(function(api) {
     "mongo"
   ], ["client", "server"]);
 
-  api.use([
-    "ongoworks:security"
-  ], ["server"]);
-
   api.addFiles([
     "lib/collection.js",
     "lib/methods.js"
   ], ["client", "server"]);
 
   api.addFiles([
-    "server/security.js",
     "server/publications.js"
   ], ["server"]);
 

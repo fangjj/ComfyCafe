@@ -21,11 +21,6 @@ Package.onUse(function(api) {
   ], ["client", "server"]);
 
   api.use([
-    "ongoworks:security",
-    "teru:utility"
-  ], ["server"]);
-
-  api.use([
     "react",
     "teru:components"
   ], ["client"]);
@@ -36,7 +31,6 @@ Package.onUse(function(api) {
   ], ["client", "server"]);
 
   api.addFiles([
-    "server/security.js",
     "server/publications.js"
   ], ["server"]);
 

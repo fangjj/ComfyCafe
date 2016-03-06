@@ -1,13 +1,21 @@
 BlogList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    var handle = Meteor.subscribe("blogFeed");
+    let subs = [];
+    if (Meteor.userId()) {
+      subs = Meteor.user().subscriptions || [];
+    }
+
+    let handle = Meteor.subscribe("blogFeed");
     return {
       loading: ! handle.ready(),
       posts: BlogPosts.find(
         { $or: [
           { "owner._id": Meteor.userId() },
-          { "owner._id": { $in: Meteor.user() && (Meteor.user().subscriptions || []) } }
+          {
+            "owner._id": { $in: subs },
+            visibility: { $ne: "unlisted" }
+          }
         ] },
         { sort: { createdAt: -1, name: 1 } }
       ).fetch(),
@@ -47,6 +55,10 @@ BlogList = React.createClass({
   render() {
     if (this.data.loading) {
       return <LoadingSpinnerComponent />;
+    }
+
+    if (! this.data.currentUser) {
+      return <PowerlessComponent />;
     }
 
     return <div>

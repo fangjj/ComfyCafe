@@ -4,9 +4,13 @@ PostFeed = React.createClass({
       subName="postFeed"
       requireAuth={true}
       generateDoc={function () {
+        let subs = [];
+        if (Meteor.userId()) {
+          subs = Meteor.user().subscriptions || [];
+        }
         return { $or: [
           { "owner._id": Meteor.userId() },
-          { "owner._id": { $in: Meteor.user() && (Meteor.user().subscriptions || []) } }
+          { "owner._id": { $in: subs } }
         ] };
       }}
       ifEmpty={function () {

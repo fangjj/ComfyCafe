@@ -4,26 +4,71 @@ Meteor.publish("blogPost", function (postId) {
 });
 
 Meteor.publish("allBlogPosts", function () {
-	return BlogPosts.find();
+	this.autorun(function (computation) {
+		if (this.userId) {
+			var user = Meteor.users.findOne(this.userId, { fields: {
+				friends: 1
+			} });
+			return BlogPosts.find(privacyWrap(
+				{},
+				this.userId,
+				user.friends
+			));
+		} else {
+			return BlogPosts.find(
+				{
+					visibility: "public"
+				}
+			);
+		}
+	});
 });
 
 Meteor.publish("pagesBy", function (username) {
 	check(username, String);
-	return BlogPosts.find({ "owner.username": username });
+
+	this.autorun(function (computation) {
+		if (this.userId) {
+			var user = Meteor.users.findOne(this.userId, { fields: {
+				friends: 1
+			} });
+			return BlogPosts.find(privacyWrap(
+				{ "owner.username": username },
+				this.userId,
+				user.friends
+			));
+		} else {
+			return BlogPosts.find(
+				{
+					"owner.username": username,
+					visibility: "public"
+				}
+			);
+		}
+	});
 });
 
 Meteor.publish("blogFeed", function () {
 	this.autorun(function (computation) {
 		if (this.userId) {
-			var user = Meteor.users.findOne(this.userId, { fields: { subscriptions: 1 } });
-			return BlogPosts.find(
+			var user = Meteor.users.findOne(this.userId, { fields: {
+				subscriptions: 1,
+				friends: 1
+			} });
+			return BlogPosts.find(privacyWrap(
 				{ $or: [
 					{ "owner._id": this.userId },
 					{ "owner._id": { $in: user && user.subscriptions || [] } }
-				] }
-			);
+				] },
+				this.userId,
+				user.friends
+			));
 		} else {
-			return BlogPosts.find();
+			return BlogPosts.find(
+				{
+					visibility: "public"
+				}
+			);
 		}
 	});
 });

@@ -22,16 +22,11 @@ Meteor.publish("allPosts", function () {
 				friends: 1
 			} });
 
-			return Posts.find({
-				$or: [
-					{ "owner._id": this.userId },
-					{ visibility: "public" },
-					{
-						"owner._id": { $in: user.friends },
-						visibility: "friends"
-					}
-				]
-			});
+			return Posts.find(privacyWrap(
+				{},
+				this.userId,
+				user.friends
+			));
 		} else {
 			return Posts.find(
 				{
@@ -50,17 +45,11 @@ Meteor.publish("imagesBy", function (username) {
 				friends: 1
 			} });
 
-			return Posts.find({
-				"owner.username": username,
-				$or: [
-					{ "owner._id": this.userId },
-					{ visibility: "public" },
-					{
-						"owner._id": { $in: user.friends },
-						visibility: "friends"
-					}
-				]
-			});
+			return Posts.find(privacyWrap(
+				{ "owner.username": username },
+				this.userId,
+				user.friends
+			));
 		} else {
 			return Posts.find(
 				{
@@ -81,21 +70,14 @@ Meteor.publish("postFeed", function () {
 				friends: 1
 			} });
 
-			return Posts.find(
-				{
-					$or: [
-						{ "owner._id": this.userId },
-						{
-							"owner._id": { $in: user.subscriptions || [] },
-							visibility: "public"
-						},
-						{
-							"owner._id": { $in: user.friends },
-							visibility: "friends"
-						}
-					]
-				}
-			);
+			return Posts.find(privacyWrap(
+				{ $or: [
+					{ "owner._id": this.userId },
+					{ "owner._id": { $in: user.subscriptions || [] } }
+				] },
+				this.userId,
+				user.friends
+			));
 		} else {
 			return Posts.find({ visibility: "public" });
 		}

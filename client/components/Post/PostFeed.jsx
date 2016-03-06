@@ -6,19 +6,19 @@ PostFeed = React.createClass({
       generateDoc={function () {
         return { $or: [
           { "owner._id": Meteor.userId() },
-          { "owner._id": { $in: Meteor.user() && Meteor.user().subscriptions || [] } }
+          { "owner._id": { $in: Meteor.user() && (Meteor.user().subscriptions || []) } }
         ] };
       }}
       ifEmpty={function () {
         let msg;
-        if (this.data.currentUser.subscriptions.length) {
+        if (this.data.currentUser.subscriptions && this.data.currentUser.subscriptions.length) {
           msg = "None of your subscriptions have posted anything...";
         } else {
           msg = "You haven't subscribed to anyone!";
         }
-        return <Uhoh>
+        return <InlineUhoh>
           {msg}
-        </Uhoh>;
+        </InlineUhoh>;
       }}
     />;
   }

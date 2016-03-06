@@ -15,12 +15,30 @@ mediaUpload = function (self, file, callback) {
       var liveQuery = cursor.observe({
         changed: function(newImage, oldImage) {
           if (newImage.length === file.size) {
-            liveQuery.stop();
-            self.setState({
-              isUploading: false,
-              progress: 0
-            });
-            callback(file.uniqueIdentifier);
+            var done = function () {
+              liveQuery.stop();
+              self.setState({
+                isUploading: false,
+                progress: 0
+              });
+              callback(file.uniqueIdentifier);
+            };
+
+            if (newImage.contentType.split("/")[0] === "image") {
+              var img = new Image();
+              img.onload = function () {
+                var imgWidth = this.width;
+                var imgHeight = this.height;
+                URL.revokeObjectURL(img.src);
+
+                Meteor.call("mediumDimensions", file.uniqueIdentifier, imgWidth, imgHeight);
+
+                done();
+              }
+              img.src = URL.createObjectURL(file.file);
+            } else {
+              done();
+            }
           }
         }
       });

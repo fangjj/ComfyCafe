@@ -10,7 +10,7 @@ MessageInnerForm = React.createClass({
     } else {
       value.defaultValue = this.props.body;
     }
-    return <div>
+    return <div className="messageInput">
       <TextField
         {...value}
         hintText={generateMessageHint()}

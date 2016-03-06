@@ -8,7 +8,8 @@ PostGallery = React.createClass({
   getInitialState() {
     return {
       originalOnly: false,
-      tagStr: ""
+      tagStr: "",
+      filter: "sfw"
     }
   },
   getMeteorData() {
@@ -28,6 +29,12 @@ PostGallery = React.createClass({
       });
     }
 
+    if (this.state.filter) {
+      if (this.state.filter === "your") {
+        doc["owner._id"] = Meteor.userId();
+      }
+    }
+
     let handle = Meteor.subscribe(this.props.subName, this.props.subData);
     return {
       loading: ! handle.ready(),
@@ -43,6 +50,9 @@ PostGallery = React.createClass({
   },
   handleSearch(event) {
     this.setState({tagStr: event.target.value})
+  },
+  handleFilter(event, index, value) {
+    this.setState({filter: value});
   },
   renderPosts() {
     if (this.data.posts.length) {
@@ -100,6 +110,12 @@ PostGallery = React.createClass({
           <TextField
             hintText="Search"
             onChange={this.handleSearch}
+          />
+        </div>
+        <div style={{flexGrow: 2}}>
+          <PostFilters
+            filter={this.state.filter}
+            onChange={this.handleFilter}
           />
         </div>
       </div>

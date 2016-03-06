@@ -22,7 +22,6 @@ AccountActionsList = React.createClass({
     var profileUrl = FlowRouter.path("profile", {username: this.props.currentUser.username});
     var likesUrl = FlowRouter.path("likes");
     var friendsUrl = FlowRouter.path("friends");
-    var yourImagesUrl = FlowRouter.path("imagesBy", {username: this.props.currentUser.username});
     var yourBlogUrl = FlowRouter.path("blogBy", {username: this.props.currentUser.username});
     var yourPagesUrl = FlowRouter.path("pagesBy", {username: this.props.currentUser.username});
     var favoritesUrl = FlowRouter.path("favorites");
@@ -48,17 +47,7 @@ AccountActionsList = React.createClass({
           href={friendsUrl}
         />
         <TopMenuItem
-          primaryText="Your Images"
-          leftIconName="image"
-          href={yourImagesUrl}
-        />
-        <TopMenuItem
-          primaryText="Your Blog"
-          leftIconName="weekend"
-          href={yourBlogUrl}
-        />
-        <TopMenuItem
-          primaryText="Your Pages"
+          primaryText="Pages"
           leftIconName="import_contacts"
           href={yourPagesUrl}
         />

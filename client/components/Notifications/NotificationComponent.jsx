@@ -12,17 +12,17 @@ NotificationComponent = React.createClass({
       return [
         "wants to be friends! ",
         <FlatButton
-          label="Accept"
-          key={_.uniqueId()}
-          onTouchTap={() => {
-            Meteor.call("acceptFriendRequest", this.props.notification._id);
-          }}
-        />,
-        <FlatButton
           label="Reject"
           key={_.uniqueId()}
           onTouchTap={() => {
             Meteor.call("rejectFriendRequest", this.props.notification._id);
+          }}
+        />,
+        <FlatButton
+          label="Accept"
+          key={_.uniqueId()}
+          onTouchTap={() => {
+            Meteor.call("acceptFriendRequest", this.props.notification._id);
           }}
         />
       ];

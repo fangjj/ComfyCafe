@@ -1,3 +1,7 @@
+let {
+  FontIcon
+} = mui;
+
 Moonbox = React.createClass({
   mixins: [hotkey.Mixin("handleHotkey")],
   handleHotkey(event) {
@@ -29,6 +33,12 @@ Moonbox = React.createClass({
       style={{display: this.props.open ? "flex" : "none"}}
       onTouchTap={this.handleClose}
     >
+      <div className="close">
+        <FontIcon
+          className="material-icons"
+          onTouchTap={this.handleClose}
+        >close</FontIcon>
+      </div>
       <div className="container center">
         <img src={this.props.src} ref="image" />
       </div>

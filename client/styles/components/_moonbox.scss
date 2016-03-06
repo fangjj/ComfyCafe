@@ -23,4 +23,18 @@
       max-height: calc(100% - 100px);
     }
   }
+
+  .close {
+    z-index: index($elements, viewer-close);
+
+    position: absolute;
+    right: 10px;
+    top: 10px;
+
+    .material-icons {
+      font-size: 36px !important;
+
+      cursor: pointer;
+    }
+  }
 }

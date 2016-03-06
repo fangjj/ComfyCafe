@@ -1,6 +1,7 @@
 let {
   TextField,
-  Checkbox
+  Checkbox,
+  FontIcon
 } = mui;
 
 PostGallery = React.createClass({
@@ -107,13 +108,14 @@ PostGallery = React.createClass({
             onCheck={this.handleOriginalOnly}
           />
         </div>
-        <div>
+        <div style={{flexGrow: 2}}>
           <TextField
             hintText="Search"
+            fullWidth={true}
             onChange={this.handleSearch}
           />
         </div>
-        <div style={{flexGrow: 2}}>
+        <div style={{flexGrow: 1}}>
           <PostFilters
             filter={this.state.filter}
             onChange={this.handleFilter}

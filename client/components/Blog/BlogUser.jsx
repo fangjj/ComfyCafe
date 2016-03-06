@@ -1,13 +1,13 @@
-PagesUser = React.createClass({
+BlogUser = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const username =  FlowRouter.getParam("username");
-    const handle = Meteor.subscribe("pagesBy", username);
+    const handle = Meteor.subscribe("blogBy", username);
     return {
       loading: ! handle.ready(),
       posts: BlogPosts.find(
         { "owner.username": username },
-        { sort: { createdAt: -1, name: 1 } }
+        { sort: { createdAt: -1 } }
       ).fetch(),
       currentUser: Meteor.user()
     };
@@ -27,7 +27,7 @@ PagesUser = React.createClass({
       </ol>
     } else {
       return <Uhoh>
-        {FlowRouter.getParam("username") + " hasn't written any pages yet."}
+        {FlowRouter.getParam("username") + " hasn't written any posts yet."}
       </Uhoh>;
     }
   },

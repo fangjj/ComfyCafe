@@ -52,7 +52,7 @@ UserProfileComponent = React.createClass({
     var toolbox;
     if (! isOwner) {
       var imagesPath = FlowRouter.path("imagesBy", {username: this.data.user.username});
-      var pagesPath = FlowRouter.path("pagesBy", {username: this.data.user.username});
+      var pagesPath = FlowRouter.path("blogBy", {username: this.data.user.username});
       toolbox = <div className="toolbox">
         <SubscriptionButton owner={user} currentUser={this.data.currentUser} />
         <FriendButton

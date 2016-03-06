@@ -24,7 +24,7 @@ Meteor.publish("allBlogPosts", function () {
 	});
 });
 
-Meteor.publish("pagesBy", function (username) {
+Meteor.publish("blogBy", function (username) {
 	check(username, String);
 
 	this.autorun(function (computation) {

@@ -1,6 +1,6 @@
-PagesUserView = {
+BlogUserView = {
   layout: MainLayout,
   content: {
-    main: <PagesUser />
+    main: <BlogUser />
   }
 };

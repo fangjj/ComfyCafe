@@ -27,8 +27,8 @@ TopBarMenu = React.createClass({
           href={FlowRouter.path("art")}
         />
         <TopMenuItem
-          primaryText="Pages"
-          leftIconName="import_contacts"
+          primaryText="Blog"
+          leftIconName="weekend"
           href={FlowRouter.path("blog")}
         />
         <TopMenuItem

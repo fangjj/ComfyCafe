@@ -1,8 +1,8 @@
 TopBarBlogButton = React.createClass({
   render() {
     return <NavItem
-      label="Pages"
-      iconName="import_contacts"
+      label="Blog"
+      iconName="weekend"
       href={FlowRouter.path("blog")}
       className="hide-on-small-only"
     />;

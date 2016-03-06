@@ -24,7 +24,13 @@ MediumComponent = React.createClass({
     var type = medium.contentType.split("/")[0];
     var src = "/gridfs/media/" + medium.md5;
     var medium = {
-      image: <img className="medium" src={src} onTouchTap={this.handleTouch} />,
+      image: <img
+        className="medium"
+        src={src}
+        width={medium.width}
+        height={medium.height}
+        onTouchTap={this.handleTouch}
+      />,
       video: <video className="medium" id={"video" + medium._id} src={src} controls>
         <source src={src} type={medium.contentType} />
       </video>,

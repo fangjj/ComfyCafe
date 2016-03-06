@@ -2,12 +2,33 @@ Accounts.onCreateUser(function (options, user) {
   if (options.profile) {
     user.profile = options.profile;
     user.settings = {};
-    
+
     user.inviteKey = options.profile.key;
     delete user.profile.key;
 
     // Generate default avatar.
     generateDjenticon(user._id, CryptoJS.SHA256(user.emails[0].address).toString());
+
+    // Create system room for user.
+    var roomId = Rooms.insert(
+      {
+        createdAt: new Date(),
+				updatedAt: new Date(),
+				lastActivity: new Date(),
+        name: user.username,
+        slug: user._id,
+				owner: {
+					_id: user._id,
+					username: user.username,
+					profile: user.profile
+				},
+        system: true,
+				topicCount: 0
+      }
+    );
+    user.room = {
+      _id: roomId
+    };
   }
   return user;
 });

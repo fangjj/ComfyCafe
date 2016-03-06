@@ -1,9 +1,10 @@
 Post = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    var id = FlowRouter.getParam("postId");
-    var handle;
-    var doc = {};
+    const id = FlowRouter.getParam("postId");
+    let handle;
+    let doc = {};
+
     if (id) {
       handle = Meteor.subscribe("postPerma", id);
       doc = { _id: id };
@@ -17,6 +18,7 @@ Post = React.createClass({
         name: FlowRouter.getParam("postName")
       };
     }
+
     return {
       loading: ! handle.ready(),
       post: Posts.findOne(doc),
@@ -66,7 +68,10 @@ Post = React.createClass({
       <PostInfoBox post={this.data.post} currentUser={this.data.currentUser} />
       {this.renderTags()}
       <section className="comments content">
-        <CommentList post={this.data.post} />
+        <InlineTopic
+          topicId={this.data.post.topic._id}
+          currentUser={this.data.currentUser}
+        />
       </section>
       {this.renderLikes()}
       {fab}

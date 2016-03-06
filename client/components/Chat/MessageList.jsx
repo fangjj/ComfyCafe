@@ -1,8 +1,8 @@
 MessageList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    var id = FlowRouter.getParam("topicId");
-    var handle = Meteor.subscribe("topicMessages", id);
+    const id = this.props.topic._id;
+    let handle = Meteor.subscribe("topicMessages", id);
     return {
       loading: ! handle.ready(),
       messages: Messages.find(

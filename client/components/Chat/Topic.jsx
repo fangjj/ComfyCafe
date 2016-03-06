@@ -51,7 +51,6 @@ Topic = React.createClass({
       </header>
       <MessageList
         topic={this.data.topic}
-        messages={this.data.topic.messages}
         currentUser={this.data.currentUser}
         updateTitle={this.updateTitle}
       />

@@ -6,7 +6,8 @@ Meteor.publish(null, function () {
 			settings: 1,
 			avatars: 1,
 			subscriptions: 1,
-      friends: 1
+      friends: 1,
+      room: 1
 		} }
 	);
 });

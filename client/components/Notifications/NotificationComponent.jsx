@@ -62,6 +62,30 @@ NotificationComponent = React.createClass({
         </a>
       ];
     },
+    postCommented() {
+      const url = FlowRouter.path("post", {
+        username: this.props.notification.post.username,
+        postName: this.props.notification.post.name
+      });
+      return [
+        "commented on ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
+          {this.props.notification.post.name}
+        </a>
+      ];
+    },
+    commentMentioned() {
+      const url = FlowRouter.path("post", {
+        username: this.props.notification.post.username,
+        postName: this.props.notification.post.name
+      });
+      return [
+        "mentioned you in a comment on ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
+          {this.props.notification.post.name}
+        </a>
+      ];
+    },
     blogMentioned() {
       const url = FlowRouter.path("blogPost", {
         postId: this.props.notification.blog._id

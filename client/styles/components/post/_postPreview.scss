@@ -1,26 +1,6 @@
 .postPreview {
   position: relative;
 
-  &.friends a {
-    &:link, &:visited {
-      color: #91FFA5;
-    }
-
-    &:hover, &:active {
-      color: #7ADE4A;
-    }
-  }
-
-  &.unlisted a {
-    &:link, &:visited {
-      color: #FF91AC;
-    }
-
-    &:hover, &:active {
-      color: #FF61A8;
-    }
-  }
-
   .avatar.icon {
     position: absolute;
     left: 6px;

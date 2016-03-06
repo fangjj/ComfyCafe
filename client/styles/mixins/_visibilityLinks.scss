@@ -1,5 +1,5 @@
 @mixin visibilityLinks() {
-  a.friends {
+  &.friends {
     &:link, &:visited {
       color: #91FFA5;
     }
@@ -9,7 +9,7 @@
     }
   }
 
-  a.unlisted {
+  &.unlisted {
     &:link, &:visited {
       color: #FF91AC;
     }
@@ -18,4 +18,8 @@
       color: #FF61A8;
     }
   }
+}
+
+a.visibility {
+  @include visibilityLinks;
 }

@@ -33,7 +33,10 @@ TopicListItem = React.createClass({
         <div className="rightSide">
           <div className="top">
             <div className="info">
-              <a href={topicUrl} className={topic.visibility}>{topic.name}</a>
+              <VisibilityLink
+                href={topicUrl}
+                visibility={topic.visibility}
+              >{topic.name}</VisibilityLink>
               <br />
               <Moment time={topic.lastActivity} />
             </div>

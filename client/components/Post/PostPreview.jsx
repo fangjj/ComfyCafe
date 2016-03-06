@@ -18,12 +18,12 @@ PostPreview = React.createClass({
       <a href={ownerUrl} className="avatarLink">
         <AvatarComponent size="icon" user={owner} />
       </a>
-      <a href={postUrl}>
+      <VisibilityLink href={postUrl} visibility={this.props.post.visibility}>
         <ThumbnailComponent medium={this.props.post.medium} size="list" />
         <div className="label">
           {this.props.post.name}
         </div>
-      </a>
+      </VisibilityLink>
     </li>;
   }
 });

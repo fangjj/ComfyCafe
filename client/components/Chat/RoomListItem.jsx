@@ -31,7 +31,10 @@ RoomListItem = React.createClass({
         <div className="rightSide">
           <div className="top">
             <div className="info">
-              <a href={path} className={room.visibility}>{room.name}</a>
+              <VisibilityLink
+                href={path}
+                visibility={room.visibility}
+              >{room.name}</VisibilityLink>
               <br />
               {room.topicCount + " " + this.renderCountLabel()}
               <br />

@@ -3,11 +3,15 @@ MessageList = React.createClass({
   getMeteorData() {
     const id = this.props.topic._id;
     let handle = Meteor.subscribe("topicMessages", id);
+    let sort = 1;
+    if (this.props.comments) {
+      sort = -1;
+    }
     return {
       loading: ! handle.ready(),
       messages: Messages.find(
         { "topic._id": id },
-        { sort: { createdAt: 1 } }
+        { sort: { createdAt: sort } }
       ).fetch(),
       currentUser: Meteor.user()
     };
@@ -103,6 +107,16 @@ MessageList = React.createClass({
       </li>;
     }
   },
+  renderInputTop() {
+    if (this.props.comments) {
+      return this.renderInput();
+    }
+  },
+  renderInputBottom() {
+    if (! this.props.comments) {
+      return this.renderInput();
+    }
+  },
   render() {
     if (this.data.loading) {
       return <InlineLoadingSpinner />;
@@ -111,9 +125,10 @@ MessageList = React.createClass({
     this.props.updateTitle(this.state.difference);
 
     return <ol className="list">
+      {this.renderInputTop()}
       {this.renderMsg()}
       {this.renderTyping()}
-      {this.renderInput()}
+      {this.renderInputBottom()}
     </ol>;
   }
 });

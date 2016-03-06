@@ -4,5 +4,5 @@ Meteor.publish("room", function (roomId) {
 });
 
 Meteor.publish("allRooms", function () {
-	return Rooms.find();
+	return Rooms.find({ system: { $ne: true } });
 });

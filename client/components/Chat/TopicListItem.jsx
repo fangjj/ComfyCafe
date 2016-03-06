@@ -14,16 +14,16 @@ TopicListItem = React.createClass({
     }
   },
   render() {
-    var topic = this.props.topic;
-    var topicUrl = FlowRouter.path("topic", {
+    const topic = this.props.topic;
+    const topicUrl = FlowRouter.path("topic", {
       roomId: topic.room._id,
       topicId: topic._id
     });
 
-    var owner = topic.owner;
-    var ownerUrl = FlowRouter.path("profile", {username: owner.username});
+    const owner = topic.owner;
+    const ownerUrl = FlowRouter.path("profile", {username: owner.username});
 
-    return <li>
+    return <li className="topicListItem">
       <div className="flexLayout">
         <div className="leftSIde">
           <a href={ownerUrl}>
@@ -33,7 +33,7 @@ TopicListItem = React.createClass({
         <div className="rightSide">
           <div className="top">
             <div className="info">
-              <a href={topicUrl}>{topic.name}</a>
+              <a href={topicUrl} className={topic.visibility}>{topic.name}</a>
               <br />
               <Moment time={topic.lastActivity} />
             </div>

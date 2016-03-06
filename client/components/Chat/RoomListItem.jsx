@@ -18,11 +18,10 @@ RoomListItem = React.createClass({
     }
   },
   render() {
-    var room = this.props.room;
+    const room = this.props.room;
+    const path = FlowRouter.path("room", {roomId: room._id});
 
-    var path = FlowRouter.path("room", {roomId: room._id});
-
-    return <li>
+    return <li className="roomListItem">
       <div className="flexLayout">
         <div className="leftSIde">
           <a href={path}>
@@ -32,7 +31,7 @@ RoomListItem = React.createClass({
         <div className="rightSide">
           <div className="top">
             <div className="info">
-              <a href={path}>{room.name}</a>
+              <a href={path} className={room.visibility}>{room.name}</a>
               <br />
               {room.topicCount + " " + this.renderCountLabel()}
               <br />

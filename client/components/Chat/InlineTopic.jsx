@@ -8,6 +8,14 @@ InlineTopic = React.createClass({
       topic: Topics.findOne({ _id: id })
     };
   },
+  updateTitle(n) {
+    const body = this.data.topic.name;
+    let pre = "";
+    if (n) {
+      pre = "(" + n + ") ";
+    }
+    setTitle(pre + body);
+  },
   render() {
     if (this.data.loading) {
       return <InlineLoadingSpinner />;
@@ -16,7 +24,8 @@ InlineTopic = React.createClass({
     return <MessageList
       topic={this.data.topic}
       currentUser={this.props.currentUser}
-      updateTitle={() => {}}
+      updateTitle={this.updateTitle}
+      comments={true}
     />;
   }
 });

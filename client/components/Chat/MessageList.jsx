@@ -66,7 +66,11 @@ MessageList = React.createClass({
         />;
       });
     }
-    return <li>No messages.</li>;
+    if (! this.props.comments) {
+      return <li>No messages.</li>;
+    } else {
+      return <li>No comments.</li>;
+    }
   },
   renderTyping() {
     if (this.props.topic.typing) {

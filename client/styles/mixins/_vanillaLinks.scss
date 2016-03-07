@@ -1,0 +1,11 @@
+@mixin vanillaLinks() {
+  a:not(.btn) {
+    &:link, &:visited {
+      color: #29BED6;
+    }
+
+    &:hover, &:active {
+      color: #30F0F0;
+    }
+  }
+}

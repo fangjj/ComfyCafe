@@ -1,0 +1,11 @@
+@mixin subtleLinks() {
+  a:not(.btn) {
+    &:link, &:visited {
+      color: $text-color;
+    }
+
+    &:hover, &:active {
+      color: $text-color;
+    }
+  }
+}

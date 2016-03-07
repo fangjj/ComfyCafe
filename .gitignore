@@ -24,7 +24,7 @@ node_modules
 .git
 .build*
 .vagrant
-packages/
+packages/npm-container
 bundle/
 settings.json
 settings.*.json

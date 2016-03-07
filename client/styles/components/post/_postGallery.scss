@@ -1,0 +1,16 @@
+.postGallery {
+  ul {
+    a .material-icons {
+      color: $text-color;
+    }
+  }
+
+  .filter {
+    display: flex;
+    flex-direction: row;
+
+    margin-bottom: 6px;
+
+    width: 100%;
+  }
+}

@@ -1,0 +1,19 @@
+.mediumContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  .medium {
+    max-width: 100%;
+    max-height: calc(100vh - 128px);
+
+    width: auto;
+    height: auto;
+  }
+
+  img.medium {
+    cursor: zoom-in;
+  }
+}

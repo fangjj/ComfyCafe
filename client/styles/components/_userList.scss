@@ -1,0 +1,14 @@
+.userList {
+  li {
+    display: flex;
+    flex-direction: row;
+
+    .avatar {
+      margin-right: 12px;
+    }
+
+    .userLink {
+      line-height: 36px;
+    }
+  }
+}

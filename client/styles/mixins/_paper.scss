@@ -1,0 +1,7 @@
+@mixin paper {
+  @extend .z-depth-1;
+
+  position: relative;
+
+  background: $fg-color;
+}

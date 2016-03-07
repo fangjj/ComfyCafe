@@ -1,0 +1,20 @@
+.post .infoBox {
+  .action {
+    margin-top: 12px;
+  }
+
+  .body {
+    &:empty {
+      // Fancy!
+      display: none;
+    }
+
+    &:not(:empty) {
+      margin-top: 16px;
+
+      $pad: 24px;
+      padding: $pad;
+      padding-bottom: $pad - 16px;
+    }
+  }
+}

@@ -1,0 +1,35 @@
+.navItem {
+  z-index: index($elements, topNavItems);
+
+  height: $top-nav-height;
+
+  line-height: $top-nav-height;
+
+  span {
+    font-size: 20px;
+  }
+
+  > a {
+    padding-left: 16px;
+    padding-right: 16px;
+
+    height: $top-nav-height;
+
+    color: $text-color;
+
+    i {
+      font-size: 28px;
+      line-height: $top-nav-height;
+
+      &.left {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+@media #{$medium-and-down} {
+  .navItem > a i.left {
+    margin-right: 0;
+  }
+}

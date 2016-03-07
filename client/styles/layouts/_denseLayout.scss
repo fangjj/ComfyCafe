@@ -1,0 +1,48 @@
+.denseLayout {
+  display: flex;
+
+  height: calc(100vh - 64px);
+
+  overflow: hidden;
+
+  background-color: $fg-color;
+
+  .leftCol {
+    @extend .z-depth-2;
+
+    width: 20%;
+  }
+
+  .mainCol {
+    width: 80%;
+  }
+
+  .bottomLeft {
+    margin-left: 12px;
+    margin-bottom: 12px;
+
+    .push {
+      @include pushBadge(20px);
+    }
+  }
+
+  .more {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+  }
+
+  .messageForm {
+    @include paper;
+
+    //z-index: 4;
+
+    position: fixed;
+    bottom: 0;
+
+    width: 100%;
+    height: 160px;
+
+    background-color: $sg-color;
+  }
+}

@@ -85,7 +85,7 @@ UserSettingsComponent = React.createClass({
     }
 
     if (! _.has(this.data.currentUser, "profile")) {
-      return <LoadingSpinnerComponent />;
+      return <LoadingSpinner />;
     }
 
     return <div className="settings content">

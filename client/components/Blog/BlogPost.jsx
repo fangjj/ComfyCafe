@@ -11,7 +11,7 @@ BlogPost = React.createClass({
   },
   render() {
     if (this.data.loading) {
-      return <LoadingSpinnerComponent />;
+      return <LoadingSpinner />;
     }
 
     var isOwner = this.data.currentUser

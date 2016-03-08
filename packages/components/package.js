@@ -32,7 +32,7 @@ Package.onUse(function(api) {
     "client/lib/client.browserify.js",
     "client/components/SpinnerComponent.jsx",
     "client/components/RainbowSpinnerComponent.jsx",
-    "client/components/LoadingSpinnerComponent.jsx",
+    "client/components/LoadingSpinner.jsx",
     "client/components/PowerlessComponent.jsx",
     "client/components/Uhoh.jsx",
     "client/components/MainLayout.jsx",
@@ -42,7 +42,7 @@ Package.onUse(function(api) {
     "OnClickOutside",
     "SpinnerComponent",
     "RainbowSpinnerComponent",
-    "LoadingSpinnerComponent",
+    "LoadingSpinner",
     "PowerlessComponent",
     "Uhoh",
     "MainLayout"

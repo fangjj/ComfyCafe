@@ -61,7 +61,7 @@ UserProfileForm = React.createClass({
     }
 
     if (! _.has(this.props.currentUser, "profile")) {
-      return <LoadingSpinnerComponent />;
+      return <LoadingSpinner />;
     }
 
     return <div>

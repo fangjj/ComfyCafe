@@ -90,7 +90,7 @@ PostGallery = React.createClass({
   },
   render() {
     if (this.data.loading) {
-      return <LoadingSpinnerComponent />;
+      return <LoadingSpinner />;
     }
 
     if (this.props.requireAuth && ! this.data.currentUser) {

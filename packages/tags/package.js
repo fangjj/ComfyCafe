@@ -27,6 +27,8 @@ Package.onUse(function(api) {
   ], ["client", "server"]);
 
   api.export([
+    "sampleTagStr",
+    "newParseTagStr",
     "parseTagStr",
     "getDefaultTagObj",
     "humanizeTags",

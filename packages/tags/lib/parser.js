@@ -1,12 +1,41 @@
-/*
-Wow holy shit I need to document this.
-*/
+sampleTagStr = "nia-teppelin: young, short multicolored hair, cat ears;"
+	+ "yoko-littner: flame bikini, pink stockings, long red hair, without gun";
 
-var getClauseProto = function () {
-	return {
-		parents: {},
-		root: []
+newParseTagStr = function (tagStr) {
+	var parsed = {
+		authors: [],
+		toplevel: [],
+		subjects: {},
 	};
+
+	var toplevel = tagStr.split(/\s*;\s*/);
+
+	for (var ti in toplevel) {
+		var topToken = toplevel[ti];
+
+		if (topToken.substr(0, 3) === "by ") {
+			parsed.authors.push(topToken.substr(3));
+			continue;
+		}
+
+		var kv = topToken.split(/\s*:\s*/);
+
+		if (kv.length === 1) {
+			parsed.toplevel.push(kv[0]);
+		} else {
+			var inner = {};
+			parsed.subjects[kv[0]] = inner; // This reference is intentional!
+
+			var descriptors = kv[1].split(/\s*,\s*/);
+
+			for (di in descriptors) {
+				var tokens = descriptors[di].split(/\s+/);
+				inner[tokens.splice(-1)] = tokens;
+			}
+		}
+	}
+
+	return parsed;
 };
 
 parseTagStr = function (tagStr, options) {

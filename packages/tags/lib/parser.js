@@ -4,6 +4,7 @@ sampleTagStr = "nia-teppelin: young, short multicolored hair, cat ears;"
 newParseTagStr = function (tagStr) {
 	var parsed = {
 		authors: [],
+		notAuthors: [],
 		toplevel: [],
 		subjects: {},
 	};
@@ -15,6 +16,11 @@ newParseTagStr = function (tagStr) {
 
 		if (topToken.substr(0, 3) === "by ") {
 			parsed.authors.push(topToken.substr(3));
+			continue;
+		}
+
+		if (topToken.substr(0, 7) === "not by ") {
+			parsed.notAuthors.push(topToken.substr(7));
 			continue;
 		}
 

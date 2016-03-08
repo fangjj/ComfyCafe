@@ -28,9 +28,7 @@ Package.onUse(function(api) {
 
   api.export([
     "sampleTagStr",
-    "newParseTagStr",
     "parseTagStr",
-    "getDefaultTagObj",
     "humanizeTags",
     "humanizeTagStr",
     "queryTagsGenerator",

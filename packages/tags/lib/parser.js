@@ -21,12 +21,28 @@ function parseDescriptors(parsed, kv) {
 		withoutMode = true;
 	}
 
-	var sInner = {}, wInner = {};
+	var sInner = {}, wInner = {}, nots = {};
 
 	var descriptors = kv[1].split(/\s*,\s*/);
 
 	for (di in descriptors) {
 		var tokens = descriptors[di].split(/\s+/);
+		var rootNoun = tokens.pop();
+
+		var notIndex = tokens.indexOf("not");
+		while (notIndex > -1) {
+			if (! withoutMode) {
+				if (! _.has(wInner, rootNoun)) {
+					wInner[rootNoun] = [tokens[notIndex+1]];
+				} else {
+					wInner[rootNoun].push(tokens[notIndex+1]);
+				}
+				tokens.splice(notIndex, notIndex+1);
+				notIndex = tokens.indexOf("not");
+			} else {
+				tokens.splice(notIndex);
+			}
+		}
 
 		var target;
 		if (tokens[0] !== "without") {
@@ -40,7 +56,7 @@ function parseDescriptors(parsed, kv) {
 			tokens.shift();
 		}
 
-		target[tokens.pop()] = tokens;
+		target[rootNoun] = tokens;
 	}
 
 	if (! _.isEmpty(sInner)) {

@@ -92,7 +92,7 @@ Meteor.publish("likes", function () {
 
 Meteor.publish("searchPosts", function (tagStr) {
 	check(tagStr, String);
-	var query = queryTags(tagStr);
+	var query = tagQuery(tagStr);
 	this.autorun(function (computation) {
 		if (this.userId) {
 			var user = Meteor.users.findOne(this.userId, { fields: {

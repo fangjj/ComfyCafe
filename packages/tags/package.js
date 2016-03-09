@@ -21,8 +21,9 @@ Package.onUse(function(api) {
 
   api.addFiles([
     "lib/parser.js",
+    "lib/aliases.js",
     "lib/humanizer.js",
-    "lib/query.js",
+    "lib/newQuery.js",
     "lib/urlify.js"
   ], ["client", "server"]);
 
@@ -31,7 +32,7 @@ Package.onUse(function(api) {
     "parseTagStr",
     "humanizeTags",
     "humanizeTagStr",
-    "queryTagsGenerator",
+    "tagQuery",
     "tagStrToUrl",
     "tagStrFromUrl"
   ], ["client", "server"]);

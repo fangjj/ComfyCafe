@@ -21,7 +21,7 @@ PostGallery = React.createClass({
     }
 
     if (this.state.tagStr) {
-      const parsed = queryTags(this.state.tagStr, Meteor.userId());
+      const parsed = tagQuery(this.state.tagStr);
       _.each(parsed, (value, key) => {
         if (_.has(doc, key)) {
           console.error("PANIC: key " + key + " already present in doc.");

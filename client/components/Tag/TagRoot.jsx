@@ -1,4 +1,4 @@
-TagRootComponent = React.createClass({
+TagRoot = React.createClass({
   componentWillMount() {
     this.ids = {};
     this.props.noun.descriptors.map((descriptor) => {
@@ -7,7 +7,7 @@ TagRootComponent = React.createClass({
   },
   renderDescriptors(descriptors) {
     return descriptors.map((descriptor) => {
-      return <TagDescriptorComponent
+      return <TagDescriptor
         descriptor={descriptor}
         key={this.ids[descriptor.name]}
       />;
@@ -16,7 +16,7 @@ TagRootComponent = React.createClass({
   render() {
     var noun = this.props.noun;
     return <li>
-      <TagRootClauseComponent noun={noun} />
+      <TagRootClause noun={noun} />
       <ul>
         {this.renderDescriptors(noun.descriptors)}
       </ul>

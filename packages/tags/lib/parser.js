@@ -76,7 +76,8 @@ parseTagStr = function (tagStr) {
 		authors: [],
 		notAuthors: [],
 		subjects: {},
-		without: {}
+		without: {},
+		text: tagStr
 	};
 
 	var toplevel = tagStr.split(/\s*;\s*/);

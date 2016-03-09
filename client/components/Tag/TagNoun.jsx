@@ -1,4 +1,4 @@
-TagNounComponent = React.createClass({
+TagNoun = React.createClass({
   render() {
     var noun = this.props.noun;
     return <a

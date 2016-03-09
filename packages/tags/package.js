@@ -30,8 +30,7 @@ Package.onUse(function(api) {
   api.export([
     "sampleTagStr",
     "parseTagStr",
-    "humanizeTags",
-    "humanizeTagStr",
+    "tagHumanizer",
     "tagQuery",
     "tagStrToUrl",
     "tagStrFromUrl"

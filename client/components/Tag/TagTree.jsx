@@ -1,4 +1,4 @@
-TagTreeComponent = React.createClass({
+TagTree = React.createClass({
   componentWillMount() {
     this.ids = {};
     this.props.humanizedTags.nouns.map((noun) => {
@@ -7,7 +7,7 @@ TagTreeComponent = React.createClass({
   },
   renderRoots() {
     return this.props.humanizedTags.nouns.map((noun) => {
-      return <TagRootComponent
+      return <TagRoot
         noun={noun}
         key={this.ids[noun.name]}
       />;

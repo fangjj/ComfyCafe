@@ -28,7 +28,7 @@ Post = React.createClass({
   renderTags() {
     if (this.data.post.tags.text) {
       return <section className="tagBox content">
-        <TagTreeComponent tags={this.data.post.tags} humanizedTags={this.data.post.humanizedTags} />
+        <TagTree tags={this.data.post.tags} humanizedTags={this.data.post.humanizedTags} />
       </section>;
     }
   },

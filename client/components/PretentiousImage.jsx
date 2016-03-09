@@ -2,8 +2,8 @@ PretentiousImage = React.createClass({
   getInitialState() {
     return {
       showMoonbox: false,
-      width: this.props.width,
-      height: this.props.height
+      width: this.props.width || 0,
+      height: this.props.height || 0
     };
   },
   handleTouch(event) {
@@ -16,22 +16,43 @@ PretentiousImage = React.createClass({
       showMoonbox: false
     });
   },
-  componentDidMount() {
+  handleResize() {
     const $img = $(this.refs.image);
-
-    $img.one("load", () => {
-      this.setState({
-        width: $img.width(),
-        height: $img.height()
-      });
+    this.setState({
+      width: $img.width(),
+      height: $img.height()
     });
+  },
+  componentDidMount() {
+    if (this.props.moonbox) {
+      const $img = $(this.refs.image);
 
-    $(window).resize(() => {
-      this.setState({
-        width: $img.width(),
-        height: $img.height()
+      $img.one("load", () => {
+        this.setState({
+          width: $img.width(),
+          height: $img.height()
+        });
       });
-    });
+
+      window.addEventListener("resize", this.handleResize);
+    }
+  },
+  componentWillUnmount: function() {
+    if (this.props.moonbox) {
+      window.removeEventListener("resize", this.handleResize);
+    }
+  },
+  renderMoonbox() {
+    if (this.props.moonbox) {
+      return <Moonbox
+        imgClassName={"filter-" + this.props.pretentiousFilter || "none"}
+        src={this.props.src}
+        width={this.state.width}
+        height={this.state.height}
+        open={this.state.showMoonbox}
+        onClose={this.closeMoonbox}
+      />;
+    }
   },
   render() {
     const classes = classConcat(
@@ -47,13 +68,7 @@ PretentiousImage = React.createClass({
         height={this.props.height}
         onTouchTap={this.handleTouch}
       />
-      <Moonbox
-        src={this.props.src}
-        width={this.state.width}
-        height={this.state.height}
-        open={this.state.showMoonbox}
-        onClose={this.closeMoonbox}
-      />
+      {this.renderMoonbox()}
     </div>;
   }
 });

@@ -44,7 +44,7 @@ Moonbox = React.createClass({
         >close</FontIcon>
       </div>
       <div className="container center" style={containerStyle}>
-        <img src={this.props.src} ref="image" />
+        <img src={this.props.src} ref="image" className={this.props.imgClassName} />
       </div>
     </div>;
   }

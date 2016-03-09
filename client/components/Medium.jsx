@@ -6,12 +6,12 @@ Medium = React.createClass({
     let classes = classConcat("medium", this.props.className);
     const mediumCmp = {
       image: <PretentiousImage
-        ref="image"
         className={classes}
         src={src}
         width={medium.width}
         height={medium.height}
         pretentiousFilter={this.props.pretentiousFilter}
+        moonbox={true}
       />,
       video: <video className="medium" id={"video" + medium._id} src={src} controls>
         <source src={src} type={medium.contentType} />

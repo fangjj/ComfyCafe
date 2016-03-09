@@ -1,13 +1,15 @@
 TagDescriptor = React.createClass({
-  render() {
-    var descriptor = this.props.descriptor;
-    var adjectives;
-    var showAdjectives = ! _.isEmpty(descriptor.adjectives);
-    if (showAdjectives) {
-      adjectives = <TagAdjective adjectives={descriptor.adjectives} />;
+  renderAdjs(descriptor) {
+    if (! _.isEmpty(descriptor.adjectives)) {
+      return descriptor.adjectives.map((a) => {
+        return <TagAdjective adjective={a} />;
+      });
     }
+  },
+  render() {
+    const descriptor = this.props.descriptor;
     return <li className="descriptor">
-      {adjectives}
+      {this.renderAdjs(descriptor)}
       <TagNoun noun={descriptor} />
     </li>;
   }

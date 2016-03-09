@@ -6,7 +6,11 @@ let {
 
 const defaultState = {
   name: "",
-  definition: ""
+  tagType: "generic",
+  definition: "",
+  aliases: "",
+  origin: "",
+  implications: ""
 };
 
 TagDialog = React.createClass({
@@ -14,7 +18,11 @@ TagDialog = React.createClass({
     if (this.props.tag) {
       return {
         name: this.props.tag.name,
-        definition: this.props.tag.definition
+        tagType: this.props.tag.type,
+        definition: this.props.tag.definition,
+        aliases: this.props.tag.aliasStr,
+        origin: this.props.tag.origin,
+        implications: this.props.tag.implicationStr
       };
     } else {
       return defaultState;
@@ -23,13 +31,29 @@ TagDialog = React.createClass({
   handleName(event) {
     this.setState({name: event.target.value});
   },
+  handleTagType(event, index, value) {
+    this.setState({tagType: value});
+  },
   handleDefinition(event) {
     this.setState({definition: event.target.value});
+  },
+  handleAliases(event) {
+    this.setState({aliases: event.target.value});
+  },
+  handleOrigin(event) {
+    this.setState({origin: event.target.value});
+  },
+  handleImplications(event) {
+    this.setState({implications: event.target.value});
   },
   handleSubmit() {
     this.props.handleSubmit({
       name: this.state.name,
-      definition: this.state.definition
+      type: this.state.tagType,
+      definition: this.state.definition,
+      aliases: this.state.aliases,
+      origin: this.state.origin,
+      implications: this.state.implications
     });
 
     if (! this.props.tag) {
@@ -64,8 +88,16 @@ TagDialog = React.createClass({
       <TagInnerForm
         name={this.state.name}
         handleName={this.handleName}
+        tagType={this.state.tagType}
+        handleTagType={this.handleTagType}
+        aliases={this.state.aliases}
+        handleAliases={this.handleAliases}
+        origin={this.state.origin}
+        handleOrigin={this.handleOrigin}
         definition={this.state.definition}
         handleDefinition={this.handleDefinition}
+        implications={this.state.implications}
+        handleImplications={this.handleImplications}
       />
     </Dialog>;
   }

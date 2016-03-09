@@ -13,6 +13,29 @@ TagInnerForm = React.createClass({
         fullWidth={true}
       />
       <br />
+      <TagTypeSelector
+        tagType={this.props.tagType}
+        onChange={this.props.handleTagType}
+      />
+      <TextField
+        defaultValue={this.props.aliases}
+        floatingLabelText="Aliases"
+        floatingLabelStyle={{fontSize: "20px"}}
+        multiLine={true}
+        rows={1}
+        rowsMax={3}
+        onChange={this.props.handleAliases}
+        fullWidth={true}
+      />
+      <br />
+      <TextField
+        defaultValue={this.props.origin}
+        floatingLabelText="Origin"
+        floatingLabelStyle={{fontSize: "20px"}}
+        onChange={this.props.handleOrigin}
+        fullWidth={true}
+      />
+      <br />
       <TextField
         defaultValue={this.props.definition}
         floatingLabelText="Definition"
@@ -21,6 +44,17 @@ TagInnerForm = React.createClass({
         rows={3}
         rowsMax={10}
         onChange={this.props.handleDefinition}
+        fullWidth={true}
+      />
+      <br />
+      <TextField
+        defaultValue={this.props.implications}
+        floatingLabelText="Implications"
+        floatingLabelStyle={{fontSize: "20px"}}
+        multiLine={true}
+        rows={4}
+        rowsMax={10}
+        onChange={this.props.handleImplications}
         fullWidth={true}
       />
   </div>;

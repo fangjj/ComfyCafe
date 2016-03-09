@@ -130,7 +130,7 @@ queryTagsGenerator = function (coll) {
     if (typeof tagStr === "object") {
       tagObj = tagStr;
     } else {
-      tagObj = parseTagStr(tagStr);
+      tagObj = tagParser(tagStr);
     }
 
     if (! tagObj) {

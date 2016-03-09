@@ -1,4 +1,4 @@
-sampleTagStr = "nia-teppelin: young, short multicolored hair, cat ears;"
+tagStrSample = "nia-teppelin: young, short multicolored hair, cat ears;"
 	+ "yoko-littner: flame bikini, pink stockings, long red hair, without gun";
 
 function parseLonely(parsed, kv) {
@@ -21,7 +21,7 @@ function parseDescriptors(parsed, kv) {
 		withoutMode = true;
 	}
 
-	var sInner = {}, wInner = {}, nots = {};
+	var sInner = {}, wInner = {};
 
 	var descriptors = kv[1].split(/\s*,\s*/);
 
@@ -71,7 +71,7 @@ function parseDescriptors(parsed, kv) {
 	}
 }
 
-parseTagStr = function (tagStr) {
+tagParser = function (tagStr) {
 	var parsed = {
 		authors: [],
 		notAuthors: [],

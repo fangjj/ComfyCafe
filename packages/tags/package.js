@@ -20,16 +20,18 @@ Package.onUse(function(api) {
   ], ["client", "server"]);
 
   api.addFiles([
-    "lib/parser.js",
     "lib/aliases.js",
+    "lib/parser.js",
     "lib/humanizer.js",
     "lib/newQuery.js",
     "lib/urlify.js"
   ], ["client", "server"]);
 
   api.export([
-    "sampleTagStr",
-    "parseTagStr",
+    "aliasSample",
+    "parseAliases",
+    "tagStrSample",
+    "tagParser",
     "tagHumanizer",
     "tagQuery",
     "tagStrToUrl",

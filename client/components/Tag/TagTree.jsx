@@ -21,7 +21,7 @@ TagTree = React.createClass({
     }
   },
   renderAuthors() {
-    if (this.props.tags.authors) {
+    if (! _.isEmpty(this.props.tags.authors)) {
       return <div className="metaRow">
         {"by " + fancyCommaJoin(this.props.tags.authors)}
       </div>;

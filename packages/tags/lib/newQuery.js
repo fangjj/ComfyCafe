@@ -1,5 +1,5 @@
 tagQuery = function (str) {
-  var parsed = parseTagStr(str);
+  var parsed = tagParser(str);
 
   var doc = {};
 

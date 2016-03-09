@@ -1,5 +1,5 @@
 /*
-While the output of parseTagStr is designed for querying, tagHumanizer is designed
+While the output of tagParser is designed for querying, tagHumanizer is designed
 for easy consumption by views, humans, etc.
 */
 

@@ -13,6 +13,23 @@ Tag = React.createClass({
       currentUser: Meteor.user()
     };
   },
+  renderAliases(tag) {
+    if (tag.aliases) {
+      const aliases = fancyCommaJoin(tag.aliases);
+      return <span>
+        Aliases: {aliases}
+        <br />
+      </span>;
+    }
+  },
+  renderTagTree(tag) {
+    if (tag.implications) {
+      return <TagTree
+        tags={tag.implications}
+        humanizedTags={tagHumanizer(tag.implications)}
+      />;
+  }
+  },
   render() {
     if (this.data.loading) {
       return <LoadingSpinner />;
@@ -23,7 +40,12 @@ Tag = React.createClass({
       <header>
         <h2>{tag.name}</h2>
       </header>
+      Type: {tag.type}
+      <br />
+      {this.renderAliases(tag)}
+      Origin: {tag.origin}
       <TextBody text={tag.definition} />
+      {this.renderTagTree(tag)}
       <TagEditFAB tag={tag} />
     </article>;
   }

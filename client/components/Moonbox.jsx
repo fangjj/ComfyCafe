@@ -28,6 +28,10 @@ Moonbox = React.createClass({
     });
   },
   render() {
+    const containerStyle = {
+      width: this.props.width + 20,
+      height: this.props.height + 20
+    };
     return <div
       className="moonbox center"
       style={{display: this.props.open ? "flex" : "none"}}
@@ -39,8 +43,8 @@ Moonbox = React.createClass({
           onTouchTap={this.handleClose}
         >close</FontIcon>
       </div>
-      <div className="container center">
-        <img src={this.props.src} ref="image" />
+      <div className="container center" style={containerStyle}>
+        <img src={this.props.src} ref="image" className={this.props.imgClassName} />
       </div>
     </div>;
   }

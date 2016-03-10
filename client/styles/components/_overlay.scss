@@ -1,0 +1,19 @@
+.overlayContainer {
+  display: none;
+  z-index: index($elements, overlay);
+}
+
+.overlay {
+  z-index: index($elements, overlay);
+
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100vh;
+
+  background-color: rgba($bg-color, 0.7);
+
+  //pointer-events: none;
+}

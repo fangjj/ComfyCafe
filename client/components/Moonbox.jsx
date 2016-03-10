@@ -9,11 +9,9 @@ Moonbox = React.createClass({
       this.handleClose();
     }
   },
-  handleClose(e) {
-    _.defer(() => {
-      $(this.refs.image).panzoom("reset");
-      this.props.onClose();
-    });
+  handleClose() {
+    $(this.refs.image).panzoom("reset");
+    this.props.onClose();
   },
   componentDidMount() {
     var $panzoom = $(this.refs.image).panzoom();
@@ -28,6 +26,17 @@ Moonbox = React.createClass({
         focal: event
       });
     });
+  },
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.open !== this.props.open) {
+      if (nextProps.open) {
+        $("body").addClass("frozen");
+      } else {
+        _.delay(() => {
+          $("body").removeClass("frozen");
+        }, 100);
+      }
+    }
   },
   render() {
     const containerStyle = {

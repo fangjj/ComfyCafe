@@ -7,7 +7,6 @@ useraccounts:flow-routing
 reactive-var
 vsivsi:file-collection
 meteorhacks:npm
-npm-container
 jparker:crypto-sha256
 momentjs:moment
 force-ssl
@@ -33,3 +32,6 @@ teru:names
 mizzao:user-status
 meteorhacks:fast-render
 alanning:roles
+
+
+npm-container

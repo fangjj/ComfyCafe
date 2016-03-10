@@ -10,8 +10,10 @@ Moonbox = React.createClass({
     }
   },
   handleClose() {
-    $(this.refs.image).panzoom("reset");
-    this.props.onClose();
+    _.defer(() => {
+      $(this.refs.image).panzoom("reset");
+      this.props.onClose();
+    });
   },
   componentDidMount() {
     var $panzoom = $(this.refs.image).panzoom();
@@ -37,11 +39,8 @@ Moonbox = React.createClass({
       style={{display: this.props.open ? "flex" : "none"}}
       onTouchTap={this.handleClose}
     >
-      <div className="close">
-        <FontIcon
-          className="material-icons"
-          onTouchTap={this.handleClose}
-        >close</FontIcon>
+      <div className="close" onTouchTap={this.handleClose}>
+        <FontIcon className="material-icons">close</FontIcon>
       </div>
       <div className="container center" style={containerStyle}>
         <img src={this.props.src} ref="image" className={this.props.imgClassName} />

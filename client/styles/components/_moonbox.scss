@@ -11,6 +11,8 @@
 
   background-color: rgba($bg-color, 0.7);
 
+  pointer-events: auto;
+
   .container {
     overflow: visible !important;
 

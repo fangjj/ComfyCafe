@@ -1,6 +1,13 @@
 main > div > .row {
   @include content;
 
+  > div {
+    padding-left: 12px;
+    padding-right: 12px;
+
+    width: 100% !important;
+  }
+
   label {
     font-size: $label-font-size;
     color: $input-border-color;

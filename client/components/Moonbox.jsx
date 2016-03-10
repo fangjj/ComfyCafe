@@ -9,7 +9,7 @@ Moonbox = React.createClass({
       this.handleClose();
     }
   },
-  handleClose() {
+  handleClose(e) {
     _.defer(() => {
       $(this.refs.image).panzoom("reset");
       this.props.onClose();

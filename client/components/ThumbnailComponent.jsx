@@ -1,27 +1,34 @@
 ThumbnailComponent = React.createClass({
   render() {
-    var medium = this.props.medium;
-    var size = this.props.size;
-    var thumbTerminated = medium.thumbnails
+    const medium = this.props.medium;
+    const type = medium.contentType.split("/")[0];
+    const size = this.props.size;
+    const thumbTerminated = medium.thumbnails
       && medium.thumbnails[size]
       && medium.thumbnails[size].terminated;
 
-    var thumbnail;
+    let thumbnail;
 
-    if (! thumbTerminated) {
-      if (medium.thumbnails) {
-        let thumb = medium.thumbnails[size];
-        thumbnail = <PretentiousImage
-          className="thumbnail"
-          src={"/gridfs/media/id/" + thumb._id + "?size=" + size}
-          pretentiousFilter={this.props.pretentiousFilter}
-        />;
+    if (type !== "audio") {
+      if (! thumbTerminated) {
+        if (medium.thumbnails) {
+          let thumb = medium.thumbnails[size];
+          thumbnail = <PretentiousImage
+            className="thumbnail"
+            src={"/gridfs/media/id/" + thumb._id + "?size=" + size}
+            pretentiousFilter={this.props.pretentiousFilter}
+          />;
+        } else {
+          thumbnail = <SpinnerComponent />;
+        }
       } else {
-        thumbnail = <SpinnerComponent />;
+        thumbnail = <div className="thumbnail">
+          <i className="material-icons large">image</i>
+        </div>;
       }
     } else {
       thumbnail = <div className="thumbnail">
-        <i className="material-icons large">image</i>
+        <i className="material-icons large">audiotrack</i>
       </div>;
     }
 

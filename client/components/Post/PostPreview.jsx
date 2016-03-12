@@ -31,7 +31,7 @@ PostPreview = React.createClass({
         {this.renderStar()}
       </a>
       <VisibilityLink href={postUrl} visibility={this.props.post.visibility}>
-        <ThumbnailComponent
+        <Thumbnail
           medium={this.props.post.medium}
           size="list"
           pretentiousFilter={this.props.post.pretentiousFilter}

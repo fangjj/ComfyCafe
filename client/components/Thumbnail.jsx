@@ -1,4 +1,11 @@
-ThumbnailComponent = React.createClass({
+Thumbnail = React.createClass({
+  renderPlay(type) {
+    if (type === "video") {
+      return <div className="play">
+        <i className="material-icons large">play_circle_outline</i>
+      </div>;
+    }
+  },
   render() {
     const medium = this.props.medium;
     const type = medium.contentType.split("/")[0];
@@ -34,6 +41,7 @@ ThumbnailComponent = React.createClass({
 
     return <div className="thumbnailContainer">
       {thumbnail}
+      {this.renderPlay(type)}
     </div>;
   }
 });

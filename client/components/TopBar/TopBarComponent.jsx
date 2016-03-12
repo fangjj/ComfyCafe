@@ -45,12 +45,13 @@ TopBarComponent = React.createClass({
     this.genericHandleMenuButton("account");
   },
   componentDidMount() {
-    if (muxAnd([
-      this.data.currentUser,
-      _.has(this.data.currentUser, "settings"),
-      this.data.currentUser.settings.patternSeed
-    ])) {
-      setPattern(this.data.currentUser.settings.patternSeed);
+    if (this.data.currentUser) {
+      if (muxAnd([
+        _.has(this.data.currentUser, "settings"),
+        this.data.currentUser.settings.patternSeed
+      ])) {
+        setPattern(this.data.currentUser.settings.patternSeed);
+      }
     }
   },
   renderLeftSub() {

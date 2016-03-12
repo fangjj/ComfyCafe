@@ -47,15 +47,10 @@ TagInnerForm = React.createClass({
         fullWidth={true}
       />
       <br />
-      <TextField
+      <TagField
         defaultValue={this.props.implications}
         floatingLabelText="Implications"
-        floatingLabelStyle={{fontSize: "20px"}}
-        multiLine={true}
-        rows={4}
-        rowsMax={10}
         onChange={this.props.handleImplications}
-        fullWidth={true}
       />
   </div>;
   }

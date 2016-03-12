@@ -1,5 +1,7 @@
 .thumbnailContainer {
-  position: relative;
+  .material-icons {
+    color: $text-color;
+  }
 
   .play {
     display: flex;

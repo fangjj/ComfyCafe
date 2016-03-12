@@ -28,15 +28,10 @@ PostInnerForm = React.createClass({
         fullWidth={true}
       />
       <br />
-      <TextField
+      <TagField
         defaultValue={this.props.tags}
         floatingLabelText="Tags"
-        floatingLabelStyle={{fontSize: "20px"}}
-        multiLine={true}
-        rows={1}
-        rowsMax={4}
         onChange={this.props.handleTags}
-        fullWidth={true}
       />
       <PretentiousFilterSelector
         pretentiousFilter={this.props.pretentiousFilter}

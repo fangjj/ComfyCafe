@@ -15,12 +15,13 @@ const defaultState = {
 PostDialog = React.createClass({
   getInitialState() {
     if (this.props.post) {
+      const post = this.props.post;
       return {
-        visibility: this.props.post.visibility,
-        original: this.props.post.original,
-        description: this.props.post.description || defaultState.description,
-        tags: this.props.post.tags.text || defaultState.tags,
-        pretentiousFilter: this.props.post.pretentiousFilter || defaultState.pretentiousFilter
+        visibility: post.visibility,
+        original: post.original,
+        description: post.description || defaultState.description,
+        tags: post.tags.text || defaultState.tags,
+        pretentiousFilter: post.pretentiousFilter || defaultState.pretentiousFilter
       };
     } else {
       return defaultState;
@@ -35,8 +36,8 @@ PostDialog = React.createClass({
   handleDescription(event) {
     this.setState({description: event.target.value});
   },
-  handleTags(event) {
-    this.setState({tags: event.target.value});
+  handleTags(value) {
+    this.setState({tags: value});
   },
   handlePretentiousFilter(event, index, value) {
     this.setState({pretentiousFilter: value});

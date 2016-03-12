@@ -43,8 +43,9 @@ TagDialog = React.createClass({
   handleOrigin(event) {
     this.setState({origin: event.target.value});
   },
-  handleImplications(event) {
-    this.setState({implications: event.target.value});
+  handleImplications(value) {
+    console.log(value);
+    this.setState({implications: value});
   },
   handleSubmit() {
     this.props.handleSubmit({

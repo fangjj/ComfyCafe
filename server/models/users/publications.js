@@ -7,7 +7,8 @@ Meteor.publish(null, function () {
 			avatars: 1,
 			subscriptions: 1,
       friends: 1,
-      room: 1
+      room: 1,
+      bookmarks: 1
 		} }
 	);
 });

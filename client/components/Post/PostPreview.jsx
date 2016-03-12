@@ -8,6 +8,8 @@ PostPreview = React.createClass({
       && this.props.currentUser._id === this.props.post.owner._id;
     if (isOwner) {
       return <PostMoreMenu post={this.props.post} currentUser={this.props.currentUser} />;
+    } else {
+      return <PostBookmarkButton post={this.props.post} currentUser={this.props.currentUser} />;
     }
   },
   renderStar() {
@@ -31,7 +33,7 @@ PostPreview = React.createClass({
         {this.renderStar()}
       </a>
       <VisibilityLink href={postUrl} visibility={this.props.post.visibility}>
-        <ThumbnailComponent
+        <Thumbnail
           medium={this.props.post.medium}
           size="list"
           pretentiousFilter={this.props.post.pretentiousFilter}

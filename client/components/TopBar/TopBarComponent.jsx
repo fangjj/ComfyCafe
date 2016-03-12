@@ -72,6 +72,7 @@ TopBarComponent = React.createClass({
       </NavItem>
       <TopBarMenu
         open={this.state.visibleMenu === "hotdog"}
+        currentUser={this.data.currentUser}
         onClose={this.handleHotdog}
       />
 

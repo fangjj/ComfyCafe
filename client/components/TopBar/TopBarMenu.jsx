@@ -12,6 +12,33 @@ TopBarMenu = React.createClass({
       this.props.onClose();
     }
   },
+  renderTop() {
+    if (this.props.currentUser) {
+      return [
+        <TopMenuItem
+          key="topMenuImages"
+          primaryText="Images"
+          leftIconName="image"
+          href={FlowRouter.path("art")}
+        />,
+        <TopMenuItem
+          key="topMenuBlog"
+          primaryText="Blog"
+          leftIconName="weekend"
+          href={FlowRouter.path("blog")}
+        />,
+        <TopMenuItem
+          key="topMenuTags"
+          primaryText="Tags"
+          leftIconName="style"
+          href={FlowRouter.path("pizza")}
+        />,
+        <Divider
+          key="topMenuDivider"
+        />
+      ];
+    }
+  },
   render() {
     var classes = "topMenu";
     if (this.props.open) {
@@ -21,22 +48,7 @@ TopBarMenu = React.createClass({
     return <div className={classes}>
       <div id="mobileMenuArrow" className={classes}></div>
       <Menu id="mobileMenu" className={classes} autoWidth={false}>
-        <TopMenuItem
-          primaryText="Images"
-          leftIconName="image"
-          href={FlowRouter.path("art")}
-        />
-        <TopMenuItem
-          primaryText="Blog"
-          leftIconName="weekend"
-          href={FlowRouter.path("blog")}
-        />
-        <TopMenuItem
-          primaryText="Tags"
-          leftIconName="style"
-          href={FlowRouter.path("pizza")}
-        />
-        <Divider />
+        {this.renderTop()}
         <TopMenuItem
           primaryText="Explore"
           leftIconName="explore"

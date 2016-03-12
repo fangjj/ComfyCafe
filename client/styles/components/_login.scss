@@ -1,6 +1,8 @@
 main > div > .row {
   @include content;
 
+  max-width: 540px;
+
   > div {
     padding-left: 12px;
     padding-right: 12px;

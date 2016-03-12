@@ -8,7 +8,7 @@ PostPreview = React.createClass({
       && this.props.currentUser._id === this.props.post.owner._id;
     if (isOwner) {
       return <PostMoreMenu post={this.props.post} currentUser={this.props.currentUser} />;
-    } else {
+    } else if (this.props.currentUser) {
       return <PostBookmarkButton post={this.props.post} currentUser={this.props.currentUser} />;
     }
   },

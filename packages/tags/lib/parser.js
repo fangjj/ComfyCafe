@@ -2,7 +2,7 @@ tagStrSample = "nia-teppelin: young, short multicolored hair, cat ears;"
 	+ "yoko-littner: flame bikini, pink stockings, long red hair, without gun";
 
 function parseLonely(parsed, kv) {
-	var tokens = kv[0].split(/\s+/);
+	var tokens = _.compact(kv[0].split(/\s+/));
 	if (tokens.length === 1) {
 		parsed.subjects[kv[0]] = {};
 	} else if (_.contains(["not", "without"], tokens[0])) {
@@ -13,7 +13,7 @@ function parseLonely(parsed, kv) {
 function parseDescriptors(parsed, kv) {
 	var label;
 	var withoutMode = false;
-	var topTokens = kv[0].split(/\s+/);
+	var topTokens = _.compact(kv[0].split(/\s+/));
 	if (topTokens.length === 1) {
 		label = kv[0];
 	} else if (_.contains(["not", "without"], topTokens[0])) {
@@ -23,10 +23,10 @@ function parseDescriptors(parsed, kv) {
 
 	var sInner = {}, wInner = {};
 
-	var descriptors = kv[1].split(/\s*,\s*/);
+	var descriptors = _.compact(kv[1].split(/\s*,\s*/));
 
 	for (di in descriptors) {
-		var tokens = descriptors[di].split(/\s+/);
+		var tokens = _.compact(descriptors[di].split(/\s+/));
 		var rootNoun = tokens.pop();
 
 		var notIndex = tokens.indexOf("not");
@@ -80,7 +80,7 @@ tagParser = function (tagStr) {
 		text: tagStr
 	};
 
-	var toplevel = tagStr.split(/\s*;\s*/);
+	var toplevel = _.compact(tagStr.split(/\s*;\s*/));
 
 	for (var ti in toplevel) {
 		var topToken = toplevel[ti];
@@ -95,7 +95,7 @@ tagParser = function (tagStr) {
 			continue;
 		}
 
-		var kv = topToken.split(/\s*:\s*/);
+		var kv = _.compact(topToken.split(/\s*:\s*/));
 
 		if (kv.length === 1) {
 			parseLonely(parsed, kv);

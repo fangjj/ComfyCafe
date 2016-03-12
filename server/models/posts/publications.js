@@ -90,6 +90,18 @@ Meteor.publish("likes", function () {
 	}
 });
 
+Meteor.publish("bookmarks", function () {
+	this.autorun(function (computation) {
+		if (this.userId) {
+			var user = Meteor.users.findOne(this.userId, { fields: {
+				bookmarks: 1
+			} });
+
+			return Posts.find({ _id: { $in: user.bookmarks || [] } });
+		}
+	});
+});
+
 Meteor.publish("searchPosts", function (tagStr) {
 	check(tagStr, String);
 	var query = queryTags(tagStr);

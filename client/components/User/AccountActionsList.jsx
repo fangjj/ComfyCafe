@@ -14,18 +14,19 @@ AccountActionsList = React.createClass({
     Meteor.logout();
   },
   render() {
-    var classes = "topMenu";
+    let classes = "topMenu";
     if (this.props.visible) {
       classes = "topMenu active";
     }
 
-    var profileUrl = FlowRouter.path("profile", {username: this.props.currentUser.username});
-    var likesUrl = FlowRouter.path("likes");
-    var friendsUrl = FlowRouter.path("friends");
-    var yourPagesUrl = FlowRouter.path("pagesBy", {username: this.props.currentUser.username});
-    var favoritesUrl = FlowRouter.path("favorites");
-    var invitesUrl = FlowRouter.path("invites");
-    var settingsUrl = FlowRouter.path("settings");
+    const profileUrl = FlowRouter.path("profile", {username: this.props.currentUser.username});
+    const bookmarksUrl = FlowRouter.path("bookmarks");
+    const likesUrl = FlowRouter.path("likes");
+    const friendsUrl = FlowRouter.path("friends");
+    const yourPagesUrl = FlowRouter.path("pagesBy", {username: this.props.currentUser.username});
+    const favoritesUrl = FlowRouter.path("favorites");
+    const invitesUrl = FlowRouter.path("invites");
+    const settingsUrl = FlowRouter.path("settings");
 
     return <div>
       <div id="accountActionsArrow" className={classes}></div>
@@ -34,6 +35,11 @@ AccountActionsList = React.createClass({
           primaryText="Profile"
           leftIconName="account_circle"
           href={profileUrl}
+        />
+        <TopMenuItem
+          primaryText="Bookmarks"
+          leftIconName="bookmark"
+          href={bookmarksUrl}
         />
         <TopMenuItem
           primaryText="Likes"

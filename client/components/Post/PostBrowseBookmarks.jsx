@@ -1,15 +1,15 @@
-PostBrowseLikes = React.createClass({
+PostBrowseBookmarks = React.createClass({
   render() {
     return <PostGallery
-      subName="likes"
+      subName="bookmarks"
       requireAuth={true}
       noFab={true}
       generateDoc={function () {
-        return { likes: Meteor.userId() };
+        return { _id: { $in: Meteor.user().bookmarks || [] } };
       }}
       ifEmpty={function () {
         return <InlineUhoh>
-          You haven't liked any posts yet!
+          You haven't bookmarked any posts yet!
         </InlineUhoh>;
       }}
     />;

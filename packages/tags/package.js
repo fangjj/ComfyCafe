@@ -21,6 +21,7 @@ Package.onUse(function(api) {
 
   api.addFiles([
     "lib/aliases.js",
+    "lib/resolver.js",
     "lib/parser.js",
     "lib/humanizer.js",
     "lib/query.js",
@@ -30,6 +31,7 @@ Package.onUse(function(api) {
   api.export([
     "aliasSample",
     "parseAliases",
+    "tagResolver",
     "tagStrSample",
     "tagParser",
     "tagHumanizer",

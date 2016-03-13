@@ -67,7 +67,6 @@ function queryGeneratorSubjects(parsed, sDoc) {
   }
 
   _.each(parsed.subjects, function (descriptors, rootNoun) {
-    console.log(descriptors);
     if (_.has(descriptors, "_pre") && descriptors._pre.length) {
       /*
       Root->Child: `blue hat` with `dog: black, blue hat`

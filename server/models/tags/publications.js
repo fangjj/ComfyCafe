@@ -6,3 +6,7 @@ Meteor.publish("tag", function (tagName) {
 Meteor.publish("allTags", function () {
 	return Tags.find();
 });
+
+Meteor.publish("tags", function (nameList) {
+	return Tags.find({ name: { $in: nameList || [] } });
+});

@@ -1,40 +1,15 @@
-function queryGenerator(parsed, queryDoc, positive) {
-  // These determine whether we're matching or filtering. postiive = matching
-  var target, targetRev, targetFlat, targetFlatAdj;
-  if (positive) {
-    target = parsed.subjects;
-    targetRev = parsed.subjectsReverse;
-    targetFlat = parsed.subjectsFlat;
-    targetFlatAdj = parsed.subjectsFlatAdjectives;
-  } else {
-    target = parsed.without;
-    targetRev = parsed.withoutReverse;
-    targetFlat = parsed.withoutFlat;
-    targetFlatAdj = parsed.withoutFlatAdjectives;
-  }
-
-  var exclude = [];
-
-  _.each(target, function (descriptors, rootNoun) {
+function queryGeneratorSubjects(parsed, queryDoc) {
+  _.each(parsed.subjects, function (descriptors, rootNoun) {
     if (! _.isEmpty(descriptors)) {
       /*
       Root->Child: `blue hat` with `dog: black, blue hat`
       We only need to do this if there are pre-adjs.
       */
       //queryDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $all: descriptors };
-    } else if (! positive) {
-      exclude.push(rootNoun);
     }
   });
 
-  if (exclude.length) {
-    /*
-    Root->Root exclusion
-    */
-    queryDoc["tags.subjectsFlat"] = { $nin: exclude };
-  }
-
-  _.each(targetRev, function (descriptors, rootNoun) {
+  _.each(parsed.subjectsReverse, function (descriptors, rootNoun) {
     _.each(descriptors, function (adjectives, parent) {
       /*
       Child->Child: `dog: blue hat` with `dog: black, blue hat`
@@ -49,6 +24,37 @@ function queryGenerator(parsed, queryDoc, positive) {
       Child->Root: `hat: dog` with `dog: hat`
       We don't support this, for obvious reasons...
       */
+    });
+  });
+}
+
+function queryGeneratorWithout(parsed, queryDoc) {
+  var exclude = [];
+
+  _.each(parsed.without, function (descriptors, rootNoun) {
+    if (! _.isEmpty(descriptors)) {
+      // Root->Child
+      //queryDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $all: descriptors };
+    } else {
+      exclude.push(rootNoun);
+    }
+  });
+
+  if (exclude.length) {
+    // Root->Root exclusion
+    queryDoc["tags.subjectsFlat"] = { $nin: exclude };
+  }
+
+  _.each(parsed.withoutReverse, function (descriptors, rootNoun) {
+    _.each(descriptors, function (adjectives, parent) {
+      // Child->Child
+      var doc = {};
+      if (! _.isEmpty(adjectives)) {
+        doc.$nin = adjectives;
+      } else {
+        doc.$exists = false;
+      }
+      queryDoc["tags.subjectsReverse." + rootNoun + "." + parent] = doc;
     });
   });
 };
@@ -95,10 +101,8 @@ tagQuery = function (str) {
   }
 
   // Now we're ready for the meat of the query.
-  // We're passing false, since this is the stuff we don't want to match.
-  queryGenerator(parsed, queryDoc, false);
-  // This takes true, since we want to match these.
-  queryGenerator(parsed, queryDoc, true);
+  queryGeneratorWithout(parsed, queryDoc);
+  queryGeneratorSubjects(parsed, queryDoc);
 
   prettyPrint(queryDoc);
 

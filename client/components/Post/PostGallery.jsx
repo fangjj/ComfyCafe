@@ -24,9 +24,15 @@ PostGallery = React.createClass({
       const parsed = tagQuery(this.state.tagStr);
       _.each(parsed, (value, key) => {
         if (_.has(doc, key)) {
-          console.error("PANIC: key " + key + " already present in doc.");
+          prettyPrint(value);
+          if (_.contains(["$and", "$or", "$nor"], key)) {
+            doc[key].push.apply(doc[key], value);
+          } else {
+            console.error("PANIC: key " + key + " already present in doc.");
+          }
+        } else {
+          doc[key] = value;
         }
-        doc[key] = value;
       });
     }
 

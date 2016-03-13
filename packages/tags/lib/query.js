@@ -25,7 +25,7 @@ function queryGeneratorMeta(parsed, queryDoc) {
   }
 }
 
-function queryGeneratorWithout(parsed, queryDoc) {
+function queryGeneratorWithout(parsed, wDoc) {
   var exclude = [];
 
   _.each(parsed.without, function (descriptors, rootNoun) {
@@ -39,7 +39,7 @@ function queryGeneratorWithout(parsed, queryDoc) {
 
   if (exclude.length) {
     // Root->Root exclusion
-    queryDoc["tags.subjectsFlat"] = { $nin: exclude };
+    wDoc["tags.subjectsFlat"] = { $nin: exclude };
   }
 
   _.each(parsed.withoutReverse, function (descriptors, rootNoun) {
@@ -51,19 +51,19 @@ function queryGeneratorWithout(parsed, queryDoc) {
       } else {
         doc.$exists = false;
       }
-      queryDoc["tags.subjectsReverse." + rootNoun + "." + parent] = doc;
+      wDoc["tags.subjectsReverse." + rootNoun + "." + parent] = doc;
     });
   });
 };
 
-function queryGeneratorSubjects(parsed, queryDoc) {
+function queryGeneratorSubjects(parsed, sDoc) {
   if (parsed.subjectsFlat.length) {
     /*
     This is the basic Root->Root query.
     All we're doing is checking for all root nouns existing.
     i.e. matching `dog` against `dog` or `dog: black, hat`
     */
-    queryDoc["tags.subjectsFlat"] = { $all: parsed.subjectsFlat };
+    sDoc["tags.subjectsFlat"] = { $all: parsed.subjectsFlat };
   }
 
   _.each(parsed.subjects, function (descriptors, rootNoun) {
@@ -85,7 +85,7 @@ function queryGeneratorSubjects(parsed, queryDoc) {
       if (! _.isEmpty(adjectives)) {
         doc.$all = adjectives;
       }
-      queryDoc["tags.subjectsReverse." + rootNoun + "." + parent] = doc;
+      sDoc["tags.subjectsReverse." + rootNoun + "." + parent] = doc;
 
       /*
       Child->Root: `hat: dog` with `dog: hat`
@@ -101,12 +101,19 @@ tagQuery = function (str) {
   }
 
   var parsed = tagParser(str);
-  var queryDoc = {};
+  var queryDoc = {}, wDoc = {}, sDoc = {};
 
   queryGeneratorAuthors(parsed, queryDoc);
   queryGeneratorMeta(parsed, queryDoc);
-  queryGeneratorWithout(parsed, queryDoc);
-  queryGeneratorSubjects(parsed, queryDoc);
+  queryGeneratorWithout(parsed, wDoc);
+  queryGeneratorSubjects(parsed, sDoc);
+
+  if (! _.isEmpty(wDoc) || ! _.isEmpty(sDoc)) {
+    queryDoc.$and = [
+      wDoc,
+      sDoc
+    ];
+  }
 
   prettyPrint(parsed);
   prettyPrint(queryDoc);

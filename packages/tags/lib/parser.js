@@ -27,15 +27,15 @@ function parseDescriptors(parsed, kv) {
 
 	for (di in descriptors) {
 		var tokens = _.compact(descriptors[di].split(/\s+/));
-		var rootNoun = tokens.pop();
+		var descNoun = tokens.pop();
 
 		var notIndex = tokens.indexOf("not");
 		while (notIndex > -1) {
 			if (! withoutMode) {
-				if (! _.has(wInner, rootNoun)) {
-					wInner[rootNoun] = [tokens[notIndex+1]];
+				if (! _.has(wInner, descNoun)) {
+					wInner[descNoun] = [tokens[notIndex+1]];
 				} else {
-					wInner[rootNoun].push(tokens[notIndex+1]);
+					wInner[descNoun].push(tokens[notIndex+1]);
 				}
 				tokens.splice(notIndex, notIndex+1);
 				notIndex = tokens.indexOf("not");
@@ -44,19 +44,26 @@ function parseDescriptors(parsed, kv) {
 			}
 		}
 
-		var target;
+		var target, targetRev;
 		if (tokens[0] !== "without") {
 			target = sInner;
+			targetRev = parsed.subjectsReverse;
 		} else {
 			if (! withoutMode) {
 				target = wInner;
+				targetRev = parsed.withoutReverse;
 			} else {
 				target = sInner;
+				targetRev = parsed.subjectsReverse;
 			}
 			tokens.shift();
 		}
 
-		target[rootNoun] = tokens;
+		target[descNoun] = tokens;
+
+		var revInner = {};
+		revInner[label] = tokens;
+		targetRev[descNoun] = revInner;
 	}
 
 	if (! _.isEmpty(sInner)) {
@@ -76,7 +83,9 @@ tagParser = function (tagStr) {
 		authors: [],
 		notAuthors: [],
 		subjects: {},
+		subjectsReverse: {},
 		without: {},
+		withoutReverse: {},
 		text: tagStr
 	};
 

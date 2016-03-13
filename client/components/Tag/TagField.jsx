@@ -46,7 +46,7 @@ TagField = React.createClass({
     const split = this.state.text.split(/\s+/);
     const body = _.initial(split);
     const last = _.last(split);
-    const text = (body + " " + tag.name + ": " + tag.implicationStr + ";").trim();
+    const text = (body.join(" ") + " " + tag.name + ": " + tag.implicationStr + ";").trim();
     this.setState({
       text: text,
       suggestions: []

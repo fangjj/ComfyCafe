@@ -1,18 +1,23 @@
-tagResolver = function (tag) {
+tagResolver = function (tag, callback) {
+  doIt = function () {
+    var canon = Tags.findOne(
+      { $or: [
+        { name: tag },
+        { aliases: tag }
+      ] }
+    );
+
+    var name = tag;
+    if (canon) {
+      name = canon.name;
+    }
+
+    callback(name);
+  };
+
   if (Meteor.isClient) {
-    Meteor.subscribe("canonicalTag", tag);
-  }
-
-  var canon = Tags.findOne(
-    { $or: [
-      { name: tag },
-      { aliases: tag }
-    ] }
-  );
-
-  if (canon) {
-    return canon.name;
+    Meteor.subscribe("tag", tag, doIt);
   } else {
-    return tag;
+    doIt();
   }
 };

@@ -13,6 +13,8 @@ function queryGenerator(parsed, queryDoc, positive) {
     targetFlatAdj = parsed.withoutFlatAdjectives;
   }
 
+  var exclude = [];
+
   _.each(target, function (descriptors, rootNoun) {
     if (! _.isEmpty(descriptors)) {
       /*
@@ -20,8 +22,17 @@ function queryGenerator(parsed, queryDoc, positive) {
       We only need to do this if there are pre-adjs.
       */
       //queryDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $all: descriptors };
+    } else if (! positive) {
+      exclude.push(rootNoun);
     }
   });
+
+  if (exclude.length) {
+    /*
+    Root->Root exclusion
+    */
+    queryDoc["tags.subjectsFlat"] = { $nin: exclude };
+  }
 
   _.each(targetRev, function (descriptors, rootNoun) {
     _.each(descriptors, function (adjectives, parent) {

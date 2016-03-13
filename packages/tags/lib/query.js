@@ -1,4 +1,40 @@
+function queryGeneratorAuthors(parsed, queryDoc) {
+  var authorQuery = {};
+  if (parsed.authors.length) {
+    // If we're querying for authors, only return posts with all of those authors.
+    authorQuery.$all = parsed.authors;
+  }
+  if (parsed.notAuthors.length) {
+    // If we're excluding some authors, don't return posts with any of those authors.
+    authorQuery.$nin = parsed.notAuthors;
+  }
+  if (! _.isEmpty(authorQuery)) {
+    queryDoc["tags.authors"] = authorQuery;
+  }
+}
+
+function queryGeneratorMeta(parsed, queryDoc) {
+  if (_.has(parsed.meta, "id")) {
+    // The query specifies a post ID, i.e. `id neJk82uvXvGH3Meig`.
+    queryDoc._id = parsed.meta.id;
+  }
+
+  if (_.has(parsed.meta, "name")) {
+    // The query specifies a post name, i.e. `name DuplicitousVibrantXamdou`.
+    queryDoc.name = parsed.meta.name;
+  }
+}
+
 function queryGeneratorSubjects(parsed, queryDoc) {
+  if (parsed.subjectsFlat.length) {
+    /*
+    This is the basic Root->Root query.
+    All we're doing is checking for all root nouns existing.
+    i.e. matching `dog` against `dog` or `dog: black, hat`
+    */
+    queryDoc["tags.subjectsFlat"] = { $all: parsed.subjectsFlat };
+  }
+
   _.each(parsed.subjects, function (descriptors, rootNoun) {
     if (! _.isEmpty(descriptors)) {
       /*
@@ -34,7 +70,7 @@ function queryGeneratorWithout(parsed, queryDoc) {
   _.each(parsed.without, function (descriptors, rootNoun) {
     if (! _.isEmpty(descriptors)) {
       // Root->Child
-      //queryDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $all: descriptors };
+      //queryDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $nin: descriptors };
     } else {
       exclude.push(rootNoun);
     }
@@ -65,42 +101,10 @@ tagQuery = function (str) {
   }
 
   var parsed = tagParser(str);
-
   var queryDoc = {};
 
-  var authorQuery = {};
-  if (parsed.authors.length) {
-    // If we're querying for authors, only return posts with all of those authors.
-    authorQuery.$all = parsed.authors;
-  }
-  if (parsed.notAuthors.length) {
-    // If we're excluding some authors, don't return posts with any of those authors.
-    authorQuery.$nin = parsed.notAuthors;
-  }
-  if (! _.isEmpty(authorQuery)) {
-    queryDoc["tags.authors"] = authorQuery;
-  }
-
-  if (_.has(parsed.meta, "id")) {
-    // The query specifies a post ID, i.e. `id neJk82uvXvGH3Meig`.
-    queryDoc._id = parsed.meta.id;
-  }
-
-  if (_.has(parsed.meta, "name")) {
-    // The query specifies a post name, i.e. `name DuplicitousVibrantXamdou`.
-    queryDoc.name = parsed.meta.name;
-  }
-
-  if (parsed.subjectsFlat.length) {
-    /*
-    This is the basic Root->Root query.
-    All we're doing is checking for all root nouns existing.
-    i.e. matching `dog` against `dog` or `dog: black, hat`
-    */
-    queryDoc["tags.subjectsFlat"] = { $all: parsed.subjectsFlat };
-  }
-
-  // Now we're ready for the meat of the query.
+  queryGeneratorAuthors(parsed, queryDoc);
+  queryGeneratorMeta(parsed, queryDoc);
   queryGeneratorWithout(parsed, queryDoc);
   queryGeneratorSubjects(parsed, queryDoc);
 

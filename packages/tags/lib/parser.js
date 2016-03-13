@@ -5,8 +5,10 @@ function parseLonely(parsed, kv) {
 	var tokens = _.compact(kv[0].split(/\s+/));
 	if (tokens.length === 1) {
 		parsed.subjects[kv[0]] = {};
+		parsed.subjectsFlat.push(kv[0]);
 	} else if (_.contains(["not", "without"], tokens[0])) {
 		parsed.without[tokens[1]] = {};
+		parsed.withoutFlat.push(tokens[1]);
 	}
 }
 

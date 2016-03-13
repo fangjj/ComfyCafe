@@ -5,17 +5,13 @@ This time, I'm commenting it heavily. I promise!
 
 function queryGenerator(parsed, queryDoc, positive) {
   // These determine whether we're matching or filtering. postiive = matching
-  var rootMode, childMode, target, targetRev, targetFlat, targetFlatAdj;
+  var target, targetRev, targetFlat, targetFlatAdj;
   if (positive) {
-    rootMode = "$or";
-    childMode = "$all";
     target = parsed.subjects;
     targetRev = parsed.subjectsReverse;
     targetFlat = parsed.subjectsFlat;
     targetFlatAdj = parsed.subjectsFlatAdjectives;
   } else {
-    rootMode = "$nor";
-    childMode = "$nin";
     target = parsed.without;
     targetRev = parsed.withoutReverse;
     targetFlat = parsed.withoutFlat;
@@ -23,86 +19,29 @@ function queryGenerator(parsed, queryDoc, positive) {
   }
 
   _.each(target, function (descriptors, rootNoun) {
-    var done = false;
-
-    if (slice(rootNoun, 0, 3) === "id ") {
-      // The query specifies a post ID, i.e. `id neJk82uvXvGH3Meig`.
-      var id = slice(rootNoun, 3, undefined);
-      if (positive) {
-        queryDoc._id = id;
-      } else {
-        queryDoc._id = { $ne: id };
-      }
-      done = true;
-    }
-
-    if (! done && slice(rootNoun, 0, 5) === "name ") {
-      // The query specifies a post name, i.e. `name DuplicitousVibrantXamdou`.
-      var name = slice(rootNoun, 5, undefined);
-      if (positive) {
-        queryDoc.name = name;
-      } else {
-        queryDoc.name = { $ne: name };
-      }
-      done = true;
-    }
-
-    if (! done && ! _.isEmpty(descriptors)) {
+    if (! _.isEmpty(descriptors)) {
       /*
-      If we enter this block, then this is a root noun, i.e. a character name.
-      The data structure is simply an array of adjectives.
-      ["big", "sassy", "black"]
+      Root->Child: `blue hat` with `dog: black, blue hat`
+      We only need to do this if there are pre-adjs.
       */
-
-      var rootDoc = {};
-
-      /*
-      Root->Child is a bit more complicated.
-      i.e. matching "blue hat" against "black dog with blue hat"
-
-      Note that in the absence of adjectives, this works by default.
-      But if we had no adjectives, we wouldn't have even entered this block.
-
-      This currently doesn't work, since pre-adjs aren't presently parsed...
-      */
-      //rootDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $all: descriptors };
-
-      // Now to $or together Root->Root and Root->Child.
-      queryDoc[rootMode] = _.map(rootDoc, function (value, key) {
-        var kv = {};
-        kv[key] = value;
-        return kv;
-      });
-
-      done = true;
+      //queryDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $all: descriptors };
     }
   });
 
   _.each(targetRev, function (descriptors, rootNoun) {
     _.each(descriptors, function (adjectives, parent) {
       /*
-      If we enter this loop, then this is a child noun, i.e. a clothing item.
-      The data structure is a k/v pair of parent noun names and adjective arrays.
-      "yoko-littner": ["long", "red"]
-      The parent noun is already guaranteed to be present, but we still need to check for:
-      1. That this child noun is a child to that parent.
-      2. That all the adjectives are present and associated with that parent.
+      Child->Child: `dog: blue hat` with `dog: black, blue hat`
       */
-
-      /*
-      This is a Child->Child query.
-      i.e. matching "dog with blue hat" against "black dog with blue hat"
-      */
+      var doc = { $exists: true };
       if (! _.isEmpty(adjectives)) {
-        queryDoc["tags.subjectsReverse." + rootNoun + "." + parent] = {};
-        queryDoc["tags.subjectsReverse." + rootNoun + "." + parent][childMode] = adjectives;
+        doc.$all = adjectives;
       }
+      queryDoc["tags.subjectsReverse." + rootNoun + "." + parent] = doc;
 
       /*
-      And last but not least, Child->Root.
-      Actually, this is least, since we don't support it!
-      i.e. matching "hat with dog" against "dog with hat"
-      So enjoy the no-op.
+      Child->Root: `hat: dog` with `dog: hat`
+      We don't support this, for obvious reasons...
       */
     });
   });
@@ -144,6 +83,31 @@ tagQuery = function (str) {
   queryGenerator(parsed, queryDoc, false);
   // This takes true, since we want to match these.
   queryGenerator(parsed, queryDoc, true);
+
+  /*
+  // Meta stuff
+  if (slice(rootNoun, 0, 3) === "id ") {
+    // The query specifies a post ID, i.e. `id neJk82uvXvGH3Meig`.
+    var id = slice(rootNoun, 3, undefined);
+    if (positive) {
+      queryDoc._id = id;
+    } else {
+      queryDoc._id = { $ne: id };
+    }
+    done = true;
+  }
+
+  if (! done && slice(rootNoun, 0, 5) === "name ") {
+    // The query specifies a post name, i.e. `name DuplicitousVibrantXamdou`.
+    var name = slice(rootNoun, 5, undefined);
+    if (positive) {
+      queryDoc.name = name;
+    } else {
+      queryDoc.name = { $ne: name };
+    }
+    done = true;
+  }
+  */
 
   prettyPrint(queryDoc);
 

@@ -44,19 +44,28 @@ function parseDescriptors(parsed, kv) {
 			}
 		}
 
-		var target, targetRev;
+		var target, targetRev, targetFlat, targetFlatAdj;
 		if (tokens[0] !== "without") {
-			target = sInner;
-			targetRev = parsed.subjectsReverse;
+			useSubject = true;
 		} else {
 			if (! withoutMode) {
-				target = wInner;
-				targetRev = parsed.withoutReverse;
+				useSubject = false;
 			} else {
-				target = sInner;
-				targetRev = parsed.subjectsReverse;
+				useSubject = true;
 			}
 			tokens.shift();
+		}
+
+		if (useSubject) {
+			target = sInner;
+			targetRev = parsed.subjectsReverse;
+			targetFlat = parsed.subjectsFlat;
+			targetFlatAdj = parsed.subjectsFlatAdjectives;
+		} else {
+			target = wInner;
+			targetRev = parsed.withoutReverse;
+			targetFlat = parsed.withoutFlat;
+			targetFlatAdj = parsed.withoutFlatAdjectives;
 		}
 
 		target[descNoun] = tokens;
@@ -64,17 +73,28 @@ function parseDescriptors(parsed, kv) {
 		var revInner = {};
 		revInner[label] = tokens;
 		targetRev[descNoun] = revInner;
+
+		if (! targetFlatAdj[descNoun]) {
+			targetFlatAdj[descNoun] = tokens;
+		} else {
+			targetFlatAdj[descNoun].push.apply(targetFlatAdj[descNoun], tokens);
+		}
+
+		targetFlat.push(descNoun);
 	}
 
 	if (! _.isEmpty(sInner)) {
 		if (! withoutMode) {
 			parsed.subjects[label] = sInner;
+			parsed.subjectsFlat.push(label);
 		} else {
 			parsed.without[label] = sInner;
+			parsed.withoutFlat.push(label);
 		}
 	}
 	if (! _.isEmpty(wInner)) {
 		parsed.without[label] = wInner;
+		parsed.withoutFlat.push(label);
 	}
 }
 
@@ -84,8 +104,12 @@ tagParser = function (tagStr) {
 		notAuthors: [],
 		subjects: {},
 		subjectsReverse: {},
+		subjectsFlat: [],
+		subjectsFlatAdjectives: {},
 		without: {},
 		withoutReverse: {},
+		withoutFlat: [],
+		withoutFlatAdjectives: {},
 		text: tagStr
 	};
 

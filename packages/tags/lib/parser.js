@@ -123,6 +123,7 @@ tagParser = function (tagStr) {
 		withoutFlat: [],
 		withoutFlatAdjectives: {},
 		allTags: [],
+		meta: {},
 		text: tagStr
 	};
 
@@ -138,6 +139,16 @@ tagParser = function (tagStr) {
 
 		if (topToken.substr(0, 7) === "not by ") {
 			parsed.notAuthors.push(topToken.substr(7).trim());
+			continue;
+		}
+
+		if (topToken.substr(0, 3) === "id ") {
+			parsed.meta.id = topToken.substr(3).trim();
+			continue;
+		}
+
+		if (topToken.substr(0, 5) === "name ") {
+			parsed.meta.name = topToken.substr(5).trim();
 			continue;
 		}
 

@@ -1,8 +1,3 @@
-/*
-Okay, so the original query code was incomprehensible.
-This time, I'm commenting it heavily. I promise!
-*/
-
 function queryGenerator(parsed, queryDoc, positive) {
   // These determine whether we're matching or filtering. postiive = matching
   var target, targetRev, targetFlat, targetFlatAdj;
@@ -69,6 +64,16 @@ tagQuery = function (str) {
     queryDoc["tags.authors"] = authorQuery;
   }
 
+  if (_.has(parsed.meta, "id")) {
+    // The query specifies a post ID, i.e. `id neJk82uvXvGH3Meig`.
+    queryDoc._id = parsed.meta.id;
+  }
+
+  if (_.has(parsed.meta, "name")) {
+    // The query specifies a post name, i.e. `name DuplicitousVibrantXamdou`.
+    queryDoc.name = parsed.meta.name;
+  }
+
   if (parsed.subjectsFlat.length) {
     /*
     This is the basic Root->Root query.
@@ -83,31 +88,6 @@ tagQuery = function (str) {
   queryGenerator(parsed, queryDoc, false);
   // This takes true, since we want to match these.
   queryGenerator(parsed, queryDoc, true);
-
-  /*
-  // Meta stuff
-  if (slice(rootNoun, 0, 3) === "id ") {
-    // The query specifies a post ID, i.e. `id neJk82uvXvGH3Meig`.
-    var id = slice(rootNoun, 3, undefined);
-    if (positive) {
-      queryDoc._id = id;
-    } else {
-      queryDoc._id = { $ne: id };
-    }
-    done = true;
-  }
-
-  if (! done && slice(rootNoun, 0, 5) === "name ") {
-    // The query specifies a post name, i.e. `name DuplicitousVibrantXamdou`.
-    var name = slice(rootNoun, 5, undefined);
-    if (positive) {
-      queryDoc.name = name;
-    } else {
-      queryDoc.name = { $ne: name };
-    }
-    done = true;
-  }
-  */
 
   prettyPrint(queryDoc);
 

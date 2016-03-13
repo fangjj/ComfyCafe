@@ -25,6 +25,37 @@ function queryGeneratorMeta(parsed, queryDoc) {
   }
 }
 
+function queryGeneratorWithout(parsed, queryDoc) {
+  var exclude = [];
+
+  _.each(parsed.without, function (descriptors, rootNoun) {
+    if (! _.isEmpty(descriptors)) {
+      // Root->Child
+      //queryDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $nin: descriptors };
+    } else {
+      exclude.push(rootNoun);
+    }
+  });
+
+  if (exclude.length) {
+    // Root->Root exclusion
+    queryDoc["tags.subjectsFlat"] = { $nin: exclude };
+  }
+
+  _.each(parsed.withoutReverse, function (descriptors, rootNoun) {
+    _.each(descriptors, function (adjectives, parent) {
+      // Child->Child
+      var doc = {};
+      if (! _.isEmpty(adjectives)) {
+        doc.$nin = adjectives;
+      } else {
+        doc.$exists = false;
+      }
+      queryDoc["tags.subjectsReverse." + rootNoun + "." + parent] = doc;
+    });
+  });
+};
+
 function queryGeneratorSubjects(parsed, queryDoc) {
   if (parsed.subjectsFlat.length) {
     /*
@@ -64,37 +95,6 @@ function queryGeneratorSubjects(parsed, queryDoc) {
   });
 }
 
-function queryGeneratorWithout(parsed, queryDoc) {
-  var exclude = [];
-
-  _.each(parsed.without, function (descriptors, rootNoun) {
-    if (! _.isEmpty(descriptors)) {
-      // Root->Child
-      //queryDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $nin: descriptors };
-    } else {
-      exclude.push(rootNoun);
-    }
-  });
-
-  if (exclude.length) {
-    // Root->Root exclusion
-    queryDoc["tags.subjectsFlat"] = { $nin: exclude };
-  }
-
-  _.each(parsed.withoutReverse, function (descriptors, rootNoun) {
-    _.each(descriptors, function (adjectives, parent) {
-      // Child->Child
-      var doc = {};
-      if (! _.isEmpty(adjectives)) {
-        doc.$nin = adjectives;
-      } else {
-        doc.$exists = false;
-      }
-      queryDoc["tags.subjectsReverse." + rootNoun + "." + parent] = doc;
-    });
-  });
-};
-
 tagQuery = function (str) {
   if (! str) {
     return {};
@@ -108,6 +108,7 @@ tagQuery = function (str) {
   queryGeneratorWithout(parsed, queryDoc);
   queryGeneratorSubjects(parsed, queryDoc);
 
+  prettyPrint(parsed);
   prettyPrint(queryDoc);
 
   return queryDoc;

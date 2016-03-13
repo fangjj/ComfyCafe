@@ -41,7 +41,24 @@ function parseDescriptors(parsed, kv) {
 				} else {
 					wInner[descNoun].push(tokens[notIndex+1]);
 				}
-				tokens.splice(notIndex, notIndex+1);
+
+				var revInner;
+				if (! _.has(parsed.withoutReverse, descNoun)) {
+					revInner = {};
+					parsed.withoutReverse[descNoun] = revInner;
+				} else {
+					revInner = parsed.withoutReverse[descNoun];
+				}
+
+				if (! _.has(parsed.withoutReverse[descNoun], label)) {
+					revInner[label] = [tokens[notIndex+1]];
+				} else {
+					revInner[label].push(tokens[notIndex+1]);
+				}
+
+				parsed.withoutFlat.push(descNoun);
+
+				tokens.splice(notIndex, notIndex+2);
 				notIndex = tokens.indexOf("not");
 			} else {
 				tokens.splice(notIndex);

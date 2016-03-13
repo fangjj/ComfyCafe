@@ -29,9 +29,9 @@ function queryGeneratorWithout(parsed, wDoc) {
   var exclude = [];
 
   _.each(parsed.without, function (descriptors, rootNoun) {
-    if (! _.isEmpty(descriptors)) {
+    if (_.has(descriptors, "_pre") && descriptors._pre.length) {
       // Root->Child
-      //queryDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $nin: descriptors };
+      wDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $nin: descriptors._pre };
     } else {
       exclude.push(rootNoun);
     }
@@ -67,12 +67,13 @@ function queryGeneratorSubjects(parsed, sDoc) {
   }
 
   _.each(parsed.subjects, function (descriptors, rootNoun) {
-    if (! _.isEmpty(descriptors)) {
+    console.log(descriptors);
+    if (_.has(descriptors, "_pre") && descriptors._pre.length) {
       /*
       Root->Child: `blue hat` with `dog: black, blue hat`
       We only need to do this if there are pre-adjs.
       */
-      //queryDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $all: descriptors };
+      sDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $all: descriptors._pre };
     }
   });
 
@@ -115,8 +116,8 @@ tagQuery = function (str) {
     ];
   }
 
-  prettyPrint(parsed);
-  prettyPrint(queryDoc);
+  //prettyPrint(parsed);
+  //prettyPrint(queryDoc);
 
   return queryDoc;
 };

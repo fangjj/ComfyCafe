@@ -3,14 +3,27 @@ tagStrSample = "nia-teppelin: young, short multicolored hair, cat ears;"
 
 function parseLonely(parsed, kv) {
 	var tokens = _.compact(kv[0].split(/\s+/));
-	if (tokens.length === 1) {
-		parsed.subjects[kv[0]] = {};
-		parsed.subjectsFlat.push(kv[0]);
-		parsed.allTags.push(kv[0]);
-	} else if (_.contains(["not", "without"], tokens[0])) {
-		parsed.without[tokens[1]] = {};
-		parsed.withoutFlat.push(tokens[1]);
-		parsed.allTags.push(tokens[1]);
+	var noun = tokens.pop();
+
+	if (_.contains(["not", "without"], tokens[0])) {
+		tokens.shift();
+		target = parsed.without;
+		targetFlat = parsed.withoutFlat;
+	} else {
+		target = parsed.subjects;
+		targetFlat = parsed.subjectsFlat;
+	}
+
+	var doc = {};
+	if (tokens.length) {
+		doc = {_pre: tokens};
+	}
+
+	target[noun] = doc;
+	targetFlat.push(noun);
+	parsed.allTags.push(noun);
+	if (tokens.length) {
+		parsed.allTags.push.apply(parsed.allTags, tokens);
 	}
 }
 

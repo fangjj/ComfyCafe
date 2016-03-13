@@ -109,6 +109,8 @@ function parseDescriptors(parsed, kv) {
 }
 
 tagParser = function (tagStr) {
+	tagStr = tagStr.trim();
+
 	var parsed = {
 		authors: [],
 		notAuthors: [],

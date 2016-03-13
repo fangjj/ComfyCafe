@@ -23,7 +23,7 @@ Package.onUse(function(api) {
     "lib/aliases.js",
     "lib/parser.js",
     "lib/humanizer.js",
-    "lib/newQuery.js",
+    "lib/query.js",
     "lib/urlify.js"
   ], ["client", "server"]);
 

@@ -2,7 +2,7 @@ function something(tag) {
   return Tags.findOne({ name: tag });
 }
 
-tagDiffer = function (parsed) {
+tagDiffer = function (oldParsed, newParsed) {
   /*
   u: `long blonde hair`
   d: `short blonde hair`
@@ -11,9 +11,8 @@ tagDiffer = function (parsed) {
 
   var dOps = [];
 
-  _.each(parsed.subjects, function (descriptors, rootNoun) {
-    var implications = something(rootNoun).implications;
-    var uKeys = _.keys(implications.subjects[rootNoun]);
+  _.each(newParsed.subjects, function (descriptors, rootNoun) {
+    var uKeys = _.keys(oldParsed.subjects[rootNoun]);
     var dKeys = _.keys(descriptors);
     var dix = _.intersection(uKeys, dKeys);
     _.each(uKeys, function (k) {
@@ -21,7 +20,7 @@ tagDiffer = function (parsed) {
         dOps.push("removed `" + k + "`");
       } else {
         _.each(descriptors, function (dAdjs, descNoun) {
-          var uAdjs = implications.subjects[rootNoun][k];
+          var uAdjs = oldParsed.subjects[rootNoun][k];
           var ix = _.intersection(uAdjs, dAdjs);
           _.each(uAdjs, function (a) {
             if (! _.contains(ix, a)) {

@@ -23,6 +23,7 @@ Package.onUse(function(api) {
     "lib/aliases.js",
     "lib/resolver.js",
     "lib/parser.js",
+    "lib/differ.js",
     "lib/humanizer.js",
     "lib/query.js",
     "lib/urlify.js"
@@ -34,6 +35,7 @@ Package.onUse(function(api) {
     "tagResolver",
     "tagStrSample",
     "tagParser",
+    "tagDiffer",
     "tagHumanizer",
     "tagQuery",
     "tagStrToUrl",

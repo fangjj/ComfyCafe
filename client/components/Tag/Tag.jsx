@@ -1,5 +1,11 @@
 /*
 - Include a live parsing preview
+
+uOp: added `long` to `hair`
+doc = {];
+doc["tags.subjects." + tag] = { $exists: true };
+victims = Posts.find(doc);
+victim.tags.subjects[tag].push(long);
 */
 
 Tag = React.createClass({

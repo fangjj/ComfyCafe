@@ -20,18 +20,20 @@ tagDiffer = function (oldParsed, newParsed) {
         dOps.push("removed `" + k + "`");
       } else {
         _.each(descriptors, function (dAdjs, descNoun) {
-          var uAdjs = oldParsed.subjects[rootNoun][k];
-          var ix = _.intersection(uAdjs, dAdjs);
-          _.each(uAdjs, function (a) {
-            if (! _.contains(ix, a)) {
-              dOps.push("`" + a + "` removed from `" + descNoun + "`");
-            }
-          });
-          _.each(dAdjs, function (a) {
-            if (! _.contains(ix, a)) {
-              dOps.push("`" + a + "` added to `" + descNoun + "`");
-            }
-          });
+          var uAdjs = oldParsed.subjects[rootNoun][descNoun];
+          if (uAdjs) {
+            var ix = _.intersection(uAdjs, dAdjs);
+            _.each(uAdjs, function (a) {
+              if (! _.contains(ix, a)) {
+                dOps.push("`" + a + "` removed from `" + descNoun + "`");
+              }
+            });
+            _.each(dAdjs, function (a) {
+              if (! _.contains(ix, a)) {
+                dOps.push("`" + a + "` added to `" + descNoun + "`");
+              }
+            });
+          }
         });
       }
     });

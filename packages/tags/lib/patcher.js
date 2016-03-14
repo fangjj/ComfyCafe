@@ -23,7 +23,7 @@ function remove(dTags, rootNoun, tag) {
 function removeFrom(dTags, rootNoun, tag, adj) {
   if (_.contains(dTags.subjects[rootNoun][tag], adj)) {
     var idx = dTags.subjects[rootNoun][tag].indexOf(adj);
-    dTags.subjects[rootNoun][tag].splice(idx);
+    dTags.subjects[rootNoun][tag].splice(idx, 1);
   }
 }
 
@@ -56,18 +56,22 @@ diff(u1, d) = [
 ];
 output = parse("yoko-littner: long pink hair")
 */
-tagPatcher = function (u1, u2, d) {
+tagPatcher = function (u1, u2, d1) {
   var uDiff = tagDiffer(u1, u2);
-  var xDiff = tagDiffer(u1, d);
+  var xDiff = tagDiffer(u1, d1);
 
   prettyPrint(uDiff);
   prettyPrint(xDiff);
 
-  _.each(d.subjects, function (descriptors, rootNoun) {
+  var d2 = {
+    subjects: JSON.parse(JSON.stringify(d1.subjects))
+  };
+
+  _.each(d1.subjects, function (descriptors, rootNoun) {
     if (_.has(uDiff, rootNoun)) {
       _.each(uDiff[rootNoun].added, function (tag) {
         if (! isRemoved(xDiff, rootNoun, tag)) {
-          add(d, rootNoun, tag);
+          add(d2, rootNoun, tag);
         }
       });
 
@@ -75,7 +79,7 @@ tagPatcher = function (u1, u2, d) {
         if (! isRemoved(xDiff, rootNoun, tag)) {
           _.each(adjs, function (adj) {
             if (! isRemovedFrom(xDiff, rootNoun, tag, adj)) {
-              addTo(d, rootNoun, tag, adj);
+              addTo(d2, rootNoun, tag, adj);
             }
           });
         }
@@ -83,7 +87,7 @@ tagPatcher = function (u1, u2, d) {
 
       _.each(uDiff[rootNoun].removed, function (tag) {
         if (! isAdded(xDiff, rootNoun, tag)) {
-          remove(d, rootNoun, tag);
+          remove(d2, rootNoun, tag);
         }
       });
 
@@ -91,7 +95,7 @@ tagPatcher = function (u1, u2, d) {
         if (! isAdded(xDiff, rootNoun, tag)) {
           _.each(adjs, function (adj) {
             if (! isAddedTo(xDiff, rootNoun, tag, adj)) {
-              removeFrom(d, rootNoun, tag, adj);
+              removeFrom(d2, rootNoun, tag, adj);
             }
           });
         }
@@ -99,5 +103,7 @@ tagPatcher = function (u1, u2, d) {
     }
   });
 
-  return d;
+  // Lazy, or genius? Time will decide!
+  var tagStr = tagStringify(d2);
+  return tagParser(tagStr);
 };

@@ -26,7 +26,7 @@ Package.onUse(function(api) {
     "lib/parser.js",
     "lib/differ.js",
     "lib/patcher.js",
-    "lib/humanizer.js",
+    "lib/renamer.js",
     "lib/query.js",
     "lib/urlify.js"
   ], ["client", "server"]);
@@ -40,7 +40,7 @@ Package.onUse(function(api) {
     "tagParser",
     "tagDiffer",
     "tagPatcher",
-    "tagHumanizer",
+    "tagRenamer",
     "tagQuery",
     "tagStrToUrl",
     "tagStrFromUrl"

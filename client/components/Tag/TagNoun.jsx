@@ -1,9 +1,10 @@
 TagNoun = React.createClass({
   render() {
-    var noun = this.props.noun;
+    const noun = this.props.noun;
+    const nounType = "generic";
     return <a
-      className={"taglet noun " + noun.type}
-      href={"/q/" + noun.name}
-    >{noun.name}</a>;
+      className={"taglet noun " + nounType}
+      href={"/q/" + noun}
+    >{noun}</a>;
   }
 });

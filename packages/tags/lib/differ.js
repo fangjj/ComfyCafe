@@ -26,36 +26,36 @@ tagDiffer = function (oldParsed, newParsed) {
     _.each(uKeys, function (k) {
       if (! _.contains(dix, k)) {
         dOps.removed.push(k);
-      } else {
-        _.each(descriptors, function (dAdjs, descNoun) {
-          var uAdjs = oldParsed.subjects[rootNoun][descNoun];
-          if (uAdjs) {
-            var ix = _.intersection(uAdjs, dAdjs);
-            _.each(uAdjs, function (a) {
-              if (! _.contains(ix, a)) {
-                if (! dOps.removedFrom[descNoun]) {
-                  dOps.removedFrom[descNoun] = [a];
-                } else {
-                  dOps.removedFrom[descNoun].push(a);
-                }
-              }
-            });
-            _.each(dAdjs, function (a) {
-              if (! _.contains(ix, a)) {
-                if (! dOps.addedTo[descNoun]) {
-                  dOps.addedTo[descNoun] = [a];
-                } else {
-                  dOps.addedTo[descNoun].push(a);
-                }
-              }
-            });
-          }
-        });
       }
     });
     _.each(dKeys, function (k) {
       if (! _.contains(dix, k)) {
         dOps.added.push(k);
+      }
+    });
+
+    _.each(descriptors, function (dAdjs, descNoun) {
+      var uAdjs = oldParsed.subjects[rootNoun][descNoun];
+      if (uAdjs) {
+        var ix = _.intersection(uAdjs, dAdjs);
+        _.each(uAdjs, function (a) {
+          if (! _.contains(ix, a)) {
+            if (! dOps.removedFrom[descNoun]) {
+              dOps.removedFrom[descNoun] = [a];
+            } else {
+              dOps.removedFrom[descNoun].push(a);
+            }
+          }
+        });
+        _.each(dAdjs, function (a) {
+          if (! _.contains(ix, a)) {
+            if (! dOps.addedTo[descNoun]) {
+              dOps.addedTo[descNoun] = [a];
+            } else {
+              dOps.addedTo[descNoun].push(a);
+            }
+          }
+        });
       }
     });
   });

@@ -7,14 +7,25 @@ TagField = React.createClass({
   getInitialState() {
     return {
       text: this.props.defaultValue || "",
-      suggestions: []
+      search: ""
     };
   },
   getMeteorData() {
     const handle = Meteor.subscribe("allTags");
+    let doc = {};
+    if (this.state.search) {
+      const re = new RegExp("^" + this.state.search);
+      doc = { $or: [
+        { name: re },
+        { aliases: re }
+      ] };
+    }
     return {
       loading: ! handle.ready(),
-      tags: Tags.find({}, { fields: { name: 1, implicationStr: 1 } }).fetch(),
+      tags: Tags.find(
+        doc,
+        { fields: { name: 1, implicationStr: 1 } }
+      ).fetch(),
       currentUser: Meteor.user()
     };
   },
@@ -23,23 +34,10 @@ TagField = React.createClass({
     const split = value.split(/\s+/);
     const body = _.initial(split);
     const last = _.last(split);
-    if (last) {
-      this.setState({
-        text: value,
-        suggestions: _.compact(
-          _.map(this.data.tags, (tag) => {
-            if (tag.name.substr(0, last.length) === last) {
-              return tag;
-            }
-          })
-        )
-      });
-    } else {
-      this.setState({
-        text: value,
-        suggestions: []
-      });
-    }
+    this.setState({
+      text: value,
+      search: last
+    });
     this.props.onChange(value);
   },
   onSelect(tag) {
@@ -49,9 +47,17 @@ TagField = React.createClass({
     const text = (body.join(" ") + " " + tag.name + ": " + tag.implicationStr + ";").trim();
     this.setState({
       text: text,
-      suggestions: []
+      search: ""
     });
     this.props.onChange(text);
+  },
+  renderSuggestions() {
+    if (this.state.search) {
+      return <Suggestions
+        suggestions={this.data.tags}
+        onSelect={this.onSelect}
+      />;
+    }
   },
   render() {
     if (this.data.loading) {
@@ -69,10 +75,7 @@ TagField = React.createClass({
         onChange={this.onChange}
         fullWidth={true}
       />
-      <Suggestions
-        suggestions={this.state.suggestions}
-        onSelect={this.onSelect}
-      />
+      {this.renderSuggestions()}
     </div>;
   }
 });

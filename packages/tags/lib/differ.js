@@ -8,6 +8,10 @@ tagDiffer = function (oldParsed, newParsed) {
   var diff = {};
 
   _.each(newParsed.subjects, function (descriptors, rootNoun) {
+    if (! _.has(oldParsed.subjects, rootNoun)) {
+      return;
+    }
+
     var dOps = {
       added: [],
       addedTo: {},

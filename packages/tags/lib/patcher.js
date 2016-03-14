@@ -21,8 +21,10 @@ function remove(dTags, rootNoun, tag) {
 }
 
 function removeFrom(dTags, rootNoun, tag, adj) {
-  var idx = dTags.subjects[rootNoun][tag].indexOf(adj);
-  dTags.subjects[rootNoun][tag].splice(idx);
+  if (_.contains(dTags.subjects[rootNoun][tag], adj)) {
+    var idx = dTags.subjects[rootNoun][tag].indexOf(adj);
+    dTags.subjects[rootNoun][tag].splice(idx);
+  }
 }
 
 function add(dTags, rootNoun, tag) {
@@ -57,6 +59,9 @@ output = parse("yoko-littner: long pink hair")
 tagPatcher = function (u1, u2, d) {
   var uDiff = tagDiffer(u1, u2);
   var xDiff = tagDiffer(u1, d);
+
+  prettyPrint(uDiff);
+  prettyPrint(xDiff);
 
   _.each(d.subjects, function (descriptors, rootNoun) {
     if (_.has(uDiff, rootNoun)) {

@@ -22,6 +22,7 @@ Package.onUse(function(api) {
   api.addFiles([
     "lib/aliases.js",
     "lib/resolver.js",
+    "lib/stringify.js",
     "lib/parser.js",
     "lib/differ.js",
     "lib/patcher.js",
@@ -34,6 +35,7 @@ Package.onUse(function(api) {
     "aliasSample",
     "parseAliases",
     "tagResolver",
+    "tagStringify",
     "tagStrSample",
     "tagParser",
     "tagDiffer",

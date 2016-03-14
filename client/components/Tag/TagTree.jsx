@@ -1,12 +1,12 @@
 TagTree = React.createClass({
   componentWillMount() {
     this.ids = {};
-    this.props.humanizedTags.nouns.map((noun) => {
+    tagHumanizer(this.props.tags).nouns.map((noun) => {
       this.ids[noun.name] = _.uniqueId();
     });
   },
   renderRoots() {
-    return this.props.humanizedTags.nouns.map((noun) => {
+    return tagHumanizer(this.props.tags).nouns.map((noun) => {
       return <TagRoot
         noun={noun}
         key={this.ids[noun.name]}

@@ -22,13 +22,20 @@ Tag = React.createClass({
       </span>;
     }
   },
+  renderOrigin(tag) {
+    if (tag.type !== "origin") {
+      return <span>
+        Origin: {tag.origin}
+      </span>;
+    }
+  },
   renderTagTree(tag) {
     if (tag.implications) {
       return <TagTree
         tags={tag.implications}
         humanizedTags={tagHumanizer(tag.implications)}
       />;
-  }
+    }
   },
   render() {
     if (this.data.loading) {
@@ -43,7 +50,7 @@ Tag = React.createClass({
       Type: {tag.type}
       <br />
       {this.renderAliases(tag)}
-      Origin: {tag.origin}
+      {this.renderOrigin(tag)}
       <TextBody text={tag.definition} />
       {this.renderTagTree(tag)}
       <TagEditFAB tag={tag} />

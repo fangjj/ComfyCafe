@@ -3,6 +3,20 @@ let {
 } = mui;
 
 TagInnerForm = React.createClass({
+  renderOrigin() {
+    if (this.props.tagType !== "origin") {
+      return <span>
+        <TextField
+          defaultValue={this.props.origin}
+          floatingLabelText="Origin"
+          floatingLabelStyle={{fontSize: "20px"}}
+          onChange={this.props.handleOrigin}
+          fullWidth={true}
+        />
+        <br />
+      </span>;
+    }
+  },
   render() {
     return <div>
       <TextField
@@ -28,14 +42,7 @@ TagInnerForm = React.createClass({
         fullWidth={true}
       />
       <br />
-      <TextField
-        defaultValue={this.props.origin}
-        floatingLabelText="Origin"
-        floatingLabelStyle={{fontSize: "20px"}}
-        onChange={this.props.handleOrigin}
-        fullWidth={true}
-      />
-      <br />
+      {this.renderOrigin()}
       <TextField
         defaultValue={this.props.definition}
         floatingLabelText="Definition"

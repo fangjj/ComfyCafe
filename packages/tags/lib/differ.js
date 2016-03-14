@@ -60,7 +60,5 @@ tagDiffer = function (oldParsed, newParsed) {
     });
   });
 
-  prettyPrint(diff);
-
   return diff;
 };

@@ -2,14 +2,14 @@ tagStringify = function (tagObj) {
   // This currently ignores all negativity.
   var chunks = [];
   _.each(tagObj.subjects, function (descriptors, rootNoun) {
-    if (! descriptors) {
+    if (_.isEmpty(descriptors)) {
       chunks.push(rootNoun);
     } else {
       var str = rootNoun + ": ";
       var dChunks = [];
       _.each(descriptors, function (adjs, descNoun) {
         var dStr = "";
-        if (adjs) {
+        if (adjs.length) {
           dStr += adjs.join(" ") + " ";
         }
         dChunks.push(dStr + descNoun);

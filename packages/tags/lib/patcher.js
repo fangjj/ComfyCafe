@@ -58,9 +58,6 @@ tagPatcher = function (u1, u2, d) {
   var uDiff = tagDiffer(u1, u2);
   var xDiff = tagDiffer(u1, d);
 
-  prettyPrint(uDiff);
-  prettyPrint(xDiff);
-
   _.each(d.subjects, function (descriptors, rootNoun) {
     if (_.has(uDiff, rootNoun)) {
       _.each(uDiff[rootNoun].added, function (tag) {

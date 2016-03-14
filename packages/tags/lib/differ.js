@@ -1,10 +1,10 @@
-tagDiffer = function (oldParsed, newParsed) {
-  /*
-  o: `long blonde hair`
-  n: `short blonde hair`
-  intended dOps: ["removed `long` from `hair`", "added `short` to `hair"]
-  */
+/*
+o: `long blonde hair`
+n: `short blonde hair`
+intended dOps: ["removed `long` from `hair`", "added `short` to `hair"]
+*/
 
+tagDiffer = function (oldParsed, newParsed) {
   var diff = {};
 
   _.each(newParsed.subjects, function (descriptors, rootNoun) {
@@ -56,6 +56,12 @@ tagDiffer = function (oldParsed, newParsed) {
             }
           }
         });
+      } else {
+        if (! dOps.addedTo[descNoun]) {
+          dOps.addedTo[descNoun] = dAdjs;
+        } else {
+          dOps.addedTo[descNoun].push.apply(dOps.addedTo[descNoun], dAdjs);
+        }
       }
     });
   });

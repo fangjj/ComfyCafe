@@ -55,13 +55,11 @@ TagDialog = React.createClass({
   },
   handleImplications(value) {
     this.setState({implications: value});
-    console.log("handleImplications", value);
   },
   handleCondImplications(id, cond, impl) {
     let obj = _.clone(this.state.condImplications);
     obj[id] = [cond, impl];
     this.setState({condImplications: obj});
-    prettyPrint(obj);
   },
   handleSubmit() {
     this.props.handleSubmit({

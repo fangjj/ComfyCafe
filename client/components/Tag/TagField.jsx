@@ -75,28 +75,21 @@ TagField = React.createClass({
     }
   },
   handleParse(tagStr, doc) {
-    let clean = true;
-    const parsed = tagParser(this.injectTags(tagStr));
+    doc.parsed = tagParser(this.injectTags(tagStr));
+    doc.text = tagStr;
 
-    const rootNoun = "fluttershy";
-    if (_.has(parsed.subjects, rootNoun)) {
+    _.each(doc.parsed.subjects, (descriptors, rootNoun) => {
       const rootTag = Tags.findOne({ name: rootNoun });
       if (rootTag) {
         _.each(rootTag.condImplications, (impl, cond) => {
-          if (_.has(parsed.subjects[rootNoun], cond)) {
-            clean = false;
-            const patched = tagPatcher(parsed, impl, parsed, { noRemove: true });
+          if (_.has(doc.parsed.subjects[rootNoun], cond)) {
+            const patched = tagPatcher(doc.parsed, impl, doc.parsed, { noRemove: true });
             doc.parsed = patched;
             doc.text = patched.text;
           }
         });
       }
-    }
-
-    if (clean) {
-      doc.parsed = parsed;
-      doc.text = tagStr;
-    }
+    });
   },
   afterChange(doc, value) {
     this.handleParse(value, doc);

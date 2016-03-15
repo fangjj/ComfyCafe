@@ -28,15 +28,24 @@ Are there downsides to this approach? I hope not!
 
 TagField = React.createClass({
   mixins: [ReactMeteorData],
-  getInitialState() {
-    let tagStr = this.props.defaultValue || "";
-    if (this.props.injectRoot) {
-      tagStr = this.props.injectRoot + ": " + tagStr;
+  injectTags(base, props) {
+    if (typeof props === "undefined") {
+      props = this.props;
     }
+    let tagStr = base || "";
+    if (props.injectDescriptors) {
+      tagStr = props.injectDescriptors + ", " + tagStr;
+    }
+    if (props.injectRoot) {
+      tagStr = props.injectRoot + ": " + tagStr;
+    }
+    return tagStr;
+  },
+  getInitialState() {
     return {
       text: this.props.defaultValue || "",
       search: "",
-      parsed: tagParser(tagStr)
+      parsed: tagParser(this.injectTags(this.props.defaultValue))
     };
   },
   getMeteorData() {
@@ -58,8 +67,15 @@ TagField = React.createClass({
       currentUser: Meteor.user()
     };
   },
+  componentWillReceiveProps(nextProps) {
+    if (this.props.injectDescriptors !== nextProps.injectDescriptors) {
+      this.setState({
+        parsed: tagParser(this.injectTags(this.state.text, nextProps))
+      });
+    }
+  },
   handleParse(tagStr) {
-    const parsed = tagParser(tagStr);
+    const parsed = tagParser(this.injectTags(tagStr));
     let text = this.state.text;
     let clean = true;
 

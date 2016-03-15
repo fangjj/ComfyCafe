@@ -37,7 +37,7 @@ Tag = React.createClass({
       return _.map(tag.condImplications, (impl, cond) => {
         return <div key={_.uniqueId()}>
           {cond}
-          <TagTree tags={impl} />
+          <TagTree tags={impl} injectDescriptors={cond} />
         </div>;
       });
     }

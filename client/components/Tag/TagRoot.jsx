@@ -1,6 +1,6 @@
 TagRoot = React.createClass({
-  renderDescriptors() {
-    return _.map(this.props.descriptors, (adjs, descNoun) => {
+  renderDescriptors(descriptors) {
+    return _.map(descriptors, (adjs, descNoun) => {
       return <TagDescriptor
         noun={descNoun}
         adjs={adjs}
@@ -8,11 +8,23 @@ TagRoot = React.createClass({
       />;
     });
   },
+  renderInjected() {
+    if (this.props.injectDescriptors) {
+      const rawDescriptors = this.props.injectDescriptors.split(/\s*,\s*/);
+      let descriptors = {};
+      _.each(rawDescriptors, (raw) => {
+        const split = raw.split(/\s+/);
+        descriptors[split.pop()] = split;
+      });
+      return this.renderDescriptors(descriptors);
+    }
+  },
   render() {
     return <li>
       <TagRootClause noun={this.props.noun} />
       <ul>
-        {this.renderDescriptors()}
+        {this.renderInjected()}
+        {this.renderDescriptors(this.props.descriptors)}
       </ul>
     </li>;
   }

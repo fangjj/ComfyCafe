@@ -2,12 +2,28 @@ let {
   TextField
 } = mui;
 
+/*
+Conditional expansions are rather tricky, but fortunately, we have a good set of tools!
+
+Since a live parsing preview (and validation) is important regardless, we'll parse a tree onChange.
+We already have the tag object for our rootNoun, and thus the list of conditions. Checking if a
+condition is met is fairly easy, and can be done through the subjects obj.
+
+When a condition's met, what do we do?
+patched = tagPatcher(parsed, condImpl, parsed)
+See what I meant by "good set of tools"? Granted, tagPatcher(a, b, a) could be optimized...
+
+We still need to apply our patched tag doc, though. This is stupidly easy, since we just need to
+shove patched.text into our state. Pretty easy, right?
+*/
+
 TagField = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
       text: this.props.defaultValue || "",
-      search: ""
+      search: "",
+      parsed: this.handleParse(this.props.defaultValue || "")
     };
   },
   getMeteorData() {
@@ -29,6 +45,11 @@ TagField = React.createClass({
       currentUser: Meteor.user()
     };
   },
+  handleParse(tagStr) {
+    const parsed = tagParser(tagStr);
+
+    return parsed;
+  },
   onChange(e) {
     const value = e.target.value;
     const split = value.split(/\s+/);
@@ -36,7 +57,8 @@ TagField = React.createClass({
     const last = _.last(split);
     this.setState({
       text: value,
-      search: last
+      search: last,
+      parsed: this.handleParse(value)
     });
     this.props.onChange(value);
   },
@@ -47,7 +69,8 @@ TagField = React.createClass({
     const text = (body.join(" ") + " " + tag.name + ": " + tag.implicationStr + ";").trim();
     this.setState({
       text: text,
-      search: ""
+      search: "",
+      parsed: this.handleParse(text)
     });
     this.props.onChange(text);
   },
@@ -57,6 +80,11 @@ TagField = React.createClass({
         suggestions={this.data.tags}
         onSelect={this.onSelect}
       />;
+    }
+  },
+  renderTagTree() {
+    if (! _.isEmpty(this.state.parsed)) {
+      return <TagTree tags={this.state.parsed} />;
     }
   },
   render() {
@@ -76,6 +104,7 @@ TagField = React.createClass({
         onChange={this.onChange}
       />
       {this.renderSuggestions()}
+      {this.renderTagTree()}
     </div>;
   }
 });

@@ -1,7 +1,3 @@
-/*
-- Include a live parsing preview
-*/
-
 Tag = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

@@ -1,16 +1,10 @@
 TagTree = React.createClass({
-  componentWillMount() {
-    this.ids = {};
-    _.each(this.props.tags.subjects, (descriptors, rootNoun) => {
-      this.ids[rootNoun] = _.uniqueId();
-    });
-  },
   renderRoots() {
     return _.map(this.props.tags.subjects, (descriptors, rootNoun) => {
       return <TagRoot
         noun={rootNoun}
         descriptors={descriptors}
-        key={this.ids[rootNoun]}
+        key={_.uniqueId()}
       />;
     });
   },

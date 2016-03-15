@@ -68,7 +68,8 @@ tagPatcher = function (u1, u2, d1, options) {
   prettyPrint(xDiff);
 
   var d2 = {
-    subjects: JSON.parse(JSON.stringify(d1.subjects))
+    subjects: JSON.parse(JSON.stringify(d1.subjects)),
+    authors: _.clone(d1.authors)
   };
 
   _.each(d1.subjects, function (descriptors, rootNoun) {
@@ -106,6 +107,11 @@ tagPatcher = function (u1, u2, d1, options) {
       });
     }
   });
+
+  // Don't forget the authors!
+  d2.authors.push.apply(d2.authors, u1.authors);
+  d2.authors.push.apply(d2.authors, u2.authors);
+  d2.authors = _.uniq(d2.authors);
 
   // Lazy, or genius? Time will decide!
   var tagStr = tagStringify(d2);

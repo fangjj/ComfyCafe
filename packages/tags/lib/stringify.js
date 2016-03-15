@@ -1,6 +1,9 @@
 tagStringify = function (tagObj) {
   // This currently ignores all negativity.
   var chunks = [];
+  _.each(tagObj.authors, function (author) {
+    chunks.push("by " + author);
+  });
   _.each(tagObj.subjects, function (descriptors, rootNoun) {
     if (_.isEmpty(descriptors)) {
       chunks.push(rootNoun);

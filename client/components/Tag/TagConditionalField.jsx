@@ -25,17 +25,21 @@ TagConditionalField = React.createClass({
     this.props.onChange(this.id, this.state.cond, value);
   },
   render() {
-    return <li>
-      <TextField
-        floatingLabelText="Condition"
-        floatingLabelStyle={{fontSize: "20px"}}
-        onChange={this.handleCond}
-      />
-      <TagField
-        defaultValue={this.props.defaultImplications}
-        floatingLabelText="Implications"
-        onChange={this.handleImpl}
-      />
+    return <li className="condImplicationField">
+      <div className="condField">
+        <TextField
+          floatingLabelText="Condition"
+          floatingLabelStyle={{fontSize: "20px"}}
+          onChange={this.handleCond}
+        />
+      </div>
+      <div className="implicationField">
+        <TagField
+          defaultValue={this.props.defaultImplications}
+          floatingLabelText="Implications"
+          onChange={this.handleImpl}
+        />
+      </div>
     </li>;
   }
 });

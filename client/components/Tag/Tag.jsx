@@ -36,6 +36,16 @@ Tag = React.createClass({
       />;
     }
   },
+  renderCondImpl(tag) {
+    if (tag.condImplications) {
+      return _.map(tag.condImplications, (impl, cond) => {
+        return <div key={_.uniqueId()}>
+          {cond}
+          <TagTree tags={impl} />
+        </div>;
+      });
+    }
+  },
   render() {
     if (this.data.loading) {
       return <LoadingSpinner />;
@@ -52,6 +62,7 @@ Tag = React.createClass({
       {this.renderOrigin(tag)}
       <TextBody text={tag.definition} />
       {this.renderTagTree(tag)}
+      {this.renderCondImpl(tag)}
       <TagEditFAB tag={tag} />
     </article>;
   }

@@ -74,10 +74,9 @@ TagField = React.createClass({
       });
     }
   },
-  handleParse(tagStr) {
-    const parsed = tagParser(this.injectTags(tagStr));
-    let text = this.state.text;
+  handleParse(tagStr, doc) {
     let clean = true;
+    const parsed = tagParser(this.injectTags(tagStr));
 
     const rootNoun = "fluttershy";
     if (_.has(parsed.subjects, rootNoun)) {
@@ -87,45 +86,40 @@ TagField = React.createClass({
           if (_.has(parsed.subjects[rootNoun], cond)) {
             clean = false;
             const patched = tagPatcher(parsed, impl, parsed, { noRemove: true });
-            text = patched.text;
-            this.setState({
-              parsed: patched,
-              text: patched.text
-            });
+            doc.parsed = patched;
+            doc.text = patched.text;
           }
         });
       }
     }
 
     if (clean) {
-      this.setState({
-        parsed: parsed
-      });
+      doc.parsed = parsed;
+      doc.text = tagStr;
     }
-
-    this.props.onChange(text);
+  },
+  afterChange(doc, value) {
+    this.handleParse(value, doc);
+    this.setState(doc);
+    this.props.onChange(doc.text);
   },
   onChange(e) {
     const value = e.target.value;
     const split = value.split(/\s+/);
     const body = _.initial(split);
     const last = _.last(split);
-    this.setState({
-      text: value,
+    this.afterChange({
       search: last
-    });
-    this.handleParse(value);
+    }, value);
   },
   onSelect(tag) {
     const split = this.state.text.split(/\s+/);
     const body = _.initial(split);
     const last = _.last(split);
     const text = (body.join(" ") + " " + tag.name + ": " + tag.implicationStr + ";").trim();
-    this.setState({
-      text: text,
+    this.afterChange({
       search: ""
-    });
-    this.handleParse(text);
+    }, text);
   },
   renderSuggestions() {
     if (this.state.search) {

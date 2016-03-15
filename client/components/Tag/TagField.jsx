@@ -72,8 +72,8 @@ TagField = React.createClass({
         multiLine={true}
         rows={1}
         rowsMax={5}
-        onChange={this.onChange}
         fullWidth={true}
+        onChange={this.onChange}
       />
       {this.renderSuggestions()}
     </div>;

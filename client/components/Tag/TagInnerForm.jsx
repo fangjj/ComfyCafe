@@ -59,6 +59,12 @@ TagInnerForm = React.createClass({
         floatingLabelText="Implications"
         onChange={this.props.handleImplications}
       />
+      <TagMultiField
+        defaultValue={this.props.condImplications}
+        defaultImplications={this.props.implications}
+        floatingLabelText="Conditional Implications"
+        onChange={this.props.handleCondImplications}
+      />
   </div>;
   }
 });

@@ -10,11 +10,20 @@ We already have the tag object for our rootNoun, and thus the list of conditions
 condition is met is fairly easy, and can be done through the subjects obj.
 
 When a condition's met, what do we do?
-patched = tagPatcher(parsed, condImpl, parsed)
+patched = tagPatcher(parsed, condImpl, parsed, { noRemove: true })
 See what I meant by "good set of tools"? Granted, tagPatcher(a, b, a) could be optimized...
 
 We still need to apply our patched tag doc, though. This is stupidly easy, since we just need to
 shove patched.text into our state. Pretty easy, right?
+
+c = patch(a, b, a)
+a = `fluttershy: funny hat`
+b = `fluttershy: huge breasts`
+c = `fluttershy: huge breasts`
+This is bad!
+diff(a, b) interprets `funny hat` as removed from b, so it doesn't make it into c.
+Therefore, we need the noRemove flag, preventing this from happening.
+Are there downsides to this approach? I hope not!
 */
 
 TagField = React.createClass({
@@ -23,7 +32,7 @@ TagField = React.createClass({
     return {
       text: this.props.defaultValue || "",
       search: "",
-      parsed: this.handleParse(this.props.defaultValue || "")
+      parsed: tagParser(this.props.defaultValue || "")
     };
   },
   getMeteorData() {
@@ -47,8 +56,34 @@ TagField = React.createClass({
   },
   handleParse(tagStr) {
     const parsed = tagParser(tagStr);
+    let text = this.state.text;
+    let clean = true;
 
-    return parsed;
+    const rootNoun = "fluttershy";
+    if (_.has(parsed.subjects, rootNoun)) {
+      const rootTag = Tags.findOne({ name: rootNoun });
+      if (rootTag) {
+        _.each(rootTag.condImplications, (impl, cond) => {
+          if (_.has(parsed.subjects[rootNoun], cond)) {
+            clean = false;
+            const patched = tagPatcher(parsed, impl, parsed, { noRemove: true });
+            text = patched.text;
+            this.setState({
+              parsed: patched,
+              text: patched.text
+            });
+          }
+        });
+      }
+    }
+
+    if (clean) {
+      this.setState({
+        parsed: parsed
+      });
+    }
+
+    this.props.onChange(text);
   },
   onChange(e) {
     const value = e.target.value;
@@ -57,10 +92,9 @@ TagField = React.createClass({
     const last = _.last(split);
     this.setState({
       text: value,
-      search: last,
-      parsed: this.handleParse(value)
+      search: last
     });
-    this.props.onChange(value);
+    this.handleParse(value);
   },
   onSelect(tag) {
     const split = this.state.text.split(/\s+/);
@@ -69,10 +103,9 @@ TagField = React.createClass({
     const text = (body.join(" ") + " " + tag.name + ": " + tag.implicationStr + ";").trim();
     this.setState({
       text: text,
-      search: "",
-      parsed: this.handleParse(text)
+      search: ""
     });
-    this.props.onChange(text);
+    this.handleParse(text);
   },
   renderSuggestions() {
     if (this.state.search) {

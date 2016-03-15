@@ -4,7 +4,10 @@ TagList = React.createClass({
     const handle = Meteor.subscribe("allTags");
     return {
       loading: ! handle.ready(),
-      tags: Tags.find().fetch(),
+      tags: Tags.find(
+        {},
+        { sort: { name: 1 } }
+      ).fetch(),
       currentUser: Meteor.user()
     };
   },

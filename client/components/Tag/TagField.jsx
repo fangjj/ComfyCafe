@@ -29,10 +29,14 @@ Are there downsides to this approach? I hope not!
 TagField = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
+    let tagStr = this.props.defaultValue || "";
+    if (this.props.injectRoot) {
+      tagStr = this.props.injectRoot + ": " + tagStr;
+    }
     return {
       text: this.props.defaultValue || "",
       search: "",
-      parsed: tagParser(this.props.defaultValue || "")
+      parsed: tagParser(tagStr)
     };
   },
   getMeteorData() {

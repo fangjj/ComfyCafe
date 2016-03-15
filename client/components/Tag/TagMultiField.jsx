@@ -21,6 +21,7 @@ TagMultiField = React.createClass({
     }
     return <TagConditionalField
       condImplId={key}
+      injectRoot={this.props.injectRoot}
       defaultCondition={cond}
       defaultImplications={impl}
       onChange={this.props.onChange}

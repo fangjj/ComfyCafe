@@ -33,6 +33,7 @@ TagConditionalField = React.createClass({
       </div>
       <div className="implicationField">
         <TagField
+          injectRoot={this.props.injectRoot}
           defaultValue={this.props.defaultImplications}
           floatingLabelText="Implications"
           onChange={this.handleImpl}

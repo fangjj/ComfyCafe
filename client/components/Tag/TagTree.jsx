@@ -4,6 +4,7 @@ TagTree = React.createClass({
       return <TagRoot
         noun={rootNoun}
         descriptors={descriptors}
+        injectDescriptors={this.props.injectDescriptors}
         key={_.uniqueId()}
       />;
     });

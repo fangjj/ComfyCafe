@@ -1,7 +1,3 @@
-/*
-- Include a live parsing preview
-*/
-
 Tag = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -36,6 +32,16 @@ Tag = React.createClass({
       />;
     }
   },
+  renderCondImpl(tag) {
+    if (tag.condImplications) {
+      return _.map(tag.condImplications, (impl, cond) => {
+        return <div key={_.uniqueId()}>
+          {cond}
+          <TagTree tags={impl} injectDescriptors={cond} />
+        </div>;
+      });
+    }
+  },
   render() {
     if (this.data.loading) {
       return <LoadingSpinner />;
@@ -52,6 +58,7 @@ Tag = React.createClass({
       {this.renderOrigin(tag)}
       <TextBody text={tag.definition} />
       {this.renderTagTree(tag)}
+      {this.renderCondImpl(tag)}
       <TagEditFAB tag={tag} />
     </article>;
   }

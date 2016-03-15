@@ -14,6 +14,14 @@ const defaultState = {
   condImplications: {}
 };
 
+function condImplWrap(condImpl) {
+  let formatted = {};
+  _.each(condImpl, (impl, cond) => {
+    formatted[_.uniqueId()] = [cond, impl.text.split(/\s*:\s*/)[1]];
+  });
+  return formatted;
+}
+
 TagDialog = React.createClass({
   getInitialState() {
     if (this.props.tag) {
@@ -24,7 +32,7 @@ TagDialog = React.createClass({
         aliases: this.props.tag.aliasStr,
         origin: this.props.tag.origin,
         implications: this.props.tag.implicationStr,
-        condImplications: this.props.tag.condImplicationStr || {}
+        condImplications: condImplWrap(this.props.tag.condImplications) || {}
       };
     } else {
       return defaultState;

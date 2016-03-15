@@ -5,37 +5,41 @@ let {
 TagConditionalField = React.createClass({
   getInitialState() {
     return {
-      cond: "",
+      cond: this.props.defaultCondition || "",
       impl: this.props.defaultImplications || ""
     };
-  },
-  componentWillMount() {
-    this.id = _.uniqueId();
   },
   handleCond(e) {
     this.setState({
       cond: e.target.value
     });
-    this.props.onChange(this.id, e.target.value, this.state.impl);
+    this.props.onChange(this.props.condImplId, e.target.value, this.state.impl);
   },
   handleImpl(value) {
     this.setState({
       impl: value
     });
-    this.props.onChange(this.id, this.state.cond, value);
+    this.props.onChange(this.props.condImplId, this.state.cond, value);
   },
   render() {
-    return <li>
-      <TextField
-        floatingLabelText="Condition"
-        floatingLabelStyle={{fontSize: "20px"}}
-        onChange={this.handleCond}
-      />
-      <TagField
-        defaultValue={this.props.defaultImplications}
-        floatingLabelText="Implications"
-        onChange={this.handleImpl}
-      />
+    return <li className="condImplicationField">
+      <div className="condField">
+        <TextField
+          defaultValue={this.props.defaultCondition}
+          floatingLabelText="Condition"
+          floatingLabelStyle={{fontSize: "20px"}}
+          onChange={this.handleCond}
+        />
+      </div>
+      <div className="implicationField">
+        <TagField
+          injectRoot={this.props.injectRoot}
+          injectDescriptors={this.state.cond}
+          defaultValue={this.props.defaultImplications}
+          floatingLabelText="Implications"
+          onChange={this.handleImpl}
+        />
+      </div>
     </li>;
   }
 });

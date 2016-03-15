@@ -9,15 +9,34 @@ TagMultiField = React.createClass({
       qty: 1
     };
   },
-  makeField() {
+  makeField(key, cond, impl) {
+    if (typeof key === "undefined") {
+      key = _.uniqueId();
+    }
+    if (typeof cond === "undefined") {
+      cond = "";
+    }
+    if (typeof impl === "undefined") {
+      impl = this.props.defaultImplications;
+    }
     return <TagConditionalField
-      defaultImplications={this.props.defaultImplications}
+      condImplId={key}
+      injectRoot={this.props.injectRoot}
+      defaultCondition={cond}
+      defaultImplications={impl}
       onChange={this.props.onChange}
-      key={_.uniqueId()}
+      key={key}
     />;
   },
   componentWillMount() {
-    this.elems = [this.makeField()];
+    this.elems = [];
+    if (this.props.defaultValue) {
+      _.each(this.props.defaultValue, (arr, key) => {
+        this.elems.push(this.makeField(key, arr[0], arr[1]));
+      });
+    } else {
+      this.elems.push(this.makeField());
+    }
   },
   handleAdd() {
     this.elems.push(this.makeField());

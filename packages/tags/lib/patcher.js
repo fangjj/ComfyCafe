@@ -56,8 +56,12 @@ diff(u1, d) = [
 ];
 output = parse("yoko-littner: long pink hair")
 */
-tagPatcher = function (u1, u2, d1) {
-  var uDiff = tagDiffer(u1, u2);
+tagPatcher = function (u1, u2, d1, options) {
+  if (typeof options === "undefined") {
+    options = {};
+  }
+
+  var uDiff = tagDiffer(u1, u2, options);
   var xDiff = tagDiffer(u1, d1);
 
   prettyPrint(uDiff);

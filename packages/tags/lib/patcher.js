@@ -39,7 +39,125 @@ function addTo(dTags, rootNoun, tag, adj) {
   }
 }
 
+function authorPusher(srcs) {
+  var authors = [];
+  _.each(srcs, function (src) {
+    authors.push.apply(authors, src.authors);
+  });
+  return _.uniq(authors);
+}
+
+tagPatcher1 = function (diff, target, authors) {
+  var output = {
+    subjects: JSON.parse(JSON.stringify(target.subjects)),
+    authors: authors || []
+  };
+
+  _.each(target.subjects, function (descriptors, rootNoun) {
+    if (_.has(diff, rootNoun)) {
+      _.each(diff[rootNoun].added, function (tag) {
+        add(output, rootNoun, tag);
+      });
+
+      _.each(diff[rootNoun].addedTo, function (adjs, tag) {
+        _.each(adjs, function (adj) {
+          addTo(output, rootNoun, tag, adj);
+        });
+      });
+
+      _.each(diff[rootNoun].removed, function (tag) {
+        remove(output, rootNoun, tag);
+      });
+
+      _.each(diff[rootNoun].removedFrom, function (adjs, tag) {
+        _.each(adjs, function (adj) {
+          removeFrom(output, rootNoun, tag, adj);
+        });
+      });
+    }
+  });
+
+  var tagStr = tagStringify(output);
+  return tagParser(tagStr);
+};
+
+tagPatcher = function (a, b, c) {
+  var output = tagPatcher1(
+    tagDiffer(a, b),
+    c,
+    authorPusher([a, b])
+  );
+  return output;
+};
+
+tagPatcher2 = function (diff, diffPreserve, target, authors) {
+  var output = {
+    subjects: JSON.parse(JSON.stringify(target.subjects)),
+    authors: authors || []
+  };
+
+  _.each(target.subjects, function (descriptors, rootNoun) {
+    if (_.has(diff, rootNoun)) {
+      _.each(diff[rootNoun].added, function (tag) {
+        if (! isRemoved(diffPreserve, rootNoun, tag)) {
+          add(output, rootNoun, tag);
+        }
+      });
+
+      _.each(diff[rootNoun].addedTo, function (adjs, tag) {
+        if (! isRemoved(diffPreserve, rootNoun, tag)) {
+          _.each(adjs, function (adj) {
+            if (! isRemovedFrom(diffPreserve, rootNoun, tag, adj)) {
+              addTo(output, rootNoun, tag, adj);
+            }
+          });
+        }
+      });
+
+      _.each(diff[rootNoun].removed, function (tag) {
+        if (! isAdded(diffPreserve, rootNoun, tag)) {
+          remove(output, rootNoun, tag);
+        }
+      });
+
+      _.each(diff[rootNoun].removedFrom, function (adjs, tag) {
+        if (! isAdded(diffPreserve, rootNoun, tag)) {
+          _.each(adjs, function (adj) {
+            if (! isAddedTo(diffPreserve, rootNoun, tag, adj)) {
+              removeFrom(output, rootNoun, tag, adj);
+            }
+          });
+        }
+      });
+    }
+  });
+
+  // Lazy, or genius? Time will decide!
+  var tagStr = tagStringify(output);
+  return tagParser(tagStr);
+};
+
+tagPatcherSyncImpl = function (u1, u2, d1) {
+  var diff = tagDiffer(u1, u2);
+  var diffPreserve = tagDiffer(u1, d1);
+
+  prettyPrint(diff);
+  prettyPrint(diffPreserve);
+
+  return tagPatcher2(
+    diff,
+    diffPreserve,
+    d1,
+    authorPusher([d1, u1, u2])
+  );
+};
+
 /*
+1. diff u1 and u2
+2. diff ui and d1
+3. deep clone d1 to d2
+4. apply u1->u2 diff to d2 if the change isn't countered by u1->d1 diff
+
 u1: upstream old
 u2: upstream new
 d: downstream
@@ -56,64 +174,3 @@ diff(u1, d) = [
 ];
 output = parse("yoko-littner: long pink hair")
 */
-tagPatcher = function (u1, u2, d1, options) {
-  if (typeof options === "undefined") {
-    options = {};
-  }
-
-  var uDiff = tagDiffer(u1, u2, options);
-  var xDiff = tagDiffer(u1, d1);
-
-  prettyPrint(uDiff);
-  prettyPrint(xDiff);
-
-  var d2 = {
-    subjects: JSON.parse(JSON.stringify(d1.subjects)),
-    authors: _.clone(d1.authors)
-  };
-
-  _.each(d1.subjects, function (descriptors, rootNoun) {
-    if (_.has(uDiff, rootNoun)) {
-      _.each(uDiff[rootNoun].added, function (tag) {
-        if (! isRemoved(xDiff, rootNoun, tag)) {
-          add(d2, rootNoun, tag);
-        }
-      });
-
-      _.each(uDiff[rootNoun].addedTo, function (adjs, tag) {
-        if (! isRemoved(xDiff, rootNoun, tag)) {
-          _.each(adjs, function (adj) {
-            if (! isRemovedFrom(xDiff, rootNoun, tag, adj)) {
-              addTo(d2, rootNoun, tag, adj);
-            }
-          });
-        }
-      });
-
-      _.each(uDiff[rootNoun].removed, function (tag) {
-        if (! isAdded(xDiff, rootNoun, tag)) {
-          remove(d2, rootNoun, tag);
-        }
-      });
-
-      _.each(uDiff[rootNoun].removedFrom, function (adjs, tag) {
-        if (! isAdded(xDiff, rootNoun, tag)) {
-          _.each(adjs, function (adj) {
-            if (! isAddedTo(xDiff, rootNoun, tag, adj)) {
-              removeFrom(d2, rootNoun, tag, adj);
-            }
-          });
-        }
-      });
-    }
-  });
-
-  // Don't forget the authors!
-  d2.authors.push.apply(d2.authors, u1.authors);
-  d2.authors.push.apply(d2.authors, u2.authors);
-  d2.authors = _.uniq(d2.authors);
-
-  // Lazy, or genius? Time will decide!
-  var tagStr = tagStringify(d2);
-  return tagParser(tagStr);
-};

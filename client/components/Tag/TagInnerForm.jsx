@@ -55,6 +55,7 @@ TagInnerForm = React.createClass({
       />
       <br />
       <TagField
+        noExpand={true}
         injectRoot={this.props.name}
         defaultValue={this.props.implications}
         floatingLabelText="Implications"

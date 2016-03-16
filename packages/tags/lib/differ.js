@@ -4,11 +4,7 @@ n: `short blonde hair`
 intended dOps: ["removed `long` from `hair`", "added `short` to `hair"]
 */
 
-tagDiffer = function (oldParsed, newParsed, options) {
-  if (typeof options === "undefined") {
-    options = {};
-  }
-
+tagDiffer = function (oldParsed, newParsed) {
   var diff = {};
 
   _.each(newParsed.subjects, function (descriptors, rootNoun) {
@@ -68,11 +64,6 @@ tagDiffer = function (oldParsed, newParsed, options) {
         }
       }
     });
-
-    if (options.noRemove) {
-      dOps.removed = [];
-      dOps.removedFrom = {};
-    }
   });
 
   return diff;

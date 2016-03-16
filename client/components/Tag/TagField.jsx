@@ -18,12 +18,38 @@ shove patched.text into our state. Pretty easy, right?
 
 c = patch(a, b, a)
 a = `fluttershy: funny hat`
-b = `fluttershy: huge breasts`
-c = `fluttershy: huge breasts`
+b = `fluttershy: humanized, huge breasts`
+c = `fluttershy: humanized, huge breasts`
 This is bad!
 diff(a, b) interprets `funny hat` as removed from b, so it doesn't make it into c.
 Therefore, we need the noRemove flag, preventing this from happening.
 Are there downsides to this approach? I hope not!
+
+d2 = patch(d1, u2, d1)
+u1 = `nia-teppelin: medium breasts`
+u2 = `nia-teppelin: young, small breasts`
+d1 = `nia-teppelin: medium breasts, happy`
+d2 = `nia-teppelin: young, medium small breasts, happy`
+This is bad too!
+While our flattened approach to expanding implications is generally effective, in this case, we
+need to differentiate between upstream and downstream.
+bridged_net = diff(?) => `medium` removed from `breasts`, `small` added to `breasts`
+
+Second attempt:
+tagPatcher1(diff, target) -> output
+  Simply apply diff to target.
+  This is vastly superior to the logically dubious tagPatcher(a, b, a) pattern.
+  frontends:
+    tagPatcher(a, b, c)
+tagPatcher2(diff, diffPreserve, target) -> output
+  Apply diff to target without overwriting changes defined by diffPreserve.
+  frontends:
+    tagPatcherSyncImpl(u1, u2, d1)
+tagPatcher3(diff1, diff2, diff3, target) -> output
+  In this context...
+  diff1 = diff(u1, u2) => `medium` removed from `breasts`, `small` added to `breasts`
+  diff2 = diff(u1, d1) => added `happy`
+  diff3 = diff(d1, u2) => `medium` removed from `breasts`, `small` added to `breasts`
 */
 
 TagField = React.createClass({
@@ -78,18 +104,20 @@ TagField = React.createClass({
     doc.parsed = tagParser(this.injectTags(tagStr));
     doc.text = tagStr;
 
-    _.each(doc.parsed.subjects, (descriptors, rootNoun) => {
-      const rootTag = Tags.findOne({ name: rootNoun });
-      if (rootTag) {
-        _.each(rootTag.condImplications, (impl, cond) => {
-          if (_.has(doc.parsed.subjects[rootNoun], cond)) {
-            const patched = tagPatcher(doc.parsed, impl, doc.parsed, { noRemove: true });
-            doc.parsed = patched;
-            doc.text = patched.text;
-          }
-        });
-      }
-    });
+    if (! this.props.noExpand) {
+      _.each(doc.parsed.subjects, (descriptors, rootNoun) => {
+        const rootTag = Tags.findOne({ name: rootNoun });
+        if (rootTag) {
+          _.each(rootTag.condImplications, (impl, cond) => {
+            if (_.has(doc.parsed.subjects[rootNoun], cond)) {
+              const patched = tagPatcher(doc.parsed, impl, doc.parsed);
+              doc.parsed = patched;
+              doc.text = patched.text;
+            }
+          });
+        }
+      });
+    }
   },
   afterChange(doc, value) {
     this.handleParse(value, doc);

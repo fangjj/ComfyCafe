@@ -110,7 +110,7 @@ TagField = React.createClass({
         if (rootTag) {
           _.each(rootTag.condImplications, (impl, cond) => {
             if (_.has(doc.parsed.subjects[rootNoun], cond)) {
-              const patched = tagPatcher(doc.parsed, impl, doc.parsed);
+              const patched = tagPatcherSyncImpl(doc.parsed, impl, doc.parsed);
               doc.parsed = patched;
               doc.text = patched.text;
             }

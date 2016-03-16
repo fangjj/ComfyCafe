@@ -12,8 +12,12 @@ function isAdded(dDiff, rootNoun, tag) {
 }
 
 function isAddedTo(dDiff, rootNoun, tag, adj) {
-  return _.has(dDiff[rootNoun].addedTo, tag)
-    && _.contains(dDiff[rootNoun].removedFrom[tag], adj);
+  var has = _.has(dDiff[rootNoun].addedTo, tag);
+  if (! adj) {
+    return has;
+  } else {
+    return has && _.contains(dDiff[rootNoun].removedFrom[tag], adj);
+  }
 }
 
 function remove(dTags, rootNoun, tag) {
@@ -82,12 +86,11 @@ tagPatcher1 = function (diff, target, authors) {
 };
 
 tagPatcher = function (a, b, c) {
-  var output = tagPatcher1(
+  return tagPatcher1(
     tagDiffer(a, b),
     c,
-    authorPusher([a, b])
+    authorPusher([a, b, c])
   );
-  return output;
 };
 
 tagPatcher2 = function (diff, diffPreserve, target, authors) {
@@ -115,7 +118,10 @@ tagPatcher2 = function (diff, diffPreserve, target, authors) {
       });
 
       _.each(diff[rootNoun].removed, function (tag) {
-        if (! isAdded(diffPreserve, rootNoun, tag)) {
+        if (
+          ! isAdded(diffPreserve, rootNoun, tag)
+          && ! isAddedTo(diffPreserve, rootNoun, tag)
+        ) {
           remove(output, rootNoun, tag);
         }
       });
@@ -141,6 +147,7 @@ tagPatcherSyncImpl = function (u1, u2, d1) {
   var diff = tagDiffer(u1, u2);
   var diffPreserve = tagDiffer(u1, d1);
 
+  console.log("[tagPatcherSyncImpl]");
   prettyPrint(diff);
   prettyPrint(diffPreserve);
 

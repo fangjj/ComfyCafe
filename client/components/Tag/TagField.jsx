@@ -100,6 +100,23 @@ TagField = React.createClass({
         parsed: tagParser(this.injectTags(this.state.text, nextProps))
       });
     }
+
+    if (this.props.inheritFrom !== nextProps.inheritFrom) {
+      const patched = tagPatcherSyncImpl(
+        this.props.inheritFrom,
+        nextProps.inheritFrom,
+        this.state.parsed
+      );
+      const stringifed = tagChunkStringify(
+        patched,
+        nextProps.injectRoot,
+        nextProps.injectDescriptors.split(/\s*,\s*/)
+      );
+      this.setState({
+        text: stringifed,
+        parsed: patched
+      });
+    }
   },
   handleParse(tagStr, doc) {
     doc.parsed = tagParser(this.injectTags(tagStr));
@@ -113,7 +130,7 @@ TagField = React.createClass({
             if (! _.contains(this.condExpanded, cond)
               && _.has(doc.parsed.subjects[rootNoun], cond)
             ) {
-              const patched = tagPatcher(rootTag.implications, condImpl, doc.parsed);
+              const patched = tagPatcherCondImpl(rootTag.implications, condImpl, doc.parsed);
               doc.parsed = patched;
               doc.text = patched.text;
               this.condExpanded.push(cond);
@@ -126,7 +143,7 @@ TagField = React.createClass({
   afterChange(doc, value) {
     this.handleParse(value, doc);
     this.setState(doc);
-    this.props.onChange(doc.text);
+    this.props.onChange(doc.text, doc.parsed);
   },
   onChange(e) {
     const value = e.target.value;

@@ -33,6 +33,7 @@ TagConditionalField = React.createClass({
       </div>
       <div className="implicationField">
         <TagField
+          inheritFrom={this.props.inheritFrom}
           noExpand={true}
           injectRoot={this.props.injectRoot}
           injectDescriptors={this.state.cond}

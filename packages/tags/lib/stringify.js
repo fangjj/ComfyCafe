@@ -22,3 +22,26 @@ tagStringify = function (tagObj) {
   });
   return chunks.join("; ");
 };
+
+tagChunkStringify = function (tagObj, rootNoun, exclude) {
+  if (! exclude) {
+    exclude = [];
+  }
+  var str = "";
+  if (_.has(tagObj.subjects, rootNoun)) {
+    if (! _.isEmpty(tagObj.subjects[rootNoun])) {
+      var dChunks = [];
+      _.each(tagObj.subjects[rootNoun], function (adjs, descNoun) {
+        if (! _.contains(exclude, descNoun)) {
+          var dStr = "";
+          if (adjs.length) {
+            dStr += adjs.join(" ") + " ";
+          }
+          dChunks.push(dStr + descNoun);
+        }
+      });
+      str = dChunks.join(", ");
+    }
+  }
+  return str;
+};

@@ -62,6 +62,7 @@ TagInnerForm = React.createClass({
         onChange={this.props.handleImplications}
       />
       <TagMultiField
+        inheritFrom={this.props.inheritFrom}
         injectRoot={this.props.name}
         defaultValue={this.props.condImplications}
         defaultImplications={this.props.implications}

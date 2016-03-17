@@ -21,6 +21,7 @@ TagMultiField = React.createClass({
     }
     return <TagConditionalField
       condImplId={key}
+      inheritFrom={this.props.inheritFrom}
       injectRoot={this.props.injectRoot}
       defaultCondition={cond}
       defaultImplications={impl}
@@ -32,10 +33,18 @@ TagMultiField = React.createClass({
     this.elems = [];
     if (this.props.defaultValue) {
       _.each(this.props.defaultValue, (arr, key) => {
-        this.elems.push(this.makeField(key, arr[0], arr[1]));
+        this.elems.push({
+          key: key,
+          cond: arr[0],
+          impl: arr[1]
+        });
       });
     } else {
-      this.elems.push(this.makeField());
+      this.elems.push({
+        key: _.uniqueId(),
+        cond: "",
+        impl: this.props.defaultImplications
+      });
     }
   },
   handleAdd() {
@@ -44,7 +53,15 @@ TagMultiField = React.createClass({
   },
   renderInner() {
     return _.map(this.elems, (elem) => {
-      return elem;
+      return <TagConditionalField
+        condImplId={elem.key}
+        inheritFrom={this.props.inheritFrom}
+        injectRoot={this.props.injectRoot}
+        defaultCondition={elem.cond}
+        defaultImplications={elem.impl}
+        onChange={this.props.onChange}
+        key={elem.key}
+      />;
     });
   },
   render() {

@@ -177,11 +177,6 @@ output = parse("yoko-littner: long pink hair")
 tagPatcherSyncImpl = function (u1, u2, d1) {
   var diff = tagDiffer(u1, u2);
   var diffPreserve = tagDiffer(u1, d1);
-
-  console.log("[tagPatcherSyncImpl]");
-  prettyPrint(diff);
-  prettyPrint(diffPreserve);
-
   return tagPatcher2(
     diff,
     diffPreserve,
@@ -199,6 +194,12 @@ output: school swimsuit, cake
 diff(impl, condImpl) is significant
 but we can't contradict diff(impl, input)
 */
-tagPatcherSyncCondImpl = function (impl, condImpl, input) {
+tagPatcherCondImpl = function (impl, condImpl, input) {
   return tagPatcherSyncImpl(impl, condImpl, input);
+};
+
+/*
+Oh god...
+*/
+tagPatcherSyncCondImpl = function (implOld, implNew, condImplOld, condImplNew, input) {
 };

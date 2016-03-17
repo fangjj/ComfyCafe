@@ -37,7 +37,7 @@ TagTest = React.createClass({
     return {
       vanilla: tagPatcher,
       syncImpl: tagPatcherSyncImpl,
-      syncCondImpl: tagPatcherSyncCondImpl
+      condImpl: tagPatcherCondImpl
     }[this.state.patchMode];
   },
   render() {
@@ -51,7 +51,7 @@ TagTest = React.createClass({
       >
         <MenuItem value="vanilla" primaryText="Vanilla" />
         <MenuItem value="syncImpl" primaryText="SyncImpl" />
-        <MenuItem value="syncCondImpl" primaryText="SyncCondImpl" />
+        <MenuItem value="condImpl" primaryText="CondImpl" />
       </SelectField>
       <TagTree tags={this.getPatcher()(
         tagParser(this.state.tagStrA),

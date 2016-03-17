@@ -7,5 +7,5 @@ tagSubjectTokenizer = function (str) {
 };
 
 tagDescriptorTokenizer = function (str) {
-  return _.compact(str.split(/\s*,\s*/))
+  return commaSplit(str);
 };

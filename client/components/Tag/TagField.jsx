@@ -79,7 +79,7 @@ TagField = React.createClass({
     const handle = Meteor.subscribe("allTags");
     let doc = {};
     if (this.state.search) {
-      const re = new RegExp("^" + this.state.search);
+      const re = new RegExp("^" + escapeRegExp(this.state.search));
       doc = { $or: [
         { name: re },
         { aliases: re }

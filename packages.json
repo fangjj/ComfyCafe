@@ -12,5 +12,6 @@
   "perfect-scrollbar": "0.6.10",
   "emojione": "2.1.1",
   "autolinker.js": "0.7.0",
-  "marked": "0.3.5"
+  "marked": "0.3.5",
+  "lodash.escaperegexp": "4.1.1"
 }

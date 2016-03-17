@@ -5,6 +5,6 @@ parseAliases = function (str) {
   var parsed = {};
   var sides = str.split(/\s*aka\s*/);
   parsed.canonical = sides[0].trim();
-  parsed.aliases = sides[1].split(/\s*,\s*/);
+  parsed.aliases = commaSplit(sides[1]);
   return parsed;
 };

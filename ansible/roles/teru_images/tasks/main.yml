@@ -8,6 +8,8 @@
   group: name=teruimages
 - name: Add user "teruimages"
   user: name=teruimages group=teruimages home=/srv/TeruImages/
+- name: load email config
+  include_vars: ~/.mailgun.json
 - name: copy TeruImages systemd unit file
   template: src=TeruImages.service.j2 dest=/etc/systemd/system/TeruImages.service
   register: service_file

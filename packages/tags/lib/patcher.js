@@ -65,6 +65,9 @@ tagPatcher1 = function (diff, target, authors) {
 
       _.each(diff[rootNoun].addedTo, function (adjs, tag) {
         _.each(adjs, function (adj) {
+          if (! output.subjects[rootNoun][tag]) {
+            output.subjects[rootNoun][tag] = [];
+          }
           addTo(output, rootNoun, tag, adj);
         });
       });

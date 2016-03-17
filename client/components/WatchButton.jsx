@@ -7,7 +7,7 @@ WatchButton = React.createClass({
   },
   render() {
     const watched = this.props.currentUser
-      && _.contains(this.props.topic.watchers, this.props.currentUser._id);
+      && _.includes(this.props.topic.watchers, this.props.currentUser._id);
     return <ToggleButton
       active={watched}
       activate={this.watch}

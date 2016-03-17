@@ -15,7 +15,6 @@ Package.onUse(function(api) {
 
   api.use([
     "ecmascript",
-    "underscore",
     "teru:utility"
   ], ["client", "server"]);
 

@@ -79,7 +79,7 @@ TagField = React.createClass({
     const handle = Meteor.subscribe("allTags");
     let doc = {};
     if (this.state.search) {
-      const re = new RegExp("^" + escapeRegExp(this.state.search));
+      const re = new RegExp("^" + _.escapeRegExp(this.state.search));
       doc = { $or: [
         { name: re },
         { aliases: re }
@@ -127,7 +127,7 @@ TagField = React.createClass({
         const rootTag = Tags.findOne({ name: rootNoun });
         if (rootTag) {
           _.each(rootTag.condImplications, (condImpl, cond) => {
-            if (! _.contains(this.condExpanded, cond)
+            if (! _.includes(this.condExpanded, cond)
               && _.has(doc.parsed.subjects[rootNoun], cond)
             ) {
               const patched = tagPatcherCondImpl(rootTag.implications, condImpl, doc.parsed);

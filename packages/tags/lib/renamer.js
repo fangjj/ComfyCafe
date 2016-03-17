@@ -10,7 +10,7 @@ tagRenamer = function (oldName, newName, tagDoc) {
       desc[newName] = desc[oldName];
       delete desc[oldName];
     });
-  } else if (_.contains(tagDoc.subjectsFlat, oldName)) {
+  } else if (_.includes(tagDoc.subjectsFlat, oldName)) {
     // It can only be an adjective at this point.
     _.each(tagDoc.subjects, function (descriptors, rootNoun) {
       _.each(descriptors, function (adjs, descNoun) {

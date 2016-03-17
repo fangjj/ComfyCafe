@@ -24,12 +24,12 @@ tagDiffer = function (oldParsed, newParsed) {
     var dKeys = _.keys(descriptors);
     var dix = _.intersection(uKeys, dKeys);
     _.each(uKeys, function (k) {
-      if (! _.contains(dix, k)) {
+      if (! _.includes(dix, k)) {
         dOps.removed.push(k);
       }
     });
     _.each(dKeys, function (k) {
-      if (! _.contains(dix, k)) {
+      if (! _.includes(dix, k)) {
         dOps.added.push(k);
       }
     });
@@ -39,7 +39,7 @@ tagDiffer = function (oldParsed, newParsed) {
       if (uAdjs) {
         var ix = _.intersection(uAdjs, dAdjs);
         _.each(uAdjs, function (a) {
-          if (! _.contains(ix, a)) {
+          if (! _.includes(ix, a)) {
             if (! dOps.removedFrom[descNoun]) {
               dOps.removedFrom[descNoun] = [a];
             } else {
@@ -48,7 +48,7 @@ tagDiffer = function (oldParsed, newParsed) {
           }
         });
         _.each(dAdjs, function (a) {
-          if (! _.contains(ix, a)) {
+          if (! _.includes(ix, a)) {
             if (! dOps.addedTo[descNoun]) {
               dOps.addedTo[descNoun] = [a];
             } else {

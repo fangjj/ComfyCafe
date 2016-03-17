@@ -8,7 +8,7 @@ PostBookmarkButton = React.createClass({
     Meteor.call("bookmarkPost", this.props.post._id, next);
   },
   render() {
-    const active = _.contains(this.props.currentUser.bookmarks, this.props.post._id);
+    const active = _.includes(this.props.currentUser.bookmarks, this.props.post._id);
     let iconName = "bookmark_border";
     if (active) {
       iconName = "bookmark";

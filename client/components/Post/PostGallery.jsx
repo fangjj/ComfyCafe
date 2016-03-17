@@ -25,7 +25,7 @@ PostGallery = React.createClass({
       _.each(parsed, (value, key) => {
         if (_.has(doc, key)) {
           prettyPrint(value);
-          if (_.contains(["$and", "$or", "$nor"], key)) {
+          if (_.includes(["$and", "$or", "$nor"], key)) {
             doc[key].push.apply(doc[key], value);
           } else {
             console.error("PANIC: key " + key + " already present in doc.");

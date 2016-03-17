@@ -4,7 +4,7 @@ SubscriptionButton = React.createClass({
   },
   render() {
     const subscribed = this.props.currentUser
-      && _.contains(this.props.currentUser.subscriptions, this.props.owner._id);
+      && _.includes(this.props.currentUser.subscriptions, this.props.owner._id);
     return <ToggleButton
       active={subscribed}
       activate={this.toggleSubscription}

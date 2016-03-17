@@ -32,7 +32,7 @@ tagChunkStringify = function (tagObj, rootNoun, exclude) {
     if (! _.isEmpty(tagObj.subjects[rootNoun])) {
       var dChunks = [];
       _.each(tagObj.subjects[rootNoun], function (adjs, descNoun) {
-        if (! _.contains(exclude, descNoun)) {
+        if (! _.includes(exclude, descNoun)) {
           var dStr = "";
           if (adjs.length) {
             dStr += adjs.join(" ") + " ";

@@ -1,0 +1,1 @@
+_ = Meteor.npmRequire("lodash");

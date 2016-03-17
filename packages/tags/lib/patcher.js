@@ -1,14 +1,14 @@
 function isRemoved(dDiff, rootNoun, tag) {
-  return _.contains(dDiff[rootNoun].removed, tag);
+  return _.includes(dDiff[rootNoun].removed, tag);
 }
 
 function isRemovedFrom(dDiff, rootNoun, tag, adj) {
   return _.has(dDiff[rootNoun].removedFrom, tag)
-    && _.contains(dDiff[rootNoun].removedFrom[tag], adj);
+    && _.includes(dDiff[rootNoun].removedFrom[tag], adj);
 }
 
 function isAdded(dDiff, rootNoun, tag) {
-  return _.contains(dDiff[rootNoun].added, tag);
+  return _.includes(dDiff[rootNoun].added, tag);
 }
 
 function isAddedTo(dDiff, rootNoun, tag, adj) {
@@ -16,7 +16,7 @@ function isAddedTo(dDiff, rootNoun, tag, adj) {
   if (! adj) {
     return has;
   } else {
-    return has && _.contains(dDiff[rootNoun].removedFrom[tag], adj);
+    return has && _.includes(dDiff[rootNoun].removedFrom[tag], adj);
   }
 }
 
@@ -25,7 +25,7 @@ function remove(dTags, rootNoun, tag) {
 }
 
 function removeFrom(dTags, rootNoun, tag, adj) {
-  if (_.contains(dTags.subjects[rootNoun][tag], adj)) {
+  if (_.includes(dTags.subjects[rootNoun][tag], adj)) {
     var idx = dTags.subjects[rootNoun][tag].indexOf(adj);
     dTags.subjects[rootNoun][tag].splice(idx, 1);
   }
@@ -38,7 +38,7 @@ function add(dTags, rootNoun, tag) {
 }
 
 function addTo(dTags, rootNoun, tag, adj) {
-  if (! _.contains(dTags.subjects[rootNoun][tag], adj)) {
+  if (! _.includes(dTags.subjects[rootNoun][tag], adj)) {
     dTags.subjects[rootNoun][tag].push(adj);
   }
 }

@@ -1,3 +1,4 @@
+_ = require("lodash");
 Cropper = require("cropperjs");
 GeoPattern = require("geopattern");
 tinycolor = require("tinycolor2");
@@ -9,4 +10,3 @@ Ps = require("perfect-scrollbar");
 emojione = require("emojione");
 Autolinker = require("autolinker.js");
 marked = require("marked");
-escapeRegExp = require("lodash.escaperegexp");

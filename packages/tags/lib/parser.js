@@ -5,7 +5,7 @@ function parseLonely(parsed, kv) {
 	var tokens = whiteSplit(kv[0]);
 	var noun = tokens.pop();
 
-	if (_.contains(["not", "without"], tokens[0])) {
+	if (_.includes(["not", "without"], tokens[0])) {
 		tokens.shift();
 		target = parsed.without;
 		targetFlat = parsed.withoutFlat;
@@ -33,7 +33,7 @@ function parseDescriptors(parsed, kv) {
 	var topTokens = whiteSplit(kv[0]);
 	if (topTokens.length === 1) {
 		label = kv[0];
-	} else if (_.contains(["not", "without"], topTokens[0])) {
+	} else if (_.includes(["not", "without"], topTokens[0])) {
 		label = topTokens[1];
 		withoutMode = true;
 	}

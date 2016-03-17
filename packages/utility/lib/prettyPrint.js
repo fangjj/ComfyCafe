@@ -1,3 +1,5 @@
-prettyPrint = function (obj) {
-	console.log(JSON.stringify(obj, null, 2));
+prettyPrint = function () {
+	_.each(arguments, function (arg) {
+		console.log(JSON.stringify(arg, null, 2));
+	});
 };

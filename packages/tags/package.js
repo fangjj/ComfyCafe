@@ -43,6 +43,7 @@ Package.onUse(function(api) {
     "tagPatcher",
     "tagPatcher2",
     "tagPatcherSyncImpl",
+    "tagPatcherSyncCondImpl",
     "tagRenamer",
     "tagQuery",
     "tagStrToUrl",

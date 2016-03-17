@@ -54,6 +54,7 @@ tagPatcher3(diff1, diff2, diff3, target) -> output
 
 TagField = React.createClass({
   mixins: [ReactMeteorData],
+  condExpanded: [],
   injectTags(base, props) {
     if (typeof props === "undefined") {
       props = this.props;
@@ -108,11 +109,14 @@ TagField = React.createClass({
       _.each(doc.parsed.subjects, (descriptors, rootNoun) => {
         const rootTag = Tags.findOne({ name: rootNoun });
         if (rootTag) {
-          _.each(rootTag.condImplications, (impl, cond) => {
-            if (_.has(doc.parsed.subjects[rootNoun], cond)) {
-              const patched = tagPatcherSyncImpl(doc.parsed, impl, doc.parsed);
+          _.each(rootTag.condImplications, (condImpl, cond) => {
+            if (! _.contains(this.condExpanded, cond)
+              && _.has(doc.parsed.subjects[rootNoun], cond)
+            ) {
+              const patched = tagPatcher(rootTag.implications, condImpl, doc.parsed);
               doc.parsed = patched;
               doc.text = patched.text;
+              this.condExpanded.push(cond);
             }
           });
         }

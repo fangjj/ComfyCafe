@@ -51,6 +51,12 @@ function authorPusher(srcs) {
   return _.uniq(authors);
 }
 
+function discardRemovals(diff) {
+  diff.removed = [];
+  diff.removedFrom = {};
+  return diff;
+}
+
 tagPatcher1 = function (diff, target, authors) {
   var output = {
     subjects: JSON.parse(JSON.stringify(target.subjects)),
@@ -146,22 +152,6 @@ tagPatcher2 = function (diff, diffPreserve, target, authors) {
   return tagParser(tagStr);
 };
 
-tagPatcherSyncImpl = function (u1, u2, d1) {
-  var diff = tagDiffer(u1, u2);
-  var diffPreserve = tagDiffer(u1, d1);
-
-  console.log("[tagPatcherSyncImpl]");
-  prettyPrint(diff);
-  prettyPrint(diffPreserve);
-
-  return tagPatcher2(
-    diff,
-    diffPreserve,
-    d1,
-    authorPusher([d1, u1, u2])
-  );
-};
-
 /*
 1. diff u1 and u2
 2. diff ui and d1
@@ -184,3 +174,31 @@ diff(u1, d) = [
 ];
 output = parse("yoko-littner: long pink hair")
 */
+tagPatcherSyncImpl = function (u1, u2, d1) {
+  var diff = tagDiffer(u1, u2);
+  var diffPreserve = tagDiffer(u1, d1);
+
+  console.log("[tagPatcherSyncImpl]");
+  prettyPrint(diff);
+  prettyPrint(diffPreserve);
+
+  return tagPatcher2(
+    diff,
+    diffPreserve,
+    d1,
+    authorPusher([d1, u1, u2])
+  );
+};
+
+/*
+impl: hotdog
+condImpl: cake
+input: school swimsuit, hotdog
+output: school swimsuit, cake
+
+diff(impl, condImpl) is significant
+but we can't contradict diff(impl, input)
+*/
+tagPatcherSyncCondImpl = function (impl, condImpl, input) {
+  return tagPatcherSyncImpl(impl, condImpl, input);
+};

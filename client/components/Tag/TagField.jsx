@@ -110,7 +110,7 @@ TagField = React.createClass({
       const stringifed = tagChunkStringify(
         patched,
         nextProps.injectRoot,
-        nextProps.injectDescriptors.split(/\s*,\s*/)
+        tagDescriptorTokenizer(nextProps.injectDescriptors)
       );
       this.setState({
         text: stringifed,
@@ -147,7 +147,7 @@ TagField = React.createClass({
   },
   onChange(e) {
     const value = e.target.value;
-    const split = value.split(/\s+/);
+    const split = whiteSplit(value);
     const body = _.initial(split);
     const last = _.last(split);
     this.afterChange({
@@ -155,7 +155,7 @@ TagField = React.createClass({
     }, value);
   },
   onSelect(tag) {
-    const split = this.state.text.split(/\s+/);
+    const split = whiteSplit(his.state.text);
     const body = _.initial(split);
     const last = _.last(split);
     const text = (body.join(" ") + " " + tag.name + ": " + tag.implicationStr + ";").trim();

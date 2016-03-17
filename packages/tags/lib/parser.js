@@ -2,7 +2,7 @@ tagStrSample = "nia-teppelin: young, short multicolored hair, cat ears;"
 	+ "yoko-littner: flame bikini, pink stockings, long red hair, without gun";
 
 function parseLonely(parsed, kv) {
-	var tokens = _.compact(kv[0].split(/\s+/));
+	var tokens = whiteSplit(kv[0]);
 	var noun = tokens.pop();
 
 	if (_.contains(["not", "without"], tokens[0])) {
@@ -30,7 +30,7 @@ function parseLonely(parsed, kv) {
 function parseDescriptors(parsed, kv) {
 	var label;
 	var withoutMode = false;
-	var topTokens = _.compact(kv[0].split(/\s+/));
+	var topTokens = whiteSplit(kv[0]);
 	if (topTokens.length === 1) {
 		label = kv[0];
 	} else if (_.contains(["not", "without"], topTokens[0])) {
@@ -40,10 +40,10 @@ function parseDescriptors(parsed, kv) {
 
 	var sInner = {}, wInner = {};
 
-	var descriptors = _.compact(kv[1].split(/\s*,\s*/));
+	var descriptors = tagDescriptorTokenizer(kv[1]);
 
 	for (di in descriptors) {
-		var tokens = _.compact(descriptors[di].split(/\s+/));
+		var tokens = whiteSplit(descriptors[di]);
 		var descNoun = tokens.pop();
 
 		var notIndex = tokens.indexOf("not");
@@ -138,7 +138,7 @@ function parseDescriptors(parsed, kv) {
 	parsed.allTags.push(label);
 }
 
-tagParser = function (tagStr) {
+tagParser = function (tagStr, reformat) {
 	tagStr = tagStr.trim();
 
 	var parsed = {
@@ -157,7 +157,7 @@ tagParser = function (tagStr) {
 		text: tagStr
 	};
 
-	var toplevel = _.compact(tagStr.split(/\s*;\s*/));
+	var toplevel = tagTopLevelTokenizer(tagStr);
 
 	for (var ti in toplevel) {
 		var topToken = toplevel[ti];
@@ -182,7 +182,7 @@ tagParser = function (tagStr) {
 			continue;
 		}
 
-		var kv = _.compact(topToken.split(/\s*:\s*/));
+		var kv = tagSubjectTokenizer(topToken);
 
 		if (kv.length === 1) {
 			parseLonely(parsed, kv);
@@ -194,6 +194,10 @@ tagParser = function (tagStr) {
 	parsed.subjectsFlat = _.uniq(parsed.subjectsFlat);
 	parsed.withoutFlat = _.uniq(parsed.withoutFlat);
 	parsed.allTags = _.uniq(parsed.allTags);
+
+	if (reformat) {
+		parsed.text = tagStringify(parsed);
+	}
 
 	return parsed;
 };

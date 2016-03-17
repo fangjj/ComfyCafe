@@ -15,7 +15,7 @@ Package.onUse(function(api) {
 
   api.use([
     "ecmascript",
-    "mongo",
+    "underscore",
     "teru:utility"
   ], ["client", "server"]);
 
@@ -23,6 +23,7 @@ Package.onUse(function(api) {
     "lib/aliases.js",
     "lib/resolver.js",
     "lib/stringify.js",
+    "lib/tokenizer.js",
     "lib/parser.js",
     "lib/differ.js",
     "lib/patcher.js",
@@ -38,6 +39,9 @@ Package.onUse(function(api) {
     "tagStringify",
     "tagChunkStringify",
     "tagStrSample",
+    "tagTopLevelTokenizer",
+    "tagSubjectTokenizer",
+    "tagDescriptorTokenizer",
     "tagParser",
     "tagDiffer",
     "tagPatcher1",

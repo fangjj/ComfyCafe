@@ -18,7 +18,7 @@ const defaultState = {
 function condImplWrap(condImpl) {
   let formatted = {};
   _.each(condImpl, (impl, cond) => {
-    formatted[_.uniqueId()] = [cond, impl.text.split(/\s*:\s*/)[1]];
+    formatted[_.uniqueId()] = [cond, tagSubjectTokenizer(impl.text)[1]];
   });
   return formatted;
 }

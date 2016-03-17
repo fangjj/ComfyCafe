@@ -10,10 +10,10 @@ TagRoot = React.createClass({
   },
   renderInjected() {
     if (this.props.injectDescriptors) {
-      const rawDescriptors = this.props.injectDescriptors.split(/\s*,\s*/);
+      const rawDescriptors = tagDescriptorTokenizer(this.props.injectDescriptors);
       let descriptors = {};
       _.each(rawDescriptors, (raw) => {
-        const split = raw.split(/\s+/);
+        const split = whiteSplit(raw);
         descriptors[split.pop()] = split;
       });
       return this.renderDescriptors(descriptors);

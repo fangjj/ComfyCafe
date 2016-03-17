@@ -23,6 +23,7 @@ Package.onUse(function(api) {
   ], "server");
 
   api.addFiles([
+    "lib/whiteSplit.js",
     "lib/prettyPrint.js",
     "lib/setTitle.js",
     "lib/slice.js"
@@ -33,6 +34,7 @@ Package.onUse(function(api) {
   ], "server");
 
   api.export([
+    "whiteSplit",
     "prettyPrint",
     "setTitle",
     "slice"

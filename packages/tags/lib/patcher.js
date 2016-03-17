@@ -51,58 +51,7 @@ function authorPusher(srcs) {
   return _.uniq(authors);
 }
 
-function discardRemovals(diff) {
-  diff.removed = [];
-  diff.removedFrom = {};
-  return diff;
-}
-
-tagPatcher1 = function (diff, target, authors) {
-  var output = {
-    subjects: JSON.parse(JSON.stringify(target.subjects)),
-    authors: authors || []
-  };
-
-  _.each(target.subjects, function (descriptors, rootNoun) {
-    if (_.has(diff, rootNoun)) {
-      _.each(diff[rootNoun].added, function (tag) {
-        add(output, rootNoun, tag);
-      });
-
-      _.each(diff[rootNoun].addedTo, function (adjs, tag) {
-        _.each(adjs, function (adj) {
-          if (! output.subjects[rootNoun][tag]) {
-            output.subjects[rootNoun][tag] = [];
-          }
-          addTo(output, rootNoun, tag, adj);
-        });
-      });
-
-      _.each(diff[rootNoun].removed, function (tag) {
-        remove(output, rootNoun, tag);
-      });
-
-      _.each(diff[rootNoun].removedFrom, function (adjs, tag) {
-        _.each(adjs, function (adj) {
-          removeFrom(output, rootNoun, tag, adj);
-        });
-      });
-    }
-  });
-
-  var tagStr = tagStringify(output);
-  return tagParser(tagStr);
-};
-
-tagPatcher = function (a, b, c) {
-  return tagPatcher1(
-    tagDiffer(a, b),
-    c,
-    authorPusher([a, b, c])
-  );
-};
-
-tagPatcher2 = function (diff, diffPreserve, target, authors) {
+tagPatcherDirect = function (diff, diffPreserve, target, authors) {
   var output = {
     subjects: JSON.parse(JSON.stringify(target.subjects)),
     authors: authors || []
@@ -152,54 +101,11 @@ tagPatcher2 = function (diff, diffPreserve, target, authors) {
   return tagParser(tagStr);
 };
 
-/*
-1. diff u1 and u2
-2. diff ui and d1
-3. deep clone d1 to d2
-4. apply u1->u2 diff to d2 if the change isn't countered by u1->d1 diff
-
-u1: upstream old
-u2: upstream new
-d: downstream
-// simplest scenario
-u1 = parse("yoko-littner: long hair")
-u2 = parse("yoko-littner: long red hair")
-d = parse("yoko-littner: pink hair")
-diff(u1, u2) = [
-  added long to hair
-];
-diff(u1, d) = [
-  removed red from hair
-  added pink to hair
-];
-output = parse("yoko-littner: long pink hair")
-*/
-tagPatcherSyncImpl = function (u1, u2, d1) {
-  var diff = tagDiffer(u1, u2);
-  var diffPreserve = tagDiffer(u1, d1);
-  return tagPatcher2(
-    diff,
-    diffPreserve,
-    d1,
-    authorPusher([d1, u1, u2])
+tagPatcher = function (a, b, c) {
+  return tagPatcherDirect(
+    tagDiffer(a, b),
+    tagDiffer(a, c),
+    c,
+    authorPusher([a, b, c])
   );
-};
-
-/*
-impl: hotdog
-condImpl: cake
-input: school swimsuit, hotdog
-output: school swimsuit, cake
-
-diff(impl, condImpl) is significant
-but we can't contradict diff(impl, input)
-*/
-tagPatcherCondImpl = function (impl, condImpl, input) {
-  return tagPatcherSyncImpl(impl, condImpl, input);
-};
-
-/*
-Oh god...
-*/
-tagPatcherSyncCondImpl = function (implOld, implNew, condImplOld, condImplNew, input) {
 };

@@ -130,7 +130,7 @@ TagField = React.createClass({
     }, value);
   },
   onSelect(tag) {
-    const split = whiteSplit(his.state.text);
+    const split = whiteSplit(this.state.text);
     const body = _.initial(split);
     const last = _.last(split);
     const text = (body.join(" ") + " " + tag.name + ": " + tag.implicationStr + ";").trim();

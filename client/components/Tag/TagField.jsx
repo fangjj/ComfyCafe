@@ -79,10 +79,11 @@ TagField = React.createClass({
     doc.parsed = tagParser(this.injectTags(tagStr));
     doc.text = tagStr;
 
+    prettyPrint(doc.parsed);
+
     if (! this.props.noExpand) {
       _.each(this.condExpanded, (expanded, rootNoun) => {
         if (! _.has(doc.parsed.subjects, rootNoun)) {
-          prettyPrint(rootNoun, this.condExpanded);
           delete this.condExpanded[rootNoun];
         } else {
           _.each(expanded, (cond) => {

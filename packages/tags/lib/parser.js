@@ -107,7 +107,10 @@ function parseDescriptors(parsed, kv) {
 
 		var revInner = {};
 		revInner[label] = tokens;
-		targetRev[descNoun] = revInner;
+		if (! _.has(targetRev, descNoun)) {
+			targetRev[descNoun] = {};
+		}
+		targetRev[descNoun][label] = tokens;
 
 		if (! targetFlatAdj[descNoun]) {
 			targetFlatAdj[descNoun] = tokens;

@@ -23,20 +23,20 @@ PostGallery = React.createClass({
   getMeteorData() {
     let doc = this.props.generateDoc.bind(this)();
 
+    let queuedParams = [];
+
     if (this.state.originalOnly) {
-      if (this.state.originalOnly !== defaultState.originalOnly) {
-        FlowRouter.setQueryParams({originalOnly: this.state.originalOnly});
-      } else {
-        FlowRouter.setQueryParams({originalOnly: null});
-      }
+      queuedParams.push({originalOnly: this.state.originalOnly});
       doc.original = { $ne: false };
+    } else {
+      queuedParams.push({originalOnly: null});
     }
 
     if (this.state.tagStr) {
       if (this.state.tagStr !== defaultState.tagStr) {
-        FlowRouter.setQueryParams({query: this.state.tagStr});
+        queuedParams.push({query: this.state.tagStr});
       } else {
-        FlowRouter.setQueryParams({query: null});
+        queuedParams.push({query: null});
       }
       const parsed = tagQuery(this.state.tagStr);
       _.each(parsed, (value, key) => {
@@ -55,14 +55,20 @@ PostGallery = React.createClass({
 
     if (this.state.filter) {
       if (this.state.filter !== defaultState.filter) {
-        FlowRouter.setQueryParams({filter: this.state.filter});
+        queuedParams.push({filter: this.state.filter});
       } else {
-        FlowRouter.setQueryParams({filter: null});
+        queuedParams.push({filter: null});
       }
       if (this.state.filter === "your") {
         doc["owner._id"] = Meteor.userId();
       }
     }
+
+    FlowRouter.withReplaceState(() => {
+      _.each(queuedParams, (obj) => {
+        FlowRouter.setQueryParams(obj);
+      });
+    });
 
     let handle = Meteor.subscribe(this.props.subName, this.props.subData);
     return {

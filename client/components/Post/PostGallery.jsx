@@ -4,23 +4,40 @@ let {
   FontIcon
 } = mui;
 
+const defaultState = {
+  originalOnly: false,
+  tagStr: "",
+  filter: "sfw"
+};
+
 PostGallery = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
-      originalOnly: false,
-      tagStr: "",
-      filter: "sfw"
+      originalOnly: (FlowRouter.getQueryParam("originalOnly") === "true")
+        || defaultState.originalOnly,
+      tagStr: FlowRouter.getQueryParam("query") || defaultState.tagStr,
+      filter: FlowRouter.getQueryParam("filter") || defaultState.filter
     }
   },
   getMeteorData() {
     let doc = this.props.generateDoc.bind(this)();
 
     if (this.state.originalOnly) {
+      if (this.state.originalOnly !== defaultState.originalOnly) {
+        FlowRouter.setQueryParams({originalOnly: this.state.originalOnly});
+      } else {
+        FlowRouter.setQueryParams({originalOnly: null});
+      }
       doc.original = { $ne: false };
     }
 
     if (this.state.tagStr) {
+      if (this.state.tagStr !== defaultState.tagStr) {
+        FlowRouter.setQueryParams({query: this.state.tagStr});
+      } else {
+        FlowRouter.setQueryParams({query: null});
+      }
       const parsed = tagQuery(this.state.tagStr);
       _.each(parsed, (value, key) => {
         if (_.has(doc, key)) {
@@ -37,6 +54,11 @@ PostGallery = React.createClass({
     }
 
     if (this.state.filter) {
+      if (this.state.filter !== defaultState.filter) {
+        FlowRouter.setQueryParams({filter: this.state.filter});
+      } else {
+        FlowRouter.setQueryParams({filter: null});
+      }
       if (this.state.filter === "your") {
         doc["owner._id"] = Meteor.userId();
       }
@@ -116,6 +138,7 @@ PostGallery = React.createClass({
         </div>
         <div style={{flexGrow: 2}}>
           <TextField
+            defaultValue={this.state.tagStr}
             hintText="Search"
             fullWidth={true}
             onChange={this.handleSearch}

@@ -42,8 +42,8 @@ function parseDescriptors(parsed, kv) {
 
 	var descriptors = tagDescriptorTokenizer(kv[1]);
 
-	for (di in descriptors) {
-		var tokens = whiteSplit(descriptors[di]);
+	_.each(descriptors, function (descriptor, di) {
+		var tokens = whiteSplit(descriptor);
 		var descNoun = tokens.pop();
 
 		var notIndex = tokens.indexOf("not");
@@ -55,18 +55,18 @@ function parseDescriptors(parsed, kv) {
 					wInner[descNoun].push(tokens[notIndex+1]);
 				}
 
-				var revInner;
+				var notRevInner;
 				if (! _.has(parsed.withoutReverse, descNoun)) {
 					revInner = {};
-					parsed.withoutReverse[descNoun] = revInner;
+					parsed.withoutReverse[descNoun] = notRevInner;
 				} else {
-					revInner = parsed.withoutReverse[descNoun];
+					notRevInner = parsed.withoutReverse[descNoun];
 				}
 
 				if (! _.has(parsed.withoutReverse[descNoun], label)) {
-					revInner[label] = [tokens[notIndex+1]];
+					notRevInner[label] = [tokens[notIndex+1]];
 				} else {
-					revInner[label].push(tokens[notIndex+1]);
+					notRevInner[label].push(tokens[notIndex+1]);
 				}
 
 				parsed.withoutFlat.push(descNoun);
@@ -113,7 +113,7 @@ function parseDescriptors(parsed, kv) {
 		targetRev[descNoun][label] = tokens;
 
 		if (! targetFlatAdj[descNoun]) {
-			targetFlatAdj[descNoun] = tokens;
+			targetFlatAdj[descNoun] = _.cloneDeep(tokens);
 		} else {
 			targetFlatAdj[descNoun].push.apply(targetFlatAdj[descNoun], tokens);
 		}
@@ -122,7 +122,7 @@ function parseDescriptors(parsed, kv) {
 
 		parsed.allTags.push(descNoun);
 		parsed.allTags.push.apply(parsed.allTags, tokens);
-	}
+	});
 
 	if (! _.isEmpty(sInner)) {
 		if (! withoutMode) {
@@ -162,27 +162,25 @@ tagParser = function (tagStr, reformat) {
 
 	var toplevel = tagTopLevelTokenizer(tagStr);
 
-	for (var ti in toplevel) {
-		var topToken = toplevel[ti];
-
+	_.each(toplevel, function (topToken, ti) {
 		if (topToken.substr(0, 3) === "by ") {
 			parsed.authors.push(topToken.substr(3).trim());
-			continue;
+			return;
 		}
 
 		if (topToken.substr(0, 7) === "not by ") {
 			parsed.notAuthors.push(topToken.substr(7).trim());
-			continue;
+			return;
 		}
 
 		if (topToken.substr(0, 3) === "id ") {
 			parsed.meta.id = topToken.substr(3).trim();
-			continue;
+			return;
 		}
 
 		if (topToken.substr(0, 5) === "name ") {
 			parsed.meta.name = topToken.substr(5).trim();
-			continue;
+			return;
 		}
 
 		var kv = tagSubjectTokenizer(topToken);
@@ -192,7 +190,7 @@ tagParser = function (tagStr, reformat) {
 		} else {
 			parseDescriptors(parsed, kv);
 		}
-	}
+	});
 
 	parsed.subjectsFlat = _.uniq(parsed.subjectsFlat);
 	parsed.withoutFlat = _.uniq(parsed.withoutFlat);

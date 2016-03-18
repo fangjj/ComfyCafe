@@ -96,9 +96,7 @@ tagPatcherDirect = function (diff, diffPreserve, target, authors) {
     }
   });
 
-  // Lazy, or genius? Time will decide!
-  var tagStr = tagStringify(output);
-  return tagParser(tagStr);
+  return tagRegenerator(output);
 };
 
 tagPatcher = function (a, b, c) {

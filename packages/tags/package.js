@@ -20,10 +20,11 @@ Package.onUse(function(api) {
 
   api.addFiles([
     "lib/aliases.js",
-    "lib/resolver.js",
     "lib/stringify.js",
     "lib/tokenizer.js",
     "lib/parser.js",
+    "lib/regenerator.js",
+    "lib/resolver.js",
     "lib/differ.js",
     "lib/patcher.js",
     "lib/renamer.js",
@@ -34,7 +35,6 @@ Package.onUse(function(api) {
   api.export([
     "aliasSample",
     "parseAliases",
-    "tagResolver",
     "tagStringify",
     "tagChunkStringify",
     "tagStrSample",
@@ -42,6 +42,9 @@ Package.onUse(function(api) {
     "tagSubjectTokenizer",
     "tagDescriptorTokenizer",
     "tagParser",
+    "tagRegenerator",
+    "tagResolver",
+    "tagFullResolver",
     "tagDiffer",
     "tagPatcherDirect",
     "tagPatcher",

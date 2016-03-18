@@ -80,6 +80,20 @@ TagField = React.createClass({
     doc.text = tagStr;
 
     if (! this.props.noExpand) {
+      _.each(this.condExpanded, (expanded, rootNoun) => {
+        if (! _.has(doc.parsed.subjects, rootNoun)) {
+          prettyPrint(rootNoun, this.condExpanded);
+          delete this.condExpanded[rootNoun];
+        } else {
+          _.each(expanded, (cond) => {
+            if (! _.has(doc.parsed.subjects[rootNoun], cond)) {
+              const idx = this.condExpanded[rootNoun].indexOf(cond);
+              this.condExpanded[rootNoun].splice(idx, 1);
+            }
+          });
+        }
+      });
+
       _.each(doc.parsed.subjects, (descriptors, rootNoun) => {
         const rootTag = Tags.findOne({ name: rootNoun });
         if (rootTag) {

@@ -39,7 +39,7 @@ TagField = React.createClass({
       loading: ! handle.ready(),
       tags: Tags.find(
         doc,
-        { fields: { name: 1, implicationStr: 1 } }
+        { fields: { name: 1, implicationStr: 1, origin: 1 } }
       ).fetch(),
       currentUser: Meteor.user()
     };
@@ -132,7 +132,10 @@ TagField = React.createClass({
     const split = whiteSplit(this.state.text);
     const body = _.initial(split);
     const last = _.last(split);
-    const text = (body.join(" ") + " " + tag.name + ": " + tag.implicationStr + ";").trim();
+    let text = (body.join(" ") + " " + tag.name + ": " + tag.implicationStr + ";").trim();
+    if (tag.origin) {
+      text += " " + tag.origin + ";";
+    }
     this.afterChange({
       search: ""
     }, text);

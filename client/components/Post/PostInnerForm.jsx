@@ -30,6 +30,7 @@ PostInnerForm = React.createClass({
       <br />
       <TagField
         defaultValue={this.props.tags}
+        condExpanded={this.props.condExpanded}
         floatingLabelText="Tags"
         onChange={this.props.handleTags}
       />

@@ -4,7 +4,7 @@ let {
 
 TagField = React.createClass({
   mixins: [ReactMeteorData],
-  condExpanded: [],
+  condExpanded: {},
   injectTags(base, props) {
     if (typeof props === "undefined") {
       props = this.props;
@@ -44,6 +44,9 @@ TagField = React.createClass({
       currentUser: Meteor.user()
     };
   },
+  componentWillMount() {
+    this.condExpanded = this.props.condExpanded || {};
+  },
   componentWillReceiveProps(nextProps) {
     if (this.props.injectDescriptors !== nextProps.injectDescriptors) {
       this.setState({
@@ -68,6 +71,10 @@ TagField = React.createClass({
       });
     }
   },
+  hasExpanded(rootNoun, cond) {
+    return _.has(this.condExpanded, rootNoun)
+      && _.includes(this.condExpanded[rootNoun], cond);
+  },
   handleParse(tagStr, doc) {
     doc.parsed = tagParser(this.injectTags(tagStr));
     doc.text = tagStr;
@@ -77,13 +84,17 @@ TagField = React.createClass({
         const rootTag = Tags.findOne({ name: rootNoun });
         if (rootTag) {
           _.each(rootTag.condImplications, (condImpl, cond) => {
-            if (! _.includes(this.condExpanded, cond)
+            if (! this.hasExpanded(rootNoun, cond)
               && _.has(doc.parsed.subjects[rootNoun], cond)
             ) {
               const patched = tagPatcher(rootTag.implications, condImpl, doc.parsed);
               doc.parsed = patched;
               doc.text = patched.text;
-              this.condExpanded.push(cond);
+              if (! _.has(this.condExpanded, rootNoun)) {
+                this.condExpanded[rootNoun] = [cond];
+              } else {
+                this.condExpanded[rootNoun].push(cond);
+              }
             }
           });
         }
@@ -93,7 +104,7 @@ TagField = React.createClass({
   afterChange(doc, value) {
     this.handleParse(value, doc);
     this.setState(doc);
-    this.props.onChange(doc.text, doc.parsed);
+    this.props.onChange(doc.text, doc.parsed, this.condExpanded);
   },
   onChange(e) {
     const value = e.target.value;

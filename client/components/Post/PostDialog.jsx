@@ -9,6 +9,7 @@ const defaultState = {
   original: false,
   description: "",
   tags: "tagme",
+  condExpanded: {},
   pretentiousFilter: "none"
 };
 
@@ -21,6 +22,7 @@ PostDialog = React.createClass({
         original: post.original,
         description: post.description || defaultState.description,
         tags: post.tags.text || defaultState.tags,
+        condExpanded: post.tagsCondExpanded || defaultState.condExpanded,
         pretentiousFilter: post.pretentiousFilter || defaultState.pretentiousFilter
       };
     } else {
@@ -36,8 +38,11 @@ PostDialog = React.createClass({
   handleDescription(event) {
     this.setState({description: event.target.value});
   },
-  handleTags(value) {
-    this.setState({tags: value});
+  handleTags(value, parsed, condExpanded) {
+    this.setState({
+      tags: value,
+      condExpanded: condExpanded
+    });
   },
   handlePretentiousFilter(event, index, value) {
     this.setState({pretentiousFilter: value});
@@ -48,6 +53,7 @@ PostDialog = React.createClass({
       original: this.state.original,
       description: this.state.description,
       tags: this.state.tags,
+      tagsCondExpanded: this.state.condExpanded,
       pretentiousFilter: this.state.pretentiousFilter
     });
 
@@ -97,6 +103,7 @@ PostDialog = React.createClass({
         handleDescription={this.handleDescription}
         tags={this.state.tags}
         handleTags={this.handleTags}
+        condExpanded={this.state.condExpanded}
         pretentiousFilter={this.state.pretentiousFilter}
         handlePretentiousFilter={this.handlePretentiousFilter}
       />

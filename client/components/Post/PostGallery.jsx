@@ -13,6 +13,7 @@ const defaultState = {
 
 PostGallery = React.createClass({
   mixins: [ReactMeteorData],
+  first: true,
   getInitialState() {
     return {
       originalOnly: (getQueryParam("originalOnly") === "true") || defaultState.originalOnly,
@@ -91,8 +92,12 @@ PostGallery = React.createClass({
     }
 
     if (! this.state.noPush) {
-      pushState(setQueryParams(queuedParams));
+      const query = setQueryParams(queuedParams);
+      if (! this.first || query) {
+        pushState(query);
+      }
     }
+    this.first = false;
 
     let handle = Meteor.subscribe(this.props.subName, this.props.subData);
     return {

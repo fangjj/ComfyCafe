@@ -85,6 +85,12 @@ PostGallery = React.createClass({
       } else {
         queuedParams.push({filter: undefined});
       }
+      if (this.state.filter === "sfw") {
+        doc["safety"] = { $lte: 1 };
+      }
+      if (this.state.filter === "nsfw") {
+        doc["safety"] = { $gte: 2 };
+      }
       if (this.state.filter === "your") {
         doc["owner._id"] = Meteor.userId();
       }

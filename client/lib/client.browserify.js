@@ -10,3 +10,4 @@ Ps = require("perfect-scrollbar");
 emojione = require("emojione");
 Autolinker = require("autolinker.js");
 marked = require("marked");
+getCaretCoordinates = require("textarea-caret");

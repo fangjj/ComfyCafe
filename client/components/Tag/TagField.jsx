@@ -120,6 +120,11 @@ TagField = React.createClass({
     this.props.onChange(doc.text, doc.parsed, this.condExpanded);
   },
   onChange(e) {
+    const tf = $(this.refs.tfContainer).find("textarea:not([tabindex=-1])")[0];
+    this.setState({
+      caretCoords: getCaretCoordinates(tf, tf.selectionStart)
+    });
+
     const value = e.target.value;
     const split = whiteSplit(value);
     const body = _.initial(split);
@@ -142,8 +147,12 @@ TagField = React.createClass({
   },
   renderSuggestions() {
     if (this.state.search) {
+      const anchorCoords = $(this.refs.tfContainer).position();
+      anchorCoords.top += 36; // Account for margin
       return <Suggestions
         suggestions={this.data.tags}
+        anchorCoords={anchorCoords}
+        caretCoords={this.state.caretCoords}
         onSelect={this.onSelect}
       />;
     }
@@ -159,16 +168,18 @@ TagField = React.createClass({
     }
 
     return <div>
-      <TextField
-        value={this.state.text}
-        floatingLabelText={this.props.floatingLabelText || "Tags"}
-        floatingLabelStyle={{fontSize: "20px"}}
-        multiLine={true}
-        rows={1}
-        rowsMax={5}
-        fullWidth={true}
-        onChange={this.onChange}
-      />
+      <div ref="tfContainer">
+        <TextField
+          value={this.state.text}
+          floatingLabelText={this.props.floatingLabelText || "Tags"}
+          floatingLabelStyle={{fontSize: "20px"}}
+          multiLine={true}
+          rows={1}
+          rowsMax={5}
+          fullWidth={true}
+          onChange={this.onChange}
+        />
+      </div>
       {this.renderSuggestions()}
       {this.renderTagTree()}
     </div>;

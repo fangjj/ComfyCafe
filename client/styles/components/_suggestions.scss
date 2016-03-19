@@ -9,6 +9,12 @@
   background-color: $sg-color;
 
   li {
+    padding: 0;
+
     cursor: pointer;
+
+    &.selected {
+      border: 2px solid lime !important;
+    }
   }
 }

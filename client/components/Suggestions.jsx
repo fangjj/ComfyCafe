@@ -82,6 +82,22 @@ Suggestions = React.createClass({
       });
     }
   },
+  buildLookup(props) {
+    this.lookup = {};
+    _.each(props.suggestions, (value, idx) => {
+      this.lookup[value._id] = idx;
+      if (idx === 0) {
+        this.setState({
+          selected: props.suggestions[0]._id
+        });
+      }
+    });
+  },
+  componentWillMount() {
+    if (this.props.suggestions) {
+      this.buildLookup(this.props);
+    }
+  },
   componentDidMount() {
     window.addEventListener("keydown", this.keyHandler);
   },
@@ -90,15 +106,7 @@ Suggestions = React.createClass({
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.suggestions && nextProps.suggestions !== this.props.suggestions) {
-      this.lookup = {};
-      _.each(nextProps.suggestions, (value, idx) => {
-        this.lookup[value._id] = idx;
-        if (idx === 0) {
-          this.setState({
-            selected: nextProps.suggestions[0]._id
-          });
-        }
-      });
+      this.buildLookup(nextProps);
     }
   },
   renderSuggestions() {

@@ -10,7 +10,7 @@ const defaultState = {
   definition: "",
   aliases: "",
   origin: "",
-  safety: "safe",
+  safety: 0,
   implications: "",
   implicationsParsed: {},
   condImplications: {}

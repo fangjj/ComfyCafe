@@ -14,10 +14,9 @@ PostGallery = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
-      originalOnly: (FlowRouter.getQueryParam("originalOnly") === "true")
-        || defaultState.originalOnly,
-      tagStr: FlowRouter.getQueryParam("query") || defaultState.tagStr,
-      filter: FlowRouter.getQueryParam("filter") || defaultState.filter
+      originalOnly: (getQueryParam("originalOnly") === "true") || defaultState.originalOnly,
+      tagStr: getQueryParam("query") || defaultState.tagStr,
+      filter: getQueryParam("filter") || defaultState.filter
     }
   },
   getMeteorData() {
@@ -29,14 +28,14 @@ PostGallery = React.createClass({
       queuedParams.push({originalOnly: this.state.originalOnly});
       doc.original = { $ne: false };
     } else {
-      queuedParams.push({originalOnly: null});
+      queuedParams.push({originalOnly: undefined});
     }
 
     if (this.state.tagStr) {
       if (this.state.tagStr !== defaultState.tagStr) {
         queuedParams.push({query: this.state.tagStr});
       } else {
-        queuedParams.push({query: null});
+        queuedParams.push({query: undefined});
       }
       const parsed = tagQuery(this.state.tagStr);
       _.each(parsed, (value, key) => {
@@ -57,18 +56,14 @@ PostGallery = React.createClass({
       if (this.state.filter !== defaultState.filter) {
         queuedParams.push({filter: this.state.filter});
       } else {
-        queuedParams.push({filter: null});
+        queuedParams.push({filter: undefined});
       }
       if (this.state.filter === "your") {
         doc["owner._id"] = Meteor.userId();
       }
     }
 
-    FlowRouter.withReplaceState(() => {
-      _.each(queuedParams, (obj) => {
-        FlowRouter.setQueryParams(obj);
-      });
-    });
+    pushState(setQueryParams(queuedParams));
 
     let handle = Meteor.subscribe(this.props.subName, this.props.subData);
     return {

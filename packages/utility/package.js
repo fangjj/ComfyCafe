@@ -25,6 +25,8 @@ Package.onUse(function(api) {
     "lib/commaSplit.js",
     "lib/prettyPrint.js",
     "lib/setTitle.js",
+    "lib/pushState.js",
+    "lib/getQueryParam.js",
     "lib/setQueryParam.js",
     "lib/slice.js"
   ], ["client", "server"]);
@@ -39,7 +41,10 @@ Package.onUse(function(api) {
     "commaSplit",
     "prettyPrint",
     "setTitle",
+    "pushState",
+    "getQueryParam",
     "setQueryParam",
+    "setQueryParams",
     "slice"
   ], ["client", "server"]);
 

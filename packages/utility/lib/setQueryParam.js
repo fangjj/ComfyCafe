@@ -1,27 +1,49 @@
-// by amateur via http://stackoverflow.com/a/6021027/5435443
 function updateQueryStringParameter(uri, key, value) {
+  if (! uri) {
+    uri = "";
+  }
+
+  // by amateur via http://stackoverflow.com/a/6021027/5435443
   var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
   var separator = uri.indexOf('?') !== -1 ? "&" : "?";
   if (uri.match(re)) {
     if (typeof value !== "undefined") {
-      return uri.replace(re, '$1' + key + "=" + value + '$2');
+      uri = uri.replace(re, '$1' + key + "=" + value + '$2');
     } else {
-      return uri.replace(re, "");
+      uri = uri.replace(re, "");
     }
   } else {
     if (typeof value !== "undefined") {
-      return uri + separator + key + "=" + value;
-    } else {
-      return uri;
+      uri += separator + key + "=" + value;
     }
   }
+
+  if (uri.length) {
+    if (uri[0] !== "?") {
+      uri = "?" + uri;
+    }
+  }
+
+  return uri;
 }
 
 setQueryParam = function (key, value) {
-  var query = updateQueryStringParameter(
+  return updateQueryStringParameter(
     window.location.search,
     key,
     value
   );
-  window.history.pushState(FlowRouter.current().context, Session.get("pageTitle"), query);
+};
+
+setQueryParams = function (queue) {
+  // FP skills activate!
+  return _.reduce(
+    _.map(queue, function (obj) {
+      return _.toPairs(obj)[0];
+    }),
+    function (result, value, key) {
+      return updateQueryStringParameter(result, value[0], value[1]);
+    },
+    window.location.search
+  );
 };

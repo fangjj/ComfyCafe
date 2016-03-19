@@ -19,6 +19,30 @@ PostGallery = React.createClass({
       filter: getQueryParam("filter") || defaultState.filter
     }
   },
+  readQueryParams(event) {
+    let doc = {};
+    const params = {
+      originalOnly: getQueryParam("originalOnly"),
+      tagStr: getQueryParam("query"),
+      filter: getQueryParam("filter")
+    };
+    _.each(params, (v, k) => {
+      if (v !== null) {
+        if (typeof defaultState[k] !== "boolean") {
+          doc[k] = v;
+        } else {
+          doc[k] = v === "true";
+        }
+      }
+    });
+    this.setState(doc);
+  },
+  componentDidMount() {
+    window.addEventListener("popstate", this.readQueryParams);
+  },
+  componentWillUnmount() {
+    window.removeEventListener("popstate", this.readQueryParams);
+  },
   getMeteorData() {
     let doc = this.props.generateDoc.bind(this)();
 
@@ -76,7 +100,7 @@ PostGallery = React.createClass({
     };
   },
   handleOriginalOnly(event) {
-    this.setState({originalOnly: event.target.checked});
+    this.setState({originalOnly: ! this.state.originalOnly});
   },
   handleSearch(event) {
     this.setState({tagStr: event.target.value})

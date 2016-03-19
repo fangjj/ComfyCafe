@@ -7,7 +7,8 @@ let {
 const defaultState = {
   originalOnly: false,
   tagStr: "",
-  filter: "sfw"
+  filter: "sfw",
+  noPush: false
 };
 
 PostGallery = React.createClass({
@@ -20,7 +21,9 @@ PostGallery = React.createClass({
     }
   },
   readQueryParams(event) {
-    let doc = {};
+    let doc = {
+      noPush: true
+    };
     const params = {
       originalOnly: getQueryParam("originalOnly"),
       tagStr: getQueryParam("query"),
@@ -87,7 +90,9 @@ PostGallery = React.createClass({
       }
     }
 
-    pushState(setQueryParams(queuedParams));
+    if (! this.state.noPush) {
+      pushState(setQueryParams(queuedParams));
+    }
 
     let handle = Meteor.subscribe(this.props.subName, this.props.subData);
     return {
@@ -100,13 +105,22 @@ PostGallery = React.createClass({
     };
   },
   handleOriginalOnly(event) {
-    this.setState({originalOnly: ! this.state.originalOnly});
+    this.setState({
+      originalOnly: ! this.state.originalOnly,
+      noPush: false
+    });
   },
   handleSearch(event) {
-    this.setState({tagStr: event.target.value})
+    this.setState({
+      tagStr: event.target.value,
+      noPush: false
+    });
   },
   handleFilter(event, index, value) {
-    this.setState({filter: value});
+    this.setState({
+      filter: value,
+      noPush: false
+    });
   },
   renderPosts() {
     if (this.data.posts.length) {

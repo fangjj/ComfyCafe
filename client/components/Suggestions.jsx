@@ -40,6 +40,13 @@ Suggestions = React.createClass({
     const canGoUp = currentIndex !== 0 && lookupLength > 1;
 
     const actionMap = {};
+    actionMap[keys.ENTER] = () => {
+      this.props.onSelect(
+        _.find(this.props.suggestions, (s, idx) => {
+          return idx === currentIndex;
+        })
+      );
+    };
     actionMap[keys.DOWN] = () => {
       if (canGoDown) {
         // Reckless reduction!
@@ -83,6 +90,7 @@ Suggestions = React.createClass({
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.suggestions && nextProps.suggestions !== this.props.suggestions) {
+      this.lookup = {};
       _.each(nextProps.suggestions, (value, idx) => {
         this.lookup[value._id] = idx;
         if (idx === 0) {

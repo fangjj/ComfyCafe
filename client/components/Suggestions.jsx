@@ -117,7 +117,7 @@ Suggestions = React.createClass({
   },
   renderInner() {
     if (this.props.suggestions && this.props.suggestions.length) {
-      return <ul className="suggestions list">
+      return <ul className="suggestions">
         {this.renderSuggestions()}
       </ul>;
     }

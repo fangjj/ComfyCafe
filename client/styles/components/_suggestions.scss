@@ -6,15 +6,15 @@
 }
 
 .suggestions {
+  margin: 0;
+
   background-color: $sg-color;
 
   li {
-    padding: 0;
-
     cursor: pointer;
 
     &.selected {
-      border: 2px solid lime !important;
+      background-color: rgba(#B09D63, 0.3);
     }
   }
 }

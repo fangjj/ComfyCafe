@@ -6,12 +6,10 @@ TagInnerForm = React.createClass({
   renderOrigin() {
     if (this.props.tagType !== "origin") {
       return <span>
-        <TextField
+        <TagInlineField
           defaultValue={this.props.origin}
           floatingLabelText="Origin"
-          floatingLabelStyle={{fontSize: "20px"}}
           onChange={this.props.handleOrigin}
-          fullWidth={true}
         />
         <br />
       </span>;

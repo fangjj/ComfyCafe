@@ -52,8 +52,8 @@ TagDialog = React.createClass({
   handleAliases(event) {
     this.setState({aliases: event.target.value});
   },
-  handleOrigin(event) {
-    this.setState({origin: event.target.value});
+  handleOrigin(value) {
+    this.setState({origin: value});
   },
   handleImplications(tagStr, parsed) {
     this.setState({

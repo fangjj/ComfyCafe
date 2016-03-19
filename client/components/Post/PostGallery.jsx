@@ -181,6 +181,7 @@ PostGallery = React.createClass({
         </div>
         <div style={{flexGrow: 2}}>
           <TagInlineField
+            delim=";"
             defaultValue={this.state.tagStr}
             hintText="Search"
             onChange={this.handleSearch}

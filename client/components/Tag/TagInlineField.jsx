@@ -52,7 +52,7 @@ TagInlineField = React.createClass({
     const split = whiteSplit(this.state.text);
     const body = _.initial(split);
     const last = _.last(split);
-    let text = (body.join(" ") + " " + tag.name + ";").trim();
+    let text = (body.join(" ") + " " + tag.name + (this.props.delim || "")).trim();
     this.afterChange({
       text: text,
       search: ""
@@ -62,7 +62,11 @@ TagInlineField = React.createClass({
     if (! this.data.loading) {
       if (this.state.search) {
         const anchorCoords = $(this.refs.tfContainer).position();
-        anchorCoords.top += 16; // Account for margin
+        if (this.props.floatingLabelText) {
+          anchorCoords.top += 36; // Account for margin
+        } else {
+          anchorCoords.top += 16;
+        }
         return <Suggestions
           suggestions={this.data.tags}
           anchorCoords={anchorCoords}

@@ -10,6 +10,7 @@ const defaultState = {
   definition: "",
   aliases: "",
   origin: "",
+  safety: "safe",
   implications: "",
   implicationsParsed: {},
   condImplications: {}
@@ -32,6 +33,7 @@ TagDialog = React.createClass({
         definition: this.props.tag.definition,
         aliases: this.props.tag.aliasStr,
         origin: this.props.tag.origin,
+        safety: this.props.tag.safety,
         implications: this.props.tag.implicationStr,
         implicationsParsed: this.props.tag.implications || {},
         condImplications: condImplWrap(this.props.tag.condImplications) || {}
@@ -55,6 +57,9 @@ TagDialog = React.createClass({
   handleOrigin(value) {
     this.setState({origin: value});
   },
+  handleSafety(event, index, value) {
+    this.setState({safety: value});
+  },
   handleImplications(tagStr, parsed) {
     this.setState({
       implications: tagStr,
@@ -73,6 +78,7 @@ TagDialog = React.createClass({
       definition: this.state.definition,
       aliases: this.state.aliases,
       origin: this.state.origin,
+      safety: this.state.safety,
       implications: this.state.implications,
       condImplications: this.state.condImplications
     });
@@ -117,6 +123,8 @@ TagDialog = React.createClass({
         handleOrigin={this.handleOrigin}
         definition={this.state.definition}
         handleDefinition={this.handleDefinition}
+        safety={this.state.safety}
+        handleSafety={this.handleSafety}
         implications={this.state.implications}
         handleImplications={this.handleImplications}
         inheritFrom={this.state.implicationsParsed}

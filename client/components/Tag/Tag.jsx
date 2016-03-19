@@ -57,6 +57,7 @@ Tag = React.createClass({
       {this.renderAliases(tag)}
       {this.renderOrigin(tag)}
       <TextBody text={tag.definition} />
+      Safety: {tag.safety}
       {this.renderTagTree(tag)}
       {this.renderCondImpl(tag)}
       <TagEditFAB tag={tag} />

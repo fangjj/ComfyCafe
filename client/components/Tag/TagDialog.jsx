@@ -58,7 +58,7 @@ TagDialog = React.createClass({
     this.setState({origin: value});
   },
   handleSafety(event, index, value) {
-    this.setState({safety: value});
+    this.setState({safety: parseInt(value)});
   },
   handleImplications(tagStr, parsed) {
     this.setState({

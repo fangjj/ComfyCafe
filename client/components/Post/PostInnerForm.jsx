@@ -28,6 +28,10 @@ PostInnerForm = React.createClass({
         fullWidth={true}
       />
       <br />
+      <SafetySelector
+        safety={this.props.safety}
+        onChange={this.props.handleSafety}
+      />
       <TagField
         defaultValue={this.props.tags}
         condExpanded={this.props.condExpanded}

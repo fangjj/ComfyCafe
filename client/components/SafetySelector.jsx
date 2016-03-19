@@ -12,10 +12,10 @@ SafetySelector = React.createClass({
       floatingLabelText="Safety"
       floatingLabelStyle={{fontSize: "20px"}}
     >
-      <MenuItem value="safe" primaryText="Safe" />
-      <MenuItem value="risqué" primaryText="Risqué" />
-      <MenuItem value="nudity" primaryText="Nudity" />
-      <MenuItem value="explicit" primaryText="Explicit" />
+      <MenuItem value={0} primaryText={safetyLabels[0]} />
+      <MenuItem value={1} primaryText={safetyLabels[1]} />
+      <MenuItem value={2} primaryText={safetyLabels[2]} />
+      <MenuItem value={3} primaryText={safetyLabels[3]} />
     </SelectField>;
   }
 });

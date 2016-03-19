@@ -46,6 +46,10 @@ TagField = React.createClass({
   },
   componentWillMount() {
     this.condExpanded = this.props.condExpanded || {};
+
+    if (this.props.receiveAutoSafety) {
+      this.props.receiveAutoSafety(this.safetyRecommendation());
+    }
   },
   componentWillReceiveProps(nextProps) {
     if (this.props.injectDescriptors !== nextProps.injectDescriptors) {
@@ -70,6 +74,26 @@ TagField = React.createClass({
         parsed: patched
       });
     }
+  },
+  safetyRecommendation() {
+    return _.reduce(
+      this.state.parsed.allTags,
+      (result, value, index) => {
+        const tag = Tags.findOne(
+          { $or: [
+            { name: value },
+            { aliases: value }
+          ] },
+          { fields: {
+            safety: 1
+          } }
+        );
+        if (tag) {
+          return Math.max(result, tag.safety);
+        } return result;
+      },
+      0
+    );
   },
   hasExpanded(rootNoun, cond) {
     return _.has(this.condExpanded, rootNoun)
@@ -118,6 +142,9 @@ TagField = React.createClass({
     this.handleParse(value, doc);
     this.setState(doc);
     this.props.onChange(doc.text, doc.parsed, this.condExpanded);
+    if (this.props.receiveAutoSafety) {
+      this.props.receiveAutoSafety(this.safetyRecommendation());
+    }
   },
   onChange(e) {
     const tf = $(this.refs.tfContainer).find("textarea:not([tabindex=-1])")[0];

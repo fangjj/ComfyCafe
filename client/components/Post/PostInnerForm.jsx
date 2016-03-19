@@ -1,6 +1,7 @@
 let {
   TextField,
-  Checkbox
+  Checkbox,
+  FlatButton
 } = mui;
 
 PostInnerForm = React.createClass({
@@ -32,11 +33,21 @@ PostInnerForm = React.createClass({
         safety={this.props.safety}
         onChange={this.props.handleSafety}
       />
+      <div className="autoSafety">
+        <span className="label">
+          Auto Safety: {safetyLabels[this.props.autoSafety]}
+        </span>
+        <FlatButton
+          label="Apply"
+          onTouchTap={this.props.applyAutoSafety}
+        />
+      </div>
       <TagField
         defaultValue={this.props.tags}
         condExpanded={this.props.condExpanded}
         floatingLabelText="Tags"
         onChange={this.props.handleTags}
+        receiveAutoSafety={this.props.receiveAutoSafety}
       />
       <PretentiousFilterSelector
         pretentiousFilter={this.props.pretentiousFilter}

@@ -9,6 +9,7 @@ const defaultState = {
   original: false,
   description: "",
   safety: "safe",
+  autoSafety: 0,
   tags: "tagme",
   condExpanded: {},
   pretentiousFilter: "none"
@@ -23,6 +24,7 @@ PostDialog = React.createClass({
         original: post.original,
         description: post.description || defaultState.description,
         safety: post.safety || defaultState.safety,
+        autoSafety: post.safety || defaultState.safety,
         tags: post.tags.text || defaultState.tags,
         condExpanded: post.tagsCondExpanded || defaultState.condExpanded,
         pretentiousFilter: post.pretentiousFilter || defaultState.pretentiousFilter
@@ -42,6 +44,12 @@ PostDialog = React.createClass({
   },
   handleSafety(event, index, value) {
     this.setState({safety: parseInt(value)});
+  },
+  receiveAutoSafety(value) {
+    this.setState({autoSafety: value});
+  },
+  applyAutoSafety() {
+    this.setState({safety: this.state.autoSafety});
   },
   handleTags(value, parsed, condExpanded) {
     this.setState({
@@ -109,6 +117,9 @@ PostDialog = React.createClass({
         handleDescription={this.handleDescription}
         safety={this.state.safety}
         handleSafety={this.handleSafety}
+        autoSafety={this.state.autoSafety}
+        receiveAutoSafety={this.receiveAutoSafety}
+        applyAutoSafety={this.applyAutoSafety}
         tags={this.state.tags}
         handleTags={this.handleTags}
         condExpanded={this.state.condExpanded}

@@ -20,10 +20,12 @@ Package.onUse(function(api) {
   ], "server");
 
   api.addFiles([
+    "lib/jsonClone.js",
     "lib/whiteSplit.js",
     "lib/commaSplit.js",
     "lib/prettyPrint.js",
     "lib/setTitle.js",
+    "lib/setQueryParam.js",
     "lib/slice.js"
   ], ["client", "server"]);
 
@@ -32,10 +34,12 @@ Package.onUse(function(api) {
   ], "server");
 
   api.export([
+    "jsonClone",
     "whiteSplit",
     "commaSplit",
     "prettyPrint",
     "setTitle",
+    "setQueryParam",
     "slice"
   ], ["client", "server"]);
 

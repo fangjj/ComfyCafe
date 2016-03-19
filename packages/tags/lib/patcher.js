@@ -53,7 +53,7 @@ function authorPusher(srcs) {
 
 tagPatcherDirect = function (diff, diffPreserve, target, authors) {
   var output = {
-    subjects: JSON.parse(JSON.stringify(target.subjects)),
+    subjects: jsonClone(target.subjects),
     authors: authors || []
   };
 

@@ -26,7 +26,11 @@ TagField = React.createClass({
     };
   },
   getMeteorData() {
-    const handle = Meteor.subscribe("allTags");
+    const handle = Meteor.subscribe("allTags", () => {
+      if (this.props.receiveAutoSafety) {
+        this.props.receiveAutoSafety(this.safetyRecommendation());
+      }
+    });
     let doc = {};
     if (this.state.search) {
       const re = new RegExp("^" + _.escapeRegExp(this.state.search));
@@ -46,10 +50,6 @@ TagField = React.createClass({
   },
   componentWillMount() {
     this.condExpanded = this.props.condExpanded || {};
-
-    if (this.props.receiveAutoSafety) {
-      this.props.receiveAutoSafety(this.safetyRecommendation());
-    }
   },
   componentWillReceiveProps(nextProps) {
     if (this.props.injectDescriptors !== nextProps.injectDescriptors) {

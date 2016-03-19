@@ -6,5 +6,9 @@
 }
 
 .suggestions {
+  background-color: $sg-color;
 
+  li {
+    cursor: pointer;
+  }
 }

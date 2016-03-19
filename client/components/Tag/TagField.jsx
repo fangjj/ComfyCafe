@@ -137,10 +137,16 @@ TagField = React.createClass({
     const split = whiteSplit(this.state.text);
     const body = _.initial(split);
     const last = _.last(split);
-    let text = (body.join(" ") + " " + tag.name + ": " + tag.implicationStr + ";").trim();
+    let text = body.join(" ") + " " + tag.name;
+    if (tag.implicationStr) {
+      text += ": " + tag.implicationStr + ";";
+    } else {
+      text += ";"
+    }
     if (tag.origin) {
       text += " " + tag.origin + ";";
     }
+    text = text.trim();
     this.afterChange({
       search: ""
     }, text);

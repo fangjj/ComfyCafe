@@ -127,7 +127,7 @@ Suggestions = React.createClass({
     const caretCoords = this.props.caretCoords || {top: 0, left: 0};
     const style = {
       top: anchorCoords.top + caretCoords.top + 20,
-      left: caretCoords.left
+      left: anchorCoords.left + caretCoords.left
     };
     return <div className="suggestionContainer" style={style}>
       {this.renderInner()}

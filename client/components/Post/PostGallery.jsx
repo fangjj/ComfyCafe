@@ -1,5 +1,4 @@
 let {
-  TextField,
   Checkbox,
   FontIcon
 } = mui;
@@ -115,9 +114,9 @@ PostGallery = React.createClass({
       noPush: false
     });
   },
-  handleSearch(event) {
+  handleSearch(value) {
     this.setState({
-      tagStr: event.target.value,
+      tagStr: value,
       noPush: false
     });
   },
@@ -181,10 +180,9 @@ PostGallery = React.createClass({
           />
         </div>
         <div style={{flexGrow: 2}}>
-          <TextField
+          <TagInlineField
             defaultValue={this.state.tagStr}
             hintText="Search"
-            fullWidth={true}
             onChange={this.handleSearch}
           />
         </div>

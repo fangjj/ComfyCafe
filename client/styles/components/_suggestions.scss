@@ -1,0 +1,10 @@
+.suggestionContainer {
+  @extend .z-depth-2;
+  z-index: index($elements, suggestions);
+
+  position: absolute;
+}
+
+.suggestions {
+
+}

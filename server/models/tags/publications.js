@@ -1,5 +1,10 @@
-Meteor.publish("allTags", function () {
-	return Tags.find();
+Meteor.publish("allTags", function (type) {
+	check(type, Match.Optional(String));
+	if (! type) {
+		return Tags.find();
+	} else {
+		return Tags.find({ type: type });
+	}
 });
 
 Meteor.publish("tag", function (tagName) {

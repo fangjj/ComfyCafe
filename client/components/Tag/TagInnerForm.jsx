@@ -7,6 +7,7 @@ TagInnerForm = React.createClass({
     if (this.props.tagType !== "origin") {
       return <span>
         <TagInlineField
+          constrainType="origin"
           defaultValue={this.props.origin}
           floatingLabelText="Origin"
           onChange={this.props.handleOrigin}

@@ -11,8 +11,11 @@ TagInlineField = React.createClass({
     };
   },
   getMeteorData() {
-    const handle = Meteor.subscribe("allTags");
+    const handle = Meteor.subscribe("allTags", this.props.constrainType);
     let doc = {};
+    if (this.props.constrainType) {
+      doc.type = this.props.constrainType;
+    }
     if (this.state.search) {
       const re = new RegExp("^" + _.escapeRegExp(this.state.search));
       doc = { $or: [
@@ -24,7 +27,7 @@ TagInlineField = React.createClass({
       loading: ! handle.ready(),
       tags: Tags.find(
         doc,
-        { fields: { name: 1 } }
+        { fields: { name: 1, implicationStr: 1, origin: 1 } }
       ).fetch(),
       currentUser: Meteor.user()
     };

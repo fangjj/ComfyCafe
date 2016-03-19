@@ -184,7 +184,7 @@ PostGallery = React.createClass({
             delim=";"
             defaultValue={this.state.tagStr}
             hintText="Search"
-            onChange={_.debounce(this.handleSearch, 100)}
+            onChange={_.debounce(this.handleSearch, 250)}
           />
         </div>
         <div style={{flexGrow: 1}}>

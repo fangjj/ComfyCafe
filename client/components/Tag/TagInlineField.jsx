@@ -40,14 +40,18 @@ TagInlineField = React.createClass({
     this.setState(doc);
     this.props.onChange(doc.text);
   },
+  getTextArea() {
+    return $(this.refs.tfContainer).find("input:not([tabindex=-1])")[0];
+  },
   onChange(e) {
-    const tf = $(this.refs.tfContainer).find("input:not([tabindex=-1])")[0];
+    const tf = this.getTextArea();
     this.setState({
       caretCoords: getCaretCoordinates(tf, tf.selectionStart)
     });
 
     const value = e.target.value;
-    const search = getActiveToken(value, tf);
+    const searchPair = getActiveToken(value, tf);
+    const search = searchPair[0].trim();
 
     this.afterChange({
       text: value,
@@ -55,10 +59,15 @@ TagInlineField = React.createClass({
     });
   },
   onSelect(tag) {
-    const split = whiteSplit(this.state.text);
-    const body = _.initial(split);
-    const last = _.last(split);
-    let text = (body.join(" ") + " " + tag.name + (this.props.delim || "")).trim();
+    const tf = this.getTextArea();
+
+    const value = this.state.text;
+    const searchPair = getActiveToken(value, tf);
+
+    const before = value.substr(0, searchPair[1]);
+    const after = value.substr(searchPair[1] + searchPair[0].length);
+    const text = before + tag.name + after;
+
     this.afterChange({
       text: text,
       search: ""

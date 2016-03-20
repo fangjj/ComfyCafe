@@ -7,10 +7,9 @@ getActiveToken = function (value, tf) {
   // - needle is at start of token
   // - needle is in token
   // - needle is at end of token
-  const searchPair = _.find(tokens, (pair, index) => {
+  return _.find(tokens, (pair, index) => {
     const token = pair[0];
     const offset = pair[1];
     return _.inRange(needle, offset, offset + token.length + 1); // [start, end)
   });
-  return searchPair[0].trim();
 };

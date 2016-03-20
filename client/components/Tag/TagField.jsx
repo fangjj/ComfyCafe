@@ -154,7 +154,8 @@ TagField = React.createClass({
     });
 
     const value = e.target.value;
-    const search = getActiveToken(value, tf);
+    const searchPair = getActiveToken(value, tf);
+    const search = searchPair[0].trim();
 
     this.afterChange({
       search: search

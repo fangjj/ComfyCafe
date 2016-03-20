@@ -59,11 +59,8 @@ PostGallery = React.createClass({
     }
 
     if (this.state.tagStr) {
-      if (this.state.tagStr !== defaultState.tagStr) {
-        queuedParams.push({query: this.state.tagStr});
-      } else {
-        queuedParams.push({query: undefined});
-      }
+      queuedParams.push({query: this.state.tagStr});
+    
       const parsed = tagQuery(this.state.tagStr);
       _.each(parsed, (value, key) => {
         if (_.has(doc, key)) {
@@ -77,6 +74,8 @@ PostGallery = React.createClass({
           doc[key] = value;
         }
       });
+    } else {
+      queuedParams.push({query: undefined});
     }
 
     if (this.state.filter) {

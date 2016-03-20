@@ -5,6 +5,20 @@ let {
 } = mui;
 
 PostInnerForm = React.createClass({
+  renderSourceField() {
+    if (this.props.originality !== "original") {
+      return <TextField
+        defaultValue={this.props.source}
+        floatingLabelText="Source"
+        floatingLabelStyle={{fontSize: "20px"}}
+        multiLine={true}
+        rows={1}
+        rowsMax={3}
+        onChange={this.props.handleSource}
+        fullWidth={true}
+      />;
+    }
+  },
   render() {
     return <div>
       <SelectVisibility
@@ -12,12 +26,11 @@ PostInnerForm = React.createClass({
         onChange={this.props.handleVisibility}
       />
       <br />
-      <Checkbox
-        defaultChecked={this.props.original}
-        label="Original content"
-        labelStyle={{fontSize: "20px"}}
-        onCheck={this.props.handleOriginal}
+      <OriginalitySelector
+        value={this.props.originality}
+        onChange={this.props.handleOriginality}
       />
+      {this.renderSourceField()}
       <TextField
         defaultValue={this.props.description}
         floatingLabelText="Description"

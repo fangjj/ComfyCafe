@@ -53,14 +53,14 @@ PostGallery = React.createClass({
 
     if (this.state.originalOnly) {
       queuedParams.push({originalOnly: this.state.originalOnly});
-      doc.original = { $ne: false };
+      doc.originality = { $ne: "repost" };
     } else {
       queuedParams.push({originalOnly: undefined});
     }
 
     if (this.state.tagStr) {
       queuedParams.push({query: this.state.tagStr});
-    
+
       const parsed = tagQuery(this.state.tagStr);
       _.each(parsed, (value, key) => {
         if (_.has(doc, key)) {

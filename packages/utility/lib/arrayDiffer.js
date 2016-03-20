@@ -1,8 +1,5 @@
 function beforeAfter(arr, idx) {
-  var doc = {
-    after: undefined,
-    before: undefined
-  };
+  var doc = {};
 
   if (idx !== 0) {
     doc.after = arr[idx - 1];

@@ -29,7 +29,8 @@ Package.onUse(function(api) {
     "lib/getQueryParam.js",
     "lib/setQueryParam.js",
     "lib/slice.js",
-    "lib/arrayDiffer.js"
+    "lib/arrayDiffer.js",
+    "lib/fancySplit.js"
   ], ["client", "server"]);
 
   api.addFiles([
@@ -47,7 +48,8 @@ Package.onUse(function(api) {
     "setQueryParam",
     "setQueryParams",
     "slice",
-    "arrayDiffer"
+    "arrayDiffer",
+    "fancySplit"
   ], ["client", "server"]);
 
   api.export([

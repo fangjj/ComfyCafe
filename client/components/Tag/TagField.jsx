@@ -140,11 +140,12 @@ TagField = React.createClass({
   },
   afterChange(doc, value) {
     this.handleParse(value, doc);
-    this.setState(doc);
+    this.setState(doc, () => {
+      if (this.props.receiveAutoSafety) {
+        this.props.receiveAutoSafety(this.safetyRecommendation());
+      }
+    });
     this.props.onChange(doc.text, doc.parsed, this.condExpanded);
-    if (this.props.receiveAutoSafety) {
-      this.props.receiveAutoSafety(this.safetyRecommendation());
-    }
   },
   onChange(e) {
     const tf = $(this.refs.tfContainer).find("textarea:not([tabindex=-1])")[0];

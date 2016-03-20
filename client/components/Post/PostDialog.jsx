@@ -8,7 +8,7 @@ const defaultState = {
   visibility: "public",
   original: false,
   description: "",
-  safety: "safe",
+  safety: 0,
   autoSafety: 0,
   tags: "tagme",
   condExpanded: {},

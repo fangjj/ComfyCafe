@@ -6,20 +6,21 @@ tagRenamer = function (oldName, newName, tagDoc) {
     delete tagDoc.subjects[oldName];
   } else if (_.has(tagDoc.subjectsReverse, oldName)) {
     _.each(tagDoc.subjectsReverse[oldName], function (adjs, rootNoun) {
-      var desc = tagDoc.subjects[rooNoun];
+      var desc = tagDoc.subjects[rootNoun];
       desc[newName] = desc[oldName];
       delete desc[oldName];
     });
-  } else if (_.includes(tagDoc.subjectsFlat, oldName)) {
+  } else {
     // It can only be an adjective at this point.
     _.each(tagDoc.subjects, function (descriptors, rootNoun) {
       _.each(descriptors, function (adjs, descNoun) {
         var idx = adjs.indexOf(oldName);
-        adjs[idx] = newName;
+        if (idx !== -1) {
+          adjs[idx] = newName;
+        }
       });
     });
   }
 
-  var tagStr = tagStringify(renamed);
-  return tagParser(renamed);
+  return tagRegenerator(tagDoc);
 };

@@ -154,11 +154,10 @@ TagField = React.createClass({
     });
 
     const value = e.target.value;
-    const split = whiteSplit(value);
-    const body = _.initial(split);
-    const last = _.last(split);
+    const search = getActiveToken(value, tf);
+
     this.afterChange({
-      search: last
+      search: search
     }, value);
   },
   onSelect(tag) {

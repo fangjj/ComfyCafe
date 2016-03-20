@@ -25,6 +25,22 @@ Tag = React.createClass({
       </span>;
     }
   },
+  renderSafety(tag) {
+    if (tag.safety) {
+      return <span>
+        Safety: {safetyLabels[tag.safety]}
+        <br />
+      </span>;
+    }
+  },
+  renderExtends(tag) {
+    if (tag.extends) {
+      return <span>
+        Extends: {fancyCommaJoin(tag.extends)}
+        <br />
+      </span>;
+    }
+  },
   renderTagTree(tag) {
     if (tag.implications) {
       return <TagTree
@@ -57,7 +73,8 @@ Tag = React.createClass({
       {this.renderAliases(tag)}
       {this.renderOrigin(tag)}
       <TextBody text={tag.definition} />
-      Safety: {safetyLabels[tag.safety]}
+      {this.renderSafety(tag)}
+      {this.renderExtends(tag)}
       {this.renderTagTree(tag)}
       {this.renderCondImpl(tag)}
       <TagEditFAB tag={tag} />

@@ -147,8 +147,11 @@ TagField = React.createClass({
     });
     this.props.onChange(doc.text, doc.parsed, this.condExpanded);
   },
+  getTextArea() {
+    return $(this.refs.tfContainer).find("textarea:not([tabindex=-1])")[0];
+  },
   onChange(e) {
-    const tf = $(this.refs.tfContainer).find("textarea:not([tabindex=-1])")[0];
+    const tf = this.getTextArea();
     this.setState({
       caretCoords: getCaretCoordinates(tf, tf.selectionStart)
     });
@@ -162,19 +165,27 @@ TagField = React.createClass({
     }, value);
   },
   onSelect(tag) {
-    const split = whiteSplit(this.state.text);
-    const body = _.initial(split);
-    const last = _.last(split);
-    let text = body.join(" ") + " " + tag.name;
+    const tf = this.getTextArea();
+
+    const value = this.state.text;
+    const searchPair = getActiveToken(value, tf);
+
+    const before = value.substr(0, searchPair[1]);
+    const after = value.substr(searchPair[1] + searchPair[0].length);
+
+    let expanded = tag.name;
     if (tag.implicationStr) {
-      text += ": " + tag.implicationStr + ";";
+      expanded += ": " + tag.implicationStr + ";";
     } else {
-      text += ";"
+      expanded += ";"
     }
     if (tag.origin) {
-      text += " " + tag.origin + ";";
+      expanded += " " + tag.origin + ";";
     }
-    text = text.trim();
+    expanded = expanded.trim();
+
+    const text = before + expanded + after;
+
     this.afterChange({
       search: ""
     }, text);

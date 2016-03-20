@@ -1,6 +1,19 @@
 .post .infoBox {
-  .action {
-    margin-top: 12px;
+  .rightSide {
+    .action {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+
+  .originalityIcon, .privacyIcon {
+    float: left;
+
+    margin-right: 4px;
+    margin-top: 4px;
+
+    cursor: default;
   }
 
   .body {

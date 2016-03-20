@@ -19,9 +19,7 @@ PostPreview = React.createClass({
       repost: "repeat"
     };
     return <div className="star">
-      <FontIcon className="material-icons" style={{fontSize: 18}}>
-        {iconMap[this.props.post.originality]}
-      </FontIcon>
+      <OriginalityIcon originality={this.props.post.originality} /> 
     </div>;
   },
   render() {

@@ -25,7 +25,6 @@ PostInnerForm = React.createClass({
         visibility={this.props.visibility}
         onChange={this.props.handleVisibility}
       />
-      <br />
       <OriginalitySelector
         value={this.props.originality}
         onChange={this.props.handleOriginality}

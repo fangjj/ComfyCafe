@@ -28,7 +28,8 @@ Package.onUse(function(api) {
     "lib/pushState.js",
     "lib/getQueryParam.js",
     "lib/setQueryParam.js",
-    "lib/slice.js"
+    "lib/slice.js",
+    "lib/arrayDiffer.js"
   ], ["client", "server"]);
 
   api.addFiles([
@@ -45,7 +46,8 @@ Package.onUse(function(api) {
     "getQueryParam",
     "setQueryParam",
     "setQueryParams",
-    "slice"
+    "slice",
+    "arrayDiffer"
   ], ["client", "server"]);
 
   api.export([

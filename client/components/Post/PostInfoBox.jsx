@@ -66,18 +66,20 @@ PostInfoBox = React.createClass({
           </div>
           <div className="rightSide">
             <div className="top">
-              <div className="info">
-                <OriginalityIcon originality={post.originality} />
-                {verb} by <UserLink user={owner} /> <Moment time={post.createdAt} />
+              <div className="genericCol">
+                <div className="info">
+                  <OriginalityIcon originality={post.originality} />
+                  {verb} by <UserLink user={owner} /> <Moment time={post.createdAt} />
+                </div>
+                <div className="privacy">
+                  <PrivacyIcon privacy={post.visibility} /> {_.capitalize(post.visibility)}
+                </div>
+                {this.renderSource()}
               </div>
               <div className="action">
                 {subButton}
               </div>
             </div>
-            <div className="privacy">
-              <PrivacyIcon privacy={post.visibility} /> {_.capitalize(post.visibility)}
-            </div>
-            {this.renderSource()}
           </div>
         </div>
         <TextBody text={this.props.post.description} className="body" />

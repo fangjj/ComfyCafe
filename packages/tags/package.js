@@ -15,10 +15,12 @@ Package.onUse(function(api) {
 
   api.use([
     "ecmascript",
+    "mongo",
     "teru:utility"
   ], ["client", "server"]);
 
   api.addFiles([
+    "lib/collection.js",
     "lib/aliases.js",
     "lib/stringify.js",
     "lib/tokenizer.js",
@@ -35,8 +37,9 @@ Package.onUse(function(api) {
   ], ["client", "server"]);
 
   api.export([
-    "aliasSample",
-    "parseAliases",
+    "Tags",
+    "tagAliasSample",
+    "tagParseAliases",
     "tagStringify",
     "tagChunkStringify",
     "tagStrSample",

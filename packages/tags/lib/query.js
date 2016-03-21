@@ -38,7 +38,7 @@ function queryGeneratorMeta(parsed, queryDoc) {
   }
 }
 
-function queryGeneratorWithout(parsed, wDoc) {
+function queryGeneratorWithout(parsed, extLookup, wDoc) {
   var exclude = [];
 
   _.each(parsed.without, function (descriptors, rootNoun) {
@@ -69,14 +69,23 @@ function queryGeneratorWithout(parsed, wDoc) {
   });
 };
 
-function queryGeneratorSubjects(parsed, sDoc) {
+function queryGeneratorSubjects(parsed, extLookup, sDoc) {
+  sDoc.$and = [];
+
   if (parsed.subjectsFlat.length) {
     /*
     This is the basic Root->Root query.
     All we're doing is checking for all root nouns existing.
     i.e. matching `dog` against `dog` or `dog: black, hat`
     */
-    sDoc["tags.subjectsFlat"] = { $all: parsed.subjectsFlat };
+    //sDoc["tags.subjectsFlat"] = { $all: parsed.subjectsFlat };
+    sDoc.$and = _.map(
+      parsed.subjectsFlat,
+      function (subj) {
+        var exts = extLookup[subj];
+        return { "tags.subjectsFlat": { $in: exts } };
+      }
+    );
   }
 
   _.each(parsed.subjects, function (descriptors, rootNoun) {
@@ -116,21 +125,35 @@ tagQuery = function (str) {
   var parsed = tagParser(str);
   var queryDoc = {}, wDoc = {}, sDoc = {};
 
+  var extLookup = _.reduce(
+    parsed.allTags,
+    function (result, tag) {
+      result[tag] = tagExtensions(tag);
+      return result;
+    },
+    {}
+  );
+
   queryGeneratorAuthors(parsed, queryDoc);
   queryGeneratorOrigins(parsed, queryDoc);
   queryGeneratorMeta(parsed, queryDoc);
-  queryGeneratorWithout(parsed, wDoc);
-  queryGeneratorSubjects(parsed, sDoc);
+  queryGeneratorWithout(parsed, extLookup, wDoc);
+  queryGeneratorSubjects(parsed, extLookup, sDoc);
 
   if (! _.isEmpty(wDoc) || ! _.isEmpty(sDoc)) {
+    wAnd = wDoc.$and;
+    delete wDoc.$and;
+    sAnd = sDoc.$and;
+    delete sDoc.$and;
     queryDoc.$and = [
       wDoc,
       sDoc
     ];
+    queryDoc.$and = _.union(queryDoc.$and, wAnd, sAnd);
   }
 
   //prettyPrint(parsed);
-  //prettyPrint(queryDoc);
+  prettyPrint(queryDoc);
 
   return queryDoc;
 };

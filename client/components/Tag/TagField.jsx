@@ -181,7 +181,7 @@ TagField = React.createClass({
         expanded += ";"
       }
       if (tag.origin) {
-        expanded += " " + tag.origin + ";";
+        expanded += " from " + tag.origin + ";";
       }
       expanded = expanded.trim();
     }

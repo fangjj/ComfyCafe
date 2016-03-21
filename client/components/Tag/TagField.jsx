@@ -138,11 +138,14 @@ TagField = React.createClass({
       });
     }
   },
-  afterChange(doc, value) {
-    this.handleParse(value, doc);
+  afterChange(doc, callback) {
+    this.handleParse(doc.text, doc);
     this.setState(doc, () => {
       if (this.props.receiveAutoSafety) {
         this.props.receiveAutoSafety(this.safetyRecommendation());
+      }
+      if (callback) {
+        callback();
       }
     });
     this.props.onChange(doc.text, doc.parsed, this.condExpanded);
@@ -151,7 +154,7 @@ TagField = React.createClass({
     return $(this.refs.tfContainer).find("textarea:not([tabindex=-1])")[0];
   },
   onChange(e) {
-    const tf = this.getTextArea();
+    const tf = e.target;
     this.setState({
       caretCoords: getCaretCoordinates(tf, tf.selectionStart)
     });
@@ -161,17 +164,13 @@ TagField = React.createClass({
     const search = searchPair[0].trim();
 
     this.afterChange({
+      text: value,
       search: search
-    }, value);
+    });
   },
   onSelect(tag) {
     const tf = this.getTextArea();
-
     const value = this.state.text;
-    const searchPair = getActiveToken(value, tf);
-
-    const before = value.substr(0, searchPair[1]);
-    const after = value.substr(searchPair[1] + searchPair[0].length);
 
     const isToplevel = _.has(this.state.parsed.subjects, this.state.search);
     let expanded = tag.name;
@@ -187,11 +186,12 @@ TagField = React.createClass({
       expanded = expanded.trim();
     }
 
-    const text = before + expanded + after;
+    const replaced = replaceActiveToken(value, expanded, tf);
 
     this.afterChange({
+      text: replaced.text,
       search: ""
-    }, text);
+    }, replaced.moveNeedle);
   },
   renderSuggestions() {
     if (this.state.search) {

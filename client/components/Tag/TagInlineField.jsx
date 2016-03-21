@@ -36,15 +36,15 @@ TagInlineField = React.createClass({
       currentUser: Meteor.user()
     };
   },
-  afterChange(doc) {
-    this.setState(doc);
+  afterChange(doc, callback) {
+    this.setState(doc, callback);
     this.props.onChange(doc.text);
   },
   getTextArea() {
     return $(this.refs.tfContainer).find("input:not([tabindex=-1])")[0];
   },
   onChange(e) {
-    const tf = this.getTextArea();
+    const tf = e.target;
     this.setState({
       caretCoords: getCaretCoordinates(tf, tf.selectionStart)
     });
@@ -60,18 +60,14 @@ TagInlineField = React.createClass({
   },
   onSelect(tag) {
     const tf = this.getTextArea();
-
     const value = this.state.text;
-    const searchPair = getActiveToken(value, tf);
 
-    const before = value.substr(0, searchPair[1]);
-    const after = value.substr(searchPair[1] + searchPair[0].length);
-    const text = before + tag.name + after;
+    const replaced = replaceActiveToken(value, tag.name, tf);
 
     this.afterChange({
-      text: text,
+      text: replaced.text,
       search: ""
-    });
+    }, replaced.moveNeedle);
   },
   renderSuggestions() {
     if (! this.data.loading) {

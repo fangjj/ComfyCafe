@@ -23,8 +23,6 @@ arrayMerge = function (a, b) {
   _.each(a, buildLookup(a));
   _.each(b, buildLookup(b));
 
-  prettyPrint(lookup);
-
   var c = [];
   var keyOrder = _.keys(lookup).sort();
   _.each(keyOrder, function (start) {

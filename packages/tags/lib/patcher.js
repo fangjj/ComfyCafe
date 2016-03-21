@@ -37,10 +37,8 @@ function add(dTags, rootNoun, tag) {
   }
 }
 
-function addTo(dTags, rootNoun, tag, adj) {
-  if (! _.includes(dTags.subjects[rootNoun][tag], adj)) {
-    dTags.subjects[rootNoun][tag].push(adj);
-  }
+function addTo(dTags, rootNoun, tag, adjs) {
+  dTags.subjects[rootNoun][tag] = adjs;
 }
 
 function multiPusher(srcs, proc) {
@@ -63,7 +61,7 @@ function originPusher(srcs) {
   });
 }
 
-tagPatcherDirect = function (diff, diffPreserve, target, authors, origins) {
+tagPatcherDirect = function (diff, diffPreserve, adjOrder, target, authors, origins) {
   var output = {
     subjects: jsonClone(target.subjects),
     authors: authors || [],
@@ -78,13 +76,20 @@ tagPatcherDirect = function (diff, diffPreserve, target, authors, origins) {
         }
       });
 
-      _.each(diff[rootNoun].addedTo, function (adjs, tag) {
-        if (! isRemoved(diffPreserve, rootNoun, tag)) {
-          _.each(adjs, function (adj) {
-            if (! isRemovedFrom(diffPreserve, rootNoun, tag, adj)) {
-              addTo(output, rootNoun, tag, adj);
-            }
+      _.each(diff[rootNoun].addedTo, function (adjs, descNoun) {
+        if (! isRemoved(diffPreserve, rootNoun, descNoun)) {
+          var notRemoved = _.filter(adjs, function (adj) {
+            return ! isRemovedFrom(diffPreserve, rootNoun, descNoun, adj);
           });
+          var targetAdjs = _.get(output.subjects, rootNoun + "." + descNoun, []);
+          var merged = arrayMerge(
+            targetAdjs,
+            _.intersection(
+              adjOrder[rootNoun][descNoun],
+              _.union(notRemoved, targetAdjs)
+            )
+          );
+          addTo(output, rootNoun, descNoun, merged);
         }
       });
 
@@ -116,6 +121,7 @@ tagPatcher = function (a, b, c) {
   return tagPatcherDirect(
     tagDiffer(a, b),
     tagDiffer(a, c),
+    tagAdjOrder(b, c),
     c,
     authorPusher([a, b, c]),
     originPusher([a, b, c])

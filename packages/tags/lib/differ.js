@@ -16,7 +16,8 @@ tagDiffer = function (oldParsed, newParsed) {
       added: [],
       addedTo: {},
       removed: [],
-      removedFrom: {}
+      removedFrom: {},
+      adjOrder: {}
     };
     diff[rootNoun] = dOps;
 
@@ -35,6 +36,8 @@ tagDiffer = function (oldParsed, newParsed) {
     });
 
     _.each(descriptors, function (dAdjs, descNoun) {
+      var removedAdjs = [];
+
       var uAdjs = oldParsed.subjects[rootNoun][descNoun];
       if (uAdjs) {
         var ix = _.intersection(uAdjs, dAdjs);
@@ -45,6 +48,7 @@ tagDiffer = function (oldParsed, newParsed) {
             } else {
               dOps.removedFrom[descNoun].push(a);
             }
+            removedAdjs.push(a);
           }
         });
         _.each(dAdjs, function (a) {
@@ -63,6 +67,8 @@ tagDiffer = function (oldParsed, newParsed) {
           dOps.addedTo[descNoun].push.apply(dOps.addedTo[descNoun], dAdjs);
         }
       }
+
+      dOps.adjOrder[descNoun] = _.difference(uAdjs, removedAdjs);
     });
   });
 

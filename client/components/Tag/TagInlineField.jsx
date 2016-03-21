@@ -71,9 +71,11 @@ TagInlineField = React.createClass({
     }, replaced.moveNeedle);
   },
   onBlur(e) {
-    this.setState({
-      hideSuggestions: true
-    });
+    _.delay(() => {
+      this.setState({
+        hideSuggestions: true
+      });
+    }, 100);
 
     if (this.props.onBlur) {
       this.props.onBlur(e);

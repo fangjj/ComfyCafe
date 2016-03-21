@@ -1,11 +1,13 @@
 pushState = function (where) {
+  var where = window.location.pathname + where;
   var lastState = Session.get("lastHistState");
   if (where !== lastState) {
+    console.log("pushState", where, "lastHistState", lastState);
     window.history.pushState(
       FlowRouter.current().context,
       Session.get("pageTitle"),
-      window.location.pathname + where
+      where
     );
-    Session.set("lastHistState", window.location.pathname + where);
+    Session.set("lastHistState", where);
   }
 }

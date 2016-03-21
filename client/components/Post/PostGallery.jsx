@@ -13,6 +13,7 @@ const defaultState = {
 PostGallery = React.createClass({
   mixins: [ReactMeteorData],
   first: true,
+  seeded: false,
   getInitialState() {
     let filter;
     if (Meteor.user().settings && Meteor.user().settings.defaultFilter) {
@@ -42,6 +43,9 @@ PostGallery = React.createClass({
         }
       }
     });
+    if (! _.isEmpty(doc)) {
+      this.seeded = true;
+    }
     if (params.filter) {
       doc.filterChanged = true;
     }
@@ -111,7 +115,7 @@ PostGallery = React.createClass({
 
     if (! this.state.noPush) {
       const query = setQueryParams(queuedParams);
-      if (! this.first || query) {
+      if (! this.first || this.seeded) {
         pushState(query);
       }
     }

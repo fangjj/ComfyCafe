@@ -1,3 +1,7 @@
+/*
+This entire file is presently dead code.
+*/
+
 function beforeAfter(arr, idx) {
   var doc = {};
 

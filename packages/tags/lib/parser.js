@@ -67,6 +67,7 @@ function parseDescriptors(parsed, kv) {
 				} else {
 					notRevInner[label].push(tokens[notIndex+1]);
 				}
+				parsed.allTags.push(tokens[notIndex+1]);
 
 				parsed.withoutFlat.push(descNoun);
 

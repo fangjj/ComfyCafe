@@ -41,8 +41,6 @@ function queryGeneratorMeta(parsed, queryDoc) {
 function queryGeneratorWithout(parsed, extLookup, wAnd) {
   var exclude = [];
 
-  var wDoc = {};
-
   _.each(parsed.without, function (descriptors, rootNoun) {
     if (_.has(descriptors, "_pre") && descriptors._pre.length) {
       // Root->Child
@@ -77,6 +75,7 @@ function queryGeneratorWithout(parsed, extLookup, wAnd) {
   _.each(parsed.withoutReverse, function (descriptors, rootNoun) {
     _.each(descriptors, function (adjectives, parent) {
       // Child->Child
+      /*
       var doc = {};
       if (! _.isEmpty(adjectives)) {
         doc.$nin = adjectives;
@@ -84,6 +83,34 @@ function queryGeneratorWithout(parsed, extLookup, wAnd) {
         doc.$exists = false;
       }
       wDoc["tags.subjectsReverse." + rootNoun + "." + parent] = doc;
+      */
+
+      var rootExts = extLookup[rootNoun];
+      var parentExts = extLookup[parent];
+
+      _.each(rootExts, function (rootExt) {
+        _.each(parentExts, function (parentExt) {
+          if (! _.isEmpty(adjectives)) {
+            _.each(adjectives, function (adj) {
+              var exts = extLookup[adj];
+              pushApply(wAnd, _.map(
+                rootExts,
+                function (rootExt) {
+                  var doc = {};
+                  doc["tags.subjectsReverse." + rootExt + "." + parentExt] = {
+                    $nin: exts
+                  };
+                  return doc;
+                }
+              ));
+            });
+          } else {
+            var doc = {};
+            doc["tags.subjectsReverse." + rootExt + "." + parentExt] = { $exists: false };
+            wAnd.push(doc);
+          }
+        });
+      });
     });
   });
 };
@@ -157,7 +184,7 @@ function queryGeneratorSubjects(parsed, extLookup, sAnd) {
             ));
           }
 
-          rootDoc = {};
+          var rootDoc = {};
           rootDoc["tags.subjectsReverse." + rootExt + "." + parentExt] = { $exists: true };
           rootOrDoc.$or.push(rootDoc);
         });

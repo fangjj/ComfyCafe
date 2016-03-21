@@ -29,8 +29,8 @@ Package.onUse(function(api) {
     "lib/getQueryParam.js",
     "lib/setQueryParam.js",
     "lib/slice.js",
-    "lib/arrayDiffer.js",
     "lib/arrayPercent.js",
+    "lib/arrayMerge.js",
     "lib/fancySplit.js"
   ], ["client", "server"]);
 
@@ -49,8 +49,8 @@ Package.onUse(function(api) {
     "setQueryParam",
     "setQueryParams",
     "slice",
-    "arrayDiffer",
     "arrayPercent",
+    "arrayMerge",
     "fancySplit"
   ], ["client", "server"]);
 

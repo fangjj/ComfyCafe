@@ -117,11 +117,42 @@ function queryGeneratorSubjects(parsed, extLookup, sDoc) {
       /*
       Child->Child: `dog: blue hat` with `dog: black, blue hat`
       */
-      var doc = { $exists: true };
-      if (! _.isEmpty(adjectives)) {
-        doc.$all = adjectives;
-      }
-      sDoc["tags.subjectsReverse." + rootNoun + "." + parent] = doc;
+      //var doc = { $exists: true };
+      //if (! _.isEmpty(adjectives)) {
+      //  doc.$all = adjectives;
+      //}
+      //sDoc["tags.subjectsReverse." + rootNoun + "." + parent] = doc;
+
+      var rootExts = extLookup[rootNoun];
+      var parentExts = extLookup[parent];
+
+      var rootOrDoc = { $or: [] };
+      _.each(rootExts, function (rootExt) {
+        _.each(parentExts, function (parentExt) {
+          if (! _.isEmpty(adjectives)) {
+            pushApply(sDoc.$and, _.map(
+              adjectives,
+              function (adj) {
+                var exts = extLookup[adj];
+                var orDoc = { $or: [] };
+                orDoc.$or = _.map(rootExts, function (rootExt) {
+                  var doc = {};
+                  doc["tags.subjectsReverse." + rootExt + "." + parentExt] = {
+                    $in: exts
+                  };
+                  return doc;
+                });
+                return orDoc;
+              }
+            ));
+          }
+
+          rootDoc = {};
+          rootDoc["tags.subjectsReverse." + rootExt + "." + parentExt] = { $exists: true };
+          rootOrDoc.$or.push(rootDoc);
+        });
+      });
+      pushApply(sDoc.$and, rootOrDoc);
 
       /*
       Child->Root: `hat: dog` with `dog: hat`

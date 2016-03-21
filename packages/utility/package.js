@@ -20,6 +20,7 @@ Package.onUse(function(api) {
   ], "server");
 
   api.addFiles([
+    "lib/pushApply.js",
     "lib/jsonClone.js",
     "lib/whiteSplit.js",
     "lib/commaSplit.js",
@@ -39,6 +40,7 @@ Package.onUse(function(api) {
   ], "server");
 
   api.export([
+    "pushApply",
     "jsonClone",
     "whiteSplit",
     "commaSplit",

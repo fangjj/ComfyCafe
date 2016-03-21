@@ -79,13 +79,13 @@ function queryGeneratorSubjects(parsed, extLookup, sDoc) {
     i.e. matching `dog` against `dog` or `dog: black, hat`
     */
     //sDoc["tags.subjectsFlat"] = { $all: parsed.subjectsFlat };
-    sDoc.$and = _.map(
+    pushApply(sDoc.$and, _.map(
       parsed.subjectsFlat,
       function (subj) {
         var exts = extLookup[subj];
         return { "tags.subjectsFlat": { $in: exts } };
       }
-    );
+    ));
   }
 
   _.each(parsed.subjects, function (descriptors, rootNoun) {
@@ -94,7 +94,21 @@ function queryGeneratorSubjects(parsed, extLookup, sDoc) {
       Root->Child: `blue hat` with `dog: black, blue hat`
       We only need to do this if there are pre-adjs.
       */
-      sDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $all: descriptors._pre };
+      //sDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $all: descriptors._pre };
+      pushApply(sDoc.$and, _.map(
+        descriptors._pre,
+        function (pre) {
+          var rootExts = extLookup[rootNoun];
+          var exts = extLookup[pre];
+          var orDoc = { $or: [] };
+          orDoc.$or = _.map(rootExts, function (rootExt) {
+            var doc = {};
+            doc["tags.subjectsFlatAdjectives." + rootExt] = { $in: exts };
+            return doc;
+          });
+          return orDoc;
+        },
+      ));
     }
   });
 

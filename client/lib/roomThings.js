@@ -12,6 +12,7 @@ roomThings = [
   "Council",
   "Tribunal",
   "Organization",
+  "Enthusiasts",
   "Atelier",
   "University",
   "Academy",

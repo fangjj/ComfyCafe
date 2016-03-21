@@ -13,6 +13,19 @@ function queryGeneratorAuthors(parsed, queryDoc) {
   }
 }
 
+function queryGeneratorOrigins(parsed, queryDoc) {
+  var originQuery = {};
+  if (parsed.origins.length) {
+    originQuery.$all = parsed.origins;
+  }
+  if (parsed.notOrigins.length) {
+    originQuery.$nin = parsed.notOrigins;
+  }
+  if (! _.isEmpty(originQuery)) {
+    queryDoc["tags.origins"] = originQuery;
+  }
+}
+
 function queryGeneratorMeta(parsed, queryDoc) {
   if (_.has(parsed.meta, "id")) {
     // The query specifies a post ID, i.e. `id neJk82uvXvGH3Meig`.
@@ -104,6 +117,7 @@ tagQuery = function (str) {
   var queryDoc = {}, wDoc = {}, sDoc = {};
 
   queryGeneratorAuthors(parsed, queryDoc);
+  queryGeneratorOrigins(parsed, queryDoc);
   queryGeneratorMeta(parsed, queryDoc);
   queryGeneratorWithout(parsed, wDoc);
   queryGeneratorSubjects(parsed, sDoc);

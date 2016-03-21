@@ -29,6 +29,7 @@ Package.onUse(function(api) {
     "lib/adjOrder.js",
     "lib/patcher.js",
     "lib/renamer.js",
+    "lib/extensions.js",
     "lib/query.js",
     "lib/urlify.js"
   ], ["client", "server"]);
@@ -51,6 +52,7 @@ Package.onUse(function(api) {
     "tagPatcherDirect",
     "tagPatcher",
     "tagRenamer",
+    "tagExtensions",
     "tagQuery",
     "tagStrToUrl",
     "tagStrFromUrl"

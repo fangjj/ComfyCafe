@@ -23,9 +23,20 @@ TagTree = React.createClass({
       </div>;
     }
   },
+  renderOrigins() {
+    if (! _.isEmpty(this.props.tags.origins)) {
+      const elems = this.props.tags.origins.map((name) => {
+        return <TagletOrigin name={name} key={_.uniqueId()} />;
+      });
+      return <ul className="metaRow">
+        {elems}
+      </ul>;
+    }
+  },
   render() {
 		return <div className="tagTree">
       {this.renderAuthors()}
+      {this.renderOrigins()}
 			{this.renderInner()}
 		</div>;
   }

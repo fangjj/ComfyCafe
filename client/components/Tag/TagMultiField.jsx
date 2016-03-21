@@ -1,6 +1,5 @@
 let {
-  FontIcon,
-  IconButton
+  FlatButton
 } = mui;
 
 TagMultiField = React.createClass({
@@ -52,9 +51,11 @@ TagMultiField = React.createClass({
     return <ul>
       {this.renderInner()}
       <li>
-        <IconButton onTouchTap={this.handleAdd}>
-          <FontIcon className="material-icons">add</FontIcon>
-        </IconButton>
+        <FlatButton
+          label="Add Conditional Implication"
+          icon={<Icon>add</Icon>}
+          onTouchTap={this.handleAdd}
+        />
       </li>
     </ul>;
   }

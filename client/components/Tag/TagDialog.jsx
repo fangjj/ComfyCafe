@@ -45,7 +45,10 @@ TagDialog = React.createClass({
     }
   },
   handleName(event) {
-    this.setState({name: event.target.value});
+    this.setState({
+      name: event.target.value,
+      nameChanged: true
+    });
   },
   handleTagType(event, index, value) {
     this.setState({tagType: value});
@@ -92,6 +95,9 @@ TagDialog = React.createClass({
     if (! this.props.tag) {
       this.setState(defaultState);
     }
+
+    const path = FlowRouter.path("tag", {tagName: this.state.name});
+    FlowRouter.go(path);
   },
   render() {
     const actions = [

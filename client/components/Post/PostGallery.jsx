@@ -13,11 +13,16 @@ const defaultState = {
 PostGallery = React.createClass({
   mixins: [ReactMeteorData],
   first: true,
+  seeded: false,
   getInitialState() {
+    let filter;
+    if (Meteor.user().settings && Meteor.user().settings.defaultFilter) {
+      filter = Meteor.user().settings.defaultFilter;
+    }
     return {
       originalOnly: (getQueryParam("originalOnly") === "true") || defaultState.originalOnly,
       tagStr: getQueryParam("query") || defaultState.tagStr,
-      filter: getQueryParam("filter") || defaultState.filter
+      filter: getQueryParam("filter") || filter || defaultState.filter
     }
   },
   readQueryParams(event) {
@@ -38,6 +43,12 @@ PostGallery = React.createClass({
         }
       }
     });
+    if (! _.isEmpty(doc)) {
+      this.seeded = true;
+    }
+    if (params.filter) {
+      doc.filterChanged = true;
+    }
     this.setState(doc);
   },
   componentDidMount() {
@@ -49,21 +60,22 @@ PostGallery = React.createClass({
   getMeteorData() {
     let doc = this.props.generateDoc.bind(this)();
 
+    if (Meteor.user().settings && Meteor.user().settings.defaultFilter) {
+      defaultState.filter = Meteor.user().settings.defaultFilter;
+    }
+
     let queuedParams = [];
 
     if (this.state.originalOnly) {
       queuedParams.push({originalOnly: this.state.originalOnly});
-      doc.original = { $ne: false };
+      doc.originality = { $ne: "repost" };
     } else {
       queuedParams.push({originalOnly: undefined});
     }
 
     if (this.state.tagStr) {
-      if (this.state.tagStr !== defaultState.tagStr) {
-        queuedParams.push({query: this.state.tagStr});
-      } else {
-        queuedParams.push({query: undefined});
-      }
+      queuedParams.push({query: this.state.tagStr});
+
       const parsed = tagQuery(this.state.tagStr);
       _.each(parsed, (value, key) => {
         if (_.has(doc, key)) {
@@ -77,6 +89,8 @@ PostGallery = React.createClass({
           doc[key] = value;
         }
       });
+    } else {
+      queuedParams.push({query: undefined});
     }
 
     if (this.state.filter) {
@@ -84,6 +98,9 @@ PostGallery = React.createClass({
         queuedParams.push({filter: this.state.filter});
       } else {
         queuedParams.push({filter: undefined});
+      }
+      if (this.state.filter === "all") {
+        // noop
       }
       if (this.state.filter === "sfw") {
         doc["safety"] = { $lte: 1 };
@@ -98,7 +115,7 @@ PostGallery = React.createClass({
 
     if (! this.state.noPush) {
       const query = setQueryParams(queuedParams);
-      if (! this.first || query) {
+      if (! this.first || this.seeded) {
         pushState(query);
       }
     }
@@ -129,6 +146,7 @@ PostGallery = React.createClass({
   handleFilter(event, index, value) {
     this.setState({
       filter: value,
+      filterChanged: true,
       noPush: false
     });
   },
@@ -195,7 +213,7 @@ PostGallery = React.createClass({
         </div>
         <div style={{flexGrow: 1}}>
           <PostFilters
-            filter={this.state.filter}
+            value={this.state.filter}
             onChange={this.handleFilter}
           />
         </div>

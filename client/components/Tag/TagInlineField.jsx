@@ -7,7 +7,8 @@ TagInlineField = React.createClass({
   getInitialState() {
     return {
       text: this.props.defaultValue || "",
-      search: ""
+      search: "",
+      hideSuggestions: false
     };
   },
   getMeteorData() {
@@ -36,38 +37,62 @@ TagInlineField = React.createClass({
       currentUser: Meteor.user()
     };
   },
-  afterChange(doc) {
-    this.setState(doc);
+  afterChange(doc, callback) {
+    this.setState(doc, callback);
     this.props.onChange(doc.text);
   },
+  getTextArea() {
+    return $(this.refs.tfContainer).find("input:not([tabindex=-1])")[0];
+  },
   onChange(e) {
-    const tf = $(this.refs.tfContainer).find("input:not([tabindex=-1])")[0];
+    const tf = e.target;
     this.setState({
       caretCoords: getCaretCoordinates(tf, tf.selectionStart)
     });
 
     const value = e.target.value;
-    const split = whiteSplit(value);
-    const body = _.initial(split);
-    const last = _.last(split);
+    const searchPair = getActiveToken(value, tf);
+    const search = searchPair[0].trim();
+
     this.afterChange({
       text: value,
-      search: last
+      search: search
     });
   },
   onSelect(tag) {
-    const split = whiteSplit(this.state.text);
-    const body = _.initial(split);
-    const last = _.last(split);
-    let text = (body.join(" ") + " " + tag.name + (this.props.delim || "")).trim();
+    const tf = this.getTextArea();
+    const value = this.state.text;
+
+    const replaced = replaceActiveToken(value, tag.name, tf);
+
     this.afterChange({
-      text: text,
+      text: replaced.text,
       search: ""
+    }, replaced.moveNeedle);
+  },
+  onBlur(e) {
+    _.delay(() => {
+      this.setState({
+        hideSuggestions: true
+      });
+    }, 100);
+
+    if (this.props.onBlur) {
+      this.props.onBlur(e);
+    }
+  },
+  onFocus(e) {
+    this.setState({
+      hideSuggestions: false
     });
+
+    if (this.props.onFocus) {
+      this.props.onFocus(e);
+    }
   },
   renderSuggestions() {
     if (! this.data.loading) {
-      if (this.state.search) {
+      if (this.state.search && ! this.state.hideSuggestions) {
         const anchorCoords = $(this.refs.tfContainer).position();
         if (this.props.floatingLabelText) {
           anchorCoords.top += 36; // Account for margin
@@ -92,6 +117,8 @@ TagInlineField = React.createClass({
         floatingLabelStyle={{fontSize: "20px"}}
         fullWidth={true}
         onChange={this.onChange}
+        onBlur={this.onBlur}
+        onFocus={this.onFocus}
       />
       {this.renderSuggestions()}
     </div>;

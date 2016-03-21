@@ -10,7 +10,7 @@ Tag = React.createClass({
     };
   },
   renderAliases(tag) {
-    if (tag.aliases) {
+    if (tag.aliases.length) {
       const aliases = fancyCommaJoin(tag.aliases);
       return <span>
         Aliases: {aliases}
@@ -19,13 +19,14 @@ Tag = React.createClass({
     }
   },
   renderOrigin(tag) {
-    if (tag.type !== "origin") {
+    if (tag.type !== "origin" && tag.origin) {
       return <span>
         Origin: {tag.origin}
       </span>;
     }
   },
   renderSafety(tag) {
+    // Don't bother rendering if Safe
     if (tag.safety) {
       return <span>
         Safety: {safetyLabels[tag.safety]}
@@ -42,7 +43,7 @@ Tag = React.createClass({
     }
   },
   renderTagTree(tag) {
-    if (tag.implications) {
+    if (tag.implications && tag.implications.allTags.length > 1) {
       return <TagTree
         tags={tag.implications}
       />;

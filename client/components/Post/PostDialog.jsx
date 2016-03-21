@@ -6,9 +6,10 @@ let {
 
 const defaultState = {
   visibility: "public",
-  original: false,
+  originality: "original",
+  source: "",
   description: "",
-  safety: "safe",
+  safety: 0,
   autoSafety: 0,
   tags: "tagme",
   condExpanded: {},
@@ -21,7 +22,8 @@ PostDialog = React.createClass({
       const post = this.props.post;
       return {
         visibility: post.visibility,
-        original: post.original,
+        originality: post.originality,
+        source: post.source || defaultState.source,
         description: post.description || defaultState.description,
         safety: post.safety || defaultState.safety,
         autoSafety: post.safety || defaultState.safety,
@@ -36,8 +38,11 @@ PostDialog = React.createClass({
   handleVisibility(event, index, value) {
     this.setState({visibility: value});
   },
-  handleOriginal(event) {
-    this.setState({original: event.target.checked});
+  handleOriginality(event, index, value) {
+    this.setState({originality: value});
+  },
+  handleSource(event) {
+    this.setState({source: event.target.value});
   },
   handleDescription(event) {
     this.setState({description: event.target.value});
@@ -63,7 +68,8 @@ PostDialog = React.createClass({
   handleSubmit() {
     this.props.handleSubmit({
       visibility: this.state.visibility,
-      original: this.state.original,
+      originality: this.state.originality,
+      source: this.state.source,
       description: this.state.description,
       safety: this.state.safety,
       tags: this.state.tags,
@@ -111,8 +117,10 @@ PostDialog = React.createClass({
       <PostInnerForm
         visibility={this.state.visibility}
         handleVisibility={this.handleVisibility}
-        original={this.state.original}
-        handleOriginal={this.handleOriginal}
+        originality={this.state.originality}
+        handleOriginality={this.handleOriginality}
+        source={this.state.source}
+        handleSource={this.handleSource}
         description={this.state.description}
         handleDescription={this.handleDescription}
         safety={this.state.safety}

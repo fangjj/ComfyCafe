@@ -28,7 +28,10 @@ Package.onUse(function(api) {
     "lib/pushState.js",
     "lib/getQueryParam.js",
     "lib/setQueryParam.js",
-    "lib/slice.js"
+    "lib/slice.js",
+    "lib/arrayPercent.js",
+    "lib/arrayMerge.js",
+    "lib/fancySplit.js"
   ], ["client", "server"]);
 
   api.addFiles([
@@ -45,7 +48,10 @@ Package.onUse(function(api) {
     "getQueryParam",
     "setQueryParam",
     "setQueryParams",
-    "slice"
+    "slice",
+    "arrayPercent",
+    "arrayMerge",
+    "fancySplit"
   ], ["client", "server"]);
 
   api.export([

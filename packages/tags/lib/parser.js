@@ -147,6 +147,8 @@ tagParser = function (tagStr, reformat) {
 	var parsed = {
 		authors: [],
 		notAuthors: [],
+		origins: [],
+		notOrigins: [],
 		subjects: {},
 		subjectsReverse: {},
 		subjectsFlat: [],
@@ -173,6 +175,16 @@ tagParser = function (tagStr, reformat) {
 			return;
 		}
 
+		if (topToken.substr(0, 5) === "from ") {
+			parsed.origins.push(topToken.substr(5).trim());
+			return;
+		}
+
+		if (topToken.substr(0, 9) === "not from ") {
+			parsed.notOrigins.push(topToken.substr(9).trim());
+			return;
+		}
+
 		if (topToken.substr(0, 3) === "id ") {
 			parsed.meta.id = topToken.substr(3).trim();
 			return;
@@ -191,6 +203,11 @@ tagParser = function (tagStr, reformat) {
 			parseDescriptors(parsed, kv);
 		}
 	});
+
+	parsed.authors = _.uniq(parsed.authors);
+	parsed.notAuthors = _.uniq(parsed.notAuthors);
+	parsed.origins = _.uniq(parsed.origins);
+	parsed.notOrigins = _.uniq(parsed.notOrigins);
 
 	parsed.subjectsFlat = _.uniq(parsed.subjectsFlat);
 	parsed.withoutFlat = _.uniq(parsed.withoutFlat);

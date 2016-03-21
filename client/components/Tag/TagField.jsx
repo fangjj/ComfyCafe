@@ -22,7 +22,8 @@ TagField = React.createClass({
     return {
       text: this.props.defaultValue || "",
       search: "",
-      parsed: tagParser(this.injectTags(this.props.defaultValue))
+      parsed: tagParser(this.injectTags(this.props.defaultValue)),
+      hideSuggestions: false
     };
   },
   getMeteorData() {
@@ -138,48 +139,83 @@ TagField = React.createClass({
       });
     }
   },
-  afterChange(doc, value) {
-    this.handleParse(value, doc);
-    this.setState(doc);
+  afterChange(doc, callback) {
+    this.handleParse(doc.text, doc);
+    this.setState(doc, () => {
+      if (this.props.receiveAutoSafety) {
+        this.props.receiveAutoSafety(this.safetyRecommendation());
+      }
+      if (callback) {
+        callback();
+      }
+    });
     this.props.onChange(doc.text, doc.parsed, this.condExpanded);
-    if (this.props.receiveAutoSafety) {
-      this.props.receiveAutoSafety(this.safetyRecommendation());
-    }
+  },
+  getTextArea() {
+    return $(this.refs.tfContainer).find("textarea:not([tabindex=-1])")[0];
   },
   onChange(e) {
-    const tf = $(this.refs.tfContainer).find("textarea:not([tabindex=-1])")[0];
+    const tf = e.target;
     this.setState({
       caretCoords: getCaretCoordinates(tf, tf.selectionStart)
     });
 
     const value = e.target.value;
-    const split = whiteSplit(value);
-    const body = _.initial(split);
-    const last = _.last(split);
+    const searchPair = getActiveToken(value, tf);
+    const search = searchPair[0].trim();
+
     this.afterChange({
-      search: last
-    }, value);
+      text: value,
+      search: search
+    });
   },
   onSelect(tag) {
-    const split = whiteSplit(this.state.text);
-    const body = _.initial(split);
-    const last = _.last(split);
-    let text = body.join(" ") + " " + tag.name;
-    if (tag.implicationStr) {
-      text += ": " + tag.implicationStr + ";";
-    } else {
-      text += ";"
+    const tf = this.getTextArea();
+    const value = this.state.text;
+
+    const isToplevel = _.has(this.state.parsed.subjects, this.state.search);
+    let expanded = tag.name;
+    if (isToplevel) {
+      if (tag.implicationStr) {
+        expanded += ": " + tag.implicationStr + ";";
+      } else {
+        expanded += ";"
+      }
+      if (tag.origin) {
+        expanded += " from " + tag.origin + ";";
+      }
+      expanded = expanded.trim();
     }
-    if (tag.origin) {
-      text += " " + tag.origin + ";";
-    }
-    text = text.trim();
+
+    const replaced = replaceActiveToken(value, expanded, tf);
+
     this.afterChange({
+      text: replaced.text,
       search: ""
-    }, text);
+    }, replaced.moveNeedle);
+  },
+  onBlur(e) {
+    _.delay(() => {
+      this.setState({
+        hideSuggestions: true
+      });
+    }, 100);
+
+    if (this.props.onBlur) {
+      this.props.onBlur(e);
+    }
+  },
+  onFocus(e) {
+    this.setState({
+      hideSuggestions: false
+    });
+
+    if (this.props.onFocus) {
+      this.props.onFocus(e);
+    }
   },
   renderSuggestions() {
-    if (this.state.search) {
+    if (this.state.search && ! this.state.hideSuggestions) {
       const anchorCoords = $(this.refs.tfContainer).position();
       anchorCoords.top += 36; // Account for margin
       return <Suggestions
@@ -211,6 +247,8 @@ TagField = React.createClass({
           rowsMax={5}
           fullWidth={true}
           onChange={this.onChange}
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
         />
       </div>
       {this.renderSuggestions()}

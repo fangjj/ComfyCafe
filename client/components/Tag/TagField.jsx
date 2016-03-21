@@ -173,16 +173,19 @@ TagField = React.createClass({
     const before = value.substr(0, searchPair[1]);
     const after = value.substr(searchPair[1] + searchPair[0].length);
 
+    const isToplevel = _.has(this.state.parsed.subjects, this.state.search);
     let expanded = tag.name;
-    if (tag.implicationStr) {
-      expanded += ": " + tag.implicationStr + ";";
-    } else {
-      expanded += ";"
+    if (isToplevel) {
+      if (tag.implicationStr) {
+        expanded += ": " + tag.implicationStr + ";";
+      } else {
+        expanded += ";"
+      }
+      if (tag.origin) {
+        expanded += " " + tag.origin + ";";
+      }
+      expanded = expanded.trim();
     }
-    if (tag.origin) {
-      expanded += " " + tag.origin + ";";
-    }
-    expanded = expanded.trim();
 
     const text = before + expanded + after;
 

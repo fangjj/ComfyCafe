@@ -22,7 +22,8 @@ TagField = React.createClass({
     return {
       text: this.props.defaultValue || "",
       search: "",
-      parsed: tagParser(this.injectTags(this.props.defaultValue))
+      parsed: tagParser(this.injectTags(this.props.defaultValue)),
+      hideSuggestions: false
     };
   },
   getMeteorData() {
@@ -193,8 +194,26 @@ TagField = React.createClass({
       search: ""
     }, replaced.moveNeedle);
   },
+  onBlur(e) {
+    this.setState({
+      hideSuggestions: true
+    });
+
+    if (this.props.onBlur) {
+      this.props.onBlur(e);
+    }
+  },
+  onFocus(e) {
+    this.setState({
+      hideSuggestions: false
+    });
+
+    if (this.props.onFocus) {
+      this.props.onFocus(e);
+    }
+  },
   renderSuggestions() {
-    if (this.state.search) {
+    if (this.state.search && ! this.state.hideSuggestions) {
       const anchorCoords = $(this.refs.tfContainer).position();
       anchorCoords.top += 36; // Account for margin
       return <Suggestions
@@ -226,6 +245,8 @@ TagField = React.createClass({
           rowsMax={5}
           fullWidth={true}
           onChange={this.onChange}
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
         />
       </div>
       {this.renderSuggestions()}

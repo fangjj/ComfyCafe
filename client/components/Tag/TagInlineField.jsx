@@ -7,7 +7,8 @@ TagInlineField = React.createClass({
   getInitialState() {
     return {
       text: this.props.defaultValue || "",
-      search: ""
+      search: "",
+      hideSuggestions: false
     };
   },
   getMeteorData() {
@@ -69,9 +70,27 @@ TagInlineField = React.createClass({
       search: ""
     }, replaced.moveNeedle);
   },
+  onBlur(e) {
+    this.setState({
+      hideSuggestions: true
+    });
+
+    if (this.props.onBlur) {
+      this.props.onBlur(e);
+    }
+  },
+  onFocus(e) {
+    this.setState({
+      hideSuggestions: false
+    });
+
+    if (this.props.onFocus) {
+      this.props.onFocus(e);
+    }
+  },
   renderSuggestions() {
     if (! this.data.loading) {
-      if (this.state.search) {
+      if (this.state.search && ! this.state.hideSuggestions) {
         const anchorCoords = $(this.refs.tfContainer).position();
         if (this.props.floatingLabelText) {
           anchorCoords.top += 36; // Account for margin
@@ -96,6 +115,8 @@ TagInlineField = React.createClass({
         floatingLabelStyle={{fontSize: "20px"}}
         fullWidth={true}
         onChange={this.onChange}
+        onBlur={this.onBlur}
+        onFocus={this.onFocus}
       />
       {this.renderSuggestions()}
     </div>;

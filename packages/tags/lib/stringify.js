@@ -4,6 +4,9 @@ tagStringify = function (tagObj) {
   _.each(tagObj.authors, function (author) {
     chunks.push("by " + author);
   });
+  _.each(tagObj.origins, function (origin) {
+    chunks.push("from " + origin);
+  });
   _.each(tagObj.subjects, function (descriptors, rootNoun) {
     if (_.isEmpty(descriptors)) {
       chunks.push(rootNoun);

@@ -43,18 +43,31 @@ function addTo(dTags, rootNoun, tag, adj) {
   }
 }
 
-function authorPusher(srcs) {
-  var authors = [];
+function multiPusher(srcs, proc) {
+  var combined = [];
   _.each(srcs, function (src) {
-    authors.push.apply(authors, src.authors);
+    combined.push.apply(combined, proc(src));
   });
-  return _.uniq(authors);
+  return _.uniq(combined);
 }
 
-tagPatcherDirect = function (diff, diffPreserve, target, authors) {
+function authorPusher(srcs) {
+  return multiPusher(srcs, function (src) {
+    return src.authors;
+  });
+}
+
+function originPusher(srcs) {
+  return multiPusher(srcs, function (src) {
+    return src.origins;
+  });
+}
+
+tagPatcherDirect = function (diff, diffPreserve, target, authors, origins) {
   var output = {
     subjects: jsonClone(target.subjects),
-    authors: authors || []
+    authors: authors || [],
+    origins: origins || []
   };
 
   _.each(target.subjects, function (descriptors, rootNoun) {
@@ -104,6 +117,7 @@ tagPatcher = function (a, b, c) {
     tagDiffer(a, b),
     tagDiffer(a, c),
     c,
-    authorPusher([a, b, c])
+    authorPusher([a, b, c]),
+    originPusher([a, b, c])
   );
 };

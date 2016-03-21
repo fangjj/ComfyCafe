@@ -147,6 +147,8 @@ tagParser = function (tagStr, reformat) {
 	var parsed = {
 		authors: [],
 		notAuthors: [],
+		origins: [],
+		notOrigins: [],
 		subjects: {},
 		subjectsReverse: {},
 		subjectsFlat: [],
@@ -170,6 +172,16 @@ tagParser = function (tagStr, reformat) {
 
 		if (topToken.substr(0, 7) === "not by ") {
 			parsed.notAuthors.push(topToken.substr(7).trim());
+			return;
+		}
+
+		if (topToken.substr(0, 5) === "from ") {
+			parsed.origins.push(topToken.substr(5).trim());
+			return;
+		}
+
+		if (topToken.substr(0, 9) === "not from ") {
+			parsed.notOrigins.push(topToken.substr(9).trim());
 			return;
 		}
 

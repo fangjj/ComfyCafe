@@ -23,9 +23,17 @@ TagTree = React.createClass({
       </div>;
     }
   },
+  renderOrigins() {
+    if (! _.isEmpty(this.props.tags.origins)) {
+      return <div className="metaRow">
+        {"from " + fancyCommaJoin(this.props.tags.origins)}
+      </div>;
+    }
+  },
   render() {
 		return <div className="tagTree">
       {this.renderAuthors()}
+      {this.renderOrigins()}
 			{this.renderInner()}
 		</div>;
   }

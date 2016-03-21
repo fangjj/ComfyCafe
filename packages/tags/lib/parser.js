@@ -204,6 +204,11 @@ tagParser = function (tagStr, reformat) {
 		}
 	});
 
+	parsed.authors = _.uniq(parsed.authors);
+	parsed.notAuthors = _.uniq(parsed.notAuthors);
+	parsed.origins = _.uniq(parsed.origins);
+	parsed.notOrigins = _.uniq(parsed.notOrigins);
+
 	parsed.subjectsFlat = _.uniq(parsed.subjectsFlat);
 	parsed.withoutFlat = _.uniq(parsed.withoutFlat);
 	parsed.allTags = _.uniq(parsed.allTags);

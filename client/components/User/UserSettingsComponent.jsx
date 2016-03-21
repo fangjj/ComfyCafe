@@ -19,6 +19,7 @@ UserSettingsComponent = React.createClass({
     return {
       snackbarOpen: false,
       defaultPage: "art",
+      defaultFilter: "sfw",
       uploadAction: "redirect",
       autoWatch: false,
       patternSeed: "",
@@ -31,6 +32,9 @@ UserSettingsComponent = React.createClass({
   },
   handleDefaultPage(event, index, value) {
     this.setState({defaultPage: value})
+  },
+  handleDefaultFilter(event, index, value) {
+    this.setState({defaultFilter: value})
   },
   handleUploadAction(event, index, value) {
     this.setState({uploadAction: value})
@@ -46,6 +50,7 @@ UserSettingsComponent = React.createClass({
     var self = this;
     Meteor.call("updateSettings", {
       defaultPage: this.state.defaultPage,
+      defaultFilter: this.state.defaultFilter,
       uploadAction: this.state.uploadAction,
       autoWatch: this.state.autoWatch,
       patternSeed: this.state.patternSeed
@@ -62,6 +67,10 @@ UserSettingsComponent = React.createClass({
     if (this.data.currentUser && _.has(this.data.currentUser, "settings")) {
       if (_.has(this.data.currentUser.settings, "defaultPage")) {
         obj.defaultPage = this.data.currentUser.settings.defaultPage;
+      }
+
+      if (_.has(this.data.currentUser.settings, "defaultFilter")) {
+        obj.defaultFilter = this.data.currentUser.settings.defaultFilter;
       }
 
       if (_.has(this.data.currentUser.settings, "uploadAction")) {
@@ -97,6 +106,12 @@ UserSettingsComponent = React.createClass({
         <MenuItem value="art" primaryText="Art" />
         <MenuItem value="blog" primaryText="Blog" />
       </SelectField>
+      <br />
+      <PostFilters
+        value={this.state.defaultFilter}
+        floatingLabelText="Default Filter"
+        onChange={this.handleDefaultFilter}
+      />
       <br />
       <SelectField
         value={this.state.uploadAction}

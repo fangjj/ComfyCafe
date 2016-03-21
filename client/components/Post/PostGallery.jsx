@@ -14,10 +14,14 @@ PostGallery = React.createClass({
   mixins: [ReactMeteorData],
   first: true,
   getInitialState() {
+    let filter;
+    if (Meteor.user().settings && Meteor.user().settings.defaultFilter) {
+      filter = Meteor.user().settings.defaultFilter;
+    }
     return {
       originalOnly: (getQueryParam("originalOnly") === "true") || defaultState.originalOnly,
       tagStr: getQueryParam("query") || defaultState.tagStr,
-      filter: getQueryParam("filter") || defaultState.filter
+      filter: getQueryParam("filter") || filter || defaultState.filter
     }
   },
   readQueryParams(event) {
@@ -38,6 +42,9 @@ PostGallery = React.createClass({
         }
       }
     });
+    if (params.filter) {
+      doc.filterChanged = true;
+    }
     this.setState(doc);
   },
   componentDidMount() {
@@ -48,6 +55,10 @@ PostGallery = React.createClass({
   },
   getMeteorData() {
     let doc = this.props.generateDoc.bind(this)();
+
+    if (Meteor.user().settings && Meteor.user().settings.defaultFilter) {
+      defaultState.filter = Meteor.user().settings.defaultFilter;
+    }
 
     let queuedParams = [];
 
@@ -83,6 +94,9 @@ PostGallery = React.createClass({
         queuedParams.push({filter: this.state.filter});
       } else {
         queuedParams.push({filter: undefined});
+      }
+      if (this.state.filter === "all") {
+        // noop
       }
       if (this.state.filter === "sfw") {
         doc["safety"] = { $lte: 1 };
@@ -128,6 +142,7 @@ PostGallery = React.createClass({
   handleFilter(event, index, value) {
     this.setState({
       filter: value,
+      filterChanged: true,
       noPush: false
     });
   },
@@ -194,7 +209,7 @@ PostGallery = React.createClass({
         </div>
         <div style={{flexGrow: 1}}>
           <PostFilters
-            filter={this.state.filter}
+            value={this.state.filter}
             onChange={this.handleFilter}
           />
         </div>

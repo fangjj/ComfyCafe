@@ -46,7 +46,18 @@ function queryGeneratorWithout(parsed, extLookup, wAnd) {
   _.each(parsed.without, function (descriptors, rootNoun) {
     if (_.has(descriptors, "_pre") && descriptors._pre.length) {
       // Root->Child
-      wDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $nin: descriptors._pre };
+      var rootExts = extLookup[rootNoun];
+      _.each(descriptors._pre, function (dp) {
+        var exts = extLookup[dp];
+        pushApply(wAnd, _.map(
+          rootExts,
+          function (rootExt) {
+            var doc = {};
+            doc["tags.subjectsFlatAdjectives." + rootExt] = { $nin: exts };
+            return doc;
+          }
+        ));
+      });
     } else {
       exclude.push(rootNoun);
     }
@@ -121,7 +132,7 @@ function queryGeneratorSubjects(parsed, extLookup, sAnd) {
       /*
       Child->Child: `dog: blue hat` with `dog: black, blue hat`
       */
-      
+
       var rootExts = extLookup[rootNoun];
       var parentExts = extLookup[parent];
 

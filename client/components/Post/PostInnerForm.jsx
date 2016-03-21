@@ -1,22 +1,35 @@
 let {
   TextField,
-  Checkbox
+  Checkbox,
+  FlatButton
 } = mui;
 
 PostInnerForm = React.createClass({
+  renderSourceField() {
+    if (this.props.originality !== "original") {
+      return <TextField
+        defaultValue={this.props.source}
+        floatingLabelText="Source"
+        floatingLabelStyle={{fontSize: "20px"}}
+        multiLine={true}
+        rows={1}
+        rowsMax={3}
+        onChange={this.props.handleSource}
+        fullWidth={true}
+      />;
+    }
+  },
   render() {
     return <div>
       <SelectVisibility
         visibility={this.props.visibility}
         onChange={this.props.handleVisibility}
       />
-      <br />
-      <Checkbox
-        defaultChecked={this.props.original}
-        label="Original content"
-        labelStyle={{fontSize: "20px"}}
-        onCheck={this.props.handleOriginal}
+      <OriginalitySelector
+        value={this.props.originality}
+        onChange={this.props.handleOriginality}
       />
+      {this.renderSourceField()}
       <TextField
         defaultValue={this.props.description}
         floatingLabelText="Description"
@@ -28,15 +41,25 @@ PostInnerForm = React.createClass({
         fullWidth={true}
       />
       <br />
-      <TextField
+      <SafetySelector
+        safety={this.props.safety}
+        onChange={this.props.handleSafety}
+      />
+      <div className="autoSafety">
+        <span className="label">
+          Auto Safety: {safetyLabels[this.props.autoSafety]}
+        </span>
+        <FlatButton
+          label="Apply"
+          onTouchTap={this.props.applyAutoSafety}
+        />
+      </div>
+      <TagField
         defaultValue={this.props.tags}
+        condExpanded={this.props.condExpanded}
         floatingLabelText="Tags"
-        floatingLabelStyle={{fontSize: "20px"}}
-        multiLine={true}
-        rows={1}
-        rowsMax={4}
         onChange={this.props.handleTags}
-        fullWidth={true}
+        receiveAutoSafety={this.props.receiveAutoSafety}
       />
       <PretentiousFilterSelector
         pretentiousFilter={this.props.pretentiousFilter}

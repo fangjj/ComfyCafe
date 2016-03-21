@@ -4,8 +4,9 @@ PostSearch = React.createClass({
     return <PostGallery
       subName="searchPosts"
       subData={tagStr}
+      noFab={true}
       generateDoc={function () {
-        return privacyWrap(queryTags(tagStr), Meteor.userId(), Meteor.user().friends);
+        return privacyWrap(tagQuery(tagStr), Meteor.userId(), Meteor.user().friends);
       }}
       ifEmpty={function () {
         return <InlineUhoh>

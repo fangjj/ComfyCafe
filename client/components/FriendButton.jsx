@@ -24,7 +24,7 @@ FriendButton = React.createClass({
   },
   render() {
     const friended = this.props.currentUser
-      && _.contains(this.props.currentUser.friends, this.props.user._id);
+      && _.includes(this.props.currentUser.friends, this.props.user._id);
 
     if (! friended) {
       const requested = this.props.currentUser

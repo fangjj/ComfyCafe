@@ -6,21 +6,30 @@ let {
 
 const defaultState = {
   visibility: "public",
-  original: false,
+  originality: "original",
+  source: "",
   description: "",
+  safety: 0,
+  autoSafety: 0,
   tags: "tagme",
+  condExpanded: {},
   pretentiousFilter: "none"
 };
 
 PostDialog = React.createClass({
   getInitialState() {
     if (this.props.post) {
+      const post = this.props.post;
       return {
-        visibility: this.props.post.visibility,
-        original: this.props.post.original,
-        description: this.props.post.description || defaultState.description,
-        tags: this.props.post.tags.text || defaultState.tags,
-        pretentiousFilter: this.props.post.pretentiousFilter || defaultState.pretentiousFilter
+        visibility: post.visibility,
+        originality: post.originality,
+        source: post.source || defaultState.source,
+        description: post.description || defaultState.description,
+        safety: post.safety || defaultState.safety,
+        autoSafety: post.safety || defaultState.safety,
+        tags: post.tags.text || defaultState.tags,
+        condExpanded: post.tagsCondExpanded || defaultState.condExpanded,
+        pretentiousFilter: post.pretentiousFilter || defaultState.pretentiousFilter
       };
     } else {
       return defaultState;
@@ -29,14 +38,29 @@ PostDialog = React.createClass({
   handleVisibility(event, index, value) {
     this.setState({visibility: value});
   },
-  handleOriginal(event) {
-    this.setState({original: event.target.checked});
+  handleOriginality(event, index, value) {
+    this.setState({originality: value});
+  },
+  handleSource(event) {
+    this.setState({source: event.target.value});
   },
   handleDescription(event) {
     this.setState({description: event.target.value});
   },
-  handleTags(event) {
-    this.setState({tags: event.target.value});
+  handleSafety(event, index, value) {
+    this.setState({safety: parseInt(value)});
+  },
+  receiveAutoSafety(value) {
+    this.setState({autoSafety: value});
+  },
+  applyAutoSafety() {
+    this.setState({safety: this.state.autoSafety});
+  },
+  handleTags(value, parsed, condExpanded) {
+    this.setState({
+      tags: value,
+      condExpanded: condExpanded
+    });
   },
   handlePretentiousFilter(event, index, value) {
     this.setState({pretentiousFilter: value});
@@ -44,9 +68,12 @@ PostDialog = React.createClass({
   handleSubmit() {
     this.props.handleSubmit({
       visibility: this.state.visibility,
-      original: this.state.original,
+      originality: this.state.originality,
+      source: this.state.source,
       description: this.state.description,
+      safety: this.state.safety,
       tags: this.state.tags,
+      tagsCondExpanded: this.state.condExpanded,
       pretentiousFilter: this.state.pretentiousFilter
     });
 
@@ -90,12 +117,20 @@ PostDialog = React.createClass({
       <PostInnerForm
         visibility={this.state.visibility}
         handleVisibility={this.handleVisibility}
-        original={this.state.original}
-        handleOriginal={this.handleOriginal}
+        originality={this.state.originality}
+        handleOriginality={this.handleOriginality}
+        source={this.state.source}
+        handleSource={this.handleSource}
         description={this.state.description}
         handleDescription={this.handleDescription}
+        safety={this.state.safety}
+        handleSafety={this.handleSafety}
+        autoSafety={this.state.autoSafety}
+        receiveAutoSafety={this.receiveAutoSafety}
+        applyAutoSafety={this.applyAutoSafety}
         tags={this.state.tags}
         handleTags={this.handleTags}
+        condExpanded={this.state.condExpanded}
         pretentiousFilter={this.state.pretentiousFilter}
         handlePretentiousFilter={this.handlePretentiousFilter}
       />

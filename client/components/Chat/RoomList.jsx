@@ -27,7 +27,7 @@ RoomList = React.createClass({
   },
   render() {
     if (this.data.loading) {
-      return <LoadingSpinnerComponent />;
+      return <LoadingSpinner />;
     }
 
     return <div className="content">

@@ -1,6 +1,6 @@
 var takeAdj = function (pool) {
   adj = _.sample(adjectives);
-  if (_.contains(pool, adj)) {
+  if (_.includes(pool, adj)) {
     return takeAdj(pool);
   } else {
     return adj;

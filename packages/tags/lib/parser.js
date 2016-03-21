@@ -1,216 +1,216 @@
-/*
-Wow holy shit I need to document this.
-*/
+tagStrSample = "nia-teppelin: young, short multicolored hair, cat ears;"
+	+ "yoko-littner: flame bikini, pink stockings, long red hair, without gun";
 
-var getClauseProto = function () {
-	return {
-		parents: {},
-		root: []
-	};
-};
+function parseLonely(parsed, kv) {
+	var tokens = whiteSplit(kv[0]);
+	var noun = tokens.pop();
 
-parseTagStr = function (tagStr, options) {
-  if (! options) {
-    options = {};
-  }
+	if (_.includes(["not", "without"], tokens[0])) {
+		tokens.shift();
+		target = parsed.without;
+		targetFlat = parsed.withoutFlat;
+	} else {
+		target = parsed.subjects;
+		targetFlat = parsed.subjectsFlat;
+	}
+
+	var doc = {};
+	if (tokens.length) {
+		doc = {_pre: tokens};
+	}
+
+	target[noun] = doc;
+	targetFlat.push(noun);
+	parsed.allTags.push(noun);
+	if (tokens.length) {
+		parsed.allTags.push.apply(parsed.allTags, tokens);
+	}
+}
+
+function parseDescriptors(parsed, kv) {
+	var label;
+	var withoutMode = false;
+	var topTokens = whiteSplit(kv[0]);
+	if (topTokens.length === 1) {
+		label = kv[0];
+	} else if (_.includes(["not", "without"], topTokens[0])) {
+		label = topTokens[1];
+		withoutMode = true;
+	}
+
+	var sInner = {}, wInner = {};
+
+	var descriptors = tagDescriptorTokenizer(kv[1]);
+
+	_.each(descriptors, function (descriptor, di) {
+		var tokens = whiteSplit(descriptor);
+		var descNoun = tokens.pop();
+
+		var notIndex = tokens.indexOf("not");
+		while (notIndex > -1) {
+			if (! withoutMode) {
+				if (! _.has(wInner, descNoun)) {
+					wInner[descNoun] = [tokens[notIndex+1]];
+				} else {
+					wInner[descNoun].push(tokens[notIndex+1]);
+				}
+
+				var notRevInner;
+				if (! _.has(parsed.withoutReverse, descNoun)) {
+					revInner = {};
+					parsed.withoutReverse[descNoun] = notRevInner;
+				} else {
+					notRevInner = parsed.withoutReverse[descNoun];
+				}
+
+				if (! _.has(parsed.withoutReverse[descNoun], label)) {
+					notRevInner[label] = [tokens[notIndex+1]];
+				} else {
+					notRevInner[label].push(tokens[notIndex+1]);
+				}
+
+				parsed.withoutFlat.push(descNoun);
+
+				tokens.splice(notIndex, notIndex+2);
+				notIndex = tokens.indexOf("not");
+			} else {
+				tokens.splice(notIndex);
+			}
+		}
+
+		var useSubject;
+		if (tokens[0] !== "without") {
+			useSubject = true;
+		} else {
+			if (! withoutMode) {
+				useSubject = false;
+			} else {
+				useSubject = true;
+			}
+			tokens.shift();
+		}
+
+		var target, targetRev, targetFlat, targetFlatAdj;
+		if (useSubject) {
+			target = sInner;
+			targetRev = parsed.subjectsReverse;
+			targetFlat = parsed.subjectsFlat;
+			targetFlatAdj = parsed.subjectsFlatAdjectives;
+		} else {
+			target = wInner;
+			targetRev = parsed.withoutReverse;
+			targetFlat = parsed.withoutFlat;
+			targetFlatAdj = parsed.withoutFlatAdjectives;
+		}
+
+		target[descNoun] = tokens;
+
+		var revInner = {};
+		revInner[label] = tokens;
+		if (! _.has(targetRev, descNoun)) {
+			targetRev[descNoun] = {};
+		}
+		targetRev[descNoun][label] = tokens;
+
+		if (! targetFlatAdj[descNoun]) {
+			targetFlatAdj[descNoun] = _.cloneDeep(tokens);
+		} else {
+			targetFlatAdj[descNoun].push.apply(targetFlatAdj[descNoun], tokens);
+		}
+
+		targetFlat.push(descNoun);
+
+		parsed.allTags.push(descNoun);
+		parsed.allTags.push.apply(parsed.allTags, tokens);
+	});
+
+	if (! _.isEmpty(sInner)) {
+		if (! withoutMode) {
+			parsed.subjects[label] = sInner;
+			parsed.subjectsFlat.push(label);
+		} else {
+			parsed.without[label] = sInner;
+			parsed.withoutFlat.push(label);
+		}
+	}
+	if (! _.isEmpty(wInner)) {
+		parsed.without[label] = wInner;
+		parsed.withoutFlat.push(label);
+	}
+
+	parsed.allTags.push(label);
+}
+
+tagParser = function (tagStr, reformat) {
+	tagStr = tagStr.trim();
 
 	var parsed = {
-		nouns: {},
-		filters: {}
+		authors: [],
+		notAuthors: [],
+		origins: [],
+		notOrigins: [],
+		subjects: {},
+		subjectsReverse: {},
+		subjectsFlat: [],
+		subjectsFlatAdjectives: {},
+		without: {},
+		withoutReverse: {},
+		withoutFlat: [],
+		withoutFlatAdjectives: {},
+		allTags: [],
+		meta: {},
+		text: tagStr
 	};
 
-	if (! tagStr) {
-		return parsed;
-	}
+	var toplevel = tagTopLevelTokenizer(tagStr);
 
-	if (options.reformat) {
-		parsed.text = "";
-	}
-
-	operatorRe = new RegExp("( with | without )+");
-	conjunctionRe = new RegExp("(, and |,and | and |, |,)+");
-
-	var rawClauses = tagStr.split(";");
-	for (var clauseIndex in rawClauses) {
-		var clause = rawClauses[clauseIndex];
-
-		var clauses = clause.split(operatorRe);
-
-		var rootDescriptor = clauses[0].trim().split(" ");
-		if (! rootDescriptor.length) {
-			// This is an empty clause, so skip it.
-			continue;
+	_.each(toplevel, function (topToken, ti) {
+		if (topToken.substr(0, 3) === "by ") {
+			parsed.authors.push(topToken.substr(3).trim());
+			return;
 		}
 
-		var rootNoun = slice(rootDescriptor, -1)[0];
-
-		var rootAdjs = [];
-		if (clauses[0].length > 1) {
-			rootAdjs = slice(rootDescriptor, undefined, -1);
+		if (topToken.substr(0, 7) === "not by ") {
+			parsed.notAuthors.push(topToken.substr(7).trim());
+			return;
 		}
 
-		if (rootAdjs.length && slice(rootAdjs, -1)[0] === "by") {
-			// This is an author meta attribute.
-
-			if (rootAdjs[0] === "not") {
-				if (! parsed.filteredAuthors) {
-					parsed.filteredAuthors = [];
-				}
-				parsed.filteredAuthors.push(rootNoun);
-
-				if (options.reformat) {
-					parsed.text += "; not by " + rootNoun;
-				}
-			} else {
-				if (! parsed.authors) {
-					parsed.authors = [];
-				}
-				parsed.authors.push(rootNoun);
-
-				if (options.reformat) {
-					parsed.text += "; by " + rootNoun;
-				}
-			}
-
-			continue;
+		if (topToken.substr(0, 5) === "from ") {
+			parsed.origins.push(topToken.substr(5).trim());
+			return;
 		}
 
-		var rootTarget = "nouns";
-		if (rootAdjs.length && rootAdjs[0] === "not") {
-			rootTarget = "filters";
-			rootAdjs = slice(rootAdjs, 1);
+		if (topToken.substr(0, 9) === "not from ") {
+			parsed.notOrigins.push(topToken.substr(9).trim());
+			return;
 		}
 
-		if (! (rootNoun in parsed[rootTarget])) {
-			parsed[rootTarget][rootNoun] = getClauseProto();
-		}
-		parsed[rootTarget][rootNoun].root = rootAdjs;
-
-		if (options.reformat) {
-			var adjs = "";
-			if (rootAdjs.length) {
-				adjs = rootAdjs.join(" ") + " ";
-			}
-
-			if (rootTarget === "filters") {
-				adjs = "not " + adjs;
-			}
-
-			parsed.text += "; " + adjs + rootNoun;
+		if (topToken.substr(0, 3) === "id ") {
+			parsed.meta.id = topToken.substr(3).trim();
+			return;
 		}
 
-		var enumeratedClauses = [];
-		for (var clauseIndex in clauses) {
-			enumeratedClauses.push([parseInt(clauseIndex), clauses[clauseIndex].trim()]);
+		if (topToken.substr(0, 5) === "name ") {
+			parsed.meta.name = topToken.substr(5).trim();
+			return;
 		}
 
-		var workingClauses = slice(enumeratedClauses, 1, undefined, 2);
-		for (var clausePairIndex in workingClauses) {
-			var clauseIndex = workingClauses[clausePairIndex][0];
-			var operator = workingClauses[clausePairIndex][1];
+		var kv = tagSubjectTokenizer(topToken);
 
-			var descriptors = clauses[clauseIndex+1].split(conjunctionRe);
-
-			var rootSubDescriptor = descriptors[0].split(" ");
-			if (! rootSubDescriptor.length) {
-				// This is an empty descriptor, so skip it.
-				continue;
-			}
-
-			var noun = slice(rootSubDescriptor, -1);
-			var adjectives = slice(rootSubDescriptor, undefined, -1);
-
-			if (options.reformat) {
-				var adjs = "";
-				if (adjectives.length) {
-					adjs = adjectives.join(" ") + " ";
-				}
-
-				parsed.text += (" " + operator + " " + adjs + noun);
-			}
-
-			var target = "nouns";
-			if (operator === "without" || rootTarget === "filters") {
-				target = "filters";
-			}
-
-			if (! (noun in parsed[target])) {
-				parsed[target][noun] = getClauseProto();
-
-				/*
-				Array to contain all of the noun's parents.
-				This is used to efficiently make Root->Child queries.
-				*/
-				parsed[target][noun].flatAdjectives = [];
-			}
-			parsed[target][noun].parents[rootNoun] = adjectives;
-			parsed[target][noun].flatAdjectives = _.union(
-				parsed[target][noun].flatAdjectives, adjectives
-			);
-
-			var enumeratedDescriptors = [];
-			for (var descIndex in descriptors) {
-				enumeratedDescriptors.push([parseInt(descIndex), descriptors[descIndex].trim()]);
-			}
-
-			var workingDescriptors = slice(enumeratedDescriptors, 1, undefined, 2);
-			for (var descPairIndex in workingDescriptors) {
-				var descIndex = workingDescriptors[descPairIndex][0];
-				// Conjunctions are meaningless in the current spec ;_;
-				var conjunction = workingDescriptors[descPairIndex][1];
-
-				var subDescriptor = descriptors[descIndex+1].split(" ");
-				if (! subDescriptor.length) {
-					// This is an empty descriptor, so skip it.
-					continue;
-				}
-
-				var noun = slice(subDescriptor, -1);
-				var adjectives = slice(subDescriptor, undefined, -1);
-
-				if (options.reformat) {
-					var conj = ", ";
-					if (descIndex + 2 === descriptors.length) {
-						if (descIndex === 1) {
-							conj = " and ";
-						} else {
-							conj = ", and "
-						}
-					}
-
-					var adjs = "";
-					if (adjectives.length) {
-						adjs = adjectives.join(" ") + " ";
-					}
-
-					parsed.text += (conj + adjs + noun);
-				}
-
-				if (! (noun in parsed[target])) {
-					parsed[target][noun] = getClauseProto();
-
-					/*
-					Array to contain all of the noun's parents.
-					This is used to efficiently make Root->Child queries.
-					*/
-					parsed[target][noun].flatAdjectives = [];
-				}
-				parsed[target][noun].parents[rootNoun] = adjectives;
-				parsed[target][noun].flatAdjectives = _.union(
-					parsed[target][noun].flatAdjectives, adjectives
-				);
-			}
+		if (kv.length === 1) {
+			parseLonely(parsed, kv);
+		} else {
+			parseDescriptors(parsed, kv);
 		}
-	}
+	});
 
-	if (options.reformat) {
-		parsed.text = slice(parsed.text, 2, undefined);
+	parsed.subjectsFlat = _.uniq(parsed.subjectsFlat);
+	parsed.withoutFlat = _.uniq(parsed.withoutFlat);
+	parsed.allTags = _.uniq(parsed.allTags);
+
+	if (reformat) {
+		parsed.text = tagStringify(parsed);
 	}
 
 	return parsed;
-};
-
-getDefaultTagObj = function () {
-	// Without any arguments, this just returns the default tag object.
-	return parseTagStr();
 };

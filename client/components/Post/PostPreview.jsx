@@ -13,11 +13,14 @@ PostPreview = React.createClass({
     }
   },
   renderStar() {
-    if (this.props.post.original) {
-      return <div className="star">
-        <FontIcon className="material-icons" style={{fontSize: 18}}>star</FontIcon>
-      </div>;
-    }
+    const iconMap = {
+      original: "star",
+      derivative: "device_hub",
+      repost: "repeat"
+    };
+    return <div className="star">
+      <OriginalityIcon originality={this.props.post.originality} /> 
+    </div>;
   },
   render() {
     const postUrl = FlowRouter.path("post", {

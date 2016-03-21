@@ -3,8 +3,8 @@ TopBarTagButton = React.createClass({
     return <NavItem
       label="Tags"
       iconName="style"
-      href={FlowRouter.path("pizza")}
-      className="hide-on-small-only" 
+      href={FlowRouter.path("tagList")}
+      className="hide-on-small-only"
     />;
   }
 });

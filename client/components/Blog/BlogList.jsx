@@ -54,7 +54,7 @@ BlogList = React.createClass({
   },
   render() {
     if (this.data.loading) {
-      return <LoadingSpinnerComponent />;
+      return <LoadingSpinner />;
     }
 
     if (! this.data.currentUser) {

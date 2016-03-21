@@ -1,6 +1,6 @@
 LoadingTestView = {
   layout: MainLayout,
   content: {
-    main: <LoadingSpinnerComponent />
+    main: <LoadingSpinner />
   }
 };

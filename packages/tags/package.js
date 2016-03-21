@@ -15,23 +15,43 @@ Package.onUse(function(api) {
 
   api.use([
     "ecmascript",
-    "mongo",
     "teru:utility"
   ], ["client", "server"]);
 
   api.addFiles([
+    "lib/aliases.js",
+    "lib/stringify.js",
+    "lib/tokenizer.js",
     "lib/parser.js",
-    "lib/humanizer.js",
+    "lib/regenerator.js",
+    "lib/resolver.js",
+    "lib/differ.js",
+    "lib/adjOrder.js",
+    "lib/patcher.js",
+    "lib/renamer.js",
     "lib/query.js",
     "lib/urlify.js"
   ], ["client", "server"]);
 
   api.export([
-    "parseTagStr",
-    "getDefaultTagObj",
-    "humanizeTags",
-    "humanizeTagStr",
-    "queryTagsGenerator",
+    "aliasSample",
+    "parseAliases",
+    "tagStringify",
+    "tagChunkStringify",
+    "tagStrSample",
+    "tagTopLevelTokenizer",
+    "tagSubjectTokenizer",
+    "tagDescriptorTokenizer",
+    "tagParser",
+    "tagRegenerator",
+    "tagResolver",
+    "tagFullResolver",
+    "tagDiffer",
+    "tagAdjOrder",
+    "tagPatcherDirect",
+    "tagPatcher",
+    "tagRenamer",
+    "tagQuery",
     "tagStrToUrl",
     "tagStrFromUrl"
   ], ["client", "server"]);

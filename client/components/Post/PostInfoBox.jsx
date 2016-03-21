@@ -3,6 +3,12 @@ let {
   FontIcon
 } = mui;
 
+const verbMap = {
+  original: "created",
+  derivative: "remixed",
+  repost: "uploaded"
+};
+
 PostInfoBox = React.createClass({
   reroll() {
     Meteor.call("rerollPost", this.props.post._id, (err, name) => {
@@ -18,6 +24,11 @@ PostInfoBox = React.createClass({
       goBack();
     });
   },
+  renderSource() {
+    if (this.props.post.source) {
+      return <TextBody text={"Source: " + this.props.post.source} className="source" />;
+    }
+  },
   render() {
     const post = this.props.post;
 
@@ -30,23 +41,20 @@ PostInfoBox = React.createClass({
       subButton = <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />;
     } else {
       subButton = <div>
-        <SubmitButton
-          label="Reroll"
-          iconName="casino"
-          onTouchTap={this.reroll}
-        />
         <SubtleDangerButton
           label="Delete"
           iconName="delete"
           onTouchTap={this.delete}
         />
+        <SubmitButton
+          label="Reroll"
+          iconName="casino"
+          onTouchTap={this.reroll}
+        />
       </div>;
     }
 
-    let verb = "uploaded";
-    if (post.original) {
-      verb = "created";
-    }
+    const verb = verbMap[post.originality];
 
     return <section className="infoBox content">
       <div className="flexColumn">
@@ -58,13 +66,19 @@ PostInfoBox = React.createClass({
           </div>
           <div className="rightSide">
             <div className="top">
-              <div className="info">
-                {verb} by <UserLink user={owner} /> <Moment time={post.createdAt} />
+              <div className="genericCol">
+                <div className="info">
+                  <OriginalityIcon originality={post.originality} />
+                  {verb} by <UserLink user={owner} /> <Moment time={post.createdAt} />
+                </div>
+                <div className="privacy">
+                  <PrivacyIcon privacy={post.visibility} /> {_.capitalize(post.visibility)}
+                </div>
+                {this.renderSource()}
               </div>
-              {/*this.renderMoreMenu()*/}
-            </div>
-            <div className="action">
-              {subButton}
+              <div className="action">
+                {subButton}
+              </div>
             </div>
           </div>
         </div>

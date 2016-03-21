@@ -1,40 +1,121 @@
 let {
-  TextField,
   Checkbox,
   FontIcon
 } = mui;
 
+const defaultState = {
+  originalOnly: false,
+  tagStr: "",
+  filter: "sfw",
+  noPush: false
+};
+
 PostGallery = React.createClass({
   mixins: [ReactMeteorData],
+  first: true,
   getInitialState() {
-    return {
-      originalOnly: false,
-      tagStr: "",
-      filter: "sfw"
+    let filter;
+    if (Meteor.user().settings && Meteor.user().settings.defaultFilter) {
+      filter = Meteor.user().settings.defaultFilter;
     }
+    return {
+      originalOnly: (getQueryParam("originalOnly") === "true") || defaultState.originalOnly,
+      tagStr: getQueryParam("query") || defaultState.tagStr,
+      filter: getQueryParam("filter") || filter || defaultState.filter
+    }
+  },
+  readQueryParams(event) {
+    let doc = {
+      noPush: true
+    };
+    const params = {
+      originalOnly: getQueryParam("originalOnly"),
+      tagStr: getQueryParam("query"),
+      filter: getQueryParam("filter")
+    };
+    _.each(params, (v, k) => {
+      if (v !== null) {
+        if (typeof defaultState[k] !== "boolean") {
+          doc[k] = v;
+        } else {
+          doc[k] = v === "true";
+        }
+      }
+    });
+    if (params.filter) {
+      doc.filterChanged = true;
+    }
+    this.setState(doc);
+  },
+  componentDidMount() {
+    window.addEventListener("popstate", this.readQueryParams);
+  },
+  componentWillUnmount() {
+    window.removeEventListener("popstate", this.readQueryParams);
   },
   getMeteorData() {
     let doc = this.props.generateDoc.bind(this)();
 
+    if (Meteor.user().settings && Meteor.user().settings.defaultFilter) {
+      defaultState.filter = Meteor.user().settings.defaultFilter;
+    }
+
+    let queuedParams = [];
+
     if (this.state.originalOnly) {
-      doc.original = { $ne: false };
+      queuedParams.push({originalOnly: this.state.originalOnly});
+      doc.originality = { $ne: "repost" };
+    } else {
+      queuedParams.push({originalOnly: undefined});
     }
 
     if (this.state.tagStr) {
-      const parsed = queryTags(this.state.tagStr, Meteor.userId());
+      queuedParams.push({query: this.state.tagStr});
+
+      const parsed = tagQuery(this.state.tagStr);
       _.each(parsed, (value, key) => {
         if (_.has(doc, key)) {
-          console.error("PANIC: key " + key + " already present in doc.");
+          prettyPrint(value);
+          if (_.includes(["$and", "$or", "$nor"], key)) {
+            doc[key].push.apply(doc[key], value);
+          } else {
+            console.error("PANIC: key " + key + " already present in doc.");
+          }
+        } else {
+          doc[key] = value;
         }
-        doc[key] = value;
       });
+    } else {
+      queuedParams.push({query: undefined});
     }
 
     if (this.state.filter) {
+      if (this.state.filter !== defaultState.filter) {
+        queuedParams.push({filter: this.state.filter});
+      } else {
+        queuedParams.push({filter: undefined});
+      }
+      if (this.state.filter === "all") {
+        // noop
+      }
+      if (this.state.filter === "sfw") {
+        doc["safety"] = { $lte: 1 };
+      }
+      if (this.state.filter === "nsfw") {
+        doc["safety"] = { $gte: 2 };
+      }
       if (this.state.filter === "your") {
         doc["owner._id"] = Meteor.userId();
       }
     }
+
+    if (! this.state.noPush) {
+      const query = setQueryParams(queuedParams);
+      if (! this.first || query) {
+        pushState(query);
+      }
+    }
+    this.first = false;
 
     let handle = Meteor.subscribe(this.props.subName, this.props.subData);
     return {
@@ -47,13 +128,23 @@ PostGallery = React.createClass({
     };
   },
   handleOriginalOnly(event) {
-    this.setState({originalOnly: event.target.checked});
+    this.setState({
+      originalOnly: ! this.state.originalOnly,
+      noPush: false
+    });
   },
-  handleSearch(event) {
-    this.setState({tagStr: event.target.value})
+  handleSearch(value) {
+    this.setState({
+      tagStr: value,
+      noPush: false
+    });
   },
   handleFilter(event, index, value) {
-    this.setState({filter: value});
+    this.setState({
+      filter: value,
+      filterChanged: true,
+      noPush: false
+    });
   },
   renderPosts() {
     if (this.data.posts.length) {
@@ -90,7 +181,7 @@ PostGallery = React.createClass({
   },
   render() {
     if (this.data.loading) {
-      return <LoadingSpinnerComponent />;
+      return <LoadingSpinner />;
     }
 
     if (this.props.requireAuth && ! this.data.currentUser) {
@@ -109,15 +200,16 @@ PostGallery = React.createClass({
           />
         </div>
         <div style={{flexGrow: 2}}>
-          <TextField
+          <TagInlineField
+            delim=";"
+            defaultValue={this.state.tagStr}
             hintText="Search"
-            fullWidth={true}
-            onChange={this.handleSearch}
+            onChange={_.debounce(this.handleSearch, 250)}
           />
         </div>
         <div style={{flexGrow: 1}}>
           <PostFilters
-            filter={this.state.filter}
+            value={this.state.filter}
             onChange={this.handleFilter}
           />
         </div>

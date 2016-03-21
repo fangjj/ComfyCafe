@@ -38,8 +38,10 @@ function queryGeneratorMeta(parsed, queryDoc) {
   }
 }
 
-function queryGeneratorWithout(parsed, extLookup, wDoc) {
+function queryGeneratorWithout(parsed, extLookup, wAnd) {
   var exclude = [];
+
+  var wDoc = {};
 
   _.each(parsed.without, function (descriptors, rootNoun) {
     if (_.has(descriptors, "_pre") && descriptors._pre.length) {
@@ -52,7 +54,13 @@ function queryGeneratorWithout(parsed, extLookup, wDoc) {
 
   if (exclude.length) {
     // Root->Root exclusion
-    wDoc["tags.subjectsFlat"] = { $nin: exclude };
+    pushApply(wAnd, _.map(
+      exclude,
+      function (subj) {
+        var exts = extLookup[subj];
+        return { "tags.subjectsFlat": { $nin: exts } };
+      }
+    ));
   }
 
   _.each(parsed.withoutReverse, function (descriptors, rootNoun) {
@@ -69,17 +77,14 @@ function queryGeneratorWithout(parsed, extLookup, wDoc) {
   });
 };
 
-function queryGeneratorSubjects(parsed, extLookup, sDoc) {
-  sDoc.$and = [];
-
+function queryGeneratorSubjects(parsed, extLookup, sAnd) {
   if (parsed.subjectsFlat.length) {
     /*
     This is the basic Root->Root query.
     All we're doing is checking for all root nouns existing.
     i.e. matching `dog` against `dog` or `dog: black, hat`
     */
-    //sDoc["tags.subjectsFlat"] = { $all: parsed.subjectsFlat };
-    pushApply(sDoc.$and, _.map(
+    pushApply(sAnd, _.map(
       parsed.subjectsFlat,
       function (subj) {
         var exts = extLookup[subj];
@@ -94,8 +99,7 @@ function queryGeneratorSubjects(parsed, extLookup, sDoc) {
       Root->Child: `blue hat` with `dog: black, blue hat`
       We only need to do this if there are pre-adjs.
       */
-      //sDoc["tags.subjectsFlatAdjectives." + rootNoun] = { $all: descriptors._pre };
-      pushApply(sDoc.$and, _.map(
+      pushApply(sAnd, _.map(
         descriptors._pre,
         function (pre) {
           var rootExts = extLookup[rootNoun];
@@ -117,12 +121,7 @@ function queryGeneratorSubjects(parsed, extLookup, sDoc) {
       /*
       Child->Child: `dog: blue hat` with `dog: black, blue hat`
       */
-      //var doc = { $exists: true };
-      //if (! _.isEmpty(adjectives)) {
-      //  doc.$all = adjectives;
-      //}
-      //sDoc["tags.subjectsReverse." + rootNoun + "." + parent] = doc;
-
+      
       var rootExts = extLookup[rootNoun];
       var parentExts = extLookup[parent];
 
@@ -130,7 +129,7 @@ function queryGeneratorSubjects(parsed, extLookup, sDoc) {
       _.each(rootExts, function (rootExt) {
         _.each(parentExts, function (parentExt) {
           if (! _.isEmpty(adjectives)) {
-            pushApply(sDoc.$and, _.map(
+            pushApply(sAnd, _.map(
               adjectives,
               function (adj) {
                 var exts = extLookup[adj];
@@ -152,7 +151,7 @@ function queryGeneratorSubjects(parsed, extLookup, sDoc) {
           rootOrDoc.$or.push(rootDoc);
         });
       });
-      pushApply(sDoc.$and, rootOrDoc);
+      pushApply(sAnd, rootOrDoc);
 
       /*
       Child->Root: `hat: dog` with `dog: hat`
@@ -168,7 +167,7 @@ tagQuery = function (str) {
   }
 
   var parsed = tagParser(str);
-  var queryDoc = {}, wDoc = {}, sDoc = {};
+  var queryDoc = {}, wAnd = [], sAnd = [];
 
   var extLookup = _.reduce(
     parsed.allTags,
@@ -182,19 +181,15 @@ tagQuery = function (str) {
   queryGeneratorAuthors(parsed, queryDoc);
   queryGeneratorOrigins(parsed, queryDoc);
   queryGeneratorMeta(parsed, queryDoc);
-  queryGeneratorWithout(parsed, extLookup, wDoc);
-  queryGeneratorSubjects(parsed, extLookup, sDoc);
+  queryGeneratorWithout(parsed, extLookup, wAnd);
+  queryGeneratorSubjects(parsed, extLookup, sAnd);
 
-  if (! _.isEmpty(wDoc) || ! _.isEmpty(sDoc)) {
-    wAnd = wDoc.$and;
-    delete wDoc.$and;
-    sAnd = sDoc.$and;
-    delete sDoc.$and;
-    queryDoc.$and = [
-      wDoc,
-      sDoc
-    ];
-    queryDoc.$and = _.union(queryDoc.$and, wAnd, sAnd);
+  if (wAnd.length || sAnd.length) {
+    and = [];
+    pushApply(and, wAnd, sAnd);
+    if (and.length) {
+      queryDoc.$and = and;
+    }
   }
 
   //prettyPrint(parsed);

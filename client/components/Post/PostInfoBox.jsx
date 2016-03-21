@@ -4,9 +4,9 @@ let {
 } = mui;
 
 const verbMap = {
-  original: "created",
-  derivative: "remixed",
-  repost: "uploaded"
+  original: "Created",
+  derivative: "Remixed",
+  repost: "Uploaded"
 };
 
 PostInfoBox = React.createClass({

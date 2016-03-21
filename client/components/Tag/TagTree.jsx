@@ -25,9 +25,12 @@ TagTree = React.createClass({
   },
   renderOrigins() {
     if (! _.isEmpty(this.props.tags.origins)) {
-      return <div className="metaRow">
-        {"from " + fancyCommaJoin(this.props.tags.origins)}
-      </div>;
+      const elems = this.props.tags.origins.map((name) => {
+        return <TagletOrigin name={name} key={_.uniqueId()} />;
+      });
+      return <ul className="metaRow">
+        {elems}
+      </ul>;
     }
   },
   render() {

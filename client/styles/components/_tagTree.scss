@@ -1,7 +1,7 @@
 $tag-bg: #CFF7FF;
 $tag-bg-adj: #E2FFDB;
 $tag-bg-character: #EBE4FF;
-$tag-bg-meta: #FFFEE4;
+$tag-bg-meta: #FFF0D9;
 $tag-bg-dangerous: #FFDCE7;
 
 .taglet {
@@ -20,6 +20,10 @@ $tag-bg-dangerous: #FFDCE7;
 	}
 
 	&.meta {
+		@include tag($tag-bg-meta);
+	}
+
+	&.origin {
 		@include tag($tag-bg-meta);
 	}
 

@@ -57,6 +57,12 @@ TagInnerForm = React.createClass({
         safety={this.props.safety}
         onChange={this.props.handleSafety}
       />
+      <TagInlineField
+        delim=","
+        defaultValue={this.props.extends}
+        floatingLabelText="Extends"
+        onChange={this.props.handleExtends}
+      />
       <TagField
         noExpand={true}
         injectRoot={this.props.name}

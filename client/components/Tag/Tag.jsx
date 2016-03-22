@@ -34,6 +34,14 @@ Tag = React.createClass({
       </span>;
     }
   },
+  renderExtends(tag) {
+    if (tag.extends) {
+      return <span>
+        Extends: {fancyCommaJoin(tag.extends)}
+        <br />
+      </span>;
+    }
+  },
   renderTagTree(tag) {
     if (tag.implications && tag.implications.allTags.length > 1) {
       return <TagTree
@@ -67,6 +75,7 @@ Tag = React.createClass({
       {this.renderOrigin(tag)}
       <TextBody text={tag.definition} />
       {this.renderSafety(tag)}
+      {this.renderExtends(tag)}
       {this.renderTagTree(tag)}
       {this.renderCondImpl(tag)}
       <TagEditFAB tag={tag} />

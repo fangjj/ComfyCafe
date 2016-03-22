@@ -70,6 +70,34 @@ tagPatcherDirect = function (diff, diffPreserve, adjOrder, target, authors, orig
 
   _.each(target.subjects, function (descriptors, rootNoun) {
     if (_.has(diff, rootNoun)) {
+      _.each(diffPreserve[rootNoun].transmuted, function (next, prev) {
+        diff[rootNoun].added = _.map(diff[rootNoun].added, function (val, idx) {
+          if (val === prev) {
+            return next;
+          } return val;
+        });
+
+        diff[rootNoun].removed = _.map(diff[rootNoun].removed, function (val, idx) {
+          if (val === prev) {
+            return next;
+          } return val;
+        });
+
+        _.each(diff[rootNoun].addedTo, function (adjs, descNoun) {
+          if (descNoun === prev) {
+            diff[rootNoun].addedTo[next] = diff[rootNoun].addedTo[prev];
+            delete diff[rootNoun].addedTo[prev];
+          }
+        });
+
+        _.each(diff[rootNoun].removedFrom, function (adjs, descNoun) {
+          if (descNoun === prev) {
+            diff[rootNoun].removedFrom[next] = diff[rootNoun].removedFrom[prev];
+            delete diff[rootNoun].removedFrom[prev];
+          }
+        });
+      });
+
       _.each(diff[rootNoun].added, function (tag) {
         if (! isRemoved(diffPreserve, rootNoun, tag)) {
           add(output, rootNoun, tag);
@@ -118,9 +146,10 @@ tagPatcherDirect = function (diff, diffPreserve, adjOrder, target, authors, orig
 };
 
 tagPatcher = function (a, b, c) {
+  var diffPreserve = tagDiffer(a, c);
   return tagPatcherDirect(
     tagDiffer(a, b),
-    tagDiffer(a, c),
+    diffPreserve,
     tagAdjOrder(b, c),
     c,
     authorPusher([a, b, c]),

@@ -224,7 +224,8 @@ tagQuery = function (str) {
 
   if (wAnd.length || sAnd.length) {
     and = [];
-    pushApply(and, wAnd, sAnd);
+    pushApply(and, wAnd);
+    pushApply(and, sAnd);
     if (and.length) {
       queryDoc.$and = and;
     }

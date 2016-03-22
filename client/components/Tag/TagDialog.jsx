@@ -35,7 +35,7 @@ TagDialog = React.createClass({
         aliases: this.props.tag.aliasStr,
         origin: this.props.tag.origin,
         safety: this.props.tag.safety,
-        extends: this.props.tag.extends || defaultState.extends,
+        extends: (this.props.tag.extends || []).join(", ").trim(),
         implications: this.props.tag.implicationStr,
         implicationsParsed: this.props.tag.implications
           || defaultState.implicationsParsed,

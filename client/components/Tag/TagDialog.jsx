@@ -35,10 +35,12 @@ TagDialog = React.createClass({
         aliases: this.props.tag.aliasStr,
         origin: this.props.tag.origin,
         safety: this.props.tag.safety,
-        extends: this.props.tag.extends,
+        extends: this.props.tag.extends || defaultState.extends,
         implications: this.props.tag.implicationStr,
-        implicationsParsed: this.props.tag.implications || {},
-        condImplications: condImplWrap(this.props.tag.condImplications) || {}
+        implicationsParsed: this.props.tag.implications
+          || defaultState.implicationsParsed,
+        condImplications: condImplWrap(this.props.tag.condImplications)
+          || defaultState.condImplications
       };
     } else {
       return defaultState;

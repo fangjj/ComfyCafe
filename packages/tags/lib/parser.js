@@ -55,19 +55,19 @@ function parseDescriptors(parsed, kv) {
 					wInner[descNoun].push(tokens[notIndex+1]);
 				}
 
-				var notRevInner;
+				var notRevInner = {};
 				if (! _.has(parsed.withoutReverse, descNoun)) {
-					revInner = {};
 					parsed.withoutReverse[descNoun] = notRevInner;
 				} else {
 					notRevInner = parsed.withoutReverse[descNoun];
 				}
 
-				if (! _.has(parsed.withoutReverse[descNoun], label)) {
+				if (! _.has(notRevInner, label)) {
 					notRevInner[label] = [tokens[notIndex+1]];
 				} else {
 					notRevInner[label].push(tokens[notIndex+1]);
 				}
+				parsed.allTags.push(tokens[notIndex+1]);
 
 				parsed.withoutFlat.push(descNoun);
 

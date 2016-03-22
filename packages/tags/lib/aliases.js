@@ -1,6 +1,6 @@
-aliasSample = "yoko-littner aka yoko, yoko-ritona";
+tagAliasSample = "yoko-littner aka yoko, yoko-ritona";
 
-parseAliases = function (str) {
+tagParseAliases = function (str) {
   str = str.trim().toLowerCase();
   var parsed = {};
   var sides = str.split(/\s*aka\s*/);

@@ -15,10 +15,12 @@ Package.onUse(function(api) {
 
   api.use([
     "ecmascript",
+    "mongo",
     "teru:utility"
   ], ["client", "server"]);
 
   api.addFiles([
+    "lib/collection.js",
     "lib/aliases.js",
     "lib/stringify.js",
     "lib/tokenizer.js",
@@ -29,13 +31,15 @@ Package.onUse(function(api) {
     "lib/adjOrder.js",
     "lib/patcher.js",
     "lib/renamer.js",
+    "lib/extensions.js",
     "lib/query.js",
     "lib/urlify.js"
   ], ["client", "server"]);
 
   api.export([
-    "aliasSample",
-    "parseAliases",
+    "Tags",
+    "tagAliasSample",
+    "tagParseAliases",
     "tagStringify",
     "tagChunkStringify",
     "tagStrSample",
@@ -51,6 +55,7 @@ Package.onUse(function(api) {
     "tagPatcherDirect",
     "tagPatcher",
     "tagRenamer",
+    "tagExtensions",
     "tagQuery",
     "tagStrToUrl",
     "tagStrFromUrl"

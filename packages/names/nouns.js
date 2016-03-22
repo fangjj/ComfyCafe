@@ -61,6 +61,7 @@ nouns = [
   "Tryst",
   "Reverie",
   "Menagerie",
+  "Imbroglio",
   "Honeymoon",
   "Duck",
   "Girlfriend",

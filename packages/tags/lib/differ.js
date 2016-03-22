@@ -52,11 +52,21 @@ tagDiffer = function (oldParsed, newParsed) {
     _.each(dKeys, function (k) {
       if (! _.includes(dix, k)) {
         if (_.has(transmutationCandidates, k)) {
+          // Transmuted from upstream
           var trans = transmutationCandidates[k];
           dOps.transmuted[trans.upstream] = k;
           dOps.removed = _.without(dOps.removed, trans.upstream);
         } else {
-          dOps.added.push(k);
+          // Check if transmuted from downstream
+          var exts = extLookup[k];
+          var xix = _.intersection(exts, uKeys);
+          if (xix.length) {
+            // Transmutation has occurred!
+            dOps.transmuted[xix[0]] = k;
+          } else {
+            // Things are perfectly normal
+            dOps.added.push(k);
+          }
         }
       }
     });

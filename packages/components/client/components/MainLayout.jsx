@@ -75,7 +75,7 @@ MainLayout = React.createClass({
   renderFooter() {
     if (! this.props.dense) {
       return <footer>
-        © 2016 Pepperoni Pizza Inc.
+        © 2016 ComfySoft LLC
       </footer>;
     }
   },

@@ -35,7 +35,7 @@ Tag = React.createClass({
     }
   },
   renderExtends(tag) {
-    if (tag.extends) {
+    if (tag.extends && tag.extends.length) {
       return <span>
         Extends: {fancyCommaJoin(tag.extends)}
         <br />

@@ -10,7 +10,15 @@ tagDiffer = function (oldParsed, newParsed) {
   var extLookup = _.reduce(
     _.union(oldParsed.allTags, newParsed.allTags),
     function (result, tag) {
-      result[tag] = tagExtensions(tag);
+      var exts = tagExtensions(tag);
+      if (! result[tag] || result[tag].length === 1) {
+        result[tag] = exts;
+      }
+      _.each(result[tag], function (reverse) {
+        if (! result[reverse] || result[reverse].length === 1) {
+          result[reverse] = exts;
+        }
+      });
       return result;
     },
     {}

@@ -7,6 +7,15 @@ intended dOps: ["removed `long` from `hair`", "added `short` to `hair"]
 tagDiffer = function (oldParsed, newParsed) {
   var diff = {};
 
+  var extLookup = _.reduce(
+    _.union(oldParsed.allTags, newParsed.allTags),
+    function (result, tag) {
+      result[tag] = tagExtensions(tag);
+      return result;
+    },
+    {}
+  );
+
   _.each(newParsed.subjects, function (descriptors, rootNoun) {
     if (! _.has(oldParsed.subjects, rootNoun)) {
       return;
@@ -16,9 +25,12 @@ tagDiffer = function (oldParsed, newParsed) {
       added: [],
       addedTo: {},
       removed: [],
-      removedFrom: {}
+      removedFrom: {},
+      transmuted: {}
     };
     diff[rootNoun] = dOps;
+
+    var transmutationCandidates = {};
 
     var uKeys = _.keys(oldParsed.subjects[rootNoun]);
     var dKeys = _.keys(descriptors);
@@ -26,11 +38,26 @@ tagDiffer = function (oldParsed, newParsed) {
     _.each(uKeys, function (k) {
       if (! _.includes(dix, k)) {
         dOps.removed.push(k);
+
+        var exts = extLookup[k];
+        var xix = _.intersection(exts, dKeys);
+        _.each(xix, function (x) {
+          transmutationCandidates[x] = {
+            upstream: k,
+            exts: exts
+          };
+        });
       }
     });
     _.each(dKeys, function (k) {
       if (! _.includes(dix, k)) {
-        dOps.added.push(k);
+        if (_.has(transmutationCandidates, k)) {
+          var trans = transmutationCandidates[k];
+          dOps.transmuted[trans.upstream] = k;
+          dOps.removed = _.without(dOps.removed, trans.upstream);
+        } else {
+          dOps.added.push(k);
+        }
       }
     });
 

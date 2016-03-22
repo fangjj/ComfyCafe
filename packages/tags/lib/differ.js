@@ -39,6 +39,7 @@ tagDiffer = function (oldParsed, newParsed) {
       if (! _.includes(dix, k)) {
         dOps.removed.push(k);
 
+        // This is now a transmutation candidate!
         var exts = extLookup[k];
         var xix = _.intersection(exts, dKeys);
         _.each(xix, function (x) {
@@ -56,6 +57,8 @@ tagDiffer = function (oldParsed, newParsed) {
           var trans = transmutationCandidates[k];
           dOps.transmuted[trans.upstream] = k;
           dOps.removed = _.without(dOps.removed, trans.upstream);
+          descriptors[trans.upstream] = descriptors[k];
+          delete descriptors[k];
         } else {
           // Check if transmuted from downstream
           var exts = extLookup[k];
@@ -63,6 +66,9 @@ tagDiffer = function (oldParsed, newParsed) {
           if (xix.length) {
             // Transmutation has occurred!
             dOps.transmuted[xix[0]] = k;
+            dOps.removed = _.without(dOps.removed, xix[0]);
+            oldParsed.subjects[rootNoun][k] = oldParsed.subjects[rootNoun][xix[0]];
+            delete oldParsed.subjects[rootNoun][xix[0]];
           } else {
             // Things are perfectly normal
             dOps.added.push(k);

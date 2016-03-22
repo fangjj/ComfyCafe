@@ -5,6 +5,9 @@ intended dOps: ["removed `long` from `hair`", "added `short` to `hair"]
 */
 
 tagDiffer = function (oldParsed, newParsed) {
+  oldParsed = jsonClone(oldParsed);
+  newParsed = jsonClone(newParsed);
+
   var diff = {};
 
   var extLookup = _.reduce(
@@ -26,7 +29,6 @@ tagDiffer = function (oldParsed, newParsed) {
 
   _.each(newParsed.subjects, function (descriptors, rootNoun) {
     var rootExts = extLookup[rootNoun];
-    prettyPrint(rootExts, _.keys(oldParsed.subjects), extLookup);
     var oldRootIntersection = _.intersection(
       _.keys(oldParsed.subjects), rootExts
     );
@@ -124,6 +126,22 @@ tagDiffer = function (oldParsed, newParsed) {
         } else {
           dOps.addedTo[descNoun].push.apply(dOps.addedTo[descNoun], dAdjs);
         }
+      }
+    });
+
+    _.each(dOps.addedTo, function (adjectives, descNoun) {
+      if (_.has(dOps.transmuted, descNoun)) {
+        var next = dOps.transmuted[descNoun];
+        dOps.addedTo[next] = dOps.addedTo[descNoun];
+        delete dOps.addedTo[descNoun];
+      }
+    });
+
+    _.each(dOps.removedFrom, function (adjectives, descNoun) {
+      if (_.has(dOps.transmuted, descNoun)) {
+        var next = dOps.transmuted[descNoun];
+        dOps.removedFrom[next] = dOps.removedFrom[descNoun];
+        delete dOps.removedFrom[descNoun];
       }
     });
   });

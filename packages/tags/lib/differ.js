@@ -17,8 +17,19 @@ tagDiffer = function (oldParsed, newParsed) {
   );
 
   _.each(newParsed.subjects, function (descriptors, rootNoun) {
-    if (! _.has(oldParsed.subjects, rootNoun)) {
+    var rootExts = extLookup[rootNoun];
+    prettyPrint(rootExts, _.keys(oldParsed.subjects), extLookup);
+    var oldRootIntersection = _.intersection(
+      _.keys(oldParsed.subjects), rootExts
+    );
+
+    if (! oldRootIntersection.length) {
       return;
+    }
+
+    if (oldRootIntersection[0] !== rootNoun) {
+      oldParsed.subjects[rootNoun] = oldParsed.subjects[oldRootIntersection[0]];
+      delete oldParsed.subjects[oldRootIntersection[0]];
     }
 
     var dOps = {

@@ -15,13 +15,7 @@ PostGallery = React.createClass({
   first: true,
   seeded: false,
   getInitialState() {
-    let filter;
-    if (Meteor.user()
-      && Meteor.user().settings
-      && Meteor.user().settings.defaultFilter
-    ) {
-      filter = Meteor.user().settings.defaultFilter;
-    }
+    const filter = _.get(Meteor.user(), "settings.defaultFilter");
     return {
       originalOnly: (getQueryParam("originalOnly") === "true") || defaultState.originalOnly,
       tagStr: getQueryParam("query") || defaultState.tagStr,
@@ -63,13 +57,8 @@ PostGallery = React.createClass({
   getMeteorData() {
     let doc = this.props.generateDoc.bind(this)();
 
-    if (Meteor.user()
-      && Meteor.user().settings
-      && Meteor.user().settings.defaultFilter
-    ) {
-      defaultState.filter = Meteor.user().settings.defaultFilter;
-    }
-
+    defaultState.filter = _.get(Meteor.user(), "settings.defaultFilter", defaultState.filter);
+    
     let queuedParams = [];
 
     if (this.state.originalOnly) {

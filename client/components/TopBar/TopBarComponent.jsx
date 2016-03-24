@@ -46,10 +46,8 @@ TopBarComponent = React.createClass({
   },
   componentDidMount() {
     if (this.data.currentUser) {
-      if (muxAnd([
-        _.has(this.data.currentUser, "settings"),
-        this.data.currentUser.settings.patternSeed
-      ])) {
+      const seed = _.get(this.data.currentUser, "settings.patternSeed");
+      if (seed) {
         setPattern(this.data.currentUser.settings.patternSeed);
       }
     }

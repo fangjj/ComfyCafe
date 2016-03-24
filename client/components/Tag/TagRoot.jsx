@@ -1,6 +1,6 @@
 TagRoot = React.createClass({
   renderDescriptors(descriptors) {
-    return _.map(descriptors, (adjs, descNoun) => {
+    return _.map(_.omit(descriptors, ["_pre"]), (adjs, descNoun) => {
       return <TagDescriptor
         noun={descNoun}
         adjs={adjs}

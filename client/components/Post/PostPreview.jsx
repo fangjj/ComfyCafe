@@ -19,7 +19,7 @@ PostPreview = React.createClass({
       repost: "repeat"
     };
     return <div className="star">
-      <OriginalityIcon originality={this.props.post.originality} /> 
+      <OriginalityIcon originality={this.props.post.originality} />
     </div>;
   },
   render() {
@@ -30,7 +30,6 @@ PostPreview = React.createClass({
     const owner = this.props.post.owner;
     const ownerUrl = FlowRouter.path("profile", {username: owner.username});
     return <li className={"postPreview " + this.props.post.visibility}>
-      {this.renderMoreMenu()}
       <a href={ownerUrl} className="avatarLink">
         <AvatarComponent size="icon" user={owner} />
         {this.renderStar()}
@@ -45,6 +44,7 @@ PostPreview = React.createClass({
           {this.props.post.name}
         </div>
       </VisibilityLink>
+      {this.renderMoreMenu()}
     </li>;
   }
 });

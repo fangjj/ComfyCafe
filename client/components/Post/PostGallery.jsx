@@ -16,7 +16,10 @@ PostGallery = React.createClass({
   seeded: false,
   getInitialState() {
     let filter;
-    if (Meteor.user().settings && Meteor.user().settings.defaultFilter) {
+    if (Meteor.user()
+      && Meteor.user().settings
+      && Meteor.user().settings.defaultFilter
+    ) {
       filter = Meteor.user().settings.defaultFilter;
     }
     return {
@@ -60,7 +63,10 @@ PostGallery = React.createClass({
   getMeteorData() {
     let doc = this.props.generateDoc.bind(this)();
 
-    if (Meteor.user().settings && Meteor.user().settings.defaultFilter) {
+    if (Meteor.user()
+      && Meteor.user().settings
+      && Meteor.user().settings.defaultFilter
+    ) {
       defaultState.filter = Meteor.user().settings.defaultFilter;
     }
 

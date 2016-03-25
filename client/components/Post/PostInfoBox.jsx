@@ -25,9 +25,9 @@ PostInfoBox = React.createClass({
     });
   },
   bookmark() {
-    Meteor.call("deletePost", this.props.post._id, function () {
-      goBack();
-    });
+    const bookmarked = this.props.currentUser
+      && _.includes(this.props.currentUser.bookmarks, this.props.post._id);
+    Meteor.call("bookmarkPost", this.props.post._id, ! bookmarked);
   },
   renderSource() {
     if (this.props.post.source) {

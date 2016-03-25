@@ -20,6 +20,7 @@ Package.onUse(function(api) {
   ], "server");
 
   api.addFiles([
+    "lib/isOwner.js",
     "lib/pushApply.js",
     "lib/jsonClone.js",
     "lib/whiteSplit.js",
@@ -40,6 +41,7 @@ Package.onUse(function(api) {
   ], "server");
 
   api.export([
+    "isOwner",
     "pushApply",
     "jsonClone",
     "whiteSplit",

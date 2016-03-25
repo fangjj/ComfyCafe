@@ -24,6 +24,11 @@ PostInfoBox = React.createClass({
       goBack();
     });
   },
+  bookmark() {
+    Meteor.call("deletePost", this.props.post._id, function () {
+      goBack();
+    });
+  },
   renderSource() {
     if (this.props.post.source) {
       return <TextBody text={"Source: " + this.props.post.source} className="source" />;
@@ -38,7 +43,23 @@ PostInfoBox = React.createClass({
 
     let subButton;
     if (! isOwner) {
-      subButton = <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />;
+      const bookmarked = this.props.currentUser
+        && _.includes(this.props.currentUser.bookmarks, this.props.post._id);
+      subButton = <div>
+        <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />
+        <ToggleButton
+          active={bookmarked}
+          activate={this.bookmark}
+          deactivate={this.bookmark}
+          labelActivate="Bookmark"
+          iconActivate="bookmark_outline"
+          labelActivated="Bookmarked"
+          iconActivated="bookmark"
+          labelDeactivate="Unbookmark"
+          iconDeactivate="bookmark_outline"
+          width={174}
+        />
+      </div>;
     } else {
       subButton = <div>
         <SubtleDangerButton

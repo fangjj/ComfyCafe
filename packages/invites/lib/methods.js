@@ -16,7 +16,7 @@ Meteor.methods({
 
 		var invite = Invites.findOne({ key: key });
 
-		if (! invite.owner === Meteor.userId()) {
+		if (invite.owner !== Meteor.userId()) {
 			throw new Meteor.Error("not-authorized");
 		}
 

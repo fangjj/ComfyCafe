@@ -4,7 +4,7 @@ Meteor.methods({
 
     var medium = media.findOne({ _id: new Mongo.ObjectID(mediumId) });
 
-		if (! medium.metadata.owner === Meteor.userId()) {
+		if (medium.metadata.owner !== Meteor.userId()) {
 			throw new Meteor.Error("not-authorized");
 		}
 
@@ -17,7 +17,7 @@ Meteor.methods({
 
 		var medium = media.findOne({ _id: new Mongo.ObjectID(mediumId) });
 
-		if (! medium.metadata.owner === Meteor.userId()) {
+		if (medium.metadata.owner !== Meteor.userId()) {
 			throw new Meteor.Error("not-authorized");
 		}
 

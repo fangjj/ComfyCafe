@@ -4,7 +4,7 @@ Meteor.methods({
 
 		var note = Notifications.findOne(noteId);
 
-		if (! note.to === Meteor.userId()) {
+		if (note.to !== Meteor.userId()) {
 			throw new Meteor.Error("not-authorized");
 		}
 
@@ -20,7 +20,7 @@ Meteor.methods({
 
 		var note = Notifications.findOne(noteId);
 
-		if (! note.to === Meteor.userId()) {
+		if (note.to !== Meteor.userId()) {
 			throw new Meteor.Error("not-authorized");
 		}
 

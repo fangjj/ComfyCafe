@@ -20,6 +20,8 @@ adjectives = [
   "Minty",
   "Flamboyant",
   "Gay",
+  "Petite",
+  "Vociferous",
   "Emboldened",
   "Fabulous",
   "Shiny",

@@ -38,6 +38,9 @@ Moonbox = React.createClass({
       }
     }
   },
+  componentWillUnmount() {
+    $("body").removeClass("frozen");
+  },
   render() {
     const containerStyle = {
       width: this.props.width + 20,

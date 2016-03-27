@@ -15,7 +15,7 @@ $tag-bg-dangerous: #FFDCE7;
 		@include tag($tag-bg-adj);
 	}
 
-	&.character {
+	&.character, &.author {
 		@include tag($tag-bg-character);
 	}
 

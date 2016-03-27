@@ -18,9 +18,12 @@ TagTree = React.createClass({
   },
   renderAuthors() {
     if (! _.isEmpty(this.props.tags.authors)) {
-      return <div className="metaRow">
-        {"by " + fancyCommaJoin(this.props.tags.authors)}
-      </div>;
+      const elems = this.props.tags.authors.map((author) => {
+        return <TagletAuthor name={author} key={_.uniqueId()} />;
+      });
+      return <ul className="metaRow">
+        {elems}
+      </ul>;
     }
   },
   renderOrigins() {

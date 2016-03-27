@@ -4,7 +4,7 @@ let {
 
 TagInnerForm = React.createClass({
   renderOrigin() {
-    if (this.props.tagType !== "origin") {
+    if (! _.includes(["origin", "artist"], this.props.tagType)) {
       return <span>
         <TagInlineField
           constrainType="origin"

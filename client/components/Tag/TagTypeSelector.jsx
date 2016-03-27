@@ -15,6 +15,7 @@ TagTypeSelector = React.createClass({
       <MenuItem value="generic" primaryText="Generic" />
       <MenuItem value="character" primaryText="Character" />
       <MenuItem value="origin" primaryText="Origin" />
+      <MenuItem value="artist" primaryText="Artist" />
     </SelectField>;
   }
 });

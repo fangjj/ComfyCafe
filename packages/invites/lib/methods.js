@@ -4,12 +4,14 @@ Meteor.methods({
 			throw new Meteor.Error("not-logged-in");
 		}
 
-		Invites.insert(
-			{
-				key: uuid.v4(),
-				owner: Meteor.userId()
-			}
-		);
+		if (Meteor.isServer) {
+			Invites.insert(
+				{
+					key: uuid.v4(),
+					owner: Meteor.userId()
+				}
+			);
+		}
 	},
 	deleteInvite: function (key) {
 		check(key, String);

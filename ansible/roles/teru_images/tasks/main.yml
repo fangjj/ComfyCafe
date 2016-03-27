@@ -19,20 +19,6 @@
   shell: systemctl daemon-reload
   when: service_file.changed
 
-- name: ensure git is at the latest version
-  apt: pkg=git state=latest
-  when: useGit
-- name: pull from TeruImages repo
-  git: repo={{ repository }} dest=/srv/TeruImages/src version=develop
-  register: pulled
-  when: useGit
-- name: build Meteor bundle
-  command: /usr/local/bin/meteor build --directory /srv/TeruImages
-  args:
-    chdir: /srv/TeruImages/src
-  register: bundle
-  when: useGit and pulled.changed
-
 - name: copy Meteor bundle
   copy: src=../TeruImages.tar.gz dest=/srv/TeruImages/TeruImages.tar.gz
   register: bundle

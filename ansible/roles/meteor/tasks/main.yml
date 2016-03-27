@@ -11,10 +11,6 @@
   get_url: url=https://data.teru.sexy/node-v0.10.41.tar.gz dest=/var/tmp/node-v0.10.41.tar.gz
   register: node
   when: not local
-- name: download nodejs 0.10 archive sha256sum
-  get_url: url=https://data.teru.sexy/node-v0.10.41.tar.gz.sha256sum dest=/var/tmp/node-v0.10.41.tar.gz.sha256sum
-  when: not local and node.changed
-
 - name: copy nodejs 0.10 archive
   copy: src=../../node-v0.10.41.tar.gz dest=/var/tmp/node-v0.10.41.tar.gz
   register: node

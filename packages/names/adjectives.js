@@ -22,6 +22,7 @@ adjectives = [
   "Gay",
   "Petite",
   "Vociferous",
+  "Bodacious",
   "Emboldened",
   "Fabulous",
   "Shiny",

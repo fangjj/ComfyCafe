@@ -142,7 +142,7 @@ function parseDescriptors(parsed, kv) {
 }
 
 tagParser = function (tagStr, reformat) {
-	tagStr = tagStr.trim();
+	tagStr = tagStr.trim().toLowerCase();
 
 	var parsed = {
 		authors: [],

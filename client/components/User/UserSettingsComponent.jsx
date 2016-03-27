@@ -103,7 +103,7 @@ UserSettingsComponent = React.createClass({
         onChange={this.handleDefaultPage}
         floatingLabelText="Default Page"
       >
-        <MenuItem value="art" primaryText="Art" />
+        <MenuItem value="art" primaryText="Images" />
         <MenuItem value="blog" primaryText="Blog" />
       </SelectField>
       <br />

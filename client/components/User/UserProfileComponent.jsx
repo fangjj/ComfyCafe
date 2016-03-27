@@ -69,7 +69,7 @@ UserProfileComponent = React.createClass({
           href={imagesPath}
         />
         <RaisedButton
-          label="View Pages"
+          label="View Blog"
           labelStyle={{fontSize: "18px"}}
           secondary={true}
           icon={<FontIcon className="material-icons">import_contacts</FontIcon>}

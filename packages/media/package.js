@@ -1,5 +1,5 @@
 Package.describe({
-  name: "teru:media",
+  name: "comfysoft:media",
   version: "0.0.1",
   // Brief, one-line summary of the package.
   summary: "Internal media package for ComfyCafé.",
@@ -43,6 +43,6 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use("ecmascript");
   api.use("tinytest");
-  api.use("teru:media");
+  api.use("comfysoft:media");
   api.addFiles("media-tests.js");
 });

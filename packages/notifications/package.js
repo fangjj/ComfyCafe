@@ -1,5 +1,5 @@
 Package.describe({
-  name: "teru:notifications",
+  name: "comfysoft:notifications",
   version: "0.0.1",
   // Brief, one-line summary of the package.
   summary: "Internal notifications package for ComfyCafé.",
@@ -33,6 +33,6 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use("ecmascript");
   api.use("tinytest");
-  api.use("teru:notifications");
+  api.use("comfysoft:notifications");
   api.addFiles("notifications-tests.js");
 });

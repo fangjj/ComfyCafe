@@ -1,5 +1,5 @@
 Package.describe({
-  name: "teru:invites",
+  name: "comfysoft:invites",
   version: "0.0.1",
   // Brief, one-line summary of the package.
   summary: "Internal invites package for ComfyCafé.",
@@ -17,12 +17,12 @@ Package.onUse(function(api) {
     "ecmascript",
     "mongo",
     "jaywon:meteor-node-uuid",
-    "teru:utility"
+    "comfysoft:utility"
   ], ["client", "server"]);
 
   api.use([
     "react",
-    "teru:components"
+    "comfysoft:components"
   ], ["client"]);
 
   api.addFiles([
@@ -49,6 +49,6 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use("ecmascript");
   api.use("tinytest");
-  api.use("teru:invites");
+  api.use("comfysoft:invites");
   api.addFiles("invites-tests.js");
 });

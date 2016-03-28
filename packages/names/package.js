@@ -1,5 +1,5 @@
 Package.describe({
-  name: "teru:names",
+  name: "comfysoft:names",
   version: "0.0.1",
   // Brief, one-line summary of the package.
   summary: "Internal name generator package for ComfyCafé.",
@@ -29,6 +29,6 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use("ecmascript");
   api.use("tinytest");
-  api.use("teru:names");
+  api.use("comfysoft:names");
   api.addFiles("names-tests.js");
 });

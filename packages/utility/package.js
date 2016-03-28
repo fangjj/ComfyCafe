@@ -1,5 +1,5 @@
 Package.describe({
-  name: "teru:utility",
+  name: "comfysoft:utility",
   version: "0.0.1",
   // Brief, one-line summary of the package.
   summary: "Internal utility function package for ComfyCafé.",
@@ -66,6 +66,6 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use("ecmascript");
   api.use("tinytest");
-  api.use("teru:utility");
+  api.use("comfysoft:utility");
   api.addFiles("common-tests.js");
 });

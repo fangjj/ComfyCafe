@@ -1,5 +1,5 @@
 Package.describe({
-  name: "teru:thumbnails",
+  name: "comfysoft:thumbnails",
   version: "0.0.1",
   // Brief, one-line summary of the package.
   summary: "Internal thumbnailing package for ComfyCafé.",
@@ -23,8 +23,8 @@ Package.onUse(function(api) {
     "ecmascript",
     "mongo",
     "vsivsi:job-collection",
-    "teru:media",
-    "teru:jobs"
+    "comfysoft:media",
+    "comfysoft:jobs"
   ], ["server"]);
 
   api.addFiles([
@@ -39,6 +39,6 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use("ecmascript");
   api.use("tinytest");
-  api.use("teru:thumbnails");
+  api.use("comfysoft:thumbnails");
   api.addFiles("thumbnails-tests.js");
 });

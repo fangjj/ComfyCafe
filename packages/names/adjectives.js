@@ -23,6 +23,8 @@ adjectives = [
   "Petite",
   "Vociferous",
   "Bodacious",
+  "Gushy",
+  "Effusive",
   "Emboldened",
   "Fabulous",
   "Shiny",

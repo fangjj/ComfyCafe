@@ -1,5 +1,5 @@
 Package.describe({
-  name: "teru:tags",
+  name: "comfysoft:tags",
   version: "0.0.1",
   // Brief, one-line summary of the package.
   summary: "Internal tags package for ComfyCafé.",
@@ -16,7 +16,7 @@ Package.onUse(function(api) {
   api.use([
     "ecmascript",
     "mongo",
-    "teru:utility"
+    "comfysoft:utility"
   ], ["client", "server"]);
 
   api.addFiles([
@@ -65,6 +65,6 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use("ecmascript");
   api.use("tinytest");
-  api.use("teru:tags");
+  api.use("comfysoft:tags");
   api.addFiles("tags-tests.js");
 });

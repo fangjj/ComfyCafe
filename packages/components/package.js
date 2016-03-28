@@ -1,5 +1,5 @@
 Package.describe({
-  name: "teru:components",
+  name: "comfysoft:components",
   version: "0.0.1",
   // Brief, one-line summary of the package.
   summary: "Internal common component package for ComfyCafé.",
@@ -52,6 +52,6 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use("ecmascript");
   api.use("tinytest");
-  api.use("teru:components");
+  api.use("comfysoft:components");
   api.addFiles("components-tests.js");
 });

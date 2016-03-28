@@ -1,4 +1,8 @@
 .post .infoBox {
+  .flexLayout {
+    width: 100%;
+  }
+
   .originalityIcon, .privacyIcon {
     float: left;
 
@@ -9,6 +13,8 @@
   }
 
   .body {
+    width: 100%;
+
     &:empty {
       // Fancy!
       display: none;

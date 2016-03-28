@@ -21,6 +21,7 @@ Package.onUse(function(api) {
 
   api.addFiles([
     "lib/collection.js",
+    "lib/urls.js",
     "lib/methods.js"
   ], ["client", "server"]);
 
@@ -36,7 +37,8 @@ Package.onUse(function(api) {
   api.export("media", ["client", "server"]);
   api.export([
     "getFiles",
-    "eachFile"
+    "eachFile",
+    "getMediaUrlMD5"
   ], ["client"]);
 });
 

@@ -1,5 +1,10 @@
 Post = React.createClass({
   mixins: [ReactMeteorData],
+  getInitialState() {
+    return {
+      avatarCropper: false
+    };
+  },
   getMeteorData() {
     const id = FlowRouter.getParam("postId");
     let handle;
@@ -25,6 +30,16 @@ Post = React.createClass({
       currentUser: Meteor.user()
     };
   },
+  showAvatarCropper() {
+    this.setState({
+      avatarCropper: true
+    });
+  },
+  hideAvatarCropper() {
+    this.setState({
+      avatarCropper: false
+    });
+  },
   renderTags() {
     if (this.data.post.tags.text) {
       return <section className="tagBox content">
@@ -38,8 +53,12 @@ Post = React.createClass({
     }
   },
   renderAvatarCropper() {
-    const src = "/gridfs/media/" + this.data.post.medium.md5;
-    return <AvatarCropper src={src} />;
+    if (this.state.avatarCropper) {
+      const src = "/gridfs/media/" + this.data.post.medium.md5;
+      return <Content>
+        <AvatarCropper src={src} cancelAction={this.hideAvatarCropper} />
+      </Content>;
+    }
   },
   render() {
     if (this.data.loading) {
@@ -72,10 +91,12 @@ Post = React.createClass({
           pretentiousFilter={this.data.post.pretentiousFilter}
         />
       </figure>
-      <Content>
-        {this.renderAvatarCropper()}
-      </Content>
-      <PostInfoBox post={this.data.post} currentUser={this.data.currentUser} />
+      <PostInfoBox
+        post={this.data.post}
+        currentUser={this.data.currentUser}
+        showAvatarCropper={this.showAvatarCropper}
+      />
+      {this.renderAvatarCropper()}
       {this.renderTags()}
       <section className="comments content">
         <InlineTopic

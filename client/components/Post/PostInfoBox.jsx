@@ -29,23 +29,16 @@ PostInfoBox = React.createClass({
       && _.includes(this.props.currentUser.bookmarks, this.props.post._id);
     Meteor.call("bookmarkPost", this.props.post._id, ! bookmarked);
   },
-  renderSource() {
-    if (this.props.post.source) {
-      return <TextBody text={"Source: " + this.props.post.source} className="source" />;
-    }
-  },
-  render() {
-    const post = this.props.post;
-
-    const owner = post.owner;
-    const ownerUrl = FlowRouter.path("profile", {username: owner.username});
-    const isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
-
-    let subButton;
+  renderButtons() {
+    const cropButton = <SubmitButton
+      label="Set Avatar"
+      iconName="crop"
+      onTouchTap={this.props.showAvatarCropper}
+    />;
     if (! isOwner) {
       const bookmarked = this.props.currentUser
         && _.includes(this.props.currentUser.bookmarks, this.props.post._id);
-      subButton = <div>
+      return <div>
         <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />
         <ToggleButton
           active={bookmarked}
@@ -59,9 +52,11 @@ PostInfoBox = React.createClass({
           iconDeactivate="bookmark_outline"
           width={174}
         />
+        <br />
+        {cropButton}
       </div>;
     } else {
-      subButton = <div>
+      return <div>
         <SubtleDangerButton
           label="Delete"
           iconName="delete"
@@ -72,8 +67,22 @@ PostInfoBox = React.createClass({
           iconName="casino"
           onTouchTap={this.reroll}
         />
+        <br />
+        {cropButton}
       </div>;
     }
+  },
+  renderSource() {
+    if (this.props.post.source) {
+      return <TextBody text={"Source: " + this.props.post.source} className="source" />;
+    }
+  },
+  render() {
+    const post = this.props.post;
+
+    const owner = post.owner;
+    const ownerUrl = FlowRouter.path("profile", {username: owner.username});
+    const isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
 
     const verb = verbMap[post.originality];
 
@@ -98,7 +107,7 @@ PostInfoBox = React.createClass({
                 {this.renderSource()}
               </div>
               <div className="action">
-                {subButton}
+                {this.renderButtons()}
               </div>
             </div>
           </div>

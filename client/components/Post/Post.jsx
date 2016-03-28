@@ -37,6 +37,10 @@ Post = React.createClass({
       return <PostLikes likes={this.data.post.likes} />;
     }
   },
+  renderAvatarCropper() {
+    const src = "/gridfs/media/" + this.data.post.medium.md5;
+    return <AvatarCropper src={src} />;
+  },
   render() {
     if (this.data.loading) {
       return <LoadingSpinner />;
@@ -64,10 +68,13 @@ Post = React.createClass({
     return <article className="post contentLayout">
       <figure className="content">
         <Medium
-          medium={this.data.post.medium} 
+          medium={this.data.post.medium}
           pretentiousFilter={this.data.post.pretentiousFilter}
         />
       </figure>
+      <Content>
+        {this.renderAvatarCropper()}
+      </Content>
       <PostInfoBox post={this.data.post} currentUser={this.data.currentUser} />
       {this.renderTags()}
       <section className="comments content">

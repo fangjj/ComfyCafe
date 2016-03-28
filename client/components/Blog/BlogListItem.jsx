@@ -18,7 +18,7 @@ BlogListItem = React.createClass({
       <article className="flexLayout">
         <div className="leftSIde">
           <a href={ownerUrl}>
-            <AvatarComponent size="small" user={owner} />
+            <Avatar size="small" user={owner} />
           </a>
         </div>
         <div className="rightSide">

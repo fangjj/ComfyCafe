@@ -27,7 +27,7 @@ TopicListItem = React.createClass({
       <div className="flexLayout">
         <div className="leftSIde">
           <a href={ownerUrl}>
-            <AvatarComponent size="icon" user={owner} />
+            <Avatar size="icon" user={owner} />
           </a>
         </div>
         <div className="rightSide">

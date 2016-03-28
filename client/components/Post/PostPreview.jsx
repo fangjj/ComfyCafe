@@ -31,7 +31,7 @@ PostPreview = React.createClass({
     const ownerUrl = FlowRouter.path("profile", {username: owner.username});
     return <li className={"postPreview " + this.props.post.visibility}>
       <a href={ownerUrl} className="avatarLink">
-        <AvatarComponent size="icon" user={owner} />
+        <Avatar size="icon" user={owner} />
         {this.renderStar()}
       </a>
       <VisibilityLink href={postUrl} visibility={this.props.post.visibility}>

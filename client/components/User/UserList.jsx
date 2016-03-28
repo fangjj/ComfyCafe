@@ -16,7 +16,7 @@ UserList = React.createClass({
         const userUrl = FlowRouter.path("profile", {username: user.username});
         return <li key={_.uniqueId()}>
           <a href={userUrl} style={{float: "left"}}>
-            <AvatarComponent size="icon" user={user} />
+            <Avatar size="icon" user={user} />
           </a>
           <UserLink
             user={user}

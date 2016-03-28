@@ -83,3 +83,14 @@ header {
 strong {
   font-weight: bold;
 }
+
+.actions {
+  padding-top: 6px;
+
+  width: 100%;
+  height: 36px + 6px;
+
+  > div {
+    float: right;
+  }
+}

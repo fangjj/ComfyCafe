@@ -1,4 +1,4 @@
-AvatarComponent = React.createClass({
+Avatar = React.createClass({
   render() {
     const size = thumbnailPolicies.avatar[this.props.size].size;
 

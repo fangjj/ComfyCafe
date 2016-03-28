@@ -141,7 +141,7 @@ UserSettingsComponent = React.createClass({
 
       <br />
 
-      <div className="actions">
+      <Actions>
         <CancelButton
           onTouchTap={this.cancel}
         />
@@ -149,7 +149,7 @@ UserSettingsComponent = React.createClass({
           label="Save"
           onTouchTap={this.submit}
         />
-      </div>
+      </Actions>
 
       <Snackbar
         className="snackbar"

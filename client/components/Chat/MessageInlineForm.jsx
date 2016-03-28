@@ -38,13 +38,13 @@ MessageInlineForm = React.createClass({
         body={this.state.body}
         handleBody={this.handleBody}
       />
-      <div className="actions">
+      <Actions>
         <SubmitButton
           label="Send"
           iconName="send"
           onTouchTap={this.handleSubmit}
         />
-      </div>
+      </Actions>
     </div>;
   }
 });

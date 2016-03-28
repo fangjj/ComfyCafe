@@ -83,7 +83,7 @@ UserProfileForm = React.createClass({
         fullWidth={true}
       />
 
-      <div className="actions">
+      <Actions>
         <CancelButton
           onTouchTap={this.cancel}
         />
@@ -91,7 +91,7 @@ UserProfileForm = React.createClass({
           label="Save"
           onTouchTap={this.submit}
         />
-      </div>
+      </Actions>
 
       <Snackbar
         className="snackbar"

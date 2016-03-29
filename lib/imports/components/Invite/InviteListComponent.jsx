@@ -26,7 +26,7 @@ const InviteListComponent = React.createClass({
     }
 
     if (! this.data.currentUser) {
-      return <PowerlessComponent />;
+      return <Powerless />;
     }
 
     if (this.data.invites.length) {

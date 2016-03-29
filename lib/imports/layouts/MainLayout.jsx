@@ -2,6 +2,7 @@ import React from "react";
 
 import globalEvents from "/lib/globalEvents";
 
+import PseudoBody from "/lib/imports/components/PseudoBody";
 import TopBarComponent from "/lib/imports/components/TopBar/TopBarComponent";
 import PostForm from "/lib/imports/components/Post/PostForm";
 
@@ -47,10 +48,6 @@ const MainLayout = React.createClass({
     };
   },
   componentWillMount() {
-    globalEvents.on("patternChange", (pattern) => {
-      this.setState(pattern);
-    });
-
     if (Meteor.isServer) {
       const ua = FlowRouter.current()._serverRequest.headers["user-agent"];
       muiTheme.userAgent = ua;
@@ -120,14 +117,11 @@ const MainLayout = React.createClass({
     }
   },
   render() {
-    const style = {
-      backgroundImage: this.state.bg
-    };
     return <MuiThemeProvider muiTheme={muiTheme}>
       <div onDrop={this.test}>
-        <div className="pseudoBody" style={style} />
+        <PseudoBody />
         <header>
-          <TopBarComponent color={this.state.color} />
+          <TopBarComponent />
         </header>
         <main>
           {this.props.main}

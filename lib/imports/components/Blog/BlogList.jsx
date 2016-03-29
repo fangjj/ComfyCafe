@@ -60,7 +60,7 @@ const BlogList = React.createClass({
     }
 
     if (! this.data.currentUser) {
-      return <PowerlessComponent />;
+      return <Powerless />;
     }
 
     return <div>

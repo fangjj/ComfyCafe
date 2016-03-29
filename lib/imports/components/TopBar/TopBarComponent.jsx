@@ -1,6 +1,8 @@
 import _ from "lodash";
 import React from "react";
 
+import globalEvents from "/lib/globalEvents";
+
 import TopBarArtButton from "./TopBarArtButton";
 import TopBarBlogButton from "./TopBarBlogButton";
 import TopBarTagButton from "./TopBarTagButton";
@@ -16,6 +18,15 @@ import AccountActionsList from "../User/AccountActionsList";
 
 const TopBarComponent = React.createClass({
   mixins: [ReactMeteorData],
+  getInitialState() {
+    return {
+      showMobileMenu: false,
+      showNotificationList: false,
+      showAccountActions: false,
+      visibleMenu: null,
+      color: this.props.color
+    };
+  },
   getMeteorData() {
     var handle = Meteor.subscribe("notifications", Meteor.userId());
     return {
@@ -28,14 +39,6 @@ const TopBarComponent = React.createClass({
         { sort: { createdAt: -1 } }
       ).fetch(),
       currentUser: Meteor.user()
-    };
-  },
-  getInitialState() {
-    return {
-      showMobileMenu: false,
-      showNotificationList: false,
-      showAccountActions: false,
-      visibleMenu: null
     };
   },
   userReady() {
@@ -60,13 +63,12 @@ const TopBarComponent = React.createClass({
   toggleAccountActions() {
     this.genericHandleMenuButton("account");
   },
-  componentDidMount() {
-    if (this.data.currentUser) {
-      const seed = _.get(this.data.currentUser, "settings.patternSeed");
-      if (seed) {
-        setPattern(this.data.currentUser.settings.patternSeed);
-      }
-    }
+  componentWillMount() {
+    globalEvents.on("topColorChange", (color) => {
+      this.setState({
+        color: color
+      });
+    });
   },
   renderLeftSub() {
     if (this.userReady()) {
@@ -151,7 +153,7 @@ const TopBarComponent = React.createClass({
   },
   render() {
     const style = {
-      backgroundColor: this.props.color
+      backgroundColor: this.state.color
     };
     return <nav className="topNav" style={style}>
       {this.renderLeft()}

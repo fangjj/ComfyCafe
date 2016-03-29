@@ -2,7 +2,7 @@ import React from "react";
 
 import Uhoh from "./Uhoh";
 
-const PowerlessComponent = React.createClass({
+const Powerless = React.createClass({
   render() {
     return <Uhoh>
       You aren't logged in, so you're powerless!
@@ -10,4 +10,4 @@ const PowerlessComponent = React.createClass({
   }
 });
 
-export default PowerlessComponent;
+export default Powerless;

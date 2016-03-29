@@ -6,7 +6,7 @@ import PostFilters from "./PostFilters";
 import UploadFAB from "../UploadFAB";
 import LoadingSpinner from "../LoadingSpinner";
 import InlineUhoh from "../InlineUhoh";
-import PowerlessComponent from "../PowerlessComponent";
+import Powerless from "../Powerless";
 import TagInlineField from "../Tag/TagInlineField";
 
 import {
@@ -195,7 +195,7 @@ const PostGallery = React.createClass({
     }
 
     if (this.props.requireAuth && ! this.data.currentUser) {
-      return <PowerlessComponent />;
+      return <Powerless />;
     }
 
     const posts = this.data.posts;

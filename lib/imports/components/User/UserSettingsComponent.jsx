@@ -1,6 +1,13 @@
 import _ from "lodash";
 import React from "react";
 
+import LoadingSpinner from "../LoadingSpinner";
+import Powerless from "../Powerless";
+import Actions from "../Actions";
+import CancelButton from "../CancelButton";
+import SubmitButton from "../SubmitButton";
+import PostFilters from "../Post/PostFilters";
+
 import {
   TextField,
   SelectField,
@@ -93,7 +100,7 @@ const UserSettingsComponent = React.createClass({
   },
   render() {
     if (! this.data.currentUser) {
-      return <PowerlessComponent />;
+      return <Powerless />;
     }
 
     if (! _.has(this.data.currentUser, "profile")) {

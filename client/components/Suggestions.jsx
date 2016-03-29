@@ -30,11 +30,11 @@ Suggestions = React.createClass({
 
     e.preventDefault();
 
-    const currentIndex = () => {
+    const currentIndex = expr(() => {
       if (this.state.selected) {
         return this.lookup[this.state.selected];
       } return 0;
-    }();
+    });
     const lookupLength = _.keys(this.lookup).length;
     const canGoDown = currentIndex < lookupLength;
     const canGoUp = currentIndex !== 0 && lookupLength > 1;

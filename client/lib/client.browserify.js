@@ -1,4 +1,4 @@
-_ = require("lodash");
+React = require("react");
 Cropper = require("cropperjs");
 GeoPattern = require("geopattern");
 tinycolor = require("tinycolor2");

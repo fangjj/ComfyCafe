@@ -12,11 +12,11 @@ TagInlineField = React.createClass({
     };
   },
   getMeteorData() {
-    const handle = () => {
+    const handle = expr(() => {
       if (this.props.constrainType) {
         return Meteor.subscribe("allTags", this.props.constrainType);
       } return Meteor.subscribe("allTags");
-    }();
+    });
     let doc = {};
     if (this.props.constrainType) {
       doc.type = this.props.constrainType;

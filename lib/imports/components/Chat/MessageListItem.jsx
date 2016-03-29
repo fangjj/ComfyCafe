@@ -1,6 +1,6 @@
 import React from "react";
 
-MessageListItem = React.createClass({
+const MessageListItem = React.createClass({
   onVisibility(visible) {
     if (visible) {
       this.props.onVisible();
@@ -39,3 +39,5 @@ MessageListItem = React.createClass({
     </li>;
   }
 });
+
+export default MessageListItem;

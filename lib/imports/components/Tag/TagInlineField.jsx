@@ -5,7 +5,7 @@ import {
   TextField
 } from "material-ui";
 
-TagInlineField = React.createClass({
+const TagInlineField = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
@@ -127,3 +127,5 @@ TagInlineField = React.createClass({
     </div>;
   }
 });
+
+export default TagInlineField;

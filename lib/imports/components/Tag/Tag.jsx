@@ -1,6 +1,6 @@
 import React from "react";
 
-Tag = React.createClass({
+const Tag = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const name = FlowRouter.getParam("tagName");
@@ -84,3 +84,5 @@ Tag = React.createClass({
     </article>;
   }
 });
+
+export default Tag;

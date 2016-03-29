@@ -1,7 +1,7 @@
 import React from "react";
 import NativeListener from "react-native-listener";
 
-AccountActionsButton = React.createClass({
+const AccountActionsButton = React.createClass({
   toggleActionsVisbility(event) {
     if (event.which === 2) {
       // Middle mouse click
@@ -22,3 +22,5 @@ AccountActionsButton = React.createClass({
     </NativeListener>;
   }
 });
+
+export default AccountActionsButton;

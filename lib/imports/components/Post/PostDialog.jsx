@@ -18,7 +18,7 @@ const defaultState = {
   pretentiousFilter: "none"
 };
 
-PostDialog = React.createClass({
+const PostDialog = React.createClass({
   getInitialState() {
     if (this.props.post) {
       const post = this.props.post;
@@ -139,3 +139,5 @@ PostDialog = React.createClass({
     </Dialog>;
   }
 });
+
+export default PostDialog;

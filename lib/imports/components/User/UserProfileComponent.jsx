@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-UserProfileComponent = React.createClass({
+const UserProfileComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var handle = Meteor.subscribe("user", FlowRouter.getParam("username"));
@@ -124,3 +124,5 @@ UserProfileComponent = React.createClass({
     </div>;
   }
 });
+
+export default UserProfileComponent;

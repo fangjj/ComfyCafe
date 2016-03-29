@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-PostModifyFAB = React.createClass({
+const PostModifyFAB = React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -30,3 +30,5 @@ PostModifyFAB = React.createClass({
     </div>;
   }
 });
+
+export default PostModifyFAB;

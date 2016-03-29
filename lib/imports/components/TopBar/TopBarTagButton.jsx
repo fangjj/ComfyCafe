@@ -1,6 +1,6 @@
 import React from "react";
 
-TopBarTagButton = React.createClass({
+const TopBarTagButton = React.createClass({
   render() {
     return <NavItem
       label="Tags"
@@ -10,3 +10,5 @@ TopBarTagButton = React.createClass({
     />;
   }
 });
+
+export default TopBarTagButton;

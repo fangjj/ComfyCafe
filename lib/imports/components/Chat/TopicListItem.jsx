@@ -1,6 +1,6 @@
 import React from "react";
 
-TopicListItem = React.createClass({
+const TopicListItem = React.createClass({
   renderMoreMenu() {
     var isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.topic.owner._id;
@@ -54,3 +54,5 @@ TopicListItem = React.createClass({
     </li>;
   }
 });
+
+export default TopicListItem;

@@ -1,6 +1,6 @@
 import React from "react";
 
-PostFeed = React.createClass({
+const PostFeed = React.createClass({
   render() {
     return <PostGallery
       subName="postFeed"
@@ -29,3 +29,5 @@ PostFeed = React.createClass({
     />;
   }
 });
+
+export default PostFeed;

@@ -1,6 +1,6 @@
 import React from "react";
 
-InviteFAB = React.createClass({
+const InviteFAB = React.createClass({
   invite() {
     Meteor.call("addInvite");
   },
@@ -16,3 +16,5 @@ InviteFAB = React.createClass({
     </div>;
   }
 });
+
+export default InviteFAB;

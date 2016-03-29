@@ -1,6 +1,6 @@
 import React from "react";
 
-PostLikes = React.createClass({
+const PostLikes = React.createClass({
   render() {
     return <section className="likes content">
       <header>
@@ -10,3 +10,5 @@ PostLikes = React.createClass({
     </section>;
   }
 });
+
+export default PostLikes;

@@ -1,6 +1,6 @@
 import React from "react";
 
-Chat = React.createClass({
+const Chat = React.createClass({
   renderMain() {
     if (FlowRouter.getParam("topicId")) {
       return <Topic />;
@@ -19,3 +19,5 @@ Chat = React.createClass({
     </DenseLayout>;
   }
 });
+
+export default Chat;

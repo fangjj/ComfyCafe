@@ -4,7 +4,7 @@ import {
   TextField
 } from "material-ui";
 
-MessageInnerForm = React.createClass({
+const MessageInnerForm = React.createClass({
   render() {
     let value = {};
     if (this.props.directValue) {
@@ -25,3 +25,5 @@ MessageInnerForm = React.createClass({
     </div>;
   }
 });
+
+export default MessageInnerForm;

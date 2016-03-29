@@ -1,6 +1,6 @@
 import React from "react";
 
-InviteComponent = React.createClass({
+const InviteComponent = React.createClass({
   delete() {
     Meteor.call("deleteInvite", this.props.invite.key);
   },
@@ -16,3 +16,5 @@ InviteComponent = React.createClass({
     </li>;
   }
 });
+
+export default InviteComponent;

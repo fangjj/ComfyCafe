@@ -7,7 +7,7 @@ import {
   FontIcon
 } from "material-ui";
 
-PostMoreMenu = React.createClass({
+const PostMoreMenu = React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -53,3 +53,5 @@ PostMoreMenu = React.createClass({
     </div>;
   }
 });
+
+export default PostMoreMenu;

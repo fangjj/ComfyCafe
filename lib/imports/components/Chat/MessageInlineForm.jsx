@@ -1,6 +1,6 @@
 import React from "react";
 
-MessageInlineForm = React.createClass({
+const MessageInlineForm = React.createClass({
   getInitialState() {
     return {
       typing: false,
@@ -50,3 +50,5 @@ MessageInlineForm = React.createClass({
     </div>;
   }
 });
+
+export default MessageInlineForm;

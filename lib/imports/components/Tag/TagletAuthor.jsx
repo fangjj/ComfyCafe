@@ -1,6 +1,6 @@
 import React from "react";
 
-TagletAuthor = React.createClass({
+const TagletAuthor = React.createClass({
   render() {
     const name = this.props.name;
     return <a
@@ -9,3 +9,5 @@ TagletAuthor = React.createClass({
     >{name}</a>;
   }
 });
+
+export default TagletAuthor;

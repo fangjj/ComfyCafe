@@ -12,7 +12,7 @@ const defaultState = {
   noPush: false
 };
 
-PostGallery = React.createClass({
+const PostGallery = React.createClass({
   mixins: [ReactMeteorData],
   first: true,
   seeded: false,
@@ -60,7 +60,7 @@ PostGallery = React.createClass({
     let doc = this.props.generateDoc.bind(this)();
 
     defaultState.filter = _.get(Meteor.user(), "settings.defaultFilter", defaultState.filter);
-    
+
     let queuedParams = [];
 
     if (this.state.originalOnly) {
@@ -222,3 +222,5 @@ PostGallery = React.createClass({
     </div>;
   }
 });
+
+export default PostGallery;

@@ -4,7 +4,7 @@ import {
   TextField
 } from "material-ui";
 
-BlogInnerForm = React.createClass({
+const BlogInnerForm = React.createClass({
   render() {
     return <div>
       <SelectVisibility
@@ -25,3 +25,5 @@ BlogInnerForm = React.createClass({
   </div>;
   }
 });
+
+export default BlogInnerForm;

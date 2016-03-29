@@ -1,6 +1,6 @@
 import React from "react";
 
-BlogList = React.createClass({
+const BlogList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     let subs = [];
@@ -69,3 +69,5 @@ BlogList = React.createClass({
     </div>;
   }
 });
+
+export default BlogList;

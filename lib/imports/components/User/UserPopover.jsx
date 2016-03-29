@@ -4,7 +4,7 @@ import {
   Popover
 } from "material-ui";
 
-UserPopover = React.createClass({
+const UserPopover = React.createClass({
   render() {
     return <Popover
       open={this.props.open}
@@ -20,3 +20,5 @@ UserPopover = React.createClass({
     </Popover>;
   }
 });
+
+export default UserPopover;

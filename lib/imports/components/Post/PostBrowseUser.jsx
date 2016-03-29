@@ -1,6 +1,6 @@
 import React from "react";
 
-PostBrowseUser = React.createClass({
+const PostBrowseUser = React.createClass({
   render() {
     return <PostGallery
       subName="imagesBy"
@@ -19,3 +19,5 @@ PostBrowseUser = React.createClass({
     />;
   }
 });
+
+export default PostBrowseUser;

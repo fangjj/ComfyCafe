@@ -1,6 +1,6 @@
 import React from "react";
 
-TopBarComponent = React.createClass({
+const TopBarComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var handle = Meteor.subscribe("notifications", Meteor.userId());
@@ -147,3 +147,5 @@ TopBarComponent = React.createClass({
   	</nav>;
   }
 });
+
+export default TopBarComponent;

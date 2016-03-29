@@ -1,6 +1,6 @@
 import React from "react";
 
-FriendList = React.createClass({
+const FriendList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
@@ -16,3 +16,5 @@ FriendList = React.createClass({
     </div>;
   }
 });
+
+export default FriendList;

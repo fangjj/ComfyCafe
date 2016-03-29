@@ -7,7 +7,7 @@ import {
   FontIcon
 } from "material-ui";
 
-RoomMoreMenu = React.createClass({
+const RoomMoreMenu = React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -54,3 +54,5 @@ RoomMoreMenu = React.createClass({
     </div>;
   }
 });
+
+export default RoomMoreMenu;

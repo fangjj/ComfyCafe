@@ -10,7 +10,7 @@ import {
   Snackbar
 } from "material-ui";
 
-UserProfileForm = React.createClass({
+const UserProfileForm = React.createClass({
   getInitialState() {
     return {
       snackbarOpen: false,
@@ -106,3 +106,5 @@ UserProfileForm = React.createClass({
     </div>;
   }
 });
+
+export default UserProfileForm;

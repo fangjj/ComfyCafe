@@ -1,6 +1,6 @@
 import React from "react";
 
-UserList = React.createClass({
+const UserList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     let handle = Meteor.subscribe("users", this.props.userIds);
@@ -39,3 +39,5 @@ UserList = React.createClass({
     </ul>;
   }
 });
+
+export default UserList;

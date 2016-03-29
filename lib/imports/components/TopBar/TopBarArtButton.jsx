@@ -1,6 +1,6 @@
 import React from "react";
 
-TopBarArtButton = React.createClass({
+const TopBarArtButton = React.createClass({
   render() {
     return <NavItem
       label="Images"
@@ -10,3 +10,5 @@ TopBarArtButton = React.createClass({
     />;
   }
 });
+
+export default TopBarArtButton;

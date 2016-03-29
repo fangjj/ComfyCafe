@@ -1,6 +1,6 @@
 import React from "react";
 
-BlogUser = React.createClass({
+const BlogUser = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const username =  FlowRouter.getParam("username");
@@ -52,3 +52,5 @@ BlogUser = React.createClass({
     </div>;
   }
 });
+
+export default BlogUser;

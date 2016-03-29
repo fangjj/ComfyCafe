@@ -1,6 +1,6 @@
 import React from "react";
 
-TopBarBlogButton = React.createClass({
+const TopBarBlogButton = React.createClass({
   render() {
     return <NavItem
       label="Blog"
@@ -10,3 +10,5 @@ TopBarBlogButton = React.createClass({
     />;
   }
 });
+
+export default TopBarBlogButton;

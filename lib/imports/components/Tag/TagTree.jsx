@@ -1,6 +1,6 @@
 import React from "react";
 
-TagTree = React.createClass({
+const TagTree = React.createClass({
   renderRoots() {
     return _.map(this.props.tags.subjects, (descriptors, rootNoun) => {
       return <TagRoot
@@ -46,3 +46,5 @@ TagTree = React.createClass({
 		</div>;
   }
 });
+
+export default TagTree;

@@ -1,6 +1,6 @@
 import React from "react";
 
-TagListItem = React.createClass({
+const TagListItem = React.createClass({
   render() {
     const tag = this.props.tag;
     const tagUrl = FlowRouter.path("tag", {tagName: tag.name});
@@ -11,3 +11,5 @@ TagListItem = React.createClass({
     </li>;
   }
 });
+
+export default TagListItem;

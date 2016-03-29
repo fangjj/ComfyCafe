@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-TopicButton = React.createClass({
+const TopicButton = React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -33,3 +33,5 @@ TopicButton = React.createClass({
     </div>;
   }
 });
+
+export default TopicButton;

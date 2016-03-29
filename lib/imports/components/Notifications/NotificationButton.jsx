@@ -1,6 +1,6 @@
 import React from "react";
 
-NotificationButton = React.createClass({
+const NotificationButton = React.createClass({
   renderCount() {
     if (this.props.notifications.length) {
       return <span className="push teal">{this.props.notifications.length}</span>;
@@ -21,3 +21,5 @@ NotificationButton = React.createClass({
     </a>;
   }
 });
+
+export default NotificationButton;

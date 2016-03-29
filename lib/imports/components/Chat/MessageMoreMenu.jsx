@@ -7,7 +7,7 @@ import {
   FontIcon
 } from "material-ui";
 
-MessageMoreMenu = React.createClass({
+const MessageMoreMenu = React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -49,3 +49,5 @@ MessageMoreMenu = React.createClass({
     </div>;
   }
 });
+
+export default MessageMoreMenu;

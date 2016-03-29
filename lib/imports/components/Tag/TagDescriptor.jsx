@@ -1,6 +1,6 @@
 import React from "react";
 
-TagDescriptor = React.createClass({
+const TagDescriptor = React.createClass({
   renderAdjs() {
     if (! _.isEmpty(this.props.adjs)) {
       return this.props.adjs.map((a) => {
@@ -15,3 +15,5 @@ TagDescriptor = React.createClass({
     </li>;
   }
 });
+
+export default TagDescriptor;

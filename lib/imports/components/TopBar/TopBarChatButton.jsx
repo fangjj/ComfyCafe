@@ -1,6 +1,6 @@
 import React from "react";
 
-TopBarChatButton = React.createClass({
+const TopBarChatButton = React.createClass({
   render() {
     return <NavItem
       iconName="forum"
@@ -8,3 +8,5 @@ TopBarChatButton = React.createClass({
     />;
   }
 });
+
+export default TopBarChatButton;

@@ -6,7 +6,7 @@ import {
   Divider
 } from "material-ui";
 
-AccountActionsList = React.createClass({
+const AccountActionsList = React.createClass({
   mixins: [OnClickOutside],
   handleClickOutside(event) {
     if (this.props.visible) {
@@ -78,3 +78,5 @@ AccountActionsList = React.createClass({
     </div>;
   }
 });
+
+export default AccountActionsList;

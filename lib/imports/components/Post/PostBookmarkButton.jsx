@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-PostBookmarkButton = React.createClass({
+const PostBookmarkButton = React.createClass({
   toggle(next) {
     Meteor.call("bookmarkPost", this.props.post._id, next);
   },
@@ -22,3 +22,5 @@ PostBookmarkButton = React.createClass({
     </div>;
   }
 });
+
+export default PostBookmarkButton;

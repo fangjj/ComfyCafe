@@ -1,6 +1,6 @@
 import React from "react";
 
-TagList = React.createClass({
+const TagList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const handle = Meteor.subscribe("allTags");
@@ -38,3 +38,5 @@ TagList = React.createClass({
     </div>;
   }
 });
+
+export default TagList;

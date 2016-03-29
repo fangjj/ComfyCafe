@@ -1,6 +1,6 @@
 import React from "react";
 
-DirectAvatar = React.createClass({
+const DirectAvatar = React.createClass({
   render() {
     const size = thumbnailPolicies.avatar[this.props.size].size;
 
@@ -28,3 +28,5 @@ DirectAvatar = React.createClass({
     />
   }
 });
+
+export default DirectAvatar;

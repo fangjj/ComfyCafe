@@ -1,6 +1,6 @@
 import React from "react";
 
-InviteListComponent = React.createClass({
+const InviteListComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var handle = Meteor.subscribe("invites");
@@ -42,3 +42,5 @@ InviteListComponent = React.createClass({
     }
   }
 });
+
+export default InviteListComponent;

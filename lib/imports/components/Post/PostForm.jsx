@@ -1,6 +1,6 @@
 import React from "react";
 
-PostForm = React.createClass({
+const PostForm = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var handle = Meteor.subscribe("media", Meteor.userId());
@@ -39,3 +39,5 @@ PostForm = React.createClass({
     />;
   }
 });
+
+export default PostForm;

@@ -10,7 +10,7 @@ import {
   Snackbar
 } from "material-ui";
 
-UserSettingsComponent = React.createClass({
+const UserSettingsComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
@@ -164,3 +164,5 @@ UserSettingsComponent = React.createClass({
     </div>;
   }
 });
+
+export default UserSettingsComponent;

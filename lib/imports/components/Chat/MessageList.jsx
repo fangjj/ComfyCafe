@@ -1,6 +1,6 @@
 import React from "react";
 
-MessageList = React.createClass({
+const MessageList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const id = this.props.topic._id;
@@ -134,3 +134,5 @@ MessageList = React.createClass({
     </ol>;
   }
 });
+
+export default MessageList;

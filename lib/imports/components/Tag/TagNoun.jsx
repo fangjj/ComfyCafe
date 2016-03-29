@@ -1,6 +1,6 @@
 import React from "react";
 
-TagNoun = React.createClass({
+const TagNoun = React.createClass({
   render() {
     const noun = this.props.noun;
     const nounType = "generic";
@@ -10,3 +10,5 @@ TagNoun = React.createClass({
     >{noun}</a>;
   }
 });
+
+export default TagNoun;

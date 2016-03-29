@@ -1,6 +1,6 @@
 import React from "react";
 
-TopicForm = React.createClass({
+const TopicForm = React.createClass({
   handleSubmit(data) {
     Meteor.call("addTopic", this.props.room._id, data, (err, topicId) => {
       this.props.handleClose();
@@ -21,3 +21,5 @@ TopicForm = React.createClass({
     />;
   }
 });
+
+export default TopicForm;

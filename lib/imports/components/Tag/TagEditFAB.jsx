@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-TagEditFAB = React.createClass({
+const TagEditFAB = React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -30,3 +30,5 @@ TagEditFAB = React.createClass({
     </div>;
   }
 });
+
+export default TagEditFAB;

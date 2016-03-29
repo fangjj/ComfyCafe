@@ -6,7 +6,7 @@ import {
   FlatButton
 } from "material-ui";
 
-PostInnerForm = React.createClass({
+const PostInnerForm = React.createClass({
   renderSourceField() {
     if (this.props.originality !== "original") {
       return <TextField
@@ -70,3 +70,5 @@ PostInnerForm = React.createClass({
   </div>;
   }
 });
+
+export default PostInnerForm;

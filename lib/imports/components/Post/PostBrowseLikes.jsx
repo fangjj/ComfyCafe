@@ -1,6 +1,6 @@
 import React from "react";
 
-PostBrowseLikes = React.createClass({
+const PostBrowseLikes = React.createClass({
   render() {
     return <PostGallery
       subName="likes"
@@ -17,3 +17,5 @@ PostBrowseLikes = React.createClass({
     />;
   }
 });
+
+export default PostBrowseLikes;

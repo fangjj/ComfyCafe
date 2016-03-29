@@ -5,7 +5,7 @@ import {
   FlatButton
 } from "material-ui";
 
-NotificationComponent = React.createClass({
+const NotificationComponent = React.createClass({
   actionMap: {
     subscribed() {
       return "subscribed!";
@@ -148,3 +148,5 @@ NotificationComponent = React.createClass({
     </li>;
   }
 });
+
+export default NotificationComponent;

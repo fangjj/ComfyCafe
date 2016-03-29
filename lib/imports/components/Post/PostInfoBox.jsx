@@ -11,7 +11,7 @@ const verbMap = {
   repost: "Uploaded"
 };
 
-PostInfoBox = React.createClass({
+const PostInfoBox = React.createClass({
   reroll() {
     Meteor.call("rerollPost", this.props.post._id, (err, name) => {
       const path = FlowRouter.path("post", {
@@ -119,3 +119,5 @@ PostInfoBox = React.createClass({
     </section>;
   }
 });
+
+export default PostInfoBox;

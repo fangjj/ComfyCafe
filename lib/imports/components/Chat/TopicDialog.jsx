@@ -14,7 +14,7 @@ const defaultState = {
   visibility: "public"
 };
 
-TopicDialog = React.createClass({
+const TopicDialog = React.createClass({
   getInitialState() {
     if (this.props.topic) {
       return {
@@ -86,3 +86,5 @@ TopicDialog = React.createClass({
     </Dialog>;
   }
 });
+
+export default TopicDialog;

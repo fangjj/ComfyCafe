@@ -1,6 +1,6 @@
 import React from "react";
 
-UserLink = React.createClass({
+const UserLink = React.createClass({
   getInitialState() {
     return {
       open: false
@@ -27,3 +27,5 @@ UserLink = React.createClass({
     </div>;
   }
 });
+
+export default UserLink;

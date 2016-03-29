@@ -4,7 +4,7 @@ import {
   TextField
 } from "material-ui";
 
-TagConditionalField = React.createClass({
+const TagConditionalField = React.createClass({
   getInitialState() {
     return {
       cond: this.props.defaultCondition || "",
@@ -47,3 +47,5 @@ TagConditionalField = React.createClass({
     </li>;
   }
 });
+
+export default TagConditionalField;

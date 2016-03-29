@@ -1,6 +1,6 @@
 import React from "react";
 
-PostBrowseBookmarks = React.createClass({
+const PostBrowseBookmarks = React.createClass({
   render() {
     return <PostGallery
       subName="bookmarks"
@@ -17,3 +17,5 @@ PostBrowseBookmarks = React.createClass({
     />;
   }
 });
+
+export default PostBrowseBookmarks;

@@ -1,6 +1,6 @@
 import React from "react";
 
-TagTest = React.createClass({
+const TagTest = React.createClass({
   getInitialState() {
     return {
       tagStrA: "",
@@ -36,3 +36,5 @@ TagTest = React.createClass({
     </div>;
   }
 });
+
+export default TagTest;

@@ -1,6 +1,6 @@
 import React from "react";
 
-TagUpdateForm = React.createClass({
+const TagUpdateForm = React.createClass({
   handleSubmit(data) {
     Meteor.call("updateTag", this.props.tag._id, data, (err) => {
       this.props.handleClose();
@@ -17,3 +17,5 @@ TagUpdateForm = React.createClass({
     />;
   }
 });
+
+export default TagUpdateForm;

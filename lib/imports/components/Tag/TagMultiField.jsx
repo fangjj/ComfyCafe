@@ -4,7 +4,7 @@ import {
   FlatButton
 } from "material-ui";
 
-TagMultiField = React.createClass({
+const TagMultiField = React.createClass({
   getInitialState() {
     return {
       qty: 1
@@ -62,3 +62,5 @@ TagMultiField = React.createClass({
     </ul>;
   }
 });
+
+export default TagMultiField;

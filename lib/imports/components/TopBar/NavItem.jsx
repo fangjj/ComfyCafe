@@ -1,7 +1,7 @@
 import React from "react";
 import mui from "material-ui";
 
-NavItem = React.createClass({
+const NavItem = React.createClass({
   getInitialState() {
     return {
       muiTheme: this.context.muiTheme || mui.Styles.getMuiTheme(),
@@ -66,3 +66,5 @@ NavItem = React.createClass({
     </li>;
   }
 });
+
+export default NavItem;

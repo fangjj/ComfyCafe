@@ -1,6 +1,6 @@
 import React from "react";
 
-RoomList = React.createClass({
+const RoomList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var handle = Meteor.subscribe("allRooms");
@@ -40,3 +40,5 @@ RoomList = React.createClass({
     </div>;
   }
 });
+
+export default RoomList;

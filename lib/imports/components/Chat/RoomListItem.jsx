@@ -4,7 +4,7 @@ import {
   Avatar
 } from "material-ui";
 
-RoomListItem = React.createClass({
+const RoomListItem = React.createClass({
   renderMoreMenu() {
     var isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.room.owner._id;
@@ -49,3 +49,5 @@ RoomListItem = React.createClass({
     </li>;
   }
 });
+
+export default RoomListItem;

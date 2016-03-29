@@ -1,6 +1,6 @@
 import React from "react";
 
-InlineTopic = React.createClass({
+const InlineTopic = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const id = this.props.topicId;
@@ -31,3 +31,5 @@ InlineTopic = React.createClass({
     />;
   }
 });
+
+export default InlineTopic;

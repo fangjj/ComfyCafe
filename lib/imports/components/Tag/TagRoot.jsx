@@ -1,6 +1,6 @@
 import React from "react";
 
-TagRoot = React.createClass({
+const TagRoot = React.createClass({
   renderDescriptors(descriptors) {
     return _.map(_.omit(descriptors, ["_pre"]), (adjs, descNoun) => {
       return <TagDescriptor
@@ -31,3 +31,5 @@ TagRoot = React.createClass({
     </li>;
   }
 });
+
+export default TagRoot;

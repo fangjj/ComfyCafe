@@ -1,9 +1,11 @@
 import React from "react";
 
-TagRootClause = React.createClass({
+const TagRootClause = React.createClass({
   render() {
     return <div className="root">
       <TagNoun noun={this.props.noun} />
     </div>;
   }
 });
+
+export default TagRootClause;

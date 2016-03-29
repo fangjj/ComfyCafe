@@ -1,6 +1,6 @@
 import React from "react";
 
-Room = React.createClass({
+const Room = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var id = FlowRouter.getParam("roomId");
@@ -41,3 +41,5 @@ Room = React.createClass({
     </div>;
   }
 });
+
+export default Room;

@@ -1,6 +1,6 @@
 import React from "react";
 
-TagletOrigin = React.createClass({
+const TagletOrigin = React.createClass({
   render() {
     const name = this.props.name;
     return <a
@@ -9,3 +9,5 @@ TagletOrigin = React.createClass({
     >{name}</a>;
   }
 });
+
+export default TagletOrigin;

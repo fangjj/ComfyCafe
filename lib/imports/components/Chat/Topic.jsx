@@ -1,6 +1,6 @@
 import React from "react";
 
-Topic = React.createClass({
+const Topic = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var id = FlowRouter.getParam("topicId");
@@ -59,3 +59,5 @@ Topic = React.createClass({
     </section>;
   }
 });
+
+export default Topic;

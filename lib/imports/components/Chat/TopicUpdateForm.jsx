@@ -1,6 +1,6 @@
 import React from "react";
 
-TopicUpdateForm = React.createClass({
+const TopicUpdateForm = React.createClass({
   handleSubmit(data) {
     Meteor.call("updateTopic", this.props.topic._id, data, (err) => {
       this.props.handleClose();
@@ -17,3 +17,5 @@ TopicUpdateForm = React.createClass({
     />;
   }
 });
+
+export default TopicUpdateForm;

@@ -4,7 +4,7 @@ import {
   TextField
 } from "material-ui";
 
-TopicList = React.createClass({
+const TopicList = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
@@ -73,3 +73,5 @@ TopicList = React.createClass({
     </ol>;
   }
 });
+
+export default TopicList;

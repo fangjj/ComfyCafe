@@ -1,6 +1,6 @@
 import React from "react";
 
-TagAdjective = React.createClass({
+const TagAdjective = React.createClass({
   render() {
     return <a
       className="taglet adj"
@@ -8,3 +8,5 @@ TagAdjective = React.createClass({
     >{this.props.adj}</a>;
   }
 });
+
+export default TagAdjective;

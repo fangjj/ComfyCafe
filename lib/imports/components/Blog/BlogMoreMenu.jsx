@@ -7,7 +7,7 @@ import {
   FontIcon
 } from "material-ui";
 
-BlogMoreMenu = React.createClass({
+const BlogMoreMenu = React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -49,3 +49,5 @@ BlogMoreMenu = React.createClass({
     </div>;
   }
 });
+
+export default BlogMoreMenu;

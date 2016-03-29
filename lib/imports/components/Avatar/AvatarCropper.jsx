@@ -6,7 +6,7 @@ import {
   FontIcon
 } from "material-ui";
 
-AvatarCropper = React.createClass({
+const AvatarCropper = React.createClass({
 	getInitialState() {
     if (this.props.src) {
       return {
@@ -112,3 +112,5 @@ AvatarCropper = React.createClass({
     </div>;
   }
 });
+
+export default AvatarCropper;

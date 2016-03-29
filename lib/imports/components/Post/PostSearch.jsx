@@ -1,6 +1,6 @@
 import React from "react";
 
-PostSearch = React.createClass({
+const PostSearch = React.createClass({
   render() {
     const tagStr = tagStrFromUrl(FlowRouter.getParam("rawTagStr"));
     return <PostGallery
@@ -18,3 +18,5 @@ PostSearch = React.createClass({
     />;
   }
 });
+
+export default PostSearch;

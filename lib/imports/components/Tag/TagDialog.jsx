@@ -27,7 +27,7 @@ function condImplWrap(condImpl) {
   return formatted;
 }
 
-TagDialog = React.createClass({
+const TagDialog = React.createClass({
   getInitialState() {
     if (this.props.tag) {
       return {
@@ -152,3 +152,5 @@ TagDialog = React.createClass({
     </Dialog>;
   }
 });
+
+export default TagDialog;

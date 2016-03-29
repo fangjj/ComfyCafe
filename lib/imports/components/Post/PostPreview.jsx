@@ -4,7 +4,7 @@ import {
   FontIcon
 } from "material-ui";
 
-PostPreview = React.createClass({
+const PostPreview = React.createClass({
   renderMoreMenu() {
     const isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.post.owner._id;
@@ -50,3 +50,5 @@ PostPreview = React.createClass({
     </li>;
   }
 });
+
+export default PostPreview;

@@ -4,7 +4,7 @@ import {
   TextField
 } from "material-ui";
 
-TagInnerForm = React.createClass({
+const TagInnerForm = React.createClass({
   renderOrigin() {
     if (! _.includes(["origin", "artist"], this.props.tagType)) {
       return <span>
@@ -83,3 +83,5 @@ TagInnerForm = React.createClass({
   </div>;
   }
 });
+
+export default TagInnerForm;

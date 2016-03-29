@@ -1,5 +1,3 @@
-import React from "react";
-
 /*
 The MIT License (MIT)
 
@@ -41,7 +39,7 @@ SOFTWARE.
  * seconds. Their intervals will be canceled automatically when the component
  * unmounts.
  */
-SetIntervalMixin = {
+const SetIntervalMixin = {
     componentWillMount: function() {
         this.intervals = [];
     },
@@ -53,4 +51,4 @@ SetIntervalMixin = {
     }
 };
 
-//module.exports = SetIntervalMixin;
+export default SetIntervalMixin;

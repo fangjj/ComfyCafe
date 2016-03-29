@@ -1,7 +1,7 @@
 import React from "react";
 import OnClickOutside from "react-onclickoutside";
 
-NotificationListComponent = React.createClass({
+const NotificationListComponent = React.createClass({
   mixins: [OnClickOutside],
   handleClickOutside(event) {
     if (this.props.visible) {
@@ -34,3 +34,5 @@ NotificationListComponent = React.createClass({
     </div>;
   }
 });
+
+export default NotificationListComponent;

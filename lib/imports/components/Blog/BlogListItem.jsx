@@ -1,6 +1,6 @@
 import React from "react";
 
-BlogListItem = React.createClass({
+const BlogListItem = React.createClass({
   renderMoreMenu() {
     var isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.post.owner._id;
@@ -40,3 +40,5 @@ BlogListItem = React.createClass({
     </li>;
   }
 });
+
+export default BlogListItem;

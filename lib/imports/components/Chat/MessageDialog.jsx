@@ -10,7 +10,7 @@ const defaultState = {
   body: ""
 };
 
-MessageDialog = React.createClass({
+const MessageDialog = React.createClass({
   getInitialState() {
     if (this.props.message) {
       return {
@@ -66,3 +66,5 @@ MessageDialog = React.createClass({
     </Dialog>;
   }
 });
+
+export default MessageDialog;

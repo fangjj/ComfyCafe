@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-RoomFAB = React.createClass({
+const RoomFAB = React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -29,3 +29,5 @@ RoomFAB = React.createClass({
     </div>;
   }
 });
+
+export default RoomFAB;

@@ -7,7 +7,7 @@ import {
   FontIcon
 } from "material-ui";
 
-TopicMoreMenu = React.createClass({
+const TopicMoreMenu = React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -54,3 +54,5 @@ TopicMoreMenu = React.createClass({
     </div>;
   }
 });
+
+export default TopicMoreMenu;

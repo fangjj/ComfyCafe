@@ -1,6 +1,6 @@
 import React from "react";
 
-Post = React.createClass({
+const Post = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
@@ -111,3 +111,5 @@ Post = React.createClass({
     </article>;
   }
 });
+
+export default Post;

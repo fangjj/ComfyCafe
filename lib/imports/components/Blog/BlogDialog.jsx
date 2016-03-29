@@ -11,7 +11,7 @@ const defaultState = {
   body: ""
 };
 
-BlogDialog = React.createClass({
+const BlogDialog = React.createClass({
   getInitialState() {
     if (this.props.post) {
       return {
@@ -72,3 +72,5 @@ BlogDialog = React.createClass({
     </Dialog>;
   }
 });
+
+export default BlogDialog;

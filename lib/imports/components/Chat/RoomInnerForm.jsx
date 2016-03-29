@@ -4,7 +4,7 @@ import {
   TextField
 } from "material-ui";
 
-RoomInnerForm = React.createClass({
+const RoomInnerForm = React.createClass({
   render() {
     return <div>
       <TextField
@@ -22,3 +22,5 @@ RoomInnerForm = React.createClass({
     </div>;
   }
 });
+
+export default RoomInnerForm;

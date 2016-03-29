@@ -8,7 +8,7 @@ import {
   FontIcon
 } from "material-ui";
 
-TopBarMenu = React.createClass({
+const TopBarMenu = React.createClass({
   mixins: [OnClickOutside],
   handleClickOutside(event) {
     if (this.props.open) {
@@ -61,3 +61,5 @@ TopBarMenu = React.createClass({
     </div>;
   }
 });
+
+export default TopBarMenu;

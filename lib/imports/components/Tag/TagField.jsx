@@ -5,7 +5,7 @@ import {
   TextField
 } from "material-ui";
 
-TagField = React.createClass({
+const TagField = React.createClass({
   mixins: [ReactMeteorData],
   condExpanded: {},
   injectTags(base, props) {
@@ -259,3 +259,5 @@ TagField = React.createClass({
     </div>;
   }
 });
+
+export default TagField;

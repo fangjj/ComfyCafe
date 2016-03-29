@@ -1,6 +1,6 @@
 import React from "react";
 
-BlogForm = React.createClass({
+const BlogForm = React.createClass({
   handleSubmit(data) {
     Meteor.call("addBlogPost", data, (err, name) => {
       this.props.handleClose();
@@ -16,3 +16,5 @@ BlogForm = React.createClass({
     />;
   }
 });
+
+export default BlogForm;

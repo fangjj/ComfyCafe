@@ -1,6 +1,6 @@
 import React from "react";
 
-Avatar = React.createClass({
+const Avatar = React.createClass({
   render() {
     const size = thumbnailPolicies.avatar[this.props.size].size;
 
@@ -21,3 +21,5 @@ Avatar = React.createClass({
     />;
   }
 });
+
+export default Avatar;

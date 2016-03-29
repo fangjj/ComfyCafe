@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-TopMenuItem = React.createClass({
+const TopMenuItem = React.createClass({
   render() {
     let leftIcon;
     if (this.props.leftIconName) {
@@ -25,3 +25,5 @@ TopMenuItem = React.createClass({
     </MenuItem>;
   }
 });
+
+export default TopMenuItem;

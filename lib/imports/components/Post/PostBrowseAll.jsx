@@ -1,6 +1,6 @@
 import React from "react";
 
-PostBrowseAll = React.createClass({
+const PostBrowseAll = React.createClass({
   render() {
     return <PostGallery
       subName="allPosts"
@@ -18,3 +18,5 @@ PostBrowseAll = React.createClass({
     />;
   }
 });
+
+export default PostBrowseAll;

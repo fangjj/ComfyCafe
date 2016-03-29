@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-PostLikeFAB = React.createClass({
+const PostLikeFAB = React.createClass({
   like() {
     var post = this.props.post;
     Meteor.call("likePost", post._id, ! _.includes(post.likes, this.props.userId));
@@ -19,3 +19,5 @@ PostLikeFAB = React.createClass({
     </div>;
   }
 });
+
+export default PostLikeFAB;

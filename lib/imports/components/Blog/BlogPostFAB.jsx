@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-BlogPostFAB = React.createClass({
+const BlogPostFAB = React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -29,3 +29,5 @@ BlogPostFAB = React.createClass({
     </div>;
   }
 });
+
+export default BlogPostFAB;

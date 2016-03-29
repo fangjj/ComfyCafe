@@ -1,6 +1,6 @@
 import React from "react";
 
-BlogPost = React.createClass({
+const BlogPost = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const id = FlowRouter.getParam("postId");
@@ -31,3 +31,5 @@ BlogPost = React.createClass({
     </ol>;
   }
 });
+
+export default BlogPost;

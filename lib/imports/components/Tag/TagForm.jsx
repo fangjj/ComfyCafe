@@ -1,6 +1,6 @@
 import React from "react";
 
-TagForm = React.createClass({
+const TagForm = React.createClass({
   handleSubmit(data) {
     Meteor.call("addTag", data, (err, name) => {
       this.props.handleClose();
@@ -16,3 +16,5 @@ TagForm = React.createClass({
     />;
   }
 });
+
+export default TagForm;

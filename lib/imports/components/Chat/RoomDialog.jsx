@@ -14,7 +14,7 @@ const defaultState = {
   visibility: "public"
 };
 
-RoomDialog = React.createClass({
+const RoomDialog = React.createClass({
   getInitialState() {
     if (this.props.room) {
       return {
@@ -86,3 +86,5 @@ RoomDialog = React.createClass({
     </Dialog>;
   }
 });
+
+export default RoomDialog;

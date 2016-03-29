@@ -1,6 +1,6 @@
 import React from "react";
 
-TopBarExploreButton = React.createClass({
+const TopBarExploreButton = React.createClass({
   render() {
     return <NavItem
       label="Explore"
@@ -10,3 +10,5 @@ TopBarExploreButton = React.createClass({
     />;
   }
 });
+
+export default TopBarExploreButton;

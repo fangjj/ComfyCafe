@@ -27,7 +27,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-CropperComponent = React.createClass({
+const CropperComponent = React.createClass({
   propTypes: {
     // react cropper options
     crossOrigin: React.PropTypes.string,
@@ -205,3 +205,5 @@ CropperComponent = React.createClass({
     );
   }
 });
+
+export default CropperComponent;

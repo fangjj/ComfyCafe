@@ -1,3 +1,5 @@
+import React from "react";
+
 MessageInlineForm = React.createClass({
   getInitialState() {
     return {

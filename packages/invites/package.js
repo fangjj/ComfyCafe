@@ -20,10 +20,6 @@ Package.onUse(function(api) {
     "comfysoft:utility"
   ], ["client", "server"]);
 
-  api.use([
-    "comfysoft:components"
-  ], ["client"]);
-
   api.addFiles([
     "lib/collection.js",
     "lib/methods.js",
@@ -33,16 +29,7 @@ Package.onUse(function(api) {
     "server/publications.js"
   ], ["server"]);
 
-  api.addFiles([
-    "client/components/InviteComponent.jsx",
-    "client/components/InviteFAB.jsx",
-    "client/components/InviteListComponent.jsx",
-    "client/views/InviteListView.jsx"
-  ], ["client"]);
-
   api.export("Invites", ["client", "server"]);
-
-  api.export("InviteListView", ["client"]);
 });
 
 Package.onTest(function(api) {

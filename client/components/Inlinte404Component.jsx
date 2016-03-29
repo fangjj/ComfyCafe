@@ -1,3 +1,5 @@
+import React from "react";
+
 // This isn't actually inline. Hm.
 Inline404Component = React.createClass({
   render() {

@@ -1,3 +1,5 @@
+import React from "react";
+
 MessageList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

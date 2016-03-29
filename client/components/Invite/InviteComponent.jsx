@@ -1,3 +1,5 @@
+import React from "react";
+
 InviteComponent = React.createClass({
   delete() {
     Meteor.call("deleteInvite", this.props.invite.key);

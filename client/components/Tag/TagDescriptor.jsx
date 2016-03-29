@@ -1,3 +1,5 @@
+import React from "react";
+
 TagDescriptor = React.createClass({
   renderAdjs() {
     if (! _.isEmpty(this.props.adjs)) {

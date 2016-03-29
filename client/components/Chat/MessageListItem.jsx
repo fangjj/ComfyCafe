@@ -1,3 +1,5 @@
+import React from "react";
+
 MessageListItem = React.createClass({
   onVisibility(visible) {
     if (visible) {

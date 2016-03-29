@@ -1,3 +1,5 @@
+import React from "react";
+
 RoomUpdateForm = React.createClass({
   handleSubmit(data) {
     Meteor.call("updateRoom", this.props.room._id, data, (err) => {

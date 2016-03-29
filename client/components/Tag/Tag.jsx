@@ -1,3 +1,5 @@
+import React from "react";
+
 Tag = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

@@ -1,3 +1,5 @@
+import React from "react";
+
 Post = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {

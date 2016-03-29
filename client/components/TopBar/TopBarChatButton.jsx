@@ -1,3 +1,5 @@
+import React from "react";
+
 TopBarChatButton = React.createClass({
   render() {
     return <NavItem

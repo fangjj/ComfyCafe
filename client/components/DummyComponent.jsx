@@ -1,3 +1,5 @@
+import React from "react";
+
 DummyComponent = React.createClass({
   render() {
     return <article>

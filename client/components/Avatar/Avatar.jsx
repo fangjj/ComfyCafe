@@ -1,3 +1,5 @@
+import React from "react";
+
 Avatar = React.createClass({
   render() {
     const size = thumbnailPolicies.avatar[this.props.size].size;

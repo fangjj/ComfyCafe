@@ -1,3 +1,5 @@
+import React from "react";
+
 InviteListComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

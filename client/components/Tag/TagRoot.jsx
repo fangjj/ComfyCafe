@@ -1,3 +1,5 @@
+import React from "react";
+
 TagRoot = React.createClass({
   renderDescriptors(descriptors) {
     return _.map(_.omit(descriptors, ["_pre"]), (adjs, descNoun) => {

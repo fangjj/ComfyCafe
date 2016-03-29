@@ -1,3 +1,5 @@
+import React from "react";
+
 TopicListItem = React.createClass({
   renderMoreMenu() {
     var isOwner = this.props.currentUser

@@ -1,3 +1,5 @@
+import React from "react";
+
 BlogListItem = React.createClass({
   renderMoreMenu() {
     var isOwner = this.props.currentUser

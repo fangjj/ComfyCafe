@@ -1,3 +1,5 @@
+import React from "react";
+
 TopBarComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

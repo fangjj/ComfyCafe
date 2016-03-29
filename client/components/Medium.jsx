@@ -1,3 +1,5 @@
+import React from "react";
+
 Medium = React.createClass({
   render() {
     const medium = this.props.medium;

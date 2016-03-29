@@ -1,3 +1,5 @@
+import React from "react";
+
 UserList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

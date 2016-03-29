@@ -1,3 +1,5 @@
+import React from "react";
+
 TopBarArtButton = React.createClass({
   render() {
     return <NavItem

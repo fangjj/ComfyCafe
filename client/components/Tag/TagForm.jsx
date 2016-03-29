@@ -1,3 +1,5 @@
+import React from "react";
+
 TagForm = React.createClass({
   handleSubmit(data) {
     Meteor.call("addTag", data, (err, name) => {

@@ -1,3 +1,5 @@
+import React from "react";
+
 RoomList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

@@ -1,3 +1,5 @@
+import React from "react";
+
 RainbowSpinnerComponent = React.createClass({
   render() {
     return <div className="preloader-wrapper big active">

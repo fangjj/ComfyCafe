@@ -1,3 +1,5 @@
+import React from "react";
+
 FriendButton = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

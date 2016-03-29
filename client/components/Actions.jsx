@@ -1,3 +1,5 @@
+import React from "react";
+
 Actions = React.createClass({
   render() {
     const { className, children, ...props } = this.props;

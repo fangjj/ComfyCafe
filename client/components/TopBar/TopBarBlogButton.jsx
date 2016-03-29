@@ -1,3 +1,5 @@
+import React from "react";
+
 TopBarBlogButton = React.createClass({
   render() {
     return <NavItem

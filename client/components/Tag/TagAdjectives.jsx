@@ -1,3 +1,5 @@
+import React from "react";
+
 TagAdjective = React.createClass({
   render() {
     return <a

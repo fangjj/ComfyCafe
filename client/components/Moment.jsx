@@ -1,3 +1,5 @@
+import React from "react";
+
 Moment = React.createClass({
   mixins: [SetIntervalMixin],
   getInitialState() {

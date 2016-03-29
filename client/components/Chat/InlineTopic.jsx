@@ -1,3 +1,5 @@
+import React from "react";
+
 InlineTopic = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

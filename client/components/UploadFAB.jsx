@@ -1,3 +1,5 @@
+import React from "react";
+
 UploadFAB = React.createClass({
   componentDidMount() {
     media.resumable.assignBrowse(this.refs.addFile);

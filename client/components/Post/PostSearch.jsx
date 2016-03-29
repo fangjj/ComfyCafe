@@ -1,3 +1,5 @@
+import React from "react";
+
 PostSearch = React.createClass({
   render() {
     const tagStr = tagStrFromUrl(FlowRouter.getParam("rawTagStr"));

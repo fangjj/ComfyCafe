@@ -1,3 +1,5 @@
+import React from "react";
+
 PostFeed = React.createClass({
   render() {
     return <PostGallery

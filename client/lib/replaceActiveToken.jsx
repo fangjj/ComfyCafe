@@ -1,3 +1,5 @@
+import React from "react";
+
 replaceActiveToken = function (value, replacement, tf) {
   const searchPair = getActiveToken(value, tf);
 

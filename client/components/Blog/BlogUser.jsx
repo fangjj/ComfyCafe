@@ -1,3 +1,5 @@
+import React from "react";
+
 BlogUser = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

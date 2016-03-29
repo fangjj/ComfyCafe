@@ -1,3 +1,5 @@
+import React from "react";
+
 TopBarExploreButton = React.createClass({
   render() {
     return <NavItem

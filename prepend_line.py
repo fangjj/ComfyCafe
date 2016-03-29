@@ -12,7 +12,7 @@ def go(line, where="."):
                 with open(path, "r") as i:
                     content = i.read()
                 content = line + "\n\n" + content
-                with open(path, "w") as i:
-                    content = o.write()
+                with open(path, "w") as o:
+                    content = o.write(content)
 
-go(input("Line: "), sys.argv[1])
+go(sys.argv[2], sys.argv[1])

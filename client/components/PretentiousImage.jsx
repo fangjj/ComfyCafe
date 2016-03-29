@@ -1,3 +1,5 @@
+import React from "react";
+
 PretentiousImage = React.createClass({
   getInitialState() {
     return {

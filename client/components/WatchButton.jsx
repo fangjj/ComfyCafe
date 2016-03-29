@@ -1,3 +1,5 @@
+import React from "react";
+
 WatchButton = React.createClass({
   watch(event) {
     Meteor.call("watchTopic", this.props.topic._id);

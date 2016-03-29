@@ -1,3 +1,5 @@
+import React from "react";
+
 TagListItem = React.createClass({
   render() {
     const tag = this.props.tag;

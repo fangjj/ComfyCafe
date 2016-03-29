@@ -1,3 +1,5 @@
+import React from "react";
+
 InviteFAB = React.createClass({
   invite() {
     Meteor.call("addInvite");

@@ -1,3 +1,5 @@
+import React from "react";
+
 BlogForm = React.createClass({
   handleSubmit(data) {
     Meteor.call("addBlogPost", data, (err, name) => {

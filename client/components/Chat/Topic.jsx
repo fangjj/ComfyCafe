@@ -1,3 +1,5 @@
+import React from "react";
+
 Topic = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

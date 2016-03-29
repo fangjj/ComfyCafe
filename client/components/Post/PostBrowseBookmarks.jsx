@@ -1,3 +1,5 @@
+import React from "react";
+
 PostBrowseBookmarks = React.createClass({
   render() {
     return <PostGallery

@@ -1,3 +1,5 @@
+import React from "react";
+
 TagNoun = React.createClass({
   render() {
     const noun = this.props.noun;

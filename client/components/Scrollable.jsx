@@ -1,3 +1,5 @@
+import React from "react";
+
 Scrollable = React.createClass({
   componentDidMount() {
     Ps.initialize(this.refs.container);

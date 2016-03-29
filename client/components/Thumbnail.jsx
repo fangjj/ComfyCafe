@@ -1,3 +1,5 @@
+import React from "react";
+
 Thumbnail = React.createClass({
   renderPlay(type) {
     if (type === "video") {

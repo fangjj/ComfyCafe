@@ -1,3 +1,5 @@
+import React from "react";
+
 FriendList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

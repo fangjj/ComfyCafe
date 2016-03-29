@@ -1,3 +1,5 @@
+import React from "react";
+
 PostBrowseUser = React.createClass({
   render() {
     return <PostGallery

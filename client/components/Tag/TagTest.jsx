@@ -1,3 +1,5 @@
+import React from "react";
+
 TagTest = React.createClass({
   getInitialState() {
     return {

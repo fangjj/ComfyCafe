@@ -1,3 +1,5 @@
+import React from "react";
+
 VisibilityLink = React.createClass({
   render() {
     const classes = classConcat("visibility", this.props.visibility);

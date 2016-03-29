@@ -1,3 +1,5 @@
+import React from "react";
+
 TagTree = React.createClass({
   renderRoots() {
     return _.map(this.props.tags.subjects, (descriptors, rootNoun) => {

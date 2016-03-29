@@ -1,3 +1,5 @@
+import React from "react";
+
 TagRootClause = React.createClass({
   render() {
     return <div className="root">

@@ -1,3 +1,5 @@
+import React from "react";
+
 NotificationButton = React.createClass({
   renderCount() {
     if (this.props.notifications.length) {

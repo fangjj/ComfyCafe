@@ -1,3 +1,5 @@
+import React from "react";
+
 Content = React.createClass({
   render() {
     const { className, children, ...props } = this.props;

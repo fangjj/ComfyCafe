@@ -21,6 +21,10 @@ Package.onUse(function(api) {
     "ecmascript",
   ], ["client", "server"]);
 
+  api.imply([
+    "react-meteor-data",
+  ], ["client", "server"]);
+
   api.addFiles([
     "client/lib/client.browserify.js",
     "client/components/SpinnerComponent.jsx",

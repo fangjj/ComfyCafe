@@ -1,3 +1,5 @@
+import React from "react";
+
 UserLink = React.createClass({
   getInitialState() {
     return {

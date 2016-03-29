@@ -1,3 +1,5 @@
+import React from "react";
+
 PostBrowseAll = React.createClass({
   render() {
     return <PostGallery

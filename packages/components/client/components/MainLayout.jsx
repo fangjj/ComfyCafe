@@ -1,3 +1,5 @@
+import React from "react";
+
 MainLayout = React.createClass({
   childContextTypes: {
     muiTheme: React.PropTypes.object

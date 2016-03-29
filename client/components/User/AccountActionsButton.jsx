@@ -1,3 +1,5 @@
+import React from "react";
+
 AccountActionsButton = React.createClass({
   toggleActionsVisbility(event) {
     if (event.which === 2) {

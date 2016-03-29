@@ -1,3 +1,5 @@
+import React from "react";
+
 NotificationListComponent = React.createClass({
   mixins: [OnClickOutside],
   handleClickOutside(event) {

@@ -1,3 +1,5 @@
+import React from "react";
+
 PostBrowseLikes = React.createClass({
   render() {
     return <PostGallery

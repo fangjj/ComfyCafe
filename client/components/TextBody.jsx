@@ -1,3 +1,5 @@
+import React from "react";
+
 TextBody = React.createClass({
   shouldComponentUpdate(nextProps, nextState) {
     return muxOr([

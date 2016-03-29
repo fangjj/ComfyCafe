@@ -1,3 +1,5 @@
+import React from "react";
+
 getActiveToken = function (value, tf) {
   const tokens = fancySplit(value);
   // we have our lovely needle

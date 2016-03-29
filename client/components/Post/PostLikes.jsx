@@ -1,3 +1,5 @@
+import React from "react";
+
 PostLikes = React.createClass({
   render() {
     return <section className="likes content">

@@ -1,3 +1,5 @@
+import React from "react";
+
 /*
 https://github.com/roadmanfong/react-cropper
 

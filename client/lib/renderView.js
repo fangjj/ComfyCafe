@@ -1,5 +1,7 @@
-renderView = function(view) {
+import {mount} from "react-mounter";
+
+renderView = function (route, view) {
   Session.set("previousPath", Session.get("currentPath") || "/");
   Session.set("currentPath", FlowRouter.current().path);
-  ReactLayout.render(view.layout, view.content);
+  mount(view.layout, view.content);
 };

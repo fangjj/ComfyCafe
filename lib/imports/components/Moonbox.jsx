@@ -2,6 +2,11 @@ import _ from "lodash";
 import React from "react";
 import hotkey from "react-hotkey";
 
+if (Meteor.isClient) {
+  global.jQuery = require("jquery");
+  require("jquery.panzoom");
+}
+
 import {
   FontIcon
 } from "material-ui";
@@ -14,11 +19,11 @@ const Moonbox = React.createClass({
     }
   },
   handleClose() {
-    $(this.refs.image).panzoom("reset");
+    jQuery(this.refs.image).panzoom("reset");
     this.props.onClose();
   },
   componentDidMount() {
-    var $panzoom = $(this.refs.image).panzoom();
+    var $panzoom = jQuery(this.refs.image).panzoom();
     $panzoom.parent().on("mousewheel.focal", function (event) {
       event.preventDefault();
       var delta = event.delta || event.originalEvent.wheelDelta;
@@ -34,16 +39,16 @@ const Moonbox = React.createClass({
   componentWillReceiveProps(nextProps) {
     if (nextProps.open !== this.props.open) {
       if (nextProps.open) {
-        $("body").addClass("frozen");
+        jQuery("body").addClass("frozen");
       } else {
         _.delay(() => {
-          $("body").removeClass("frozen");
+          jQuery("body").removeClass("frozen");
         }, 100);
       }
     }
   },
   componentWillUnmount() {
-    $("body").removeClass("frozen");
+    jQuery("body").removeClass("frozen");
   },
   render() {
     const containerStyle = {

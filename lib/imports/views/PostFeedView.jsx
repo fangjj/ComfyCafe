@@ -2,8 +2,6 @@ import React from "react";
 import MainLayout from "/lib/imports/layouts/MainLayout";
 import PostFeed from "/lib/imports/components/Post/PostFeed";
 
-prettyPrint(PostFeed);
-
 const PostFeedView = {
   layout: MainLayout,
   content: {

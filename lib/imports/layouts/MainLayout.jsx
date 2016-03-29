@@ -9,7 +9,12 @@ const MainLayout = React.createClass({
     muiTheme: React.PropTypes.object
   },
   getChildContext() {
-    var theme = mui.Styles.ThemeManager.getMuiTheme(mui.Styles.DarkRawTheme);
+    let theme = mui.Styles.ThemeManager.getMuiTheme(
+      mui.Styles.DarkRawTheme,
+      {
+        userAgent: "all"
+      }
+    );
     theme = mui.Styles.ThemeManager.modifyRawThemeFontFamily(theme, "Slabo 27px");
     theme = mui.Styles.ThemeManager.modifyRawThemePalette(theme, {
       primary1Color: "#009688",

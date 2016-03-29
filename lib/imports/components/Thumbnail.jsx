@@ -1,5 +1,7 @@
 import React from "react";
 
+import PretentiousImage from "./PretentiousImage";
+
 const Thumbnail = React.createClass({
   renderPlay(type) {
     if (type === "video") {

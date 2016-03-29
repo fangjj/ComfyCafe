@@ -10,7 +10,7 @@ momentjs:moment
 force-ssl
 seba:minifiers-autoprefixer
 peerlibrary:reactive-publish
-kadira:flow-router
+kadira:flow-router-ssr
 jonblum:jquery-cropper
 chuangbo:cookie
 mizzao:user-status
@@ -25,5 +25,4 @@ comfysoft:thumbnails
 comfysoft:jobs
 comfysoft:tags
 comfysoft:notifications
-comfysoft:components
 comfysoft:names

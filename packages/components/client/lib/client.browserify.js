@@ -1,1 +1,0 @@
-OnClickOutside = require("react-onclickoutside");

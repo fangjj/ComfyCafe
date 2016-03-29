@@ -16,7 +16,6 @@ callback-hook@1.0.6
 check@1.1.2
 chuangbo:cookie@1.1.0
 coffeescript@1.0.15
-comfysoft:components@0.0.1
 comfysoft:invites@0.0.1
 comfysoft:jobs@0.0.1
 comfysoft:media@0.0.1
@@ -49,7 +48,7 @@ jonblum:jquery-cropper@2.3.0
 jparker:crypto-core@0.1.0
 jparker:crypto-sha256@0.1.1
 jquery@1.11.6
-kadira:flow-router@2.11.0
+kadira:flow-router-ssr@3.12.2
 launch-screen@1.0.8
 livedata@1.0.16
 localstorage@1.0.7

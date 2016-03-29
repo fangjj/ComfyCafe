@@ -1,6 +1,8 @@
 import React from "react";
 import NativeListener from "react-native-listener";
 
+import CropperComponent from "../extern/CropperComponent";
+
 import {
   RaisedButton,
   FontIcon

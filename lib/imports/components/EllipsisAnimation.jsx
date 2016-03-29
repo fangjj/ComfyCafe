@@ -1,7 +1,9 @@
 import React from "react";
 
-EllipsisAnimation = React.createClass({
+const EllipsisAnimation = React.createClass({
   render() {
     return <span className="dots"><span>.</span><span>.</span><span>.</span></span>;
   }
 });
+
+export default EllipsisAnimation;

@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-CancelButton = React.createClass({
+const CancelButton = React.createClass({
   render() {
     return <RaisedButton
       className="grey darken-2"
@@ -16,3 +16,5 @@ CancelButton = React.createClass({
     />
   }
 });
+
+export default CancelButton;

@@ -6,7 +6,7 @@ const iconMap = {
   unlisted: "visibility_off"
 };
 
-PrivacyIcon = React.createClass({
+const PrivacyIcon = React.createClass({
   render() {
     return <Icon
       className="privacyIcon"
@@ -17,3 +17,5 @@ PrivacyIcon = React.createClass({
     </Icon>;
   }
 });
+
+export default PrivacyIcon;

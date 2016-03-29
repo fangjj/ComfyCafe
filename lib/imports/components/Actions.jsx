@@ -1,6 +1,6 @@
 import React from "react";
 
-Actions = React.createClass({
+const Actions = React.createClass({
   render() {
     const { className, children, ...props } = this.props;
     const classes = classConcat("actions", className);
@@ -11,3 +11,5 @@ Actions = React.createClass({
     </div>;
   }
 });
+
+export default Actions;

@@ -1,6 +1,6 @@
 import React from "react";
 
-FriendButton = React.createClass({
+const FriendButton = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var handle = Meteor.subscribe("friendRequest", Meteor.userId(), this.props.user._id);
@@ -57,3 +57,5 @@ FriendButton = React.createClass({
     }
   }
 });
+
+export default FriendButton;

@@ -4,7 +4,7 @@ if (Meteor.isClient) {
   const Ps = require("perfect-scrollbar");
 }
 
-Scrollable = React.createClass({
+const Scrollable = React.createClass({
   componentDidMount() {
     Ps.initialize(this.refs.container);
   },
@@ -21,3 +21,5 @@ Scrollable = React.createClass({
     </div>;
   }
 });
+
+export default Scrollable;

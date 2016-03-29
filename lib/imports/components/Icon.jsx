@@ -4,7 +4,7 @@ import {
   FontIcon
 } from "material-ui";
 
-Icon = React.createClass({
+const Icon = React.createClass({
   render() {
     const { className, children, ...props } = this.props;
     const classes = classConcat("material-icons", className);
@@ -13,3 +13,5 @@ Icon = React.createClass({
     </FontIcon>;
   }
 });
+
+export default Icon;

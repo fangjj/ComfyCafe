@@ -1,6 +1,6 @@
 import React from "react";
 
-Content = React.createClass({
+const Content = React.createClass({
   render() {
     const { className, children, ...props } = this.props;
     const classes = classConcat("content", className);
@@ -9,3 +9,5 @@ Content = React.createClass({
     </div>;
   }
 });
+
+export default Content;

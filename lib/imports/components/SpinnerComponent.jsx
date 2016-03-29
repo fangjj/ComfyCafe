@@ -1,6 +1,6 @@
 import React from "react";
 
-SpinnerComponent = React.createClass({
+const SpinnerComponent = React.createClass({
   render() {
     return <div className="preloader-wrapper big active">
       <div className="spinner-layer spinner-blue-only">
@@ -15,3 +15,5 @@ SpinnerComponent = React.createClass({
     </div>;
   }
 });
+
+export default SpinnerComponent;

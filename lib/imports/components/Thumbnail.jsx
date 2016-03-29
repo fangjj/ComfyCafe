@@ -1,6 +1,6 @@
 import React from "react";
 
-Thumbnail = React.createClass({
+const Thumbnail = React.createClass({
   renderPlay(type) {
     if (type === "video") {
       return <div className="play">
@@ -47,3 +47,5 @@ Thumbnail = React.createClass({
     </div>;
   }
 });
+
+export default Thumbnail;

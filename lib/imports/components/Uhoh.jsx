@@ -1,9 +1,11 @@
 import React from "react";
 
-Uhoh = React.createClass({
+const Uhoh = React.createClass({
   render() {
     return <div className="uhoh content">
       {this.props.children}
     </div>;
   }
 });
+
+export default Uhoh;

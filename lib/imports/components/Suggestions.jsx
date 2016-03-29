@@ -5,7 +5,7 @@ import {
   MenuItem
 } from "material-ui";
 
-Suggestions = React.createClass({
+const Suggestions = React.createClass({
   getInitialState() {
     return {
       selected: undefined
@@ -144,3 +144,5 @@ Suggestions = React.createClass({
     </div>;
   }
 });
+
+export default Suggestions;

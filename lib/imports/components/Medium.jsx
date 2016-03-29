@@ -1,6 +1,6 @@
 import React from "react";
 
-Medium = React.createClass({
+const Medium = React.createClass({
   render() {
     const medium = this.props.medium;
     const type = medium.contentType.split("/")[0];
@@ -27,3 +27,5 @@ Medium = React.createClass({
     </div>;
   }
 });
+
+export default Medium;

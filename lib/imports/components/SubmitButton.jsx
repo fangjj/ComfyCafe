@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-SubmitButton = React.createClass({
+const SubmitButton = React.createClass({
   render() {
     return <RaisedButton
       label={this.props.label || "Submit"}
@@ -17,3 +17,5 @@ SubmitButton = React.createClass({
     />;
   }
 });
+
+export default SubmitButton;

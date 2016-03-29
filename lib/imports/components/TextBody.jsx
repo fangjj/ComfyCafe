@@ -3,7 +3,7 @@ import marked from "marked";
 import Autolinker from "autolinker.js";
 import emojione from "emojione";
 
-TextBody = React.createClass({
+const TextBody = React.createClass({
   shouldComponentUpdate(nextProps, nextState) {
     return muxOr([
       this.props.text !== nextProps.text,
@@ -36,3 +36,5 @@ TextBody = React.createClass({
     </div>;
   }
 });
+
+export default TextBody;

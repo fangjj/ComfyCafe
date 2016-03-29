@@ -1,6 +1,6 @@
 import React from "react";
 
-Moment = React.createClass({
+const Moment = React.createClass({
   mixins: [SetIntervalMixin],
   getInitialState() {
     return {
@@ -19,3 +19,5 @@ Moment = React.createClass({
     return <time dateTime={isoDate}>{this.state.prettyDate}</time>;
   }
 });
+
+export default Moment;

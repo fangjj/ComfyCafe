@@ -1,6 +1,6 @@
 import React from "react";
 
-UploadFAB = React.createClass({
+const UploadFAB = React.createClass({
   componentDidMount() {
     media.resumable.assignBrowse(this.refs.addFile);
   },
@@ -15,3 +15,5 @@ UploadFAB = React.createClass({
     </div>;
   }
 });
+
+export default UploadFAB;

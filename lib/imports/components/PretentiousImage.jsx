@@ -1,6 +1,6 @@
 import React from "react";
 
-PretentiousImage = React.createClass({
+const PretentiousImage = React.createClass({
   getInitialState() {
     return {
       showMoonbox: false,
@@ -74,3 +74,5 @@ PretentiousImage = React.createClass({
     </div>;
   }
 });
+
+export default PretentiousImage;

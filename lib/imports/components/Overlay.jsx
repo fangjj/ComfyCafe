@@ -1,6 +1,6 @@
 import React from "react";
 
-Overlay = React.createClass({
+const Overlay = React.createClass({
   render() {
     return <div
       className="overlayContainer"
@@ -11,3 +11,5 @@ Overlay = React.createClass({
     </div>;
   }
 });
+
+export default Overlay;

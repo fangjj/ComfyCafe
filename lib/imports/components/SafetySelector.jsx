@@ -5,7 +5,7 @@ import {
   MenuItem
 } from "material-ui";
 
-SafetySelector = React.createClass({
+const SafetySelector = React.createClass({
   render() {
     return <SelectField
       value={this.props.safety}
@@ -21,3 +21,5 @@ SafetySelector = React.createClass({
     </SelectField>;
   }
 });
+
+export default SafetySelector;

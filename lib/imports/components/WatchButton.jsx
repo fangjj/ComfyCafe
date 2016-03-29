@@ -1,6 +1,6 @@
 import React from "react";
 
-WatchButton = React.createClass({
+const WatchButton = React.createClass({
   watch(event) {
     Meteor.call("watchTopic", this.props.topic._id);
   },
@@ -24,3 +24,5 @@ WatchButton = React.createClass({
     />;
   }
 });
+
+export default WatchButton;

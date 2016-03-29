@@ -5,7 +5,7 @@ import {
   MenuItem
 } from "material-ui";
 
-OriginalitySelector = React.createClass({
+const OriginalitySelector = React.createClass({
   render() {
     return <SelectField
       value={this.props.value}
@@ -20,3 +20,5 @@ OriginalitySelector = React.createClass({
     </SelectField>;
   }
 });
+
+export default OriginalitySelector;

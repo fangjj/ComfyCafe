@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-SubtleDangerButton = React.createClass({
+const SubtleDangerButton = React.createClass({
   getInitialState() {
     return {
       hover: false
@@ -32,3 +32,5 @@ SubtleDangerButton = React.createClass({
     />
   }
 });
+
+export default SubtleDangerButton;

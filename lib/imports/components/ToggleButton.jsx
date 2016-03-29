@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-ToggleButton = React.createClass({
+const ToggleButton = React.createClass({
   getInitialState() {
     return {
       notHover: true
@@ -54,3 +54,5 @@ ToggleButton = React.createClass({
     }
   }
 });
+
+export default ToggleButton;

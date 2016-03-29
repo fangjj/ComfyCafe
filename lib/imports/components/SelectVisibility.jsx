@@ -5,7 +5,7 @@ import {
   MenuItem
 } from "material-ui";
 
-SelectVisibility = React.createClass({
+const SelectVisibility = React.createClass({
   render() {
     return <div>
       <SelectField
@@ -22,3 +22,5 @@ SelectVisibility = React.createClass({
     </div>;
   }
 });
+
+export default SelectVisibility;

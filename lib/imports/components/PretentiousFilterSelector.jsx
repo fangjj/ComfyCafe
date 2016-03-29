@@ -6,7 +6,7 @@ import {
 } from "material-ui";
 
 // Note that this is for Instagram-esque filters, not query filters.
-PretentiousFilterSelector = React.createClass({
+const PretentiousFilterSelector = React.createClass({
   render() {
     return <div>
       <SelectField
@@ -30,3 +30,5 @@ PretentiousFilterSelector = React.createClass({
     </div>;
   }
 });
+
+export default PretentiousFilterSelector;

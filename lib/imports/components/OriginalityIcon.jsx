@@ -6,7 +6,7 @@ const iconMap = {
   repost: "repeat"
 };
 
-OriginalityIcon = React.createClass({
+const OriginalityIcon = React.createClass({
   render() {
     return <Icon
       className="originalityIcon"
@@ -17,3 +17,5 @@ OriginalityIcon = React.createClass({
     </Icon>;
   }
 });
+
+export default OriginalityIcon;

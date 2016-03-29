@@ -1,6 +1,6 @@
 import React from "react";
 
-SubscriptionButton = React.createClass({
+const SubscriptionButton = React.createClass({
   toggleSubscription(event) {
     Meteor.call("toggleSubscription", this.props.owner._id);
   },
@@ -21,3 +21,5 @@ SubscriptionButton = React.createClass({
     />;
   }
 });
+
+export default SubscriptionButton;

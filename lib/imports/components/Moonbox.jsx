@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-Moonbox = React.createClass({
+const Moonbox = React.createClass({
   mixins: [hotkey.Mixin("handleHotkey")],
   handleHotkey(event) {
     if (event.keyCode === 27) {
@@ -63,3 +63,5 @@ Moonbox = React.createClass({
     </div>;
   }
 });
+
+export default Moonbox;

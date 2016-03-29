@@ -5,7 +5,7 @@ import {
   FontIcon
 } from "material-ui";
 
-DangerButton = React.createClass({
+const DangerButton = React.createClass({
   render() {
     return <RaisedButton
       className="red darken-3"
@@ -16,3 +16,5 @@ DangerButton = React.createClass({
     />
   }
 });
+
+export default DangerButton;

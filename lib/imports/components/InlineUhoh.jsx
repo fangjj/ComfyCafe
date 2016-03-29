@@ -1,9 +1,11 @@
 import React from "react";
 
-InlineUhoh = React.createClass({
+const InlineUhoh = React.createClass({
   render() {
     return <div className="uhoh">
       {this.props.children}
     </div>;
   }
 });
+
+export default InlineUhoh;

@@ -1,6 +1,6 @@
 import React from "react";
 
-DummyComponent = React.createClass({
+const DummyComponent = React.createClass({
   render() {
     return <article>
       <figure className="content">
@@ -11,3 +11,5 @@ DummyComponent = React.createClass({
     </article>;
   }
 });
+
+export default DummyComponent;

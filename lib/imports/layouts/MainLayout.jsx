@@ -35,10 +35,7 @@ const muiTheme = getMuiTheme({
     pickerHeaderColor: ColorManipulator.fade(fullWhite, 0.12),
     clockCircleColor: ColorManipulator.fade(fullWhite, 0.12)
   },
-  fontFamily: "Slabo 27px",
-  userAgent: "all"
-}, {
-  userAgent: "all"
+  fontFamily: "Slabo 27px"
 });
 
 const MainLayout = React.createClass({
@@ -53,6 +50,11 @@ const MainLayout = React.createClass({
     globalEvents.on("patternChange", (pattern) => {
       this.setState(pattern);
     });
+
+    if (Meteor.isServer) {
+      const ua = FlowRouter.current()._serverRequest.headers["user-agent"];
+      muiTheme.userAgent = ua;
+    }
   },
   componentDidMount() {
     var self = this;

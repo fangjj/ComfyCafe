@@ -150,7 +150,10 @@ const TopBarComponent = React.createClass({
     </ul>;
   },
   render() {
-    return <nav className="topNav">
+    const style = {
+      backgroundColor: this.props.color
+    };
+    return <nav className="topNav" style={style}>
       {this.renderLeft()}
 
       <div className="logoWrapper center hide-on-small-only">

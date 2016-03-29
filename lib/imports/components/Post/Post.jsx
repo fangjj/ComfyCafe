@@ -44,6 +44,9 @@ const Post = React.createClass({
       currentUser: Meteor.user()
     };
   },
+  componentWillMount() {
+    setPattern(FlowRouter.getParam("postName"));
+  },
   showAvatarCropper() {
     this.setState({
       avatarCropper: true
@@ -95,8 +98,6 @@ const Post = React.createClass({
     if (showFavoriteButton) {
       fab = <PostLikeFAB post={this.data.post} userId={this.data.currentUser._id} />;
     }
-
-    setPattern(this.data.post.name);
 
     return <article className="post contentLayout">
       <figure className="content">

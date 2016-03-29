@@ -1,6 +1,8 @@
 import React from "react";
 import NativeListener from "react-native-listener";
 
+import DirectAvatar from "../Avatar/DirectAvatar";
+
 const AccountActionsButton = React.createClass({
   toggleActionsVisbility(event) {
     if (event.which === 2) {

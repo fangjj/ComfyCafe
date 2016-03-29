@@ -1,5 +1,7 @@
 import React from "react";
 
+import NavItem from "./NavItem";
+
 const TopBarExploreButton = React.createClass({
   render() {
     return <NavItem

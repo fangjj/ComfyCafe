@@ -1,5 +1,7 @@
 import React from "react";
 
+import NavItem from "./NavItem";
+
 const TopBarTagButton = React.createClass({
   render() {
     return <NavItem

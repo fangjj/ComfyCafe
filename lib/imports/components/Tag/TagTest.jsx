@@ -1,5 +1,8 @@
 import React from "react";
 
+import TagTree from "./TagTree";
+import TagField from "./TagField";
+
 const TagTest = React.createClass({
   getInitialState() {
     return {

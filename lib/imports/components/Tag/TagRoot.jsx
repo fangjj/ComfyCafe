@@ -1,5 +1,8 @@
 import React from "react";
 
+import TagRootClause from "./TagRootClause";
+import TagDescriptor from "./TagDescriptor";
+
 const TagRoot = React.createClass({
   renderDescriptors(descriptors) {
     return _.map(_.omit(descriptors, ["_pre"]), (adjs, descNoun) => {

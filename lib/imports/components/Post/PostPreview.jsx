@@ -1,5 +1,11 @@
 import React from "react";
 
+import PostMoreMenu from "./PostMoreMenu";
+import PostBookmarkButton from "./PostBookmarkButton";
+import OriginalityIcon from "../OriginalityIcon";
+import VisibilityLink from "../VisibilityLink";
+import Thumbnail from "../Thumbnail";
+
 import {
   FontIcon
 } from "material-ui";

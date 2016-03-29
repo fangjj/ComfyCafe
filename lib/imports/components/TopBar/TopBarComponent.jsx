@@ -1,5 +1,17 @@
 import React from "react";
 
+import TopBarArtButton from "./TopBarArtButton";
+import TopBarBlogButton from "./TopBarBlogButton";
+import TopBarTagButton from "./TopBarTagButton";
+import TopBarChatButton from "./TopBarChatButton";
+import TopBarExploreButton from "./TopBarExploreButton";
+import TopBarMenu from "./TopBarMenu";
+import NavItem from "./NavItem";
+import NotificationButton from "../Notification/NotificationButton";
+import NotificationListComponent from "../Notification/NotificationListComponent";
+import AccountActionsButton from "../User/AccountActionsButton";
+import AccountActionsList from "../User/AccountActionsList";
+
 const TopBarComponent = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

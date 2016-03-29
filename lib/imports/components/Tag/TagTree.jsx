@@ -1,5 +1,9 @@
 import React from "react";
 
+import TagRoot from "./TagRoot";
+import TagletAuthor from "./TagletAuthor";
+import TagletOrigin from "./TagletOrigin";
+
 const TagTree = React.createClass({
   renderRoots() {
     return _.map(this.props.tags.subjects, (descriptors, rootNoun) => {

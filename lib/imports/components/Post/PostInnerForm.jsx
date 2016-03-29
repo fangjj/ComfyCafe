@@ -1,5 +1,11 @@
 import React from "react";
 
+import SelectVisibility from "../SelectVisibility";
+import OriginalitySelector from "../OriginalitySelector";
+import SafetySelector from "../SafetySelector";
+import PretentiousFilterSelector from "../PretentiousFilterSelector";
+import TagField from "../Tag/TagField";
+
 import {
   TextField,
   Checkbox,

@@ -1,5 +1,7 @@
 import React from "react";
 
+import UserLink from "../User/UserLink";
+
 import {
   FontIcon,
   FlatButton

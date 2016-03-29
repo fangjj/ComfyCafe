@@ -1,6 +1,8 @@
 import React from "react";
 import getCaretCoordinates from "textarea-caret";
 
+import Suggestions from "../Suggestions";
+
 import {
   TextField
 } from "material-ui";

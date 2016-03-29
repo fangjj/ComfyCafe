@@ -1,6 +1,10 @@
 import React from "react";
 import getCaretCoordinates from "textarea-caret";
 
+import TagTree from "./TagTree";
+import Suggestions from "../Suggestions";
+import InlineLoadingSpinner from "../InlineLoadingSpinner";
+
 import {
   TextField
 } from "material-ui";

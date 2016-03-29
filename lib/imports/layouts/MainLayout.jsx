@@ -1,7 +1,10 @@
 import React from "react";
 import mui from "material-ui";
 
-MainLayout = React.createClass({
+import TopBarComponent from "/lib/imports/components/TopBar/TopBarComponent";
+import PostForm from "/lib/imports/components/Post/PostForm";
+
+const MainLayout = React.createClass({
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
@@ -102,3 +105,5 @@ MainLayout = React.createClass({
     </div>;
   }
 });
+
+export default MainLayout;

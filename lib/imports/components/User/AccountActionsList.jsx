@@ -1,6 +1,8 @@
 import React from "react";
 import OnClickOutside from "react-onclickoutside";
 
+import TopMenuItem from "../TopBar/TopMenuItem";
+
 import {
   Menu,
   Divider

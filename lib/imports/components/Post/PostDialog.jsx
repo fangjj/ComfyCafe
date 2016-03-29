@@ -1,5 +1,8 @@
 import React from "react";
 
+import PostInnerForm from "./PostInnerForm";
+import Medium from "../Medium";
+
 import {
   Dialog,
   FlatButton,

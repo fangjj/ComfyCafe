@@ -1,5 +1,7 @@
 import React from "react";
 
+import PostUpdateForm from "./PostUpdateForm";
+
 import {
   IconMenu,
   MenuItem,

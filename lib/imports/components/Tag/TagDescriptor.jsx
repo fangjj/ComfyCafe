@@ -1,5 +1,8 @@
 import React from "react";
 
+import TagNoun from "./TagNoun";
+import TagAdjective from "./TagAdjective";
+
 const TagDescriptor = React.createClass({
   renderAdjs() {
     if (! _.isEmpty(this.props.adjs)) {

@@ -1,5 +1,7 @@
 import React from "react";
 
+import PretentiousImage from "./PretentiousImage";
+
 const Medium = React.createClass({
   render() {
     const medium = this.props.medium;

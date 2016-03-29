@@ -1,5 +1,7 @@
 import React from "react";
 
+import Moonbox from "./Moonbox";
+
 const PretentiousImage = React.createClass({
   getInitialState() {
     return {

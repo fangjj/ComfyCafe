@@ -1,3 +1,6 @@
+import GeoPattern from "geopattern";
+import tinycolor from "tinycolor2";
+
 setPattern = function (str) {
   var pattern = GeoPattern.generate(str);
 

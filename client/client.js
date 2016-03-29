@@ -1,3 +1,8 @@
+import hotkey from "react-hotkey";
+import injectTapEventPlugin from "react-tap-event-plugin";
+import emojione from "emojione";
+import marked from "marked";
+
 Meteor.startup(function(){
   injectTapEventPlugin();
   hotkey.activate();

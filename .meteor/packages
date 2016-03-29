@@ -11,10 +11,10 @@ force-ssl
 seba:minifiers-autoprefixer
 peerlibrary:reactive-publish
 kadira:flow-router-ssr
+meteorhacks:fast-render
 jonblum:jquery-cropper
 chuangbo:cookie
 mizzao:user-status
-meteorhacks:fast-render
 alanning:roles
 email
 react-meteor-data

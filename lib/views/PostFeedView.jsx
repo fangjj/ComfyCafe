@@ -1,6 +1,6 @@
 import React from "react";
 
-PostFeedView = {
+const PostFeedView = {
   layout: MainLayout,
   content: {
     main: <PostFeed />
@@ -9,3 +9,5 @@ PostFeedView = {
     this.subscribe("postFeed");
   }
 };
+
+export default PostFeedView;

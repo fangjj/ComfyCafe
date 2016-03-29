@@ -1,6 +1,8 @@
 import _ from "lodash";
 import React from "react";
 
+import ToggleButton from "./ToggleButton";
+
 const FriendButton = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

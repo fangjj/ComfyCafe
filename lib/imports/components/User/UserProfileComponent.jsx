@@ -1,6 +1,14 @@
 import _ from "lodash";
 import React from "react";
 
+import UserProfileForm from "./UserProfileForm";
+import LoadingSpinner from "../LoadingSpinner";
+import SubscriptionButton from "../SubscriptionButton";
+import FriendButton from "../FriendButton";
+import SubtleDangerButton from "../SubtleDangerButton";
+import DirectAvatar from "../Avatar/DirectAvatar";
+import AvatarCropper from "../Avatar/AvatarCropper";
+
 import {
   RaisedButton,
   FontIcon

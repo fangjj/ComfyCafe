@@ -1,6 +1,8 @@
 import _ from "lodash";
 import React from "react";
 
+import Icon from "./Icon";
+
 const iconMap = {
   public: "public",
   friends: "people",

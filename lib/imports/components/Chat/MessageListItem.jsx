@@ -1,5 +1,10 @@
 import React from "react";
 
+import MessageMoreMenu from "./MessageMoreMenu";
+import TextBody from "../TextBody";
+import Avatar from "../Avatar/Avatar";
+import UserLink from "../User/UserLink";
+
 const MessageListItem = React.createClass({
   onVisibility(visible) {
     if (visible) {

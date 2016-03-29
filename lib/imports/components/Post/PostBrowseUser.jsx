@@ -1,5 +1,8 @@
 import React from "react";
 
+import PostGallery from "./PostGallery";
+import InlineUhoh from "../InlineUhoh";
+
 const PostBrowseUser = React.createClass({
   render() {
     return <PostGallery

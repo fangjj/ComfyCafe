@@ -1,5 +1,7 @@
 import React from "react";
 
+import MessageDialog from "./MessageDialog";
+
 const MessageUpdateForm = React.createClass({
   handleSubmit(data) {
     Meteor.call("updateMessage", this.props.message._id, data, (err) => {

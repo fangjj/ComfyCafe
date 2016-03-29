@@ -1,5 +1,7 @@
 import React from "react";
 
+import MessageInnerForm from "./MessageInnerForm";
+
 import {
   Dialog,
   FlatButton,

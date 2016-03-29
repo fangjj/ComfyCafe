@@ -1,5 +1,9 @@
 import React from "react";
 
+import MessageInnerForm from "./MessageInnerForm";
+import Actions from "../Actions";
+import SubmitButton from "../SubmitButton";
+
 const MessageInlineForm = React.createClass({
   getInitialState() {
     return {

@@ -1,5 +1,17 @@
 import React from "react";
 
+import PostModifyFAB from "./PostModifyFAB";
+import PostLikeFAB from "./PostLikeFAB";
+import PostLikes from "./PostLikes";
+import PostInfoBox from "./PostInfoBox";
+import Medium from "../Medium";
+import LoadingSpinner from "../LoadingSpinner";
+import Inline404 from "../Inline404";
+import Content from "../Content";
+import AvatarCropper from "../Avatar/AvatarCropper";
+import TagTree from "../Tag/TagTree";
+import InlineTopic from "../Chat/InlineTopic";
+
 const Post = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
@@ -68,7 +80,7 @@ const Post = React.createClass({
     }
 
     if (! this.data.post) {
-      return <Inline404Component />;
+      return <Inline404 />;
     }
 
     var isOwner = this.data.currentUser

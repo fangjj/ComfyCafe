@@ -1,6 +1,10 @@
 import _ from "lodash";
 import React from "react";
 
+import MessageListItem from "./MessageListItem";
+import MessageInlineForm from "./MessageInlineForm";
+import InlineLoadingSpinner from "../InlineLoadingSpinner";
+
 const MessageList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

@@ -1,6 +1,8 @@
 import _ from "lodash";
 import React from "react";
 
+import ToggleButton from "./ToggleButton";
+
 const SubscriptionButton = React.createClass({
   toggleSubscription(event) {
     Meteor.call("toggleSubscription", this.props.owner._id);

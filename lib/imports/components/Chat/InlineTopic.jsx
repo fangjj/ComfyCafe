@@ -1,5 +1,8 @@
 import React from "react";
 
+import MessageList from "./MessageList";
+import InlineLoadingSpinner from "../InlineLoadingSpinner";
+
 const InlineTopic = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

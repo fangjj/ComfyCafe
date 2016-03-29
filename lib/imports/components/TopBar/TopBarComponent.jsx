@@ -10,6 +10,7 @@ import TopBarMenu from "./TopBarMenu";
 import NavItem from "./NavItem";
 import NotificationButton from "../Notification/NotificationButton";
 import NotificationListComponent from "../Notification/NotificationListComponent";
+import LoginButton from "../User/LoginButton";
 import AccountActionsButton from "../User/AccountActionsButton";
 import AccountActionsList from "../User/AccountActionsList";
 
@@ -100,7 +101,7 @@ const TopBarComponent = React.createClass({
     if (! this.data.currentUser) {
       return [
         <NavItem id="topLogin" key="topBarLoginBtn">
-          <BlazeToReact blazeTemplate="atNavButton"/>
+          <LoginButton />
         </NavItem>
       ];
     }

@@ -1,5 +1,7 @@
 import React from "react";
 
+import MessageUpdateForm from "./MessageUpdateForm";
+
 import {
   IconMenu,
   MenuItem,

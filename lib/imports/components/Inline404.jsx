@@ -3,7 +3,7 @@ import React from "react";
 import Uhoh from "./Uhoh";
 
 // This isn't actually inline. Hm.
-const Inline404Component = React.createClass({
+const Inline404 = React.createClass({
   render() {
     return <Uhoh>
       404 - Dead Forever
@@ -11,4 +11,4 @@ const Inline404Component = React.createClass({
   }
 });
 
-export default Inline404Component;
+export default Inline404;

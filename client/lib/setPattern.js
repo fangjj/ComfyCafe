@@ -1,3 +1,4 @@
+import $ from "jquery";
 import GeoPattern from "geopattern";
 import tinycolor from "tinycolor2";
 

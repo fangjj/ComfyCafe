@@ -1,6 +1,10 @@
 import _ from "lodash";
 import React from "react";
 
+import UserLink from "./UserLink";
+import InlineLoadingSpinner from "../InlineLoadingSpinner";
+import Avatar from "../Avatar/Avatar";
+
 const UserList = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

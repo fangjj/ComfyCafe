@@ -53,7 +53,7 @@ const UserSettingsComponent = React.createClass({
     this.setState({autoWatch: event.target.checked})
   },
   handlePatternSeed(event) {
-    setPattern(event.target.value);
+    //setPattern(event.target.value);
     this.setState({patternSeed: event.target.value})
   },
   submit(event) {

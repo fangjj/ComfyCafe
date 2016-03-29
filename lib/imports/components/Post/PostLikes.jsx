@@ -1,5 +1,7 @@
 import React from "react";
 
+import UserList from "../User/UserList";
+
 const PostLikes = React.createClass({
   render() {
     return <section className="likes content">

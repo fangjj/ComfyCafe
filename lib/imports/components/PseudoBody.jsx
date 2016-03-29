@@ -9,6 +9,7 @@ export default React.createClass({
   },
   componentWillMount() {
     globalEvents.on("patternChange", (seed) => {
+      console.log("patternChange", seed);
       const pattern = GeoPattern.generate(seed);
       this.bg = pattern.toDataUrl();
       this.setState({

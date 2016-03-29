@@ -1,8 +1,6 @@
 import _ from "lodash";
 import React from "react";
 
-import globalEvents from "/lib/globalEvents";
-
 import TopBarArtButton from "./TopBarArtButton";
 import TopBarBlogButton from "./TopBarBlogButton";
 import TopBarTagButton from "./TopBarTagButton";
@@ -23,8 +21,7 @@ const TopBarComponent = React.createClass({
       showMobileMenu: false,
       showNotificationList: false,
       showAccountActions: false,
-      visibleMenu: null,
-      color: this.props.color
+      visibleMenu: null
     };
   },
   getMeteorData() {
@@ -62,13 +59,6 @@ const TopBarComponent = React.createClass({
   },
   toggleAccountActions() {
     this.genericHandleMenuButton("account");
-  },
-  componentWillMount() {
-    globalEvents.on("topColorChange", (color) => {
-      this.setState({
-        color: color
-      });
-    });
   },
   renderLeftSub() {
     if (this.userReady()) {
@@ -153,7 +143,7 @@ const TopBarComponent = React.createClass({
   },
   render() {
     const style = {
-      backgroundColor: this.state.color
+      backgroundColor: this.props.color
     };
     return <nav className="topNav" style={style}>
       {this.renderLeft()}

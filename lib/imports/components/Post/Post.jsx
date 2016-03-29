@@ -45,7 +45,7 @@ const Post = React.createClass({
     };
   },
   componentWillMount() {
-    setPattern(FlowRouter.getParam("postName"));
+    this.props.setPattern(FlowRouter.getParam("postName"));
   },
   showAvatarCropper() {
     this.setState({

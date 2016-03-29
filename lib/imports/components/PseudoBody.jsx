@@ -1,26 +1,35 @@
 import React from "react";
 import GeoPattern from "geopattern";
-
-import globalEvents from "/lib/globalEvents";
+import tinycolor from "tinycolor2";
 
 export default React.createClass({
   getInitialState() {
     return {};
   },
-  componentWillMount() {
-    globalEvents.on("patternChange", (seed) => {
-      console.log("patternChange", seed);
+  updatePattern(seed) {
+    if (seed) {
+      console.log("updatePattern", seed);
       const pattern = GeoPattern.generate(seed);
-      this.bg = pattern.toDataUrl();
+
       this.setState({
-        seed: seed
+        bg: pattern.toDataUrl()
       });
-      setTopColor(pattern.color);
-    });
+
+      const color = tinycolor(pattern.color);
+      this.props.setColor(color.desaturate(5).darken(15));
+    }
+  },
+  componentWillMount() {
+    this.updatePattern(this.props.seed);
+  },
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.seed !== this.props.seed) {
+      this.updatePattern(nextProps.seed);
+    }
   },
   render() {
     const style = {
-      backgroundImage: this.bg
+      backgroundImage: this.state.bg
     };
     return <div className="pseudoBody" style={style} />;
   }

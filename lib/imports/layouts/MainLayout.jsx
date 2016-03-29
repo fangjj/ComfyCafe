@@ -1,6 +1,5 @@
+import _ from "lodash";
 import React from "react";
-
-import globalEvents from "/lib/globalEvents";
 
 import PseudoBody from "/lib/imports/components/PseudoBody";
 import TopBarComponent from "/lib/imports/components/TopBar/TopBarComponent";
@@ -40,14 +39,28 @@ const muiTheme = getMuiTheme({
 });
 
 const MainLayout = React.createClass({
+  mixins: [ReactMeteorData],
   getInitialState() {
     return {
       isUploading: false,
       progress: 0,
-      postId: undefined
+      postId: undefined,
+      seed: undefined
+    };
+  },
+  getMeteorData() {
+    return {
+      currentUser: Meteor.user()
     };
   },
   componentWillMount() {
+    const seed = _.get(this, "data.currentUser.settings.patternSeed");
+    if (seed) {
+      this.setState({
+        seed: seed
+      });
+    }
+
     if (Meteor.isServer) {
       const ua = FlowRouter.current()._serverRequest.headers["user-agent"];
       muiTheme.userAgent = ua;
@@ -92,6 +105,16 @@ const MainLayout = React.createClass({
     }
     this.destroyPostForm();
   },
+  setPattern(seed) {
+    this.setState({
+      seed: seed
+    });
+  },
+  setColor(color) {
+    this.setState({
+      color: color
+    });
+  },
   renderPostForm() {
     if (this.state.mediumId) {
       return <PostForm
@@ -117,14 +140,18 @@ const MainLayout = React.createClass({
     }
   },
   render() {
+    const main = React.cloneElement(this.props.main, { setPattern: this.setPattern });
     return <MuiThemeProvider muiTheme={muiTheme}>
       <div onDrop={this.test}>
-        <PseudoBody />
+        <PseudoBody
+          seed={this.state.seed}
+          setColor={this.setColor}
+        />
         <header>
-          <TopBarComponent />
+          <TopBarComponent color={this.state.color} />
         </header>
         <main>
-          {this.props.main}
+          {main}
         </main>
         {this.renderPostForm()}
         {this.renderFooter()}

@@ -1,5 +1,8 @@
 import _ from "lodash";
 
+import Tags from "./collection";
+import tagRegenerator from "./regenerator";
+
 function tagResolver(tag) {
   var canon = Tags.findOne(
     { $or: [

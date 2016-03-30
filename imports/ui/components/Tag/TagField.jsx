@@ -5,6 +5,7 @@ import getCaretCoordinates from "textarea-caret";
 import Tags from "/imports/api/tags/collection";
 import tagParser from "/imports/api/tags/parser";
 import tagPatcher from "/imports/api/tags/patcher";
+import { tagChunkStringify } from "/imports/api/tags/stringify";
 import getActiveToken from "/imports/api/common/getActiveToken";
 import replaceActiveToken from "/imports/api/common/replaceActiveToken";
 

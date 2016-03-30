@@ -2,6 +2,7 @@ import hotkey from "react-hotkey";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import emojione from "emojione";
 import marked from "marked";
+import "blueimp-canvas-to-blob";
 
 Meteor.startup(function () {
   injectTapEventPlugin();

@@ -1,3 +1,5 @@
+import jobs from "../collection";
+
 /*
 Snagged from
 https://github.com/vsivsi/meteor-job-collection-playground/blob/master/play.coffee#L443-L464

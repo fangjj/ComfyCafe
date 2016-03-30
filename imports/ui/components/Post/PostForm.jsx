@@ -3,6 +3,7 @@ import React from "react";
 import "/imports/api/posts/methods";
 
 import PostDialog from "./PostDialog";
+import RainbowSpinnerComponent from "../RainbowSpinnerComponent";
 
 const PostForm = React.createClass({
   mixins: [ReactMeteorData],

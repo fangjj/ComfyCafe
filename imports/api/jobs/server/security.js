@@ -1,3 +1,5 @@
+import jobs from "../collection";
+
 jobs.allow({
   manager: function(userId, method, params) {
     var ids = params[0];

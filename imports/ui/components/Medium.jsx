@@ -4,7 +4,7 @@ import classConcat from "/imports/api/common/classConcat";
 
 import PretentiousImage from "./PretentiousImage";
 
-const Medium = React.createClass({
+export default React.createClass({
   render() {
     const medium = this.props.medium;
     const type = medium.contentType.split("/")[0];
@@ -31,5 +31,3 @@ const Medium = React.createClass({
     </div>;
   }
 });
-
-export default Medium;

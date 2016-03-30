@@ -1,7 +1,7 @@
-jobs = new JobCollection("queue", {
+const jobs = new JobCollection("queue", {
   idGeneration: "MONGO",
   transform: function (d) {
-    var e, res;
+    let e, res;
     try {
       res = new Job(jobs, d);
     } catch (_error) {
@@ -11,3 +11,5 @@ jobs = new JobCollection("queue", {
     return res;
   }
 });
+
+export default jobs;

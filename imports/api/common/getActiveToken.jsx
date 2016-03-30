@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 
-getActiveToken = function (value, tf) {
+export default function (value, tf) {
   const tokens = fancySplit(value);
   // we have our lovely needle
   const needle = tf.selectionStart;

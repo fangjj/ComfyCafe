@@ -1,5 +1,6 @@
 import Invites from "/imports/api/invites/collection";
 import Rooms from "/imports/api/rooms/collection";
+import generateDjenticon from "/imports/api/users/server/djenticon";
 
 Accounts.onCreateUser(function (options, user) {
   if (options.profile) {

@@ -3,13 +3,14 @@ import marked from "marked";
 import Autolinker from "autolinker.js";
 import emojione from "emojione";
 
+import classConcat from "/imports/api/common/classConcat";
+import linkMentions from "/imports/api/common/linkMentions";
+
 const TextBody = React.createClass({
   shouldComponentUpdate(nextProps, nextState) {
-    return muxOr([
-      this.props.text !== nextProps.text,
+    return this.props.text !== nextProps.text
       // className probably won't change, but just in case...
-      this.props.className !== nextProps.className
-    ]);
+      || this.props.className !== nextProps.className;
   },
   transform() {
     let $elem = $(this.refs.body);

@@ -1,4 +1,5 @@
 import Rooms from "../collection";
+import privacyWrap from "/imports/api/common/privacyWrap";
 
 Meteor.publish("room", function (roomId) {
 	check(roomId, String);

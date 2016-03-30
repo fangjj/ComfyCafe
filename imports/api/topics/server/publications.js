@@ -1,4 +1,5 @@
 import Topics from "../collection";
+import privacyWrap from "/imports/api/common/privacyWrap";
 
 Meteor.publish("topic", function (topicId) {
 	check(topicId, String);

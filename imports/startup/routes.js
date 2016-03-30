@@ -1,3 +1,6 @@
+import renderView from "/imports/api/common/renderView";
+import setTitle from "/imports/api/common/setTitle";
+
 import PostFeedView from "/imports/ui/views/PostFeedView";
 import BlogUserView from "/imports/ui/views/BlogUserView";
 import PostBrowseLikesView from "/imports/ui/views/PostBrowseLikesView";

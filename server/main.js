@@ -8,5 +8,6 @@ import "/imports/api/tags/server/publications";
 import "/imports/api/topics/server/publications";
 import "/imports/api/users/server/publications";
 import "/imports/api/users/server/security";
+import "/imports/api/users/server/registration";
 
 import "/imports/startup/routes";

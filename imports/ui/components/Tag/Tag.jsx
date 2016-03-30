@@ -1,6 +1,9 @@
 import _ from "lodash";
 import React from "react";
 
+import fancyCommaJoin from "/imports/api/common/fancyCommaJoin";
+import safetyLabels from "/imports/api/common/safetyLabels";
+
 import TagTree from "./TagTree";
 import TagEditFAB from "./TagEditFAB";
 import LoadingSpinner from "../LoadingSpinner";

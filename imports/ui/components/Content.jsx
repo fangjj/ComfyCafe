@@ -1,5 +1,7 @@
 import React from "react";
 
+import classConcat from "/imports/api/common/classConcat";
+
 const Content = React.createClass({
   render() {
     const { className, children, ...props } = this.props;

@@ -2,6 +2,9 @@ import _ from "lodash";
 import React from "react";
 import getCaretCoordinates from "textarea-caret";
 
+import getActiveToken from "/imports/api/common/getActiveToken";
+import replaceActiveToken from "/imports/api/common/replaceActiveToken";
+
 import TagTree from "./TagTree";
 import Suggestions from "../Suggestions";
 import InlineLoadingSpinner from "../InlineLoadingSpinner";

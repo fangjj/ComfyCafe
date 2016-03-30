@@ -1,5 +1,7 @@
 import React from "react";
 
+import classConcat from "/imports/api/common/classConcat";
+
 import Moonbox from "./Moonbox";
 
 const PretentiousImage = React.createClass({

@@ -1,4 +1,5 @@
 import Posts from "../collection";
+import privacyWrap from "/imports/api/common/privacyWrap";
 
 Meteor.publish("postPerma", function (postId) {
 	check(postId, String);

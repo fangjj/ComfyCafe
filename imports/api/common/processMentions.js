@@ -3,7 +3,11 @@ import _ from "lodash";
 import mentionRegex from "/imports/api/common/mentionRegex";
 import Notifications from "/imports/api/notifications/collection";
 
-processMentions = function (tag, text, data) {
+export default function (tag, text, data) {
+  if (! Meteor.isServer) {
+    return;
+  }
+
   var mentions = text.match(mentionRegex);
   _.each(mentions, function (mention) {
     var username = mention.substr(1);

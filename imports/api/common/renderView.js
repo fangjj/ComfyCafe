@@ -1,6 +1,6 @@
 import {mount} from "react-mounter";
 
-renderView = function (view) {
+export default function (view) {
   if (Meteor.isClient) {
     Session.set("previousPath", Session.get("currentPath") || "/");
     Session.set("currentPath", FlowRouter.current().path);

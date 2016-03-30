@@ -1,6 +1,7 @@
 import React from "react";
 
 import Rooms from "/imports/api/rooms/collection";
+import setTitle from "/imports/api/common/setTitle";
 
 import RoomMoreMenu from "./RoomMoreMenu";
 import DenseLoadingSpinner from "../DenseLoadingSpinner";

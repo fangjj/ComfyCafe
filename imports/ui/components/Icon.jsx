@@ -1,5 +1,7 @@
 import React from "react";
 
+import classConcat from "/imports/api/common/classConcat";
+
 import {
   FontIcon
 } from "material-ui";

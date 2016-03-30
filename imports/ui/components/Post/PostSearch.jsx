@@ -1,5 +1,7 @@
 import React from "react";
 
+import privacyWrap from "/imports/api/common/privacyWrap";
+
 import PostGallery from "./PostGallery";
 import InlineUhoh from "../InlineUhoh";
 

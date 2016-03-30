@@ -1,5 +1,5 @@
-privacyWrap = function (doc, userId, friends) {
-  var wrapped = {
+export default function (doc, userId, friends) {
+  let wrapped = {
     $and: [
       { $or: [
         { visibility: "public" }

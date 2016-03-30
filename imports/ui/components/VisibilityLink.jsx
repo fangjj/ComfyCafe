@@ -1,6 +1,8 @@
 import React from "react";
 
-const VisibilityLink = React.createClass({
+import classConcat from "/imports/api/common/classConcat";
+
+export default React.createClass({
   render() {
     const classes = classConcat("visibility", this.props.visibility);
     return <a href={this.props.href} className={classes}>
@@ -8,5 +10,3 @@ const VisibilityLink = React.createClass({
     </a>;
   }
 });
-
-export default VisibilityLink;

@@ -1,10 +1,10 @@
 import _ from "lodash";
 
 import "../topics/methods";
-
 import Posts from "./collection";
 import Topics from "../topics/collection";
 import Notifications from "../notifications/collection";
+import processMentions from "../common/processMentions";
 
 var nameCycle = function (options, callback) {
 	var name = generateName(options);

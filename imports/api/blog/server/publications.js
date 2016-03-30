@@ -1,4 +1,5 @@
 import BlogPosts from "../collection";
+import privacyWrap from "/imports/api/common/privacyWrap";
 
 Meteor.publish("blogPost", function (postId) {
 	check(postId, String);

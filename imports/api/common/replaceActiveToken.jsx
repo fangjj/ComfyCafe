@@ -1,6 +1,8 @@
 import React from "react";
 
-replaceActiveToken = function (value, replacement, tf) {
+import getActiveToken from "/imports/api/common/getActiveToken";
+
+export default function (value, replacement, tf) {
   const searchPair = getActiveToken(value, tf);
 
   const before = value.substr(0, searchPair[1]);

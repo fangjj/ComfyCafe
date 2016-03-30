@@ -1,12 +1,12 @@
 import _ from "lodash";
 
 import "../topics/methods";
-
 import Messages from "./collection";
 import Topics from "../topics/collection";
 import Rooms from "../rooms/collection";
 import Posts from "../posts/collection";
 import Notifications from "../notifications/collection";
+import processMentions from "../common/processMentions";
 
 Meteor.methods({
   addMessage: function (topicId, data) {

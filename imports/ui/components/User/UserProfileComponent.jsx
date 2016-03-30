@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import "/imports/api/users/methods";
+import setTitle from "/imports/api/common/setTitle";
 
 import UserProfileForm from "./UserProfileForm";
 import LoadingSpinner from "../LoadingSpinner";

@@ -1,5 +1,7 @@
 import React from "react";
 
+import safetyLabels from "/imports/api/common/safetyLabels";
+
 import {
   SelectField,
   MenuItem

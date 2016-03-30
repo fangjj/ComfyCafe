@@ -1,4 +1,5 @@
 import BlogPosts from "./collection";
+import processMentions from "../common/processMentions";
 
 Meteor.methods({
 	addBlogPost: function (data) {

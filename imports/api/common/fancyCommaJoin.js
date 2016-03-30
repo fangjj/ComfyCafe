@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-fancyCommaJoin = function (arr, map) {
+export default function (arr, map) {
   if (typeof map === "undefined") {
     map = function (x) { return x };
   }

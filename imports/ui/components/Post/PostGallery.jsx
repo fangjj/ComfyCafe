@@ -168,11 +168,10 @@ const PostGallery = React.createClass({
         />;
       });
     } else {
-      if (muxOr([
-        this.state.originalOnly,
-        this.state.tagStr,
-        this.state.filter
-      ])) {
+      if (this.state.originalOnly
+        || this.state.tagStr
+        || this.state.filter
+      ) {
         return <InlineUhoh>
           No results.
         </InlineUhoh>;

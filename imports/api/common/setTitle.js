@@ -1,6 +1,6 @@
 import { DocHead } from "meteor/kadira:dochead";
 
-setTitle = function (title) {
+export default function (title) {
   if (! title) {
     title = "ComfyCafé";
   }

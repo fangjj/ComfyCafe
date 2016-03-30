@@ -1,6 +1,7 @@
 import React from "react";
 
 import Topics from "/imports/api/topics/collection";
+import setTitle from "/imports/api/common/setTitle";
 
 import MessageList from "./MessageList";
 import InlineLoadingSpinner from "../InlineLoadingSpinner";

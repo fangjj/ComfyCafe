@@ -24,6 +24,11 @@
     img {
       max-width: calc(100% - 10px);
       max-height: calc(100% - 10px);
+
+      width: auto;
+      height: auto;
+
+      object-fit: contain;
     }
   }
 

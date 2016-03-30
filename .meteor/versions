@@ -24,6 +24,7 @@ comfysoft:notifications@0.0.1
 comfysoft:tags@0.0.1
 comfysoft:thumbnails@0.0.1
 comfysoft:utility@0.0.1
+cosmos:browserify@0.8.4
 ddp@1.2.3
 ddp-client@1.2.3
 ddp-common@1.2.3
@@ -35,6 +36,7 @@ ecmascript@0.4.1
 ecmascript-runtime@0.2.8
 ejson@1.0.9
 email@1.0.10
+es5-shim@4.5.8
 fastclick@1.0.9
 force-ssl@1.0.9
 fourseven:scss@3.4.1
@@ -48,6 +50,7 @@ jonblum:jquery-cropper@2.3.0
 jparker:crypto-core@0.1.0
 jparker:crypto-sha256@0.1.1
 jquery@1.11.6
+kadira:dochead@1.4.0
 kadira:flow-router-ssr@3.12.2
 launch-screen@1.0.8
 livedata@1.0.16

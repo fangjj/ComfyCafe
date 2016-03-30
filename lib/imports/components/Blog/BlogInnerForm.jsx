@@ -1,5 +1,7 @@
 import React from "react";
 
+import SelectVisibility from "../SelectVisibility";
+
 import {
   TextField
 } from "material-ui";

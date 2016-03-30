@@ -85,10 +85,9 @@ const CropperComponent = React.createClass({
         options[prop] = this.props[prop];
       }
     }
-    this.img = ReactDOM.findDOMNode(this.refs.img);
     console.log('options');
     console.log(options)
-    this.cropper =  new Cropper(this.img, options);
+    this.cropper =  new Cropper(this.refs.img, options);
   },
 
   componentWillReceiveProps(nextProps) {

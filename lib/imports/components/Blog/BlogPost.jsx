@@ -1,5 +1,8 @@
 import React from "react";
 
+import BlogListItem from "./BlogListItem";
+import BlogPostEditFAB from "./BlogPostEditFAB";
+
 const BlogPost = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

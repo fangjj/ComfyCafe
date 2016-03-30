@@ -1,5 +1,7 @@
 import React from "react";
 
+import BlogInnerForm from "./BlogInnerForm";
+
 import {
   Dialog,
   FlatButton,

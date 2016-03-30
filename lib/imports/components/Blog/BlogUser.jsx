@@ -1,5 +1,10 @@
 import React from "react";
 
+import BlogListItem from "./BlogListItem";
+import BlogPostFAB from "./BlogPostFAB";
+import LoadingSpinner from "../LoadingSpinner";
+import Uhoh from "../Uhoh";
+
 const BlogUser = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -34,10 +39,8 @@ const BlogUser = React.createClass({
     }
   },
   renderFab() {
-    if (muxAnd([
-      this.data.currentUser,
-      this.data.currentUser.username === FlowRouter.getParam("username")
-    ])) {
+    const username = _.get(this, "data.currentUser.username");
+    if (username === FlowRouter.getParam("username")) {
       return <BlogPostFAB />;
     }
   },

@@ -1,6 +1,9 @@
 import React from "react";
 import NativeListener from "react-native-listener";
 
+import Actions from "../Actions";
+import CancelButton from "../CancelButton";
+import SubmitButton from "../SubmitButton";
 import CropperComponent from "../extern/CropperComponent";
 
 import {

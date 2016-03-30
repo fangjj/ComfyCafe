@@ -1,5 +1,12 @@
 import React from "react";
 
+import BlogMoreMenu from "./BlogMoreMenu";
+import TextBody from "../TextBody";
+import Moment from "../Moment";
+import VisibilityLink from "../VisibilityLink";
+import UserLink from "../User/UserLink";
+import Avatar from "../Avatar/Avatar";
+
 const BlogListItem = React.createClass({
   renderMoreMenu() {
     var isOwner = this.props.currentUser

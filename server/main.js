@@ -24,4 +24,6 @@ import "/imports/api/users/server/registration";
 import "/imports/api/jobs/server/garbageCollection.js";
 import "/imports/api/thumbnails/server/job.js";
 
+// Startup
+import "/imports/startup/server/startup";
 import "/imports/startup/routes";

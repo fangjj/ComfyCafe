@@ -3,6 +3,8 @@ import React from "react";
 
 import "/imports/api/media/methods";
 import media from "/imports/api/media/collection";
+import mediaUpload from "/imports/api/media/handlers/media";
+import avatarUpload from "/imports/api/media/handlers/avatar";
 
 import PseudoBody from "/imports/ui/components/PseudoBody";
 import TopBarComponent from "/imports/ui/components/TopBar/TopBarComponent";

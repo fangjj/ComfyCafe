@@ -1,4 +1,4 @@
-adjectives = [
+const adjectives = [
   "Comfy",
   "Lovely",
   "Spicy",
@@ -369,3 +369,5 @@ adjectives = [
   "Impulsive",
   "Compulsive"
 ];
+
+export default adjectives;

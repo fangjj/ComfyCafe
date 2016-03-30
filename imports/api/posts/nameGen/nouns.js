@@ -1,4 +1,4 @@
-nouns = [
+const nouns = [
   "Heart",
   "Shiba",
   "Rectangle",
@@ -161,3 +161,5 @@ nouns = [
   "Amorphophallus",
   "Xamdou"
 ];
+
+export default nouns;

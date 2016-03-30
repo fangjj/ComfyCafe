@@ -1,7 +1,7 @@
-import media from "/imports/api/media/collection";
-import "/imports/api/media/methods";
+import media from "../collection";
+import "../methods";
 
-mediaUpload = function (self, file, callback) {
+export default function (self, file, callback) {
   self.setState({isUploading: true});
   media.insert({
       _id: file.uniqueIdentifier,

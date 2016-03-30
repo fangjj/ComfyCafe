@@ -1,6 +1,6 @@
 import React from "react";
 
-import generateRoom from "/lib/generators/generateRoom";
+import generateRoom from "/imports/api/rooms/nameGen/generator";
 
 import RoomInnerForm from "./RoomInnerForm";
 

@@ -1,7 +1,7 @@
-import media from "/imports/api/media/collection";
+import media from "../collection";
 import "/imports/api/users/methods";
 
-avatarUpload = function (self, file) {
+export default function (self, file) {
 	self.setState({isUploading: true});
 	media.insert({
 			_id: file.uniqueIdentifier,

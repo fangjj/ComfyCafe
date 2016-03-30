@@ -1,6 +1,6 @@
 import React from "react";
 
-import generateTopic from "/lib/generators/generateTopic";
+import generateTopic from "/imports/api/topics/nameGen/generator";
 
 import TopicInnerForm from "./TopicUpdateForm";
 

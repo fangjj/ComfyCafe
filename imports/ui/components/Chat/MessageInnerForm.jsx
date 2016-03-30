@@ -1,5 +1,7 @@
 import React from "react";
 
+import generateMessageHint from "/imports/api/messages/nameGen/hintGenerator";
+
 import {
   TextField
 } from "material-ui";

@@ -20,7 +20,6 @@ email
 react-meteor-data
 comfysoft:utility
 comfysoft:tags
-comfysoft:names
 kadira:dochead
 jaywon:meteor-node-uuid
 vsivsi:job-collection

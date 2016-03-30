@@ -1,7 +1,10 @@
 import _ from "lodash";
 
-var takeAdj = function (pool) {
-  adj = _.sample(adjectives);
+import adjectives from "./adjectives";
+import nouns from "./nouns";
+
+function takeAdj(pool) {
+  const adj = _.sample(adjectives);
   if (_.includes(pool, adj)) {
     return takeAdj(pool);
   } else {
@@ -9,7 +12,7 @@ var takeAdj = function (pool) {
   }
 };
 
-generateName = function (options) {
+function generateName(options) {
   if (typeof options === "undefined") {
     options = {};
   }
@@ -21,10 +24,12 @@ generateName = function (options) {
     options.adjCount = 2;
   }
 
-  var adjs = [];
-  for (var i = 0; i < options.adjCount; ++i) {
+  let adjs = [];
+  for (let i = 0; i < options.adjCount; ++i) {
     adjs.push(takeAdj(adjs));
   }
-  var noun = _.sample(nouns);
+  const noun = _.sample(nouns);
   return adjs.join(options.delim) + options.delim + noun;
 };
+
+export default generateName;

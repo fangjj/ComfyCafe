@@ -1,13 +1,14 @@
 import _ from "lodash";
 
-import "../topics/methods";
 import Posts from "./collection";
+import generateName from "./nameGen/generator";
 import media from "../media/collection";
+import "../topics/methods";
 import Topics from "../topics/collection";
 import Notifications from "../notifications/collection";
 import processMentions from "../common/processMentions";
 
-var nameCycle = function (options, callback) {
+function nameCycle(options, callback) {
 	var name = generateName(options);
 	var taken = Boolean(Posts.findOne(
 		{
@@ -22,7 +23,7 @@ var nameCycle = function (options, callback) {
 	}
 };
 
-var injectAuthor = function (data, tags) {
+function injectAuthor(data, tags) {
 	if (data.originality !== "repost") {
 		var username = Meteor.user().username;
 		if (! tags.authors) {
@@ -33,7 +34,7 @@ var injectAuthor = function (data, tags) {
 	}
 };
 
-var match = {
+const match = {
 	visibility: String,
 	originality: String,
 	source: String,

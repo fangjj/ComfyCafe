@@ -1,6 +1,13 @@
 import _ from "lodash";
 
-tagStrSample = "nia-teppelin: young, short multicolored hair, cat ears;"
+import { tagStringify } from "./stringify";
+import {
+	tagTopLevelTokenizer,
+	tagSubjectTokenizer,
+	tagDescriptorTokenizer
+} from "./tokenizer";
+
+const tagStrSample = "nia-teppelin: young, short multicolored hair, cat ears;"
 	+ "yoko-littner: flame bikini, pink stockings, long red hair, without gun";
 
 function parseLonely(parsed, kv) {
@@ -143,7 +150,7 @@ function parseDescriptors(parsed, kv) {
 	parsed.allTags.push(label);
 }
 
-tagParser = function (tagStr, reformat) {
+function tagParser(tagStr, reformat) {
 	tagStr = tagStr.trim().toLowerCase();
 
 	var parsed = {
@@ -220,4 +227,9 @@ tagParser = function (tagStr, reformat) {
 	}
 
 	return parsed;
+}
+
+export default tagParser;
+export {
+	tagStrSample
 };

@@ -1,5 +1,9 @@
 import _ from "lodash";
 
+import tagDiffer from "./differ";
+import tagAdjOrder from "./adjOrder";
+import tagRegenerator from "./regenerator";
+
 function isRemoved(dDiff, rootNoun, tag) {
   return _.includes(dDiff[rootNoun].removed, tag);
 }
@@ -63,7 +67,7 @@ function originPusher(srcs) {
   });
 }
 
-tagPatcherDirect = function (diff, diffPreserve, adjOrder, target, authors, origins) {
+function tagPatcherDirect(diff, diffPreserve, adjOrder, target, authors, origins) {
   var output = {
     subjects: jsonClone(target.subjects),
     authors: authors || [],
@@ -145,9 +149,9 @@ tagPatcherDirect = function (diff, diffPreserve, adjOrder, target, authors, orig
   });
 
   return tagRegenerator(output);
-};
+}
 
-tagPatcher = function (a, b, c) {
+function tagPatcher(a, b, c) {
   var diffPreserve = tagDiffer(a, c);
   return tagPatcherDirect(
     tagDiffer(a, b),
@@ -157,4 +161,9 @@ tagPatcher = function (a, b, c) {
     authorPusher([a, b, c]),
     originPusher([a, b, c])
   );
+}
+
+export default tagPatcher;
+export {
+  tagPatcherDirect
 };

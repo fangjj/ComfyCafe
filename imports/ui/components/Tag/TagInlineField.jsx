@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 import getCaretCoordinates from "textarea-caret";
 
+import Tags from "/imports/api/tags/collection";
 import getActiveToken from "/imports/api/common/getActiveToken";
 import replaceActiveToken from "/imports/api/common/replaceActiveToken";
 

@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-tagStringify = function (tagObj) {
+function tagStringify(tagObj) {
   // This currently ignores all negativity.
   var chunks = [];
   _.each(tagObj.authors, function (author) {
@@ -26,9 +26,9 @@ tagStringify = function (tagObj) {
     }
   });
   return chunks.join("; ");
-};
+}
 
-tagChunkStringify = function (tagObj, rootNoun, exclude) {
+function tagChunkStringify(tagObj, rootNoun, exclude) {
   if (! exclude) {
     exclude = [];
   }
@@ -49,4 +49,9 @@ tagChunkStringify = function (tagObj, rootNoun, exclude) {
     }
   }
   return str;
+}
+
+export {
+  tagStringify,
+  tagChunkStringify
 };

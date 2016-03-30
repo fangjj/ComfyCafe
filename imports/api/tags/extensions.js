@@ -1,5 +1,7 @@
 import _ from "lodash";
 
+import Tags from "./collection";
+
 function extendsName(name) {
   var extensions = [];
   extensions.push(name);
@@ -12,7 +14,7 @@ function extendsName(name) {
   return extensions;
 }
 
-tagExtensions = function (name) {
+function tagExtensions(name) {
   var tag = Tags.findOne({ $or: [
     { name: name },
     { aliases: name }
@@ -23,4 +25,6 @@ tagExtensions = function (name) {
   } else {
     return extendsName(tag.name);
   }
-};
+}
+
+export default tagExtensions;

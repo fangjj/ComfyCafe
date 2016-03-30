@@ -1,6 +1,8 @@
 import _ from "lodash";
 
-tagRenamer = function (oldName, newName, tagDoc) {
+import tagRegenerator from "./regenerator";
+
+function tagRenamer(oldName, newName, tagDoc) {
   // Thanks to our stringification easymode, we only need to modify the subjects obj.
 
   if (_.has(tagDoc.subjects, oldName)) {
@@ -25,4 +27,6 @@ tagRenamer = function (oldName, newName, tagDoc) {
   }
 
   return tagRegenerator(tagDoc);
-};
+}
+
+export default tagRenamer;

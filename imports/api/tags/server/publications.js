@@ -1,3 +1,5 @@
+import Tags from "../collection";
+
 Meteor.publish("allTags", function (type) {
 	check(type, Match.Optional(String));
 	if (! type) {

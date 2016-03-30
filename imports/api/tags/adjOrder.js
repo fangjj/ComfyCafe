@@ -1,6 +1,8 @@
 import _ from "lodash";
 
-tagAdjOrder = function (oldParsed, newParsed) {
+import tagDiffer from "./differ";
+
+function tagAdjOrder(oldParsed, newParsed) {
   var adjOrder = {};
 
   var diff = tagDiffer(oldParsed, newParsed);
@@ -40,4 +42,6 @@ tagAdjOrder = function (oldParsed, newParsed) {
   });
 
   return adjOrder;
-};
+}
+
+export default tagAdjOrder;

@@ -1,12 +1,14 @@
 import _ from "lodash";
 
+import tagExtensions from "./extensions";
+
 /*
 o: `long blonde hair`
 n: `short blonde hair`
 intended dOps: ["removed `long` from `hair`", "added `short` to `hair"]
 */
 
-tagDiffer = function (oldParsed, newParsed) {
+function tagDiffer(oldParsed, newParsed) {
   oldParsed = jsonClone(oldParsed);
   newParsed = jsonClone(newParsed);
 
@@ -149,4 +151,6 @@ tagDiffer = function (oldParsed, newParsed) {
   });
 
   return diff;
-};
+}
+
+export default tagDiffer;

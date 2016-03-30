@@ -1,5 +1,7 @@
 import React from "react";
 
+import Tags from "/imports/api/tags/collection";
+
 import TagListItem from "./TagListItem";
 import TagFAB from "./TagFAB";
 import LoadingSpinner from "../LoadingSpinner";

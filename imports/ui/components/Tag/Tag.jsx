@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React from "react";
 
+import Tags from "/imports/api/tags/collection";
 import fancyCommaJoin from "/imports/api/common/fancyCommaJoin";
 import safetyLabels from "/imports/api/common/safetyLabels";
 

@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-tagResolver = function (tag) {
+function tagResolver(tag) {
   var canon = Tags.findOne(
     { $or: [
       { name: tag },
@@ -14,9 +14,9 @@ tagResolver = function (tag) {
   }
 
   return name;
-};
+}
 
-tagFullResolver = function (parsed) {
+function tagFullResolver(parsed) {
   var output = {
     subjects: _.cloneDeep(parsed.subjects),
     authors: _.cloneDeep(parsed.authors),
@@ -46,4 +46,9 @@ tagFullResolver = function (parsed) {
   });
 
   return tagRegenerator(output);
+}
+
+export {
+  tagResolver,
+  tagFullResolver
 };

@@ -19,7 +19,6 @@ alanning:roles
 email
 react-meteor-data
 comfysoft:utility
-comfysoft:tags
 kadira:dochead
 jaywon:meteor-node-uuid
 vsivsi:job-collection

@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import Posts from "/imports/api/posts/collection";
+import tagQuery from "/imports/api/tags/query";
 
 import PostPreview from "./PostPreview";
 import PostFilters from "./PostFilters";

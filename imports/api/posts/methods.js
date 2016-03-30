@@ -7,6 +7,8 @@ import "../topics/methods";
 import Topics from "../topics/collection";
 import Notifications from "../notifications/collection";
 import processMentions from "../common/processMentions";
+import tagParser from "../tags/parser";
+import tagFullResolver from "../tags/resolver";
 
 function nameCycle(options, callback) {
 	var name = generateName(options);
@@ -21,7 +23,7 @@ function nameCycle(options, callback) {
 	} else {
 		callback(name);
 	}
-};
+}
 
 function injectAuthor(data, tags) {
 	if (data.originality !== "repost") {
@@ -32,7 +34,7 @@ function injectAuthor(data, tags) {
 			tags.authors.push(username);
 		}
 	}
-};
+}
 
 const match = {
 	visibility: String,

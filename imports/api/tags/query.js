@@ -1,5 +1,8 @@
 import _ from "lodash";
 
+import tagParser from "./parser";
+import tagExtensions from "./extensions";
+
 function queryGeneratorAuthors(parsed, queryDoc) {
   var authorQuery = {};
   if (parsed.authors.length) {
@@ -201,7 +204,7 @@ function queryGeneratorSubjects(parsed, extLookup, sAnd) {
   });
 }
 
-tagQuery = function (str) {
+function tagQuery(str) {
   if (! str) {
     return {};
   }
@@ -237,4 +240,6 @@ tagQuery = function (str) {
   prettyPrint(queryDoc);
 
   return queryDoc;
-};
+}
+
+export default tagQuery;

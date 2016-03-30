@@ -1,8 +1,13 @@
 import _ from "lodash";
 
+import Tags from "./collection";
+import tagParser from "./parser";
+import tagPatcher from "./patcher";
+import tagRenamer from "./renamer";
+import tagRegenerator from "./regenerator";
 import Posts from "../posts/collection";
 
-var match = {
+const match = {
   name: String,
   type: String,
   definition: String,

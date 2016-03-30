@@ -1,5 +1,8 @@
 import React from "react";
 
+import tagParser from "/imports/api/tags/parser";
+import tagPatcher from "/imports/api/tags/patcher";
+
 import TagTree from "./TagTree";
 import TagField from "./TagField";
 

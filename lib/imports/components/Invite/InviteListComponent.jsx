@@ -1,6 +1,13 @@
 import React from "react";
 
-const InviteListComponent = React.createClass({
+import InviteComponent from "./InviteComponent";
+import InviteFAB from "./InviteFAB";
+import LoadingSpinner from "../LoadingSpinner";
+import Powerless from "../Powerless";
+import Uhoh from "../Uhoh";
+import Content from "../Content";
+
+export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var handle = Meteor.subscribe("invites");
@@ -30,10 +37,10 @@ const InviteListComponent = React.createClass({
     }
 
     if (this.data.invites.length) {
-      return <div className="content">
+      return <Content>
         {this.renderInner()}
         <InviteFAB />
-      </div>;
+      </Content>;
     } else {
       return <Uhoh>
         You don't have any open invites.
@@ -42,5 +49,3 @@ const InviteListComponent = React.createClass({
     }
   }
 });
-
-export default InviteListComponent;

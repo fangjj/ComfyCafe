@@ -1,6 +1,8 @@
 import _ from "lodash";
 import React from "react";
 
+import ToggleButton from "./ToggleButton";
+
 const WatchButton = React.createClass({
   watch(event) {
     Meteor.call("watchTopic", this.props.topic._id);

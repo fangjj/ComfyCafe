@@ -1,10 +1,14 @@
 import React from "react";
 
+import TopicButton from "./TopicButton";
+import TopicListItem from "./TopicListItem";
+import DenseLoadingSpinner from "../DenseLoadingSpinner";
+
 import {
   TextField
 } from "material-ui";
 
-const TopicList = React.createClass({
+export default React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
@@ -73,5 +77,3 @@ const TopicList = React.createClass({
     </ol>;
   }
 });
-
-export default TopicList;

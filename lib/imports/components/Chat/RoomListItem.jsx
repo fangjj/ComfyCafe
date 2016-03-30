@@ -1,5 +1,9 @@
 import React from "react";
 
+import RoomMoreMenu from "./RoomMoreMenu";
+import VisibilityLink from "../VisibilityLink";
+import Moment from "../Moment";
+
 import {
   Avatar
 } from "material-ui";

@@ -1,5 +1,7 @@
 import React from "react";
 
+import RoomUpdateForm from "./RoomUpdateForm";
+
 import {
   IconMenu,
   MenuItem,

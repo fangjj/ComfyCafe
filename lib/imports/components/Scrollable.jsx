@@ -1,10 +1,12 @@
 import React from "react";
 
-if (Meteor.isClient) {
-  const Ps = require("perfect-scrollbar");
-}
+const Ps = expr(() => {
+  if (Meteor.isClient) {
+    return require("perfect-scrollbar");
+  }
+});
 
-const Scrollable = React.createClass({
+export default React.createClass({
   componentDidMount() {
     Ps.initialize(this.refs.container);
   },
@@ -12,7 +14,9 @@ const Scrollable = React.createClass({
     Ps.update(this.refs.container);
   },
   componentWillUnmount() {
-    Ps.destroy(this.refs.container);
+    if (Ps) {
+      Ps.destroy(this.refs.container);
+    }
   },
   render() {
     const classes = classConcat("scrollable", this.props.className);
@@ -21,5 +25,3 @@ const Scrollable = React.createClass({
     </div>;
   }
 });
-
-export default Scrollable;

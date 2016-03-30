@@ -1,5 +1,7 @@
 import React from "react";
 
+import TopicDialog from "./TopicDialog";
+
 const TopicUpdateForm = React.createClass({
   handleSubmit(data) {
     Meteor.call("updateTopic", this.props.topic._id, data, (err) => {

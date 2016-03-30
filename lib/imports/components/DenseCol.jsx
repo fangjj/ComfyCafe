@@ -1,6 +1,8 @@
 import React from "react";
 
-const DenseCol = React.createClass({
+import Scrollable from "./Scrollable";
+
+export default React.createClass({
   render() {
     const classes = classConcat("col", this.props.className);
     return <Scrollable className={classes}>
@@ -8,5 +10,3 @@ const DenseCol = React.createClass({
     </Scrollable>;
   }
 });
-
-export default DenseCol;

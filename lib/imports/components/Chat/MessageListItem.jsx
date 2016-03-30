@@ -2,6 +2,7 @@ import React from "react";
 
 import MessageMoreMenu from "./MessageMoreMenu";
 import TextBody from "../TextBody";
+import Moment from "../Moment";
 import Avatar from "../Avatar/Avatar";
 import UserLink from "../User/UserLink";
 

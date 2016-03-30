@@ -1,5 +1,8 @@
 import React from "react";
 
+import RoomMoreMenu from "./RoomMoreMenu";
+import DenseLoadingSpinner from "../DenseLoadingSpinner";
+
 const Room = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

@@ -1,5 +1,8 @@
 import React from "react";
 
+import TopicForm from "./TopicForm";
+import SubmitButton from "../SubmitButton";
+
 import {
   RaisedButton,
   FontIcon

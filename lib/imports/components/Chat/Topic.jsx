@@ -1,5 +1,10 @@
 import React from "react";
 
+import TopicMoreMenu from "./TopicMoreMenu";
+import MessageList from "./MessageList";
+import WatchButton from "../WatchButton";
+import DenseLoadingSpinner from "../DenseLoadingSpinner";
+
 const Topic = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

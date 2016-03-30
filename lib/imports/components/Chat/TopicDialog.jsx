@@ -2,6 +2,8 @@ import React from "react";
 
 import generateTopic from "/lib/generators/generateTopic";
 
+import TopicInnerForm from "./TopicUpdateForm";
+
 import {
   Dialog,
   FlatButton,

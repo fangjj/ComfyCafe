@@ -1,5 +1,7 @@
 import React from "react";
 
+import TopicUpdateForm from "./TopicUpdateForm";
+
 import {
   IconMenu,
   MenuItem,

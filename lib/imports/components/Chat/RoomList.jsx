@@ -1,6 +1,10 @@
 import React from "react";
 
-const RoomList = React.createClass({
+import RoomListItem from "./RoomListItem";
+import RoomFAB from "./RoomFAB";
+import LoadingSpinner from "../LoadingSpinner";
+
+export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var handle = Meteor.subscribe("allRooms");
@@ -40,5 +44,3 @@ const RoomList = React.createClass({
     </div>;
   }
 });
-
-export default RoomList;

@@ -1,5 +1,11 @@
 import React from "react";
 
+import Room from "./Room";
+import Topic from "./Topic";
+import TopicList from "./TopicList";
+import DenseLayout from "../DenseLayout";
+import DenseCol from "../DenseCol";
+
 const Chat = React.createClass({
   renderMain() {
     if (FlowRouter.getParam("topicId")) {

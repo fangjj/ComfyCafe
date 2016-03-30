@@ -1,5 +1,9 @@
 import React from "react";
 
+import VisibilityLink from "../VisibilityLink";
+import Moment from "../Moment";
+import Avatar from "../Avatar/Avatar";
+
 const TopicListItem = React.createClass({
   renderMoreMenu() {
     var isOwner = this.props.currentUser

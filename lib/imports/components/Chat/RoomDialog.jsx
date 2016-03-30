@@ -2,6 +2,8 @@ import React from "react";
 
 import generateRoom from "/lib/generators/generateRoom";
 
+import RoomInnerForm from "./RoomInnerForm";
+
 import {
   Dialog,
   FlatButton,

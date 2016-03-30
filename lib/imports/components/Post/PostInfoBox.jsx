@@ -44,14 +44,22 @@ const PostInfoBox = React.createClass({
     Meteor.call("bookmarkPost", this.props.post._id, ! bookmarked);
   },
   renderButtons() {
+    if (! this.props.currentUser) {
+      return;
+    }
+
     const cropButton = <SubmitButton
       label="Set Avatar"
       iconName="crop"
       onTouchTap={this.props.showAvatarCropper}
     />;
+    const owner = this.props.post.owner;
+    const isOwner = _.get(this.props, "currentUser._id") === owner._id;
     if (! isOwner) {
-      const bookmarked = this.props.currentUser
-        && _.includes(this.props.currentUser.bookmarks, this.props.post._id);
+      const bookmarked = _.includes(
+        _.get(this.props, "currentUser.bookmarks", []),
+        this.props.post._id
+      );
       return <div>
         <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />
         <ToggleButton
@@ -96,7 +104,6 @@ const PostInfoBox = React.createClass({
 
     const owner = post.owner;
     const ownerUrl = FlowRouter.path("profile", {username: owner.username});
-    const isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
 
     const verb = verbMap[post.originality];
 

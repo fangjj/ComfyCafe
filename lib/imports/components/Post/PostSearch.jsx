@@ -11,7 +11,12 @@ const PostSearch = React.createClass({
       subData={tagStr}
       noFab={true}
       generateDoc={function () {
-        return privacyWrap(tagQuery(tagStr), Meteor.userId(), Meteor.user().friends);
+        const friends = expr(() => {
+          if (Meteor.user()) {
+            return Meteor.user().friends;
+          } return [];
+        });
+        return privacyWrap(tagQuery(tagStr), Meteor.userId(), friends);
       }}
       ifEmpty={function () {
         return <InlineUhoh>

@@ -5,6 +5,7 @@ import hotkey from "react-hotkey";
 if (Meteor.isClient) {
   global.jQuery = require("jquery");
   require("jquery.panzoom");
+  require("jquery.mousewheel")(jQuery);
 }
 
 import {

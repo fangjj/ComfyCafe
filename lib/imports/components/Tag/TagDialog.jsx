@@ -1,6 +1,8 @@
 import _ from "lodash";
 import React from "react";
 
+import TagInnerForm from "./TagInnerForm";
+
 import {
   Dialog,
   FlatButton,
@@ -28,7 +30,7 @@ function condImplWrap(condImpl) {
   return formatted;
 }
 
-const TagDialog = React.createClass({
+export default React.createClass({
   getInitialState() {
     if (this.props.tag) {
       return {
@@ -153,5 +155,3 @@ const TagDialog = React.createClass({
     </Dialog>;
   }
 });
-
-export default TagDialog;

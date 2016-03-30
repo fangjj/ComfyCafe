@@ -1,6 +1,10 @@
 import React from "react";
 
-const TagList = React.createClass({
+import TagListItem from "./TagListItem";
+import TagFAB from "./TagFAB";
+import LoadingSpinner from "../LoadingSpinner";
+
+export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const handle = Meteor.subscribe("allTags");
@@ -25,6 +29,11 @@ const TagList = React.createClass({
     }
     return <li>No tags.</li>
   },
+  renderFab() {
+    if (this.data.currentUser) {
+      return <TagFAB />;
+    }
+  },
   render() {
     if (this.data.loading) {
       return <LoadingSpinner />;
@@ -34,9 +43,7 @@ const TagList = React.createClass({
       <ul className="list">
         {this.renderTags()}
       </ul>
-      <TagFAB />
+      {this.renderFab()}
     </div>;
   }
 });
-
-export default TagList;

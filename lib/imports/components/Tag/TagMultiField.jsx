@@ -1,6 +1,9 @@
 import _ from "lodash";
 import React from "react";
 
+import TagConditionalField from "./TagConditionalField";
+import Icon from "../Icon";
+
 import {
   FlatButton
 } from "material-ui";

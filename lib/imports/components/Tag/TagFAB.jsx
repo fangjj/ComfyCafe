@@ -1,5 +1,7 @@
 import React from "react";
 
+import TagForm from "./TagForm";
+
 import {
   FloatingActionButton,
   FontIcon

@@ -1,6 +1,11 @@
 import _ from "lodash";
 import React from "react";
 
+import TagTree from "./TagTree";
+import TagEditFAB from "./TagEditFAB";
+import LoadingSpinner from "../LoadingSpinner";
+import TextBody from "../TextBody";
+
 const Tag = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -62,6 +67,11 @@ const Tag = React.createClass({
       });
     }
   },
+  renderFab(tag) {
+    if (this.data.currentUser) {
+      return <TagEditFAB tag={tag} />;
+    }
+  },
   render() {
     if (this.data.loading) {
       return <LoadingSpinner />;
@@ -81,7 +91,7 @@ const Tag = React.createClass({
       {this.renderExtends(tag)}
       {this.renderTagTree(tag)}
       {this.renderCondImpl(tag)}
-      <TagEditFAB tag={tag} />
+      {this.renderFab(tag)}
     </article>;
   }
 });

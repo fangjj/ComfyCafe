@@ -1,6 +1,8 @@
 import _ from "lodash";
 import React from "react";
 
+import LinkButton from "./LinkButton";
+
 import {
   DropDownMenu,
   MenuItem

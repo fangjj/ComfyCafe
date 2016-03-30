@@ -1,5 +1,7 @@
 import React from "react";
 
+import TagUpdateForm from "./TagUpdateForm";
+
 import {
   FloatingActionButton,
   FontIcon

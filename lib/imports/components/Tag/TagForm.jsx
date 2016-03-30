@@ -1,6 +1,8 @@
 import React from "react";
 
-const TagForm = React.createClass({
+import TagDialog from "./TagDialog";
+
+export default React.createClass({
   handleSubmit(data) {
     Meteor.call("addTag", data, (err, name) => {
       this.props.handleClose();
@@ -16,5 +18,3 @@ const TagForm = React.createClass({
     />;
   }
 });
-
-export default TagForm;

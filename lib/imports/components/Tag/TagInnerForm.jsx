@@ -1,11 +1,17 @@
 import _ from "lodash";
 import React from "react";
 
+import TagTypeSelector from "./TagTypeSelector";
+import TagInlineField from "./TagInlineField";
+import TagField from "./TagField";
+import TagMultiField from "./TagMultiField";
+import SafetySelector from "../SafetySelector";
+
 import {
   TextField
 } from "material-ui";
 
-const TagInnerForm = React.createClass({
+export default React.createClass({
   renderOrigin() {
     if (! _.includes(["origin", "artist"], this.props.tagType)) {
       return <span>
@@ -84,5 +90,3 @@ const TagInnerForm = React.createClass({
   </div>;
   }
 });
-
-export default TagInnerForm;

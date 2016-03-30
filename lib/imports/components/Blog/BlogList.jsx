@@ -6,7 +6,7 @@ import LoadingSpinner from "../LoadingSpinner";
 import Powerless from "../Powerless";
 import Uhoh from "../Uhoh";
 
-const BlogList = React.createClass({
+export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     let subs = [];
@@ -75,5 +75,3 @@ const BlogList = React.createClass({
     </div>;
   }
 });
-
-export default BlogList;

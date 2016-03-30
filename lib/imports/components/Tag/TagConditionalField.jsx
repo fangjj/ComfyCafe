@@ -1,5 +1,7 @@
 import React from "react";
 
+import TagField from "./TagField";
+
 import {
   TextField
 } from "material-ui";

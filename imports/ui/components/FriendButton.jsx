@@ -1,6 +1,10 @@
 import _ from "lodash";
 import React from "react";
 
+import "/imports/api/users/methods";
+
+import Notifications from "/imports/api/notifications/collection";
+
 import ToggleButton from "./ToggleButton";
 
 const FriendButton = React.createClass({

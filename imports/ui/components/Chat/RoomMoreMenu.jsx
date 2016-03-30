@@ -1,5 +1,7 @@
 import React from "react";
 
+import "/imports/api/rooms/methods";
+
 import RoomUpdateForm from "./RoomUpdateForm";
 
 import {

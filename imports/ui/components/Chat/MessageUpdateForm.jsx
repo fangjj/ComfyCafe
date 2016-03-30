@@ -1,5 +1,7 @@
 import React from "react";
 
+import "/imports/api/messages/methods";
+
 import MessageDialog from "./MessageDialog";
 
 const MessageUpdateForm = React.createClass({

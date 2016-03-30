@@ -1,6 +1,8 @@
 import _ from "lodash";
 import React from "react";
 
+import "/imports/api/topics/methods";
+
 import ToggleButton from "./ToggleButton";
 
 const WatchButton = React.createClass({

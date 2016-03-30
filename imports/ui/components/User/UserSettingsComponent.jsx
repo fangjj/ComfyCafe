@@ -1,6 +1,8 @@
 import _ from "lodash";
 import React from "react";
 
+import "/imports/api/users/methods";
+
 import LoadingSpinner from "../LoadingSpinner";
 import Powerless from "../Powerless";
 import Actions from "../Actions";

@@ -1,5 +1,7 @@
 import React from "react";
 
+import "/imports/api/blog/methods";
+
 import BlogDialog from "./BlogDialog";
 
 const BlogForm = React.createClass({

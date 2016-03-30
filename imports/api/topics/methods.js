@@ -1,6 +1,6 @@
 import Topics from "./collection";
-
 import Rooms from "../rooms/collection";
+import Notifications from "../notifications/collection";
 
 Meteor.methods({
   addTopic: function (roomId, data) {

@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 /*
 o: `long blonde hair`
 n: `short blonde hair`

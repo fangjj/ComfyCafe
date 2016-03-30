@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 tagStrSample = "nia-teppelin: young, short multicolored hair, cat ears;"
 	+ "yoko-littner: flame bikini, pink stockings, long red hair, without gun";
 

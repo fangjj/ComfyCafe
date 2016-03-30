@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 tagTopLevelTokenizer = function (str) {
   return _.compact(str.split(/\s*;\s*/));
 };

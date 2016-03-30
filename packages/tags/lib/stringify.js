@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 tagStringify = function (tagObj) {
   // This currently ignores all negativity.
   var chunks = [];

@@ -1,5 +1,7 @@
 import React from "react";
 
+import "/imports/api/messages/methods";
+
 const MessageForm = React.createClass({
   handleSubmit(data) {
     Meteor.call("addMessage", this.props.topic._id, data, (err, name) => {

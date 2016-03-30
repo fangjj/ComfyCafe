@@ -1,6 +1,7 @@
 import _ from "lodash";
 
 import mentionRegex from "/imports/api/common/mentionRegex";
+import Notifications from "/imports/api/notifications/collection";
 
 processMentions = function (tag, text, data) {
   var mentions = text.match(mentionRegex);

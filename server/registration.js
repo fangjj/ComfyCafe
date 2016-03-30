@@ -1,3 +1,4 @@
+import Invites from "/imports/api/invites/collection";
 import Rooms from "/imports/api/rooms/collection";
 
 Accounts.onCreateUser(function (options, user) {

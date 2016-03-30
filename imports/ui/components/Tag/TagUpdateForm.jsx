@@ -1,5 +1,7 @@
 import React from "react";
 
+import "/imports/api/tags/methods";
+
 import TagDialog from "./TagDialog";
 
 const TagUpdateForm = React.createClass({

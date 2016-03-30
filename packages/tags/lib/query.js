@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 function queryGeneratorAuthors(parsed, queryDoc) {
   var authorQuery = {};
   if (parsed.authors.length) {

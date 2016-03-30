@@ -18,12 +18,11 @@ mizzao:user-status
 alanning:roles
 email
 react-meteor-data
-comfysoft:invites
 comfysoft:utility
 comfysoft:media
 comfysoft:thumbnails
 comfysoft:jobs
 comfysoft:tags
-comfysoft:notifications
 comfysoft:names
 kadira:dochead
+jaywon:meteor-node-uuid

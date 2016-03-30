@@ -1,5 +1,7 @@
 import React from "react";
 
+import "/imports/api/posts/methods";
+
 import PostUpdateForm from "./PostUpdateForm";
 
 import {

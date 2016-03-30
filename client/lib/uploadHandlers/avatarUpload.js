@@ -1,3 +1,5 @@
+import "/imports/api/users/methods";
+
 avatarUpload = function (self, file) {
 	self.setState({isUploading: true});
 	media.insert({

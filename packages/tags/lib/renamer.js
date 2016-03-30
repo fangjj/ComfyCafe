@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 tagRenamer = function (oldName, newName, tagDoc) {
   // Thanks to our stringification easymode, we only need to modify the subjects obj.
 

@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 getFiles = function (event) {
   // This function is adapted from CollectionFS. https://github.com/CollectionFS/Meteor-CollectionFS
 

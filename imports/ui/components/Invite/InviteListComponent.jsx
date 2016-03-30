@@ -1,5 +1,7 @@
 import React from "react";
 
+import Invites from "/imports/api/invites/collection";
+
 import InviteComponent from "./InviteComponent";
 import InviteFAB from "./InviteFAB";
 import LoadingSpinner from "../LoadingSpinner";

@@ -1,5 +1,7 @@
 import React from "react";
 
+import "/imports/api/posts/methods";
+
 const PostForm = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

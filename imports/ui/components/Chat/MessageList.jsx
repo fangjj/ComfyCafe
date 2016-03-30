@@ -1,6 +1,8 @@
 import _ from "lodash";
 import React from "react";
 
+import "/imports/api/topics/methods";
+
 import Messages from "/imports/api/messages/collection";
 
 import MessageListItem from "./MessageListItem";

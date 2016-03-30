@@ -1,6 +1,9 @@
 import _ from "lodash";
 import React from "react";
 
+import "/imports/api/users/methods";
+import "/imports/api/notifications/methods";
+
 import UserLink from "../User/UserLink";
 
 import {

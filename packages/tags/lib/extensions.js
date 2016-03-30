@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 function extendsName(name) {
   var extensions = [];
   extensions.push(name);

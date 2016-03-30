@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 function isRemoved(dDiff, rootNoun, tag) {
   return _.includes(dDiff[rootNoun].removed, tag);
 }

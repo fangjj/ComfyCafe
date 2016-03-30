@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 var takeAdj = function (pool) {
   adj = _.sample(adjectives);
   if (_.includes(pool, adj)) {

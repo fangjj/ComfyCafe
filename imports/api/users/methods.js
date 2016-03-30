@@ -1,4 +1,13 @@
-profileSyncList = [Posts, BlogPosts, Rooms, Topics, Messages, Notifications];
+import _ from "lodash";
+
+import Posts from "../posts/collection";
+import BlogPosts from "../blog/collection";
+import Rooms from "../rooms/collection";
+import Topics from "../topics/collection";
+import Messages from "../messages/collection";
+import Notifications from "../notifications/collection";
+
+const profileSyncList = [Posts, BlogPosts, Rooms, Topics, Messages, Notifications];
 
 Meteor.methods({
 	updateProfile: function (data) {
@@ -133,9 +142,9 @@ Meteor.methods({
 			throw new Meteor.Error("not-logged-in");
 		}
 
-		var add = ! _.includes(Meteor.user().subscriptions, userId);
+		const add = ! _.includes(Meteor.user().subscriptions, userId);
 
-		var op;
+		let op;
 		if (add) {
 			op = "$push";
 			Notifications.upsert(
@@ -169,19 +178,23 @@ Meteor.methods({
 			);
 		}
 
-		var doc = {};
-		doc[op] = { subscriptions: userId };
-    Meteor.users.update(
-			{ _id: Meteor.userId() },
-			doc
-		);
+		{
+			let doc = {};
+			doc[op] = { subscriptions: userId };
+	    Meteor.users.update(
+				{ _id: Meteor.userId() },
+				doc
+			);
+		}
 
-		var doc = {};
-		doc[op] = { subscribers: Meteor.userId() };
-    Meteor.users.update(
-			{ _id: userId },
-			doc
-		);
+		{
+			let doc = {};
+			doc[op] = { subscribers: Meteor.userId() };
+	    Meteor.users.update(
+				{ _id: userId },
+				doc
+			);
+		}
 
 		return add;
 	},

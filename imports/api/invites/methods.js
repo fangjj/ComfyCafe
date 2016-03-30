@@ -1,3 +1,5 @@
+import Invites from "./collection";
+
 Meteor.methods({
 	addInvite: function () {
 		if (! Meteor.userId()) {

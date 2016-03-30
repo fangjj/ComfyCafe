@@ -1,5 +1,7 @@
 import React from "react";
 
+import "/imports/api/blog/methods";
+
 import BlogUpdateForm from "./BlogUpdateForm";
 
 import {

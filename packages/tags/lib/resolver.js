@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 tagResolver = function (tag) {
   var canon = Tags.findOne(
     { $or: [

@@ -1,6 +1,8 @@
 import _ from "lodash";
 import React from "react";
 
+import Notifications from "/imports/api/notifications/collection";
+
 import TopBarArtButton from "./TopBarArtButton";
 import TopBarBlogButton from "./TopBarBlogButton";
 import TopBarTagButton from "./TopBarTagButton";

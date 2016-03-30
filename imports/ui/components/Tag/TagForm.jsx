@@ -1,5 +1,7 @@
 import React from "react";
 
+import "/imports/api/tags/methods";
+
 import TagDialog from "./TagDialog";
 
 export default React.createClass({

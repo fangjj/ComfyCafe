@@ -1,5 +1,7 @@
 import React from "react";
 
+import "/imports/api/rooms/methods";
+
 import RoomDialog from "./RoomDialog";
 
 const RoomForm = React.createClass({

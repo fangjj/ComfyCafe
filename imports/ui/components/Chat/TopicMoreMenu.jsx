@@ -1,5 +1,7 @@
 import React from "react";
 
+import "/imports/api/topics/methods";
+
 import TopicUpdateForm from "./TopicUpdateForm";
 
 import {

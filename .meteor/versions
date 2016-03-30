@@ -16,11 +16,9 @@ callback-hook@1.0.6
 check@1.1.2
 chuangbo:cookie@1.1.0
 coffeescript@1.0.15
-comfysoft:invites@0.0.1
 comfysoft:jobs@0.0.1
 comfysoft:media@0.0.1
 comfysoft:names@0.0.1
-comfysoft:notifications@0.0.1
 comfysoft:tags@0.0.1
 comfysoft:thumbnails@0.0.1
 comfysoft:utility@0.0.1

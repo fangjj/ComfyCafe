@@ -1,3 +1,5 @@
+import Notifications from "./collection";
+
 Meteor.methods({
 	dismissNotification: function (noteId) {
 		check(noteId, String);

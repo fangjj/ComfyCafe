@@ -1,5 +1,7 @@
 import React from "react";
 
+import "/imports/api/messages/methods";
+
 import MessageUpdateForm from "./MessageUpdateForm";
 
 import {

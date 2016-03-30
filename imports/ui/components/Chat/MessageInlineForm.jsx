@@ -1,5 +1,8 @@
 import React from "react";
 
+import "/imports/api/messages/methods";
+import "/imports/api/topics/methods";
+
 import MessageInnerForm from "./MessageInnerForm";
 import Actions from "../Actions";
 import SubmitButton from "../SubmitButton";

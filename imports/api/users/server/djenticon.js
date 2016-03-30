@@ -1,5 +1,7 @@
 import jdenticon from "jdenticon";
 
+import thumbnailPolicies from "/imports/api/thumbnails/policies";
+
 export default function (userId, hash) {
   const size = thumbnailPolicies.avatar.large.size[0];
   const djent = jdenticon.toSvg(hash, size);

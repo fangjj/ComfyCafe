@@ -1,6 +1,7 @@
 import React from "react";
 
 import PretentiousImage from "./PretentiousImage";
+import SpinnerComponent from "./SpinnerComponent";
 
 const Thumbnail = React.createClass({
   renderPlay(type) {

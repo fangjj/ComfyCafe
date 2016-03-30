@@ -20,7 +20,6 @@ comfysoft:jobs@0.0.1
 comfysoft:media@0.0.1
 comfysoft:names@0.0.1
 comfysoft:tags@0.0.1
-comfysoft:thumbnails@0.0.1
 comfysoft:utility@0.0.1
 cosmos:browserify@0.8.4
 ddp@1.2.3

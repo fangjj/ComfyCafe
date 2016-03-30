@@ -2,6 +2,8 @@ import React from "react";
 
 import "/imports/api/posts/methods";
 
+import PostDialog from "./PostDialog";
+
 const PostForm = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {

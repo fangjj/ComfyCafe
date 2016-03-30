@@ -1,15 +1,17 @@
-var exec = Npm.require("child_process").exec;
-var fs = Npm.require("fs");
-var tmp = Npm.require("tmp");
+import { exec } from "child_process";
+import fs from "fs";
+import tmp from "tmp";
 
-var ffmpegGetFirstFrame = function (inName, outName, callback) {
+import sharpImageResize from "./sharp.js";
+
+function ffmpegGetFirstFrame(inName, outName, callback) {
   exec(
     "ffmpeg -y -i " + inName + " -frames:v 1 " + outName,
     Meteor.bindEnvironment(callback)
   );
 };
 
-var getVideoPreview = function (inStream, outStream, callback) {
+function getVideoPreview(inStream, outStream, callback) {
   var tmpFile = tmp.fileSync();
   var wstream = fs.createWriteStream(tmpFile.name);
 
@@ -24,7 +26,7 @@ var getVideoPreview = function (inStream, outStream, callback) {
   }));
 };
 
-getVideoThumbnail = function (inStream, outStream, width, height) {
+export default function (inStream, outStream, width, height) {
   return getVideoPreview(inStream, outStream, function (tmpPreviewFile) {
     var rstream = fs.createReadStream(tmpPreviewFile.name);
     sharpImageResize(rstream, outStream, width, height);

@@ -1,4 +1,9 @@
-thumbnailWorker = function (job, callback) {
+import thumbnailPolicies from "../policies";
+import sharpImageResize from "./backends/sharp.js";
+import magickImageResize from "./backends/imageMagick.js";
+import getVideoThumbnail from "./backends/ffmpeg.js";
+
+export default function (job, callback) {
   var policy = thumbnailPolicies[job.data.policyName][job.data.sizeKey];
 
   job.log("Beginning work on thumbnail: " + (job.data.inputFileId.toHexString()), {

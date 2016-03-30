@@ -2,7 +2,7 @@ import _ from "lodash";
 
 import Posts from "/imports/api/posts/collection";
 
-thumbnailPolicies = {
+const thumbnailPolicies = {
   "postMedium": {
     "list": {
       size: [240, 240]
@@ -98,3 +98,5 @@ if (Meteor.isServer) {
     value.fail = function (job) {};
   });
 }
+
+export default thumbnailPolicies;

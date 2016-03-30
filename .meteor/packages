@@ -20,9 +20,9 @@ email
 react-meteor-data
 comfysoft:utility
 comfysoft:media
-comfysoft:thumbnails
 comfysoft:jobs
 comfysoft:tags
 comfysoft:names
 kadira:dochead
 jaywon:meteor-node-uuid
+vsivsi:job-collection

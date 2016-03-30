@@ -1,5 +1,7 @@
 import React from "react";
 
+import thumbnailPolicies from "/imports/api/thumbnails/policies";
+
 const DirectAvatar = React.createClass({
   render() {
     const size = thumbnailPolicies.avatar[this.props.size].size;

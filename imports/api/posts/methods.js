@@ -8,7 +8,7 @@ import Topics from "../topics/collection";
 import Notifications from "../notifications/collection";
 import processMentions from "../common/processMentions";
 import tagParser from "../tags/parser";
-import tagFullResolver from "../tags/resolver";
+import { tagFullResolver } from "../tags/resolver";
 
 function nameCycle(options, callback) {
 	var name = generateName(options);

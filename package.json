@@ -45,6 +45,7 @@
     "marked": "^0.3.5",
     "material-ui": "^0.14.4",
     "meteor-node-stubs": "^0.2.1",
+    "moment": "^2.12.0",
     "perfect-scrollbar": "^0.6.10",
     "react": "^0.14.7",
     "react-addons-create-fragment": "^0.14.7",

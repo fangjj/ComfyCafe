@@ -1,14 +1,8 @@
 import _ from "lodash";
 
+import profileSyncList from "./syncList";
 import media from "../media/collection";
-import Posts from "../posts/collection";
-import BlogPosts from "../blog/collection";
-import Rooms from "../rooms/collection";
-import Topics from "../topics/collection";
-import Messages from "../messages/collection";
 import Notifications from "../notifications/collection";
-
-const profileSyncList = [Posts, BlogPosts, Rooms, Topics, Messages, Notifications];
 
 Meteor.methods({
 	updateProfile: function (data) {

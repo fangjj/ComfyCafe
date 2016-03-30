@@ -2,6 +2,7 @@ import _ from "lodash";
 
 import media from "/imports/api/media/collection";
 import Posts from "/imports/api/posts/collection";
+import profileSyncList from "/imports/api/users/syncList";
 
 const thumbnailPolicies = {
   "postMedium": {

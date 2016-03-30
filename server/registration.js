@@ -1,3 +1,5 @@
+import Rooms from "/imports/api/rooms/collection";
+
 Accounts.onCreateUser(function (options, user) {
   if (options.profile) {
     user.profile = options.profile;

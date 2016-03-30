@@ -27,6 +27,7 @@ const Post = React.createClass({
     let doc = {};
 
     if (id) {
+      console.err("postPerma was triggered, which shouldn't actually happen.");
       handle = Meteor.subscribe("postPerma", id);
       doc = { _id: id };
     } else {

@@ -1,5 +1,6 @@
 import _ from "lodash";
 
+import media from "../media/collection";
 import Posts from "../posts/collection";
 import BlogPosts from "../blog/collection";
 import Rooms from "../rooms/collection";

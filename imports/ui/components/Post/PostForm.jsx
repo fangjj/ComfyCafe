@@ -1,6 +1,7 @@
 import React from "react";
 
 import "/imports/api/posts/methods";
+import media from "/imports/api/media/collection";
 
 import PostDialog from "./PostDialog";
 import RainbowSpinnerComponent from "../RainbowSpinnerComponent";

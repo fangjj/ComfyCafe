@@ -1,3 +1,6 @@
+import media from "/imports/api/media/collection";
+import "/imports/api/media/methods";
+
 mediaUpload = function (self, file, callback) {
   self.setState({isUploading: true});
   media.insert({

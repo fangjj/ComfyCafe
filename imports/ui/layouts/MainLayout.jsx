@@ -1,6 +1,9 @@
 import _ from "lodash";
 import React from "react";
 
+import "/imports/api/media/methods";
+import media from "/imports/api/media/collection";
+
 import PseudoBody from "/imports/ui/components/PseudoBody";
 import TopBarComponent from "/imports/ui/components/TopBar/TopBarComponent";
 import PostForm from "/imports/ui/components/Post/PostForm";

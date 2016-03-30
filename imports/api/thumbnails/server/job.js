@@ -1,6 +1,7 @@
 import thumbnailWorker from "./worker";
 import thumbnailPolicies from "../policies";
 import jobs from "/imports/api/jobs/collection";
+import media from "/imports/api/media/collection";
 
 var addedFileJob = function (file) {
   return media.rawCollection().findAndModify(

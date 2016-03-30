@@ -1,3 +1,5 @@
+import media from "./collection";
+
 Meteor.methods({
 	freeMedium: function (mediumId) {
 		check(mediumId, String);

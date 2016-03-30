@@ -1,6 +1,8 @@
 import _ from "lodash";
 
-getFiles = function (event) {
+// This is presently dead code!
+
+function getFiles(event) {
   // This function is adapted from CollectionFS. https://github.com/CollectionFS/Meteor-CollectionFS
 
   /*
@@ -15,17 +17,21 @@ getFiles = function (event) {
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   */
 
-	var event = (event.originalEvent || event);
-
-	var files = event.target.files;
+	event = (event.originalEvent || event);
+	let files = event.target.files;
 
 	if (! files || files.length === 0) {
-	 files = event.dataTransfer ? event.dataTransfer.files : [];
+		files = event.dataTransfer ? event.dataTransfer.files : [];
 	}
 
 	return files;
-};
+}
 
-eachFile = function (event, callback) {
+function eachFile(event, callback) {
 	_.each(getFiles(event), callback);
+}
+
+export {
+	getFiles,
+	eachFile
 };

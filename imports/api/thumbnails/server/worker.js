@@ -2,6 +2,7 @@ import thumbnailPolicies from "../policies";
 import sharpImageResize from "./backends/sharp.js";
 import magickImageResize from "./backends/imageMagick.js";
 import getVideoThumbnail from "./backends/ffmpeg.js";
+import media from "/imports/api/media/collection";
 
 export default function (job, callback) {
   var policy = thumbnailPolicies[job.data.policyName][job.data.sizeKey];

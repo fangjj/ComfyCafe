@@ -2,6 +2,7 @@ import _ from "lodash";
 
 import "../topics/methods";
 import Posts from "./collection";
+import media from "../media/collection";
 import Topics from "../topics/collection";
 import Notifications from "../notifications/collection";
 import processMentions from "../common/processMentions";

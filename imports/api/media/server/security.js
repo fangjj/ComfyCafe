@@ -1,3 +1,5 @@
+import media from "../collection";
+
 media.allow({
    // The creator of a file owns it. UserId may be null.
    insert: function (userId, file) {

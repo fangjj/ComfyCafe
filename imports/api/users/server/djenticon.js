@@ -1,5 +1,6 @@
 import jdenticon from "jdenticon";
 
+import media from "/imports/api/media/collection";
 import thumbnailPolicies from "/imports/api/thumbnails/policies";
 
 export default function (userId, hash) {

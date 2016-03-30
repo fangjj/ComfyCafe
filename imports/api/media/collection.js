@@ -1,7 +1,7 @@
-var lookupGenerator = function (docGen) {
+function lookupGenerator(docGen) {
   return function (params, query) {
-    var size = query.size;
-    var doc = docGen(params, query);
+    const size = query.size;
+    const doc = docGen(params, query);
     if (! size) {
       doc["metadata.thumbnailPolicy"] = { $exists: true };
     } else {
@@ -11,7 +11,7 @@ var lookupGenerator = function (docGen) {
   };
 };
 
-media = new FileCollection("media",
+export default new FileCollection("media",
   { resumable: true,
     http: [
       { method: "get",
@@ -32,7 +32,7 @@ media = new FileCollection("media",
       { method: "get",
         path: "/user/:userId",
         lookup: function (params, query) {
-          var doc = lookupGenerator(function () {
+          const doc = lookupGenerator(function () {
             return {};
           })(params, query);
 
@@ -48,7 +48,7 @@ media = new FileCollection("media",
       { method: "get",
         path: "/user/:userId/:id",
         lookup: function (params, query) {
-          var doc = lookupGenerator(function () {
+          const doc = lookupGenerator(function () {
             return { $or: [
               { _id: new Mongo.ObjectID(params.id) },
               { "metadata.thumbOf": new Mongo.ObjectID(params.id) }

@@ -1,3 +1,5 @@
+import media from "../collection";
+
 Meteor.publish("media", function (clientUserId) {
 	if (clientUserId === this.userId) {
 		return media.find({ "metadata._Resumable": { $exists: false }, "metadata.owner": this.userId });

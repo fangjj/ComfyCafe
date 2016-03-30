@@ -1,5 +1,6 @@
 import _ from "lodash";
 
+import media from "/imports/api/media/collection";
 import Posts from "/imports/api/posts/collection";
 
 const thumbnailPolicies = {

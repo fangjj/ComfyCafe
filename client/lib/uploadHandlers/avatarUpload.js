@@ -1,3 +1,4 @@
+import media from "/imports/api/media/collection";
 import "/imports/api/users/methods";
 
 avatarUpload = function (self, file) {

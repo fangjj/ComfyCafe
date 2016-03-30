@@ -1,6 +1,8 @@
 import React from "react";
 import NativeListener from "react-native-listener";
 
+import media from "/imports/api/media/collection";
+
 import Actions from "../Actions";
 import CancelButton from "../CancelButton";
 import SubmitButton from "../SubmitButton";

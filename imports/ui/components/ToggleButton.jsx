@@ -1,5 +1,6 @@
 import React from "react";
 
+import Colors from "/imports/ui/colors";
 import Icon from "./Icon";
 
 import {
@@ -29,7 +30,7 @@ const ToggleButton = React.createClass({
         onTouchTap={this.props.activate}
       />;
     } else {
-      let classes = "grey darken-2";
+      let color = Colors.reassuringGray;
       let label;
       let icon;
       if (this.state.notHover) {
@@ -37,13 +38,13 @@ const ToggleButton = React.createClass({
         icon = this.props.iconActivated;
       } else {
         if (this.props.dangerous) {
-          classes = "red darken-3";
+          color = Colors.scaryCherry;
         }
         label = this.props.labelDeactivate;
         icon = this.props.iconDeactivate;
       }
       return <RaisedButton
-        className={classes}
+        backgroundColor={color}
         label={label}
         labelStyle={{fontSize: "18px"}}
         icon={<Icon>{icon}</Icon>}

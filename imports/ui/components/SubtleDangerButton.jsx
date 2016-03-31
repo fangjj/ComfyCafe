@@ -1,5 +1,6 @@
 import React from "react";
 
+import Colors from "/imports/ui/colors";
 import Icon from "./Icon";
 
 import {
@@ -16,14 +17,14 @@ const SubtleDangerButton = React.createClass({
     this.setState({hover: ! this.state.hover});
   },
   render() {
-    var clases;
+    let color;
     if (! this.state.hover) {
-      classes = "grey darken-2";
+      color = Colors.scaryCherry;
     } else {
-      classes = "red darken-3";
+      color = Colors.reassuringGray;
     }
     return <RaisedButton
-      className={classes}
+      backgroundColor={color}
       label={this.props.label}
       labelStyle={{fontSize: "18px"}}
       icon={<Icon>{this.props.iconName}</Icon>}

@@ -1,5 +1,6 @@
 import React from "react";
 
+import Colors from "/imports/ui/colors";
 import Icon from "./Icon";
 
 import {
@@ -9,7 +10,7 @@ import {
 const CancelButton = React.createClass({
   render() {
     return <RaisedButton
-      className="grey darken-2"
+      backgroundColor={Colors.reassuringGray}
       label={this.props.label || "Cancel"}
       labelStyle={{fontSize: "18px"}}
       icon={<Icon>{this.props.iconName || "cancel"}</Icon>}

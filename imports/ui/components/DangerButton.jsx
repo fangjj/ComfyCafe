@@ -1,5 +1,6 @@
 import React from "react";
 
+import Colors from "/imports/ui/colors";
 import Icon from "./Icon";
 
 import {
@@ -9,7 +10,7 @@ import {
 const DangerButton = React.createClass({
   render() {
     return <RaisedButton
-      className="red darken-3"
+      className={Colors.scaryCherry}
       label={this.props.label}
       labelStyle={{fontSize: "18px"}}
       icon={<Icon>{this.props.iconName}</Icon>}

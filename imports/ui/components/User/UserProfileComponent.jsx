@@ -51,9 +51,7 @@ const UserProfileComponent = React.createClass({
     }
   },
   render() {
-    if (this.data.loading ||
-      (this.data.currentUser && ! _.has(this.data.currentUser, "profile"))
-    ) {
+    if (this.data.loading) {
       return <LoadingSpinner />;
     }
 
@@ -77,7 +75,7 @@ const UserProfileComponent = React.createClass({
         <RaisedButton
           label="View Images"
           labelStyle={{fontSize: "18px"}}
-          secondary={true}
+          primary={true}
           icon={<Icon>image</Icon>}
           linkButton={true}
           href={imagesPath}
@@ -85,7 +83,7 @@ const UserProfileComponent = React.createClass({
         <RaisedButton
           label="View Blog"
           labelStyle={{fontSize: "18px"}}
-          secondary={true}
+          primary={true}
           icon={<Icon>import_contacts</Icon>}
           linkButton={true}
           href={pagesPath}
@@ -107,7 +105,7 @@ const UserProfileComponent = React.createClass({
         <RaisedButton
           label="Change Avatar"
           labelStyle={{fontSize: "18px"}}
-          secondary={true}
+          primary={true}
           icon={<Icon>image</Icon>}
           onTouchTap={this.startChangingAvatar}
         />

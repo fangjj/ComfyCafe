@@ -23,7 +23,7 @@ const ToggleButton = React.createClass({
       return <RaisedButton
         label={this.props.labelActivate}
         labelStyle={{fontSize: "18px"}}
-        secondary={true}
+        primary={true}
         icon={<Icon>{this.props.iconActivate}</Icon>}
         style={{width: this.props.width}}
         onTouchTap={this.props.activate}

@@ -17,7 +17,7 @@ const PostLikeFAB = React.createClass({
   render() {
     var liked = _.includes(this.props.post.likes, this.props.userId);
     return <div className="fixed-action-btn">
-      <FloatingActionButton secondary={true} onClick={this.like}>
+      <FloatingActionButton primary={true} onClick={this.like}>
         <Icon>{liked ? "favorite" : "favorite_border"}</Icon>
       </FloatingActionButton>
     </div>;

@@ -21,7 +21,7 @@ const BlogPostEditFAB = React.createClass({
   },
   render() {
     return <div className="fixed-action-btn">
-      <FloatingActionButton secondary={true} onClick={this.showBlogForm}>
+      <FloatingActionButton primary={true} onClick={this.showBlogForm}>
         <Icon>edit</Icon>
       </FloatingActionButton>
       <BlogUpdateForm

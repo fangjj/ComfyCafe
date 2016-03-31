@@ -21,7 +21,7 @@ const RoomFAB = React.createClass({
   },
   render() {
     return <div className="fixed-action-btn">
-      <FloatingActionButton secondary={true} onTouchTap={this.showRoomForm}>
+      <FloatingActionButton primary={true} onTouchTap={this.showRoomForm}>
         <Icon>add</Icon>
       </FloatingActionButton>
       <RoomForm

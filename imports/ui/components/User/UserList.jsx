@@ -23,7 +23,7 @@ const UserList = React.createClass({
       return this.props.userIds.map((userId) => {
         const user = Meteor.users.findOne({ _id: userId });
         const userUrl = FlowRouter.path("profile", {username: user.username});
-        return <li key={_.uniqueId()}>
+        return <li key={userId}>
           <a href={userUrl} style={{float: "left"}}>
             <Avatar size="icon" user={user} />
           </a>

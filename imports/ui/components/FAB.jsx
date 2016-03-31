@@ -12,7 +12,7 @@ const FAB = (props) => {
   const { className, iconName, children, ...leftProps } = props;
   const classes = classConcat("fixed-action-btn", className);
   return <div className={classes}>
-    <FloatingActionButton secondary={true} {...leftProps}>
+    <FloatingActionButton primary={true} {...leftProps}>
       <Icon>{iconName}</Icon>
     </FloatingActionButton>
     {children}

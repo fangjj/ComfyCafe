@@ -21,7 +21,7 @@ const PostModifyFAB = React.createClass({
   },
   render() {
     return <div className="fixed-action-btn">
-      <FloatingActionButton secondary={true} onTouchTap={this.showPostForm}>
+      <FloatingActionButton primary={true} onTouchTap={this.showPostForm}>
         <Icon>edit</Icon>
       </FloatingActionButton>
       <PostUpdateForm

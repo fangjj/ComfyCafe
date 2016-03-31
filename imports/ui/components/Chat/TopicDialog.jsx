@@ -59,13 +59,13 @@ const TopicDialog = React.createClass({
       <FlatButton
         label="Cancel"
         labelStyle={{fontSize: "18px"}}
-        secondary={true}
+        primary={true}
         onTouchTap={this.props.handleClose}
       />,
       <FlatButton
         label="Submit"
         labelStyle={{fontSize: "18px"}}
-        primary={true}
+        secondary={true}
         onTouchTap={this.handleSubmit}
       />,
     ];

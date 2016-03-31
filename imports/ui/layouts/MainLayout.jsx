@@ -20,6 +20,29 @@ import {
 } from "material-ui/lib/styles/colors";
 import ColorManipulator from "material-ui/lib/utils/color-manipulator";
 
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: "#009688",
+    //accent1Color: "#880E4F",
+    accent1Color: "#64FFDA",
+    textColor: "#EEF4EE",
+    alternateTextColor: "#EEF4EE",
+
+    // copied from darkBaseTheme
+    // https://github.com/callemall/material-ui/blob/master/src/styles/baseThemes/darkBaseTheme.js
+    primary2Color: cyan700,
+    primary3Color: grey600,
+    accent2Color: pinkA400,
+    accent3Color: pinkA100,
+    canvasColor: "#303030",
+    borderColor: ColorManipulator.fade(fullWhite, 0.3),
+    disabledColor: ColorManipulator.fade(fullWhite, 0.3),
+    pickerHeaderColor: ColorManipulator.fade(fullWhite, 0.12),
+    clockCircleColor: ColorManipulator.fade(fullWhite, 0.12)
+  },
+  fontFamily: "Slabo 27px"
+});
+
 const MainLayout = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
@@ -36,29 +59,6 @@ const MainLayout = React.createClass({
     };
   },
   componentWillMount() {
-    this.muiTheme = getMuiTheme({
-      palette: {
-        primary1Color: "#009688",
-        //accent1Color: "#880E4F",
-        accent1Color: "#64FFDA",
-        textColor: "#EEF4EE",
-        alternateTextColor: "#EEF4EE",
-
-        // copied from darkBaseTheme
-        // https://github.com/callemall/material-ui/blob/master/src/styles/baseThemes/darkBaseTheme.js
-        primary2Color: cyan700,
-        primary3Color: grey600,
-        accent2Color: pinkA400,
-        accent3Color: pinkA100,
-        canvasColor: "#303030",
-        borderColor: ColorManipulator.fade(fullWhite, 0.3),
-        disabledColor: ColorManipulator.fade(fullWhite, 0.3),
-        pickerHeaderColor: ColorManipulator.fade(fullWhite, 0.12),
-        clockCircleColor: ColorManipulator.fade(fullWhite, 0.12)
-      },
-      fontFamily: "Slabo 27px"
-    }, { userAgent: global.navigator.userAgent });
-
     const seed = _.get(this, "data.currentUser.settings.patternSeed");
     if (seed) {
       this.setState({
@@ -141,7 +141,7 @@ const MainLayout = React.createClass({
   },
   render() {
     const main = React.cloneElement(this.props.main, { setPattern: this.setPattern });
-    return <MuiThemeProvider muiTheme={this.muiTheme}>
+    return <MuiThemeProvider muiTheme={muiTheme}>
       <div onDrop={this.test}>
         <PseudoBody
           seed={this.state.seed}

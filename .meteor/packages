@@ -12,7 +12,7 @@ jaywon:meteor-node-uuid
 jparker:crypto-sha256
 peerlibrary:reactive-publish
 meteorhacks:fast-render
-kadira:flow-router-ssr
+kadira:flow-router
 kadira:dochead
 chuangbo:cookie
 alanning:roles

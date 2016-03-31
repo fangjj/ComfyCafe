@@ -6,14 +6,12 @@ import {
   FontIcon
 } from "material-ui";
 
-const Icon = React.createClass({
-  render() {
-    const { className, children, ...props } = this.props;
-    const classes = classConcat("material-icons", className);
-    return <FontIcon className={classes} {...props}>
-      {children}
-    </FontIcon>;
-  }
-});
+const Icon = (props) => {
+  const { className, children, ...leftProps } = props;
+  const classes = classConcat("material-icons", className);
+  return <FontIcon className={classes} {...leftProps}>
+    {children}
+  </FontIcon>;
+};
 
 export default Icon;

@@ -1,21 +1,6 @@
 import React from "react";
-import mui from "material-ui";
 
 const NavItem = React.createClass({
-  getInitialState() {
-    return {
-      muiTheme: this.context.muiTheme || mui.Styles.getMuiTheme(),
-      hovered: false
-    };
-  },
-  handleMouseEnter () {
-    //if (! this.state.touch) {
-      this.setState({hovered: true});
-    //}
-  },
-  handleMouseLeave () {
-    this.setState({hovered: false});
-  },
   renderIcon() {
     if (this.props.iconName) {
       let classes = "material-icons";
@@ -41,28 +26,13 @@ const NavItem = React.createClass({
     }
   },
   render() {
-    const textColor = this.state.muiTheme.rawTheme.palette.textColor;
-    const hoverColor = mui.Utils.ColorManipulator.fade(textColor, 0.1);
-
-    var style = {
-      transition: mui.Styles.Transitions.easeOut()
-    };
-    if (this.state.hovered) {
-      style.backgroundColor = hoverColor;
-    }
-
     var classes = "navItem";
     if (this.props.className) {
       classes += " " + this.props.className;
     }
 
-    return <li
-        className={classes}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-        style={style}
-      >
-        {this.renderInner()}
+    return <li className={classes}>
+      {this.renderInner()}
     </li>;
   }
 });

@@ -3,9 +3,10 @@ import React from "react";
 
 import "/imports/api/posts/methods";
 
+import Icon from "../Icon";
+
 import {
-  IconButton,
-  FontIcon
+  IconButton
 } from "material-ui";
 
 const PostBookmarkButton = React.createClass({
@@ -20,7 +21,7 @@ const PostBookmarkButton = React.createClass({
     }
     return <div className="more">
       <IconButton onTouchTap={this.toggle.bind(this, ! active)}>
-        <FontIcon className="material-icons">{iconName}</FontIcon>
+        <Icon>{iconName}</Icon>
       </IconButton>
     </div>;
   }

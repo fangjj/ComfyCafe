@@ -6,8 +6,7 @@ import TopMenuItem from "./TopMenuItem";
 import {
   Menu,
   MenuItem,
-  Divider,
-  FontIcon
+  Divider
 } from "material-ui";
 
 const TopBarMenu = React.createClass({

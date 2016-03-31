@@ -1,10 +1,10 @@
 import React from "react";
 
 import RoomForm from "./RoomForm";
+import Icon from "../Icon";
 
 import {
-  FloatingActionButton,
-  FontIcon
+  FloatingActionButton
 } from "material-ui";
 
 const RoomFAB = React.createClass({
@@ -22,7 +22,7 @@ const RoomFAB = React.createClass({
   render() {
     return <div className="fixed-action-btn">
       <FloatingActionButton secondary={true} onTouchTap={this.showRoomForm}>
-        <FontIcon className="material-icons">add</FontIcon>
+        <Icon>add</Icon>
       </FloatingActionButton>
       <RoomForm
         handleClose={this.hideRoomForm}

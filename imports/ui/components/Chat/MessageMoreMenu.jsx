@@ -3,12 +3,12 @@ import React from "react";
 import "/imports/api/messages/methods";
 
 import MessageUpdateForm from "./MessageUpdateForm";
+import Icon from "../Icon";
 
 import {
   IconMenu,
   MenuItem,
-  IconButton,
-  FontIcon
+  IconButton
 } from "material-ui";
 
 const MessageMoreMenu = React.createClass({
@@ -33,7 +33,7 @@ const MessageMoreMenu = React.createClass({
     var isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
 
     var moreBtn = <IconButton>
-      <FontIcon className="material-icons">more_horiz</FontIcon>
+      <Icon>more_horiz</Icon>
     </IconButton>;
 
     return <div className="more">

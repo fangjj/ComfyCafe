@@ -1,8 +1,9 @@
 import React from "react";
 
+import Icon from "./Icon";
+
 import {
-  RaisedButton,
-  FontIcon
+  RaisedButton
 } from "material-ui";
 
 const DangerButton = React.createClass({
@@ -11,7 +12,7 @@ const DangerButton = React.createClass({
       className="red darken-3"
       label={this.props.label}
       labelStyle={{fontSize: "18px"}}
-      icon={<FontIcon className="material-icons">{this.props.iconName}</FontIcon>}
+      icon={<Icon>{this.props.iconName}</Icon>}
       onTouchTap={this.props.onTouchTap}
     />
   }

@@ -1,13 +1,12 @@
 import React from "react";
 
+import Icon from "../Icon";
+
 const NavItem = React.createClass({
   renderIcon() {
     if (this.props.iconName) {
-      let classes = "material-icons";
-      if (this.props.label) {
-        classes += " left";
-      }
-      return <i className={classes}>{this.props.iconName}</i>;
+      const classes = (this.props.label ? "left" : undefined);
+      return <Icon className={classes}>{this.props.iconName}</Icon>;
     }
   },
   renderLabel() {

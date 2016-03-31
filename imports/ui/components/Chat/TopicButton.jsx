@@ -4,8 +4,7 @@ import TopicForm from "./TopicForm";
 import SubmitButton from "../SubmitButton";
 
 import {
-  RaisedButton,
-  FontIcon
+  RaisedButton
 } from "material-ui";
 
 const TopicButton = React.createClass({

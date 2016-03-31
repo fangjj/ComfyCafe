@@ -23,6 +23,7 @@ import DummyView from "/imports/ui/views/DummyView";
 import TagView from "/imports/ui/views/TagView";
 import UserProfileView from "/imports/ui/views/UserProfileView";
 import FriendListView from "/imports/ui/views/FriendListView";
+import InviteListView from "/imports/ui/views/InviteListView";
 
 if (Meteor.isServer) {
   FastRender.onAllRoutes(function (path) {

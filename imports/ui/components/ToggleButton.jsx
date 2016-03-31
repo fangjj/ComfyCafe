@@ -1,8 +1,9 @@
 import React from "react";
 
+import Icon from "./Icon";
+
 import {
-  RaisedButton,
-  FontIcon
+  RaisedButton
 } from "material-ui";
 
 const ToggleButton = React.createClass({
@@ -23,7 +24,7 @@ const ToggleButton = React.createClass({
         label={this.props.labelActivate}
         labelStyle={{fontSize: "18px"}}
         secondary={true}
-        icon={<FontIcon className="material-icons">{this.props.iconActivate}</FontIcon>}
+        icon={<Icon>{this.props.iconActivate}</Icon>}
         style={{width: this.props.width}}
         onTouchTap={this.props.activate}
       />;
@@ -45,7 +46,7 @@ const ToggleButton = React.createClass({
         className={classes}
         label={label}
         labelStyle={{fontSize: "18px"}}
-        icon={<FontIcon className="material-icons">{icon}</FontIcon>}
+        icon={<Icon>{icon}</Icon>}
         style={{width: this.props.width}}
         onTouchTap={this.props.deactivate}
         onMouseEnter={this.hoverOn}

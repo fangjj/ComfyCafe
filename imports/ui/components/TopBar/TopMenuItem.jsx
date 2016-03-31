@@ -1,19 +1,20 @@
 import React from "react";
 
+import Icon from "../Icon";
+
 import {
-  MenuItem,
-  FontIcon
+  MenuItem
 } from "material-ui";
 
 const TopMenuItem = React.createClass({
   render() {
     let leftIcon;
     if (this.props.leftIconName) {
-      leftIcon = <FontIcon className="material-icons">{this.props.leftIconName}</FontIcon>;
+      leftIcon = <Icon>{this.props.leftIconName}</Icon>;
     }
     let rightIcon;
     if (this.props.rightIconName) {
-      rightIcon = <FontIcon className="material-icons">{this.props.rightIconName}</FontIcon>;
+      rightIcon = <Icon>{this.props.rightIconName}</Icon>;
     }
     return <MenuItem
       primaryText={this.props.primaryText}

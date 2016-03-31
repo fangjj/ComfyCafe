@@ -7,10 +7,6 @@ import VisibilityLink from "../VisibilityLink";
 import Thumbnail from "../Thumbnail";
 import Avatar from "../Avatar/Avatar";
 
-import {
-  FontIcon
-} from "material-ui";
-
 const PostPreview = React.createClass({
   renderMoreMenu() {
     const isOwner = this.props.currentUser

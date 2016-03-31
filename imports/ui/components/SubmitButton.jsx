@@ -1,8 +1,9 @@
 import React from "react";
 
+import Icon from "./Icon";
+
 import {
-  RaisedButton,
-  FontIcon
+  RaisedButton
 } from "material-ui";
 
 const SubmitButton = React.createClass({
@@ -11,7 +12,7 @@ const SubmitButton = React.createClass({
       label={this.props.label || "Submit"}
       labelStyle={{fontSize: "18px"}}
       secondary={true}
-      icon={<FontIcon className="material-icons">{this.props.iconName || "done"}</FontIcon>}
+      icon={<Icon>{this.props.iconName || "done"}</Icon>}
       style={this.props.style}
       onTouchTap={this.props.onTouchTap}
     />;

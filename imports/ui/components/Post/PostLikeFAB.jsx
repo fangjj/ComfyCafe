@@ -3,9 +3,10 @@ import React from "react";
 
 import "/imports/api/posts/methods";
 
+import Icon from "../Icon";
+
 import {
-  FloatingActionButton,
-  FontIcon
+  FloatingActionButton
 } from "material-ui";
 
 const PostLikeFAB = React.createClass({
@@ -17,7 +18,7 @@ const PostLikeFAB = React.createClass({
     var liked = _.includes(this.props.post.likes, this.props.userId);
     return <div className="fixed-action-btn">
       <FloatingActionButton secondary={true} onClick={this.like}>
-        <FontIcon className="material-icons">{liked ? "favorite" : "favorite_border"}</FontIcon>
+        <Icon>{liked ? "favorite" : "favorite_border"}</Icon>
       </FloatingActionButton>
     </div>;
   }

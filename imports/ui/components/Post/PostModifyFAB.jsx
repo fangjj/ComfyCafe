@@ -1,10 +1,10 @@
 import React from "react";
 
 import PostUpdateForm from "./PostUpdateForm";
+import Icon from "../Icon";
 
 import {
-  FloatingActionButton,
-  FontIcon
+  FloatingActionButton
 } from "material-ui";
 
 const PostModifyFAB = React.createClass({
@@ -22,7 +22,7 @@ const PostModifyFAB = React.createClass({
   render() {
     return <div className="fixed-action-btn">
       <FloatingActionButton secondary={true} onTouchTap={this.showPostForm}>
-        <FontIcon className="material-icons">edit</FontIcon>
+        <Icon>edit</Icon>
       </FloatingActionButton>
       <PostUpdateForm
         post={this.props.post}

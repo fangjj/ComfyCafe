@@ -15,7 +15,6 @@ import {
   MenuItem,
   Toggle,
   RaisedButton,
-  FontIcon,
   Snackbar
 } from "material-ui";
 

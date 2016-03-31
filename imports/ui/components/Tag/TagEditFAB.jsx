@@ -1,11 +1,7 @@
 import React from "react";
 
 import TagUpdateForm from "./TagUpdateForm";
-
-import {
-  FloatingActionButton,
-  FontIcon
-} from "material-ui";
+import FAB from "../FAB";
 
 const TagEditFAB = React.createClass({
   getInitialState() {
@@ -20,16 +16,13 @@ const TagEditFAB = React.createClass({
     this.setState({showForm: false});
   },
   render() {
-    return <div className="fixed-action-btn">
-      <FloatingActionButton secondary={true} onClick={this.showTagForm}>
-        <FontIcon className="material-icons">edit</FontIcon>
-      </FloatingActionButton>
+    return <FAB iconName="edit" onTouchTap={this.showTagForm}>
       <TagUpdateForm
         tag={this.props.tag}
         handleClose={this.hideTagForm}
         open={this.state.showForm}
       />
-    </div>;
+    </FAB>;
   }
 });
 

@@ -1,5 +1,6 @@
 import React from "react";
 
+import Icon from "./Icon";
 import PretentiousImage from "./PretentiousImage";
 import SpinnerComponent from "./SpinnerComponent";
 

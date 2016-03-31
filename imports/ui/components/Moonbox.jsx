@@ -2,15 +2,13 @@ import _ from "lodash";
 import React from "react";
 import hotkey from "react-hotkey";
 
+import Icon from "./Icon";
+
 if (Meteor.isClient) {
   global.jQuery = require("jquery");
   require("jquery.panzoom");
   require("jquery.mousewheel")(jQuery);
 }
-
-import {
-  FontIcon
-} from "material-ui";
 
 const Moonbox = React.createClass({
   mixins: [hotkey.Mixin("handleHotkey")],
@@ -62,7 +60,7 @@ const Moonbox = React.createClass({
       onTouchTap={this.handleClose}
     >
       <div className="close" onTouchTap={this.handleClose}>
-        <FontIcon className="material-icons">close</FontIcon>
+        <Icon>close</Icon>
       </div>
       <div className="container center" style={containerStyle}>
         <img src={this.props.src} ref="image" className={this.props.imgClassName} />

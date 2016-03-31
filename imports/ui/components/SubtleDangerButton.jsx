@@ -1,8 +1,9 @@
 import React from "react";
 
+import Icon from "./Icon";
+
 import {
-  RaisedButton,
-  FontIcon
+  RaisedButton
 } from "material-ui";
 
 const SubtleDangerButton = React.createClass({
@@ -25,7 +26,7 @@ const SubtleDangerButton = React.createClass({
       className={classes}
       label={this.props.label}
       labelStyle={{fontSize: "18px"}}
-      icon={<FontIcon className="material-icons">{this.props.iconName}</FontIcon>}
+      icon={<Icon>{this.props.iconName}</Icon>}
       onTouchTap={this.props.onTouchTap}
       onMouseEnter={this.toggleHover}
       onMouseLeave={this.toggleHover}

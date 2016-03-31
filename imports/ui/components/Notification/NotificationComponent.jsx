@@ -4,10 +4,10 @@ import React from "react";
 import "/imports/api/users/methods";
 import "/imports/api/notifications/methods";
 
+import Icon from "../Icon";
 import UserLink from "../User/UserLink";
 
 import {
-  FontIcon,
   FlatButton
 } from "material-ui";
 
@@ -138,10 +138,7 @@ const NotificationComponent = React.createClass({
     return this.actionMap[this.props.notification.action].bind(this)();
   },
   render() {
-    const rightIcon = <FontIcon
-      className="material-icons"
-      onTouchTap={this.dismiss}
-    >cancel</FontIcon>;
+    const rightIcon = <Icon onTouchTap={this.dismiss}>cancel</Icon>;
 
     return <li rightIcon={rightIcon} style={{whiteSpace: "normal"}}>
       <div className="notificationInner">

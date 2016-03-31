@@ -2,6 +2,8 @@ import React from "react";
 
 import media from "/imports/api/media/collection";
 
+import Icon from "./Icon";
+
 const UploadFAB = React.createClass({
   componentDidMount() {
     media.resumable.assignBrowse(this.refs.addFile);
@@ -11,7 +13,7 @@ const UploadFAB = React.createClass({
       <a className="btn-floating btn-large waves-effect waves-light tooltipped"
         data-position="left" data-tooltip="Upload a file! You can also just drop one anywhere."
       >
-        <i className="material-icons">add</i>
+        <Icon>add</Icon>
         <input className="addFile" type="file" title="" ref="addFile" />
       </a>
     </div>;

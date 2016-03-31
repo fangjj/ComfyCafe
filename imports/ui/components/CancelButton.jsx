@@ -1,8 +1,9 @@
 import React from "react";
 
+import Icon from "./Icon";
+
 import {
-  RaisedButton,
-  FontIcon
+  RaisedButton
 } from "material-ui";
 
 const CancelButton = React.createClass({
@@ -11,7 +12,7 @@ const CancelButton = React.createClass({
       className="grey darken-2"
       label={this.props.label || "Cancel"}
       labelStyle={{fontSize: "18px"}}
-      icon={<FontIcon className="material-icons">{this.props.iconName || "cancel"}</FontIcon>}
+      icon={<Icon>{this.props.iconName || "cancel"}</Icon>}
       onTouchTap={this.props.onTouchTap}
     />
   }

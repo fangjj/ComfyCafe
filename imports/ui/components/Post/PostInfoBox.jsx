@@ -16,8 +16,7 @@ import Avatar from "../Avatar/Avatar";
 import UserLink from "../User/UserLink";
 
 import {
-  RaisedButton,
-  FontIcon
+  RaisedButton
 } from "material-ui";
 
 const verbMap = {

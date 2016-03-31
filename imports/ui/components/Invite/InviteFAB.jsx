@@ -2,6 +2,8 @@ import React from "react";
 
 import "/imports/api/invites/methods";
 
+import Icon from "../Icon";
+
 export default React.createClass({
   invite() {
     Meteor.call("addInvite");
@@ -13,7 +15,7 @@ export default React.createClass({
         data-tooltip="Invite someone new :^)"
         onClick={this.invite}
       >
-        <i className="material-icons">add</i>
+        <Icon>add</Icon>
       </a>
     </div>;
   }

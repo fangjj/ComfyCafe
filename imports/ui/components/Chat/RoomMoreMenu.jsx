@@ -3,12 +3,12 @@ import React from "react";
 import "/imports/api/rooms/methods";
 
 import RoomUpdateForm from "./RoomUpdateForm";
+import Icon from "../Icon";
 
 import {
   IconMenu,
   MenuItem,
-  IconButton,
-  FontIcon
+  IconButton
 } from "material-ui";
 
 const RoomMoreMenu = React.createClass({
@@ -38,7 +38,7 @@ const RoomMoreMenu = React.createClass({
     var isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
 
     var moreBtn = <IconButton>
-      <FontIcon className="material-icons">more_horiz</FontIcon>
+      <Icon>more_horiz</Icon>
     </IconButton>;
 
     return <div className="more">

@@ -1,10 +1,10 @@
 import React from "react";
 
 import BlogUpdateForm from "./BlogUpdateForm";
+import Icon from "../Icon";
 
 import {
-  FloatingActionButton,
-  FontIcon
+  FloatingActionButton
 } from "material-ui";
 
 const BlogPostEditFAB = React.createClass({
@@ -22,7 +22,7 @@ const BlogPostEditFAB = React.createClass({
   render() {
     return <div className="fixed-action-btn">
       <FloatingActionButton secondary={true} onClick={this.showBlogForm}>
-        <FontIcon className="material-icons">edit</FontIcon>
+        <Icon>edit</Icon>
       </FloatingActionButton>
       <BlogUpdateForm
         post={this.props.post}

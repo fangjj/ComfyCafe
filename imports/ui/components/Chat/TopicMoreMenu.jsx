@@ -3,12 +3,12 @@ import React from "react";
 import "/imports/api/topics/methods";
 
 import TopicUpdateForm from "./TopicUpdateForm";
+import Icon from "../Icon";
 
 import {
   IconMenu,
   MenuItem,
-  IconButton,
-  FontIcon
+  IconButton
 } from "material-ui";
 
 const TopicMoreMenu = React.createClass({
@@ -38,7 +38,7 @@ const TopicMoreMenu = React.createClass({
     var isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
 
     var moreBtn = <IconButton>
-      <FontIcon className="material-icons">more_horiz</FontIcon>
+      <Icon>more_horiz</Icon>
     </IconButton>;
 
     return <div className="more">

@@ -5,6 +5,7 @@ import "/imports/api/users/methods";
 import setTitle from "/imports/api/common/setTitle";
 
 import UserProfileForm from "./UserProfileForm";
+import Icon from "../Icon";
 import LoadingSpinner from "../LoadingSpinner";
 import SubscriptionButton from "../SubscriptionButton";
 import FriendButton from "../FriendButton";
@@ -13,8 +14,7 @@ import DirectAvatar from "../Avatar/DirectAvatar";
 import AvatarCropper from "../Avatar/AvatarCropper";
 
 import {
-  RaisedButton,
-  FontIcon
+  RaisedButton
 } from "material-ui";
 
 const UserProfileComponent = React.createClass({
@@ -78,7 +78,7 @@ const UserProfileComponent = React.createClass({
           label="View Images"
           labelStyle={{fontSize: "18px"}}
           secondary={true}
-          icon={<FontIcon className="material-icons">image</FontIcon>}
+          icon={<Icon>image</Icon>}
           linkButton={true}
           href={imagesPath}
         />
@@ -86,7 +86,7 @@ const UserProfileComponent = React.createClass({
           label="View Blog"
           labelStyle={{fontSize: "18px"}}
           secondary={true}
-          icon={<FontIcon className="material-icons">import_contacts</FontIcon>}
+          icon={<Icon>import_contacts</Icon>}
           linkButton={true}
           href={pagesPath}
         />
@@ -108,7 +108,7 @@ const UserProfileComponent = React.createClass({
           label="Change Avatar"
           labelStyle={{fontSize: "18px"}}
           secondary={true}
-          icon={<FontIcon className="material-icons">image</FontIcon>}
+          icon={<Icon>image</Icon>}
           onTouchTap={this.startChangingAvatar}
         />
         {deleteButton}

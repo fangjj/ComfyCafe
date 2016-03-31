@@ -13,8 +13,7 @@ import Powerless from "../Powerless";
 import TagInlineField from "../Tag/TagInlineField";
 
 import {
-  Checkbox,
-  FontIcon
+  Checkbox
 } from "material-ui";
 
 const defaultState = {

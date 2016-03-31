@@ -21,6 +21,15 @@ body {
   }
 }
 
+.pseudoBody {
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  width: 100vw;
+  height: 100vh;
+}
+
 main {
   z-index: index($elements, main);
 
@@ -82,6 +91,10 @@ header {
 
 strong {
   font-weight: bold;
+}
+
+.material-icons {
+  color: $text-color;
 }
 
 .actions {

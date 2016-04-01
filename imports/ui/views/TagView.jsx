@@ -1,11 +1,19 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import Tag from "/imports/ui/components/Tag/Tag";
-
 const TagView = {
-  layout: MainLayout,
-  content: {
-    main: <Tag />
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const Tag = require("../client/components/Tag/Tag").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <Tag />
+        }
+      };
+    }
+  },
+  fastRender(params) {
+    this.subscribe("tag", params.tagName);
   }
 };
 

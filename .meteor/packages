@@ -13,7 +13,6 @@ jparker:crypto-sha256
 peerlibrary:reactive-publish
 meteorhacks:fast-render
 kadira:flow-router
-kadira:dochead
 chuangbo:cookie
 alanning:roles
 mizzao:user-status

@@ -1,13 +1,14 @@
-import {mount} from "react-mounter";
-
-export default function (view) {
+function renderView(view) {
   if (Meteor.isClient) {
     Session.set("previousPath", Session.get("currentPath") || "/");
     Session.set("currentPath", FlowRouter.current().path);
+    
+    const mount = require("react-mounter").mount;
+    const built = view.build();
+    mount(built.layout, built.content);
   } else {
-    global.navigator = {
-      userAgent: FlowRouter.current()._serverRequest.headers["user-agent"] || "all"
-    };
+    FastRender.route(FlowRouter.current().route.pathDef, view.fastRender || (() => {}));
   }
-  mount(view.layout, view.content);
 };
+
+export default renderView;

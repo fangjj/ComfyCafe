@@ -1,11 +1,19 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import PostFeed from "/imports/ui/components/Post/PostFeed";
-
 const PostFeedView = {
-  layout: MainLayout,
-  content: {
-    main: <PostFeed />
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const PostFeed = require("../client/components/Post/PostFeed").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <PostFeed />
+        }
+      };
+    }
+  },
+  fastRender(params) {
+    this.subscribe("postFeed");
   }
 };
 

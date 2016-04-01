@@ -1,12 +1,24 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import Chat from "/imports/ui/components/Chat/Chat";
-
 const ChatView = {
-  layout: MainLayout,
-  content: {
-    main: <Chat />,
-    dense: true
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const Chat = require("../client/components/Chat/Chat").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <Chat />,
+          dense: true
+        }
+      };
+    }
+  },
+  fastRender(params) {
+    if (_.has(params, "topicId")) {
+      this.subscribe("topic", params.topicId);
+    } else {
+      this.subscribe("room", params.roomId);
+    }
   }
 };
 

@@ -6,9 +6,9 @@ import media from "/imports/api/media/collection";
 import mediaUpload from "/imports/api/media/handlers/media";
 import avatarUpload from "/imports/api/media/handlers/avatar";
 
-import PseudoBody from "/imports/ui/components/PseudoBody";
-import TopBarComponent from "/imports/ui/components/TopBar/TopBarComponent";
-import PostForm from "/imports/ui/components/Post/PostForm";
+import PseudoBody from "../components/PseudoBody";
+import TopBarComponent from "../components/TopBar/TopBarComponent";
+import PostForm from "../components/Post/PostForm";
 
 import MuiThemeProvider from "material-ui/lib/MuiThemeProvider";
 import getMuiTheme from "material-ui/lib/styles/getMuiTheme";

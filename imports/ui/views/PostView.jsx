@@ -1,11 +1,23 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import Post from "/imports/ui/components/Post/Post";
-
 const PostView = {
-  layout: MainLayout,
-  content: {
-    main: <Post />
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const Post = require("../client/components/Post/Post").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <Post />
+        }
+      };
+    }
+  },
+  fastRender(params) {
+    if (_.has(params, "username")) {
+      this.subscribe("post", params.username, params.postName);
+    } else {
+      this.subscribe("postPerma", params.postId);
+    }
   }
 };
 

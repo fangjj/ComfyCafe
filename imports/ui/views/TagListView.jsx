@@ -1,11 +1,19 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import TagList from "/imports/ui/components/Tag/TagList";
-
 const TagListView = {
-  layout: MainLayout,
-  content: {
-    main: <TagList />
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const TagList = require("../client/components/Tag/TagList").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <TagList />
+        }
+      };
+    }
+  },
+  fastRender(params) {
+    this.subscribe("allTags");
   }
 };
 

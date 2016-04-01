@@ -1,11 +1,19 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import PostBrowseLikes from "/imports/ui/components/Post/PostBrowseLikes";
-
 const PostBrowseLikesView = {
-  layout: MainLayout,
-  content: {
-    main: <PostBrowseLikes />
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const PostBrowseLikes = require("../client/components/Post/PostBrowseLikes").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <PostBrowseLikes />
+        }
+      };
+    }
+  },
+  fastRender(params) {
+    this.subscribe("likes");
   }
 };
 

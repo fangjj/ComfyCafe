@@ -1,11 +1,19 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import BlogPost from "/imports/ui/components/Blog/BlogPost";
-
 const BlogPostView = {
-  layout: MainLayout,
-  content: {
-    main: <BlogPost />
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const BlogPost = require("../client/components/Blog/BlogPost").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <BlogPost />
+        }
+      };
+    }
+  },
+  fastRender(params) {
+    this.subscribe("blogPost", params.postId);
   }
 };
 

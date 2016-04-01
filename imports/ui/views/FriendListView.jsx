@@ -1,11 +1,16 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import FriendList from "/imports/ui/components/User/FriendList";
-
 const FriendListView = {
-  layout: MainLayout,
-  content: {
-    main: <FriendList />
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const FriendList = require("../client/components/User/FriendList").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <FriendList />
+        }
+      };
+    }
   }
 };
 

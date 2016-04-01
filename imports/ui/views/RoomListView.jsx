@@ -1,11 +1,19 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import RoomList from "/imports/ui/components/Chat/RoomList";
-
 const RoomListView = {
-  layout: MainLayout,
-  content: {
-    main: <RoomList />
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const RoomList = require("../client/components/Chat/RoomList").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <RoomList />
+        }
+      };
+    }
+  },
+  fastRender(params) {
+    this.subscribe("allRooms");
   }
 };
 

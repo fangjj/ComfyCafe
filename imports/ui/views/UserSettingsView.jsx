@@ -1,11 +1,16 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import UserSettingsComponent from "/imports/ui/components/User/UserSettingsComponent";
-
 const UserSettingsView = {
-  layout: MainLayout,
-  content: {
-    main: <UserSettingsComponent />
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const UserSettingsComponent = require("../client/components/User/UserSettingsComponent").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <UserSettingsComponent />
+        }
+      };
+    }
   }
 };
 

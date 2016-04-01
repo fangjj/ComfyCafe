@@ -1,11 +1,16 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import LoadingSpinner from "/imports/ui/components/LoadingSpinner";
-
 const LoadingTestView = {
-  layout: MainLayout,
-  content: {
-    main: <LoadingSpinner />
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const LoadingSpinner = require("../client/components/LoadingSpinner").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <LoadingSpinner />
+        }
+      };
+    }
   }
 };
 

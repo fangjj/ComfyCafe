@@ -1,11 +1,19 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import PostBrowseAll from "/imports/ui/components/Post/PostBrowseAll";
-
 const PostUnauthBrowseView = {
-  layout: MainLayout,
-  content: {
-    main: <PostBrowseAll />
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const PostBrowseAll = require("../client/components/Post/PostBrowseAll").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <PostBrowseAll />
+        }
+      };
+    }
+  },
+  fastRender(params) {
+    this.subscribe("allPosts");
   }
 };
 

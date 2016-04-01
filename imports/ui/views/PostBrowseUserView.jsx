@@ -1,11 +1,19 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import PostBrowseUser from "/imports/ui/components/Post/PostBrowseUser";
-
 const PostBrowseUserView = {
-  layout: MainLayout,
-  content: {
-    main: <PostBrowseUser />
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const PostBrowseUser = require("../client/components/Post/PostBrowseUser").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <PostBrowseUser />
+        }
+      };
+    }
+  },
+  fastRender(params) {
+    this.subscribe("imagesBy", params.username);
   }
 };
 

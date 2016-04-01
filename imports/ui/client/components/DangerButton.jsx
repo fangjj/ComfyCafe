@@ -1,6 +1,6 @@
 import React from "react";
 
-import Colors from "/imports/ui/colors";
+import Colors from "/imports/ui/client/utils/colors";
 import Icon from "./Icon";
 
 import {

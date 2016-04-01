@@ -1,11 +1,16 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import DummyComponent from "/imports/ui/components/DummyComponent";
-
 const DummyView = {
-  layout: MainLayout,
-  content: {
-    main: <DummyComponent />
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const DummyComponent = require("../client/components/DummyComponent").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <DummyComponent />
+        }
+      };
+    }
   }
 };
 

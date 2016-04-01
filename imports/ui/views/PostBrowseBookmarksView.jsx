@@ -1,11 +1,19 @@
-import React from "react";
-import MainLayout from "/imports/ui/layouts/MainLayout";
-import PostBrowseBookmarks from "/imports/ui/components/Post/PostBrowseBookmarks";
-
 const PostBrowseBookmarksView = {
-  layout: MainLayout,
-  content: {
-    main: <PostBrowseBookmarks />
+  build() {
+    if (Meteor.isClient) {
+      const React = require("react");
+      const MainLayout = require("../client/layouts/MainLayout").default;
+      const PostBrowseBookmarks = require("../client/components/Post/PostBrowseBookmarks").default;
+      return {
+        layout: MainLayout,
+        content: {
+          main: <PostBrowseBookmarks />
+        }
+      };
+    }
+  },
+  fastRender(params) {
+    this.subscribe("bookmarks");
   }
 };
 

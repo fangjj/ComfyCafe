@@ -6,7 +6,7 @@ import media from "/imports/api/media/collection";
 import mediaUpload from "/imports/api/media/handlers/media";
 import avatarUpload from "/imports/api/media/handlers/avatar";
 
-import PseudoBody from "../PseudoBody";
+import PseudoBodyContainer from "../PseudoBodyContainer";
 import TopBarComponent from "../TopBar/TopBarComponent";
 import PostForm from "../Post/PostForm";
 import setPattern from "/imports/ui/client/utils/setPattern";
@@ -136,8 +136,7 @@ const MainLayout = React.createClass({
   render() {
     return <MuiThemeProvider muiTheme={muiTheme}>
       <div onDrop={this.test}>
-        <PseudoBody
-          seed={this.state.seed}
+        <PseudoBodyContainer
           setColor={this.setColor}
         />
         <header>

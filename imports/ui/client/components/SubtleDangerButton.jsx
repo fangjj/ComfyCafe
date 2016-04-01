@@ -19,9 +19,9 @@ const SubtleDangerButton = React.createClass({
   render() {
     let color;
     if (! this.state.hover) {
-      color = Colors.scaryCherry;
-    } else {
       color = Colors.reassuringGray;
+    } else {
+      color = Colors.scaryCherry;
     }
     return <RaisedButton
       backgroundColor={color}

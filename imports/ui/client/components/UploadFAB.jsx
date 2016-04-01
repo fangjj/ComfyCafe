@@ -2,7 +2,7 @@ import React from "react";
 
 import media from "/imports/api/media/collection";
 
-import Icon from "./Icon";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 const UploadFAB = React.createClass({
   componentDidMount() {

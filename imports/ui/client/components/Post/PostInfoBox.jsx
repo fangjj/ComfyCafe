@@ -5,12 +5,12 @@ import "/imports/api/posts/methods";
 import goBack from "/imports/api/common/goBack";
 
 import TextBody from "../TextBody";
-import SubmitButton from "../SubmitButton";
-import ToggleButton from "../ToggleButton";
-import SubscriptionButton from "../SubscriptionButton";
-import SubtleDangerButton from "../SubtleDangerButton";
-import OriginalityIcon from "../OriginalityIcon";
-import PrivacyIcon from "../PrivacyIcon";
+import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
+import ToggleButton from "/imports/ui/client/components/Button/ToggleButton";
+import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
+import SubtleDangerButton from "/imports/ui/client/components/Button/SubtleDangerButton";
+import OriginalityIcon from "/imports/ui/client/components/Daikon/OriginalityIcon";
+import PrivacyIcon from "/imports/ui/client/components/Daikon/PrivacyIcon";
 import Moment from "../Moment";
 import Avatar from "../Avatar/Avatar";
 import UserLink from "../User/UserLink";

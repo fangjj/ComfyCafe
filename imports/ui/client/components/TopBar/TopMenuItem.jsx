@@ -1,6 +1,6 @@
 import React from "react";
 
-import Icon from "../Icon";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 import {
   MenuItem

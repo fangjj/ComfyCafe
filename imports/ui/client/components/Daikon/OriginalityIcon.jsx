@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 
-import Icon from "./Icon";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 const iconMap = {
   original: "star",

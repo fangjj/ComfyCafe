@@ -4,10 +4,10 @@ import NativeListener from "react-native-listener";
 import media from "/imports/api/media/collection";
 import { getFiles } from "/imports/api/media/eachFile";
 
-import Icon from "../Icon";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 import Actions from "../Actions";
-import CancelButton from "../CancelButton";
-import SubmitButton from "../SubmitButton";
+import CancelButton from "/imports/ui/client/components/Button/CancelButton";
+import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import CropperComponent from "../extern/CropperComponent";
 
 const AvatarCropper = React.createClass({

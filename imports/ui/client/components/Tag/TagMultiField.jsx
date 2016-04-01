@@ -2,7 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import TagConditionalField from "./TagConditionalField";
-import Icon from "../Icon";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 import {
   FlatButton

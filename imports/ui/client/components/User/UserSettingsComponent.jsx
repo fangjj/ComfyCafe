@@ -4,11 +4,11 @@ import React from "react";
 import "/imports/api/users/methods";
 import goBack from "/imports/api/common/goBack";
 
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import Powerless from "../Powerless";
 import Actions from "../Actions";
-import CancelButton from "../CancelButton";
-import SubmitButton from "../SubmitButton";
+import CancelButton from "/imports/ui/client/components/Button/CancelButton";
+import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import PostFilters from "../Post/PostFilters";
 
 import {

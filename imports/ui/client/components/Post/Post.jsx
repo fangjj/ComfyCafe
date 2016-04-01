@@ -7,7 +7,7 @@ import PostLikeFAB from "./PostLikeFAB";
 import PostLikes from "./PostLikes";
 import PostInfoBox from "./PostInfoBox";
 import Medium from "../Medium";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import Inline404 from "../Inline404";
 import Content from "../Content";
 import AvatarCropper from "../Avatar/AvatarCropper";

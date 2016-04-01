@@ -5,8 +5,8 @@ import setTitle from "/imports/api/common/setTitle";
 
 import TopicMoreMenu from "./TopicMoreMenu";
 import MessageList from "./MessageList";
-import WatchButton from "../WatchButton";
-import DenseLoadingSpinner from "../DenseLoadingSpinner";
+import WatchButton from "/imports/ui/client/components/Button/WatchButton";
+import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
 
 const Topic = React.createClass({
   mixins: [ReactMeteorData],

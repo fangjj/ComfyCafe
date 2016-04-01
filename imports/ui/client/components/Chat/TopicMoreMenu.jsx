@@ -3,7 +3,7 @@ import React from "react";
 import "/imports/api/topics/methods";
 
 import TopicUpdateForm from "./TopicUpdateForm";
-import Icon from "../Icon";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 import {
   IconMenu,

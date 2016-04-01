@@ -5,7 +5,7 @@ import Rooms from "/imports/api/rooms/collection";
 
 import TopicButton from "./TopicButton";
 import TopicListItem from "./TopicListItem";
-import DenseLoadingSpinner from "../DenseLoadingSpinner";
+import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
 
 import {
   TextField

@@ -11,7 +11,7 @@ import replaceActiveToken from "/imports/api/common/replaceActiveToken";
 
 import TagTree from "./TagTree";
 import Suggestions from "../Suggestions";
-import InlineLoadingSpinner from "../InlineLoadingSpinner";
+import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLoadingSpinner";
 
 import {
   TextField

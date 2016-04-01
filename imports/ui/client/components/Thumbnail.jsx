@@ -1,8 +1,8 @@
 import React from "react";
 
-import Icon from "./Icon";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 import PretentiousImage from "./PretentiousImage";
-import SpinnerComponent from "./SpinnerComponent";
+import Spinner from "/imports/ui/client/components/Spinner/Spinner";
 
 const Thumbnail = React.createClass({
   renderPlay(type) {
@@ -32,7 +32,7 @@ const Thumbnail = React.createClass({
             pretentiousFilter={this.props.pretentiousFilter}
           />;
         } else {
-          thumbnail = <SpinnerComponent />;
+          thumbnail = <Spinner />;
         }
       } else {
         thumbnail = <div className="thumbnail">

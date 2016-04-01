@@ -4,7 +4,7 @@ import Invites from "/imports/api/invites/collection";
 
 import InviteComponent from "./InviteComponent";
 import InviteFAB from "./InviteFAB";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import Powerless from "../Powerless";
 import Uhoh from "../Uhoh";
 import Content from "../Content";

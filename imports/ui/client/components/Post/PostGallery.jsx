@@ -7,7 +7,7 @@ import tagQuery from "/imports/api/tags/query";
 import PostPreview from "./PostPreview";
 import PostFilters from "./PostFilters";
 import UploadFAB from "../UploadFAB";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import InlineUhoh from "../InlineUhoh";
 import Powerless from "../Powerless";
 import TagInlineField from "../Tag/TagInlineField";

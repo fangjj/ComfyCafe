@@ -2,7 +2,7 @@ import _ from "lodash";
 import React from "react";
 import hotkey from "react-hotkey";
 
-import Icon from "./Icon";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 if (Meteor.isClient) {
   global.jQuery = require("jquery");

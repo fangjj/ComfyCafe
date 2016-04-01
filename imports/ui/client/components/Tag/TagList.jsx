@@ -4,7 +4,7 @@ import Tags from "/imports/api/tags/collection";
 
 import TagListItem from "./TagListItem";
 import TagFAB from "./TagFAB";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 
 export default React.createClass({
   mixins: [ReactMeteorData],

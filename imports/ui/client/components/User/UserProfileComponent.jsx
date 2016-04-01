@@ -5,11 +5,11 @@ import "/imports/api/users/methods";
 import setTitle from "/imports/api/common/setTitle";
 
 import UserProfileForm from "./UserProfileForm";
-import Icon from "../Icon";
-import LoadingSpinner from "../LoadingSpinner";
-import SubscriptionButton from "../SubscriptionButton";
-import FriendButton from "../FriendButton";
-import SubtleDangerButton from "../SubtleDangerButton";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
+import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
+import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
+import FriendButton from "/imports/ui/client/components/Button/FriendButton";
+import SubtleDangerButton from "/imports/ui/client/components/Button/SubtleDangerButton";
 import DirectAvatar from "../Avatar/DirectAvatar";
 import AvatarCropper from "../Avatar/AvatarCropper";
 

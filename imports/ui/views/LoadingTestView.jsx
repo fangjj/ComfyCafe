@@ -3,7 +3,7 @@ const LoadingTestView = {
     if (Meteor.isClient) {
       const React = require("react");
       const MainLayout = require("../client/components/Layout/MainLayout").default;
-      const LoadingSpinner = require("../client/components/LoadingSpinner").default;
+      const LoadingSpinner = require("/imports/ui/client/components/Spinner/LoadingSpinner").default;
       return {
         layout: MainLayout,
         content: {

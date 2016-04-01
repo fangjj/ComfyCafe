@@ -3,7 +3,7 @@ import React from "react";
 import "/imports/api/rooms/methods";
 
 import RoomUpdateForm from "./RoomUpdateForm";
-import Icon from "../Icon";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 import {
   IconMenu,

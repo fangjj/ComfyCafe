@@ -1,11 +1,11 @@
 import React from "react";
 
-import RainbowSpinnerComponent from "./RainbowSpinnerComponent";
+import RainbowSpinner from "./RainbowSpinner";
 
 const InlineLoadingSpinner = React.createClass({
   render() {
     return <div className="inlineLoadingSpinner center">
-      <RainbowSpinnerComponent />
+      <RainbowSpinner />
     </div>;
   }
 });

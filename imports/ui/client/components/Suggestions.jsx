@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 
-import LinkButton from "./LinkButton";
+import LinkButton from "/imports/ui/client/components/Button/LinkButton";
 
 import {
   DropDownMenu,

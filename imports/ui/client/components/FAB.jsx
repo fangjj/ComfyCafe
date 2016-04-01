@@ -2,7 +2,7 @@ import React from "react";
 
 import classConcat from "/imports/api/common/classConcat";
 
-import Icon from "./Icon";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 import {
   FloatingActionButton

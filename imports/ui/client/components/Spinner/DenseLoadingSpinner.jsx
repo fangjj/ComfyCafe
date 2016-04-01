@@ -1,11 +1,11 @@
 import React from "react";
 
-import RainbowSpinnerComponent from "./RainbowSpinnerComponent";
+import RainbowSpinner from "./RainbowSpinner";
 
 export default React.createClass({
   render() {
     return <div className="denseLoadingSpinner center">
-      <RainbowSpinnerComponent />
+      <RainbowSpinner />
     </div>;
   }
 });

@@ -1,7 +1,7 @@
 import React from "react";
 
 import BlogUpdateForm from "./BlogUpdateForm";
-import Icon from "../Icon";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 import {
   FloatingActionButton

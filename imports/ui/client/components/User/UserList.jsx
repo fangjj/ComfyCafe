@@ -4,7 +4,7 @@ import React from "react";
 import classConcat from "/imports/api/common/classConcat";
 
 import UserLink from "./UserLink";
-import InlineLoadingSpinner from "../InlineLoadingSpinner";
+import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLoadingSpinner";
 import Avatar from "../Avatar/Avatar";
 
 const UserList = React.createClass({

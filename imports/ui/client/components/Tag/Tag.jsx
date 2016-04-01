@@ -7,7 +7,7 @@ import safetyLabels from "/imports/api/common/safetyLabels";
 
 import TagTree from "./TagTree";
 import TagEditFAB from "./TagEditFAB";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import TextBody from "../TextBody";
 
 const Tag = React.createClass({

@@ -5,7 +5,7 @@ import "/imports/api/topics/methods";
 
 import MessageInnerForm from "./MessageInnerForm";
 import Actions from "../Actions";
-import SubmitButton from "../SubmitButton";
+import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
 const MessageInlineForm = React.createClass({
   getInitialState() {

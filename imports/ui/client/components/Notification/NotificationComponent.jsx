@@ -4,7 +4,7 @@ import React from "react";
 import "/imports/api/users/methods";
 import "/imports/api/notifications/methods";
 
-import Icon from "../Icon";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 import UserLink from "../User/UserLink";
 
 import {

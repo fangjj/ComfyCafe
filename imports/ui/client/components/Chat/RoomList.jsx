@@ -4,7 +4,7 @@ import Rooms from "/imports/api/rooms/collection";
 
 import RoomListItem from "./RoomListItem";
 import RoomFAB from "./RoomFAB";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 
 export default React.createClass({
   mixins: [ReactMeteorData],

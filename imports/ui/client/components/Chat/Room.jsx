@@ -4,7 +4,7 @@ import Rooms from "/imports/api/rooms/collection";
 import setTitle from "/imports/api/common/setTitle";
 
 import RoomMoreMenu from "./RoomMoreMenu";
-import DenseLoadingSpinner from "../DenseLoadingSpinner";
+import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
 
 const Room = React.createClass({
   mixins: [ReactMeteorData],

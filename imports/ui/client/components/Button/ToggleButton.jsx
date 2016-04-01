@@ -1,7 +1,7 @@
 import React from "react";
 
 import Colors from "/imports/ui/client/utils/colors";
-import Icon from "./Icon";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 import {
   RaisedButton

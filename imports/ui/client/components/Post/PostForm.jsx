@@ -4,7 +4,7 @@ import "/imports/api/posts/methods";
 import media from "/imports/api/media/collection";
 
 import PostDialog from "./PostDialog";
-import RainbowSpinnerComponent from "../RainbowSpinnerComponent";
+import RainbowSpinner from "/imports/ui/client/components/Spinner/RainbowSpinner";
 
 const PostForm = React.createClass({
   mixins: [ReactMeteorData],
@@ -32,7 +32,7 @@ const PostForm = React.createClass({
   },
   render() {
     if (this.data.loading) {
-      return <RainbowSpinnerComponent />;
+      return <RainbowSpinner />;
     }
 
     return <PostDialog

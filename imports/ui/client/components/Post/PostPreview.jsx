@@ -2,7 +2,7 @@ import React from "react";
 
 import PostMoreMenu from "./PostMoreMenu";
 import PostBookmarkButton from "./PostBookmarkButton";
-import OriginalityIcon from "../OriginalityIcon";
+import OriginalityIcon from "/imports/ui/client/components/Daikon/OriginalityIcon";
 import VisibilityLink from "../VisibilityLink";
 import Thumbnail from "../Thumbnail";
 import Avatar from "../Avatar/Avatar";

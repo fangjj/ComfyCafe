@@ -7,7 +7,7 @@ import fancyCommaJoin from "/imports/api/common/fancyCommaJoin";
 
 import MessageListItem from "./MessageListItem";
 import MessageInlineForm from "./MessageInlineForm";
-import InlineLoadingSpinner from "../InlineLoadingSpinner";
+import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLoadingSpinner";
 
 const MessageList = React.createClass({
   mixins: [ReactMeteorData],

@@ -4,7 +4,7 @@ import BlogPosts from "/imports/api/blog/collection";
 
 import BlogListItem from "./BlogListItem";
 import BlogPostFAB from "./BlogPostFAB";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import Uhoh from "../Uhoh";
 
 const BlogUser = React.createClass({

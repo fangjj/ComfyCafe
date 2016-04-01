@@ -6,7 +6,7 @@ import TagInlineField from "./TagInlineField";
 import TagField from "./TagField";
 import TagMultiField from "./TagMultiField";
 import SafetySelector from "../SafetySelector";
-import Icon from "../Icon";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 import {
   TextField

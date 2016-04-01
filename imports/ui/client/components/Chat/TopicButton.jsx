@@ -1,7 +1,7 @@
 import React from "react";
 
 import TopicForm from "./TopicForm";
-import SubmitButton from "../SubmitButton";
+import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
 import {
   RaisedButton

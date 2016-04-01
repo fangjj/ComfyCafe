@@ -2,7 +2,7 @@ const UserProfileView = {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/layouts/MainLayout").default;
+      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const UserProfileComponent = require("../client/components/User/UserProfileComponent").default;
       return {
         layout: MainLayout,

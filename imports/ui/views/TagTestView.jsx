@@ -2,7 +2,7 @@ const TagTestView = {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/layouts/MainLayout").default;
+      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const TagTest = require("../client/components/Tag/TagTest").default;
       return {
         layout: MainLayout,

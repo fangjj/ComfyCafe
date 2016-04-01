@@ -2,7 +2,7 @@ const InviteListView = {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/layouts/MainLayout").default;
+      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const InviteListComponent = require("../client/components/Invite/InviteListComponent").default;
       return {
         layout: MainLayout,

@@ -2,7 +2,7 @@ const ChatView = {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/layouts/MainLayout").default;
+      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const Chat = require("../client/components/Chat/Chat").default;
       return {
         layout: MainLayout,

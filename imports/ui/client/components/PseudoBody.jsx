@@ -3,12 +3,19 @@ import GeoPattern from "geopattern";
 import tinycolor from "tinycolor2";
 
 export default React.createClass({
+  mixins: [ReactMeteorData],
   getInitialState() {
     return {};
   },
+  getMeteorData() {
+    return {
+      seed: Session.get("patternSeed")
+    };
+  },
   updatePattern(seed) {
     if (seed) {
-      console.log("updatePattern", seed);
+      this.currentSeed = this.data.seed;
+
       const pattern = GeoPattern.generate(seed);
 
       this.setState({
@@ -20,12 +27,13 @@ export default React.createClass({
     }
   },
   componentWillMount() {
-    this.updatePattern(this.props.seed);
+    this.updatePattern(this.data.seed);
   },
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.seed !== this.props.seed) {
-      this.updatePattern(nextProps.seed);
-    }
+  componentWillUpdate(nextProps) {
+    this.updatePattern(this.data.seed);
+  },
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.data.seed !== this.currentSeed;
   },
   render() {
     const style = {

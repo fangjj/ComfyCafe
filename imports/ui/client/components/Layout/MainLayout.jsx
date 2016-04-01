@@ -6,9 +6,10 @@ import media from "/imports/api/media/collection";
 import mediaUpload from "/imports/api/media/handlers/media";
 import avatarUpload from "/imports/api/media/handlers/avatar";
 
-import PseudoBody from "../components/PseudoBody";
-import TopBarComponent from "../components/TopBar/TopBarComponent";
-import PostForm from "../components/Post/PostForm";
+import PseudoBody from "../PseudoBody";
+import TopBarComponent from "../TopBar/TopBarComponent";
+import PostForm from "../Post/PostForm";
+import setPattern from "/imports/ui/client/utils/setPattern";
 
 import MuiThemeProvider from "material-ui/lib/MuiThemeProvider";
 import getMuiTheme from "material-ui/lib/styles/getMuiTheme";
@@ -61,9 +62,7 @@ const MainLayout = React.createClass({
   componentWillMount() {
     const seed = _.get(this, "data.currentUser.settings.patternSeed");
     if (seed) {
-      this.setState({
-        seed: seed
-      });
+      setPattern(seed);
     }
   },
   componentDidMount() {
@@ -105,11 +104,6 @@ const MainLayout = React.createClass({
     }
     this.destroyPostForm();
   },
-  setPattern(seed) {
-    this.setState({
-      seed: seed
-    });
-  },
   setColor(color) {
     this.setState({
       color: color
@@ -140,7 +134,6 @@ const MainLayout = React.createClass({
     }
   },
   render() {
-    const main = React.cloneElement(this.props.main, { setPattern: this.setPattern });
     return <MuiThemeProvider muiTheme={muiTheme}>
       <div onDrop={this.test}>
         <PseudoBody
@@ -151,7 +144,7 @@ const MainLayout = React.createClass({
           <TopBarComponent color={this.state.color} />
         </header>
         <main>
-          {main}
+          {this.props.main}
         </main>
         {this.renderPostForm()}
         {this.renderFooter()}

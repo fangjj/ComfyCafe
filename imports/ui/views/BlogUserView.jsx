@@ -2,7 +2,7 @@ const BlogUserView = {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/layouts/MainLayout").default;
+      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const BlogUser = require("../client/components/Blog/BlogUser").default;
       return {
         layout: MainLayout,

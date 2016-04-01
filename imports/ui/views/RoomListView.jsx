@@ -2,7 +2,7 @@ const RoomListView = {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/layouts/MainLayout").default;
+      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const RoomList = require("../client/components/Chat/RoomList").default;
       return {
         layout: MainLayout,

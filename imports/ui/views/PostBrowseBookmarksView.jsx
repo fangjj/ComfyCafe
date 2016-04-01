@@ -2,7 +2,7 @@ const PostBrowseBookmarksView = {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/layouts/MainLayout").default;
+      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const PostBrowseBookmarks = require("../client/components/Post/PostBrowseBookmarks").default;
       return {
         layout: MainLayout,

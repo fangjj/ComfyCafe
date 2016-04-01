@@ -13,6 +13,7 @@ import Content from "../Content";
 import AvatarCropper from "../Avatar/AvatarCropper";
 import TagTree from "../Tag/TagTree";
 import InlineTopic from "../Chat/InlineTopic";
+import setPattern from "/imports/ui/client/utils/setPattern";
 
 const Post = React.createClass({
   mixins: [ReactMeteorData],
@@ -48,7 +49,7 @@ const Post = React.createClass({
     };
   },
   componentWillMount() {
-    this.props.setPattern(FlowRouter.getParam("postName"));
+    setPattern(FlowRouter.getParam("postName"));
   },
   showAvatarCropper() {
     this.setState({

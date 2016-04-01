@@ -2,7 +2,7 @@ const DummyView = {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/layouts/MainLayout").default;
+      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const DummyComponent = require("../client/components/DummyComponent").default;
       return {
         layout: MainLayout,

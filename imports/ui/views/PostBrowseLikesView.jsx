@@ -2,7 +2,7 @@ const PostBrowseLikesView = {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/layouts/MainLayout").default;
+      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const PostBrowseLikes = require("../client/components/Post/PostBrowseLikes").default;
       return {
         layout: MainLayout,

@@ -24,6 +24,18 @@ import "/imports/api/users/server/registration";
 import "/imports/api/jobs/server/garbageCollection.js";
 import "/imports/api/thumbnails/server/job.js";
 
+// Methods
+import "/imports/api/blog/methods";
+import "/imports/api/invites/methods";
+import "/imports/api/media/methods";
+import "/imports/api/messages/methods";
+import "/imports/api/notifications/methods";
+import "/imports/api/posts/methods";
+import "/imports/api/rooms/methods";
+import "/imports/api/tags/methods";
+import "/imports/api/topics/methods";
+import "/imports/api/users/methods";
+
 // Startup
 import "/imports/startup/server/startup";
 import "/imports/startup/routes";

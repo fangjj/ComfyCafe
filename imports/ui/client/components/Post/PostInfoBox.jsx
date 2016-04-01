@@ -14,6 +14,7 @@ import PrivacyIcon from "../PrivacyIcon";
 import Moment from "../Moment";
 import Avatar from "../Avatar/Avatar";
 import UserLink from "../User/UserLink";
+import setPattern from "/imports/ui/client/utils/setPattern";
 
 import {
   RaisedButton
@@ -28,6 +29,7 @@ const verbMap = {
 const PostInfoBox = React.createClass({
   reroll() {
     Meteor.call("rerollPost", this.props.post._id, (err, name) => {
+      setPattern(name);
       const path = FlowRouter.path("post", {
         username: this.props.currentUser.username,
         postName: name

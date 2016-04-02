@@ -32,15 +32,49 @@ function errorBuilder(obj) {
 }
 
 export default React.createClass({
+  mixins: [ReactMeteorData],
   getInitialState() {
     return {
       register: false
     };
   },
+  getMeteorData() {
+    if (this.state.register && this.state.username) {
+      const handle = Meteor.subscribe("user", this.state.username);
+      return {
+        loading: ! handle.ready(),
+        user: Meteor.users.findOne(
+          { username: this.state.username },
+          { fields: { username: 1 } }
+        )
+      };
+    } return { loading: false };
+  },
+  componentWillReceiveProps(nextProps) {
+    if (this.state.register) {
+      if (nextProps.user !== this.props.user) {
+        if (nextProps.user) {
+          this.setState({
+            usernameError: "This username is already taken!"
+          });
+        } else {
+          this.setState({
+            usernameError: undefined
+          });
+        }
+      }
+    }
+  },
   handleUsername(e) {
+    const username = e.target.value;
+
     this.setState({
-      username: e.target.value
+      username: username
     });
+
+    if (this.state.register) {
+      this.props.setUsername(username);
+    }
   },
   handlePassword(e) {
     this.setState({
@@ -70,6 +104,8 @@ export default React.createClass({
     this.setState({
       register: true
     });
+
+    this.props.setUsername(this.state.username);
   },
   handleSubmitLogin() {
     Meteor.loginWithPassword(

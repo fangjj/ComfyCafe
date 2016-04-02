@@ -3,11 +3,11 @@ const LoginView = {
     if (Meteor.isClient) {
       const React = require("react");
       const MainLayout = require("../client/components/Layout/MainLayout").default;
-      const Login = require("../client/components/User/Login").default;
+      const LoginContainer = require("../client/components/User/LoginContainer").default;
       return {
         layout: MainLayout,
         content: {
-          main: <Login />
+          main: <LoginContainer />
         }
       };
     }

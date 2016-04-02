@@ -220,7 +220,6 @@ export default React.createClass({
             type="submit"
             label="Login"
             iconName="directions_bike"
-            onTouchTap={this.handleSubmit}
           />
         </Actions>
       </form>

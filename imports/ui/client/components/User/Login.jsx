@@ -26,39 +26,52 @@ export default React.createClass({
       password: e.target.value
     });
   },
+  handleCancel(e) {
+    goBack();
+  },
   handleSubmit(e) {
+    e.preventDefault();
     Meteor.loginWithPassword(this.state.username, this.state.password, () => {
       goBack();
     });
   },
   render() {
+    const left = <FlatButton
+      label="Register"
+      labelStyle={{fontSize: "18px"}}
+    />;
     return <Content className="loginForm">
       <header>
         <h2>Login</h2>
       </header>
-      <TextField
-        name="username"
-        floatingLabelText="Username"
-        floatingLabelStyle={{fontSize: "20px"}}
-        fullWidth={true}
-        onChange={this.handleUsername}
-      />
-      <TextField
-        name="password"
-        type="password"
-        floatingLabelText="Password"
-        floatingLabelStyle={{fontSize: "20px"}}
-        fullWidth={true}
-        onChange={this.handlePassword}
-      />
-      <Actions>
-        <CancelButton />
-        <SubmitButton
-          label="Login"
-          iconName="directions_bike"
-          onTouchTap={this.handleSubmit}
+      <form onSubmit={this.handleSubmit}>
+        <TextField
+          name="username"
+          floatingLabelText="Username"
+          floatingLabelStyle={{fontSize: "20px"}}
+          fullWidth={true}
+          onChange={this.handleUsername}
         />
-      </Actions>
+        <TextField
+          name="password"
+          type="password"
+          floatingLabelText="Password"
+          floatingLabelStyle={{fontSize: "20px"}}
+          fullWidth={true}
+          onChange={this.handlePassword}
+        />
+        <Actions left={left}>
+          <CancelButton
+            onTouchTap={this.handleCancel}
+          />
+          <SubmitButton
+            type="submit"
+            label="Login"
+            iconName="directions_bike"
+            onTouchTap={this.handleSubmit}
+          />
+        </Actions>
+      </form>
     </Content>;
   }
 });

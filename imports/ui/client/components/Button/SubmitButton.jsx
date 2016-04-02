@@ -9,6 +9,7 @@ import {
 const SubmitButton = React.createClass({
   render() {
     return <RaisedButton
+      type={this.props.type}
       label={this.props.label || "Submit"}
       labelStyle={{fontSize: "18px"}}
       primary={true}

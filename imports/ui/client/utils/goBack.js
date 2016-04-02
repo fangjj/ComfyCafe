@@ -1,3 +1,3 @@
 export default function () {
-  FlowRouter.go(Session.get("previousPath"));
+  FlowRouter.go(Session.get("previousPath") || "/");
 };

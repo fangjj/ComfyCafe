@@ -2,7 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import "/imports/api/posts/methods";
-import goBack from "/imports/api/common/goBack";
+import goBack from "/imports/ui/client/utils/goBack";
 
 import TextBody from "../TextBody";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";

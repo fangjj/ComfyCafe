@@ -9,7 +9,6 @@ export default React.createClass({
       <SubmitButton
         label="Login"
         iconName="directions_bike"
-        width={64}
         onTouchTap={this.goLogin}
       />
     </a>;

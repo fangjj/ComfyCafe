@@ -24,6 +24,7 @@ import TagView from "/imports/ui/views/TagView";
 import UserProfileView from "/imports/ui/views/UserProfileView";
 import FriendListView from "/imports/ui/views/FriendListView";
 import InviteListView from "/imports/ui/views/InviteListView";
+import LoginView from "/imports/ui/views/LoginView";
 
 if (Meteor.isServer) {
   FastRender.onAllRoutes(function (path) {
@@ -52,6 +53,14 @@ FlowRouter.route("/", {
     } else {
       renderView(PostUnauthBrowseView);
     }
+  }
+});
+
+FlowRouter.route("/login", {
+  name: "login",
+  action: function () {
+    setTitle("Login");
+    renderView(LoginView);
   }
 });
 

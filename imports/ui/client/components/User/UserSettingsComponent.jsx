@@ -2,7 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import "/imports/api/users/methods";
-import goBack from "/imports/api/common/goBack";
+import goBack from "/imports/ui/client/utils/goBack";
 
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import Powerless from "../Powerless";

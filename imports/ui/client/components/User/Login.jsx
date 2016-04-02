@@ -1,5 +1,6 @@
 import React from "react";
 
+import setTitle from "/imports/api/common/setTitle"
 import goBack from "/imports/ui/client/utils/goBack"
 import Colors from "/imports/ui/client/utils/colors"
 import Content from "/imports/ui/client/components/Content";
@@ -131,6 +132,7 @@ export default React.createClass({
     if (this.state.register) {
       title = "Register";
     }
+    setTitle(title);
     return <header>
       <h2>{title}</h2>
     </header>;

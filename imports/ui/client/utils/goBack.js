@@ -5,6 +5,5 @@ export default function () {
   if (! prev || prev === current) {
     go = "/";
   }
-  console.log(go);
   FlowRouter.go(go);
 };

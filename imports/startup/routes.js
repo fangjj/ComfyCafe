@@ -25,6 +25,7 @@ import UserProfileView from "/imports/ui/views/UserProfileView";
 import FriendListView from "/imports/ui/views/FriendListView";
 import InviteListView from "/imports/ui/views/InviteListView";
 import LoginView from "/imports/ui/views/LoginView";
+import Err404View from "/imports/ui/views/Err404View";
 
 if (Meteor.isServer) {
   FastRender.onAllRoutes(function (path) {
@@ -36,6 +37,13 @@ if (Meteor.isServer) {
     }
   });
 }
+
+FlowRouter.notFound = {
+  action() {
+    setTitle("404");
+    renderView(Err404View);
+  }
+};
 
 FlowRouter.route("/", {
   name: "home",

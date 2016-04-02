@@ -8,7 +8,7 @@ import PostLikes from "./PostLikes";
 import PostInfoBox from "./PostInfoBox";
 import Medium from "../Medium";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
-import Inline404 from "../Inline404";
+import Err404 from "../Err404";
 import Content from "../Content";
 import AvatarCropper from "../Avatar/AvatarCropper";
 import TagTree from "../Tag/TagTree";
@@ -87,7 +87,7 @@ const Post = React.createClass({
     }
 
     if (! this.data.post) {
-      return <Inline404 />;
+      return <Err404 />;
     }
 
     var isOwner = this.data.currentUser

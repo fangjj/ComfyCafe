@@ -1,6 +1,11 @@
 import React from "react";
 
 import "/imports/api/invites/methods";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
+
+import {
+  IconButton
+} from "material-ui";
 
 export default React.createClass({
   delete() {
@@ -9,12 +14,9 @@ export default React.createClass({
   render() {
     return <li>
       <span className="key">{this.props.invite.key}</span>
-      <a
-        className="deleteInvite material-icons tooltipped"
-        data-position="left"
-        data-tooltip="Terminate invite?"
-        onClick={this.delete}
-      >close</a>
+      <IconButton className="deleteInvite" onTouchTap={this.delete}>
+        <Icon>close</Icon>
+      </IconButton>
     </li>;
   }
 });

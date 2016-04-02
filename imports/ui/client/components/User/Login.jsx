@@ -18,6 +18,7 @@ import {
 function errorBuilder(obj) {
   const base = {
     generalError: undefined,
+    waitError: undefined,
     usernameError: undefined,
     passwordError: undefined
   };
@@ -31,7 +32,9 @@ function errorBuilder(obj) {
 
 export default React.createClass({
   getInitialState() {
-    return {};
+    return {
+      register: false
+    };
   },
   handleUsername(e) {
     this.setState({
@@ -44,7 +47,18 @@ export default React.createClass({
     });
   },
   handleCancel(e) {
-    goBack();
+    if (this.state.register) {
+      this.setState({
+        register: false
+      });
+    } else {
+      goBack();
+    }
+  },
+  handleRegister(e) {
+    this.setState({
+      register: true
+    });
   },
   handleSubmit(e) {
     e.preventDefault();
@@ -112,15 +126,65 @@ export default React.createClass({
       You have to wait <Countdown ms={this.error.details.timeToReset} /> before trying again.
     </Error>;
   },
+  renderHeader() {
+    let title = "Login";
+    if (this.state.register) {
+      title = "Register";
+    }
+    return <header>
+      <h2>{title}</h2>
+    </header>;
+  },
+  renderEmail() {
+    if (this.state.register) {
+      return <TextField
+        name="email"
+        floatingLabelText="Email"
+        floatingLabelStyle={{fontSize: "20px"}}
+        errorText={this.state.emailError}
+        errorStyle={{
+          fontSize: "16px",
+          color: Colors.poisonPink
+        }}
+        fullWidth={true}
+        onChange={this.handleEmail}
+      />;
+    }
+  },
+  renderBetaKey() {
+    if (this.state.register) {
+      return <TextField
+        floatingLabelText="Beta Key"
+        floatingLabelStyle={{fontSize: "20px"}}
+        errorText={this.state.betaKeyError}
+        errorStyle={{
+          fontSize: "16px",
+          color: Colors.poisonPink
+        }}
+        fullWidth={true}
+        onChange={this.handleBetaKey}
+      />;
+    }
+  },
+  renderCancel() {
+    if (this.state.register) {
+      return <CancelButton
+        onTouchTap={this.handleCancel}
+      />;
+    }
+  },
   render() {
-    const left = <FlatButton
-      label="Register"
-      labelStyle={{fontSize: "18px"}}
-    />;
+    let left;
+    if (! this.state.register) {
+      left = <FlatButton
+        label="Register"
+        labelStyle={{fontSize: "18px"}}
+        onTouchTap={this.handleRegister}
+      />;
+    }
+
     return <Content className="loginForm">
-      <header>
-        <h2>Login</h2>
-      </header>
+      {this.renderHeader()}
       {this.renderError()}
       <form onSubmit={this.handleSubmit}>
         <TextField
@@ -148,10 +212,10 @@ export default React.createClass({
           fullWidth={true}
           onChange={this.handlePassword}
         />
+        {this.renderEmail()}
+        {this.renderBetaKey()}
         <Actions left={left}>
-          <CancelButton
-            onTouchTap={this.handleCancel}
-          />
+          {this.renderCancel()}
           <SubmitButton
             type="submit"
             label="Login"

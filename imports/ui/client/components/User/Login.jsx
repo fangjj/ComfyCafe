@@ -4,6 +4,7 @@ import goBack from "/imports/ui/client/utils/goBack"
 import Colors from "/imports/ui/client/utils/colors"
 import Content from "/imports/ui/client/components/Content";
 import Actions from "/imports/ui/client/components/Actions";
+import Error from "/imports/ui/client/components/Error";
 import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
@@ -12,6 +13,20 @@ import {
   Checkbox,
   FlatButton
 } from "material-ui";
+
+function errorBuilder(obj) {
+  const base = {
+    generalError: undefined,
+    usernameError: undefined,
+    passwordError: undefined
+  };
+
+  _.each(obj, (v, k) => {
+    base[k] = v;
+  });
+
+  return base;
+}
 
 export default React.createClass({
   getInitialState() {
@@ -32,22 +47,45 @@ export default React.createClass({
   },
   handleSubmit(e) {
     e.preventDefault();
-    Meteor.loginWithPassword(this.state.username, this.state.password, (err) => {
+    Meteor.loginWithPassword(
+      this.state.username,
+      this.state.password,
+    (err) => {
       if (err) {
         const errorMap = {
-          "User not found": () => {
-            this.setState({
-              usernameError: "You don't exist! Perhaps you'd like to register?"
-            });
+          "403": {
+            "User not found": () => {
+              this.setState(errorBuilder({
+                usernameError: "You don't exist! Perhaps you'd like to register?"
+              }));
+            },
+            "Incorrect password": () => {
+              this.setState(errorBuilder({
+                passwordError: "That isn't your password, dingus!"
+              }));
+            }
           },
-          "Incorrect password": () => {
-            this.setState({
-              passwordError: "That isn't your password, dingus!"
-            });
+          "too-many-requests": () => {
+            this.setState(errorBuilder({
+              generalError: "Slow down! Are you some sort of creepy hacker, "
+                + "or do you need to reset your password? "
+                + _.last(err.reason.split(". "))
+            }));
           }
         };
-        if (_.has(errorMap, err.reason)) {
-          errorMap[err.reason]();
+
+        const subMap = errorMap[err.error];
+        if (subMap) {
+          if (_.isFunction(subMap)) {
+            subMap();
+          } else {
+            const func = subMap[err.reason];
+            if (func) {
+              func();
+            } else {
+              prettyPrint(err);
+            }
+          }
         } else {
           prettyPrint(err);
         }
@@ -55,6 +93,13 @@ export default React.createClass({
         goBack();
       }
     });
+  },
+  renderError() {
+    if (this.state.generalError) {
+      return <Error>
+        {this.state.generalError}
+      </Error>;
+    }
   },
   render() {
     const left = <FlatButton
@@ -65,6 +110,7 @@ export default React.createClass({
       <header>
         <h2>Login</h2>
       </header>
+      {this.renderError()}
       <form onSubmit={this.handleSubmit}>
         <TextField
           name="username"

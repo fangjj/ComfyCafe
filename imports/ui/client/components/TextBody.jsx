@@ -3,7 +3,7 @@ import marked from "marked";
 import Autolinker from "autolinker.js";
 import emojione from "emojione";
 
-import classConcat from "/imports/api/common/classConcat";
+import classConcat from "/imports/ui/client/utils/classConcat";
 import linkMentions from "/imports/api/common/linkMentions";
 
 const TextBody = React.createClass({

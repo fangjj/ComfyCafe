@@ -1,6 +1,6 @@
 import React from "react";
 
-import classConcat from "/imports/api/common/classConcat";
+import classConcat from "/imports/ui/client/utils/classConcat";
 
 import Scrollable from "./Scrollable";
 

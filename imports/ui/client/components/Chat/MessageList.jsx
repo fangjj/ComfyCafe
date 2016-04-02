@@ -62,7 +62,9 @@ const MessageList = React.createClass({
     }
 
     // Clear notifications
-    Meteor.call("viewTopic", this.props.topic._id);
+    if (this.data.currentUser) {
+      Meteor.call("viewTopic", this.props.topic._id);
+    }
   },
   componentDidMount() {
     window.addEventListener("focus", this.clearDifference);

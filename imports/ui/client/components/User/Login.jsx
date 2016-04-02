@@ -1,4 +1,5 @@
 import React from "react";
+import isEmail from "validator/lib/isEmail";
 
 import setTitle from "/imports/api/common/setTitle"
 import goBack from "/imports/ui/client/utils/goBack"
@@ -82,9 +83,21 @@ export default React.createClass({
     });
   },
   handleEmail(e) {
+    const email = e.target.value;
+
     this.setState({
-      email: e.target.value
+      email: email
     });
+
+    if (! isEmail(email)) {
+      this.setState({
+        emailError: "Do you really thing that's a valid email?"
+      });
+    } else {
+      this.setState({
+        emailError: undefined
+      });
+    }
   },
   handleBetaKey(e) {
     this.setState({

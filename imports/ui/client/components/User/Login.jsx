@@ -1,4 +1,5 @@
 import React from "react";
+import isAlphanumeric from "validator/lib/isAlphanumeric";
 import isEmail from "validator/lib/isEmail";
 
 import setTitle from "/imports/api/common/setTitle"
@@ -52,7 +53,7 @@ export default React.createClass({
     } return { loading: false };
   },
   componentWillReceiveProps(nextProps) {
-    if (this.state.register) {
+    if (this.state.register && ! this.state.usernameError) {
       if (nextProps.user !== this.props.user) {
         if (nextProps.user) {
           this.setState({
@@ -74,6 +75,15 @@ export default React.createClass({
     });
 
     if (this.state.register) {
+      if (! isAlphanumeric(username)) {
+        this.setState({
+          usernameError: "Usernames can only contain alphanumeric characters!"
+        });
+      } else {
+        this.setState({
+          usernameError: undefined
+        });
+      }
       this.props.setUsername(username);
     }
   },

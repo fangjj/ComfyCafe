@@ -30,7 +30,7 @@ const NavItem = React.createClass({
       classes += " " + this.props.className;
     }
 
-    return <li className={classes}>
+    return <li id={this.props.id} className={classes}>
       {this.renderInner()}
     </li>;
   }

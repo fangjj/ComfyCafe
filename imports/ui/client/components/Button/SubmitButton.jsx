@@ -13,6 +13,7 @@ const SubmitButton = React.createClass({
       labelStyle={{fontSize: "18px"}}
       primary={true}
       icon={<Icon>{this.props.iconName || "done"}</Icon>}
+      width={this.props.width}
       style={this.props.style}
       onTouchTap={this.props.onTouchTap}
     />;

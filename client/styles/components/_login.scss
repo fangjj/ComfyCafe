@@ -218,15 +218,15 @@ main > div > .row {
   }
 }
 
-#topLogin #at-nav-button {
-  margin-left: 12px;
-  margin-right: 12px;
-  margin-top: -4px;
+#topLogin {
+  //padding-left: 14px;
+  //padding-right: 14px;
 
-  padding-top: 2px;
-}
+  > a {
+    padding: 0;
 
-.at-pwd-link {
-  margin-top: -16px;
-  margin-bottom: 18px;
+    > div {
+      height: 100% !important;
+    }
+  }
 }

@@ -47,6 +47,16 @@ export default React.createClass({
       password: e.target.value
     });
   },
+  handleEmail(e) {
+    this.setState({
+      email: e.target.value
+    });
+  },
+  handleBetaKey(e) {
+    this.setState({
+      betaKey: e.target.value
+    });
+  },
   handleCancel(e) {
     if (this.state.register) {
       this.setState({
@@ -61,8 +71,7 @@ export default React.createClass({
       register: true
     });
   },
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmitLogin() {
     Meteor.loginWithPassword(
       this.state.username,
       this.state.password,
@@ -110,6 +119,28 @@ export default React.createClass({
         goBack();
       }
     });
+  },
+  handleSubmitRegister() {
+    const userObject = {
+      username: this.state.username,
+      password: this.state.password,
+      email: this.state.email,
+      profile: {
+        key: this.state.betaKey
+      }
+    };
+
+    Accounts.createUser(userObject, (err) => {
+      prettyPrint(err);
+    });
+  },
+  handleSubmit(e) {
+    e.preventDefault();
+    if (! this.state.register) {
+      this.handleSubmitLogin();
+    } else {
+      this.handleSubmitRegister();
+    }
   },
   renderError() {
     if (this.state.generalError) {

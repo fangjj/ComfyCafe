@@ -106,9 +106,10 @@ export default React.createClass({
   },
   handleCancel(e) {
     if (this.state.register) {
-      this.setState({
+      this.setState(errorBuilder({
         register: false
-      });
+      }));
+      this.props.setUsername();
     } else {
       goBack();
     }
@@ -215,6 +216,7 @@ export default React.createClass({
     if (this.state.register) {
       return <TextField
         name="email"
+        value={this.state.email}
         floatingLabelText="Email"
         floatingLabelStyle={{fontSize: "20px"}}
         errorText={this.state.emailError}
@@ -230,6 +232,7 @@ export default React.createClass({
   renderBetaKey() {
     if (this.state.register) {
       return <TextField
+        value={this.state.betaKey}
         floatingLabelText="Beta Key"
         floatingLabelStyle={{fontSize: "20px"}}
         errorText={this.state.betaKeyError}

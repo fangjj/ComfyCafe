@@ -131,7 +131,11 @@ export default React.createClass({
     };
 
     Accounts.createUser(userObject, (err) => {
-      prettyPrint(err);
+      if (err) {
+        prettyPrint(err);
+      } else {
+        goBack();
+      }
     });
   },
   handleSubmit(e) {
@@ -157,16 +161,6 @@ export default React.createClass({
       <br />
       You have to wait <Countdown ms={this.error.details.timeToReset} /> before trying again.
     </Error>;
-  },
-  renderHeader() {
-    let title = "Login";
-    if (this.state.register) {
-      title = "Register";
-    }
-    setTitle(title);
-    return <header>
-      <h2>{title}</h2>
-    </header>;
   },
   renderEmail() {
     if (this.state.register) {
@@ -207,6 +201,12 @@ export default React.createClass({
     }
   },
   render() {
+    let title = "Login";
+    if (this.state.register) {
+      title = "Register";
+    }
+    setTitle(title);
+
     let left;
     if (! this.state.register) {
       left = <FlatButton
@@ -217,7 +217,9 @@ export default React.createClass({
     }
 
     return <Content className="loginForm">
-      {this.renderHeader()}
+      <header>
+        <h2>{title}</h2>
+      </header>
       {this.renderError()}
       <form onSubmit={this.handleSubmit}>
         <TextField
@@ -251,7 +253,7 @@ export default React.createClass({
           {this.renderCancel()}
           <SubmitButton
             type="submit"
-            label="Login"
+            label={title}
             iconName="directions_bike"
           />
         </Actions>

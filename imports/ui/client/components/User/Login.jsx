@@ -5,6 +5,7 @@ import Colors from "/imports/ui/client/utils/colors"
 import Content from "/imports/ui/client/components/Content";
 import Actions from "/imports/ui/client/components/Actions";
 import Error from "/imports/ui/client/components/Error";
+import Countdown from "/imports/ui/client/components/Countdown";
 import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
@@ -52,6 +53,8 @@ export default React.createClass({
       this.state.password,
     (err) => {
       if (err) {
+        this.error = err;
+
         const errorMap = {
           "403": {
             "User not found": () => {
@@ -67,9 +70,8 @@ export default React.createClass({
           },
           "too-many-requests": () => {
             this.setState(errorBuilder({
-              generalError: "Slow down! Are you some sort of creepy hacker, "
-                + "or do you need to reset your password? "
-                + _.last(err.reason.split(". "))
+              generalError: true,
+              waitError: true
             }));
           }
         };
@@ -96,10 +98,19 @@ export default React.createClass({
   },
   renderError() {
     if (this.state.generalError) {
-      return <Error>
-        {this.state.generalError}
-      </Error>;
+      if (this.state.waitError) {
+        return this.renderWait();
+      }
     }
+  },
+  renderWait() {
+    const path = FlowRouter.path("forgot-password");
+    return <Error>
+      Slow down! Are you some sort of creepy hacker,
+      or do you just need to <a href={path}>reset your password?</a>
+      <br />
+      You have to wait <Countdown ms={this.error.details.timeToReset} /> before trying again.
+    </Error>;
   },
   render() {
     const left = <FlatButton

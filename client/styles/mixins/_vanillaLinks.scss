@@ -9,3 +9,17 @@
     }
   }
 }
+
+@mixin lightLinks() {
+  a:not(.btn) {
+    font-weight: 600;
+
+    &:link, &:visited {
+      color: saturate(#29BED6, 40);
+    }
+
+    &:hover, &:active {
+      color: saturate(#30F0F0, 40);
+    }
+  }
+}

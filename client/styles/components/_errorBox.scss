@@ -1,4 +1,6 @@
 .errorBox {
+  @include lightLinks;
+
   padding: 12px;
 
   width: 100%;

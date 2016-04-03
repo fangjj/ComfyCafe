@@ -1,10 +1,39 @@
 import _ from "lodash";
 
 import profileSyncList from "./syncList";
+import {
+	validateUsername
+} from "./validators";
 import media from "../media/collection";
 import Notifications from "../notifications/collection";
 
 Meteor.methods({
+	changeUsername(username) {
+		check(username, String);
+
+		if (! Meteor.userId()) {
+			throw new Meteor.Error("not-logged-in");
+		}
+
+		const valid = validateUsername(username);
+
+		if (! valid) {
+			throw new Meteor.Error("invalid-username");
+		}
+
+		if (Meteor.isServer) {
+			Accounts.setUsername(Meteor.userId(), username);
+			_.map(profileSyncList, function (coll) {
+				coll.update(
+					{ "owner._id": Meteor.userId() },
+					{ $set: {
+						"owner.username": username
+					} },
+					{ multi: true }
+				);
+			});
+		}
+	},
 	updateProfile: function (data) {
 		check(data, {
 			displayName: String,

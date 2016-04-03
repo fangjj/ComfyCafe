@@ -29,6 +29,7 @@ import "/imports/api/blog/methods";
 import "/imports/api/invites/methods";
 import "/imports/api/media/methods";
 import "/imports/api/messages/methods";
+import "/imports/api/migrations/methods";
 import "/imports/api/notifications/methods";
 import "/imports/api/posts/methods";
 import "/imports/api/rooms/methods";

@@ -1,6 +1,6 @@
 import Posts from "../posts/collection";
 
-var logMigrate = function (body, note) {
+function logMigrate(body, note) {
   console.log("[MIGRATED] " + body + " (" + note + ")");
 };
 

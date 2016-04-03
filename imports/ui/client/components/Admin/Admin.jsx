@@ -5,9 +5,14 @@ import "/imports/api/migrations/methods";
 import Content from "/imports/ui/client/components/Content";
 
 export default React.createClass({
+  doIt() {
+    Meteor.call("migrateInfo");
+  },
   render() {
     return <Content>
-      sekrit club
+      <div className="btn" onTouchTap={this.doIt}>
+        Do something
+      </div>
     </Content>;
   }
 });

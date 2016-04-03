@@ -1,8 +1,10 @@
 import React from "react";
-import isAlphanumeric from "validator/lib/isAlphanumeric";
-import isEmail from "validator/lib/isEmail";
 
 import setTitle from "/imports/api/common/setTitle"
+import {
+  validateUsername,
+  validateEmail
+} from "/imports/api/users/validators";
 import goBack from "/imports/ui/client/utils/goBack"
 import Colors from "/imports/ui/client/utils/colors"
 import Content from "/imports/ui/client/components/Content";
@@ -75,9 +77,9 @@ export default React.createClass({
     });
 
     if (this.state.register) {
-      if (! isAlphanumeric(username)) {
+      if (! validateUsername(username)) {
         this.setState({
-          usernameError: "Usernames can only contain alphanumeric characters!"
+          usernameError: "Usernames cannot contain spaces!"
         });
       } else {
         this.setState({
@@ -99,7 +101,7 @@ export default React.createClass({
       email: email
     });
 
-    if (! isEmail(email)) {
+    if (! validateEmail(email)) {
       this.setState({
         emailError: "Do you really thing that's a valid email?"
       });

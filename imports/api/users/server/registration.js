@@ -1,6 +1,12 @@
+import _ from "lodash";
+
 import Invites from "/imports/api/invites/collection";
 import Rooms from "/imports/api/rooms/collection";
 import generateDjenticon from "/imports/api/users/server/djenticon";
+import {
+  validateUsername,
+  validateEmail
+} from "/imports/api/users/validators";
 
 Accounts.onCreateUser(function (options, user) {
   if (options.profile) {
@@ -37,7 +43,21 @@ Accounts.onCreateUser(function (options, user) {
   return user;
 });
 
-Accounts.validateNewUser(function (user) {
+function checkUsername(user) {
+  if (validateUsername(user.username)) {
+    return true;
+  }
+  throw new Meteor.Error("invalid-username", "Username is invalid.");
+}
+
+function checkEmail(user) {
+  if (validateEmail(user.email)) {
+    return true;
+  }
+  throw new Meteor.Error("invalid-email", "Email is invalid.");
+}
+
+function checkInvite(user) {
   if (! Meteor.users.findOne()) {
     // Always allow registration if this is the first user.
     return true;
@@ -46,5 +66,21 @@ Accounts.validateNewUser(function (user) {
     Invites.remove({ key: user.inviteKey });
     return true;
   }
-  throw new Meteor.Error(403, "Registration key is invalid.");
+  throw new Meteor.Error("invalid-betakey", "Registration key is invalid.");
+}
+
+Accounts.validateNewUser(function (user) {
+  const valid = _.reduce(
+    [
+      checkUsername,
+      checkEmail,
+      checkInvite
+    ],
+    (result, func) => {
+      return result && func(user)
+    },
+    true
+  );
+
+  return valid;
 });

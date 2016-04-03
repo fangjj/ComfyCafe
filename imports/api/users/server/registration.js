@@ -51,7 +51,7 @@ function checkUsername(user) {
 }
 
 function checkEmail(user) {
-  if (validateEmail(user.email)) {
+  if (validateEmail(user.emails[0].address)) {
     return true;
   }
   throw new Meteor.Error("invalid-email", "Email is invalid.");

@@ -26,7 +26,9 @@ function errorBuilder(obj) {
     generalError: undefined,
     waitError: undefined,
     usernameError: undefined,
-    passwordError: undefined
+    passwordError: undefined,
+    emailError: undefined,
+    betaKeyError: undefined
   };
 
   _.each(obj, (v, k) => {
@@ -57,6 +59,7 @@ export default React.createClass({
   },
   componentWillReceiveProps(nextProps) {
     if (this.state.register && ! this.state.usernameError) {
+      console.log(this.props.user, nextProps.user);
       if (nextProps.user !== this.props.user) {
         if (nextProps.user) {
           this.setState({
@@ -114,7 +117,8 @@ export default React.createClass({
   },
   handleBetaKey(e) {
     this.setState({
-      betaKey: e.target.value
+      betaKey: e.target.value,
+      betaKeyError: undefined
     });
   },
   handleCancel(e) {
@@ -217,7 +221,44 @@ export default React.createClass({
 
     Accounts.createUser(userObject, (err) => {
       if (err) {
-        prettyPrint(err);
+        this.error = err;
+
+        const errorMap = {
+          "403": {
+            "Username already exists.": () => {
+              this.setState(errorBuilder({
+                usernameError: "This username is already taken!"
+              }));
+            }
+          },
+          "invalid-betakey": () => {
+            this.setState(errorBuilder({
+              betaKeyError: "That key doesn't exist. Are you trying to trick me?"
+            }));
+          },
+          "too-many-requests": () => {
+            this.setState(errorBuilder({
+              generalError: true,
+              waitError: true
+            }));
+          }
+        };
+
+        const subMap = errorMap[err.error];
+        if (subMap) {
+          if (_.isFunction(subMap)) {
+            subMap();
+          } else {
+            const func = subMap[err.reason];
+            if (func) {
+              func();
+            } else {
+              prettyPrint(err);
+            }
+          }
+        } else {
+          prettyPrint(err);
+        }
       } else {
         goBack();
       }

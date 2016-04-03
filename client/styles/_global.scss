@@ -21,6 +21,17 @@ body {
   }
 }
 
+.pseudoBody {
+  z-index: -1;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  width: 100vw;
+  height: 100vh;
+}
+
 main {
   z-index: index($elements, main);
 
@@ -51,8 +62,29 @@ header {
   text-align: center;
 }
 
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px $fg-color inset;
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+  color: $text-color !important;
+  -webkit-text-fill-color: $text-color !important;
+  -webkit-box-shadow: 0 0 0px 1000px $fg-color inset !important;
+}
+
+input {
+  &::-webkit-input-placeholder {
+    color: $text-color;
+  }
+
+  &:-moz-placeholder { /* Firefox 18- */
+    color: $text-color;
+  }
+
+  &::-moz-placeholder {  /* Firefox 19+ */
+    color: $text-color;
+  }
+
+  &:-ms-input-placeholder {
+    color: $text-color;
+  }
 }
 
 a.fill {
@@ -84,6 +116,10 @@ strong {
   font-weight: bold;
 }
 
+.material-icons {
+  color: $text-color;
+}
+
 .actions {
   padding-top: 6px;
 
@@ -93,4 +129,12 @@ strong {
   > div {
     float: right;
   }
+}
+
+button {
+  border-radius: 0 !important;
+}
+
+.fixed-action-btn button {
+  border-radius: 50% !important;
 }

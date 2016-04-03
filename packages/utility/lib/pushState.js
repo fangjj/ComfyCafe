@@ -1,4 +1,7 @@
 pushState = function (where) {
+  if (Meteor.isServer) {
+    return;
+  }
   var where = window.location.pathname + where;
   var lastState = Session.get("lastHistState");
   if (where !== lastState) {

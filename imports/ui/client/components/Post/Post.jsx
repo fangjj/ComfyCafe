@@ -1,0 +1,135 @@
+import React from "react";
+
+import Posts from "/imports/api/posts/collection";
+
+import PostModifyFAB from "./PostModifyFAB";
+import PostLikeFAB from "./PostLikeFAB";
+import PostLikes from "./PostLikes";
+import PostInfoBox from "./PostInfoBox";
+import Medium from "../Medium";
+import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
+import Err404 from "../Err404";
+import Content from "../Content";
+import AvatarCropper from "../Avatar/AvatarCropper";
+import TagTree from "../Tag/TagTree";
+import InlineTopic from "../Chat/InlineTopic";
+import setPattern from "/imports/ui/client/utils/setPattern";
+
+const Post = React.createClass({
+  mixins: [ReactMeteorData],
+  getInitialState() {
+    return {
+      avatarCropper: false
+    };
+  },
+  getMeteorData() {
+    const id = FlowRouter.getParam("postId");
+    let handle;
+    let doc = {};
+
+    if (id) {
+      console.error("postPerma was triggered, which shouldn't actually happen.");
+      handle = Meteor.subscribe("postPerma", id);
+      doc = { _id: id };
+    } else {
+      handle = Meteor.subscribe("post",
+        FlowRouter.getParam("username"),
+        FlowRouter.getParam("postName"),
+      );
+      doc = {
+        "owner.username": FlowRouter.getParam("username"),
+        name: FlowRouter.getParam("postName")
+      };
+    }
+
+    return {
+      loading: ! handle.ready(),
+      post: Posts.findOne(doc),
+      currentUser: Meteor.user()
+    };
+  },
+  componentWillMount() {
+    setPattern(FlowRouter.getParam("postName"));
+  },
+  componentWillUpdate() {
+    setPattern(FlowRouter.getParam("postName"));
+  },
+  showAvatarCropper() {
+    this.setState({
+      avatarCropper: true
+    });
+  },
+  hideAvatarCropper() {
+    this.setState({
+      avatarCropper: false
+    });
+  },
+  renderTags() {
+    if (this.data.post.tags.text) {
+      return <section className="tagBox content">
+        <TagTree tags={this.data.post.tags} humanizedTags={this.data.post.humanizedTags} />
+      </section>;
+    }
+  },
+  renderLikes() {
+    if (this.data.post.likes && this.data.post.likes.length) {
+      return <PostLikes likes={this.data.post.likes} />;
+    }
+  },
+  renderAvatarCropper() {
+    if (this.state.avatarCropper) {
+      const src = "/gridfs/media/" + this.data.post.medium.md5;
+      return <Content>
+        <AvatarCropper src={src} cancelAction={this.hideAvatarCropper} />
+      </Content>;
+    }
+  },
+  render() {
+    if (this.data.loading) {
+      return <LoadingSpinner />;
+    }
+
+    if (! this.data.post) {
+      return <Err404 />;
+    }
+
+    var isOwner = this.data.currentUser
+      && this.data.currentUser._id === this.data.post.owner._id;
+    var showEditButton = isOwner;
+    var showFavoriteButton = ! isOwner && this.data.currentUser && this.data.post.medium;
+
+    var fab;
+    if (showEditButton) {
+      fab = <PostModifyFAB post={this.data.post} />;
+    }
+    if (showFavoriteButton) {
+      fab = <PostLikeFAB post={this.data.post} userId={this.data.currentUser._id} />;
+    }
+
+    return <article className="post contentLayout">
+      <figure className="content">
+        <Medium
+          medium={this.data.post.medium}
+          pretentiousFilter={this.data.post.pretentiousFilter}
+        />
+      </figure>
+      <PostInfoBox
+        post={this.data.post}
+        currentUser={this.data.currentUser}
+        showAvatarCropper={this.showAvatarCropper}
+      />
+      {this.renderAvatarCropper()}
+      {this.renderTags()}
+      <section className="comments content">
+        <InlineTopic
+          topicId={this.data.post.topic._id}
+          currentUser={this.data.currentUser}
+        />
+      </section>
+      {this.renderLikes()}
+      {fab}
+    </article>;
+  }
+});
+
+export default Post;

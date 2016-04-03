@@ -10,8 +10,12 @@ Package.describe({
   documentation: "README.md"
 });
 
+Npm.depends({
+  "lodash": "4.6.1"
+});
+
 Package.onUse(function(api) {
-  api.versionsFrom("1.2.1");
+  api.versionsFrom("1.3");
 
   api.use("ecmascript");
 
@@ -20,13 +24,14 @@ Package.onUse(function(api) {
   ], "server");
 
   api.addFiles([
+    "lib/lodash.js",
+    "lib/expr.js",
     "lib/isOwner.js",
     "lib/pushApply.js",
     "lib/jsonClone.js",
     "lib/whiteSplit.js",
     "lib/commaSplit.js",
     "lib/prettyPrint.js",
-    "lib/setTitle.js",
     "lib/pushState.js",
     "lib/getQueryParam.js",
     "lib/setQueryParam.js",
@@ -41,13 +46,14 @@ Package.onUse(function(api) {
   ], "server");
 
   api.export([
+    "_",
+    "expr",
     "isOwner",
     "pushApply",
     "jsonClone",
     "whiteSplit",
     "commaSplit",
     "prettyPrint",
-    "setTitle",
     "pushState",
     "getQueryParam",
     "setQueryParam",

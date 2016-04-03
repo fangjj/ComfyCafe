@@ -28,6 +28,9 @@ function updateQueryStringParameter(uri, key, value) {
 }
 
 setQueryParam = function (key, value) {
+  if (Meteor.isServer) {
+    return;
+  }
   return updateQueryStringParameter(
     window.location.search,
     key,
@@ -36,6 +39,10 @@ setQueryParam = function (key, value) {
 };
 
 setQueryParams = function (queue) {
+  if (Meteor.isServer) {
+    return;
+  }
+  
   // FP skills activate!
   return _.reduce(
     _.map(queue, function (obj) {

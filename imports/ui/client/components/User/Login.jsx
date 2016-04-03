@@ -244,7 +244,7 @@ export default React.createClass({
 
         errorMapper(errorMap, err);
       } else {
-        goBack();
+        goBack(["/register"]);
       }
     });
   },
@@ -296,7 +296,7 @@ export default React.createClass({
 
         errorMapper(errorMap, err);
       } else {
-        goBack();
+        goBack(["/login"]);
       }
     });
   },

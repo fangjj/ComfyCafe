@@ -59,7 +59,6 @@ export default React.createClass({
   },
   componentWillReceiveProps(nextProps) {
     if (this.state.register && ! this.state.usernameError) {
-      console.log(this.props.user, nextProps.user);
       if (nextProps.user !== this.props.user) {
         if (nextProps.user) {
           this.setState({
@@ -134,9 +133,9 @@ export default React.createClass({
   handleRegister(e) {
     this.setState({
       register: true
+    }, () => {
+      this.props.setUsername(this.state.username);
     });
-
-    this.props.setUsername(this.state.username);
   },
   enforceRequired() {
     const errors = {};

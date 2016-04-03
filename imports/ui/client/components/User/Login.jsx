@@ -146,7 +146,8 @@ export default React.createClass({
   },
   handlePassword(e) {
     this.setState({
-      password: e.target.value
+      password: e.target.value,
+      passwordError: undefined
     });
   },
   handleEmail(e) {

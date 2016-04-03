@@ -39,6 +39,7 @@ export default React.createClass({
           floatingLabelText="Label"
           floatingLabelStyle={{fontSize: "20px"}}
           fullWidth={true}
+          autoFocus={this.props.autoFocus}
           onChange={this.handleLabel}
         />
       </div>

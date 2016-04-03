@@ -45,7 +45,10 @@ export default React.createClass({
       label: "",
       value: ""
     };
-    this.setState({ qty: this.state.qty + 1 });
+    this.setState({
+      qty: this.state.qty + 1,
+      autoFocus: true
+    });
   },
   handleRemove(id) {
     const idx = this.order.indexOf(id);
@@ -69,6 +72,7 @@ export default React.createClass({
         defaultValue={elem.value}
         onChange={this.handleUpdate}
         onRemove={this.handleRemove}
+        autoFocus={this.state.autoFocus && key === _.last(this.order)}
         key={key}
       />;
     });

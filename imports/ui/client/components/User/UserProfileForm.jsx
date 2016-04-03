@@ -41,7 +41,11 @@ const UserProfileForm = React.createClass({
   },
   handleInfo(id, label, value) {
     const obj = _.clone(this.state.info);
-    obj[id] = [label, value];
+    if (label) {
+      obj[id] = [label, value];
+    } else {
+      delete obj[id];
+    }
     this.setState({info: obj});
   },
   submit(event) {

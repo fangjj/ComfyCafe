@@ -28,7 +28,7 @@ export default React.createClass({
     } else {
       _.each(_.range(this.state.qty), () => {
         this.elems.push({
-          key: _.uniqueId(),
+          key: Random.id(),
           label: "",
           value: ""
         });
@@ -37,11 +37,28 @@ export default React.createClass({
   },
   handleAdd() {
     this.elems.push({
-      key: _.uniqueId(),
+      key: Random.id(),
       label: "",
       value: ""
     });
     this.setState({ qty: this.state.qty + 1 });
+  },
+  handleRemove(id) {
+    const idx = _.reduce(
+      this.elems,
+      (result, value, index) => {
+        if (value.key === id) {
+          return index;
+        }
+        return result;
+      },
+      -1
+    );
+
+    if (idx !== 0) {
+      this.elems.splice(idx, 1);
+      this.setState({ qty: this.state.qty - 1 });
+    }
   },
   renderInner() {
     return _.map(this.elems, (elem) => {
@@ -50,6 +67,7 @@ export default React.createClass({
         defaultLabel={elem.label}
         defaultValue={elem.value}
         onChange={this.props.onChange}
+        onRemove={this.handleRemove}
         key={elem.key}
       />;
     });

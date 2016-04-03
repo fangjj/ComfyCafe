@@ -1,7 +1,10 @@
 import React from "react";
 
+import Icon from "/imports/ui/client/components/Daikon/Icon";
+
 import {
-  TextField
+  TextField,
+  IconButton
 } from "material-ui";
 
 export default React.createClass({
@@ -25,6 +28,10 @@ export default React.createClass({
     });
     this.props.onChange(this.props.uniqueId, this.state.label, value);
   },
+  handleRemove(e) {
+    this.props.onRemove(this.props.uniqueId);
+    this.props.onChange(this.props.uniqueId);
+  },
   render() {
     return <li className="pairField">
       <div className="labelField">
@@ -45,6 +52,9 @@ export default React.createClass({
           onChange={this.handleValue}
         />
       </div>
+      <IconButton className="remove" onTouchTap={this.handleRemove}>
+        <Icon>close</Icon>
+      </IconButton>
     </li>;
   }
 });

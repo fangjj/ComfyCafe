@@ -6,9 +6,8 @@ import PostDialog from "./PostDialog";
 
 const PostUpdateForm = React.createClass({
   handleSubmit(data) {
-    Meteor.call("updatePost", this.props.post._id, data, (err) => {
-      this.props.handleClose();
-    });
+    Meteor.call("updatePost", this.props.post._id, data, (err) => {});
+    this.props.handleClose();
   },
   render() {
     return <PostDialog

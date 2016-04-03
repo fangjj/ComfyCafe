@@ -30,7 +30,6 @@ export default React.createClass({
   },
   handleRemove(e) {
     this.props.onRemove(this.props.uniqueId);
-    this.props.onChange(this.props.uniqueId);
   },
   render() {
     return <li className="pairField">

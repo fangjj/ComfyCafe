@@ -21,6 +21,15 @@ function migrationBuilder(functionBody) {
 }
 
 Meteor.methods({
+  migrateInfo: migrationBuilder(function () {
+    Meteor.users.update(
+      {},
+      { $unset: {
+        "profile.info": 1
+      } },
+      { multi: true }
+    );
+	}),
   migrateTagCapitalization: migrationBuilder(function () {
     Posts.find().map(function (post) {
       var tags = tagRegenerator(post.tags);

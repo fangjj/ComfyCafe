@@ -3,15 +3,14 @@ import React from "react";
 
 export default React.createClass({
   renderInner() {
-    return _.map(this.props.info, (pair, id) => {
-      const label = pair[0];
-      const value = pair[1];
-      return <li key={[id, label, value].join("_")}>
+    return _.map(this.props.order, (key) => {
+      const obj = this.props.info[key];
+      return <li key={[key, obj.label, obj.value].join("_")}>
         <div className="label">
-          {label}
+          {obj.label}
         </div>
         <div className="value">
-          {value}
+          {obj.value}
         </div>
       </li>;
     });

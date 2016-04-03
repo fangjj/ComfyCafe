@@ -26,6 +26,7 @@ import FriendListView from "/imports/ui/views/FriendListView";
 import InviteListView from "/imports/ui/views/InviteListView";
 import LoginView from "/imports/ui/views/LoginView";
 import Err404View from "/imports/ui/views/Err404View";
+import AdminView from "/imports/ui/views/AdminView";
 
 if (Meteor.isServer) {
   FastRender.onAllRoutes(function (path) {
@@ -77,6 +78,14 @@ FlowRouter.route("/register", {
   action: function () {
     setTitle("Register");
     renderView(LoginView);
+  }
+});
+
+FlowRouter.route("/admin", {
+  name: "admin",
+  action: function () {
+    setTitle("Admin Panel");
+    renderView(AdminView);
   }
 });
 

@@ -49,8 +49,9 @@ const UserProfile = React.createClass({
   },
   renderInfo(isOwner) {
     const info = _.get(this.data.user, "profile.info", {});
+    const order = _.get(this.data.user, "profile.infoOrder", []);
     if (! isOwner && ! _.isEmpty(info)) {
-      return <UserInfo info={info} />;
+      return <UserInfo info={info} order={order} />;
     }
   },
   renderForm(isOwner) {

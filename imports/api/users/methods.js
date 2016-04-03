@@ -11,6 +11,7 @@ Meteor.methods({
 	updateProfile(data) {
 		check(data, {
 			info: Object,
+			infoOrder: [String],
 			displayName: String,
 			blurb: String
 		});
@@ -23,6 +24,7 @@ Meteor.methods({
 			{ _id: Meteor.userId() },
 			{ $set: {
 				"profile.info": data.info,
+				"profile.infoOrder": data.infoOrder,
 				"profile.displayName": data.displayName,
 				"profile.blurb": data.blurb
 			} }

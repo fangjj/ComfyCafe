@@ -25,7 +25,8 @@ const UserProfileForm = React.createClass({
       snackbarOpen: false,
       displayName: _.get(this.props.currentUser, "profile.displayName", ""),
       blurb: _.get(this.props.currentUser, "profile.blurb", ""),
-      info: _.get(this.props.currentUser, "profile.info", {})
+      info: _.get(this.props.currentUser, "profile.info", {}),
+      infoOrder: _.get(this.props.currentUser, "profile.infoOrder", [])
     };
   },
   handleSnackbarRequestClose() {
@@ -39,21 +40,19 @@ const UserProfileForm = React.createClass({
   handleBlurb(event) {
     this.setState({blurb: event.target.value})
   },
-  handleInfo(id, label, value) {
-    const obj = _.clone(this.state.info);
-    if (label) {
-      obj[id] = [label, value];
-    } else {
-      delete obj[id];
-    }
-    this.setState({info: obj});
+  handleInfo(info, order) {
+    this.setState({
+      info: info,
+      infoOrder: order
+    });
   },
   submit(event) {
     var self = this;
     Meteor.call("updateProfile", {
       displayName: this.state.displayName,
       blurb: this.state.blurb,
-      info: this.state.info
+      info: this.state.info,
+      infoOrder: this.state.infoOrder
     }, () => {
 	    this.setState({snackbarOpen: true});
     });
@@ -91,6 +90,7 @@ const UserProfileForm = React.createClass({
       <MultiField
         label="Random Information"
         defaultValue={this.state.info}
+        defaultOrder={this.state.infoOrder}
         defaultQty={1}
         onChange={this.handleInfo}
       />

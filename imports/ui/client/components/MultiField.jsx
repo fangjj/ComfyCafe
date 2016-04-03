@@ -16,59 +16,60 @@ export default React.createClass({
     };
   },
   componentWillMount() {
-    this.elems = [];
+    this.elems = {};
+    this.order = [];
     if (! _.isEmpty(this.props.defaultValue)) {
-      _.each(this.props.defaultValue, (arr, key) => {
-        this.elems.push({
-          key: key,
-          label: arr[0],
-          value: arr[1]
-        });
+      _.each(this.props.defaultOrder, (key) => {
+        const obj = this.props.defaultValue[key];
+        this.order.push(key);
+        this.elems[key] = {
+          label: obj.label,
+          value: obj.value
+        };
       });
     } else {
       _.each(_.range(this.state.qty), () => {
-        this.elems.push({
-          key: Random.id(),
+        const key = Random.id();
+        this.order.push(key);
+        this.elems[key] = {
           label: "",
           value: ""
-        });
+        };
       });
     }
   },
   handleAdd() {
-    this.elems.push({
-      key: Random.id(),
+    const key = Random.id();
+    this.order.push(key);
+    this.elems[key] = {
       label: "",
       value: ""
-    });
+    };
     this.setState({ qty: this.state.qty + 1 });
   },
   handleRemove(id) {
-    const idx = _.reduce(
-      this.elems,
-      (result, value, index) => {
-        if (value.key === id) {
-          return index;
-        }
-        return result;
-      },
-      -1
-    );
-
+    const idx = this.order.indexOf(id);
     if (idx !== 0) {
-      this.elems.splice(idx, 1);
+      this.order.splice(idx, 1);
+      delete this.elems[id];
       this.setState({ qty: this.state.qty - 1 });
     }
   },
+  handleUpdate(id, label, value) {
+    this.elems[id].label = label;
+    this.elems[id].value = value;
+    this.props.onChange(this.elems, this.order);
+  },
   renderInner() {
-    return _.map(this.elems, (elem) => {
+    return _.map(this.order, (key) => {
+      const elem = this.elems[key];
       return <PairField
-        uniqueId={elem.key}
+        uniqueId={key}
         defaultLabel={elem.label}
         defaultValue={elem.value}
-        onChange={this.props.onChange}
+        onChange={this.handleUpdate}
         onRemove={this.handleRemove}
-        key={elem.key}
+        key={key}
       />;
     });
   },

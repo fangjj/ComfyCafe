@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 
 import setTitle from "/imports/api/common/setTitle"
@@ -133,6 +134,28 @@ export default React.createClass({
 
     this.props.setUsername(this.state.username);
   },
+  enforceRequired() {
+    const errors = {};
+    if (! this.state.username) {
+      errors.usernameError = "Just who the hell do you think you are?";
+    }
+    if (! this.state.password) {
+      errors.passwordError = "Password, please!";
+    }
+    if (this.state.register) {
+      if (! this.state.email) {
+        errors.emailError = "Are you some sort of privacy nut?";
+      }
+      if (! this.state.betaKey) {
+        errors.betaKeyError = "You can't just barge in uninvited!";
+      }
+    }
+    if (! _.isEmpty(errors)) {
+      this.setState(errors);
+      return false;
+    }
+    return true;
+  },
   handleSubmitLogin() {
     Meteor.loginWithPassword(
       this.state.username,
@@ -202,6 +225,9 @@ export default React.createClass({
   },
   handleSubmit(e) {
     e.preventDefault();
+    if (! this.enforceRequired()) {
+      return;
+    }
     if (! this.state.register) {
       this.handleSubmitLogin();
     } else {

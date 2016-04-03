@@ -17,7 +17,7 @@ import {
   RaisedButton
 } from "material-ui";
 
-const UserProfileComponent = React.createClass({
+const UserProfile = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var handle = Meteor.subscribe("user", FlowRouter.getParam("username"));
@@ -135,4 +135,4 @@ const UserProfileComponent = React.createClass({
   }
 });
 
-export default UserProfileComponent;
+export default UserProfile;

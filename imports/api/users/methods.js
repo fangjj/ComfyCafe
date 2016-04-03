@@ -10,6 +10,7 @@ import Notifications from "../notifications/collection";
 Meteor.methods({
 	updateProfile(data) {
 		check(data, {
+			info: Object,
 			displayName: String,
 			blurb: String
 		});
@@ -21,6 +22,7 @@ Meteor.methods({
 		Meteor.users.update(
 			{ _id: Meteor.userId() },
 			{ $set: {
+				"profile.info": data.info,
 				"profile.displayName": data.displayName,
 				"profile.blurb": data.blurb
 			} }
@@ -30,6 +32,7 @@ Meteor.methods({
 			coll.update(
 				{ "owner._id": Meteor.userId() },
 				{ $set: {
+					"owner.profile.info": data.info,
 					"owner.profile.displayName": data.displayName,
 					"owner.profile.blurb": data.blurb
 				} },

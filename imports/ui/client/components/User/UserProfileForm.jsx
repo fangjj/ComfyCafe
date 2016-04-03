@@ -3,11 +3,12 @@ import React from "react";
 
 import "/imports/api/users/methods";
 
-import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
-import Powerless from "../Powerless";
-import Actions from "../Actions";
+import Powerless from "/imports/ui/client/components/Powerless";
+import Actions from "/imports/ui/client/components/Actions";
+import MultiField from "/imports/ui/client/components/MultiField";
 import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
+import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 
 import {
   TextField,
@@ -22,8 +23,9 @@ const UserProfileForm = React.createClass({
   getInitialState() {
     return {
       snackbarOpen: false,
-      displayName: "",
-      blurb: ""
+      displayName: _.get(this.props.currentUser, "profile.displayName", ""),
+      blurb: _.get(this.props.currentUser, "profile.blurb", ""),
+      info: _.get(this.props.currentUser, "profile.info", {})
     };
   },
   handleSnackbarRequestClose() {
@@ -37,11 +39,17 @@ const UserProfileForm = React.createClass({
   handleBlurb(event) {
     this.setState({blurb: event.target.value})
   },
+  handleInfo(id, label, value) {
+    const obj = _.clone(this.state.info);
+    obj[id] = [label, value];
+    this.setState({info: obj});
+  },
   submit(event) {
     var self = this;
     Meteor.call("updateProfile", {
       displayName: this.state.displayName,
-      blurb: this.state.blurb
+      blurb: this.state.blurb,
+      info: this.state.info
     }, () => {
 	    this.setState({snackbarOpen: true});
     });
@@ -49,21 +57,6 @@ const UserProfileForm = React.createClass({
   cancel(event) {
     var path = FlowRouter.path("profile", {username: this.props.currentUser.username});
     FlowRouter.go(path);
-  },
-  componentWillMount() {
-    let obj = {};
-
-    if (this.props.currentUser && _.has(this.props.currentUser, "profile")) {
-      if (_.has(this.props.currentUser.profile, "displayName")) {
-        obj.displayName = this.props.currentUser.profile.displayName;
-      }
-
-      if (_.has(this.props.currentUser.profile, "blurb")) {
-        obj.blurb = this.props.currentUser.profile.blurb;
-      }
-
-      this.setState(obj);
-    }
   },
   render() {
     if (! this.props.currentUser) {
@@ -79,18 +72,23 @@ const UserProfileForm = React.createClass({
         defaultValue={this.state.displayName}
         floatingLabelText="Display Name"
         floatingLabelStyle={{fontSize: "20px"}}
-        onChange={this.handleDisplayName}
         fullWidth={true}
+        onChange={this.handleDisplayName}
       />
 
       <TextField
         defaultValue={this.state.blurb}
-        floatingLabelText="Blurb"
+        floatingLabelText="Sassy Catchphrase"
         floatingLabelStyle={{fontSize: "20px"}}
-        multiLine={true}
-        rows={1}
-        onChange={this.handleBlurb}
         fullWidth={true}
+        onChange={this.handleBlurb}
+      />
+
+      <MultiField
+        label="Random Information"
+        defaultValue={this.state.info}
+        defaultQty={1}
+        onChange={this.handleInfo}
       />
 
       <Actions>

@@ -82,7 +82,7 @@ export default React.createClass({
     });
   },
   handleCondImplications(id, cond, impl) {
-    let obj = _.clone(this.state.condImplications);
+    const obj = _.clone(this.state.condImplications);
     obj[id] = [cond, impl];
     this.setState({condImplications: obj});
   },

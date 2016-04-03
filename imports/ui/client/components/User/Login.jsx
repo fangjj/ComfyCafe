@@ -65,6 +65,7 @@ const strings = {
   passwordRejected: "That isn't your password, dingus!",
   emailInvalid: "Do you really thing that's a valid email?",
   emailRequired: "Are you some sort of privacy nut?",
+  emailTaken: "This email address is already taken!",
   betaKeyRequired: "You can't just barge in uninvited!",
   betaKeyRejected: "That key doesn't exist. Are you trying to trick me?"
 };
@@ -259,6 +260,11 @@ export default React.createClass({
             "Username already exists.": () => {
               this.setState(errorBuilder({
                 usernameError: strings.usernameTaken
+              }));
+            },
+            "Email already exists.": () => {
+              this.setState(errorBuilder({
+                emailError: strings.emailTaken
               }));
             }
           },

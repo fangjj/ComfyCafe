@@ -38,6 +38,37 @@ function errorBuilder(obj) {
   return base;
 }
 
+function errorMapper(errorMap, err) {
+  const subMap = errorMap[err.error];
+  if (subMap) {
+    if (_.isFunction(subMap)) {
+      subMap();
+    } else {
+      const func = subMap[err.reason];
+      if (func) {
+        func();
+      } else {
+        prettyPrint(err);
+      }
+    }
+  } else {
+    prettyPrint(err);
+  }
+}
+
+const strings = {
+  usernameTaken: "This username is already taken!",
+  usernameInvalid: "Usernames cannot contain spaces!",
+  usernameRequired: "Just who the hell do you think you are?",
+  usernameRejected: "You don't exist! Perhaps you'd like to register?",
+  passwordRequired: "Password, please!",
+  passwordRejected: "That isn't your password, dingus!",
+  emailInvalid: "Do you really thing that's a valid email?",
+  emailRequired: "Are you some sort of privacy nut?",
+  betaKeyRequired: "You can't just barge in uninvited!",
+  betaKeyRejected: "That key doesn't exist. Are you trying to trick me?"
+};
+
 export default React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
@@ -62,7 +93,7 @@ export default React.createClass({
       if (nextProps.user !== this.props.user) {
         if (nextProps.user) {
           this.setState({
-            usernameError: "This username is already taken!"
+            usernameError: strings.usernameTaken
           });
         } else {
           this.setState({
@@ -82,7 +113,7 @@ export default React.createClass({
     if (this.state.register) {
       if (! validateUsername(username)) {
         this.setState({
-          usernameError: "Usernames cannot contain spaces!"
+          usernameError: strings.usernameInvalid
         });
       } else {
         this.setState({
@@ -106,7 +137,7 @@ export default React.createClass({
 
     if (! validateEmail(email)) {
       this.setState({
-        emailError: "Do you really thing that's a valid email?"
+        emailError: strings.emailInvalid
       });
     } else {
       this.setState({
@@ -131,26 +162,26 @@ export default React.createClass({
     }
   },
   handleRegister(e) {
-    this.setState({
+    this.setState(errorBuilder({
       register: true
-    }, () => {
+    }), () => {
       this.props.setUsername(this.state.username);
     });
   },
   enforceRequired() {
     const errors = {};
     if (! this.state.username) {
-      errors.usernameError = "Just who the hell do you think you are?";
+      errors.usernameError = strings.usernameRequired;
     }
     if (! this.state.password) {
-      errors.passwordError = "Password, please!";
+      errors.passwordError = strings.passwordRequired;
     }
     if (this.state.register) {
       if (! this.state.email) {
-        errors.emailError = "Are you some sort of privacy nut?";
+        errors.emailError = strings.emailRequired;
       }
       if (! this.state.betaKey) {
-        errors.betaKeyError = "You can't just barge in uninvited!";
+        errors.betaKeyError = strings.betaKeyRequired;
       }
     }
     if (! _.isEmpty(errors)) {
@@ -171,12 +202,12 @@ export default React.createClass({
           "403": {
             "User not found": () => {
               this.setState(errorBuilder({
-                usernameError: "You don't exist! Perhaps you'd like to register?"
+                usernameError: strings.usernameRejected
               }));
             },
             "Incorrect password": () => {
               this.setState(errorBuilder({
-                passwordError: "That isn't your password, dingus!"
+                passwordError: strings.passwordRejected
               }));
             }
           },
@@ -188,21 +219,7 @@ export default React.createClass({
           }
         };
 
-        const subMap = errorMap[err.error];
-        if (subMap) {
-          if (_.isFunction(subMap)) {
-            subMap();
-          } else {
-            const func = subMap[err.reason];
-            if (func) {
-              func();
-            } else {
-              prettyPrint(err);
-            }
-          }
-        } else {
-          prettyPrint(err);
-        }
+        errorMapper(errorMap, err);
       } else {
         goBack();
       }
@@ -226,13 +243,13 @@ export default React.createClass({
           "403": {
             "Username already exists.": () => {
               this.setState(errorBuilder({
-                usernameError: "This username is already taken!"
+                usernameError: strings.usernameTaken
               }));
             }
           },
           "invalid-betakey": () => {
             this.setState(errorBuilder({
-              betaKeyError: "That key doesn't exist. Are you trying to trick me?"
+              betaKeyError: strings.betaKeyRejected
             }));
           },
           "too-many-requests": () => {
@@ -243,21 +260,7 @@ export default React.createClass({
           }
         };
 
-        const subMap = errorMap[err.error];
-        if (subMap) {
-          if (_.isFunction(subMap)) {
-            subMap();
-          } else {
-            const func = subMap[err.reason];
-            if (func) {
-              func();
-            } else {
-              prettyPrint(err);
-            }
-          }
-        } else {
-          prettyPrint(err);
-        }
+        errorMapper(errorMap, err);
       } else {
         goBack();
       }

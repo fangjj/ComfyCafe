@@ -89,6 +89,11 @@ export default React.createClass({
       };
     } return { loading: false };
   },
+  componentWillMount() {
+    if (window.location.pathname === "/register") {
+      this.handleRegister();
+    }
+  },
   componentWillReceiveProps(nextProps) {
     if (this.state.register && ! this.state.usernameError) {
       if (nextProps.user !== this.props.user) {
@@ -169,6 +174,7 @@ export default React.createClass({
   },
   handleCancel(e) {
     if (this.state.register) {
+      FlowRouter.go(FlowRouter.path("login"));
       this.setState(errorBuilder({
         register: false
       }));
@@ -177,7 +183,8 @@ export default React.createClass({
       goBack();
     }
   },
-  handleRegister(e) {
+  handleRegister(first) {
+    FlowRouter.go(FlowRouter.path("register"));
     this.setState(errorBuilder({
       register: true
     }), () => {

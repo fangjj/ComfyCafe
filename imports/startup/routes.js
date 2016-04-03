@@ -72,6 +72,14 @@ FlowRouter.route("/login", {
   }
 });
 
+FlowRouter.route("/register", {
+  name: "register",
+  action: function () {
+    setTitle("Register");
+    renderView(LoginView);
+  }
+});
+
 FlowRouter.route("/explore", {
   name: "explore",
   action: function () {

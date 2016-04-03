@@ -1,0 +1,33 @@
+.userInfo {
+  h3 {
+    font-size: 32px;
+  }
+
+  ul {
+    @include list;
+  }
+
+  li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    width: 100%;
+
+    .label {
+      width: 25%;
+    }
+
+    .value {
+      flex-grow: 1;
+
+      &:before {
+        content: ":";
+
+        margin-right: 12px;
+      }
+    }
+  }
+
+}

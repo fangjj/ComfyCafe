@@ -4,6 +4,7 @@ import React from "react";
 import "/imports/api/users/methods";
 import setTitle from "/imports/api/common/setTitle";
 
+import UserInfo from "./UserInfo";
 import UserProfileForm from "./UserProfileForm";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
@@ -44,6 +45,12 @@ const UserProfile = React.createClass({
   },
   deleteAvatar(event) {
     Meteor.call("deleteAvatar");
+  },
+  renderInfo() {
+    const info = _.get(this.data.user, "profile.info", {});
+    if (! _.isEmpty(info)) {
+      return <UserInfo info={info} />;
+    }
   },
   renderForm(isOwner) {
     if (isOwner && ! this.state.isChangingAvatar) {
@@ -88,6 +95,8 @@ const UserProfile = React.createClass({
           linkButton={true}
           href={pagesPath}
         />
+
+        {this.renderInfo()}
       </div>;
     } else {
       var hasAvatar = _.has(user, "avatars");

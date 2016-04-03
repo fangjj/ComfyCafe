@@ -19,7 +19,7 @@ export default React.createClass({
   render() {
     return <div className="userInfo">
       <header>
-  			<h3>Info</h3>
+  			<h3>Meaningful Details</h3>
   		</header>
 			<ul>
         {this.renderInner()}

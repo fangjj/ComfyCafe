@@ -114,7 +114,7 @@ const PostInfoBox = React.createClass({
     return <section className="infoBox content">
       <div className="flexColumn">
         <div className="flexLayout">
-          <div className="leftSIde">
+          <div className="leftSide">
             <a href={ownerUrl}>
               <Avatar size="small" user={owner} />
             </a>

@@ -29,7 +29,7 @@ const RoomListItem = React.createClass({
 
     return <li className="roomListItem">
       <div className="flexLayout">
-        <div className="leftSIde">
+        <div className="leftSide">
           <a href={path}>
             <Avatar size={81}>{room.name[0]}</Avatar>
           </a>

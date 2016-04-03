@@ -31,7 +31,7 @@ const TopicListItem = React.createClass({
 
     return <li className="topicListItem">
       <div className="flexLayout">
-        <div className="leftSIde">
+        <div className="leftSide">
           <a href={ownerUrl}>
             <Avatar size="icon" user={owner} />
           </a>

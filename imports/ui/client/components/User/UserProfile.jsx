@@ -6,6 +6,7 @@ import setTitle from "/imports/api/common/setTitle";
 
 import UserInfo from "./UserInfo";
 import UserProfileForm from "./UserProfileForm";
+import Content from "/imports/ui/client/components/Content";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
@@ -46,62 +47,33 @@ const UserProfile = React.createClass({
   deleteAvatar(event) {
     Meteor.call("deleteAvatar");
   },
-  renderInfo() {
+  renderInfo(isOwner) {
     const info = _.get(this.data.user, "profile.info", {});
-    if (! _.isEmpty(info)) {
+    if (! isOwner && ! _.isEmpty(info)) {
       return <UserInfo info={info} />;
     }
   },
   renderForm(isOwner) {
-    if (isOwner && ! this.state.isChangingAvatar) {
+    if (isOwner) {
       return <UserProfileForm currentUser={this.data.user} />;
     }
   },
-  render() {
-    if (this.data.loading) {
-      return <LoadingSpinner />;
-    }
-
-    var user = this.data.user;
-    var isOwner = this.data.currentUser && this.data.currentUser._id === user._id;
-
-    var displayName = user.profile.displayName || user.username;
-    setTitle(displayName);
-
-    var toolbox;
+  renderAvatar(isOwner) {
+    return <DirectAvatar size="large" user={this.data.user} editable={isOwner} />;
+  },
+  renderToolbox(isOwner) {
     if (! isOwner) {
-      var imagesPath = FlowRouter.path("imagesBy", {username: this.data.user.username});
-      var pagesPath = FlowRouter.path("blogBy", {username: this.data.user.username});
-      toolbox = <div className="toolbox">
-        <SubscriptionButton owner={user} currentUser={this.data.currentUser} />
+      return <div>
+        <SubscriptionButton owner={this.data.user} currentUser={this.data.currentUser} />
         <FriendButton
-          user={user}
+          user={this.data.user}
           currentUser={this.data.currentUser}
         />
-        <br />
-        <RaisedButton
-          label="View Images"
-          labelStyle={{fontSize: "18px"}}
-          primary={true}
-          icon={<Icon>image</Icon>}
-          linkButton={true}
-          href={imagesPath}
-        />
-        <RaisedButton
-          label="View Blog"
-          labelStyle={{fontSize: "18px"}}
-          primary={true}
-          icon={<Icon>import_contacts</Icon>}
-          linkButton={true}
-          href={pagesPath}
-        />
-
-        {this.renderInfo()}
       </div>;
     } else {
-      var hasAvatar = _.has(user, "avatars");
+      const hasAvatar = _.has(this.data.user, "avatars");
 
-      var deleteButton;
+      let deleteButton;
       if (hasAvatar) {
         deleteButton = <SubtleDangerButton
           label="Delete Avatar"
@@ -110,7 +82,7 @@ const UserProfile = React.createClass({
         />;
       }
 
-      toolbox = <div className="toolbox">
+      return <div>
         <RaisedButton
           label="Change Avatar"
           labelStyle={{fontSize: "18px"}}
@@ -121,26 +93,53 @@ const UserProfile = React.createClass({
         {deleteButton}
       </div>;
     }
-
-    var content;
+  },
+  renderCatchphrase() {
+    const catchphrase = _.get(this.data.user, "profile.blurb");
+    if (catchphrase) {
+      return <span className="catchphrase">
+        {catchphrase}
+      </span>;
+    }
+  },
+  renderInner(isOwner, displayName) {
     if (! this.state.isChangingAvatar) {
-      content = <div>
-        <DirectAvatar size="large" user={user} />
-        {toolbox}
+      return <div className="flexColumn">
+        <div className="flexLayout">
+          <div className="leftSide">
+            {this.renderAvatar(isOwner)}
+          </div>
+          <div className="rightSide">
+            <header>
+              <h2>{displayName}</h2>
+              {this.renderCatchphrase()}
+            </header>
+            <div>
+              {this.renderToolbox(isOwner)}
+            </div>
+          </div>
+        </div>
       </div>;
     } else {
-      content = <div>
-        <AvatarCropper cancelAction={this.stopChangingAvatar} />
-      </div>;
+      return <AvatarCropper cancelAction={this.stopChangingAvatar} />;
+    }
+  },
+  render() {
+    if (this.data.loading) {
+      return <LoadingSpinner />;
     }
 
-    return <div className="content">
-      <header>
-  			<h2>{displayName}</h2>
-  		</header>
-			{content}
+    const user = this.data.user;
+    const isOwner = this.data.currentUser && this.data.currentUser._id === user._id;
+
+    const displayName = user.profile.displayName || user.username;
+    setTitle(displayName);
+
+    return <Content className="profile">
+      {this.renderInner(isOwner, displayName)}
+      {this.renderInfo(isOwner)}
       {this.renderForm(isOwner)}
-    </div>;
+    </Content>;
   }
 });
 

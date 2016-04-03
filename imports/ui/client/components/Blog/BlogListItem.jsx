@@ -25,7 +25,7 @@ const BlogListItem = React.createClass({
 
     return <li className="blogPost">
       <article className="flexLayout">
-        <div className="leftSIde">
+        <div className="leftSide">
           <a href={ownerUrl}>
             <Avatar size="small" user={owner} />
           </a>

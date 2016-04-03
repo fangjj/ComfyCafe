@@ -8,33 +8,7 @@ import media from "../media/collection";
 import Notifications from "../notifications/collection";
 
 Meteor.methods({
-	changeUsername(username) {
-		check(username, String);
-
-		if (! Meteor.userId()) {
-			throw new Meteor.Error("not-logged-in");
-		}
-
-		const valid = validateUsername(username);
-
-		if (! valid) {
-			throw new Meteor.Error("invalid-username");
-		}
-
-		if (Meteor.isServer) {
-			Accounts.setUsername(Meteor.userId(), username);
-			_.map(profileSyncList, function (coll) {
-				coll.update(
-					{ "owner._id": Meteor.userId() },
-					{ $set: {
-						"owner.username": username
-					} },
-					{ multi: true }
-				);
-			});
-		}
-	},
-	updateProfile: function (data) {
+	updateProfile(data) {
 		check(data, {
 			displayName: String,
 			blurb: String
@@ -63,8 +37,35 @@ Meteor.methods({
 			);
 		});
 	},
-	updateSettings: function (data) {
+	changeUsername(username) {
+		check(username, String);
+
+		if (! Meteor.userId()) {
+			throw new Meteor.Error("not-logged-in");
+		}
+
+		const valid = validateUsername(username);
+
+		if (! valid) {
+			throw new Meteor.Error("invalid-username");
+		}
+
+		if (Meteor.isServer) {
+			Accounts.setUsername(Meteor.userId(), username);
+			_.map(profileSyncList, function (coll) {
+				coll.update(
+					{ "owner._id": Meteor.userId() },
+					{ $set: {
+						"owner.username": username
+					} },
+					{ multi: true }
+				);
+			});
+		}
+	},
+	updateSettings(data) {
 		check(data, {
+			username: String,
 			defaultPage: String,
 			defaultFilter: String,
 			uploadAction: String,
@@ -74,6 +75,10 @@ Meteor.methods({
 
 		if (! Meteor.userId()) {
 			throw new Meteor.Error("not-logged-in");
+		}
+
+		if (data.username !== Meteor.user().username) {
+			Meteor.call("changeUsername", data.username);
 		}
 
 		Meteor.users.update(

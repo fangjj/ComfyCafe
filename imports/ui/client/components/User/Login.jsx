@@ -103,6 +103,21 @@ export default React.createClass({
       }
     }
   },
+  hasErrors() {
+    return _.reduce(
+      [
+        this.state.generalError,
+        this.state.usernameError,
+        this.state.passwordError,
+        this.state.emailError,
+        this.state.betaKeyError
+      ],
+      (result, value) => {
+        return result || Boolean(value);
+      },
+      false
+    );
+  },
   handleUsername(e) {
     const username = e.target.value;
 
@@ -247,6 +262,12 @@ export default React.createClass({
               }));
             }
           },
+          "invalid-username": () => {
+            // Already handled by onChange validation.
+          },
+          "invalid-email": () => {
+            // Already handled by onChange validation.
+          },
           "invalid-betakey": () => {
             this.setState(errorBuilder({
               betaKeyError: strings.betaKeyRejected
@@ -268,7 +289,7 @@ export default React.createClass({
   },
   handleSubmit(e) {
     e.preventDefault();
-    if (! this.enforceRequired()) {
+    if (this.hasErrors() || ! this.enforceRequired()) {
       return;
     }
     if (! this.state.register) {

@@ -4,6 +4,7 @@ import BlogPosts from "/imports/api/blog/collection";
 
 import BlogListItem from "./BlogListItem";
 import BlogPostEditFAB from "./BlogPostEditFAB";
+import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 
 const BlogPost = React.createClass({
   mixins: [ReactMeteorData],

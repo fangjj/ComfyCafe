@@ -7,6 +7,5 @@ export default function (exclude) {
   if (! prev || prev === current || (exclude && _.includes(exclude, prev))) {
     go = "/";
   }
-  console.log(go);
   FlowRouter.go(go);
 };

@@ -1,4 +1,5 @@
 import media from "./collection";
+import Posts from "../posts/collection";
 
 if (Meteor.isServer) {
 	getPalette = require("./server/palette").default;
@@ -50,6 +51,14 @@ Meteor.methods({
 						{ $set: {
 							"metadata.color": color,
 							"metadata.complement": complement
+						} }
+					);
+
+					Posts.update(
+						{ "medium._id": new Mongo.ObjectID(mediumId) },
+						{ $set: {
+							"color": color,
+							"complement": complement
 						} }
 					);
 				}));

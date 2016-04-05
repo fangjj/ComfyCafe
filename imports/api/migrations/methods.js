@@ -41,19 +41,12 @@ Meteor.methods({
   },*/
   migrateColor: migrationBuilder(function () {
     Posts.find().map(function (post) {
-      Meteor.call("mediumColor", post.medium._id._str);
-
-      const medium = media.findOne({ _id: post.medium._id });
-
-			Posts.update(
-				{ "medium._id": post.medium._id },
-				{ $set: {
-					"color": medium.metadata.color,
-					"complement": medium.metadata.complement
-				} }
-			);
-
-      logMigrate(post.owner.username + "/" + post.name, medium.metadata.complement);
+      if (media.findOne({ _id: post.medium._id })) {
+        Meteor.call("mediumColor", post.medium._id._str);
+        logMigrate(post.owner.username + "/" + post.name);
+      } else {
+        console.log("!!!", post._id, post.name)
+      }
     });
 	})
 });

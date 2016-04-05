@@ -3,11 +3,11 @@ const PostView = {
     if (Meteor.isClient) {
       const React = require("react");
       const MainLayout = require("../client/components/Layout/MainLayout").default;
-      const Post = require("../client/components/Post/Post").default;
+      const PostContainer = require("../client/components/Post/PostContainer").default;
       return {
         layout: MainLayout,
         content: {
-          main: <Post />
+          main: <PostContainer />
         }
       };
     }

@@ -1,6 +1,5 @@
+import _ from "lodash";
 import React from "react";
-
-import Posts from "/imports/api/posts/collection";
 
 import PostModifyFAB from "./PostModifyFAB";
 import PostLikeFAB from "./PostLikeFAB";
@@ -16,43 +15,20 @@ import InlineTopic from "../Chat/InlineTopic";
 import setPattern from "/imports/ui/client/utils/setPattern";
 
 const Post = React.createClass({
-  mixins: [ReactMeteorData],
   getInitialState() {
     return {
       avatarCropper: false
     };
   },
-  getMeteorData() {
-    const id = FlowRouter.getParam("postId");
-    let handle;
-    let doc = {};
-
-    if (id) {
-      console.error("postPerma was triggered, which shouldn't actually happen.");
-      handle = Meteor.subscribe("postPerma", id);
-      doc = { _id: id };
-    } else {
-      handle = Meteor.subscribe("post",
-        FlowRouter.getParam("username"),
-        FlowRouter.getParam("postName"),
-      );
-      doc = {
-        "owner.username": FlowRouter.getParam("username"),
-        name: FlowRouter.getParam("postName")
-      };
-    }
-
-    return {
-      loading: ! handle.ready(),
-      post: Posts.findOne(doc),
-      currentUser: Meteor.user()
-    };
-  },
   componentWillMount() {
-    setPattern(FlowRouter.getParam("postName"));
+    if (this.props.post) {
+      setPattern(this.props.post.name, this.props.post.color);
+    }
   },
   componentWillUpdate() {
-    setPattern(FlowRouter.getParam("postName"));
+    if (this.props.post) {
+      setPattern(this.props.post.name, this.props.post.color);
+    }
   },
   showAvatarCropper() {
     this.setState({
@@ -65,65 +41,65 @@ const Post = React.createClass({
     });
   },
   renderTags() {
-    if (this.data.post.tags.text) {
+    if (this.props.post.tags.text) {
       return <section className="tagBox content">
-        <TagTree tags={this.data.post.tags} humanizedTags={this.data.post.humanizedTags} />
+        <TagTree tags={this.props.post.tags} humanizedTags={this.props.post.humanizedTags} />
       </section>;
     }
   },
   renderLikes() {
-    if (this.data.post.likes && this.data.post.likes.length) {
-      return <PostLikes likes={this.data.post.likes} />;
+    if (this.props.post.likes && this.props.post.likes.length) {
+      return <PostLikes likes={this.props.post.likes} />;
     }
   },
   renderAvatarCropper() {
     if (this.state.avatarCropper) {
-      const src = "/gridfs/media/" + this.data.post.medium.md5;
+      const src = "/gridfs/media/" + this.props.post.medium.md5;
       return <Content>
         <AvatarCropper src={src} cancelAction={this.hideAvatarCropper} />
       </Content>;
     }
   },
   render() {
-    if (this.data.loading) {
+    if (this.props.loading) {
       return <LoadingSpinner />;
     }
 
-    if (! this.data.post) {
+    if (! this.props.post) {
       return <Err404 />;
     }
 
-    var isOwner = this.data.currentUser
-      && this.data.currentUser._id === this.data.post.owner._id;
+    var isOwner = this.props.currentUser
+      && this.props.currentUser._id === this.props.post.owner._id;
     var showEditButton = isOwner;
-    var showFavoriteButton = ! isOwner && this.data.currentUser && this.data.post.medium;
+    var showFavoriteButton = ! isOwner && this.props.currentUser && this.props.post.medium;
 
     var fab;
     if (showEditButton) {
-      fab = <PostModifyFAB post={this.data.post} />;
+      fab = <PostModifyFAB post={this.props.post} />;
     }
     if (showFavoriteButton) {
-      fab = <PostLikeFAB post={this.data.post} userId={this.data.currentUser._id} />;
+      fab = <PostLikeFAB post={this.props.post} userId={this.props.currentUser._id} />;
     }
 
     return <article className="post contentLayout">
       <figure className="content">
         <Medium
-          medium={this.data.post.medium}
-          pretentiousFilter={this.data.post.pretentiousFilter}
+          medium={this.props.post.medium}
+          pretentiousFilter={this.props.post.pretentiousFilter}
         />
       </figure>
       <PostInfoBox
-        post={this.data.post}
-        currentUser={this.data.currentUser}
+        post={this.props.post}
+        currentUser={this.props.currentUser}
         showAvatarCropper={this.showAvatarCropper}
       />
       {this.renderAvatarCropper()}
       {this.renderTags()}
       <section className="comments content">
         <InlineTopic
-          topicId={this.data.post.topic._id}
-          currentUser={this.data.currentUser}
+          topicId={this.props.post.topic._id}
+          currentUser={this.props.currentUser}
         />
       </section>
       {this.renderLikes()}

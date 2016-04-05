@@ -4,6 +4,7 @@ import PseudoBody from "./PseudoBody";
 
 export default createContainer(({ params }) => {
   return {
-    seed: Session.get("patternSeed")
+    seed: Session.get("patternSeed"),
+    color: Session.get("patternColor")
   };
 }, PseudoBody);

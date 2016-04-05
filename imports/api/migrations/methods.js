@@ -3,6 +3,7 @@ import GeoPattern from "geopattern";
 
 import Posts from "../posts/collection";
 import "../media/methods";
+import media from "../media/collection";
 
 function logMigrate(body, note) {
   console.log("[MIGRATED] " + body + " (" + note + ")");
@@ -41,7 +42,18 @@ Meteor.methods({
   migrateColor: migrationBuilder(function () {
     Posts.find().map(function (post) {
       Meteor.call("mediumColor", post.medium._id._str);
-      logMigrate(post.owner.username + "/" + post.name, "color");
+
+      const medium = media.findOne({ _id: post.medium._id });
+
+			Posts.update(
+				{ "medium._id": post.medium._id },
+				{ $set: {
+					"color": medium.metadata.color,
+					"complement": medium.metadata.complement
+				} }
+			);
+
+      logMigrate(post.owner.username + "/" + post.name, medium.metadata.complement);
     });
 	})
 });

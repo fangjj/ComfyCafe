@@ -22,12 +22,12 @@ const Post = React.createClass({
   },
   componentWillMount() {
     if (this.props.post) {
-      setPattern(this.props.post.name, this.props.post.color);
+      setPattern(this.props.post.name, this.props.post.complement);
     }
   },
   componentWillUpdate() {
     if (this.props.post) {
-      setPattern(this.props.post.name, this.props.post.color);
+      setPattern(this.props.post.name, this.props.post.complement);
     }
   },
   showAvatarCropper() {

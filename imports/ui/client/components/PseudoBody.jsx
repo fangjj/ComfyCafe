@@ -2,9 +2,6 @@ import _ from "lodash";
 import React from "react";
 import GeoPattern from "geopattern";
 import tinycolor from "tinycolor2";
-import nearestColor from "nearest-color";
-
-import colors from "/imports/api/media/colors";
 
 export default React.createClass({
   getInitialState() {
@@ -14,9 +11,7 @@ export default React.createClass({
     if (seed) {
       const options = {};
       if (color) {
-        const base = tinycolor(color).saturate(100).complement().toHexString();
-        const nearest = nearestColor.from(colors)(base);
-        options.color = nearest;
+        options.color = color;
       }
 
       const pattern = GeoPattern.generate(seed, options);

@@ -97,6 +97,8 @@ Meteor.methods({
 						profile: Meteor.user().profile
 					},
 					medium: mediumDoc,
+					color: medium.metadata.color,
+					complement: medium.metadata.complement,
 					topic: {
 						_id: topicId
 					},

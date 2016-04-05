@@ -25,9 +25,9 @@ const Post = React.createClass({
       setPattern(this.props.post.name, this.props.post.complement);
     }
   },
-  componentWillUpdate() {
-    if (this.props.post) {
-      setPattern(this.props.post.name, this.props.post.complement);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.post) {
+      setPattern(nextProps.post.name, nextProps.post.complement);
     }
   },
   showAvatarCropper() {

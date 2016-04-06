@@ -6,7 +6,7 @@ import Content from "/imports/ui/client/components/Content";
 
 export default React.createClass({
   doIt() {
-    Meteor.call("migrateColor");
+    //Meteor.call();
   },
   render() {
     return <Content>

@@ -1,5 +1,4 @@
 import _ from "lodash";
-import GeoPattern from "geopattern";
 
 import Posts from "../posts/collection";
 import "../media/methods";
@@ -26,19 +25,6 @@ function migrationBuilder(functionBody) {
 }
 
 Meteor.methods({
-  /*
-  giveMeTheFuckingColors() {
-    if (Meteor.isServer) {
-      const colors = [];
-      _.each(_.range(Math.pow(10, 6)), (i) => {
-        console.log(i);
-        const pattern = GeoPattern.generate(Random.id());
-        colors.push(pattern.color);
-      });
-      const fs = require("fs");
-      fs.writeFile("/home/teruko/colors.json", JSON.stringify(_.uniq(colors), null, 2));
-    }
-  },*/
   migrateColor: migrationBuilder(function () {
     Posts.find().map(function (post) {
       if (media.findOne({ _id: post.medium._id })) {

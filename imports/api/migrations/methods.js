@@ -1,4 +1,8 @@
+import _ from "lodash";
+
 import Posts from "../posts/collection";
+import "../media/methods";
+import media from "../media/collection";
 
 function logMigrate(body, note) {
   console.log("[MIGRATED] " + body + " (" + note + ")");
@@ -21,25 +25,14 @@ function migrationBuilder(functionBody) {
 }
 
 Meteor.methods({
-  migrateInfo: migrationBuilder(function () {
-    Meteor.users.update(
-      {},
-      { $unset: {
-        "profile.info": 1
-      } },
-      { multi: true }
-    );
-	}),
-  migrateTagCapitalization: migrationBuilder(function () {
+  migrateColor: migrationBuilder(function () {
     Posts.find().map(function (post) {
-      var tags = tagRegenerator(post.tags);
-      Posts.update(
-        { _id: post._id },
-        { $set: {
-          tags: tags
-        } }
-      );
-      logMigrate(post.owner.username + "/" + post.name, tags.text);
+      if (media.findOne({ _id: post.medium._id })) {
+        Meteor.call("mediumColor", post.medium._id._str);
+        logMigrate(post.owner.username + "/" + post.name);
+      } else {
+        console.log("!!!", post._id, post.name)
+      }
     });
 	})
 });

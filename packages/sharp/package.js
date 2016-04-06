@@ -7,7 +7,8 @@ Package.describe({
 });
 
 Npm.depends({
-  "sharp": "0.12.2"
+  "sharp": "0.12.2",
+  "attention": "0.1.1"
 });
 
 Package.onUse(function(api) {
@@ -16,10 +17,12 @@ Package.onUse(function(api) {
   api.use("ecmascript");
 
   api.addFiles([
-    "sharp.js"
+    "sharp.js",
+    "attention.js"
   ], "server");
 
   api.export([
-    "sharp"
+    "sharp",
+    "attention"
   ], "server");
 });

@@ -35,6 +35,7 @@ export default function (self, file, callback) {
                 URL.revokeObjectURL(img.src);
 
                 Meteor.call("mediumDimensions", file.uniqueIdentifier, imgWidth, imgHeight);
+                Meteor.call("mediumColor", file.uniqueIdentifier);
 
                 done();
               }

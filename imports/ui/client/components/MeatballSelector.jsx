@@ -15,7 +15,12 @@ export default React.createClass({
   render() {
     const classes = classConcat("meatballSelector", this.props.className);
     return <div className={classes}>
-      {this.renderInner()}
+      <header>
+        <h3>{this.props.label}</h3>
+      </header>
+      <div className="inner">
+        {this.renderInner()}
+      </div>
     </div>;
   }
 });

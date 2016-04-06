@@ -1,6 +1,6 @@
 import React from "react";
 
-import SelectVisibility from "../SelectVisibility";
+import VisibilitySelector from "../VisibilitySelector";
 
 import {
   TextField
@@ -9,11 +9,10 @@ import {
 const BlogInnerForm = React.createClass({
   render() {
     return <div>
-      <SelectVisibility
+      <VisibilitySelector
         visibility={this.props.visibility}
         onChange={this.props.handleVisibility}
       />
-      <br />
       <TextField
         defaultValue={this.props.body}
         floatingLabelText="Body"

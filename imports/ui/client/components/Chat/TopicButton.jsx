@@ -7,17 +7,17 @@ import {
   RaisedButton
 } from "material-ui";
 
-const TopicButton = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       showForm: false
     };
   },
   showTopicForm() {
-    this.setState({showForm: true});
+    this.setState({ showForm: true });
   },
   hideTopicForm() {
-    this.setState({showForm: false});
+    this.setState({ showForm: false });
   },
   render() {
     return <div>
@@ -35,5 +35,3 @@ const TopicButton = React.createClass({
     </div>;
   }
 });
-
-export default TopicButton;

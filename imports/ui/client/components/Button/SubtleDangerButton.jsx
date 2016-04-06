@@ -13,8 +13,11 @@ const SubtleDangerButton = React.createClass({
       hover: false
     };
   },
-  toggleHover() {
-    this.setState({hover: ! this.state.hover});
+  hover() {
+    this.setState({ hover: true });
+  },
+  unhover() {
+    this.setState({ hover: false });
   },
   render() {
     let color;
@@ -29,8 +32,8 @@ const SubtleDangerButton = React.createClass({
       labelStyle={{fontSize: "18px"}}
       icon={<Icon>{this.props.iconName}</Icon>}
       onTouchTap={this.props.onTouchTap}
-      onMouseEnter={this.toggleHover}
-      onMouseLeave={this.toggleHover}
+      onMouseEnter={this.hover}
+      onMouseLeave={this.unhover}
     />
   }
 });

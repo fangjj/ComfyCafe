@@ -24,7 +24,7 @@ const BlogDialog = React.createClass({
       return defaultState;
     }
   },
-  handleVisibility(event, index, value) {
+  handleVisibility(value) {
     this.setState({visibility: value});
   },
   handleBody(event) {

@@ -1,6 +1,6 @@
 import React from "react";
 
-import SelectVisibility from "../SelectVisibility";
+import VisibilitySelector from "../VisibilitySelector";
 
 import {
   TextField
@@ -16,8 +16,7 @@ const TopicInnerForm = React.createClass({
         onChange={this.props.handleName}
         fullWidth={true}
       />
-      <br />
-      <SelectVisibility
+      <VisibilitySelector
         visibility={this.props.visibility}
         onChange={this.props.handleVisibility}
       />

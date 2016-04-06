@@ -16,7 +16,7 @@ const defaultState = {
   visibility: "public"
 };
 
-const TopicDialog = React.createClass({
+export default React.createClass({
   getInitialState() {
     if (this.props.topic) {
       return {
@@ -34,7 +34,7 @@ const TopicDialog = React.createClass({
       nameGenerated: false
     });
   },
-  handleVisibility(event, index, value) {
+  handleVisibility(value) {
     this.setState({visibility: value});
   },
   handleSubmit() {
@@ -69,6 +69,7 @@ const TopicDialog = React.createClass({
         onTouchTap={this.handleSubmit}
       />,
     ];
+    console.log(this.props.open);
 
     return <Dialog
       className="topicForm"
@@ -88,5 +89,3 @@ const TopicDialog = React.createClass({
     </Dialog>;
   }
 });
-
-export default TopicDialog;

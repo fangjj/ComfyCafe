@@ -4,7 +4,7 @@ import "/imports/api/topics/methods";
 
 import TopicDialog from "./TopicDialog";
 
-const TopicForm = React.createClass({
+export default React.createClass({
   handleSubmit(data) {
     Meteor.call("addTopic", this.props.room._id, data, (err, topicId) => {
       this.props.handleClose();
@@ -25,5 +25,3 @@ const TopicForm = React.createClass({
     />;
   }
 });
-
-export default TopicForm;

@@ -2,7 +2,7 @@ import React from "react";
 
 import safetyLabels from "/imports/api/common/safetyLabels";
 
-import SelectVisibility from "../SelectVisibility";
+import VisibilitySelector from "../VisibilitySelector";
 import OriginalitySelector from "../OriginalitySelector";
 import SafetySelector from "../SafetySelector";
 import PretentiousFilterSelector from "../PretentiousFilterSelector";
@@ -31,7 +31,7 @@ const PostInnerForm = React.createClass({
   },
   render() {
     return <div>
-      <SelectVisibility
+      <VisibilitySelector
         visibility={this.props.visibility}
         onChange={this.props.handleVisibility}
       />

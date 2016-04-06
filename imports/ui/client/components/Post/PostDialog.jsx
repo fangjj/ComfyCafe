@@ -40,7 +40,7 @@ const PostDialog = React.createClass({
       return defaultState;
     }
   },
-  handleVisibility(event, index, value) {
+  handleVisibility(value) {
     this.setState({visibility: value});
   },
   handleOriginality(value) {

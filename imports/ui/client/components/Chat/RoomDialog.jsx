@@ -34,7 +34,7 @@ const RoomDialog = React.createClass({
       nameGenerated: false
     });
   },
-  handleVisibility(event, index, value) {
+  handleVisibility(value) {
     this.setState({visibility: value});
   },
   handleSubmit() {

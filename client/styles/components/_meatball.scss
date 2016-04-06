@@ -1,9 +1,23 @@
 .meatballSelector {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 10px;
 
-  padding: 10px;
+  header {
+    margin-bottom: 8px;
+
+    h3 {
+      margin: 0;
+
+      font-size: 20px;
+      text-align: left;
+    }
+  }
+
+  .inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 .meatball {
@@ -15,7 +29,7 @@
     margin-right: 20px;
   }
 
-  padding: 20px;
+  padding: 16px;
 
   border: 2px solid rgba($text-color, 0.7);
   border-radius: 6px;

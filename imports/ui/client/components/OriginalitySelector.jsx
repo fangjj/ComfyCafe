@@ -1,24 +1,31 @@
 import React from "react";
 
-import {
-  SelectField,
-  MenuItem
-} from "material-ui";
+import Meatball from "/imports/ui/client/components/Meatball";
+import MeatballSelector from "/imports/ui/client/components/MeatballSelector";
+import OriginalityIcon from "/imports/ui/client/components/Daikon/OriginalityIcon";
 
-const OriginalitySelector = React.createClass({
+export default React.createClass({
   render() {
-    return <SelectField
+    return <MeatballSelector
+      label="Originality"
       value={this.props.value}
       onChange={this.props.onChange}
-      fullWidth={true}
-      floatingLabelText="Originality"
-      floatingLabelStyle={{fontSize: "20px"}}
     >
-      <MenuItem value="original" primaryText="Your work" />
-      <MenuItem value="derivative" primaryText="Derivative work" />
-      <MenuItem value="repost" primaryText="Repost" />
-    </SelectField>;
+      <Meatball
+        name="original"
+        label="Your work"
+        icon={<OriginalityIcon originality="original" />}
+      />
+      <Meatball
+        name="derivative"
+        label="Derivative work"
+        icon={<OriginalityIcon originality="derivative" />}
+      />
+      <Meatball
+        name="repost"
+        label="Repost"
+        icon={<OriginalityIcon originality="repost" />}
+      />
+    </MeatballSelector>;
   }
 });
-
-export default OriginalitySelector;

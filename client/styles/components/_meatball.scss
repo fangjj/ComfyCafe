@@ -1,0 +1,48 @@
+.meatballSelector {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 10px;
+}
+
+.meatball {
+  @include hover;
+
+  flex: 1;
+
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+
+  padding: 20px;
+
+  border: 2px solid rgba($text-color, 0.7);
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  text-align: center;
+
+  i {
+    font-size: 36px !important;
+  }
+
+  .label {
+    font-size: 20px;
+  }
+
+  &:hover {
+    border-color: $text-color;
+  }
+
+  &.active {
+    background-color: rgba($secondary-color, 0.1);
+
+    border-color: rgba($secondary-color, 0.7);
+
+    &:hover {
+      border-color: $secondary-color;
+    }
+  }
+}

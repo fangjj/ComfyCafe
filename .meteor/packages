@@ -7,7 +7,6 @@ react-meteor-data
 force-ssl
 fourseven:scss
 seba:minifiers-autoprefixer
-ongoworks:security
 jaywon:meteor-node-uuid
 jparker:crypto-sha256
 peerlibrary:reactive-publish
@@ -20,3 +19,4 @@ vsivsi:file-collection
 vsivsi:job-collection
 comfysoft:utility
 comfysoft:sharp
+ongoworks:security@2.0.1

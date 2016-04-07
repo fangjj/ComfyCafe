@@ -1,24 +1,17 @@
 import React from "react";
 
-import Icon from "/imports/ui/client/components/Daikon/Icon";
+import Button from "/imports/ui/client/components/Button/Button";
 
-import {
-  RaisedButton
-} from "material-ui";
-
-const SubmitButton = React.createClass({
+export default React.createClass({
   render() {
-    return <RaisedButton
+    return <Button
       type={this.props.type}
       label={this.props.label || "Submit"}
-      labelStyle={{fontSize: "18px"}}
       primary={true}
-      icon={<Icon>{this.props.iconName || "done"}</Icon>}
+      iconName={this.props.iconName || "done"}
       width={this.props.width}
       style={this.props.style}
       onTouchTap={this.props.onTouchTap}
     />;
   }
 });
-
-export default SubmitButton;

@@ -22,7 +22,7 @@ import {
 
 const verbMap = {
   original: "Created",
-  derivative: "Remixed",
+  derivative: "Derived",
   repost: "Uploaded"
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 
 import privacyWrap from "/imports/api/common/privacyWrap";
 import tagQuery from "/imports/api/tags/query";
-import tagStrFromUrl from "/imports/api/tags/urlify";
+import { tagStrFromUrl } from "/imports/api/tags/urlify";
 
 import PostGallery from "./PostGallery";
 import InlineUhoh from "../InlineUhoh";

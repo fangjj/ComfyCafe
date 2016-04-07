@@ -1,6 +1,6 @@
 import renderView from "/imports/api/common/renderView";
 import setTitle from "/imports/api/common/setTitle";
-import tagStrFromUrl from "/imports/api/tags/urlify";
+import { tagStrFromUrl } from "/imports/api/tags/urlify";
 
 import PostFeedView from "/imports/ui/views/PostFeedView";
 import BlogUserView from "/imports/ui/views/BlogUserView";

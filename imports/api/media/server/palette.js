@@ -16,6 +16,7 @@ function getPalette(mediumId, callback) {
   wstream.on("finish", Meteor.bindEnvironment(function () {
     attention(tmpFile.name).swatches(1).palette(
       (err, palette) => {
+        tmpFile.removeCallback();
         _.each(palette.swatches, (swatch) => {
           const base = tinycolor(swatch.css).saturate(100).complement().toHexString();
           const nearest = nearestColor.from(colors)(base);

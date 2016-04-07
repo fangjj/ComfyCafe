@@ -21,6 +21,7 @@ function getVideoPreview(inStream, outStream, callback) {
     var tmpPreviewFile = tmp.fileSync({ postfix: ".png" });
 
     ffmpegGetFirstFrame(tmpFile.name, tmpPreviewFile.name, function (err) {
+      tmpFile.removeCallback();
       callback(tmpPreviewFile);
     });
   }));
@@ -30,5 +31,6 @@ export default function (inStream, outStream, width, height) {
   return getVideoPreview(inStream, outStream, function (tmpPreviewFile) {
     var rstream = fs.createReadStream(tmpPreviewFile.name);
     sharpImageResize(rstream, outStream, width, height);
+    tmpPreviewFile.removeCallback();
   });
 };

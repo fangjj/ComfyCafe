@@ -16,6 +16,29 @@ export default React.createClass({
     e.stopPropagation();
     this.props.onDelete(this.props.upload._id);
   },
+  renderImage() {
+    return <img src={this.props.upload.url} />;
+  },
+  renderVideo() {
+    return <video src={this.props.upload.url}>
+      <source src={this.props.upload.url} type={this.props.upload.type} />
+    </video>;
+  },
+  renderAudio() {
+    return <audio src={this.props.upload.url}>
+      <source src={this.props.upload.url} type={this.props.upload.type} />
+    </audio>;
+  },
+  renderPreview() {
+    if (this.props.upload.url) {
+      const contentType = this.props.upload.type.split("/")[0];
+      return {
+        image: this.renderImage,
+        video: this.renderVideo,
+        audio: this.renderAudio
+      }[contentType]();
+    }
+  },
   render() {
     let classes;
     if (this.props.upload.progress === 100) {
@@ -24,7 +47,7 @@ export default React.createClass({
     return <li className={classes} onTouchTap={this.handleTouch}>
       <div className="row">
         <div className="preview">
-          <img src={this.props.upload.url} />
+          {this.renderPreview()}
         </div>
         <div className="label">{this.props.upload.name}</div>
         <IconButton className="delete" onTouchTap={this.handleDelete}>

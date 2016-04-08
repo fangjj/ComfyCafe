@@ -68,7 +68,7 @@ const MainLayout = React.createClass({
           },
           {
             sort: { uploadDate: -1, filename: 1 },
-            fields: { filename: 1, md5: 1 }
+            fields: { filename: 1, contentType: 1, md5: 1 }
           }
         ).fetch(),
         (result, medium) => {
@@ -78,6 +78,7 @@ const MainLayout = React.createClass({
               _id: id,
               progress: 100,
               name: medium.filename,
+              type: medium.contentType,
               url: "/gridfs/media/" + medium.md5
             };
           }
@@ -103,6 +104,7 @@ const MainLayout = React.createClass({
         this.uploads[file.uniqueIdentifier] = {
           _id: file.uniqueIdentifier,
           name: file.fileName,
+          type: file.file.type,
           progress: 0,
           url: reader.result
         };

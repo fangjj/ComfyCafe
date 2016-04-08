@@ -19,6 +19,7 @@ export default function (self, file, callback) {
           if (newImage.length === file.size) {
             const done = () => {
               liveQuery.stop();
+              Meteor.call("mediumComplete", file.uniqueIdentifier);
               callback(file.uniqueIdentifier);
             };
 
@@ -29,7 +30,6 @@ export default function (self, file, callback) {
                 const imgHeight = this.height;
                 URL.revokeObjectURL(img.src);
 
-                Meteor.call("mediumComplete", file.uniqueIdentifier);
                 Meteor.call("mediumDimensions", file.uniqueIdentifier, imgWidth, imgHeight);
                 Meteor.call("mediumColor", file.uniqueIdentifier);
 

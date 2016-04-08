@@ -21,6 +21,7 @@ Meteor.publish("mediaQueue", function (clientUserId) {
 			},
 			{ fields: {
 				filename: 1,
+				contentType: 1,
 				md5: 1
 			} }
 		);

@@ -1,0 +1,30 @@
+.uploadQueue {
+  @include list;
+
+  position: fixed;
+  left: 22px;
+  bottom: 22px;
+
+  //padding: 16px;
+
+  min-width: 25%;
+  max-width: 65%;
+
+  background: rgba($sg-color, 0.9);
+
+  border: 1px solid rgba($text-color, 0.4);
+
+  .label {
+    margin-bottom: 6px;
+  }
+
+  li.complete {
+    @include hover;
+
+    cursor: pointer;
+  }
+
+  &:empty {
+    display: none;
+  }
+}

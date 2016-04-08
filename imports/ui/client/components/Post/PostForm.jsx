@@ -18,16 +18,23 @@ const PostForm = React.createClass({
   },
   handleSubmit(data) {
     Meteor.call("addPost", this.props.mediumId, data, (err, name) => {
-      this.props.destroy();
-      var path = FlowRouter.path("post", {
-        username: this.data.currentUser.username,
-        postName: name
-      });
-      var actions = {
-        redirect() { FlowRouter.go(path) },
-        tab() { window.open(path) },
-        nothing() {}
-      }[this.data.currentUser.settings.uploadAction || "redirect"]();
+      if (! err) {
+        if (this.props.onSuccess) {
+          this.props.onSuccess();
+        }
+        this.props.destroy();
+        const path = FlowRouter.path("post", {
+          username: this.data.currentUser.username,
+          postName: name
+        });
+        const actions = {
+          redirect() { FlowRouter.go(path) },
+          tab() { window.open(path) },
+          nothing() {}
+        }[this.data.currentUser.settings.uploadAction || "redirect"]();
+      } else {
+        prettyPrint(err);
+      }
     });
   },
   render() {

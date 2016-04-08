@@ -8,7 +8,7 @@ import {
   FloatingActionButton
 } from "material-ui";
 
-const FAB = (props) => {
+export default (props) => {
   const { className, iconName, children, ...leftProps } = props;
   const classes = classConcat("fixed-action-btn", className);
   return <div className={classes}>
@@ -18,5 +18,3 @@ const FAB = (props) => {
     {children}
   </div>;
 };
-
-export default FAB;

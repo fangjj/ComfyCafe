@@ -6,10 +6,11 @@ import media from "/imports/api/media/collection";
 import mediaUpload from "/imports/api/media/handlers/media";
 import avatarUpload from "/imports/api/media/handlers/avatar";
 
-import PseudoBodyContainer from "../PseudoBodyContainer";
-import TopBarComponent from "../TopBar/TopBarComponent";
-import PostForm from "../Post/PostForm";
 import setPattern from "/imports/ui/client/utils/setPattern";
+import UploadQueue from "/imports/ui/client/components/UploadQueue";
+import PseudoBodyContainer from "/imports/ui/client/components/PseudoBodyContainer";
+import TopBarComponent from "/imports/ui/client/components/TopBar/TopBarComponent";
+import PostForm from "/imports/ui/client/components/Post/PostForm";
 
 import MuiThemeProvider from "material-ui/lib/MuiThemeProvider";
 import getMuiTheme from "material-ui/lib/styles/getMuiTheme";
@@ -46,18 +47,16 @@ const muiTheme = getMuiTheme({
 
 const MainLayout = React.createClass({
   mixins: [ReactMeteorData],
+  uploads: {},
   getInitialState() {
     return {
-      isUploading: false,
-      progress: 0,
+      updateQueue: _.uniqueId(),
       postId: undefined,
       seed: undefined
     };
   },
   getMeteorData() {
-    return {
-      currentUser: Meteor.user()
-    };
+    return { currentUser: Meteor.user() };
   },
   componentWillMount() {
     const seed = _.get(this, "data.currentUser.settings.patternSeed");
@@ -66,11 +65,18 @@ const MainLayout = React.createClass({
     }
   },
   componentDidMount() {
-    var self = this;
     media.resumable.assignDrop(document.querySelector("html"));
-    media.resumable.on("fileAdded", function (file) {
+
+    media.resumable.on("fileAdded", (file) => {
+      this.uploads[file.uniqueIdentifier] = {
+        _id: file.uniqueIdentifier,
+        name: file.fileName,
+        progress: 0
+      };
+      this.setState({ updateQueue: _.uniqueId() });
+
       // The file's entrypoint; used to route storage actions.
-      var source = file.file.source;
+      let source = file.file.source;
       if (! source) {
         if (file.container) {
           source = file.container.className;
@@ -83,24 +89,43 @@ const MainLayout = React.createClass({
 
       if (source === "avatar") {
         // This is definitely an avatar!
-        avatarUpload(self, file);
+        avatarUpload(this, file);
       } else {
         // This is... everything else!
-        mediaUpload(self, file, function (id) {
-          self.setState({mediumId: id});
+        mediaUpload(this, file, (id) => {
+          if (! this.state.mediumId) {
+            this.setState({ mediumId: id });
+          }
         });
       }
     });
-    media.resumable.on("progress", function () {
-      self.setState({progress: media.resumable.progress() * 100});
+
+    media.resumable.on("fileProgress", (file) => {
+      this.uploads[file.uniqueIdentifier].progress = file.progress() * 100;
+      this.setState({ updateQueue: _.uniqueId() });
     });
   },
+  createPost(id) {
+    this.setState({ mediumId: id });
+  },
   destroyPostForm() {
-    this.setState({mediumId: undefined});
+    this.setState({ mediumId: null });
+  },
+  postSuccess() {
+    delete this.uploads[this.state.mediumId];
+    this.setState({
+      mediumId: null,
+      updateQueue: _.uniqueId()
+    });
   },
   freeMedium() {
     if (this.state.mediumId) {
       Meteor.call("freeMedium", this.state.mediumId);
+      delete this.uploads[this.state.mediumId];
+      this.setState({
+        mediumId: null,
+        updateQueue: _.uniqueId()
+      });
     }
     this.destroyPostForm();
   },
@@ -115,6 +140,7 @@ const MainLayout = React.createClass({
         mediumId={this.state.mediumId}
         destroy={this.destroyPostForm}
         open={true}
+        onSuccess={this.postSuccess}
         handleClose={this.freeMedium}
       />;
     }
@@ -126,12 +152,12 @@ const MainLayout = React.createClass({
       </footer>;
     }
   },
-  renderProgress() {
-    if (this.state.isUploading) {
-      return <div className="progress bottom">
-        <div className="determinate" style={{width: this.state.progress + "%"}}></div>
-      </div>;
-    }
+  renderQueue() {
+    return <UploadQueue
+      update={this.state.updateQueue}
+      queue={this.uploads}
+      onSelect={this.createPost}
+    />;
   },
   render() {
     return <MuiThemeProvider muiTheme={muiTheme}>
@@ -147,7 +173,7 @@ const MainLayout = React.createClass({
         </main>
         {this.renderPostForm()}
         {this.renderFooter()}
-        {this.renderProgress()}
+        {this.renderQueue()}
       </div>
     </MuiThemeProvider>;
   }

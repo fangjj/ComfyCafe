@@ -2,7 +2,6 @@ import media from "../collection";
 import "../methods";
 
 export default function (self, file, callback) {
-  self.setState({isUploading: true});
   media.insert({
       _id: file.uniqueIdentifier,
       filename: file.fileName,
@@ -14,26 +13,23 @@ export default function (self, file, callback) {
       if (err) { return console.error("File creation failed!", err); }
       media.resumable.upload();
 
-      var cursor = media.find({ _id: _id });
-      var liveQuery = cursor.observe({
-        changed: function(newImage, oldImage) {
+      const cursor = media.find({ _id: _id });
+      const liveQuery = cursor.observe({
+        changed: function (newImage, oldImage) {
           if (newImage.length === file.size) {
-            var done = function () {
+            const done = () => {
               liveQuery.stop();
-              self.setState({
-                isUploading: false,
-                progress: 0
-              });
               callback(file.uniqueIdentifier);
             };
 
             if (newImage.contentType.split("/")[0] === "image") {
-              var img = new Image();
+              const img = new Image();
               img.onload = function () {
-                var imgWidth = this.width;
-                var imgHeight = this.height;
+                const imgWidth = this.width;
+                const imgHeight = this.height;
                 URL.revokeObjectURL(img.src);
 
+                Meteor.call("mediumComplete", file.uniqueIdentifier);
                 Meteor.call("mediumDimensions", file.uniqueIdentifier, imgWidth, imgHeight);
                 Meteor.call("mediumColor", file.uniqueIdentifier);
 

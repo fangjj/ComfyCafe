@@ -22,11 +22,16 @@ export default React.createClass({
       classes = "complete";
     }
     return <li className={classes} onTouchTap={this.handleTouch}>
-      <div className="label">{this.props.upload.name}</div>
+      <div className="row">
+        <div className="preview">
+          <img src={this.props.upload.url} />
+        </div>
+        <div className="label">{this.props.upload.name}</div>
+        <IconButton className="delete" onTouchTap={this.handleDelete}>
+          <Icon>close</Icon>
+        </IconButton>
+      </div>
       <ProgressBar className="progress" value={this.props.upload.progress} />
-      <IconButton className="delete" onTouchTap={this.handleDelete}>
-        <Icon>close</Icon>
-      </IconButton>
     </li>;
   }
 });

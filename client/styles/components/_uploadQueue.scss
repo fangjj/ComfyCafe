@@ -4,7 +4,7 @@
   bottom: 22px;
 
   min-width: 25%;
-  max-width: 65%;
+  max-width: 45%;
   max-height: 35vh;
 
   background: rgba($sg-color, 0.9);
@@ -26,15 +26,40 @@
       cursor: pointer;
     }
 
-    .delete {
-      position: absolute !important;
-      left: -6px;
-      top: 1px;
+    .row {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 6px;
+
+      min-height: 36px;
+    }
+
+    .preview {
+      width: 36px;
+      height: 36px;
+    }
+
+    img {
+      max-width: 36px;
+      max-height: 36px;
+
+      width: auto;
+      height: auto;
+
+      object-fit: contain;
     }
 
     .label {
-      margin-left: 22px;
-      margin-bottom: 6px;
+      margin-left: 12px;
+
+      text-align: left;
+    }
+
+    .delete {
+      right: -12px;
     }
   }
 

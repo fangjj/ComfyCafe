@@ -72,12 +72,13 @@ const MainLayout = React.createClass({
           }
         ).fetch(),
         (result, medium) => {
-          if (! _.has(this.uploads, medium._id)) {
-            console.log(medium.filename);
-            result[medium._id._str] = {
-              _id: medium._id._str,
+          const id = medium._id._str;
+          if (! _.has(this.uploads, id)) {
+            result[id] = {
+              _id: id,
               progress: 100,
-              name: medium.filename
+              name: medium.filename,
+              url: "/gridfs/media/" + medium.md5
             };
           }
           return result;
@@ -97,12 +98,17 @@ const MainLayout = React.createClass({
     media.resumable.assignDrop(document.querySelector("html"));
 
     media.resumable.on("fileAdded", (file) => {
-      this.uploads[file.uniqueIdentifier] = {
-        _id: file.uniqueIdentifier,
-        name: file.fileName,
-        progress: 0
-      };
-      this.setState({ updateQueue: _.uniqueId() });
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        this.uploads[file.uniqueIdentifier] = {
+          _id: file.uniqueIdentifier,
+          name: file.fileName,
+          progress: 0,
+          url: reader.result
+        };
+        this.setState({ updateQueue: _.uniqueId() });
+      }, false);
+      reader.readAsDataURL(file.file);
 
       // The file's entrypoint; used to route storage actions.
       let source = file.file.source;

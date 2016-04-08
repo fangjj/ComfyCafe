@@ -1,7 +1,7 @@
 import media from "../collection";
 import "../methods";
 
-export default function (self, file, callback) {
+export default function (file, callback) {
   media.insert({
       _id: file.uniqueIdentifier,
       filename: file.fileName,

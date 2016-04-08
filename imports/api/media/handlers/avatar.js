@@ -1,8 +1,7 @@
 import media from "../collection";
 import "/imports/api/users/methods";
 
-export default function (self, file) {
-	self.setState({isUploading: true});
+export default function (file, callback) {
 	media.insert({
 			_id: file.uniqueIdentifier,
 			filename: file.fileName,
@@ -19,10 +18,7 @@ export default function (self, file) {
 				changed: function(newImage, oldImage) {
 					if (newImage.length === file.size) {
 						liveQuery.stop();
-						self.setState({
-              isUploading: false,
-              progress: 0
-            });
+						callback(file.uniqueIdentifier);
 						Meteor.call("setAvatar", file.uniqueIdentifier);
 					}
 				}

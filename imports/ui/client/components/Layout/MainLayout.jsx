@@ -126,10 +126,13 @@ const MainLayout = React.createClass({
 
       if (source === "avatar") {
         // This is definitely an avatar!
-        avatarUpload(this, file);
+        avatarUpload(file, (id) => {
+          delete this.uploads[id];
+          this.setState({ updateQueue: _.uniqueId() });
+        });
       } else {
         // This is... everything else!
-        mediaUpload(this, file, (id) => {
+        mediaUpload(file, (id) => {
           if (! this.state.mediumId) {
             this.setState({ mediumId: id });
           }

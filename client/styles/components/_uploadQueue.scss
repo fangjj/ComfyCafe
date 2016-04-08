@@ -19,14 +19,23 @@
     @include list;
   }
 
-  .label {
-    margin-bottom: 6px;
-  }
+  li {
+    &.complete {
+      @include hover;
 
-  li.complete {
-    @include hover;
+      cursor: pointer;
+    }
 
-    cursor: pointer;
+    .delete {
+      position: absolute !important;
+      left: -6px;
+      top: 1px;
+    }
+
+    .label {
+      margin-left: 22px;
+      margin-bottom: 6px;
+    }
   }
 
   &:empty {

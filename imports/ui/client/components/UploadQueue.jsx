@@ -5,20 +5,12 @@ import UploadQueueItem from "/imports/ui/client/components/UploadQueueItem";
 import Scrollable from "/imports/ui/client/components/Scrollable";
 
 export default React.createClass({
-  renderQueue() {
-    return _.map(this.props.queue, (upload, key) => {
+  renderQueue(queue) {
+    return _.map(queue, (upload, key) => {
       return <UploadQueueItem
         upload={upload}
         onSelect={this.props.onSelect}
-        key={key}
-      />;
-    });
-  },
-  renderPreQueue() {
-    return _.map(this.props.preQueue, (upload, key) => {
-      return <UploadQueueItem
-        upload={upload}
-        onSelect={this.props.onSelect}
+        onDelete={this.props.onDelete}
         key={key}
       />;
     });
@@ -26,8 +18,8 @@ export default React.createClass({
   render() {
     return <Scrollable className="uploadQueue">
       <ul>
-        {this.renderQueue()}
-        {this.renderPreQueue()}
+        {this.renderQueue(this.props.queue)}
+        {this.renderQueue(this.props.preQueue)}
       </ul>
     </Scrollable>;
   }

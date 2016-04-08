@@ -145,6 +145,17 @@ const MainLayout = React.createClass({
       this.setState({ updateQueue: _.uniqueId() });
     });
   },
+  handlePaste(e) {
+    _.each(e.clipboardData.items, (item) => {
+      if (item.kind === "file") {
+        const blob = item.getAsFile();
+        const ext = item.type.split("/")[1];
+        blob.name = "pasted." + ext;
+        blob.source = "media";
+        media.resumable.addFile(blob);
+      }
+    });
+  },
   createPost(id) {
     this.setState({ mediumId: id });
   },
@@ -200,7 +211,7 @@ const MainLayout = React.createClass({
   },
   render() {
     return <MuiThemeProvider muiTheme={muiTheme}>
-      <div onDrop={this.test}>
+      <div onPaste={this.handlePaste}>
         <PseudoBodyContainer
           setColor={this.setColor}
         />

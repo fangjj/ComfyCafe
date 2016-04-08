@@ -32,12 +32,14 @@
 	z-index: index($elements, topMenu);
 
 	position: absolute;
-	right: 16px/2 + 45px*2;
+  $offset: 16px/2 + 45px*2;
+	right: $offset;
 	top: 60px + 16px;
 
   padding: 0;
 
-	width: 270px;
+	min-width: 270px;
+  max-width: calc(95vw - #{$offset});
 
   background-color: $sg-color;
 
@@ -45,19 +47,10 @@
 
   list-style: none;
 
+  @include list;
+
 	li {
-    display: flex;
-    align-items: center;
-
-    position: relative;
-
-    padding-left: 16px;
-    padding-right: 42px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-
 		width: 100%;
-    min-height: 48px;
 
     overflow: hidden;
     white-space: nowrap;
@@ -65,20 +58,20 @@
 
     text-align: left;
 
-    &:nth-child(even) {
-      background: rgba(#666, 0.2);
+    .row {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    a {
-      margin-right: 3px;
+    .label {
+      margin-left: 4px;
+      margin-right: 5px;
     }
 	}
 
-  .notificationClose {
-    position: absolute;
-    right: 6px;
-    top: 6px;
-
-    cursor: pointer;
+  .dismiss {
+    right: -16px;
   }
 }

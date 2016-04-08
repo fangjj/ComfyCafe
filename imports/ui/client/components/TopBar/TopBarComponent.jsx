@@ -11,7 +11,7 @@ import TopBarExploreButton from "./TopBarExploreButton";
 import TopBarMenu from "./TopBarMenu";
 import NavItem from "./NavItem";
 import NotificationButton from "../Notification/NotificationButton";
-import NotificationListComponent from "../Notification/NotificationListComponent";
+import NotificationList from "../Notification/NotificationList";
 import LoginButton from "../User/LoginButton";
 import AccountActionsButton from "../User/AccountActionsButton";
 import AccountActionsList from "../User/AccountActionsList";
@@ -122,7 +122,7 @@ const TopBarComponent = React.createClass({
     var actionList;
 
     if (this.userReady()) {
-      notificationList = <NotificationListComponent
+      notificationList = <NotificationList
         notifications={this.data.notifications}
         currentUser={this.data.currentUser}
         visible={this.state.visibleMenu === "notifications"}

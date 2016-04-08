@@ -1,9 +1,9 @@
 import React from "react";
 import OnClickOutside from "react-onclickoutside";
 
-import NotificationComponent from "./NotificationComponent";
+import NotificationListItem from "./NotificationListItem";
 
-const NotificationListComponent = React.createClass({
+export default React.createClass({
   mixins: [OnClickOutside],
   handleClickOutside(event) {
     if (this.props.visible) {
@@ -13,7 +13,7 @@ const NotificationListComponent = React.createClass({
   renderNotifications() {
     if (this.props.notifications.length) {
       return this.props.notifications.map((notification) => {
-        return <NotificationComponent
+        return <NotificationListItem
           notification={notification}
           currentUser={this.props.currentUser}
           key={notification._id}
@@ -36,5 +36,3 @@ const NotificationListComponent = React.createClass({
     </div>;
   }
 });
-
-export default NotificationListComponent;

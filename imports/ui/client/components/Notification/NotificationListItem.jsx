@@ -5,13 +5,14 @@ import "/imports/api/users/methods";
 import "/imports/api/notifications/methods";
 
 import Icon from "/imports/ui/client/components/Daikon/Icon";
-import UserLink from "../User/UserLink";
+import UserLink from "/imports/ui/client/components/User/UserLink";
 
 import {
-  FlatButton
+  FlatButton,
+  IconButton
 } from "material-ui";
 
-const NotificationComponent = React.createClass({
+export default React.createClass({
   actionMap: {
     subscribed() {
       return "subscribed!";
@@ -135,21 +136,21 @@ const NotificationComponent = React.createClass({
     Meteor.call("dismissNotification", this.props.notification._id);
   },
   renderLabel() {
-    return this.actionMap[this.props.notification.action].bind(this)();
+    return <span className="label">
+      {this.actionMap[this.props.notification.action].bind(this)()}
+    </span>;
   },
   render() {
-    const rightIcon = <Icon onTouchTap={this.dismiss}>cancel</Icon>;
-
-    return <li rightIcon={rightIcon} style={{whiteSpace: "normal"}}>
-      <div className="notificationInner">
-        <UserLink user={this.props.notification.owner} />
-        {this.renderLabel()}
-      </div>
-      <div className="notificationClose">
-        {rightIcon}
+    return <li>
+      <div className="row">
+        <div className="inner">
+          <UserLink user={this.props.notification.owner} />
+          {this.renderLabel()}
+        </div>
+        <IconButton className="dismiss" onTouchTap={this.dismiss}>
+          <Icon>close</Icon>
+        </IconButton>
       </div>
     </li>;
   }
 });
-
-export default NotificationComponent;

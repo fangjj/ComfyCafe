@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import UploadQueueItem from "/imports/ui/client/components/UploadQueueItem";
+import Scrollable from "/imports/ui/client/components/Scrollable";
 
 export default React.createClass({
   renderQueue() {
@@ -13,9 +14,21 @@ export default React.createClass({
       />;
     });
   },
+  renderPreQueue() {
+    return _.map(this.props.preQueue, (upload, key) => {
+      return <UploadQueueItem
+        upload={upload}
+        onSelect={this.props.onSelect}
+        key={key}
+      />;
+    });
+  },
   render() {
-    return <ul className="uploadQueue">
-      {this.renderQueue()}
-    </ul>;
+    return <Scrollable className="uploadQueue">
+      <ul>
+        {this.renderQueue()}
+        {this.renderPreQueue()}
+      </ul>
+    </Scrollable>;
   }
 });

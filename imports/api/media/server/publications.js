@@ -10,3 +10,21 @@ Meteor.publish("media", function (clientUserId) {
 		return null;
 	}
 });
+
+Meteor.publish("mediaQueue", function (clientUserId) {
+	if (clientUserId === this.userId) {
+		return media.find(
+			{
+				"metadata.owner": clientUserId,
+				"metadata.complete": true,
+				"metadata.bound": { $ne: true }
+			},
+			{ fields: {
+				filename: 1,
+				md5: 1
+			} }
+		);
+	} else {
+		return null;
+	}
+});

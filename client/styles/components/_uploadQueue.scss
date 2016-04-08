@@ -1,18 +1,23 @@
 .uploadQueue {
-  @include list;
-
   position: fixed;
   left: 22px;
   bottom: 22px;
 
-  //padding: 16px;
-
   min-width: 25%;
   max-width: 65%;
+  max-height: 35vh;
 
   background: rgba($sg-color, 0.9);
 
   border: 1px solid rgba($text-color, 0.4);
+
+  &.ps-active-y {
+    padding-right: 8px;
+  }
+
+  ul {
+    @include list;
+  }
 
   .label {
     margin-bottom: 6px;

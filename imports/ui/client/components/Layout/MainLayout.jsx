@@ -56,7 +56,36 @@ const MainLayout = React.createClass({
     };
   },
   getMeteorData() {
-    return { currentUser: Meteor.user() };
+    const handle = Meteor.subscribe("mediaQueue", Meteor.userId());
+    return {
+      loading: ! handle.ready(),
+      preQueue: _.reduce(
+        media.find(
+          {
+            "metadata.owner": Meteor.userId(),
+            "metadata.complete": true,
+            "metadata.bound": { $ne: true }
+          },
+          {
+            sort: { uploadDate: -1, filename: 1 },
+            fields: { filename: 1, md5: 1 }
+          }
+        ).fetch(),
+        (result, medium) => {
+          if (! _.has(this.uploads, medium._id)) {
+            console.log(medium.filename);
+            result[medium._id._str] = {
+              _id: medium._id._str,
+              progress: 100,
+              name: medium.filename
+            };
+          }
+          return result;
+        },
+        {}
+      ),
+      currentUser: Meteor.user()
+    };
   },
   componentWillMount() {
     const seed = _.get(this, "data.currentUser.settings.patternSeed");
@@ -118,17 +147,6 @@ const MainLayout = React.createClass({
       updateQueue: _.uniqueId()
     });
   },
-  freeMedium() {
-    if (this.state.mediumId) {
-      Meteor.call("freeMedium", this.state.mediumId);
-      delete this.uploads[this.state.mediumId];
-      this.setState({
-        mediumId: null,
-        updateQueue: _.uniqueId()
-      });
-    }
-    this.destroyPostForm();
-  },
   setColor(color) {
     this.setState({
       color: color
@@ -138,10 +156,9 @@ const MainLayout = React.createClass({
     if (this.state.mediumId) {
       return <PostForm
         mediumId={this.state.mediumId}
-        destroy={this.destroyPostForm}
         open={true}
         onSuccess={this.postSuccess}
-        handleClose={this.freeMedium}
+        onClose={this.destroyPostForm}
       />;
     }
   },
@@ -155,6 +172,7 @@ const MainLayout = React.createClass({
   renderQueue() {
     return <UploadQueue
       update={this.state.updateQueue}
+      preQueue={this.data.preQueue}
       queue={this.uploads}
       onSelect={this.createPost}
     />;

@@ -9,7 +9,7 @@ import RainbowSpinner from "/imports/ui/client/components/Spinner/RainbowSpinner
 const PostForm = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    var handle = Meteor.subscribe("media", Meteor.userId());
+    const handle = Meteor.subscribe("media", Meteor.userId());
     return {
       loading: ! handle.ready(),
       medium: media.findOne({ _id: new Mongo.ObjectID(this.props.mediumId) }),
@@ -22,7 +22,8 @@ const PostForm = React.createClass({
         if (this.props.onSuccess) {
           this.props.onSuccess();
         }
-        this.props.destroy();
+        this.props.onClose();
+
         const path = FlowRouter.path("post", {
           username: this.data.currentUser.username,
           postName: name
@@ -46,7 +47,7 @@ const PostForm = React.createClass({
       title="Create Post"
       open={this.props.open}
       modal={false}
-      handleClose={this.props.handleClose}
+      handleClose={this.props.onClose}
       handleSubmit={this.handleSubmit}
       medium={this.data.medium}
     />;

@@ -6,7 +6,7 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-	freeMedium: function (mediumId) {
+	mediumDelete: function (mediumId) {
 		check(mediumId, String);
 
     const medium = media.findOne({ _id: new Mongo.ObjectID(mediumId) });

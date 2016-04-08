@@ -10,7 +10,9 @@ export default React.createClass({
   },
   render() {
     return <FAB iconName="add">
-      <input className="addFile" type="file" title="" ref="addFile" />
+      <label className="addFile">
+        <input type="file" title="" ref="addFile" />
+      </label>
     </FAB>;
   }
 });

@@ -1,26 +1,10 @@
 import React from "react";
+import TimeAgo from "react-timeago";
 import moment from "moment";
 
-import SetIntervalMixin from "./extern/SetIntervalMixin";
-
-const Moment = React.createClass({
-  mixins: [SetIntervalMixin],
-  getInitialState() {
-    return {
-      prettyDate: moment(this.props.time).fromNow()
-    }
-  },
-  componentDidMount() {
-    this.setInterval(() => {
-      this.setState({
-        prettyDate: moment(this.props.time).fromNow()
-      });
-    }, 5000);
-  },
+export default React.createClass({
   render() {
-    const isoDate = moment(this.props.time).toISOString();
-    return <time dateTime={isoDate}>{this.state.prettyDate}</time>;
+    const stamp = moment(this.props.time).format("MMMM Do, YYYY HH:mm:ss");
+    return <TimeAgo date={this.props.time} title={stamp} />;
   }
 });
-
-export default Moment;

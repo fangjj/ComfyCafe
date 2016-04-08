@@ -185,13 +185,15 @@ const MainLayout = React.createClass({
     }
   },
   renderQueue() {
-    return <UploadQueue
-      update={this.state.updateQueue}
-      preQueue={this.data.preQueue}
-      queue={this.uploads}
-      onSelect={this.createPost}
-      onDelete={this.deleteMedium}
-    />;
+    if (! _.isEmpty(this.uploads) || ! _.isEmpty(this.data.preQueue)) {
+      return <UploadQueue
+        update={this.state.updateQueue}
+        preQueue={this.data.preQueue}
+        queue={this.uploads}
+        onSelect={this.createPost}
+        onDelete={this.deleteMedium}
+      />;
+    }
   },
   render() {
     return <MuiThemeProvider muiTheme={muiTheme}>

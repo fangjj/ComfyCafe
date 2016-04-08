@@ -1,13 +1,9 @@
 import React from "react";
 
 import BlogForm from "./BlogForm";
-import Icon from "/imports/ui/client/components/Daikon/Icon";
+import FAB from "/imports/ui/client/components/FAB";
 
-import {
-  FloatingActionButton
-} from "material-ui";
-
-const BlogPostFAB = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -20,16 +16,11 @@ const BlogPostFAB = React.createClass({
     this.setState({showForm: false});
   },
   render() {
-    return <div className="fixed-action-btn">
-      <FloatingActionButton primary={true} onTouchTap={this.showBlogForm}>
-        <Icon>add</Icon>
-      </FloatingActionButton>
+    return <FAB iconName="add" onTouchTap={this.showBlogForm}>
       <BlogForm
         handleClose={this.hideBlogForm}
         open={this.state.showForm}
       />
-    </div>;
+    </FAB>;
   }
 });
-
-export default BlogPostFAB;

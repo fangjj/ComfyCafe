@@ -1,13 +1,9 @@
 import React from "react";
 
 import PostUpdateForm from "./PostUpdateForm";
-import Icon from "/imports/ui/client/components/Daikon/Icon";
+import FAB from "/imports/ui/client/components/FAB";
 
-import {
-  FloatingActionButton
-} from "material-ui";
-
-const PostModifyFAB = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -20,17 +16,12 @@ const PostModifyFAB = React.createClass({
     this.setState({showForm: false});
   },
   render() {
-    return <div className="fixed-action-btn">
-      <FloatingActionButton primary={true} onTouchTap={this.showPostForm}>
-        <Icon>edit</Icon>
-      </FloatingActionButton>
+    return <FAB iconName="edit" onTouchTap={this.showPostForm}>
       <PostUpdateForm
         post={this.props.post}
         handleClose={this.hidePostForm}
         open={this.state.showForm}
       />
-    </div>;
+    </FAB>;
   }
 });
-
-export default PostModifyFAB;

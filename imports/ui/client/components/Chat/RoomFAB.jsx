@@ -1,13 +1,9 @@
 import React from "react";
 
 import RoomForm from "./RoomForm";
-import Icon from "/imports/ui/client/components/Daikon/Icon";
+import FAB from "/imports/ui/client/components/FAB";
 
-import {
-  FloatingActionButton
-} from "material-ui";
-
-const RoomFAB = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -20,16 +16,11 @@ const RoomFAB = React.createClass({
     this.setState({showForm: false});
   },
   render() {
-    return <div className="fixed-action-btn">
-      <FloatingActionButton primary={true} onTouchTap={this.showRoomForm}>
-        <Icon>add</Icon>
-      </FloatingActionButton>
+    return <FAB iconName="add" onTouchTap={this.showRoomForm}>
       <RoomForm
         handleClose={this.hideRoomForm}
         open={this.state.showForm}
       />
-    </div>;
+    </FAB>;
   }
 });
-
-export default RoomFAB;

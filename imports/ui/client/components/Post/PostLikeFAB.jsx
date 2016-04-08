@@ -3,25 +3,15 @@ import React from "react";
 
 import "/imports/api/posts/methods";
 
-import Icon from "/imports/ui/client/components/Daikon/Icon";
+import FAB from "/imports/ui/client/components/FAB";
 
-import {
-  FloatingActionButton
-} from "material-ui";
-
-const PostLikeFAB = React.createClass({
+export default React.createClass({
   like() {
-    var post = this.props.post;
+    const post = this.props.post;
     Meteor.call("likePost", post._id, ! _.includes(post.likes, this.props.userId));
   },
   render() {
-    var liked = _.includes(this.props.post.likes, this.props.userId);
-    return <div className="fixed-action-btn">
-      <FloatingActionButton primary={true} onClick={this.like}>
-        <Icon>{liked ? "favorite" : "favorite_border"}</Icon>
-      </FloatingActionButton>
-    </div>;
+    const liked = _.includes(this.props.post.likes, this.props.userId);
+    return <FAB iconName={liked ? "favorite" : "favorite_border"} onTouchTap={this.like} />;
   }
 });
-
-export default PostLikeFAB;

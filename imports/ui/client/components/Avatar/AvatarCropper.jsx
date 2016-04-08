@@ -10,7 +10,7 @@ import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import CropperComponent from "../extern/CropperComponent";
 
-const AvatarCropper = React.createClass({
+export default React.createClass({
 	getInitialState() {
     if (this.props.src) {
       return {
@@ -83,19 +83,6 @@ const AvatarCropper = React.createClass({
       </NativeListener>;
     }
   },
-  renderInput() {
-    if (! this.props.src) {
-      return <div className="file-field input-field">
-        <div className="btn">
-          <span>File</span>
-          <input className="addAvatar" type="file" onChange={this.addToCropzone} />
-        </div>
-        <div className="file-path-wrapper">
-          <input className="file-path validate" type="text" />
-        </div>
-      </div>;
-    }
-  },
   renderActions() {
     return <Actions>
       <CancelButton
@@ -111,10 +98,7 @@ const AvatarCropper = React.createClass({
   render() {
     return <div className="avatarCropper">
 			{this.renderCropper()}
-      {this.renderInput()}
       {this.renderActions()}
     </div>;
   }
 });
-
-export default AvatarCropper;

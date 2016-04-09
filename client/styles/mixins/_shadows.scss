@@ -5,3 +5,7 @@
 @mixin lightShadow {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
 }
+
+@mixin mediumShadow {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16), 0 3px 10px rgba(0, 0, 0, 0.23);
+}

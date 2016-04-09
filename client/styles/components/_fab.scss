@@ -1,7 +1,18 @@
-.fixed-action-btn {
+.fab-container {
   z-index: index($elements, fab);
 
   position: fixed;
   right: 22px;
   bottom: 22px;
+}
+
+.fab {
+  @include button;
+  @include mediumShadow;
+
+  width: 56px;
+  height: 56px;
+  box-sizing: border-box;
+
+  border-radius: 50%;
 }

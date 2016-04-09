@@ -1,8 +1,9 @@
 import React from "react";
 
 import classConcat from "/imports/ui/client/utils/classConcat";
+import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 
-const Actions = React.createClass({
+export default React.createClass({
   renderLeft(left) {
     return <div className="left">
       {left}
@@ -13,11 +14,9 @@ const Actions = React.createClass({
     const classes = classConcat("actions", className);
     return <div className={classes} {...props}>
       {this.renderLeft(left)}
-      <div>
+      <ButtonGroup>
         {children}
-      </div>
+      </ButtonGroup>
     </div>;
   }
 });
-
-export default Actions;

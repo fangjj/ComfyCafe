@@ -13,3 +13,12 @@
     background-color: $scary-cherry;
   }
 }
+
+// Should we switch to spinal case for CSS?
+.button-group {
+  @include lightShadow;
+
+  .button {
+    box-shadow: none;
+  }
+}

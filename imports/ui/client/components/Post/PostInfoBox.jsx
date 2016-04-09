@@ -8,7 +8,7 @@ import TextBody from "../TextBody";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import ToggleButton from "/imports/ui/client/components/Button/ToggleButton";
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
-import SubtleDangerButton from "/imports/ui/client/components/Button/SubtleDangerButton";
+import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import OriginalityIcon from "/imports/ui/client/components/Daikon/OriginalityIcon";
 import PrivacyIcon from "/imports/ui/client/components/Daikon/PrivacyIcon";
 import Moment from "../Moment";
@@ -79,9 +79,10 @@ const PostInfoBox = React.createClass({
       </div>;
     } else {
       return <div>
-        <SubtleDangerButton
+        <DangerButton
           label="Delete"
           iconName="delete"
+          subtle={true}
           onTouchTap={this.delete}
         />
         <SubmitButton

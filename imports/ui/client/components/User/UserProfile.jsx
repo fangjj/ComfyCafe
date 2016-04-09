@@ -12,7 +12,7 @@ import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
 import Button from "/imports/ui/client/components/Button/Button";
 import FriendButton from "/imports/ui/client/components/Button/FriendButton";
-import SubtleDangerButton from "/imports/ui/client/components/Button/SubtleDangerButton";
+import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import DirectAvatar from "/imports/ui/client/components/Avatar/DirectAvatar";
 import AvatarCropper from "/imports/ui/client/components/Avatar/AvatarCropper";
 
@@ -73,9 +73,10 @@ const UserProfile = React.createClass({
 
       let deleteButton;
       if (hasAvatar) {
-        deleteButton = <SubtleDangerButton
+        deleteButton = <DangerButton
           label="Delete Avatar"
           iconName="delete"
+          subtle={true}
           onTouchTap={this.deleteAvatar}
         />;
       }

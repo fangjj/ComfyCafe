@@ -8,7 +8,9 @@ export default (props) => {
   const classes = classConcat("fab", className);
   return <div className="fab-container">
     <button className={classes} {...leftProps}>
-      <Icon>{iconName}</Icon>
+      <div>
+        <Icon>{iconName}</Icon>
+      </div>
     </button>
     {children}
   </div>;

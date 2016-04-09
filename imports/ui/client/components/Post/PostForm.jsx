@@ -16,7 +16,7 @@ const PostForm = React.createClass({
       currentUser: Meteor.user()
     };
   },
-  handleSubmit(data) {
+  handleSubmit(data, callback) {
     Meteor.call("addPost", this.props.mediumId, data, (err, name) => {
       if (! err) {
         if (this.props.onSuccess) {
@@ -36,6 +36,8 @@ const PostForm = React.createClass({
       } else {
         prettyPrint(err);
       }
+
+      callback();
     });
   },
   render() {

@@ -11,7 +11,7 @@ import {
   IconButton
 } from "material-ui";
 
-const PostMoreMenu = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -29,13 +29,22 @@ const PostMoreMenu = React.createClass({
   delete() {
     Meteor.call("deletePost", this.props.post._id);
   },
+  renderForm() {
+    if (this.state.showForm) {
+      return <PostUpdateForm
+        post={this.props.post}
+        handleClose={this.hidePostForm}
+        open={this.state.showForm}
+      />;
+    }
+  },
   render() {
-    var post = this.props.post;
+    const post = this.props.post;
 
-    var owner = post.owner;
-    var isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
+    const owner = post.owner;
+    const isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
 
-    var moreBtn = <IconButton>
+    const moreBtn = <IconButton>
       <Icon>more_horiz</Icon>
     </IconButton>;
 
@@ -49,13 +58,7 @@ const PostMoreMenu = React.createClass({
         <MenuItem primaryText="Reroll" onTouchTap={this.reroll} />
         <MenuItem primaryText="Delete" onTouchTap={this.delete} />
       </IconMenu>
-      <PostUpdateForm
-        post={this.props.post}
-        handleClose={this.hidePostForm}
-        open={this.state.showForm}
-      />
+      {this.renderForm()}
     </div>;
   }
 });
-
-export default PostMoreMenu;

@@ -79,11 +79,11 @@ const PostDialog = React.createClass({
       tags: this.state.tags,
       tagsCondExpanded: this.state.condExpanded,
       pretentiousFilter: this.state.pretentiousFilter
+    }, () => {
+      if (! this.props.post) {
+        this.setState(defaultState);
+      }
     });
-
-    if (! this.props.post) {
-      this.setState(defaultState);
-    }
   },
   renderMedium() {
     if (this.props.medium) {

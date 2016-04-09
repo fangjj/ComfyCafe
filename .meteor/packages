@@ -1,5 +1,5 @@
 standard-app-packages
-ecmascript
+gadicc:ecmascript-hot
 reactive-var
 accounts-password
 email
@@ -20,3 +20,4 @@ vsivsi:job-collection
 comfysoft:utility
 comfysoft:sharp
 ongoworks:security@2.0.1
+nathantreid:css-modules

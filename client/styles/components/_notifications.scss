@@ -1,8 +1,6 @@
 #notificationListToggle {
   position: relative;
 
-  margin-top: 0;
-
   .push {
     @include pushBadge(16px);
 

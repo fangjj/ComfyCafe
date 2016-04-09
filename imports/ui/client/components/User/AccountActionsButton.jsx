@@ -1,9 +1,9 @@
 import React from "react";
 import NativeListener from "react-native-listener";
 
-import DirectAvatar from "../Avatar/DirectAvatar";
+import DirectAvatar from "/imports/ui/client/components/Avatar/DirectAvatar";
 
-const AccountActionsButton = React.createClass({
+export default React.createClass({
   toggleActionsVisbility(event) {
     if (event.which === 2) {
       // Middle mouse click
@@ -16,7 +16,7 @@ const AccountActionsButton = React.createClass({
   render() {
     return <NativeListener onClick={this.toggleActionsVisbility}>
       <a id="accountActionsToggle"
-        className="ignore-react-onclickoutside waves-effect waves-teal"
+        className="ignore-react-onclickoutside"
         href={FlowRouter.path("profile", {username: this.props.currentUser.username})}
       >
         <DirectAvatar size="topBar" user={this.props.currentUser} />
@@ -24,5 +24,3 @@ const AccountActionsButton = React.createClass({
     </NativeListener>;
   }
 });
-
-export default AccountActionsButton;

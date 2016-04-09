@@ -25,12 +25,19 @@ export default React.createClass({
       </a>;
     }
   },
+  renderWrap() {
+    if (this.props.noRipple) {
+      return this.renderInner();
+    } else {
+      return <Ripple>
+        {this.renderInner()}
+      </Ripple>;
+    }
+  },
   render() {
     const classes = classConcat("navItem", this.props.className);
     return <li className={classes}>
-      <Ripple>
-        {this.renderInner()}
-      </Ripple>
+      {this.renderWrap()}
     </li>;
   }
 });

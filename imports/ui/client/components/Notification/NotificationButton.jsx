@@ -15,7 +15,7 @@ export default React.createClass({
   },
   render() {
     return <a id="notificationListToggle"
-      className="ignore-react-onclickoutside waves-effect waves-teal"
+      className="ignore-react-onclickoutside"
       onClick={this.toggleListVisibility}
     >
       <Icon>notifications</Icon>

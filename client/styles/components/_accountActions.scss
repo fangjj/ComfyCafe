@@ -1,7 +1,8 @@
 #accountActionsToggle {
+	z-index: index($elements, topMenuToggle);
+
 	padding-left: 10px;
 	padding-right: 10px;
-	padding-top: (64px - 50px) / 2;
 }
 
 #accountActionsArrow {

@@ -5,10 +5,12 @@ import "/imports/api/users/methods";
 import "/imports/api/notifications/methods";
 
 import Icon from "/imports/ui/client/components/Daikon/Icon";
+import DangerButton from "/imports/ui/client/components/Button/DangerButton";
+import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
+import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import UserLink from "/imports/ui/client/components/User/UserLink";
 
 import {
-  FlatButton,
   IconButton
 } from "material-ui";
 
@@ -18,23 +20,23 @@ export default React.createClass({
       return "subscribed!";
     },
     friendRequest() {
-      return [
-        "wants to be friends! ",
-        <FlatButton
-          label="Reject"
-          key={_.uniqueId()}
-          onTouchTap={() => {
-            Meteor.call("rejectFriendRequest", this.props.notification._id);
-          }}
-        />,
-        <FlatButton
-          label="Accept"
-          key={_.uniqueId()}
-          onTouchTap={() => {
-            Meteor.call("acceptFriendRequest", this.props.notification._id);
-          }}
-        />
-      ];
+      return {
+        label: "wants to be friends! ",
+        buttons: <ButtonGroup key={"fr_" + this.props.notification._id}>
+          <DangerButton
+            label="Reject"
+            onTouchTap={() => {
+              Meteor.call("rejectFriendRequest", this.props.notification._id);
+            }}
+          />
+          <SubmitButton
+            label="Accept"
+            onTouchTap={() => {
+              Meteor.call("acceptFriendRequest", this.props.notification._id);
+            }}
+          />
+        </ButtonGroup>
+      };
     },
     friendAccepted() {
       return "accepted your friend request!";
@@ -135,22 +137,26 @@ export default React.createClass({
     event.stopPropagation();
     Meteor.call("dismissNotification", this.props.notification._id);
   },
-  renderLabel() {
-    return <span className="label">
-      {this.actionMap[this.props.notification.action].bind(this)()}
-    </span>;
-  },
   render() {
+    let label = this.actionMap[this.props.notification.action].bind(this)();
+    let buttons;
+    if (_.has(label, "buttons")) {
+      buttons = label.buttons;
+      label = label.label;
+    }
     return <li>
       <div className="row">
         <div className="inner">
           <UserLink user={this.props.notification.owner} />
-          {this.renderLabel()}
+          <span className="label">
+            {label}
+          </span>
         </div>
         <IconButton className="dismiss" onTouchTap={this.dismiss}>
           <Icon>close</Icon>
         </IconButton>
       </div>
+      {buttons}
     </li>;
   }
 });

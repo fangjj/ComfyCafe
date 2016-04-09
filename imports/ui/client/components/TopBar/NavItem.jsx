@@ -1,39 +1,36 @@
 import React from "react";
 
+import classConcat from "/imports/ui/client/utils/classConcat";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
+import Ripple from "/imports/ui/client/components/Ripple";
 
-const NavItem = React.createClass({
+export default React.createClass({
   renderIcon() {
     if (this.props.iconName) {
-      const classes = (this.props.label ? "left" : undefined);
-      return <Icon className={classes}>{this.props.iconName}</Icon>;
+      return <Icon>{this.props.iconName}</Icon>;
     }
   },
   renderLabel() {
     if (this.props.label) {
-      return <span className="hide-on-med-and-down">{this.props.label}</span>;
+      return <div className="label hide-on-med-and-down">{this.props.label}</div>;
     }
   },
   renderInner() {
     if (this.props.children) {
       return this.props.children;
     } else {
-      return <a href={this.props.href} className="waves-effect waves-teal">
+      return <a href={this.props.href}>
         {this.renderIcon()}
         {this.renderLabel()}
       </a>;
     }
   },
   render() {
-    var classes = "navItem";
-    if (this.props.className) {
-      classes += " " + this.props.className;
-    }
-
-    return <li id={this.props.id} className={classes}>
-      {this.renderInner()}
+    const classes = classConcat("navItem", this.props.className);
+    return <li className={classes}>
+      <Ripple>
+        {this.renderInner()}
+      </Ripple>
     </li>;
   }
 });
-
-export default NavItem;

@@ -1,7 +1,8 @@
 import React from "react";
 
-import classConcat from "/imports/ui/client/utils/classConcat";
+import Colors from "/imports/ui/client/utils/colors";
 import Button from "/imports/ui/client/components/Button/Button";
+import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
 export default React.createClass({
   getInitialState() {
@@ -17,15 +18,13 @@ export default React.createClass({
   },
   render() {
     if (! this.props.active) {
-      return <Button
-        className={this.props.className}
+      return <SubmitButton
         label={this.props.labelActivate}
-        primary={true}
         iconName={this.props.iconActivate}
         onTouchTap={this.props.activate}
       />;
     } else {
-      let classes = "inactive";
+      let color = Colors.reassuringGray;
       let label;
       let icon;
       if (this.state.notHover) {
@@ -33,14 +32,13 @@ export default React.createClass({
         icon = this.props.iconActivated;
       } else {
         if (this.props.dangerous) {
-          classes = "danger";
+          color = Colors.scaryCherry;
         }
         label = this.props.labelDeactivate;
         icon = this.props.iconDeactivate;
       }
-      classes = classConcat(classes, this.props.className);
       return <Button
-        className={classes}
+        backgroundColor={color}
         label={label}
         iconName={icon}
         onTouchTap={this.props.deactivate}

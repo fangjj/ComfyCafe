@@ -10,7 +10,7 @@ import Content from "/imports/ui/client/components/Content";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
-import Button from "/imports/ui/client/components/Button/Button";
+import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import FriendButton from "/imports/ui/client/components/Button/FriendButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
@@ -83,7 +83,7 @@ const UserProfile = React.createClass({
       }
 
       return <ButtonGroup>
-        <Button
+        <SubmitButton
           label="Change Avatar"
           iconName="image"
           onTouchTap={this.startChangingAvatar}

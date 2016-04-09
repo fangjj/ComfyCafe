@@ -2,12 +2,11 @@ import _ from "lodash";
 import React from "react";
 
 import "/imports/api/users/methods";
-
 import Notifications from "/imports/api/notifications/collection";
 
 import ToggleButton from "./ToggleButton";
 
-const FriendButton = React.createClass({
+export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var handle = Meteor.subscribe("friendRequest", Meteor.userId(), this.props.user._id);
@@ -49,6 +48,7 @@ const FriendButton = React.createClass({
         iconActivated="check"
         labelDeactivate="Cancel Request"
         iconDeactivate="undo"
+        width={208}
       />;
     } else {
       return <ToggleButton
@@ -60,9 +60,8 @@ const FriendButton = React.createClass({
         iconActivated="sentiment_very_satisfied"
         labelDeactivate="Unfriend"
         iconDeactivate="delete_sweep"
+        width={140}
       />;
     }
   }
 });
-
-export default FriendButton;

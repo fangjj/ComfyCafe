@@ -1,18 +1,32 @@
 import React from "react";
 
-import classConcat from "/imports/ui/client/utils/classConcat";
+import Colors from "/imports/ui/client/utils/colors";
 import Button from "/imports/ui/client/components/Button/Button";
 
-export default (props) => {
-  const { className, iconName, ...leftoverProps } = props;
-  let classes = "danger";
-  if (props.subtle) {
-    classes = "subtle " + classes;
+export default React.createClass({
+  getInitialState() {
+    return {
+      hover: false
+    };
+  },
+  hover() {
+    this.setState({ hover: true });
+  },
+  unhover() {
+    this.setState({ hover: false });
+  },
+  render() {
+    const { iconName, subtle, ...leftoverProps } = this.props;
+    let color = Colors.scaryCherry;
+    if (subtle && ! this.state.hover) {
+      color = Colors.reassuringGray;
+    }
+    return <Button
+      backgroundColor={color}
+      iconName={iconName || "close"}
+      onMouseEnter={this.hover}
+      onMouseLeave={this.unhover}
+      {...leftoverProps}
+    />;
   }
-  classes = classConcat(classes, className);
-  return <Button
-    className={classes}
-    iconName={iconName || "close"}
-    {...leftoverProps}
-  />;
-};
+});

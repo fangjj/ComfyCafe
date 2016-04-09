@@ -23,6 +23,7 @@ export default React.createClass({
       iconActivated="check_box"
       labelDeactivate="Unsubscribe"
       iconDeactivate="indeterminate_check_box"
+      width={170}
     />;
   }
 });

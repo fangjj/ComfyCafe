@@ -16,7 +16,7 @@ import LoginButton from "../User/LoginButton";
 import AccountActionsButton from "../User/AccountActionsButton";
 import AccountActionsList from "../User/AccountActionsList";
 
-const TopBarComponent = React.createClass({
+const TopBar = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
@@ -159,4 +159,4 @@ const TopBarComponent = React.createClass({
   }
 });
 
-export default TopBarComponent;
+export default TopBar;

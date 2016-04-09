@@ -1,10 +1,10 @@
 import React from "react";
 
-import VisibilityLink from "../VisibilityLink";
-import Moment from "../Moment";
-import Avatar from "../Avatar/Avatar";
+import VisibilityLink from "/imports/ui/client/components/VisibilityLink";
+import Moment from "/imports/ui/client/components/Moment";
+import Avatar from "/imports/ui/client/components/Avatar/Avatar";
 
-const TopicListItem = React.createClass({
+export default React.createClass({
   renderMoreMenu() {
     var isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.topic.owner._id;
@@ -31,11 +31,6 @@ const TopicListItem = React.createClass({
 
     return <li className="topicListItem">
       <div className="flexLayout">
-        <div className="leftSide">
-          <a href={ownerUrl}>
-            <Avatar size="icon" user={owner} />
-          </a>
-        </div>
         <div className="rightSide">
           <div className="top">
             <div className="info">
@@ -55,8 +50,12 @@ const TopicListItem = React.createClass({
           {(topic.messageCount || 0)}
         </span>
       </div>
+      <a className="fill" href={topicUrl}></a>
+      <div className="pin">
+        <a href={ownerUrl}>
+          <Avatar size="icon" user={owner} />
+        </a>
+      </div>
     </li>;
   }
 });
-
-export default TopicListItem;

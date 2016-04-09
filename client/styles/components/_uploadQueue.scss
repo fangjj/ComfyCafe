@@ -11,17 +11,13 @@
 
   border: 1px solid rgba($text-color, 0.4);
 
-  &.ps-active-y {
-    padding-right: 8px;
-  }
-
   ul {
     @include list;
   }
 
   li {
     &.complete {
-      @include hover;
+      @include hoverAlt;
 
       cursor: pointer;
     }

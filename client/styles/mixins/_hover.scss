@@ -5,3 +5,11 @@
     background-color: rgba(0, 0, 0, 0.12);
   }
 }
+
+@mixin hoverAlt {
+  @include hover;
+
+  &:nth-child(even):hover {
+    background-color: rgba(#FFF, 0.10);
+  }
+}

@@ -4,7 +4,7 @@ import {
   MenuItem
 } from "material-ui";
 
-const LinkButton = React.createClass({
+export default React.createClass({
   renderInner() {
     if (this.props.children) {
       return this.props.children;
@@ -20,5 +20,3 @@ const LinkButton = React.createClass({
     </MenuItem>;
   }
 });
-
-export default LinkButton;

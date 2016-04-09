@@ -7,7 +7,8 @@ export default {
       return {
         layout: MainLayout,
         content: {
-          main: <Admin />
+          main: <Admin />,
+          dense: true
         }
       };
     }

@@ -3,8 +3,8 @@ import React from "react";
 import Room from "./Room";
 import Topic from "./Topic";
 import TopicList from "./TopicList";
-import DenseLayout from "../DenseLayout";
-import DenseCol from "../DenseCol";
+import DenseLayout from "/imports/ui/client/components/DenseLayout";
+import DenseCol from "/imports/ui/client/components/DenseCol";
 
 const Chat = React.createClass({
   renderMain() {

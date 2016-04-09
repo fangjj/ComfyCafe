@@ -5,6 +5,7 @@ import Rooms from "/imports/api/rooms/collection";
 
 import TopicButton from "./TopicButton";
 import TopicListItem from "./TopicListItem";
+import List from "/imports/ui/client/components/List";
 import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
 
 import {
@@ -60,7 +61,7 @@ export default React.createClass({
       return <DenseLoadingSpinner />;
     }
 
-    return <ol className="list">
+    return <List ordered={true} className="topicList">
       <li className="roomHead">
         <a href={FlowRouter.path("room", {roomId: this.data.room._id})}>
           <header>
@@ -77,6 +78,6 @@ export default React.createClass({
         />
       </li>
       {this.renderTopics()}
-    </ol>;
+    </List>;
   }
 });

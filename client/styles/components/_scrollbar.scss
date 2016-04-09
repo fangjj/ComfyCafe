@@ -2,4 +2,8 @@
   position: relative;
 
   overflow: hidden;
+
+  &.ps-active-y {
+    padding-right: 8px;
+  }
 }

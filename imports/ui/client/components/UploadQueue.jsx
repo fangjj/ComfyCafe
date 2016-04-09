@@ -1,8 +1,9 @@
 import _ from "lodash";
 import React from "react";
 
-import UploadQueueItem from "/imports/ui/client/components/UploadQueueItem";
 import Scrollable from "/imports/ui/client/components/Scrollable";
+import List from "/imports/ui/client/components/List";
+import UploadQueueItem from "/imports/ui/client/components/UploadQueueItem";
 
 export default React.createClass({
   renderQueue(queue) {
@@ -17,10 +18,10 @@ export default React.createClass({
   },
   render() {
     return <Scrollable className="uploadQueue">
-      <ul>
+      <List>
         {this.renderQueue(this.props.queue)}
         {this.renderQueue(this.props.preQueue)}
-      </ul>
+      </List>
     </Scrollable>;
   }
 });

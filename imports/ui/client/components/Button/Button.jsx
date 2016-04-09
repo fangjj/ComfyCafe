@@ -8,9 +8,11 @@ export default (props) => {
   const { className, iconName, ...leftoverProps } = props;
   const classes = classConcat("button", className);
   return <button className={classes} {...leftoverProps}>
-    <Icon>{iconName}</Icon>
-    <div className="label">
-      {props.label}
+    <div>
+      <Icon>{iconName}</Icon>
+      <div className="label">
+        {props.label}
+      </div>
     </div>
   </button>;
 };

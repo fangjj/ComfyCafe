@@ -61,39 +61,45 @@ const PostInfoBox = React.createClass({
         _.get(this.props, "currentUser.bookmarks", []),
         this.props.post._id
       );
-      return <ButtonGroup>
-        <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />
-        <ToggleButton
-          className="bookmark"
-          active={bookmarked}
-          activate={this.bookmark}
-          deactivate={this.bookmark}
-          labelActivate="Bookmark"
-          iconActivate="bookmark_outline"
-          labelActivated="Bookmarked"
-          iconActivated="bookmark"
-          labelDeactivate="Unbookmark"
-          iconDeactivate="bookmark_outline"
-        />
-        <br />
-        {cropButton}
-      </ButtonGroup>;
+      return <div>
+        <ButtonGroup>
+          <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />
+          <ToggleButton
+            className="bookmark"
+            active={bookmarked}
+            activate={this.bookmark}
+            deactivate={this.bookmark}
+            labelActivate="Bookmark"
+            iconActivate="bookmark_outline"
+            labelActivated="Bookmarked"
+            iconActivated="bookmark"
+            labelDeactivate="Unbookmark"
+            iconDeactivate="bookmark_outline"
+          />
+        </ButtonGroup>
+        <ButtonGroup>
+          {cropButton}
+        </ButtonGroup>
+      </div>;
     } else {
-      return <ButtonGroup>
-        <DangerButton
-          label="Delete"
-          iconName="delete"
-          subtle={true}
-          onTouchTap={this.delete}
-        />
-        <SubmitButton
-          label="Reroll"
-          iconName="casino"
-          onTouchTap={this.reroll}
-        />
-        <br />
-        {cropButton}
-      </ButtonGroup>;
+      return <div>
+        <ButtonGroup>
+          <DangerButton
+            label="Delete"
+            iconName="delete"
+            subtle={true}
+            onTouchTap={this.delete}
+          />
+          <SubmitButton
+            label="Reroll"
+            iconName="casino"
+            onTouchTap={this.reroll}
+          />
+        </ButtonGroup>
+        <ButtonGroup>
+          {cropButton}
+        </ButtonGroup>
+      </div>;
     }
   },
   renderSource() {

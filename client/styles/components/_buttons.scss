@@ -12,6 +12,22 @@
   &.subtle.danger:hover {
     background-color: $scary-cherry;
   }
+
+  &.subscribe {
+    width: 164px;
+  }
+
+  &.bookmark {
+    width: 170px;
+  }
+
+  &.friend-request {
+    width: 204px;
+  }
+
+  &.friended {
+    width: 136px;
+  }
 }
 
 // Should we switch to spinal case for CSS?

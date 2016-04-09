@@ -11,6 +11,7 @@ import Icon from "/imports/ui/client/components/Daikon/Icon";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
 import Button from "/imports/ui/client/components/Button/Button";
+import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import FriendButton from "/imports/ui/client/components/Button/FriendButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import DirectAvatar from "/imports/ui/client/components/Avatar/DirectAvatar";
@@ -61,13 +62,13 @@ const UserProfile = React.createClass({
   },
   renderToolbox(isOwner) {
     if (! isOwner) {
-      return <div>
+      return <ButtonGroup>
         <SubscriptionButton owner={this.data.user} currentUser={this.data.currentUser} />
         <FriendButton
           user={this.data.user}
           currentUser={this.data.currentUser}
         />
-      </div>;
+      </ButtonGroup>;
     } else {
       const hasAvatar = _.has(this.data.user, "avatars");
 
@@ -81,14 +82,14 @@ const UserProfile = React.createClass({
         />;
       }
 
-      return <div>
+      return <ButtonGroup>
         <Button
           label="Change Avatar"
           iconName="image"
           onTouchTap={this.startChangingAvatar}
         />
         {deleteButton}
-      </div>;
+      </ButtonGroup>;
     }
   },
   renderCatchphrase() {

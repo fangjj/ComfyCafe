@@ -39,6 +39,7 @@ const FriendButton = React.createClass({
       const requested = this.props.currentUser
         && this.data.friendRequest;
       return <ToggleButton
+        className="friend-request"
         active={requested}
         activate={this.friendRequest}
         deactivate={this.cancelFriendRequest}
@@ -48,10 +49,10 @@ const FriendButton = React.createClass({
         iconActivated="check"
         labelDeactivate="Cancel Request"
         iconDeactivate="undo"
-        width={208}
       />;
     } else {
       return <ToggleButton
+        className="friended"
         active={true}
         deactivate={this.unfriend}
         dangerous={true}
@@ -59,7 +60,6 @@ const FriendButton = React.createClass({
         iconActivated="sentiment_very_satisfied"
         labelDeactivate="Unfriend"
         iconDeactivate="delete_sweep"
-        width={140}
       />;
     }
   }

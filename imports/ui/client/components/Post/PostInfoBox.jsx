@@ -9,6 +9,7 @@ import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import ToggleButton from "/imports/ui/client/components/Button/ToggleButton";
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
+import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import OriginalityIcon from "/imports/ui/client/components/Daikon/OriginalityIcon";
 import PrivacyIcon from "/imports/ui/client/components/Daikon/PrivacyIcon";
 import Moment from "../Moment";
@@ -60,9 +61,10 @@ const PostInfoBox = React.createClass({
         _.get(this.props, "currentUser.bookmarks", []),
         this.props.post._id
       );
-      return <div>
+      return <ButtonGroup>
         <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />
         <ToggleButton
+          className="bookmark"
           active={bookmarked}
           activate={this.bookmark}
           deactivate={this.bookmark}
@@ -72,13 +74,12 @@ const PostInfoBox = React.createClass({
           iconActivated="bookmark"
           labelDeactivate="Unbookmark"
           iconDeactivate="bookmark_outline"
-          width={174}
         />
         <br />
         {cropButton}
-      </div>;
+      </ButtonGroup>;
     } else {
-      return <div>
+      return <ButtonGroup>
         <DangerButton
           label="Delete"
           iconName="delete"
@@ -92,7 +93,7 @@ const PostInfoBox = React.createClass({
         />
         <br />
         {cropButton}
-      </div>;
+      </ButtonGroup>;
     }
   },
   renderSource() {

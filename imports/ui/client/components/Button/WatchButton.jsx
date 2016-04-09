@@ -25,7 +25,6 @@ export default React.createClass({
       iconActivated="check"
       labelDeactivate="Unwatch"
       iconDeactivate="visibility_off"
-      width={141}
     />;
   }
 });

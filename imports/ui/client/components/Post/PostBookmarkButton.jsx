@@ -9,7 +9,7 @@ import {
   IconButton
 } from "material-ui";
 
-const PostBookmarkButton = React.createClass({
+export default React.createClass({
   toggle(next) {
     Meteor.call("bookmarkPost", this.props.post._id, next);
   },
@@ -26,5 +26,3 @@ const PostBookmarkButton = React.createClass({
     </div>;
   }
 });
-
-export default PostBookmarkButton;

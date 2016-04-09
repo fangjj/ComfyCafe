@@ -5,7 +5,7 @@ import "/imports/api/topics/methods";
 
 import ToggleButton from "./ToggleButton";
 
-const WatchButton = React.createClass({
+export default React.createClass({
   watch(event) {
     Meteor.call("watchTopic", this.props.topic._id);
   },
@@ -29,5 +29,3 @@ const WatchButton = React.createClass({
     />;
   }
 });
-
-export default WatchButton;

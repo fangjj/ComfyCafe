@@ -6,8 +6,7 @@ import TopicInnerForm from "./TopicUpdateForm";
 
 import {
   Dialog,
-  FlatButton,
-  RaisedButton
+  FlatButton
 } from "material-ui";
 
 const defaultState = {

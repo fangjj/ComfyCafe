@@ -16,10 +16,6 @@ import Avatar from "../Avatar/Avatar";
 import UserLink from "../User/UserLink";
 import setPattern from "/imports/ui/client/utils/setPattern";
 
-import {
-  RaisedButton
-} from "material-ui";
-
 const verbMap = {
   original: "Created",
   derivative: "Derived",

@@ -1,22 +1,13 @@
 import React from "react";
 
-import Colors from "/imports/ui/client/utils/colors";
-import Icon from "/imports/ui/client/components/Daikon/Icon";
+import Button from "/imports/ui/client/components/Button/Button";
 
-import {
-  RaisedButton
-} from "material-ui";
-
-const CancelButton = React.createClass({
-  render() {
-    return <RaisedButton
-      backgroundColor={Colors.reassuringGray}
-      label={this.props.label || "Cancel"}
-      labelStyle={{fontSize: "18px"}}
-      icon={<Icon>{this.props.iconName || "cancel"}</Icon>}
-      onTouchTap={this.props.onTouchTap}
-    />
-  }
-});
-
-export default CancelButton;
+export default (props) => {
+  console.error("[WARNING] CancelButton is deprecated. Use Button directly instead!");
+  return <Button
+    className="cancel"
+    label={props.label || "Cancel"}
+    iconName={props.iconName || "cancel"}
+    onTouchTap={props.onTouchTap}
+  />;
+};

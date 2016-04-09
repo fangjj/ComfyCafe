@@ -21,7 +21,6 @@ import {
   SelectField,
   MenuItem,
   Toggle,
-  RaisedButton,
   Snackbar
 } from "material-ui";
 

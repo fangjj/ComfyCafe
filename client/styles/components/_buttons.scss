@@ -1,0 +1,11 @@
+.button {
+  @include button;
+
+  &.cancel, &.inactive {
+    @include button($reassuring-gray);
+  }
+
+  &.danger {
+    @include button($scary-cherry);
+  }
+}

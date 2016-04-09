@@ -1,0 +1,7 @@
+@mixin quickShadow() {
+  text-shadow: -1px 1px 3px rgba(black, 0.6);
+}
+
+@mixin lightShadow {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+}

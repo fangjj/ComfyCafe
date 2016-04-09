@@ -1,13 +1,8 @@
 import React from "react";
 
-import Colors from "/imports/ui/client/utils/colors";
-import Icon from "/imports/ui/client/components/Daikon/Icon";
+import Button from "/imports/ui/client/components/Button/Button";
 
-import {
-  RaisedButton
-} from "material-ui";
-
-const SubtleDangerButton = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       hover: false
@@ -20,22 +15,17 @@ const SubtleDangerButton = React.createClass({
     this.setState({ hover: false });
   },
   render() {
-    let color;
-    if (! this.state.hover) {
-      color = Colors.reassuringGray;
-    } else {
-      color = Colors.scaryCherry;
+    let classes = "inactive";
+    if (this.state.hover) {
+      classes = "danger";
     }
-    return <RaisedButton
-      backgroundColor={color}
+    return <Button
+      className={classes}
       label={this.props.label}
-      labelStyle={{fontSize: "18px"}}
-      icon={<Icon>{this.props.iconName}</Icon>}
+      iconName={this.props.iconName}
       onTouchTap={this.props.onTouchTap}
       onMouseEnter={this.hover}
       onMouseLeave={this.unhover}
-    />
+    />;
   }
 });
-
-export default SubtleDangerButton;

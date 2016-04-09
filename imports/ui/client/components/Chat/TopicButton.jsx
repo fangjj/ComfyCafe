@@ -3,10 +3,6 @@ import React from "react";
 import TopicForm from "./TopicForm";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
-import {
-  RaisedButton
-} from "material-ui";
-
 export default React.createClass({
   getInitialState() {
     return {

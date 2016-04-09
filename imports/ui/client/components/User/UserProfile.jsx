@@ -10,14 +10,11 @@ import Content from "/imports/ui/client/components/Content";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
+import Button from "/imports/ui/client/components/Button/Button";
 import FriendButton from "/imports/ui/client/components/Button/FriendButton";
 import SubtleDangerButton from "/imports/ui/client/components/Button/SubtleDangerButton";
-import DirectAvatar from "../Avatar/DirectAvatar";
-import AvatarCropper from "../Avatar/AvatarCropper";
-
-import {
-  RaisedButton
-} from "material-ui";
+import DirectAvatar from "/imports/ui/client/components/Avatar/DirectAvatar";
+import AvatarCropper from "/imports/ui/client/components/Avatar/AvatarCropper";
 
 const UserProfile = React.createClass({
   mixins: [ReactMeteorData],
@@ -84,11 +81,9 @@ const UserProfile = React.createClass({
       }
 
       return <div>
-        <RaisedButton
+        <Button
           label="Change Avatar"
-          labelStyle={{fontSize: "18px"}}
-          primary={true}
-          icon={<Icon>image</Icon>}
+          iconName="image"
           onTouchTap={this.startChangingAvatar}
         />
         {deleteButton}

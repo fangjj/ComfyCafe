@@ -5,8 +5,7 @@ import Medium from "../Medium";
 
 import {
   Dialog,
-  FlatButton,
-  RaisedButton
+  FlatButton
 } from "material-ui";
 
 const defaultState = {

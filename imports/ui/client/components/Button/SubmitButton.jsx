@@ -2,16 +2,15 @@ import React from "react";
 
 import Button from "/imports/ui/client/components/Button/Button";
 
-export default React.createClass({
-  render() {
-    return <Button
-      type={this.props.type}
-      label={this.props.label || "Submit"}
-      primary={true}
-      iconName={this.props.iconName || "done"}
-      width={this.props.width}
-      style={this.props.style}
-      onTouchTap={this.props.onTouchTap}
-    />;
-  }
-});
+export default (props) => {
+  console.error("[WARNING] SubmitButton is deprecated. Use Button directly instead!");
+  return <Button
+    type={props.type}
+    label={props.label || "Submit"}
+    primary={true}
+    iconName={props.iconName || "done"}
+    width={props.width}
+    style={props.style}
+    onTouchTap={props.onTouchTap}
+  />;
+};

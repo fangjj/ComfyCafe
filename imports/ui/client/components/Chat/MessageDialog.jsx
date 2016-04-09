@@ -4,8 +4,7 @@ import MessageInnerForm from "./MessageInnerForm";
 
 import {
   Dialog,
-  FlatButton,
-  RaisedButton
+  FlatButton
 } from "material-ui";
 
 const defaultState = {

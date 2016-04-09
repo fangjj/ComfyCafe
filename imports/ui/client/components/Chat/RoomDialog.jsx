@@ -6,8 +6,7 @@ import RoomInnerForm from "./RoomInnerForm";
 
 import {
   Dialog,
-  FlatButton,
-  RaisedButton
+  FlatButton
 } from "material-ui";
 
 const defaultState = {

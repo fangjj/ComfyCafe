@@ -5,7 +5,7 @@ import "/imports/api/users/methods";
 
 import ToggleButton from "./ToggleButton";
 
-const SubscriptionButton = React.createClass({
+export default React.createClass({
   toggleSubscription(event) {
     Meteor.call("toggleSubscription", this.props.owner._id);
   },
@@ -26,5 +26,3 @@ const SubscriptionButton = React.createClass({
     />;
   }
 });
-
-export default SubscriptionButton;

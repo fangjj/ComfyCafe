@@ -1,16 +1,15 @@
 import React from "react";
 
+import classConcat from "/imports/ui/client/utils/classConcat";
 import Button from "/imports/ui/client/components/Button/Button";
 
 export default (props) => {
-  console.error("[WARNING] SubmitButton is deprecated. Use Button directly instead!");
+  const { className, label, iconName, ...leftoverProps } = props;
+  const classes = classConcat("submit", className);
   return <Button
-    type={props.type}
-    label={props.label || "Submit"}
-    primary={true}
-    iconName={props.iconName || "done"}
-    width={props.width}
-    style={props.style}
-    onTouchTap={props.onTouchTap}
+    className={classes}
+    label={label || "Submit"}
+    iconName={iconName || "done"}
+    {...leftoverProps}
   />;
 };

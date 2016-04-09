@@ -1,13 +1,17 @@
 import React from "react";
 
+import classConcat from "/imports/ui/client/utils/classConcat";
 import Button from "/imports/ui/client/components/Button/Button";
 
 export default (props) => {
-  console.error("[WARNING] DangerButton is deprecated. Use Button directly instead!");
+  const { className, ...leftoverProps } = props;
+  let classes = "danger";
+  if (props.subtle) {
+    classes = "subtle " + classes;
+  }
+  classes = classConcat(classes, className);
   return <Button
-    className="danger"
-    label={props.label}
-    iconName={props.iconName}
-    onTouchTap={props.onTouchTap}
+    className={classes}
+    {...leftoverProps}
   />;
 };

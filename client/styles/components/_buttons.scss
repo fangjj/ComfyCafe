@@ -1,11 +1,15 @@
 .button {
   @include button;
 
-  &.cancel, &.inactive {
+  &.cancel, &.inactive, &.subtle {
     @include button($reassuring-gray);
   }
 
-  &.danger {
+  &.danger:not(.subtle) {
     @include button($scary-cherry);
+  }
+
+  &.subtle.danger:hover {
+    background-color: $scary-cherry;
   }
 }

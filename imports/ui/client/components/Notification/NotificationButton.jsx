@@ -1,5 +1,6 @@
 import React from "react";
 
+import Ripple from "/imports/ui/client/components/Ripple";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 export default React.createClass({
@@ -18,8 +19,10 @@ export default React.createClass({
       className="ignore-react-onclickoutside"
       onClick={this.toggleListVisibility}
     >
-      <Icon>notifications</Icon>
-      {this.renderCount()}
+      <Ripple>
+        <Icon>notifications</Icon>
+        {this.renderCount()}
+      </Ripple>
     </a>;
   }
 });

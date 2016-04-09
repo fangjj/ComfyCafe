@@ -33,6 +33,13 @@
       font-size: 28px;
       line-height: $top-nav-height;
     }
+
+    div {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .label {

@@ -20,24 +20,17 @@ export default React.createClass({
       return this.props.children;
     } else {
       return <a href={this.props.href}>
-        {this.renderIcon()}
-        {this.renderLabel()}
+        <Ripple>
+          {this.renderIcon()}
+          {this.renderLabel()}
+        </Ripple>
       </a>;
-    }
-  },
-  renderWrap() {
-    if (this.props.noRipple) {
-      return this.renderInner();
-    } else {
-      return <Ripple>
-        {this.renderInner()}
-      </Ripple>;
     }
   },
   render() {
     const classes = classConcat("navItem", this.props.className);
     return <li className={classes}>
-      {this.renderWrap()}
+      {this.renderInner()}
     </li>;
   }
 });

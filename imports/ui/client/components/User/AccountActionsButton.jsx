@@ -1,6 +1,7 @@
 import React from "react";
 import NativeListener from "react-native-listener";
 
+import Ripple from "/imports/ui/client/components/Ripple";
 import DirectAvatar from "/imports/ui/client/components/Avatar/DirectAvatar";
 
 export default React.createClass({
@@ -19,7 +20,9 @@ export default React.createClass({
         className="ignore-react-onclickoutside"
         href={FlowRouter.path("profile", {username: this.props.currentUser.username})}
       >
-        <DirectAvatar size="topBar" user={this.props.currentUser} />
+        <Ripple>
+          <DirectAvatar size="topBar" user={this.props.currentUser} />
+        </Ripple>
       </a>
     </NativeListener>;
   }

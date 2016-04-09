@@ -112,7 +112,7 @@ const TopBar = React.createClass({
           action={this.toggleNotificationList}
         />
       </NavItem>,
-      <NavItem noRipple={true} key="topBarAcctBtn">
+      <NavItem key="topBarAcctBtn">
         <AccountActionsButton
           action={this.toggleAccountActions}
           currentUser={this.data.currentUser}

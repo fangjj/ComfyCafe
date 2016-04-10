@@ -21,9 +21,10 @@ export default React.createClass({
     }
   },
   render() {
-    const classes = classConcat("scrollable", this.props.className);
-    return <div ref="container" className={classes}>
-      {this.props.children}
+    const { className, children, ...leftoverProps } = this.props;
+    const classes = classConcat("scrollable", className);
+    return <div ref="container" className={classes} {...leftoverProps}>
+      {children}
     </div>;
   }
 });

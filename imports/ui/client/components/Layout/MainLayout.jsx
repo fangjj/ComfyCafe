@@ -12,6 +12,7 @@ import muiTheme from "/imports/ui/client/utils/muiTheme";
 import UploadQueue from "/imports/ui/client/components/UploadQueue";
 import PseudoBodyContainer from "/imports/ui/client/components/PseudoBodyContainer";
 import TopBar from "/imports/ui/client/components/TopBar/TopBar";
+import Dialog from "/imports/ui/client/components/Dialog";
 import PostForm from "/imports/ui/client/components/Post/PostForm";
 
 export default React.createClass({
@@ -68,15 +69,16 @@ export default React.createClass({
     media.resumable.assignDrop(document.querySelector("html"));
 
     media.resumable.on("fileAdded", (file) => {
+      this.uploads[file.uniqueIdentifier] = {
+        _id: file.uniqueIdentifier,
+        name: file.fileName,
+        type: file.file.type,
+        progress: 0
+      };
+
       const reader = new FileReader();
       reader.addEventListener("load", () => {
-        this.uploads[file.uniqueIdentifier] = {
-          _id: file.uniqueIdentifier,
-          name: file.fileName,
-          type: file.file.type,
-          progress: 0,
-          url: reader.result
-        };
+        this.uploads[file.uniqueIdentifier].url = reader.result;
         this.setState({ updateQueue: _.uniqueId() });
       }, false);
       reader.readAsDataURL(file.file);
@@ -152,12 +154,19 @@ export default React.createClass({
   },
   renderPostForm() {
     if (this.state.mediumId) {
-      return <PostForm
-        mediumId={this.state.mediumId}
+      return <Dialog
+        title="Create Post"
+        formId="formNewPost"
         open={true}
-        onSuccess={this.postSuccess}
         onClose={this.destroyPostForm}
-      />;
+      >
+        <PostForm
+          id="formNewPost"
+          mediumId={this.state.mediumId}
+          onSuccess={this.postSuccess}
+          onClose={this.destroyPostForm}
+        />
+      </Dialog>;
     }
   },
   renderFooter() {

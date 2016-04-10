@@ -6,7 +6,7 @@ import emojione from "emojione";
 import classConcat from "/imports/ui/client/utils/classConcat";
 import linkMentions from "/imports/api/common/linkMentions";
 
-const TextBody = React.createClass({
+export default React.createClass({
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.text !== nextProps.text
       // className probably won't change, but just in case...
@@ -37,5 +37,3 @@ const TextBody = React.createClass({
     </div>;
   }
 });
-
-export default TextBody;

@@ -3,6 +3,7 @@ import React from "react";
 import "/imports/api/posts/methods";
 
 import PostForm from "./PostForm";
+import Dialog from "/imports/ui/client/components/Dialog";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 import {
@@ -31,11 +32,19 @@ export default React.createClass({
   },
   renderForm() {
     if (this.state.showForm) {
-      return <PostForm
-        post={this.props.post}
-        onClose={this.hidePostForm}
+      return <Dialog
+        title="Edit Post"
+        formId={"form" + this.props.post._id}
         open={this.state.showForm}
-      />;
+        onClose={this.hidePostForm}
+      >
+        <PostForm
+          id={"form" + this.props.post._id}
+          post={this.props.post}
+          onClose={this.hidePostForm}
+          open={this.state.showForm}
+        />
+      </Dialog>;
     }
   },
   render() {

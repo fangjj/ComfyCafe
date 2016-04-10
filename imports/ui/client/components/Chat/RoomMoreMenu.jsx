@@ -11,7 +11,7 @@ import {
   IconButton
 } from "material-ui";
 
-const RoomMoreMenu = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -58,5 +58,3 @@ const RoomMoreMenu = React.createClass({
     </div>;
   }
 });
-
-export default RoomMoreMenu;

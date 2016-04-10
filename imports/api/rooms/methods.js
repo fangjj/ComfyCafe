@@ -2,18 +2,22 @@ import Rooms from "./collection";
 
 import Topics from "../topics/collection";
 
+const match = {
+	name: String,
+	visibility: String,
+	description: String,
+	rules: String
+};
+
 Meteor.methods({
-	addRoom: function (data) {
-		check(data, {
-			name: String,
-			visibility: String
-		});
+	addRoom(data) {
+		check(data, match);
 
 		if (! Meteor.userId()) {
 			throw new Meteor.Error("not-logged-in");
 		}
 
-		var roomId = Rooms.insert(
+		const roomId = Rooms.insert(
 			{
 				createdAt: new Date(),
 				updatedAt: new Date(),
@@ -25,19 +29,18 @@ Meteor.methods({
 					profile: Meteor.user().profile
 				},
 				visibility: data.visibility,
+				description: data.description,
+				rules: data.rules,
 				topicCount: 0
 			}
 		);
 		return roomId;
 	},
-	updateRoom: function (roomId, data) {
+	updateRoom(roomId, data) {
 		check(roomId, String);
-		check(data, {
-      name: String,
-			visibility: String
-		});
+		check(data, match);
 
-		var room = Rooms.findOne(roomId);
+		const room = Rooms.findOne(roomId);
 
 		if (! isOwner(room)) {
 			throw new Meteor.Error("not-authorized");
@@ -48,7 +51,9 @@ Meteor.methods({
 			{ $set: {
 				updatedAt: new Date(),
         name: data.name,
-				visibility: data.visibility
+				visibility: data.visibility,
+				description: data.description,
+				rules: data.rules
 			} }
 		);
 
@@ -60,10 +65,10 @@ Meteor.methods({
 			{ multi: true }
 		);
 	},
-	deleteRoom: function (roomId) {
+	deleteRoom(roomId) {
 		check(roomId, String);
 
-		var room = Rooms.findOne(roomId);
+		const room = Rooms.findOne(roomId);
 
 		if (! isOwner(room)) {
 			throw new Meteor.Error("not-authorized");

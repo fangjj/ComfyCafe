@@ -5,11 +5,13 @@ import classConcat from "/imports/ui/client/utils/classConcat";
 export default (props) => {
   const { className, ordered, children, ...leftoverProps } = props;
   const classes = classConcat("list", className);
-  let tag = "ul";
   if (ordered) {
-    tag = "ol";
+    return <ol className={classes} {...leftoverProps}>
+      {children}
+    </ol>;
+  } else {
+    return <ul className={classes} {...leftoverProps}>
+      {children}
+    </ul>;
   }
-  return <tag className={classes} {...leftoverProps}>
-    {children}
-  </tag>;
 };

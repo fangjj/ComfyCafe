@@ -3,7 +3,7 @@
 
   &:hover {
     @if $color {
-      background-color: mix($color, #FFF, 88);
+      background-color: mix($color, #FFF, 80);
     } @else {
       background-color: rgba(0, 0, 0, 0.12);
     }

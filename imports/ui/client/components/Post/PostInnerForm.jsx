@@ -2,11 +2,11 @@ import React from "react";
 
 import safetyLabels from "/imports/api/common/safetyLabels";
 
-import VisibilitySelector from "../VisibilitySelector";
-import OriginalitySelector from "../OriginalitySelector";
-import SafetySelector from "../SafetySelector";
-import PretentiousFilterSelector from "../PretentiousFilterSelector";
-import TagField from "../Tag/TagField";
+import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
+import OriginalitySelector from "/imports/ui/client/components/OriginalitySelector";
+import SafetySelector from "/imports/ui/client/components/SafetySelector";
+import PretentiousFilterSelector from "/imports/ui/client/components/PretentiousFilterSelector";
+import TagField from "/imports/ui/client/components/Tag/TagField";
 
 import {
   TextField,
@@ -14,7 +14,7 @@ import {
   FlatButton
 } from "material-ui";
 
-const PostInnerForm = React.createClass({
+export default React.createClass({
   renderSourceField() {
     if (this.props.originality !== "original") {
       return <TextField
@@ -78,5 +78,3 @@ const PostInnerForm = React.createClass({
   </div>;
   }
 });
-
-export default PostInnerForm;

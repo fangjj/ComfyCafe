@@ -1,12 +1,12 @@
 import React from "react";
 
-import VisibilitySelector from "../VisibilitySelector";
+import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
 
 import {
   TextField
 } from "material-ui";
 
-const TopicInnerForm = React.createClass({
+export default React.createClass({
   render() {
     return <div>
       <TextField
@@ -23,5 +23,3 @@ const TopicInnerForm = React.createClass({
     </div>;
   }
 });
-
-export default TopicInnerForm;

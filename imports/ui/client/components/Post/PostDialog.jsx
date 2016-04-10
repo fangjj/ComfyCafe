@@ -1,7 +1,7 @@
 import React from "react";
 
 import PostInnerForm from "./PostInnerForm";
-import Medium from "../Medium";
+import Medium from "/imports/ui/client/components/Medium";
 
 import {
   Dialog,
@@ -20,7 +20,7 @@ const defaultState = {
   pretentiousFilter: "none"
 };
 
-const PostDialog = React.createClass({
+export default React.createClass({
   getInitialState() {
     if (this.props.post) {
       const post = this.props.post;
@@ -141,5 +141,3 @@ const PostDialog = React.createClass({
     </Dialog>;
   }
 });
-
-export default PostDialog;

@@ -1,6 +1,6 @@
 import React from "react";
 
-import PostUpdateForm from "./PostUpdateForm";
+import PostForm from "./PostForm";
 import FAB from "/imports/ui/client/components/FAB";
 
 export default React.createClass({
@@ -17,9 +17,9 @@ export default React.createClass({
   },
   render() {
     return <FAB iconName="edit" onTouchTap={this.showPostForm}>
-      <PostUpdateForm
+      <PostForm
         post={this.props.post}
-        handleClose={this.hidePostForm}
+        onClose={this.hidePostForm}
         open={this.state.showForm}
       />
     </FAB>;

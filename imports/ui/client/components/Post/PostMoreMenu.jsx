@@ -2,7 +2,7 @@ import React from "react";
 
 import "/imports/api/posts/methods";
 
-import PostUpdateForm from "./PostUpdateForm";
+import PostForm from "./PostForm";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 import {
@@ -31,9 +31,9 @@ export default React.createClass({
   },
   renderForm() {
     if (this.state.showForm) {
-      return <PostUpdateForm
+      return <PostForm
         post={this.props.post}
-        handleClose={this.hidePostForm}
+        onClose={this.hidePostForm}
         open={this.state.showForm}
       />;
     }

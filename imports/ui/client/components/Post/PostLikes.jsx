@@ -1,8 +1,8 @@
 import React from "react";
 
-import UserList from "../User/UserList";
+import UserList from "/imports/ui/client/components/User/UserList";
 
-const PostLikes = React.createClass({
+export default React.createClass({
   render() {
     return <section className="likes content">
       <header>
@@ -12,5 +12,3 @@ const PostLikes = React.createClass({
     </section>;
   }
 });
-
-export default PostLikes;

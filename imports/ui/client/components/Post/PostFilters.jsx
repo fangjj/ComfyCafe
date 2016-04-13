@@ -5,7 +5,7 @@ import {
   MenuItem
 } from "material-ui";
 
-const PostFilters = React.createClass({
+export default React.createClass({
   render() {
     return <SelectField
       value={this.props.value}
@@ -21,5 +21,3 @@ const PostFilters = React.createClass({
     </SelectField>;
   }
 });
-
-export default PostFilters;

@@ -1,9 +1,9 @@
 import React from "react";
 
 import PostGallery from "./PostGallery";
-import InlineUhoh from "../InlineUhoh";
+import InlineUhoh from "/imports/ui/client/components/InlineUhoh";
 
-const PostBrowseUser = React.createClass({
+export default React.createClass({
   render() {
     return <PostGallery
       subName="imagesBy"
@@ -22,5 +22,3 @@ const PostBrowseUser = React.createClass({
     />;
   }
 });
-
-export default PostBrowseUser;

@@ -1,20 +1,20 @@
 import _ from "lodash";
 import React from "react";
 
+import setPattern from "/imports/ui/client/utils/setPattern";
 import PostModifyFAB from "./PostModifyFAB";
 import PostLikeFAB from "./PostLikeFAB";
 import PostLikes from "./PostLikes";
 import PostInfoBox from "./PostInfoBox";
-import Medium from "../Medium";
+import Medium from "/imports/ui/client/components/Medium";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
-import Err404 from "../Err404";
-import Content from "../Content";
-import AvatarCropper from "../Avatar/AvatarCropper";
-import TagTree from "../Tag/TagTree";
-import InlineTopic from "../Chat/InlineTopic";
-import setPattern from "/imports/ui/client/utils/setPattern";
+import Err404 from "/imports/ui/client/components/Err404";
+import Content from "/imports/ui/client/components/Content";
+import AvatarCropper from "/imports/ui/client/components/Avatar/AvatarCropper";
+import TagTree from "/imports/ui/client/components/Tag/TagTree";
+import InlineTopic from "/imports/ui/client/components/Chat/InlineTopic";
 
-const Post = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       avatarCropper: false
@@ -107,5 +107,3 @@ const Post = React.createClass({
     </article>;
   }
 });
-
-export default Post;

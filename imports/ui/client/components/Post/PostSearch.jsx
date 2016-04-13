@@ -5,9 +5,9 @@ import tagQuery from "/imports/api/tags/query";
 import { tagStrFromUrl } from "/imports/api/tags/urlify";
 
 import PostGallery from "./PostGallery";
-import InlineUhoh from "../InlineUhoh";
+import InlineUhoh from "/imports/ui/client/components/InlineUhoh";
 
-const PostSearch = React.createClass({
+export default React.createClass({
   render() {
     const tagStr = tagStrFromUrl(FlowRouter.getParam("rawTagStr"));
     return <PostGallery
@@ -30,5 +30,3 @@ const PostSearch = React.createClass({
     />;
   }
 });
-
-export default PostSearch;

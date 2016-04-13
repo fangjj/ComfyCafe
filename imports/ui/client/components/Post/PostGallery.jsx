@@ -6,11 +6,11 @@ import tagQuery from "/imports/api/tags/query";
 
 import PostPreview from "./PostPreview";
 import PostFilters from "./PostFilters";
-import UploadFAB from "../UploadFAB";
+import UploadFAB from "/imports/ui/client/components/UploadFAB";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
-import InlineUhoh from "../InlineUhoh";
-import Powerless from "../Powerless";
-import TagInlineField from "../Tag/TagInlineField";
+import InlineUhoh from "/imports/ui/client/components/InlineUhoh";
+import Powerless from "/imports/ui/client/components/Powerless";
+import TagInlineField from "/imports/ui/client/components/Tag/TagInlineField";
 
 import {
   Checkbox
@@ -23,7 +23,7 @@ const defaultState = {
   noPush: false
 };
 
-const PostGallery = React.createClass({
+export default React.createClass({
   mixins: [ReactMeteorData],
   first: true,
   seeded: false,
@@ -232,5 +232,3 @@ const PostGallery = React.createClass({
     </div>;
   }
 });
-
-export default PostGallery;

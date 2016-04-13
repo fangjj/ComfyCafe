@@ -1,9 +1,9 @@
 import React from "react";
 
 import PostGallery from "./PostGallery";
-import InlineUhoh from "../InlineUhoh";
+import InlineUhoh from "/imports/ui/client/components/InlineUhoh";
 
-const PostBrowseBookmarks = React.createClass({
+export default React.createClass({
   render() {
     return <PostGallery
       subName="bookmarks"
@@ -20,5 +20,3 @@ const PostBrowseBookmarks = React.createClass({
     />;
   }
 });
-
-export default PostBrowseBookmarks;

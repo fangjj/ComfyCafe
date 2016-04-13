@@ -3,8 +3,7 @@ import React from "react";
 
 import "/imports/api/posts/methods";
 import goBack from "/imports/ui/client/utils/goBack";
-
-import TextBody from "../TextBody";
+import TextBody from "/imports/ui/client/components/TextBody";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import ToggleButton from "/imports/ui/client/components/Button/ToggleButton";
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
@@ -12,9 +11,9 @@ import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import OriginalityIcon from "/imports/ui/client/components/Daikon/OriginalityIcon";
 import PrivacyIcon from "/imports/ui/client/components/Daikon/PrivacyIcon";
-import Moment from "../Moment";
-import Avatar from "../Avatar/Avatar";
-import UserLink from "../User/UserLink";
+import Moment from "/imports/ui/client/components/Moment";
+import Avatar from "/imports/ui/client/components/Avatar/Avatar";
+import UserLink from "/imports/ui/client/components/User/UserLink";
 import setPattern from "/imports/ui/client/utils/setPattern";
 
 const verbMap = {
@@ -23,7 +22,7 @@ const verbMap = {
   repost: "Uploaded"
 };
 
-const PostInfoBox = React.createClass({
+export default React.createClass({
   reroll() {
     Meteor.call("rerollPost", this.props.post._id, (err, name) => {
       setPattern(name);
@@ -146,5 +145,3 @@ const PostInfoBox = React.createClass({
     </section>;
   }
 });
-
-export default PostInfoBox;

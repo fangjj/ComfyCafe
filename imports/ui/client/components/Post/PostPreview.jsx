@@ -3,11 +3,11 @@ import React from "react";
 import PostMoreMenu from "./PostMoreMenu";
 import PostBookmarkButton from "./PostBookmarkButton";
 import OriginalityIcon from "/imports/ui/client/components/Daikon/OriginalityIcon";
-import VisibilityLink from "../VisibilityLink";
-import Thumbnail from "../Thumbnail";
-import Avatar from "../Avatar/Avatar";
+import VisibilityLink from "/imports/ui/client/components/VisibilityLink";
+import Thumbnail from "/imports/ui/client/components/Thumbnail";
+import Avatar from "/imports/ui/client/components/Avatar/Avatar";
 
-const PostPreview = React.createClass({
+export default React.createClass({
   renderMoreMenu() {
     const isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.post.owner._id;
@@ -53,5 +53,3 @@ const PostPreview = React.createClass({
     </li>;
   }
 });
-
-export default PostPreview;

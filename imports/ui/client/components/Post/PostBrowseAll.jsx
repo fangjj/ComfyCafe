@@ -1,9 +1,9 @@
 import React from "react";
 
 import PostGallery from "./PostGallery";
-import InlineUhoh from "../InlineUhoh";
+import InlineUhoh from "/imports/ui/client/components/InlineUhoh";
 
-const PostBrowseAll = React.createClass({
+export default React.createClass({
   render() {
     return <PostGallery
       subName="allPosts"
@@ -21,5 +21,3 @@ const PostBrowseAll = React.createClass({
     />;
   }
 });
-
-export default PostBrowseAll;

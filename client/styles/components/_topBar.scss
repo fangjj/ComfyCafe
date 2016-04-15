@@ -1,5 +1,5 @@
 .topNav {
-  @extend .z-depth-1;
+  @include shadow1;
   @include subtleLinks;
 
   z-index: index($elements, topNav);

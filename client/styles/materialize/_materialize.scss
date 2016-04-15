@@ -1,8 +1,6 @@
 @charset "UTF-8";
 
 // Mixins
-@import "components/prefixer";
-@import "components/mixins";
 @import "components/color";
 
 // Variables;
@@ -10,7 +8,4 @@
 
 // components
 @import "components/global";
-@import "components/icons-material-design";
-@import "components/roboto";
 @import "components/typography";
-@import "components/preloader";

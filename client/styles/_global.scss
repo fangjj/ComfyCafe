@@ -1,6 +1,12 @@
 html {
   width: 100%;
   height: 100%;
+
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 body {
@@ -86,6 +92,12 @@ input {
   }
 }
 
+a {
+  text-decoration: none;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
 a.fill {
   position: absolute;
   left: 0;
@@ -119,6 +131,16 @@ strong {
   color: $text-color;
 }
 
-ul, li {
+ul {
   margin: 0;
+
+  padding: 0;
+
+  list-style: none;
+}
+
+ol {
+  margin: 0;
+
+  padding: 0;
 }

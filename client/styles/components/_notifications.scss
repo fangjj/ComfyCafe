@@ -26,7 +26,7 @@
 }
 
 #notificationList {
-	@extend .z-depth-2;
+	@include shadow2;
   @include vanillaLinks;
 
 	z-index: index($elements, topMenu);

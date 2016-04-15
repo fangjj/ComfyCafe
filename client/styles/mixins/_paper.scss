@@ -1,5 +1,5 @@
 @mixin paper {
-  @extend .z-depth-1;
+  @include shadow1;
 
   position: relative;
 

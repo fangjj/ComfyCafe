@@ -11,16 +11,18 @@ import Icon from "/imports/ui/client/components/Daikon/Icon";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
-import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
+import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import FriendButton from "/imports/ui/client/components/Button/FriendButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
+import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
+import ActionWell from "/imports/ui/client/components/ActionWell";
 import DirectAvatar from "/imports/ui/client/components/Avatar/DirectAvatar";
 import AvatarCropper from "/imports/ui/client/components/Avatar/AvatarCropper";
 
-const UserProfile = React.createClass({
+export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    var handle = Meteor.subscribe("user", FlowRouter.getParam("username"));
+    const handle = Meteor.subscribe("user", FlowRouter.getParam("username"));
     return {
       loading: ! handle.ready(),
       user: Meteor.users.findOne({ username: FlowRouter.getParam("username") }),
@@ -29,39 +31,53 @@ const UserProfile = React.createClass({
   },
   getInitialState() {
     return {
+      isEditing: false,
       isChangingAvatar: false
-    }
+    };
+  },
+  startEditing(event) {
+    this.setState({ isEditing: true });
+  },
+  stopEditing(event) {
+    this.setState({ isEditing: false });
   },
   startChangingAvatar(event) {
-    this.setState({
-      isChangingAvatar: true
-    });
+    this.setState({ isChangingAvatar: true });
   },
   stopChangingAvatar(event) {
-    this.setState({
-      isChangingAvatar: false
-    });
+    this.setState({ isChangingAvatar: false });
   },
   deleteAvatar(event) {
     Meteor.call("deleteAvatar");
   },
-  renderInfo(isOwner) {
+  renderInfo() {
     const info = _.get(this.data.user, "profile.info", {});
     const order = _.get(this.data.user, "profile.infoOrder", []);
-    if (! isOwner && ! _.isEmpty(info)) {
+    if (! this.state.isEditing && ! _.isEmpty(info)) {
       return <UserInfo info={info} order={order} />;
-    }
-  },
-  renderForm(isOwner) {
-    if (isOwner) {
-      return <UserProfileForm currentUser={this.data.user} />;
     }
   },
   renderAvatar(isOwner) {
     return <DirectAvatar size="large" user={this.data.user} editable={isOwner} />;
   },
-  renderToolbox(isOwner) {
-    if (! isOwner) {
+  renderEditButtons(isOwner) {
+    if (isOwner) {
+      let button = <SubmitButton
+        label="Edit"
+        iconName="edit"
+        onTouchTap={this.startEditing}
+      />;
+
+      if (this.state.isEditing) {
+        button = <CancelButton
+          onTouchTap={this.stopEditing}
+        />;
+      }
+
+      return <ButtonGroup>
+        {button}
+      </ButtonGroup>;
+    } else {
       return <ButtonGroup>
         <SubscriptionButton owner={this.data.user} currentUser={this.data.currentUser} />
         <FriendButton
@@ -69,7 +85,10 @@ const UserProfile = React.createClass({
           currentUser={this.data.currentUser}
         />
       </ButtonGroup>;
-    } else {
+    }
+  },
+  renderToolbox(isOwner) {
+    if (isOwner) {
       const hasAvatar = _.has(this.data.user, "avatars");
 
       let deleteButton;
@@ -90,6 +109,13 @@ const UserProfile = React.createClass({
         />
         {deleteButton}
       </ButtonGroup>;
+    } else {
+      return <ButtonGroup>
+        <SubmitButton
+          label="Send Good Vibes"
+          iconName="wb_sunny"
+        />
+      </ButtonGroup>;
     }
   },
   renderCatchphrase() {
@@ -98,6 +124,14 @@ const UserProfile = React.createClass({
       return <span className="catchphrase">
         {catchphrase}
       </span>;
+    }
+  },
+  renderForm(isOwner) {
+    if (isOwner && this.state.isEditing) {
+      return <UserProfileForm
+        currentUser={this.data.user}
+        onCancel={this.stopEditing}
+      />;
     }
   },
   renderInner(isOwner, displayName) {
@@ -112,11 +146,12 @@ const UserProfile = React.createClass({
               <h2>{displayName}</h2>
               {this.renderCatchphrase()}
             </header>
-            <div>
-              {this.renderToolbox(isOwner)}
-            </div>
           </div>
         </div>
+        <ActionWell>
+          {this.renderEditButtons(isOwner)}
+          {this.renderToolbox(isOwner)}
+        </ActionWell>
       </div>;
     } else {
       return <AvatarCropper cancelAction={this.stopChangingAvatar} />;
@@ -135,10 +170,8 @@ const UserProfile = React.createClass({
 
     return <Content className="profile">
       {this.renderInner(isOwner, displayName)}
-      {this.renderInfo(isOwner)}
+      {this.renderInfo()}
       {this.renderForm(isOwner)}
     </Content>;
   }
 });
-
-export default UserProfile;

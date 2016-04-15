@@ -26,12 +26,7 @@
     .value {
       flex-grow: 1;
 
-      &:before {
-        content: ":";
-
-        margin-right: 12px;
-      }
+      max-width: 75%;
     }
   }
-
 }

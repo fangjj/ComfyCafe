@@ -17,7 +17,6 @@ export default React.createClass({
     });
   },
   render() {
-    prettyPrint(this.props.preQueue);
     return <Scrollable className="uploadQueue">
       <List>
         {this.renderQueue(this.props.queue)}

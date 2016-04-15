@@ -18,7 +18,7 @@ import {
   Snackbar
 } from "material-ui";
 
-const UserProfileForm = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       snackbarOpen: false,
@@ -45,31 +45,23 @@ const UserProfileForm = React.createClass({
       infoOrder: order
     });
   },
-  submit(event) {
-    var self = this;
+  handleSubmit(e) {
+    e.preventDefault();
+
     Meteor.call("updateProfile", {
       displayName: this.state.displayName,
       blurb: this.state.blurb,
       info: this.state.info,
       infoOrder: this.state.infoOrder
     }, () => {
-	    this.setState({snackbarOpen: true});
+	    this.setState({ snackbarOpen: true });
     });
   },
-  cancel(event) {
-    var path = FlowRouter.path("profile", {username: this.props.currentUser.username});
-    FlowRouter.go(path);
+  handleCancel(e) {
+    this.props.onCancel(e);
   },
   render() {
-    if (! this.props.currentUser) {
-      return <Powerless />;
-    }
-
-    if (! _.has(this.props.currentUser, "profile")) {
-      return <LoadingSpinner />;
-    }
-
-    return <div>
+    return <form onSubmit={this.handleSubmit}>
       <TextField
         defaultValue={this.state.displayName}
         floatingLabelText="Display Name"
@@ -96,11 +88,12 @@ const UserProfileForm = React.createClass({
 
       <Actions>
         <CancelButton
-          onTouchTap={this.cancel}
+          onTouchTap={this.handleCancel}
         />
         <SubmitButton
+          type="submit"
           label="Save"
-          onTouchTap={this.submit}
+          onTouchTap={this.handleSubmit}
         />
       </Actions>
 
@@ -110,10 +103,8 @@ const UserProfileForm = React.createClass({
         message="Profile saved successfully."
         autoHideDuration={4000}
         onRequestClose={this.handleSnackbarRequestClose}
-        bodyStyle={{backgroundColor: "#237B4C"}}
+        bodyStyle={{ backgroundColor: "#237B4C" }}
       />
-    </div>;
+    </form>;
   }
 });
-
-export default UserProfileForm;

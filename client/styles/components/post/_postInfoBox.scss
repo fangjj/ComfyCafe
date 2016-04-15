@@ -12,8 +12,20 @@
     cursor: default;
   }
 
+  .actionWell {
+    @include contentDepad;
+
+    margin-top: $content-padding;
+
+    background: rgba($text-color, 0.1);
+  }
+
   .body {
+    margin-top: 0;
+
     width: 100%;
+
+    border: 0;
 
     &:empty {
       // Fancy!
@@ -21,11 +33,9 @@
     }
 
     &:not(:empty) {
-      margin-top: 16px;
-
       $pad: 24px;
       padding: $pad;
-      padding-bottom: $pad - 16px;
+      padding-bottom: $pad - $content-padding;
     }
   }
 }

@@ -6,11 +6,13 @@ import goBack from "/imports/ui/client/utils/goBack";
 import TextBody from "/imports/ui/client/components/TextBody";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import ToggleButton from "/imports/ui/client/components/Button/ToggleButton";
+import BookmarkButton from "/imports/ui/client/components/Button/BookmarkButton";
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import OriginalityIcon from "/imports/ui/client/components/Daikon/OriginalityIcon";
 import PrivacyIcon from "/imports/ui/client/components/Daikon/PrivacyIcon";
+import ActionWell from "/imports/ui/client/components/ActionWell";
 import Moment from "/imports/ui/client/components/Moment";
 import Avatar from "/imports/ui/client/components/Avatar/Avatar";
 import UserLink from "/imports/ui/client/components/User/UserLink";
@@ -38,11 +40,6 @@ export default React.createClass({
       goBack();
     });
   },
-  bookmark() {
-    const bookmarked = this.props.currentUser
-      && _.includes(this.props.currentUser.bookmarks, this.props.post._id);
-    Meteor.call("bookmarkPost", this.props.post._id, ! bookmarked);
-  },
   renderButtons() {
     if (! this.props.currentUser) {
       return;
@@ -56,54 +53,44 @@ export default React.createClass({
     const owner = this.props.post.owner;
     const isOwner = _.get(this.props, "currentUser._id") === owner._id;
     if (! isOwner) {
-      const bookmarked = _.includes(
-        _.get(this.props, "currentUser.bookmarks", []),
-        this.props.post._id
-      );
-      return <div>
+      return <ActionWell>
         <ButtonGroup>
+          <BookmarkButton post={this.props.post} currentUser={this.props.currentUser} />
           <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />
-          <ToggleButton
-            className="bookmark"
-            active={bookmarked}
-            activate={this.bookmark}
-            deactivate={this.bookmark}
-            labelActivate="Bookmark"
-            iconActivate="bookmark_outline"
-            labelActivated="Bookmarked"
-            iconActivated="bookmark"
-            labelDeactivate="Unbookmark"
-            iconDeactivate="bookmark_outline"
-          />
         </ButtonGroup>
         <ButtonGroup>
           {cropButton}
         </ButtonGroup>
-      </div>;
+      </ActionWell>;
     } else {
-      return <div>
+      return <ActionWell>
         <ButtonGroup>
+          <SubmitButton
+            label="Reroll"
+            iconName="casino"
+            onTouchTap={this.reroll}
+          />
           <DangerButton
             label="Delete"
             iconName="delete"
             subtle={true}
             onTouchTap={this.delete}
           />
-          <SubmitButton
-            label="Reroll"
-            iconName="casino"
-            onTouchTap={this.reroll}
-          />
         </ButtonGroup>
         <ButtonGroup>
           {cropButton}
         </ButtonGroup>
-      </div>;
+      </ActionWell>;
     }
   },
   renderSource() {
     if (this.props.post.source) {
       return <TextBody text={"Source: " + this.props.post.source} className="source" />;
+    }
+  },
+  renderDescription() {
+    if (this.props.post.description) {
+      return <TextBody text={this.props.post.description} className="body" />;
     }
   },
   render() {
@@ -134,13 +121,11 @@ export default React.createClass({
                 </div>
                 {this.renderSource()}
               </div>
-              <div className="action">
-                {this.renderButtons()}
-              </div>
             </div>
           </div>
         </div>
-        <TextBody text={this.props.post.description} className="body" />
+        {this.renderButtons()}
+        {this.renderDescription()}
       </div>
     </section>;
   }

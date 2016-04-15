@@ -21,6 +21,7 @@ export default React.createClass({
       return <SubmitButton
         label={this.props.labelActivate}
         iconName={this.props.iconActivate}
+        width={this.props.width}
         onTouchTap={this.props.activate}
       />;
     } else {
@@ -41,6 +42,7 @@ export default React.createClass({
         backgroundColor={color}
         label={label}
         iconName={icon}
+        width={this.props.width}
         onTouchTap={this.props.deactivate}
         onMouseEnter={this.hoverOn}
         onMouseLeave={this.hoverOff}

@@ -4,7 +4,7 @@
   margin: 0 auto;
   margin-top: 100px;
 
-  padding: 16px;
+  padding: $content-padding;
 
   width: 85%;
 
@@ -17,4 +17,17 @@
 
 .content {
   @include content;
+}
+
+@mixin contentDepad {
+  margin-left: -$content-padding;
+  margin-right: -$content-padding;
+  &:first-child {
+    margin-top: -$content-padding;
+  }
+  &:last-child {
+    margin-bottom: -$content-padding;
+  }
+
+  width: calc(100% + #{$content-padding * 2});
 }

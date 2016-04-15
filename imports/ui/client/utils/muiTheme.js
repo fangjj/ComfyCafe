@@ -1,11 +1,11 @@
-import getMuiTheme from "material-ui/lib/styles/getMuiTheme";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
 import {
   cyan700,
   grey600,
   pinkA100, pinkA200, pinkA400,
   fullWhite
-} from "material-ui/lib/styles/colors";
-import ColorManipulator from "material-ui/lib/utils/color-manipulator";
+} from "material-ui/styles/colors";
+import { fade } from "material-ui/utils/colorManipulator";
 
 export default getMuiTheme({
   palette: {
@@ -22,10 +22,10 @@ export default getMuiTheme({
     accent2Color: pinkA400,
     accent3Color: pinkA100,
     canvasColor: "#303030",
-    borderColor: ColorManipulator.fade(fullWhite, 0.3),
-    disabledColor: ColorManipulator.fade(fullWhite, 0.3),
-    pickerHeaderColor: ColorManipulator.fade(fullWhite, 0.12),
-    clockCircleColor: ColorManipulator.fade(fullWhite, 0.12)
+    borderColor: fade(fullWhite, 0.3),
+    disabledColor: fade(fullWhite, 0.3),
+    pickerHeaderColor: fade(fullWhite, 0.12),
+    clockCircleColor: fade(fullWhite, 0.12)
   },
   fontFamily: "Slabo 27px"
 });

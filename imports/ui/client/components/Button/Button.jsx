@@ -1,6 +1,6 @@
 import _ from "lodash";
 import React from "react";
-import RaisedButton from "material-ui/lib/raised-button";
+import RaisedButton from "material-ui/RaisedButton";
 import tinycolor from "tinycolor2";
 
 import Colors from "/imports/ui/client/utils/colors";

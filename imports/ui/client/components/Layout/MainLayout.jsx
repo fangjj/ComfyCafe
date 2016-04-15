@@ -1,6 +1,6 @@
 import _ from "lodash";
 import React from "react";
-import MuiThemeProvider from "material-ui/lib/MuiThemeProvider";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 import "/imports/api/media/methods";
 import media from "/imports/api/media/collection";

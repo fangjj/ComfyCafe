@@ -1,5 +1,5 @@
 import React from "react";
-import TouchRipple from "material-ui/lib/ripples/touch-ripple";
+import TouchRipple from "material-ui/internal/TouchRipple";
 
 import muiTheme from "/imports/ui/client/utils/muiTheme";
 

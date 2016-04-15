@@ -1,5 +1,5 @@
 import React from "react";
-import FocusRipple from "material-ui/lib/ripples/focus-ripple";
+import FocusRipple from "material-ui/internal/FocusRipple";
 
 import muiTheme from "/imports/ui/client/utils/muiTheme";
 

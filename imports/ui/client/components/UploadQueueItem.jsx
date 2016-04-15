@@ -10,7 +10,9 @@ import {
 
 export default React.createClass({
   handleTouch(e) {
-    this.props.onSelect(this.props.upload._id);
+    if (this.props.upload.progress === 100) {
+      this.props.onSelect(this.props.upload._id);
+    }
   },
   handleDelete(e) {
     e.stopPropagation();

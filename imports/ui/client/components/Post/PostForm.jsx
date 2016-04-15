@@ -112,7 +112,6 @@ export default React.createClass({
           if (this.props.onSuccess) {
             this.props.onSuccess();
           }
-          this.props.onClose();
 
           const path = FlowRouter.path("post", {
             username: this.data.currentUser.username,
@@ -127,6 +126,7 @@ export default React.createClass({
           prettyPrint(err);
         }
       });
+      this.props.onClose();
     } else {
       Meteor.call("updatePost", this.props.post._id, data, (err) => {
         if (err) {

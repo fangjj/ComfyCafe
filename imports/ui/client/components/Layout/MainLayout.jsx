@@ -4,8 +4,8 @@ import MuiThemeProvider from "material-ui/lib/MuiThemeProvider";
 
 import "/imports/api/media/methods";
 import media from "/imports/api/media/collection";
-import mediaUpload from "/imports/api/media/handlers/media";
-import avatarUpload from "/imports/api/media/handlers/avatar";
+import mediaUpload from "/imports/api/media/client/handlers/media";
+import avatarUpload from "/imports/api/media/client/handlers/avatar";
 
 import setPattern from "/imports/ui/client/utils/setPattern";
 import muiTheme from "/imports/ui/client/utils/muiTheme";

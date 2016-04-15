@@ -52,7 +52,7 @@ export default React.createClass({
   },
   getMeteorData() {
     if (this.props.mediumId) {
-      const handle = Meteor.subscribe("media", Meteor.userId());
+      const handle = Meteor.subscribe("medium", this.props.mediumId);
       return {
         loading: ! handle.ready(),
         medium: media.findOne({ _id: new Mongo.ObjectID(this.props.mediumId) }),

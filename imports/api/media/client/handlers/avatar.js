@@ -1,4 +1,4 @@
-import media from "../collection";
+import media from "/imports/api/media/collection";
 import "/imports/api/users/methods";
 
 export default function (file, callback) {

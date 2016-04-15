@@ -14,30 +14,23 @@ import {
   TextField,
   SelectField,
   MenuItem,
-  Toggle,
-  Snackbar
+  Toggle
 } from "material-ui";
 
 export default React.createClass({
   getInitialState() {
     return {
-      snackbarOpen: false,
       displayName: _.get(this.props.currentUser, "profile.displayName", ""),
       blurb: _.get(this.props.currentUser, "profile.blurb", ""),
       info: _.get(this.props.currentUser, "profile.info", {}),
       infoOrder: _.get(this.props.currentUser, "profile.infoOrder", [])
     };
   },
-  handleSnackbarRequestClose() {
-    this.setState({
-      snackbarOpen: false
-    });
-  },
   handleDisplayName(event) {
-    this.setState({displayName: event.target.value})
+    this.setState({ displayName: event.target.value });
   },
   handleBlurb(event) {
-    this.setState({blurb: event.target.value})
+    this.setState({ blurb: event.target.value });
   },
   handleInfo(info, order) {
     this.setState({
@@ -53,9 +46,9 @@ export default React.createClass({
       blurb: this.state.blurb,
       info: this.state.info,
       infoOrder: this.state.infoOrder
-    }, () => {
-	    this.setState({ snackbarOpen: true });
     });
+
+    this.props.onCancel(e);
   },
   handleCancel(e) {
     this.props.onCancel(e);
@@ -96,15 +89,6 @@ export default React.createClass({
           onTouchTap={this.handleSubmit}
         />
       </Actions>
-
-      <Snackbar
-        className="snackbar"
-        open={this.state.snackbarOpen}
-        message="Profile saved successfully."
-        autoHideDuration={4000}
-        onRequestClose={this.handleSnackbarRequestClose}
-        bodyStyle={{ backgroundColor: "#237B4C" }}
-      />
     </form>;
   }
 });

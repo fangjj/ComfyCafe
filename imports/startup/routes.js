@@ -32,8 +32,7 @@ if (Meteor.isServer) {
   FastRender.onAllRoutes(function (path) {
     if (Meteor.userId()) {
       this.subscribe("user", Meteor.user().username);
-      this.subscribe("jobs", Meteor.userId());
-      this.subscribe("notifications", Meteor.userId())
+      this.subscribe("notifications", Meteor.userId());
     }
   });
 }

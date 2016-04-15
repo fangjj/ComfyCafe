@@ -25,6 +25,5 @@ Meteor.startup(function () {
 
 Tracker.autorun(function () {
   document.title = Session.get("pageTitle") || "ComfyCafé";
-  Meteor.subscribe("jobs", Meteor.userId());
   Cookie.set("X-Auth-Token", Accounts._storedLoginToken());
 });

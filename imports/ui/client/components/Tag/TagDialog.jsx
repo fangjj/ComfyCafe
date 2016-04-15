@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React from "react";
 
+import { tagSubjectTokenizer } from "/imports/api/tags/tokenizer";
 import TagInnerForm from "./TagInnerForm";
 
 import {

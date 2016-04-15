@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React from "react";
 
+import { tagDescriptorTokenizer } from "/imports/api/tags/tokenizer";
 import TagRootClause from "./TagRootClause";
 import TagDescriptor from "./TagDescriptor";
 

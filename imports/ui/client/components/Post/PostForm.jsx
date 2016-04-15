@@ -138,7 +138,7 @@ export default React.createClass({
   },
   renderMedium() {
     if (this.data.loading) {
-      return <div className="medium">
+      return <div className="medium center">
         <RainbowSpinner />
       </div>;
     }

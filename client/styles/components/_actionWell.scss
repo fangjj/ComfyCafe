@@ -1,0 +1,13 @@
+.actionWell {
+  @include contentDepad;
+
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+
+  margin-top: $content-padding;
+
+  min-width: 100%;
+
+  background: rgba($text-color, 0.1);
+}

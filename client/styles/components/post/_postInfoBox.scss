@@ -12,14 +12,6 @@
     cursor: default;
   }
 
-  .actionWell {
-    @include contentDepad;
-
-    margin-top: $content-padding;
-
-    background: rgba($text-color, 0.1);
-  }
-
   .body {
     margin-top: 0;
 

@@ -8,7 +8,7 @@ import MessageList from "./MessageList";
 import WatchButton from "/imports/ui/client/components/Button/WatchButton";
 import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
 
-const Topic = React.createClass({
+export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     var id = FlowRouter.getParam("topicId");
@@ -67,5 +67,3 @@ const Topic = React.createClass({
     </section>;
   }
 });
-
-export default Topic;

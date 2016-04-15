@@ -3,13 +3,25 @@ import React from "react";
 import Rooms from "/imports/api/rooms/collection";
 import setTitle from "/imports/api/common/setTitle";
 
-import RoomMoreMenu from "./RoomMoreMenu";
 import RoomInnerForm from "./RoomInnerForm";
 import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
 import TextBody from "/imports/ui/client/components/TextBody";
+import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
+import DangerButton from "/imports/ui/client/components/Button/DangerButton";
+import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
+import ActionWell from "/imports/ui/client/components/ActionWell";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
+  getInitialState() {
+    return { showForm: false };
+  },
+  showRoomForm() {
+    this.setState({ showForm: true });
+  },
+  hideRoomForm() {
+    this.setState({ showForm: false });
+  },
   getMeteorData() {
     var id = FlowRouter.getParam("roomId");
     var handle = Meteor.subscribe("room", id);
@@ -19,16 +31,34 @@ export default React.createClass({
       currentUser: Meteor.user()
     };
   },
-  renderMoreMenu() {
-
+  delete() {
+    Meteor.call("deleteRoom", this.data.room._id, () => {
+      const path = FlowRouter.path("roomList");
+      FlowRouter.go(path);
+    });
+  },
+  renderEditButtons(isOwner) {
     if (isOwner) {
-      return <div className="topRight">
-        <RoomMoreMenu
-          room={this.data.room}
-          currentUser={this.data.currentUser}
-          redirect={true}
+      return <ButtonGroup>
+        <SubmitButton
+          label="Edit"
+          iconName="edit"
+          onTouchTap={this.showRoomForm}
         />
-      </div>;
+        <DangerButton
+          label="Delete"
+          iconName="close"
+          subtle={true}
+          onTouchTap={this.delete}
+        />
+      </ButtonGroup>;
+    } else {
+      return <ButtonGroup>
+        <SubmitButton
+          label="Experience Happiness"
+          iconName="sentiment_satisfied"
+        />
+      </ButtonGroup>;
     }
   },
   renderDescription(room) {
@@ -52,14 +82,16 @@ export default React.createClass({
     }
   },
   renderProfile() {
-    const room = this.data.room;
-    return <div className="denseBox">
-      {this.renderDescription(room)}
-      {this.renderRules(room)}
-    </div>;
+    if (! this.state.showForm) {
+      const room = this.data.room;
+      return <div className="denseBox">
+        {this.renderDescription(room)}
+        {this.renderRules(room)}
+      </div>;
+    }
   },
   renderForm(isOwner) {
-    if (isOwner) {
+    if (isOwner && this.state.showForm) {
       return <RoomInnerForm />;
     }
   },
@@ -74,15 +106,23 @@ export default React.createClass({
 
     const isOwner = this.data.currentUser && this.data.currentUser._id === this.data.room.owner._id;
 
-    return <div>
+    return <section>
       <header>
-        {this.renderMoreMenu(isOwner)}
         <h2>{room.name}</h2>
+        <ActionWell>
+          {this.renderEditButtons(isOwner)}
+          <ButtonGroup>
+            <SubmitButton
+              label="Drop the Bass"
+              iconName="all_out"
+            />
+          </ButtonGroup>
+        </ActionWell>
       </header>
       <div className="denseBox">
         {this.renderProfile()}
         {this.renderForm(isOwner)}
       </div>
-    </div>;
+    </section>;
   }
 });

@@ -13,15 +13,13 @@ import {
 
 export default React.createClass({
   getInitialState() {
-    return {
-      showForm: false
-    };
+    return { showForm: false };
   },
   showRoomForm() {
-    this.setState({showForm: true});
+    this.setState({ showForm: true });
   },
   hideRoomForm() {
-    this.setState({showForm: false});
+    this.setState({ showForm: false });
   },
   delete() {
     Meteor.call("deleteRoom", this.props.room._id, () => {
@@ -32,12 +30,12 @@ export default React.createClass({
     });
   },
   render() {
-    var room = this.props.room;
+    const room = this.props.room;
 
-    var owner = room.owner;
-    var isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
+    const owner = room.owner;
+    const isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
 
-    var moreBtn = <IconButton>
+    const moreBtn = <IconButton>
       <Icon>more_horiz</Icon>
     </IconButton>;
 

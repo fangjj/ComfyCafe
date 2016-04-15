@@ -11,28 +11,26 @@ import {
   IconButton
 } from "material-ui";
 
-const MessageMoreMenu = React.createClass({
+export default React.createClass({
   getInitialState() {
-    return {
-      showForm: false
-    };
+    return { showForm: false };
   },
   showMessageForm() {
-    this.setState({showForm: true});
+    this.setState({ showForm: true });
   },
   hideMessageForm() {
-    this.setState({showForm: false});
+    this.setState({ showForm: false });
   },
   delete() {
     Meteor.call("deleteMessage", this.props.message._id);
   },
   render() {
-    var msg = this.props.message;
+    const msg = this.props.message;
 
-    var owner = msg.owner;
-    var isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
+    const owner = msg.owner;
+    const isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
 
-    var moreBtn = <IconButton>
+    const moreBtn = <IconButton>
       <Icon>more_horiz</Icon>
     </IconButton>;
 
@@ -53,5 +51,3 @@ const MessageMoreMenu = React.createClass({
     </div>;
   }
 });
-
-export default MessageMoreMenu;

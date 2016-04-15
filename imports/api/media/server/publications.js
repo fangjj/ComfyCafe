@@ -16,7 +16,10 @@ Meteor.publish("mediaQueue", function (clientUserId) {
 			{ fields: {
 				filename: 1,
 				contentType: 1,
-				md5: 1
+				md5: 1,
+				"metadata.owner": 1,
+				"metadata.complete": 1,
+				"metadata.bound": 1
 			} }
 		);
 	} else {

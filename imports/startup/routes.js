@@ -33,6 +33,7 @@ if (Meteor.isServer) {
     if (Meteor.userId()) {
       this.subscribe("user", Meteor.user().username);
       this.subscribe("notifications", Meteor.userId());
+      this.subscribe("mediaQueue", Meteor.userId());
     }
   });
 }

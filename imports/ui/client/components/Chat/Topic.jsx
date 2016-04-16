@@ -5,7 +5,8 @@ import "/imports/api/topics/methods";
 import setTitle from "/imports/api/common/setTitle";
 
 import MessageList from "./MessageList";
-import TopicUpdateForm from "./TopicUpdateForm";
+import TopicForm from "./TopicForm";
+import Dialog from "/imports/ui/client/components/Dialog";
 import WatchButton from "/imports/ui/client/components/Button/WatchButton";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
@@ -65,11 +66,6 @@ export default React.createClass({
           subtle={true}
           onTouchTap={this.delete}
         />
-        <TopicUpdateForm
-          topic={this.data.topic}
-          handleClose={this.hideTopicForm}
-          open={this.state.showForm}
-        />
       </ButtonGroup>;
     } else {
       return <ButtonGroup>
@@ -79,6 +75,22 @@ export default React.createClass({
           subtle={true}
         />
       </ButtonGroup>;
+    }
+  },
+  renderForm() {
+    if (this.state.showForm) {
+      return <Dialog
+        title="Edit Topic"
+        formId={"form" + this.data.topic._id}
+        open={true}
+        onClose={this.hideTopicForm}
+      >
+        <TopicForm
+          id={"form" + this.data.topic._id}
+          topic={this.data.topic}
+          onClose={this.hideTopicForm}
+        />
+      </Dialog>;
     }
   },
   render() {
@@ -109,6 +121,7 @@ export default React.createClass({
         currentUser={this.data.currentUser}
         updateTitle={this.updateTitle}
       />
+      {this.renderForm()}
     </section>;
   }
 });

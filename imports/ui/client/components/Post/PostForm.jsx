@@ -126,15 +126,15 @@ export default React.createClass({
           prettyPrint(err);
         }
       });
-      this.props.onClose();
     } else {
       Meteor.call("updatePost", this.props.post._id, data, (err) => {
         if (err) {
           prettyPrint(err);
         }
       });
-      this.props.onClose();
     }
+
+    this.props.onClose();
   },
   renderMedium() {
     if (this.data.loading) {

@@ -21,14 +21,13 @@ export default React.createClass({
       return <Dialog
         title="Edit Post"
         formId={"form" + this.props.post._id}
-        open={this.state.showForm}
+        open={true}
         onClose={this.hidePostForm}
       >
         <PostForm
           id={"form" + this.props.post._id}
           post={this.props.post}
           onClose={this.hidePostForm}
-          open={this.state.showForm}
         />
       </Dialog>;
     }

@@ -1,6 +1,7 @@
 import React from "react";
 
 import TopicForm from "./TopicForm";
+import Dialog from "/imports/ui/client/components/Dialog";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
 export default React.createClass({
@@ -15,6 +16,22 @@ export default React.createClass({
   hideTopicForm() {
     this.setState({ showForm: false });
   },
+  renderForm() {
+    if (this.state.showForm) {
+      return <Dialog
+        title="Create Topic"
+        formId="formNewTopic"
+        open={true}
+        onClose={this.hideTopicForm}
+      >
+        <TopicForm
+          id="formNewTopic"
+          room={this.props.room}
+          onClose={this.hideTopicForm}
+        />
+      </Dialog>;
+    }
+  },
   render() {
     return <div>
       <SubmitButton
@@ -23,11 +40,7 @@ export default React.createClass({
         style={{width: "100%"}}
         onTouchTap={this.showTopicForm}
       />
-      <TopicForm
-        handleClose={this.hideTopicForm}
-        open={this.state.showForm}
-        room={this.props.room}
-      />
+      {this.renderForm()}
     </div>;
   }
 });

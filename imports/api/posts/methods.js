@@ -10,24 +10,24 @@ import processMentions from "../common/processMentions";
 import tagParser from "../tags/parser";
 import { tagFullResolver } from "../tags/resolver";
 
-function nameCycle(options, callback) {
-	var name = generateName(options);
-	var taken = Boolean(Posts.findOne(
+function nameCycle() {
+	const name = generateName();
+	const taken = Boolean(Posts.findOne(
 		{
 			"owner._id": Meteor.userId(),
 			name: name
 		}
 	));
 	if (taken) {
-		nameCycle(nsfw, callback);
+		return nameCycle();
 	} else {
-		callback(name);
+		return name;
 	}
 }
 
 function injectAuthor(data, tags) {
 	if (data.originality !== "repost") {
-		var username = Meteor.user().username;
+		const username = Meteor.user().username;
 		if (! tags.authors) {
 			tags.authors = [username];
 		} else if (! _.has(tags.authors, username)) {
@@ -48,7 +48,7 @@ const match = {
 };
 
 Meteor.methods({
-	addPost: function (mediumId, data) {
+	addPost(mediumId, data) {
 		check(mediumId, String);
 		check(data, match);
 
@@ -56,94 +56,96 @@ Meteor.methods({
 			throw new Meteor.Error("not-logged-in");
 		}
 
-		var medium = media.findOne({ _id: new Mongo.ObjectID(mediumId) });
+		const name = nameCycle();
 
-		var tags = tagParser(data.tags, {reformat: true});
+		const medium = media.findOne({ _id: new Mongo.ObjectID(mediumId) });
+
+		if (medium.length === 0) {
+			throw new Meteor.Error("empty-medium", "Medium " + mediumId + " has length 0.");
+		}
+
+		let tags = tagParser(data.tags, {reformat: true});
 		injectAuthor(data, tags);
 		if (Meteor.isServer) {
 			tags = tagFullResolver(tags);
 		}
 
-		var name;
-		nameCycle({}, function (n) {
-			name = n;
+		let topicId;
+		if (Meteor.isServer) {
+			topicId = Meteor.call("addTopic", Meteor.user().room._id, {
+				name: name,
+				visibility: data.visibility
+			});
+		}
 
-			var topicId;
-			if (Meteor.isServer) {
-				topicId = Meteor.call("addTopic", Meteor.user().room._id, {
-					name: name,
-					visibility: data.visibility
-				});
+		const mediumDoc = {
+			_id: medium._id,
+			contentType: medium.contentType,
+			md5: medium.md5
+		};
+		if (_.has(medium.metadata, "width")) {
+			mediumDoc.width = medium.metadata.width;
+			mediumDoc.height = medium.metadata.height;
+		}
+
+		const postId = Posts.insert(
+			{
+				createdAt: new Date(),
+				updatedAt: new Date(),
+				name: name,
+				owner: {
+					_id: Meteor.userId(),
+					username: Meteor.user().username,
+					profile: Meteor.user().profile
+				},
+				medium: mediumDoc,
+				color: medium.metadata.color,
+				complement: medium.metadata.complement,
+				topic: {
+					_id: topicId
+				},
+				visibility: data.visibility,
+				originality: data.originality,
+				source: data.source,
+				description: data.description,
+				safety: data.safety,
+				tags: tags,
+				tagsCondExpanded: data.tagsCondExpanded,
+				pretentiousFilter: data.pretentiousFilter
 			}
+		);
 
-			var mediumDoc = {
-				_id: medium._id,
-				contentType: medium.contentType,
-				md5: medium.md5
-			};
-			if (_.has(medium.metadata, "width")) {
-				mediumDoc.width = medium.metadata.width;
-				mediumDoc.height = medium.metadata.height;
-			}
-
-			var postId = Posts.insert(
-				{
-					createdAt: new Date(),
-					updatedAt: new Date(),
-					name: name,
-					owner: {
-						_id: Meteor.userId(),
-						username: Meteor.user().username,
-						profile: Meteor.user().profile
-					},
-					medium: mediumDoc,
-					color: medium.metadata.color,
-					complement: medium.metadata.complement,
-					topic: {
-						_id: topicId
-					},
-					visibility: data.visibility,
-					originality: data.originality,
-					source: data.source,
-					description: data.description,
-					safety: data.safety,
-					tags: tags,
-					tagsCondExpanded: data.tagsCondExpanded,
-					pretentiousFilter: data.pretentiousFilter
-				}
+		if (Meteor.isServer) {
+			media.update(
+				{ _id: new Mongo.ObjectID(mediumId) },
+				{ $set: {
+					"metadata.post": postId,
+					"metadata.bound": true
+				} }
 			);
 
-			if (Meteor.isServer) {
-				media.update(
-					{ _id: new Mongo.ObjectID(mediumId) },
-					{ $set: {
-						"metadata.post": postId,
-						"metadata.bound": true
-					} }
-				);
+      processMentions("post", data.description, {
+        post: {
+          _id: postId,
+          name: name
+        }
+      });
+    }
 
-	      processMentions("post", data.description, {
-	        post: {
-	          _id: postId,
-	          name: name
-	        }
-	      });
-	    }
-		});
 
 		return name;
 	},
-	updatePost: function (postId, data) {
+	updatePost(postId, data) {
 		check(postId, String);
 		check(data, match);
 
-		var post = Posts.findOne(postId);
+		const post = Posts.findOne(postId);
 
 		if (! isOwner(post)) {
 			throw new Meteor.Error("not-authorized");
 		}
 
-		var tags = tagParser(data.tags, {reformat: true});
+		let tags = tagParser(data.tags, {reformat: true});
 		injectAuthor(data, tags);
 		if (Meteor.isServer) {
 			tags = tagFullResolver(tags);
@@ -183,7 +185,7 @@ Meteor.methods({
 	deletePost: function (postId) {
 		check(postId, String);
 
-		var post = Posts.findOne(postId);
+		const post = Posts.findOne(postId);
 
 		if (! isOwner(post)) {
 			throw new Meteor.Error("not-authorized");
@@ -192,42 +194,40 @@ Meteor.methods({
 		Posts.remove(postId);
 		media.remove({ "metadata.post": postId });
 	},
-	rerollPost: function (postId) {
+	rerollPost(postId) {
 		check(postId, String);
 
-		var post = Posts.findOne(postId);
-		var oldName = post.name;
+		const post = Posts.findOne(postId);
+		const oldName = post.name;
 
 		if (! isOwner(post)) {
 			throw new Meteor.Error("not-authorized");
 		}
 
 		if (Meteor.isServer) {
-			var name;
-			nameCycle({}, function (n) {
-				name = n;
-				Posts.update(
-					{ _id: postId },
-					{ $set: {
-						name: name
-					} }
-				);
+			const name = nameCycle();
 
-				Topics.update(
-					{ _id: post.topic._id },
-					{ $set: {
-						name: name
-					} }
-				);
+			Posts.update(
+				{ _id: postId },
+				{ $set: {
+					name: name
+				} }
+			);
 
-				Notifications.update(
-					{ "post._id": postId },
-					{ $set: {
-						"post.name": name
-					} },
-					{ multi: true }
-				);
-			});
+			Topics.update(
+				{ _id: post.topic._id },
+				{ $set: {
+					name: name
+				} }
+			);
+
+			Notifications.update(
+				{ "post._id": postId },
+				{ $set: {
+					"post.name": name
+				} },
+				{ multi: true }
+			);
 
 			return name;
 		}

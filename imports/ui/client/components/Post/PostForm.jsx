@@ -3,9 +3,9 @@ import React from "react";
 import "/imports/api/posts/methods";
 import media from "/imports/api/media/collection";
 import safetyLabels from "/imports/api/common/safetyLabels";
-
 import RainbowSpinner from "/imports/ui/client/components/Spinner/RainbowSpinner";
 import Medium from "/imports/ui/client/components/Medium";
+import Form from "/imports/ui/client/components/Form";
 import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
 import OriginalitySelector from "/imports/ui/client/components/OriginalitySelector";
 import SafetySelector from "/imports/ui/client/components/SafetySelector";
@@ -92,9 +92,7 @@ export default React.createClass({
   handlePretentiousFilter(event, index, value) {
     this.setState({pretentiousFilter: value});
   },
-  handleSubmit(e) {
-    e.preventDefault();
-
+  handleSubmit() {
     const data = {
       visibility: this.state.visibility,
       originality: this.state.originality,
@@ -133,8 +131,6 @@ export default React.createClass({
         }
       });
     }
-
-    this.props.onClose();
   },
   renderMedium() {
     if (this.data.loading) {
@@ -164,7 +160,13 @@ export default React.createClass({
     }
   },
   render() {
-    return <form id={this.props.id} className="postForm" onSubmit={this.handleSubmit}>
+    return <Form
+      className="postForm"
+      id={this.props.id}
+      actions={this.props.actions}
+      onSubmit={this.handleSubmit}
+      onClose={this.props.onClose}
+    >
       {this.renderMedium()}
       <VisibilitySelector
         visibility={this.state.visibility}
@@ -210,6 +212,6 @@ export default React.createClass({
         pretentiousFilter={this.props.pretentiousFilter}
         onChange={this.handlePretentiousFilter}
       />
-    </form>;
+    </Form>;
   }
 });

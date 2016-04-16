@@ -1,21 +1,17 @@
 import _ from "lodash";
 import React from "react";
-
-import "/imports/api/users/methods";
-
-import Powerless from "/imports/ui/client/components/Powerless";
-import Actions from "/imports/ui/client/components/Actions";
-import MultiField from "/imports/ui/client/components/MultiField";
-import CancelButton from "/imports/ui/client/components/Button/CancelButton";
-import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
-import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
-
 import {
-  TextField,
   SelectField,
   MenuItem,
   Toggle
 } from "material-ui";
+
+import "/imports/api/users/methods";
+import Powerless from "/imports/ui/client/components/Powerless";
+import Form from "/imports/ui/client/components/Form";
+import TextField from "/imports/ui/client/components/TextField";
+import MultiField from "/imports/ui/client/components/MultiField";
+import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 
 export default React.createClass({
   getInitialState() {
@@ -39,35 +35,29 @@ export default React.createClass({
     });
   },
   handleSubmit(e) {
-    e.preventDefault();
-
     Meteor.call("updateProfile", {
       displayName: this.state.displayName,
       blurb: this.state.blurb,
       info: this.state.info,
       infoOrder: this.state.infoOrder
     });
-
-    this.props.onCancel(e);
-  },
-  handleCancel(e) {
-    this.props.onCancel(e);
   },
   render() {
-    return <form onSubmit={this.handleSubmit}>
+    return <Form
+      id={this.props.id}
+      actions={this.props.actions}
+      onSubmit={this.handleSubmit}
+      onClose={this.props.onClose}
+    >
       <TextField
         defaultValue={this.state.displayName}
-        floatingLabelText="Display Name"
-        floatingLabelStyle={{fontSize: "20px"}}
-        fullWidth={true}
+        label="Display Name"
         onChange={this.handleDisplayName}
       />
 
       <TextField
         defaultValue={this.state.blurb}
-        floatingLabelText="Sassy Catchphrase"
-        floatingLabelStyle={{fontSize: "20px"}}
-        fullWidth={true}
+        label="Sassy Catchphrase"
         onChange={this.handleBlurb}
       />
 
@@ -78,17 +68,6 @@ export default React.createClass({
         defaultQty={1}
         onChange={this.handleInfo}
       />
-
-      <Actions>
-        <CancelButton
-          onTouchTap={this.handleCancel}
-        />
-        <SubmitButton
-          type="submit"
-          label="Save"
-          onTouchTap={this.handleSubmit}
-        />
-      </Actions>
-    </form>;
+    </Form>;
   }
 });

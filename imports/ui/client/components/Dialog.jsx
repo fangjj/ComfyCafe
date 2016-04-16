@@ -21,7 +21,7 @@ export default (props) => {
       label="Submit"
       labelStyle={{ fontSize: "18px" }}
       secondary={true}
-      onTouchTap={onSubmit}
+      onTouchTap={formId ? undefined : onSubmit}
     />,
   ];
 

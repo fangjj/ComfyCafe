@@ -2,6 +2,7 @@ import React from "react";
 
 import "/imports/api/rooms/methods";
 import generateRoom from "/imports/api/rooms/nameGen/generator";
+import Form from "/imports/ui/client/components/Form";
 import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
 import TextField from "/imports/ui/client/components/TextField";
 import TextArea from "/imports/ui/client/components/TextArea";
@@ -49,8 +50,6 @@ export default React.createClass({
     this.setState({ rules: e.target.value });
   },
   handleSubmit(e) {
-    e.preventDefault();
-
     const data = {
       name: this.state.name,
       visibility: this.state.visibility,
@@ -74,11 +73,14 @@ export default React.createClass({
         }
       });
     }
-
-    this.props.onClose();
   },
   render() {
-    return <form id={this.props.id} onSubmit={this.handleSubmit}>
+    return <Form
+      id={this.props.id}
+      actions={this.props.actions}
+      onSubmit={this.handleSubmit}
+      onClose={this.props.onClose}
+    >
       <TextField
         defaultValue={this.state.name}
         label="Name"
@@ -102,6 +104,6 @@ export default React.createClass({
         rowsMax={10}
         onChange={this.handleRules}
       />
-    </form>;
+    </Form>;
   }
 });

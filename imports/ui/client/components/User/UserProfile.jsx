@@ -130,7 +130,8 @@ export default React.createClass({
     if (isOwner && this.state.isEditing) {
       return <UserProfileForm
         currentUser={this.data.user}
-        onCancel={this.stopEditing}
+        actions={true}
+        onClose={this.stopEditing}
       />;
     }
   },

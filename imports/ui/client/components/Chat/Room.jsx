@@ -94,6 +94,7 @@ export default React.createClass({
     if (isOwner && this.state.showForm) {
       return <RoomForm
         room={this.data.room}
+        actions={true}
         onClose={this.hideRoomForm}
       />;
     }

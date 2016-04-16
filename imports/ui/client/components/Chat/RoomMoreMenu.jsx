@@ -1,8 +1,8 @@
 import React from "react";
 
 import "/imports/api/rooms/methods";
-
-import RoomUpdateForm from "./RoomUpdateForm";
+import RoomForm from "./RoomForm";
+import Dialog from "/imports/ui/client/components/Dialog";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 import {
@@ -24,10 +24,26 @@ export default React.createClass({
   delete() {
     Meteor.call("deleteRoom", this.props.room._id, () => {
       if (this.props.redirect) {
-        var path = FlowRouter.path("roomList");
+        const path = FlowRouter.path("roomList");
         FlowRouter.go(path);
       }
     });
+  },
+  renderForm() {
+    if (this.state.showForm) {
+      return <Dialog
+        title="Edit Room"
+        formId={"form" + this.props.room._id}
+        open={true}
+        onClose={this.hideRoomForm}
+      >
+        <RoomForm
+          id={"form" + this.props.room._id}
+          room={this.props.room}
+          onClose={this.hideRoomForm}
+        />
+      </Dialog>;
+    }
   },
   render() {
     const room = this.props.room;
@@ -48,11 +64,7 @@ export default React.createClass({
         <MenuItem primaryText="Edit" onTouchTap={this.showRoomForm} />
         <MenuItem primaryText="Delete" onTouchTap={this.delete} />
       </IconMenu>
-      <RoomUpdateForm
-        room={this.props.room}
-        handleClose={this.hideRoomForm}
-        open={this.state.showForm}
-      />
+      {this.renderForm()}
     </div>;
   }
 });

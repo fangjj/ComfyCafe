@@ -22,8 +22,8 @@ export default React.createClass({
     return { showForm: false };
   },
   getMeteorData() {
-    var id = FlowRouter.getParam("topicId");
-    var handle = Meteor.subscribe("topic", id);
+    const id = FlowRouter.getParam("topicId");
+    const handle = Meteor.subscribe("topic", id);
     return {
       loading: ! handle.ready(),
       topic: Topics.findOne({ _id: id }),

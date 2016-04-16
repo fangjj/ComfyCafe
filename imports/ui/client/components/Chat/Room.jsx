@@ -3,7 +3,7 @@ import React from "react";
 import Rooms from "/imports/api/rooms/collection";
 import setTitle from "/imports/api/common/setTitle";
 
-import RoomInnerForm from "./RoomInnerForm";
+import RoomForm from "./RoomForm";
 import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
 import TextBody from "/imports/ui/client/components/TextBody";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
@@ -23,8 +23,8 @@ export default React.createClass({
     this.setState({ showForm: false });
   },
   getMeteorData() {
-    var id = FlowRouter.getParam("roomId");
-    var handle = Meteor.subscribe("room", id);
+    const id = FlowRouter.getParam("roomId");
+    const handle = Meteor.subscribe("room", id);
     return {
       loading: ! handle.ready(),
       room: Rooms.findOne({ _id: id }),
@@ -92,7 +92,10 @@ export default React.createClass({
   },
   renderForm(isOwner) {
     if (isOwner && this.state.showForm) {
-      return <RoomInnerForm />;
+      return <RoomForm
+        room={this.data.room}
+        onClose={this.hideRoomForm}
+      />;
     }
   },
   render() {

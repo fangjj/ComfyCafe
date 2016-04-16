@@ -130,11 +130,12 @@ export default React.createClass({
     this.setState({ mediumId: id });
   },
   deleteMedium(id) {
-    Meteor.call("mediumDelete", id);
-    if (_.has(this.uploads, id)) {
-      delete this.uploads[id];
-      this.setState({ updateQueue: _.uniqueId() });
-    }
+    Meteor.call("mediumDelete", id, () => {
+      if (_.has(this.uploads, id)) {
+        delete this.uploads[id];
+        this.setState({ updateQueue: _.uniqueId() });
+      }
+    });
   },
   destroyPostForm() {
     this.setState({ mediumId: null });

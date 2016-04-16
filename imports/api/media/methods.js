@@ -6,7 +6,7 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-	mediumDelete: function (mediumId) {
+	mediumDelete(mediumId) {
 		check(mediumId, String);
 
     const medium = media.findOne({ _id: new Mongo.ObjectID(mediumId) });
@@ -17,7 +17,7 @@ Meteor.methods({
 
     media.remove({ _id: new Mongo.ObjectID(mediumId) });
   },
-	mediumComplete: function (mediumId) {
+	mediumComplete(mediumId) {
 		check(mediumId, String);
 
     const medium = media.findOne({ _id: new Mongo.ObjectID(mediumId) });
@@ -35,12 +35,12 @@ Meteor.methods({
 			);
 		}
   },
-	mediumDimensions: function (mediumId, width, height) {
+	mediumDimensions(mediumId, width, height) {
 		check(mediumId, String);
 		check(width, Number);
 		check(height, Number);
 
-		var medium = media.findOne({ _id: new Mongo.ObjectID(mediumId) });
+		const medium = media.findOne({ _id: new Mongo.ObjectID(mediumId) });
 
 		if (medium.metadata.owner !== Meteor.userId()) {
 			throw new Meteor.Error("not-authorized");

@@ -9,6 +9,9 @@ import {
 } from "material-ui";
 
 export default React.createClass({
+  getInitialState() {
+    return { hidden: false };
+  },
   handleTouch(e) {
     if (this.props.upload.progress === 100) {
       this.props.onSelect(this.props.upload._id);
@@ -16,7 +19,9 @@ export default React.createClass({
   },
   handleDelete(e) {
     e.stopPropagation();
-    this.props.onDelete(this.props.upload._id);
+    this.setState({ hidden: true }, () => {
+      this.props.onDelete(this.props.upload._id);
+    });
   },
   renderImage() {
     return <img src={this.props.upload.url} />;
@@ -45,6 +50,9 @@ export default React.createClass({
     let classes;
     if (this.props.upload.progress === 100) {
       classes = "complete";
+    }
+    if (this.state.hidden) {
+      classes = "hidden";
     }
     return <li className={classes} onTouchTap={this.handleTouch}>
       <div className="row">

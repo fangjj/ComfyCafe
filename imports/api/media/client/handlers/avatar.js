@@ -13,15 +13,17 @@ export default function (file, callback) {
 			if (err) { return console.error("File creation failed!", err); }
 			media.resumable.upload();
 
-			var cursor = media.find({ _id: _id });
-			var liveQuery = cursor.observe({
-				changed: function(newImage, oldImage) {
-					if (newImage.length === file.size) {
-						liveQuery.stop();
-						callback(file.uniqueIdentifier);
-						Meteor.call("setAvatar", file.uniqueIdentifier);
+			Meteor.subscribe("medium", _id._str, () => {
+				const cursor = media.find({ _id: _id });
+				const liveQuery = cursor.observe({
+					changed: function (newImage, oldImage) {
+						if (newImage.length === file.size) {
+							liveQuery.stop();
+							callback(file.uniqueIdentifier);
+							Meteor.call("setAvatar", file.uniqueIdentifier);
+						}
 					}
-				}
+				});
 			});
 		}
 	);

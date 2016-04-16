@@ -1,6 +1,7 @@
 import React from "react";
 
 import BlogForm from "./BlogForm";
+import Dialog from "/imports/ui/client/components/Dialog";
 import FAB from "/imports/ui/client/components/FAB";
 
 export default React.createClass({
@@ -15,12 +16,24 @@ export default React.createClass({
   hideBlogForm() {
     this.setState({showForm: false});
   },
+  renderForm() {
+    if (this.state.showForm) {
+      return <Dialog
+        title="Write Blog Post"
+        formId="formNewBlogPost"
+        open={true}
+        onClose={this.hideBlogForm}
+      >
+        <BlogForm
+          id="formNewBlogPost"
+          onClose={this.hideBlogForm}
+        />
+      </Dialog>;
+    }
+  },
   render() {
     return <FAB iconName="add" onTouchTap={this.showBlogForm}>
-      <BlogForm
-        handleClose={this.hideBlogForm}
-        open={this.state.showForm}
-      />
+      {this.renderForm()}
     </FAB>;
   }
 });

@@ -1,17 +1,14 @@
 import React from "react";
+import IconMenu from "material-ui/IconMenu";
+import MenuItem from "material-ui/MenuItem";
+import IconButton from "material-ui/IconButton";
 
 import "/imports/api/blog/methods";
-
-import BlogUpdateForm from "./BlogUpdateForm";
+import BlogForm from "./BlogForm";
+import Dialog from "/imports/ui/client/components/Dialog";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 
-import {
-  IconMenu,
-  MenuItem,
-  IconButton
-} from "material-ui";
-
-const BlogMoreMenu = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       showForm: false
@@ -26,13 +23,29 @@ const BlogMoreMenu = React.createClass({
   delete() {
     Meteor.call("deleteBlogPost", this.props.post._id);
   },
+  renderForm() {
+    if (this.state.showForm) {
+      return <Dialog
+        title="Edit Blog Post"
+        formId={"form" + this.props.post._id}
+        open={true}
+        onClose={this.hideBlogForm}
+      >
+        <BlogForm
+          id={"form" + this.props.post._id}
+          post={this.props.post}
+          onClose={this.hideBlogForm}
+        />
+      </Dialog>;
+    }
+  },
   render() {
-    var post = this.props.post;
+    const post = this.props.post;
 
-    var owner = post.owner;
-    var isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
+    const owner = post.owner;
+    const isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
 
-    var moreBtn = <IconButton>
+    const moreBtn = <IconButton>
       <Icon>more_horiz</Icon>
     </IconButton>;
 
@@ -45,13 +58,7 @@ const BlogMoreMenu = React.createClass({
         <MenuItem primaryText="Edit" onTouchTap={this.showBlogForm} />
         <MenuItem primaryText="Delete" onTouchTap={this.delete} />
       </IconMenu>
-      <BlogUpdateForm
-        post={this.props.post}
-        handleClose={this.hideBlogForm}
-        open={this.state.showForm}
-      />
+      {this.renderForm()}
     </div>;
   }
 });
-
-export default BlogMoreMenu;

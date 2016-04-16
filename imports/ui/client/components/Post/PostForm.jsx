@@ -6,6 +6,7 @@ import safetyLabels from "/imports/api/common/safetyLabels";
 import RainbowSpinner from "/imports/ui/client/components/Spinner/RainbowSpinner";
 import Medium from "/imports/ui/client/components/Medium";
 import Form from "/imports/ui/client/components/Form";
+import TextArea from "/imports/ui/client/components/TextArea";
 import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
 import OriginalitySelector from "/imports/ui/client/components/OriginalitySelector";
 import SafetySelector from "/imports/ui/client/components/SafetySelector";
@@ -13,7 +14,6 @@ import PretentiousFilterSelector from "/imports/ui/client/components/Pretentious
 import TagField from "/imports/ui/client/components/Tag/TagField";
 
 import {
-  TextField,
   Checkbox,
   FlatButton
 } from "material-ui";
@@ -147,15 +147,12 @@ export default React.createClass({
   },
   renderSourceField() {
     if (this.props.originality !== "original") {
-      return <TextField
+      return <TextArea
         defaultValue={this.props.source}
-        floatingLabelText="Source"
-        floatingLabelStyle={{fontSize: "20px"}}
-        multiLine={true}
+        label="Source"
         rows={1}
         rowsMax={3}
         onChange={this.handleSource}
-        fullWidth={true}
       />;
     }
   },
@@ -177,15 +174,12 @@ export default React.createClass({
         onChange={this.handleOriginality}
       />
       {this.renderSourceField()}
-      <TextField
+      <TextArea
         defaultValue={this.state.description}
-        floatingLabelText="Description"
-        floatingLabelStyle={{ fontSize: "20px" }}
-        multiLine={true}
+        label="Description"
         rows={3}
         rowsMax={7}
         onChange={this.handleDescription}
-        fullWidth={true}
       />
       <br />
       <SafetySelector

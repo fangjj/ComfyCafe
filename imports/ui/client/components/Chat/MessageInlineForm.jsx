@@ -3,11 +3,11 @@ import React from "react";
 import "/imports/api/messages/methods";
 import "/imports/api/topics/methods";
 
-import MessageInnerForm from "./MessageInnerForm";
+import MessageForm from "./MessageForm";
 import Actions from "../Actions";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
-const MessageInlineForm = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       typing: false,
@@ -42,7 +42,7 @@ const MessageInlineForm = React.createClass({
   },
   render() {
     return <div>
-      <MessageInnerForm
+      <MessageForm
         directValue={true}
         body={this.state.body}
         handleBody={this.handleBody}
@@ -57,5 +57,3 @@ const MessageInlineForm = React.createClass({
     </div>;
   }
 });
-
-export default MessageInlineForm;

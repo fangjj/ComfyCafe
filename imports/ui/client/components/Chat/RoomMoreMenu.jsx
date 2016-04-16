@@ -1,15 +1,14 @@
 import React from "react";
-
-import "/imports/api/rooms/methods";
-import RoomForm from "./RoomForm";
-import Dialog from "/imports/ui/client/components/Dialog";
-import Icon from "/imports/ui/client/components/Daikon/Icon";
-
 import {
   IconMenu,
   MenuItem,
   IconButton
 } from "material-ui";
+
+import "/imports/api/rooms/methods";
+import RoomForm from "./RoomForm";
+import Dialog from "/imports/ui/client/components/Dialog";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 export default React.createClass({
   getInitialState() {

@@ -1,15 +1,14 @@
 import React from "react";
-
-import "/imports/api/messages/methods";
-
-import MessageUpdateForm from "./MessageUpdateForm";
-import Icon from "/imports/ui/client/components/Daikon/Icon";
-
 import {
   IconMenu,
   MenuItem,
   IconButton
 } from "material-ui";
+
+import "/imports/api/messages/methods";
+import MessageForm from "./MessageForm";
+import Dialog from "/imports/ui/client/components/Dialog";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 export default React.createClass({
   getInitialState() {
@@ -23,6 +22,22 @@ export default React.createClass({
   },
   delete() {
     Meteor.call("deleteMessage", this.props.message._id);
+  },
+  renderForm() {
+    if (this.state.showForm) {
+      return <Dialog
+        title="Edit Message"
+        formId={"form" + this.props.message._id}
+        open={true}
+        onClose={this.hideMessageForm}
+      >
+        <MessageForm
+          id={"form" + this.props.message._id}
+          message={this.props.message}
+          onClose={this.hideMessageForm}
+        />
+      </Dialog>;
+    }
   },
   render() {
     const msg = this.props.message;
@@ -43,11 +58,7 @@ export default React.createClass({
         <MenuItem primaryText="Edit" onTouchTap={this.showMessageForm} />
         <MenuItem primaryText="Delete" onTouchTap={this.delete} />
       </IconMenu>
-      <MessageUpdateForm
-        message={msg}
-        handleClose={this.hideMessageForm}
-        open={this.state.showForm}
-      />
+      {this.renderForm()}
     </div>;
   }
 });

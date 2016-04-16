@@ -139,8 +139,8 @@ export default React.createClass({
   destroyPostForm() {
     this.setState({ mediumId: null });
   },
-  postSuccess() {
-    delete this.uploads[this.state.mediumId];
+  postSuccess(mediumId) {
+    delete this.uploads[mediumId];
     this.setState({
       mediumId: null,
       updateQueue: _.uniqueId()

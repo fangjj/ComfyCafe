@@ -106,9 +106,11 @@ export default React.createClass({
 
     if (! this.props.post) {
       Meteor.call("addPost", this.props.mediumId, data, (err, name) => {
-        if (! err) {
+        if (err) {
+          prettyPrint(err);
+        } else {
           if (this.props.onSuccess) {
-            this.props.onSuccess();
+            this.props.onSuccess(this.props.mediumId);
           }
 
           const path = FlowRouter.path("post", {
@@ -120,8 +122,6 @@ export default React.createClass({
             tab() { window.open(path); },
             nothing() {}
           }[this.data.currentUser.settings.uploadAction || "redirect"]();
-        } else {
-          prettyPrint(err);
         }
       });
     } else {

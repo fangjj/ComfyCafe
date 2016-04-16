@@ -5,7 +5,7 @@ import { tagDescriptorTokenizer } from "/imports/api/tags/tokenizer";
 import TagRootClause from "./TagRootClause";
 import TagDescriptor from "./TagDescriptor";
 
-const TagRoot = React.createClass({
+export default React.createClass({
   componentWillMount() {
     this.prefix = _.uniqueId();
   },
@@ -39,5 +39,3 @@ const TagRoot = React.createClass({
     </li>;
   }
 });
-
-export default TagRoot;

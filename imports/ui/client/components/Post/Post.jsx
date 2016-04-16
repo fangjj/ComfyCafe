@@ -31,14 +31,10 @@ export default React.createClass({
     }
   },
   showAvatarCropper() {
-    this.setState({
-      avatarCropper: true
-    });
+    this.setState({ avatarCropper: true });
   },
   hideAvatarCropper() {
-    this.setState({
-      avatarCropper: false
-    });
+    this.setState({ avatarCropper: false });
   },
   renderTags() {
     if (this.props.post.tags.text) {
@@ -74,7 +70,7 @@ export default React.createClass({
     var showEditButton = isOwner;
     var showFavoriteButton = ! isOwner && this.props.currentUser && this.props.post.medium;
 
-    var fab;
+    let fab;
     if (showEditButton) {
       fab = <PostModifyFAB post={this.props.post} />;
     }
@@ -92,7 +88,9 @@ export default React.createClass({
       <PostInfoBox
         post={this.props.post}
         currentUser={this.props.currentUser}
+        isCropping={this.state.avatarCropper}
         showAvatarCropper={this.showAvatarCropper}
+        hideAvatarCropper={this.hideAvatarCropper}
       />
       {this.renderAvatarCropper()}
       {this.renderTags()}

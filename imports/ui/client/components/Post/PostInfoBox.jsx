@@ -5,6 +5,7 @@ import "/imports/api/posts/methods";
 import goBack from "/imports/ui/client/utils/goBack";
 import TextBody from "/imports/ui/client/components/TextBody";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
+import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import ToggleButton from "/imports/ui/client/components/Button/ToggleButton";
 import BookmarkButton from "/imports/ui/client/components/Button/BookmarkButton";
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
@@ -45,11 +46,15 @@ export default React.createClass({
       return;
     }
 
-    const cropButton = <SubmitButton
+    let cropButton = <SubmitButton
       label="Set Avatar"
       iconName="crop"
       onTouchTap={this.props.showAvatarCropper}
     />;
+    if (this.props.isCropping) {
+      cropButton = <CancelButton onTouchTap={this.props.hideAvatarCropper} />;
+    }
+
     const owner = this.props.post.owner;
     const isOwner = _.get(this.props, "currentUser._id") === owner._id;
     if (! isOwner) {

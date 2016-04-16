@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import Posts from "/imports/api/posts/collection";
+import { postsPerPage } from "/imports/api/posts/constants";
 import tagQuery from "/imports/api/tags/query";
 import PostGallery from "./PostGallery";
 import Powerless from "/imports/ui/client/components/Powerless";
@@ -134,7 +135,7 @@ export default React.createClass({
         doc,
         {
           sort: { createdAt: -1, name: 1 },
-          limit: (page + 1) * 24
+          limit: (page + 1) * postsPerPage
         }
       ).fetch(),
       currentUser: Meteor.user()

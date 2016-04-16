@@ -1,11 +1,12 @@
 import Posts from "../collection";
+import { postsPerPage } from "../constants";
 import privacyWrap from "/imports/api/common/privacyWrap";
 import tagQuery from "/imports/api/tags/query";
 
 function options(page) {
 	return {
 		sort: { createdAt: -1, name: 1 },
-		limit: (page + 1) * 24
+		limit: (page + 1) * postsPerPage
 	};
 }
 

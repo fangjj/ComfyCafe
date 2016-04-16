@@ -6,7 +6,6 @@ import "/imports/api/media/methods";
 import media from "/imports/api/media/collection";
 import mediaUpload from "/imports/api/media/client/handlers/media";
 import avatarUpload from "/imports/api/media/client/handlers/avatar";
-
 import setPattern from "/imports/ui/client/utils/setPattern";
 import muiTheme from "/imports/ui/client/utils/muiTheme";
 import UploadQueue from "/imports/ui/client/components/UploadQueue";

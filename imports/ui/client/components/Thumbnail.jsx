@@ -1,10 +1,10 @@
 import React from "react";
 
+import Image from "/imports/ui/client/components/Image";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
-import PretentiousImage from "./PretentiousImage";
 import Spinner from "/imports/ui/client/components/Spinner/Spinner";
 
-const Thumbnail = React.createClass({
+export default React.createClass({
   renderPlay(type) {
     if (type === "video") {
       return <div className="play">
@@ -26,10 +26,10 @@ const Thumbnail = React.createClass({
       if (! thumbTerminated) {
         if (medium.thumbnails) {
           let thumb = medium.thumbnails[size];
-          thumbnail = <PretentiousImage
+          thumbnail = <Image
             className="thumbnail"
             src={"/gridfs/media/id/" + thumb._id + "?size=" + size}
-            pretentiousFilter={this.props.pretentiousFilter}
+            filter={this.props.filter}
           />;
         } else {
           thumbnail = <Spinner />;
@@ -51,5 +51,3 @@ const Thumbnail = React.createClass({
     </div>;
   }
 });
-
-export default Thumbnail;

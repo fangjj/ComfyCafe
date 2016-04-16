@@ -82,7 +82,7 @@ export default React.createClass({
       <figure className="content">
         <Medium
           medium={this.props.post.medium}
-          pretentiousFilter={this.props.post.pretentiousFilter}
+          filter={this.props.post.pretentiousFilter}
         />
       </figure>
       <PostInfoBox

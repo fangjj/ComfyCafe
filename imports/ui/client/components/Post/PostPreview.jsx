@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 
 import PostMoreMenu from "./PostMoreMenu";
@@ -8,6 +9,21 @@ import Thumbnail from "/imports/ui/client/components/Thumbnail";
 import Avatar from "/imports/ui/client/components/Avatar/Avatar";
 
 export default React.createClass({
+  shouldComponentUpdate(nextProps) {
+    const should = (
+      nextProps.currentUser._id !== this.props.currentUser._id
+      || (
+        nextProps.currentUser.bookmarks !== this.props.currentUser.bookmarks
+        && _.includes(
+          _.xor(nextProps.currentUser.bookmarks, this.props.currentUser.bookmarks),
+          nextProps.post._id
+        )
+      )
+      || JSON.stringify(nextProps.post) !== JSON.stringify(this.props.post)
+    );
+    console.log(should);
+    return should;
+  },
   renderMoreMenu() {
     const isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.post.owner._id;
@@ -43,7 +59,7 @@ export default React.createClass({
         <Thumbnail
           medium={this.props.post.medium}
           size="list"
-          pretentiousFilter={this.props.post.pretentiousFilter}
+          filter={this.props.post.pretentiousFilter}
         />
         <div className="label">
           {this.props.post.name}

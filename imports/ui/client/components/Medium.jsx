@@ -2,7 +2,7 @@ import React from "react";
 
 import classConcat from "/imports/ui/client/utils/classConcat";
 
-import PretentiousImage from "./PretentiousImage";
+import ZoomableImage from "./ZoomableImage";
 
 export default React.createClass({
   render() {
@@ -11,13 +11,12 @@ export default React.createClass({
     const src = "/gridfs/media/" + medium.md5;
     let classes = classConcat("medium", this.props.className);
     const mediumCmp = {
-      image: <PretentiousImage
+      image: <ZoomableImage
         className={classes}
         src={src}
         width={medium.width}
         height={medium.height}
-        pretentiousFilter={this.props.pretentiousFilter}
-        moonbox={true}
+        filter={this.props.filter}
       />,
       video: <video className="medium" id={"video" + medium._id} src={src} controls>
         <source src={src} type={medium.contentType} />

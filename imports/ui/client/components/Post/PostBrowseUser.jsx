@@ -1,15 +1,15 @@
 import React from "react";
 
-import PostGallery from "./PostGallery";
+import PostGalleryContainer from "./PostGalleryContainer";
 import InlineUhoh from "/imports/ui/client/components/InlineUhoh";
 
 export default React.createClass({
   render() {
-    return <PostGallery
+    return <PostGalleryContainer
       subName="imagesBy"
       subData={FlowRouter.getParam("username")}
       fabCond={function () {
-        return this.data.currentUser.username === FlowRouter.getParam("username");
+        return this.props.currentUser.username === FlowRouter.getParam("username");
       }}
       generateDoc={function () {
         return { "owner.username": FlowRouter.getParam("username") };

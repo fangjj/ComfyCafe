@@ -1,173 +1,50 @@
 import _ from "lodash";
 import React from "react";
 
-import Posts from "/imports/api/posts/collection";
-import tagQuery from "/imports/api/tags/query";
-
 import PostPreview from "./PostPreview";
 import PostFilters from "./PostFilters";
+import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLoadingSpinner";
 import UploadFAB from "/imports/ui/client/components/UploadFAB";
-import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import InlineUhoh from "/imports/ui/client/components/InlineUhoh";
-import Powerless from "/imports/ui/client/components/Powerless";
+import Infinite from "/imports/ui/client/components/Infinite";
 import TagInlineField from "/imports/ui/client/components/Tag/TagInlineField";
 
 import {
   Checkbox
 } from "material-ui";
 
-const defaultState = {
-  originalOnly: false,
-  tagStr: "",
-  filter: "sfw",
-  noPush: false
-};
-
 export default React.createClass({
-  mixins: [ReactMeteorData],
-  first: true,
-  seeded: false,
   getInitialState() {
-    const filter = _.get(Meteor.user(), "settings.defaultFilter");
     return {
-      originalOnly: (getQueryParam("originalOnly") === "true") || defaultState.originalOnly,
-      tagStr: getQueryParam("query") || defaultState.tagStr,
-      filter: getQueryParam("filter") || filter || defaultState.filter
-    }
-  },
-  readQueryParams(event) {
-    let doc = {
-      noPush: true
+      height: 1000,
+      continue: true
     };
-    const params = {
-      originalOnly: getQueryParam("originalOnly"),
-      tagStr: getQueryParam("query"),
-      filter: getQueryParam("filter")
-    };
-    _.each(params, (v, k) => {
-      if (v !== null) {
-        if (typeof defaultState[k] !== "boolean") {
-          doc[k] = v;
-        } else {
-          doc[k] = v === "true";
-        }
-      }
-    });
-    if (! _.isEmpty(doc)) {
-      this.seeded = true;
-    }
-    if (params.filter) {
-      doc.filterChanged = true;
-    }
-    this.setState(doc);
   },
-  componentDidMount() {
-    window.addEventListener("popstate", this.readQueryParams);
-  },
-  componentWillUnmount() {
-    window.removeEventListener("popstate", this.readQueryParams);
-  },
-  getMeteorData() {
-    let doc = this.props.generateDoc.bind(this)();
-
-    defaultState.filter = _.get(Meteor.user(), "settings.defaultFilter", defaultState.filter);
-
-    let queuedParams = [];
-
-    if (this.state.originalOnly) {
-      queuedParams.push({originalOnly: this.state.originalOnly});
-      doc.originality = { $ne: "repost" };
-    } else {
-      queuedParams.push({originalOnly: undefined});
-    }
-
-    if (this.state.tagStr) {
-      queuedParams.push({query: this.state.tagStr});
-
-      const parsed = tagQuery(this.state.tagStr);
-      _.each(parsed, (value, key) => {
-        if (_.has(doc, key)) {
-          prettyPrint(value);
-          if (_.includes(["$and", "$or", "$nor"], key)) {
-            doc[key].push.apply(doc[key], value);
-          } else {
-            console.error("PANIC: key " + key + " already present in doc.");
-          }
-        } else {
-          doc[key] = value;
-        }
+  componentWillReceiveProps(nextProps) {
+    if (_.get(nextProps.posts, "length") !== _.get(this.props.posts, "length")) {
+      this.setState({
+        height: $(this.refs.gallery).height(),
+        continue: true
       });
-    } else {
-      queuedParams.push({query: undefined});
+    } else if (nextProps.page !== this.props.page) {
+      this.setState({ continue: false });
     }
-
-    if (this.state.filter) {
-      if (this.state.filter !== defaultState.filter) {
-        queuedParams.push({filter: this.state.filter});
-      } else {
-        queuedParams.push({filter: undefined});
-      }
-      if (this.state.filter === "all") {
-        // noop
-      }
-      if (this.state.filter === "sfw") {
-        doc["safety"] = { $lte: 1 };
-      }
-      if (this.state.filter === "nsfw") {
-        doc["safety"] = { $gte: 2 };
-      }
-      if (this.state.filter === "your") {
-        doc["owner._id"] = Meteor.userId();
-      }
+  },
+  handleInfinity() {
+    if (this.state.continue) {
+      Session.set("page", this.props.page + 1);
     }
-
-    if (! this.state.noPush) {
-      const query = setQueryParams(queuedParams);
-      if (! this.first || this.seeded) {
-        pushState(query);
-      }
-    }
-    this.first = false;
-
-    let handle = Meteor.subscribe(this.props.subName, this.props.subData);
-    return {
-      loading: ! handle.ready(),
-      posts: Posts.find(
-  			doc,
-  			{ sort: { createdAt: -1, name: 1 } }
-  		).fetch(),
-      currentUser: Meteor.user()
-    };
-  },
-  handleOriginalOnly(event) {
-    this.setState({
-      originalOnly: ! this.state.originalOnly,
-      noPush: false
-    });
-  },
-  handleSearch(value) {
-    this.setState({
-      tagStr: value,
-      noPush: false
-    });
-  },
-  handleFilter(event, index, value) {
-    this.setState({
-      filter: value,
-      filterChanged: true,
-      noPush: false
-    });
   },
   renderPosts() {
-    if (this.data.posts.length) {
-      return this.data.posts.map((post) => {
+    if (this.props.posts.length) {
+      return this.props.posts.map((post) => {
         return <PostPreview
           post={post}
-          currentUser={this.data.currentUser}
+          currentUser={this.props.currentUser}
           key={post._id}
         />;
       });
-    } else {
+    } else if (! this.props.loading) {
       if (this.state.originalOnly
         || this.state.tagStr
         || this.state.filter
@@ -179,8 +56,13 @@ export default React.createClass({
       return this.props.ifEmpty.bind(this)();
     }
   },
+  renderSpinner() {
+    if (this.props.loading) {
+      return <InlineLoadingSpinner />;
+    }
+  },
   renderFab() {
-    if (this.data.currentUser) {
+    if (this.props.currentUser) {
       if (this.props.fabCond) {
         if (this.props.fabCond.bind(this)()) {
           return <UploadFAB />;
@@ -191,44 +73,41 @@ export default React.createClass({
     }
   },
   render() {
-    if (this.data.loading) {
-      return <LoadingSpinner />;
-    }
-
-    if (this.props.requireAuth && ! this.data.currentUser) {
-      return <Powerless />;
-    }
-
-    const posts = this.data.posts;
-    return <div className="postGallery content">
-      <div className="filter">
-        <div>
-          <Checkbox
-            defaultChecked={this.state.originalOnly}
-            label="Original only"
-            labelStyle={{fontSize: "20px"}}
-            onCheck={this.handleOriginalOnly}
-          />
+    return <Infinite
+      threshold={300}
+      onInfinite={this.handleInfinity}
+    >
+      <div className="postGallery content" ref="gallery">
+        <div className="filter">
+          <div>
+            <Checkbox
+              defaultChecked={this.props.originalOnly}
+              label="Original only"
+              labelStyle={{fontSize: "20px"}}
+              onCheck={this.props.handleOriginalOnly}
+            />
+          </div>
+          <div style={{flexGrow: 2}}>
+            <TagInlineField
+              delim=";"
+              defaultValue={this.props.tagStr}
+              hintText="Search"
+              onChange={_.debounce(this.props.handleSearch, 250)}
+            />
+          </div>
+          <div style={{flexGrow: 1}}>
+            <PostFilters
+              value={this.props.filter}
+              onChange={this.props.handleFilter}
+            />
+          </div>
         </div>
-        <div style={{flexGrow: 2}}>
-          <TagInlineField
-            delim=";"
-            defaultValue={this.state.tagStr}
-            hintText="Search"
-            onChange={_.debounce(this.handleSearch, 250)}
-          />
-        </div>
-        <div style={{flexGrow: 1}}>
-          <PostFilters
-            value={this.state.filter}
-            onChange={this.handleFilter}
-          />
-        </div>
+        <ul className="gallery">
+          {this.renderPosts()}
+        </ul>
+        {this.renderSpinner()}
+        {this.renderFab()}
       </div>
-      <ul className="gallery">
-        {this.renderPosts()}
-      </ul>
-      {this.renderFab()}
-    </div>;
+    </Infinite>;
   }
 });

@@ -3,14 +3,13 @@ import React from "react";
 import privacyWrap from "/imports/api/common/privacyWrap";
 import tagQuery from "/imports/api/tags/query";
 import { tagStrFromUrl } from "/imports/api/tags/urlify";
-
-import PostGallery from "./PostGallery";
+import PostGalleryContainer from "./PostGalleryContainer";
 import InlineUhoh from "/imports/ui/client/components/InlineUhoh";
 
 export default React.createClass({
   render() {
     const tagStr = tagStrFromUrl(FlowRouter.getParam("rawTagStr"));
-    return <PostGallery
+    return <PostGalleryContainer
       subName="searchPosts"
       subData={tagStr}
       noFab={true}

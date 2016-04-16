@@ -1,11 +1,11 @@
 import React from "react";
 
-import PostGallery from "./PostGallery";
+import PostGalleryContainer from "./PostGalleryContainer";
 import InlineUhoh from "/imports/ui/client/components/InlineUhoh";
 
 export default React.createClass({
   render() {
-    return <PostGallery
+    return <PostGalleryContainer
       subName="bookmarks"
       requireAuth={true}
       noFab={true}

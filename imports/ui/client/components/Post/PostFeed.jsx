@@ -1,11 +1,11 @@
 import React from "react";
 
-import PostGallery from "./PostGallery";
+import PostGalleryContainer from "./PostGalleryContainer";
 import InlineUhoh from "/imports/ui/client/components/InlineUhoh";
 
 export default React.createClass({
   render() {
-    return <PostGallery
+    return <PostGalleryContainer
       subName="postFeed"
       requireAuth={true}
       generateDoc={function () {
@@ -20,7 +20,7 @@ export default React.createClass({
       }}
       ifEmpty={function () {
         let msg;
-        if (this.data.currentUser.subscriptions && this.data.currentUser.subscriptions.length) {
+        if (this.props.currentUser.subscriptions && this.props.currentUser.subscriptions.length) {
           msg = "None of your subscriptions have posted anything...";
         } else {
           msg = "You haven't subscribed to anyone!";

@@ -1,12 +1,7 @@
 import React from "react";
+import Ps from "perfect-scrollbar";
 
 import classConcat from "/imports/ui/client/utils/classConcat";
-
-const Ps = expr(() => {
-  if (Meteor.isClient) {
-    return require("perfect-scrollbar");
-  }
-});
 
 export default React.createClass({
   componentDidMount() {

@@ -1,29 +1,38 @@
 import React from "react";
 
-import TagUpdateForm from "./TagUpdateForm";
-import FAB from "../FAB";
+import TagForm from "./TagForm";
+import Dialog from "/imports/ui/client/components/Dialog";
+import FAB from "/imports/ui/client/components/FAB";
 
-const TagEditFAB = React.createClass({
+export default React.createClass({
   getInitialState() {
-    return {
-      showForm: false
-    };
+    return { showForm: false };
   },
   showTagForm() {
-    this.setState({showForm: true});
+    this.setState({ showForm: true });
   },
   hideTagForm() {
-    this.setState({showForm: false});
+    this.setState({ showForm: false });
+  },
+  renderForm() {
+    if (this.state.showForm) {
+      return <Dialog
+        title="Edit Tag"
+        formId={"form" + this.props.tag._id}
+        open={true}
+        onClose={this.hideTagForm}
+      >
+        <TagForm
+          id={"form" + this.props.tag._id}
+          tag={this.props.tag}
+          onClose={this.hideTagForm}
+        />
+      </Dialog>;
+    }
   },
   render() {
     return <FAB iconName="edit" onTouchTap={this.showTagForm}>
-      <TagUpdateForm
-        tag={this.props.tag}
-        handleClose={this.hideTagForm}
-        open={this.state.showForm}
-      />
+      {this.renderForm()}
     </FAB>;
   }
 });
-
-export default TagEditFAB;

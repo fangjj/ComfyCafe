@@ -5,7 +5,7 @@ import {
   MenuItem
 } from "material-ui";
 
-const TagTypeSelector = React.createClass({
+export default React.createClass({
   render() {
     return <SelectField
       value={this.props.tagType}
@@ -21,5 +21,3 @@ const TagTypeSelector = React.createClass({
     </SelectField>;
   }
 });
-
-export default TagTypeSelector;

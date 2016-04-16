@@ -1,28 +1,37 @@
 import React from "react";
 
 import TagForm from "./TagForm";
-import FAB from "../FAB";
+import Dialog from "/imports/ui/client/components/Dialog";
+import FAB from "/imports/ui/client/components/FAB";
 
-const TagFAB = React.createClass({
+export default React.createClass({
   getInitialState() {
-    return {
-      showForm: false
-    };
+    return { showForm: false };
   },
   showTagForm() {
-    this.setState({showForm: true});
+    this.setState({ showForm: true });
   },
   hideTagForm() {
-    this.setState({showForm: false});
+    this.setState({ showForm: false });
+  },
+  renderForm() {
+    if (this.state.showForm) {
+      return <Dialog
+        title="Create Tag"
+        formId="formNewTag"
+        open={true}
+        onClose={this.hideTagForm}
+      >
+        <TagForm
+          id="formNewTag"
+          onClose={this.hideTagForm}
+        />
+      </Dialog>;
+    }
   },
   render() {
     return <FAB iconName="add" onTouchTap={this.showTagForm}>
-      <TagForm
-        handleClose={this.hideTagForm}
-        open={this.state.showForm}
-      />
+      {this.renderForm()}
     </FAB>;
   }
 });
-
-export default TagFAB;

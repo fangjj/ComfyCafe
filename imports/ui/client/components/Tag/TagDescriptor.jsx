@@ -4,7 +4,7 @@ import React from "react";
 import TagNoun from "./TagNoun";
 import TagAdjective from "./TagAdjective";
 
-const TagDescriptor = React.createClass({
+export default React.createClass({
   componentWillMount() {
     this.prefix = _.uniqueId();
   },
@@ -27,5 +27,3 @@ const TagDescriptor = React.createClass({
     </li>;
   }
 });
-
-export default TagDescriptor;

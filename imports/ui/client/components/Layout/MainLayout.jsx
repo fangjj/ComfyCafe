@@ -17,6 +17,7 @@ import PostForm from "/imports/ui/client/components/Post/PostForm";
 export default React.createClass({
   mixins: [ReactMeteorData],
   uploads: {},
+  deleted: [],
   getInitialState() {
     return {
       updateQueue: _.uniqueId(),
@@ -42,7 +43,7 @@ export default React.createClass({
         ).fetch(),
         (result, medium) => {
           const id = medium._id._str;
-          if (! _.has(this.uploads, id)) {
+          if (! _.has(this.uploads, id) && ! _.includes(this.deleted, id)) {
             result[id] = {
               _id: id,
               progress: 100,
@@ -130,12 +131,12 @@ export default React.createClass({
     this.setState({ mediumId: id });
   },
   deleteMedium(id) {
-    Meteor.call("mediumDelete", id, () => {
-      if (_.has(this.uploads, id)) {
-        delete this.uploads[id];
-        this.setState({ updateQueue: _.uniqueId() });
-      }
-    });
+    this.deleted.push(id);
+    if (_.has(this.uploads, id)) {
+      delete this.uploads[id];
+    }
+    Meteor.call("mediumDelete", id);
+    this.setState({ updateQueue: _.uniqueId() });
   },
   destroyPostForm() {
     this.setState({ mediumId: null });

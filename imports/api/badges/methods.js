@@ -39,7 +39,8 @@ Meteor.methods({
         } } },
         { $set: {
           "profile.badges.$" : dataWithId
-        } }
+        } },
+        { multi: true }
       );
 
       _.map(profileSyncList, (coll) => {

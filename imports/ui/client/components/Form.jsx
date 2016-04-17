@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 
 import Actions from "/imports/ui/client/components/Actions";
@@ -8,10 +9,14 @@ export default React.createClass({
   handleSubmit(e) {
     e.preventDefault();
     this.props.onSubmit();
-    this.props.onClose();
+    if (_.isFunction(this.props.onClose)) {
+      this.props.onClose();
+    }
   },
   handleCancel(e) {
-    this.props.onClose();
+    if (_.isFunction(this.props.onClose)) {
+      this.props.onClose();
+    }
   },
   renderActions(actions) {
     if (actions) {
@@ -22,7 +27,6 @@ export default React.createClass({
         <SubmitButton
           type="submit"
           label="Save"
-          onTouchTap={this.handleSubmit}
         />
       </Actions>;
     }

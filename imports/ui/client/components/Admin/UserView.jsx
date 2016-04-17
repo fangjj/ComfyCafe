@@ -9,7 +9,9 @@ import TextField from "/imports/ui/client/components/TextField";
 export default React.createClass({
   getInitialState() {
     return {
-      badges: _.get(this.props.user, "profile.badges", []).join(", ")
+      badges: _.map(_.get(this.props.user, "profile.badges", []), (badge) => {
+        return badge.name;
+      }).join(", ")
     };
   },
   handleBadges(e) {

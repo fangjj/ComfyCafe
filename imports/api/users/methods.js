@@ -6,6 +6,7 @@ import {
 } from "./validators";
 import media from "../media/collection";
 import Notifications from "../notifications/collection";
+import Badges from "../badges/collection";
 import adminMethod from "/imports/api/common/adminMethod";
 
 Meteor.methods({
@@ -399,12 +400,26 @@ Meteor.methods({
 		});
 
 		adminMethod(() => {
+			const badges = _.map(commaSplit(data.badges), (badge) => {
+				return Badges.findOne({ name: badge });
+			});
+
 			Meteor.users.update(
 				{ _id: userId },
 				{ $set: {
-					"profile.badges": commaSplit(data.badges)
+					"profile.badges": badges
 				} }
 			);
+
+			_.map(profileSyncList, (coll) => {
+				coll.update(
+					{ "owner._id": userId },
+					{ $set: {
+						"owner.profile.badges": badges
+					} },
+					{ multi: true }
+				);
+			});
 		});
 	}
 });

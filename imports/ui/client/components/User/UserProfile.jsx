@@ -18,6 +18,7 @@ import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/client/components/ActionWell";
 import DirectAvatar from "/imports/ui/client/components/Avatar/DirectAvatar";
 import AvatarCropper from "/imports/ui/client/components/Avatar/AvatarCropper";
+import BadgeGroup from "/imports/ui/client/components/BadgeGroup";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -126,6 +127,9 @@ export default React.createClass({
       </span>;
     }
   },
+  renderBadges() {
+    return <BadgeGroup badges={_.get(this.data.user, "profile.badges", {})} />;
+  },
   renderForm(isOwner) {
     if (isOwner && this.state.isEditing) {
       return <UserProfileForm
@@ -146,6 +150,7 @@ export default React.createClass({
             <header>
               <h2>{displayName}</h2>
               {this.renderCatchphrase()}
+              {this.renderBadges()}
             </header>
           </div>
         </div>

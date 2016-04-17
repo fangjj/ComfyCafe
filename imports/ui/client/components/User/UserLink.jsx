@@ -1,10 +1,11 @@
+import _ from "lodash";
 import React from "react";
 
-const UserLink = React.createClass({
+import BadgeGroup from "/imports/ui/client/components/BadgeGroup";
+
+export default React.createClass({
   getInitialState() {
-    return {
-      open: false
-    }
+    return { open: false }
   },
   handleTouchTap(event) {
     this.setState({
@@ -13,9 +14,10 @@ const UserLink = React.createClass({
     });
   },
   handleRequestClose() {
-    this.setState({
-      open: false
-    });
+    this.setState({ open: false });
+  },
+  renderBadges() {
+    return <BadgeGroup badges={_.get(this.props.user, "profile.badges", {})} />;
   },
   render() {
     var user = this.props.user;
@@ -27,5 +29,3 @@ const UserLink = React.createClass({
     </div>;
   }
 });
-
-export default UserLink;

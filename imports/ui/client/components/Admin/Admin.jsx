@@ -3,8 +3,10 @@ import React from "react";
 
 import "/imports/api/migrations/methods";
 import UserPanel from "./UserPanel";
-import UserViewContainer from "./UserViewContainer";
 import ImagePanel from "./ImagePanel";
+import BadgePanel from "./BadgePanel";
+import UserViewContainer from "./UserViewContainer";
+import BadgeViewContainer from "./BadgeViewContainer";
 import Content from "/imports/ui/client/components/Content";
 import List from "/imports/ui/client/components/List";
 import DenseLayout from "/imports/ui/client/components/DenseLayout";
@@ -23,7 +25,8 @@ export default React.createClass({
       if (entityId) {
         return _.get(
           {
-            users: <UserViewContainer />
+            users: <UserViewContainer />,
+            badges: <BadgeViewContainer />
           },
           panel,
           <DenseContent>
@@ -34,7 +37,8 @@ export default React.createClass({
         return _.get(
           {
             users: <UserPanel />,
-            images: <ImagePanel />
+            images: <ImagePanel />,
+            badges: <BadgePanel />
           },
           panel,
           <DenseContent>
@@ -57,6 +61,7 @@ export default React.createClass({
           <li><a href="/admin/images">Images</a></li>
           <li><a href="/admin/blog">Blog</a></li>
           <li><a href="/admin/tags">Tags</a></li>
+          <li><a href="/admin/badges">Badges</a></li>
         </List>
       </DenseCol>
 

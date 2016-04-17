@@ -1,22 +1,23 @@
 import React from "react";
 
-import UserView from "./UserView";
+import Badges from "/imports/api/badges/collection";
+import BadgeView from "./BadgeView";
 import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    const userId = FlowRouter.getParam("id");
-    const handle = Meteor.subscribe("user", userId);
+    const badgeId = FlowRouter.getParam("id");
+    const handle = Meteor.subscribe("badge", badgeId);
     return {
       loading: ! handle.ready(),
-      user: Meteor.users.findOne({ _id: userId })
+      badge: Badges.findOne({ _id: badgeId })
     };
   },
   render() {
     if (this.data.loading) {
       return <DenseLoadingSpinner />;
     }
-    return <UserView {...this.data} />;
+    return <BadgeView {...this.data} />;
   }
 });

@@ -1,0 +1,32 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 4px;
+
+  border: $border;
+  border-radius: 3px;
+
+  i {
+    margin-right: 3px;
+
+    font-size: 16px;
+  }
+
+  .label {
+
+  }
+}
+
+.badgeGroup {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+
+  padding: 4px;
+
+  .badge:not(:last-child) {
+    margin-right: 7px;
+  }
+}

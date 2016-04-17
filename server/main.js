@@ -1,4 +1,5 @@
 // Publications
+import "/imports/api/badges/server/publications";
 import "/imports/api/blog/server/publications";
 import "/imports/api/invites/server/publications";
 import "/imports/api/jobs/server/publications";
@@ -25,6 +26,7 @@ import "/imports/api/jobs/server/garbageCollection.js";
 import "/imports/api/thumbnails/server/job.js";
 
 // Methods
+import "/imports/api/badges/methods";
 import "/imports/api/blog/methods";
 import "/imports/api/invites/methods";
 import "/imports/api/media/methods";

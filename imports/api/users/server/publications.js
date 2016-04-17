@@ -26,6 +26,18 @@ Meteor.publish("user", function (username) {
 	);
 });
 
+Meteor.publish("userId", function (userId) {
+	check(userId, String);
+	return Meteor.users.find(
+		{ _id: userId },
+		{ fields: {
+			username: 1,
+			profile: 1,
+			avatars: 1
+		} }
+	);
+});
+
 Meteor.publish("users", function (ids) {
 	check(ids, [String]);
 	return Meteor.users.find(
@@ -38,6 +50,7 @@ Meteor.publish("users", function (ids) {
 	);
 });
 
+// for admins
 Meteor.publish("allUsers", function (clientUserId) {
 	check(clientUserId, String);
   if (clientUserId === this.userId) {

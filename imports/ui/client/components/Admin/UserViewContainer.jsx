@@ -7,7 +7,7 @@ export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const userId = FlowRouter.getParam("id");
-    const handle = Meteor.subscribe("user", userId);
+    const handle = Meteor.subscribe("userId", userId);
     return {
       loading: ! handle.ready(),
       user: Meteor.users.findOne({ _id: userId })

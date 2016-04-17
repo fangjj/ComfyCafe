@@ -88,6 +88,22 @@ FlowRouter.route("/admin", {
   }
 });
 
+FlowRouter.route("/admin/:panel", {
+  name: "adminPanel",
+  action: function () {
+    setTitle("Admin Panel");
+    renderView(AdminView);
+  }
+});
+
+FlowRouter.route("/admin/:panel/:id", {
+  name: "adminView",
+  action: function () {
+    setTitle("Admin Panel");
+    renderView(AdminView);
+  }
+});
+
 FlowRouter.route("/explore", {
   name: "explore",
   action: function () {

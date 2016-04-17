@@ -5,12 +5,12 @@ import classConcat from "/imports/ui/client/utils/classConcat";
 
 import UserLink from "./UserLink";
 import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLoadingSpinner";
-import Avatar from "../Avatar/Avatar";
+import Avatar from "/imports/ui/client/components/Avatar/Avatar";
 
-const UserList = React.createClass({
+export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    let handle = Meteor.subscribe("users", this.props.userIds);
+    const handle = Meteor.subscribe("users", this.props.userIds);
     return {
       loading: ! handle.ready(),
       users: Meteor.users.find(
@@ -46,5 +46,3 @@ const UserList = React.createClass({
     </ul>;
   }
 });
-
-export default UserList;

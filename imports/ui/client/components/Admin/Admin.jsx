@@ -2,10 +2,14 @@ import _ from "lodash";
 import React from "react";
 
 import "/imports/api/migrations/methods";
+import UserPanel from "./UserPanel";
+import UserViewContainer from "./UserViewContainer";
+import ImagePanel from "./ImagePanel";
 import Content from "/imports/ui/client/components/Content";
 import List from "/imports/ui/client/components/List";
 import DenseLayout from "/imports/ui/client/components/DenseLayout";
 import DenseCol from "/imports/ui/client/components/DenseCol";
+import DenseContent from "/imports/ui/client/components/DenseContent";
 
 export default React.createClass({
   doIt() {
@@ -14,18 +18,45 @@ export default React.createClass({
   renderInner() {
     const isAdmin = Roles.userIsInRole(Meteor.userId(), ["admin"], Roles.GLOBAL_GROUP);
     if (isAdmin) {
-      return "ADMIN";
+      const panel = FlowRouter.getParam("panel");
+      const entityId = FlowRouter.getParam("id");
+      if (entityId) {
+        return _.get(
+          {
+            users: <UserViewContainer />
+          },
+          panel,
+          <DenseContent>
+            Missing panel
+          </DenseContent>
+        );
+      } else {
+        return _.get(
+          {
+            users: <UserPanel />,
+            images: <ImagePanel />
+          },
+          panel,
+          <DenseContent>
+            Admin panel
+          </DenseContent>
+        );
+      }
     } else {
-      return "POSER";
+      return <DenseContent>
+        You don't have persimmons to view this!
+      </DenseContent>;
     }
   },
   render() {
     return <DenseLayout>
       <DenseCol className="leftCol">
         <List>
-          <li>gay</li>
-          <li>gay</li>
-          <li>gay</li>
+          <li><a href="/admin">Admin</a></li>
+          <li><a href="/admin/users">Users</a></li>
+          <li><a href="/admin/images">Images</a></li>
+          <li><a href="/admin/blog">Blog</a></li>
+          <li><a href="/admin/tags">Tags</a></li>
         </List>
       </DenseCol>
 

@@ -6,6 +6,7 @@ import {
 } from "./validators";
 import media from "../media/collection";
 import Notifications from "../notifications/collection";
+import adminMethod from "/imports/api/common/adminMethod";
 
 Meteor.methods({
 	updateProfile(data) {
@@ -389,5 +390,21 @@ Meteor.methods({
 				]
 			}
 		);
+	},
+
+	adminUpdateUser(userId, data) {
+		check(userId, String);
+		check(data, {
+			badges: String
+		});
+
+		adminMethod(() => {
+			Meteor.users.update(
+				{ _id: userId },
+				{ $set: {
+					"profile.badges": commaSplit(data.badges)
+				} }
+			);
+		});
 	}
 });

@@ -2,14 +2,15 @@ import _ from "lodash";
 import React from "react";
 
 import setPattern from "/imports/ui/client/utils/setPattern";
-import PostModifyFAB from "./PostModifyFAB";
-import PostLikeFAB from "./PostLikeFAB";
 import PostLikes from "./PostLikes";
 import PostInfoBox from "./PostInfoBox";
+import PostForm from "./PostForm";
+import Dialog from "/imports/ui/client/components/Dialog";
 import Medium from "/imports/ui/client/components/Medium";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import Err404 from "/imports/ui/client/components/Err404";
 import Content from "/imports/ui/client/components/Content";
+import FAB from "/imports/ui/client/components/FAB";
 import AvatarCropper from "/imports/ui/client/components/Avatar/AvatarCropper";
 import TagTree from "/imports/ui/client/components/Tag/TagTree";
 import InlineTopic from "/imports/ui/client/components/Chat/InlineTopic";
@@ -17,7 +18,8 @@ import InlineTopic from "/imports/ui/client/components/Chat/InlineTopic";
 export default React.createClass({
   getInitialState() {
     return {
-      avatarCropper: false
+      avatarCropper: false,
+      showForm: false
     };
   },
   componentWillMount() {
@@ -35,6 +37,32 @@ export default React.createClass({
   },
   hideAvatarCropper() {
     this.setState({ avatarCropper: false });
+  },
+  like() {
+    const post = this.props.post;
+    Meteor.call("likePost", post._id, ! _.includes(post.likes, this.props.currentUser._id));
+  },
+  showForm() {
+    this.setState({ showForm: true });
+  },
+  hideForm() {
+    this.setState({ showForm: false });
+  },
+  renderForm() {
+    if (this.state.showForm) {
+      return <Dialog
+        title="Edit Post"
+        formId={"form" + this.props.post._id}
+        open={true}
+        onClose={this.hideForm}
+      >
+        <PostForm
+          id={"form" + this.props.post._id}
+          post={this.props.post}
+          onClose={this.hideForm}
+        />
+      </Dialog>;
+    }
   },
   renderTags() {
     if (this.props.post.tags.text) {
@@ -56,6 +84,14 @@ export default React.createClass({
       </Content>;
     }
   },
+  renderFab(isOwner) {
+    if (isOwner) {
+      return <FAB iconName="edit" onTouchTap={this.showForm} />;
+    } else if (this.props.currentUser && this.props.post.medium) {
+      const liked = _.includes(this.props.post.likes, this.props.currentUser._id);
+      return <FAB iconName={liked ? "favorite" : "favorite_border"} onTouchTap={this.like} />;
+    }
+  },
   render() {
     if (this.props.loading) {
       return <LoadingSpinner />;
@@ -65,18 +101,8 @@ export default React.createClass({
       return <Err404 />;
     }
 
-    var isOwner = this.props.currentUser
+    const isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.post.owner._id;
-    var showEditButton = isOwner;
-    var showFavoriteButton = ! isOwner && this.props.currentUser && this.props.post.medium;
-
-    let fab;
-    if (showEditButton) {
-      fab = <PostModifyFAB post={this.props.post} />;
-    }
-    if (showFavoriteButton) {
-      fab = <PostLikeFAB post={this.props.post} userId={this.props.currentUser._id} />;
-    }
 
     return <article className="post contentLayout">
       <figure className="content">
@@ -101,7 +127,8 @@ export default React.createClass({
         />
       </section>
       {this.renderLikes()}
-      {fab}
+      {this.renderFab(isOwner)}
+      {this.renderForm()}
     </article>;
   }
 });

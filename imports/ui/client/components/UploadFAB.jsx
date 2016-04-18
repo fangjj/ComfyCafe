@@ -1,7 +1,6 @@
 import React from "react";
 
 import media from "/imports/api/media/collection";
-
 import FAB from "/imports/ui/client/components/FAB";
 
 export default React.createClass({

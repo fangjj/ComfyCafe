@@ -165,7 +165,7 @@ FlowRouter.route("/u/:username", {
   }
 });
 
-FlowRouter.route("/u/:username/images", {
+FlowRouter.route("/i/:username", {
   name: "imagesBy",
   action: function () {
     setTitle(FlowRouter.getParam("username") + "'s Images");
@@ -173,7 +173,7 @@ FlowRouter.route("/u/:username/images", {
   }
 });
 
-FlowRouter.route("/u/:username/blog", {
+FlowRouter.route("/b/:username", {
   name: "blogBy",
   action: function () {
     setTitle(FlowRouter.getParam("username") + "'s Blog");
@@ -181,7 +181,7 @@ FlowRouter.route("/u/:username/blog", {
   }
 });
 
-FlowRouter.route("/u/:username/pages", {
+FlowRouter.route("/p/:username", {
   name: "pagesBy",
   action: function () {
     setTitle(FlowRouter.getParam("username") + "'s Pages");

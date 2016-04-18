@@ -62,6 +62,7 @@ export default React.createClass({
           <li><a href="/admin/blog">Blog</a></li>
           <li><a href="/admin/tags">Tags</a></li>
           <li><a href="/admin/badges">Badges</a></li>
+          <li><a href="/admin/invites">Invites</a></li>
         </List>
       </DenseCol>
 

@@ -1,14 +1,12 @@
 import React from "react";
 import OnClickOutside from "react-onclickoutside";
+import Menu from "material-ui/Menu";
+import Divider from "material-ui/Divider";
 
-import TopMenuItem from "../TopBar/TopMenuItem";
+import { isPriveleged } from "/imports/api/common/persimmons";
+import TopMenuItem from "/imports/ui/client/components/TopBar/TopMenuItem";
 
-import {
-  Menu,
-  Divider
-} from "material-ui";
-
-const AccountActionsList = React.createClass({
+export default React.createClass({
   mixins: [OnClickOutside],
   handleClickOutside(event) {
     if (this.props.visible) {
@@ -17,6 +15,16 @@ const AccountActionsList = React.createClass({
   },
   logOut() {
     Meteor.logout();
+  },
+  renderAdminItem() {
+    if (isPriveleged(this.props.currentUser._id)) {
+      const adminUrl = FlowRouter.path("admin");
+      return <TopMenuItem
+        primaryText="Admin Panel"
+        leftIconName="free_breakfast"
+        href={adminUrl}
+      />
+    }
   },
   render() {
     let classes = "topMenu";
@@ -30,7 +38,6 @@ const AccountActionsList = React.createClass({
     const friendsUrl = FlowRouter.path("friends");
     const yourPagesUrl = FlowRouter.path("pagesBy", {username: this.props.currentUser.username});
     const favoritesUrl = FlowRouter.path("favorites");
-    const invitesUrl = FlowRouter.path("invites");
     const settingsUrl = FlowRouter.path("settings");
 
     return <div>
@@ -62,15 +69,11 @@ const AccountActionsList = React.createClass({
           href={yourPagesUrl}
         />
         <TopMenuItem
-          primaryText="Beta Invites"
-          leftIconName="free_breakfast"
-          href={invitesUrl}
-        />
-        <TopMenuItem
           primaryText="Settings"
           leftIconName="settings"
           href={settingsUrl}
         />
+        {this.renderAdminItem()}
         <TopMenuItem
           primaryText="Sign Out"
           leftIconName="directions_run"
@@ -80,5 +83,3 @@ const AccountActionsList = React.createClass({
     </div>;
   }
 });
-
-export default AccountActionsList;

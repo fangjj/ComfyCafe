@@ -39,6 +39,10 @@ Meteor.methods({
 			if (roles.length) {
 				Roles.addUsersToRoles(userId, roles,  Roles.GLOBAL_GROUP);
 			}
+			const notRoles = _.difference(["admin", "developer", "moderator"], roles);
+			if (notRoles.length) {
+				Roles.removeUsersFromRoles(userId, notRoles,  Roles.GLOBAL_GROUP);
+			}
 		});
 	}
 });

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "/imports/api/users/methods";
+import "/imports/api/users/adminMethods";
 import DenseContent from "/imports/ui/client/components/DenseContent";
 import List from "/imports/ui/client/components/List";
 import Form from "/imports/ui/client/components/Form";

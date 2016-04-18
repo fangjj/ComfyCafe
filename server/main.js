@@ -38,6 +38,7 @@ import "/imports/api/rooms/methods";
 import "/imports/api/tags/methods";
 import "/imports/api/topics/methods";
 import "/imports/api/users/methods";
+import "/imports/api/users/adminMethods";
 
 // Startup
 import "/imports/startup/server/startup";

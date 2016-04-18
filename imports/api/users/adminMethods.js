@@ -8,7 +8,10 @@ Meteor.methods({
 	adminUpdateUser(userId, data) {
 		check(userId, String);
 		check(data, {
-			badges: String
+			badges: String,
+			isAdmin: Boolean,
+			isDev: Boolean,
+			isMod: Boolean
 		});
 
 		adminMethod(() => {
@@ -22,6 +25,20 @@ Meteor.methods({
 					"profile.badges": badges
 				} }
 			);
+
+			const roles = [];
+			if (data.isAdmin) {
+				roles.push("admin");
+			}
+			if (data.isDev) {
+				roles.push("developer");
+			}
+			if (data.isMod) {
+				roles.push("moderator");
+			}
+			if (roles.length) {
+				Roles.addUsersToRoles(userId, roles,  Roles.GLOBAL_GROUP);
+			}
 		});
 	}
 });

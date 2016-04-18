@@ -13,6 +13,7 @@ function isSomething(roles) {
 }
 
 const isAdmin = isSomething(["admin"]);
+const isDev = isSomething(["developer"]);
 const isMod = isSomething(["moderator"]);
 
 function isPriveleged(userId) {
@@ -22,6 +23,7 @@ function isPriveleged(userId) {
 export {
   hasRoles,
   isAdmin,
+  isDev,
   isMod,
   isPriveleged
 };

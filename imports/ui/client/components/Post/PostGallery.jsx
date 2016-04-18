@@ -7,11 +7,8 @@ import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLo
 import UploadFAB from "/imports/ui/client/components/UploadFAB";
 import InlineUhoh from "/imports/ui/client/components/InlineUhoh";
 import Infinite from "/imports/ui/client/components/Infinite";
+import Checkbox from "/imports/ui/client/components/Checkbox";
 import TagInlineField from "/imports/ui/client/components/Tag/TagInlineField";
-
-import {
-  Checkbox
-} from "material-ui";
 
 export default React.createClass({
   getInitialState() {
@@ -81,9 +78,8 @@ export default React.createClass({
         <div className="filter">
           <div>
             <Checkbox
-              defaultChecked={this.props.originalOnly}
               label="Original only"
-              labelStyle={{fontSize: "20px"}}
+              defaultChecked={this.props.originalOnly}
               onCheck={this.props.handleOriginalOnly}
             />
           </div>

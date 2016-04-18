@@ -11,6 +11,7 @@ import "/imports/api/rooms/server/publications";
 import "/imports/api/tags/server/publications";
 import "/imports/api/topics/server/publications";
 import "/imports/api/users/server/publications";
+import "/imports/api/users/server/adminPublications";
 
 // Security
 import "/imports/api/jobs/server/security";

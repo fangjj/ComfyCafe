@@ -6,7 +6,7 @@ import List from "/imports/ui/client/components/List";
 export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    const handle = Meteor.subscribe("allUsers", Meteor.userId());
+    const handle = Meteor.subscribe("adminAllUsers", Meteor.userId());
     return {
       loading: ! handle.ready(),
       users: Meteor.users.find(

@@ -49,16 +49,3 @@ Meteor.publish("users", function (ids) {
 		} }
 	);
 });
-
-// for admins
-Meteor.publish("allUsers", function (clientUserId) {
-	check(clientUserId, String);
-  if (clientUserId === this.userId) {
-    this.autorun(function (computation) {
-      const isAdmin = Roles.userIsInRole(this.userId, ["admin"], Roles.GLOBAL_GROUP);
-      if (isAdmin) {
-        return Meteor.users.find({});
-      }
-    });
-  }
-});

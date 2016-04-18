@@ -1,15 +1,15 @@
 import React from "react";
 
 import BlogMoreMenu from "./BlogMoreMenu";
-import TextBody from "../TextBody";
-import Moment from "../Moment";
-import VisibilityLink from "../VisibilityLink";
-import UserLink from "../User/UserLink";
-import Avatar from "../Avatar/Avatar";
+import TextBody from "/imports/ui/client/components/TextBody";
+import Moment from "/imports/ui/client/components/Moment";
+import VisibilityLink from "/imports/ui/client/components/VisibilityLink";
+import UserLink from "/imports/ui/client/components/User/UserLink";
+import Avatar from "/imports/ui/client/components/Avatar/Avatar";
 
-const BlogListItem = React.createClass({
+export default React.createClass({
   renderMoreMenu() {
-    var isOwner = this.props.currentUser
+    const isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.post.owner._id;
     if (isOwner) {
       return <BlogMoreMenu post={this.props.post} currentUser={this.props.currentUser} />;
@@ -47,5 +47,3 @@ const BlogListItem = React.createClass({
     </li>;
   }
 });
-
-export default BlogListItem;

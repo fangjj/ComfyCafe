@@ -43,6 +43,12 @@ export default React.createClass({
           panel,
           <DenseContent>
             Admin panel
+            <section>
+              <header>
+                <h3>Private Mode</h3>
+              </header>
+              If active, invite keys are required for registration.
+            </section>
           </DenseContent>
         );
       }

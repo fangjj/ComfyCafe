@@ -1,13 +1,11 @@
 import React from "react";
 
-import Uhoh from "./Uhoh";
+import Uhoh from "/imports/ui/client/components/Uhoh";
 
-const Powerless = React.createClass({
+export default React.createClass({
   render() {
     return <Uhoh>
       You aren't logged in, so you're powerless!
     </Uhoh>;
   }
 });
-
-export default Powerless;

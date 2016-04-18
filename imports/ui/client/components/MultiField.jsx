@@ -57,6 +57,7 @@ export default React.createClass({
       delete this.elems[id];
       this.setState({ qty: this.state.qty - 1 });
     }
+    this.props.onChange(this.elems, this.order);
   },
   handleUpdate(id, label, value) {
     this.elems[id].label = label;

@@ -6,6 +6,8 @@ import DenseContent from "/imports/ui/client/components/DenseContent";
 import List from "/imports/ui/client/components/List";
 import Form from "/imports/ui/client/components/Form";
 import TextField from "/imports/ui/client/components/TextField";
+import Badge from "/imports/ui/client/components/Badge";
+import BadgeTypeSelector from "/imports/ui/client/components/BadgeTypeSelector";
 
 export default React.createClass({
   getInitialState() {
@@ -17,14 +19,18 @@ export default React.createClass({
   handleName(e) {
     this.setState({ name: e.target.value });
   },
-  handleType(e) {
-    this.setState({ type: e.target.value });
+  handleType(value) {
+    this.setState({ type: value });
   },
   handleSubmit() {
     Meteor.call("updateBadge", this.props.badge._id, this.state);
   },
+  renderPreview() {
+    return <Badge badge={this.state} />;
+  },
   render() {
     return <DenseContent>
+      {this.renderPreview()}
       <Form actions={true} onSubmit={this.handleSubmit}>
         <TextField
           label="Icon"
@@ -36,9 +42,8 @@ export default React.createClass({
           defaultValue={this.state.name}
           onChange={this.handleName}
         />
-        <TextField
-          label="Type"
-          defaultValue={this.state.type}
+        <BadgeTypeSelector
+          badgeValue={this.state.type}
           onChange={this.handleType}
         />
       </Form>

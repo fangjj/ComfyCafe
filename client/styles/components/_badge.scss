@@ -1,3 +1,8 @@
+@mixin badgeType($color) {
+  background-color: rgba($color, 0.2);
+  border-color: rgba($color, 0.6);
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -16,6 +21,28 @@
 
   .label {
 
+  }
+}
+
+.badge, .meatball {
+  &.staff {
+    @include badgeType(#368FBF);
+  }
+
+  &.whimsical {
+    @include badgeType(#FF62A1);
+  }
+
+  &.technical {
+    @include badgeType(#6ABF36);
+  }
+
+  &.intense {
+    @include badgeType(#BF3836);
+  }
+
+  &.mysterious {
+    @include badgeType(#3A36BF);
   }
 }
 

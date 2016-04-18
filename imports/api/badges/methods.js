@@ -2,7 +2,7 @@ import _ from "lodash";
 
 import Badges from "./collection";
 import adminMethod from "/imports/api/common/adminMethod";
-import profileSyncList from "/imports/api/users/syncList";
+import { updateProfile } from "/imports/api/users/updateProfile";
 
 const match = {
   icon: String,
@@ -33,27 +33,14 @@ Meteor.methods({
 
       const dataWithId = _.defaults(data, { _id: badgeId });
 
-      Meteor.users.update(
+      updateProfile(
         { "profile.badges": { $elemMatch: {
           _id: badgeId
         } } },
         { $set: {
           "profile.badges.$" : dataWithId
-        } },
-        { multi: true }
+        } }
       );
-
-      _.map(profileSyncList, (coll) => {
-				coll.update(
-          { "owner.profile.badges": { $elemMatch: {
-            _id: badgeId
-          } } },
-          { $set: {
-            "owner.profile.badges.$" : dataWithId
-          } },
-					{ multi: true }
-				);
-			});
     });
   }
 });

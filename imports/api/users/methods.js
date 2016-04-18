@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import profileSyncList from "./syncList";
+import { updateOwnerDocs, updateProfile } from "/imports/api/users/updateProfile";
 import {
 	validateUsername
 } from "./validators";
@@ -22,7 +22,7 @@ Meteor.methods({
 			throw new Meteor.Error("not-logged-in");
 		}
 
-		Meteor.users.update(
+		updateProfile(
 			{ _id: Meteor.userId() },
 			{ $set: {
 				"profile.info": data.info,
@@ -31,18 +31,6 @@ Meteor.methods({
 				"profile.blurb": data.blurb
 			} }
 		);
-
-		_.map(profileSyncList, function (coll) {
-			coll.update(
-				{ "owner._id": Meteor.userId() },
-				{ $set: {
-					"owner.profile.info": data.info,
-					"owner.profile.displayName": data.displayName,
-					"owner.profile.blurb": data.blurb
-				} },
-				{ multi: true }
-			);
-		});
 	},
 	changeUsername(username) {
 		check(username, String);
@@ -59,15 +47,12 @@ Meteor.methods({
 
 		if (Meteor.isServer) {
 			Accounts.setUsername(Meteor.userId(), username);
-			_.map(profileSyncList, function (coll) {
-				coll.update(
-					{ "owner._id": Meteor.userId() },
-					{ $set: {
-						"owner.username": username
-					} },
-					{ multi: true }
-				);
-			});
+			updateOwnerDocs(
+				{ "owner._id": Meteor.userId() },
+				{ $set: {
+					"owner.username": username
+				} }
+			);
 		}
 	},
 	updateSettings(data) {
@@ -161,15 +146,12 @@ Meteor.methods({
 			{ $unset: { avatars: "RIP" } }
 		);
 
-		_.map(profileSyncList, function (coll) {
-			coll.update(
-				{ "owner._id": Meteor.userId() },
-				{ $unset: {
-					"owner.profile.avatar": "RIP"
-				} },
-				{ multi: true }
-			);
-		});
+		updateOwnerDocs(
+			{ "owner._id": Meteor.userId() },
+			{ $unset: {
+				"owner.profile.avatar": "RIP"
+			} }
+		);
 	},
 	toggleSubscription: function (userId) {
 		check(userId, String);
@@ -404,22 +386,12 @@ Meteor.methods({
 				return Badges.findOne({ name: badge });
 			});
 
-			Meteor.users.update(
+			updateProfile(
 				{ _id: userId },
 				{ $set: {
 					"profile.badges": badges
 				} }
 			);
-
-			_.map(profileSyncList, (coll) => {
-				coll.update(
-					{ "owner._id": userId },
-					{ $set: {
-						"owner.profile.badges": badges
-					} },
-					{ multi: true }
-				);
-			});
 		});
 	}
 });

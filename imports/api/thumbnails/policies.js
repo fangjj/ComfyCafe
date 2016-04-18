@@ -2,7 +2,7 @@ import _ from "lodash";
 
 import media from "/imports/api/media/collection";
 import Posts from "/imports/api/posts/collection";
-import profileSyncList from "/imports/api/users/syncList";
+import { updateOwnerDocs } from "/imports/api/users/updateProfile";
 
 const thumbnailPolicies = {
   "postMedium": {
@@ -69,9 +69,9 @@ if (Meteor.isServer) {
 
   _.each(thumbnailPolicies.avatar, function (value, key) {
     value.success = function (job) {
-      var orig = media.findOne({ _id: job.data.inputFileId });
-      var thumb = media.findOne({ _id: job.data.outputFileId });
-      var doc = { $set: {} };
+      const orig = media.findOne({ _id: job.data.inputFileId });
+      const thumb = media.findOne({ _id: job.data.outputFileId });
+      const doc = { $set: {} };
       doc.$set["avatars.fullsize"] = {
         _id: orig._id,
         md5: orig.md5
@@ -86,15 +86,12 @@ if (Meteor.isServer) {
         { _id: job.data.owner },
         doc
       );
-      _.map(profileSyncList, function (coll) {
-  			coll.update(
-  				{ "owner._id": job.data.owner },
-  				{ $set: {
-  					"owner.profile.avatar._id": orig._id
-  				} },
-  				{ multi: true }
-  			);
-  		});
+      updateOwnerDocs(
+				{ "owner._id": job.data.owner },
+				{ $set: {
+					"owner.profile.avatar._id": orig._id
+				} }
+			);
     };
 
     value.fail = function (job) {};

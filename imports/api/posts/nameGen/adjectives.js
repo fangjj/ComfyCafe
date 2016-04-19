@@ -19,6 +19,7 @@ const adjectives = [
   "Salty",
   "Minty",
   "Flamboyant",
+  "Tittering",
   "Gay",
   "Petite",
   "Vociferous",

@@ -2,31 +2,33 @@ import renderView from "/imports/api/common/renderView";
 import setTitle from "/imports/api/common/setTitle";
 import { tagStrFromUrl } from "/imports/api/tags/urlify";
 
-import PostFeedView from "/imports/ui/views/PostFeedView";
-import BlogUserView from "/imports/ui/views/BlogUserView";
-import PostBrowseLikesView from "/imports/ui/views/PostBrowseLikesView";
+import AdminView from "/imports/ui/views/AdminView";
+import AlbumView from "/imports/ui/views/AlbumView";
+import AlbumListView from "/imports/ui/views/AlbumListView";
 import BlogFeedView from "/imports/ui/views/BlogFeedView";
-import PostBrowseBookmarksView from "/imports/ui/views/PostBrowseBookmarksView";
-import PostSearchView from "/imports/ui/views/PostSearchView";
 import BlogPostView from "/imports/ui/views/BlogPostView";
+import BlogUserView from "/imports/ui/views/BlogUserView";
 import ChatView from "/imports/ui/views/ChatView";
-import PostView from "/imports/ui/views/PostView";
-import PostBrowseAllView from "/imports/ui/views/PostBrowseAllView";
-import LoadingTestView from "/imports/ui/views/LoadingTestView";
-import UserSettingsView from "/imports/ui/views/UserSettingsView";
-import PostBrowseUserView from "/imports/ui/views/PostBrowseUserView";
-import TagTestView from "/imports/ui/views/TagTestView";
-import PostUnauthBrowseView from "/imports/ui/views/PostUnauthBrowseView";
-import RoomListView from "/imports/ui/views/RoomListView";
-import TagListView from "/imports/ui/views/TagListView";
 import DummyView from "/imports/ui/views/DummyView";
-import TagView from "/imports/ui/views/TagView";
-import UserProfileView from "/imports/ui/views/UserProfileView";
+import Err404View from "/imports/ui/views/Err404View";
 import FriendListView from "/imports/ui/views/FriendListView";
 import InviteListView from "/imports/ui/views/InviteListView";
+import LoadingTestView from "/imports/ui/views/LoadingTestView";
 import LoginView from "/imports/ui/views/LoginView";
-import Err404View from "/imports/ui/views/Err404View";
-import AdminView from "/imports/ui/views/AdminView";
+import PostBrowseAllView from "/imports/ui/views/PostBrowseAllView";
+import PostBrowseBookmarksView from "/imports/ui/views/PostBrowseBookmarksView";
+import PostBrowseLikesView from "/imports/ui/views/PostBrowseLikesView";
+import PostBrowseUserView from "/imports/ui/views/PostBrowseUserView";
+import PostFeedView from "/imports/ui/views/PostFeedView";
+import PostSearchView from "/imports/ui/views/PostSearchView";
+import PostUnauthBrowseView from "/imports/ui/views/PostUnauthBrowseView";
+import PostView from "/imports/ui/views/PostView";
+import RoomListView from "/imports/ui/views/RoomListView";
+import TagListView from "/imports/ui/views/TagListView";
+import TagTestView from "/imports/ui/views/TagTestView";
+import TagView from "/imports/ui/views/TagView";
+import UserProfileView from "/imports/ui/views/UserProfileView";
+import UserSettingsView from "/imports/ui/views/UserSettingsView";
 
 if (Meteor.isServer) {
   FastRender.onAllRoutes(function (path) {
@@ -173,6 +175,14 @@ FlowRouter.route("/i/:username", {
   }
 });
 
+FlowRouter.route("/a/:username", {
+  name: "albumsBy",
+  action: function () {
+    setTitle(FlowRouter.getParam("username") + "'s Albums");
+    renderView(AlbumListView);
+  }
+});
+
 FlowRouter.route("/b/:username", {
   name: "blogBy",
   action: function () {
@@ -214,19 +224,19 @@ FlowRouter.route("/q/:rawTagStr", {
   }
 });
 
-FlowRouter.route("/i/:postId", {
-  name: "postPerma",
-  action: function () {
-    setTitle(FlowRouter.getParam("postId"));
-    renderView(PostView);
-  }
-});
-
 FlowRouter.route("/i/:username/:postName", {
   name: "post",
   action: function () {
     setTitle(FlowRouter.getParam("postName"));
     renderView(PostView);
+  }
+});
+
+FlowRouter.route("/a/:username/:postName", {
+  name: "album",
+  action: function () {
+    setTitle(FlowRouter.getParam("albumName"));
+    renderView(AlbumView);
   }
 });
 

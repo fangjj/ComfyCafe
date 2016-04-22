@@ -36,8 +36,10 @@ export default React.createClass({
     const bookmarksUrl = FlowRouter.path("bookmarks");
     const likesUrl = FlowRouter.path("likes");
     const friendsUrl = FlowRouter.path("friends");
+    const yourAlbumsUrl = FlowRouter.path("albumsBy", {username: this.props.currentUser.username});
     const yourPagesUrl = FlowRouter.path("pagesBy", {username: this.props.currentUser.username});
     const favoritesUrl = FlowRouter.path("favorites");
+    const invitesUrl = FlowRouter.path("invites");
     const settingsUrl = FlowRouter.path("settings");
 
     return <div>
@@ -64,9 +66,19 @@ export default React.createClass({
           href={friendsUrl}
         />
         <TopMenuItem
+          primaryText="Albums"
+          leftIconName="album"
+          href={yourAlbumsUrl}
+        />
+        <TopMenuItem
           primaryText="Pages"
           leftIconName="import_contacts"
           href={yourPagesUrl}
+        />
+        <TopMenuItem
+          primaryText="Beta Invites"
+          leftIconName="vpn_key"
+          href={invitesUrl}
         />
         <TopMenuItem
           primaryText="Settings"

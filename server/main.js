@@ -1,4 +1,5 @@
 // Publications
+import "/imports/api/albums/server/publications";
 import "/imports/api/badges/server/publications";
 import "/imports/api/blog/server/publications";
 import "/imports/api/invites/server/publications";

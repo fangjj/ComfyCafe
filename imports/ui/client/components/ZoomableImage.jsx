@@ -51,10 +51,13 @@ export default React.createClass({
     />;
   },
   render() {
-    const { className, filter, ...leftoverProps } = this.props;
-    const classes = classConcat(className, "filter-" + filter || "none");
+    const { ...leftoverProps } = this.props;
     return <div>
-      <img ref="image" className={classes} onTouchTap={this.handleTouch} {...leftoverProps} />
+      <Image
+        ref="image"
+        onTouchTap={this.handleTouch}
+        {...leftoverProps}
+      />
       {this.renderMoonbox()}
     </div>;
   }

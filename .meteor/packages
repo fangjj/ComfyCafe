@@ -11,7 +11,7 @@ jaywon:meteor-node-uuid
 jparker:crypto-sha256
 peerlibrary:reactive-publish
 meteorhacks:fast-render
-kadira:flow-router
+kadira:flow-router-ssr
 chuangbo:cookie
 alanning:roles
 mizzao:user-status
@@ -19,5 +19,5 @@ vsivsi:file-collection
 vsivsi:job-collection
 comfysoft:utility
 comfysoft:sharp
-ongoworks:security@2.0.1
+ongoworks:security
 nathantreid:css-modules

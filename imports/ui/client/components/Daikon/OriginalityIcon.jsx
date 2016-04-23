@@ -10,10 +10,7 @@ const iconMap = {
 };
 
 export default (props) => {
-  return <Icon
-    className="sigil"
-    title={_.capitalize(props.originality)}
-  >
+  return <Icon title={_.capitalize(props.originality)}>
     {iconMap[props.originality]}
   </Icon>;
 };

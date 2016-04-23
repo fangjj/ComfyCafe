@@ -118,11 +118,17 @@ export default React.createClass({
             <div className="top">
               <div className="genericCol">
                 <div className="info">
-                  <OriginalityIcon originality={post.originality} />
+                  <OriginalityIcon
+                    className="sigil"
+                    originality={post.originality}
+                  />
                   {verb} by <UserLink user={owner} /> <Moment time={post.createdAt} />
                 </div>
                 <div className="privacy">
-                  <PrivacyIcon privacy={post.visibility} /> {_.capitalize(post.visibility)}
+                  <PrivacyIcon
+                    className="sigil"
+                    privacy={post.visibility}
+                  /> {_.capitalize(post.visibility)}
                 </div>
                 {this.renderSource()}
               </div>

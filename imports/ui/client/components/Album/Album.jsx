@@ -101,7 +101,10 @@ export default React.createClass({
                     Assembled by <UserLink user={owner} /> <Moment time={album.createdAt} />
                   </div>
                   <div className="privacy">
-                    <PrivacyIcon privacy={album.visibility} /> {_.capitalize(album.visibility)}
+                    <PrivacyIcon
+                      className="sigil"
+                      privacy={album.visibility}
+                    /> {_.capitalize(album.visibility)}
                   </div>
                 </div>
               </div>

@@ -1,7 +1,6 @@
 import React from "react";
 
 import classConcat from "/imports/ui/client/utils/classConcat";
-import Image from "/imports/ui/client/components/Image";
 import Moonbox from "/imports/ui/client/components/Moonbox";
 
 export default React.createClass({
@@ -51,10 +50,12 @@ export default React.createClass({
     />;
   },
   render() {
-    const { ...leftoverProps } = this.props;
+    const { className, filter, ...leftoverProps } = this.props;
+    const classes = classConcat(className, "filter-" + filter || "none");
     return <div>
-      <Image
+      <img
         ref="image"
+        className={classes}
         onTouchTap={this.handleTouch}
         {...leftoverProps}
       />

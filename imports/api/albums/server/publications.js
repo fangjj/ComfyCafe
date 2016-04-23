@@ -52,14 +52,15 @@ Meteor.publish("albumPosts", function (username, albumSlug) {
 				"owner.username": username,
 				slug: albumSlug
 			},
-			{ fields: { posts: 1 } }
+			{ fields: { "owner._id": 1, posts: 1 } }
 		);
 
 		return Posts.find(
 			privacyWrap(
 				{ _id: { $in: album.posts } },
 				this.userId,
-				user.friends
+				user.friends,
+				{ "owner._id": album.owner._id }
 			),
 			{ fields: { name: 1, owner: 1, medium: 1, visibility: 1, safety: 1, pretentiousFilter: 1 } }
 		);

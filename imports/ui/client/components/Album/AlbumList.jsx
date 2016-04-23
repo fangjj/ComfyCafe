@@ -17,7 +17,8 @@ export default React.createClass({
       return <AlbumListItem album={album} key={album._id} />;
     });
   },
-  render() {return <Content>
+  render() {
+    return <Content>
       <List>
         {this.renderItems()}
       </List>

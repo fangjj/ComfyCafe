@@ -120,7 +120,6 @@ Meteor.methods({
       });
     }
 
-
 		return name;
 	},
 	updatePost(postId, data) {

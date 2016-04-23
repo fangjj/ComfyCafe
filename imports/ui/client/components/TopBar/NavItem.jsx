@@ -29,7 +29,7 @@ export default React.createClass({
   },
   render() {
     const classes = classConcat("navItem", this.props.className);
-    return <li className={classes}>
+    return <li id={this.props.id} className={classes}>
       {this.renderInner()}
     </li>;
   }

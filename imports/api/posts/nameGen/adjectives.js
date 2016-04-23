@@ -16,6 +16,7 @@ const adjectives = [
   "Thick",
   "Juicy",
   "Cheesy",
+  "Adroit",
   "Salty",
   "Minty",
   "Flamboyant",

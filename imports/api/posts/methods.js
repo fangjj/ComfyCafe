@@ -193,6 +193,7 @@ Meteor.methods({
 
 		Posts.remove(postId);
 		media.remove({ "metadata.post": postId });
+		Topics.remove({ _id: post.topic._id });
 	},
 	rerollPost(postId) {
 		check(postId, String);

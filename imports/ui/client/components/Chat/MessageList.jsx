@@ -4,9 +4,9 @@ import React from "react";
 import "/imports/api/topics/methods";
 import Messages from "/imports/api/messages/collection";
 import fancyCommaJoin from "/imports/api/common/fancyCommaJoin";
-
 import MessageListItem from "./MessageListItem";
 import MessageInlineForm from "./MessageInlineForm";
+import EllipsisAnimation from "/imports/ui/client/components/EllipsisAnimation";
 import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLoadingSpinner";
 
 const MessageList = React.createClass({

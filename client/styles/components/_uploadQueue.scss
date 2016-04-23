@@ -19,6 +19,8 @@
     &.complete {
       @include hoverAlt;
 
+      border: 1px solid $secondary-color;
+
       cursor: pointer;
     }
 

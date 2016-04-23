@@ -1,5 +1,5 @@
 import _ from "lodash";
-import slug from "slug";
+import slugify from "slug";
 
 import Albums from "./collection";
 import Posts from "../posts/collection";
@@ -14,6 +14,26 @@ const match = {
 	visibility: String,
 	description: String
 };
+
+function slugCycle(albumId, name, i=0) {
+  let postfixed = name;
+  if (i > 0) {
+    postfixed = name + "-" + i;
+  }
+
+  const slug = slugify(postfixed);
+
+  if (Albums.findOne(
+    {
+      _id: { $ne: albumId },
+      slug: slug
+    }
+  )) {
+    return slugCycle(albumId, name, i+1);
+  }
+
+  return slug;
+}
 
 // Intended to be used via _.map(posts, postInliner)
 function postInliner(postId) {
@@ -48,10 +68,12 @@ Meteor.methods({
 			});
 		}
 
+    const slug = slugCycle(null, data.name);
+
 		const albumId = Albums.insert(_.defaults({
       createdAt: new Date(),
 			updatedAt: new Date(),
-      slug: slug(data.name),
+      slug: slug,
       owner: {
 				_id: Meteor.userId(),
 				username: Meteor.user().username,
@@ -74,11 +96,13 @@ Meteor.methods({
 			throw new Meteor.Error("not-authorized");
 		}
 
+    const slug = slugCycle(albumId, data.name);
+
 		Albums.update(
 			{ _id: albumId },
 			{ $set: _.defaults({
         updatedAt: new Date(),
-        slug: slug(data.name)
+        slug: slug
       }, data) }
 		);
 

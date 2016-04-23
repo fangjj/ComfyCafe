@@ -3,7 +3,6 @@ import React from "react";
 
 import "/imports/api/users/methods";
 import setTitle from "/imports/api/common/setTitle";
-
 import UserInfo from "./UserInfo";
 import UserProfileForm from "./UserProfileForm";
 import Content from "/imports/ui/client/components/Content";

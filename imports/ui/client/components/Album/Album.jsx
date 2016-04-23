@@ -1,5 +1,6 @@
 import React from "react";
 
+import setTitle from "/imports/api/common/setTitle";
 import Content from "/imports/ui/client/components/Content";
 import Medium from "/imports/ui/client/components/Medium";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
@@ -24,11 +25,12 @@ export default React.createClass({
     }
 
     return _.map(this.props.posts, (post) => {
-      return <Medium
-        medium={post.medium}
-        filter={post.pretentiousFilter}
-        key={post._id}
-      />;
+      return <figure key={post._id}>
+        <Medium
+          medium={post.medium}
+          filter={post.pretentiousFilter}
+        />
+      </figure>;
     });
   },
   renderForm(album) {
@@ -53,13 +55,13 @@ export default React.createClass({
     }
 
     const album = this.props.album;
+    setTitle(album.name);
+
     return <Content>
       <header>
         <h2>{album.name}</h2>
       </header>
-      <figure>
-        {this.renderPosts(album)}
-      </figure>
+      {this.renderPosts(album)}
       <FAB iconName="edit" onTouchTap={this.showForm} />
       {this.renderForm(album)}
     </Content>;

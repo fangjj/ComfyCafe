@@ -6,6 +6,7 @@ Meteor.publish("medium", function (mediumId) {
 });
 
 Meteor.publish("mediaQueue", function (clientUserId) {
+	check(clientUserId, Match.Optional(String));
 	if (clientUserId === this.userId) {
 		return media.find(
 			{

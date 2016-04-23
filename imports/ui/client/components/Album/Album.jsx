@@ -97,7 +97,7 @@ export default React.createClass({
               <div className="top">
                 <div className="genericCol">
                   <div className="info">
-                    <Icon className="sigil">photo_album</Icon>
+                    <Icon className="sigil">collections</Icon>
                     Assembled by <UserLink user={owner} /> <Moment time={album.createdAt} />
                   </div>
                   <div className="privacy">

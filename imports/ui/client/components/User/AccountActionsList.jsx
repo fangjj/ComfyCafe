@@ -67,7 +67,7 @@ export default React.createClass({
         />
         <TopMenuItem
           primaryText="Albums"
-          leftIconName="photo_album"
+          leftIconName="collections"
           href={yourAlbumsUrl}
         />
         <TopMenuItem

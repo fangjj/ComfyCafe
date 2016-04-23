@@ -25,17 +25,6 @@ function nameCycle() {
 	}
 }
 
-function injectAuthor(data, tags) {
-	if (data.originality !== "repost") {
-		const username = Meteor.user().username;
-		if (! tags.authors) {
-			tags.authors = [username];
-		} else if (! _.has(tags.authors, username)) {
-			tags.authors.push(username);
-		}
-	}
-}
-
 const match = {
 	visibility: String,
 	originality: String,
@@ -65,7 +54,6 @@ Meteor.methods({
 		}
 
 		let tags = tagParser(data.tags, {reformat: true});
-		injectAuthor(data, tags);
 		if (Meteor.isServer) {
 			tags = tagFullResolver(tags);
 		}
@@ -146,7 +134,6 @@ Meteor.methods({
 		}
 
 		let tags = tagParser(data.tags, {reformat: true});
-		injectAuthor(data, tags);
 		if (Meteor.isServer) {
 			tags = tagFullResolver(tags);
 		}

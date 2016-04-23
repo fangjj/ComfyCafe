@@ -22,10 +22,10 @@ export default React.createClass({
   render() {
     var user = this.props.user;
     var path = FlowRouter.path("profile", {username: user.username});
-    return <div className="userLink" style={{display: "inline"}}>
+    return <span className="userLink">
       <a href={path} title={user.profile.blurb}>
         {user.profile.displayName || user.username}
       </a>
-    </div>;
+    </span>;
   }
 });

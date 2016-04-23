@@ -9,16 +9,11 @@ const iconMap = {
   unlisted: "visibility_off"
 };
 
-const PrivacyIcon = React.createClass({
-  render() {
-    return <Icon
-      className="privacyIcon"
-      title={_.capitalize(this.props.privacy)}
-      style={{fontSize: 18}}
-    >
-      {iconMap[this.props.privacy]}
-    </Icon>;
-  }
-});
-
-export default PrivacyIcon;
+export default (props) => {
+  return <Icon
+    className="sigil"
+    title={_.capitalize(props.privacy)}
+  >
+    {iconMap[props.privacy]}
+  </Icon>;
+};

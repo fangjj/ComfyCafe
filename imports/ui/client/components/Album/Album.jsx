@@ -8,6 +8,13 @@ import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLo
 import FAB from "/imports/ui/client/components/FAB";
 import Dialog from "/imports/ui/client/components/Dialog";
 import AlbumForm from "/imports/ui/client/components/Album/AlbumForm";
+import Avatar from "/imports/ui/client/components/Avatar/Avatar";
+import TextBody from "/imports/ui/client/components/TextBody";
+import Moment from "/imports/ui/client/components/Moment";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
+import PrivacyIcon from "/imports/ui/client/components/Daikon/PrivacyIcon";
+import UserLink from "/imports/ui/client/components/User/UserLink";
+import InlineTopic from "/imports/ui/client/components/Chat/InlineTopic";
 
 export default React.createClass({
   getInitialState() {
@@ -33,6 +40,16 @@ export default React.createClass({
       </figure>;
     });
   },
+  renderDescription(album) {
+    if (album.description) {
+      return <TextBody text={album.description} className="body" />;
+    }
+  },
+  renderFab(isOwner) {
+    if (isOwner) {
+      return <FAB iconName="edit" onTouchTap={this.showForm} />;
+    }
+  },
   renderForm(album) {
     if (this.state.showForm) {
       return <Dialog
@@ -57,13 +74,50 @@ export default React.createClass({
     const album = this.props.album;
     setTitle(album.name);
 
-    return <Content>
-      <header>
-        <h2>{album.name}</h2>
-      </header>
-      {this.renderPosts(album)}
-      <FAB iconName="edit" onTouchTap={this.showForm} />
+    const owner = album.owner;
+    const ownerUrl = FlowRouter.path("profile", { username: owner.username });
+    const isOwner = this.props.currentUser._id === album.owner._id;
+
+    return <article className="album contentLayout">
+      <section className="content">
+        <header>
+          <h2>{album.name}</h2>
+        </header>
+        {this.renderPosts(album)}
+      </section>
+      <section className="infoBox content">
+        <div className="flexColumn">
+          <div className="flexLayout">
+            <div className="leftSide">
+              <a href={ownerUrl}>
+                <Avatar size="small" user={owner} />
+              </a>
+            </div>
+            <div className="rightSide">
+              <div className="top">
+                <div className="genericCol">
+                  <div className="info">
+                    <Icon className="sigil">photo_album</Icon>
+                    Assembled by <UserLink user={owner} /> <Moment time={album.createdAt} />
+                  </div>
+                  <div className="privacy">
+                    <PrivacyIcon privacy={album.visibility} /> {_.capitalize(album.visibility)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {this.renderDescription(album)}
+        </div>
+      </section>
+      <section className="comments content">
+        <InlineTopic
+          topicId={album.topic._id}
+          currentUser={this.props.currentUser}
+        />
+      </section>
+      {this.renderFab(isOwner)}
       {this.renderForm(album)}
-    </Content>;
+    </article>;
   }
 });

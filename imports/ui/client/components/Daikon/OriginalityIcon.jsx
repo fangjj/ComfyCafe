@@ -9,16 +9,11 @@ const iconMap = {
   repost: "repeat"
 };
 
-const OriginalityIcon = React.createClass({
-  render() {
-    return <Icon
-      className="originalityIcon"
-      title={_.capitalize(this.props.originality)}
-      style={{fontSize: 18}}
-    >
-      {iconMap[this.props.originality]}
-    </Icon>;
-  }
-});
-
-export default OriginalityIcon;
+export default (props) => {
+  return <Icon
+    className="sigil"
+    title={_.capitalize(props.originality)}
+  >
+    {iconMap[props.originality]}
+  </Icon>;
+};

@@ -1,5 +1,7 @@
 import React from "react";
 
+import VisibilityLink from "/imports/ui/client/components/VisibilityLink";
+
 export default React.createClass({
   render() {
     const album = this.props.album;
@@ -7,6 +9,10 @@ export default React.createClass({
       username: album.owner.username,
       albumSlug: album.slug
     });
-    return <li><a href={path}>{album.name}</a></li>;
+    return <li>
+      <VisibilityLink href={path} visibility={album.visibility}>
+        {album.name}
+      </VisibilityLink>  
+    </li>;
   }
 });

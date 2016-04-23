@@ -4,6 +4,7 @@ import React from "react";
 import Content from "/imports/ui/client/components/Content";
 import List from "/imports/ui/client/components/List";
 import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLoadingSpinner";
+import InlineUhoh from "/imports/ui/client/components/InlineUhoh";
 import FAB from "/imports/ui/client/components/FAB";
 import Dialog from "/imports/ui/client/components/Dialog";
 import AlbumForm from "/imports/ui/client/components/Album/AlbumForm";
@@ -24,9 +25,15 @@ export default React.createClass({
       return <InlineLoadingSpinner />;
     }
 
-    return _.map(this.props.albums, (album) => {
-      return <AlbumListItem album={album} key={album._id} />;
-    });
+    if (this.props.albums.length) {
+      return _.map(this.props.albums, (album) => {
+        return <AlbumListItem album={album} key={album._id} />;
+      });
+    } else {
+      return <InlineUhoh>
+        {FlowRouter.getParam("username") + " hasn't created any albums yet!"}
+      </InlineUhoh>;
+    }
   },
   renderForm() {
     if (this.state.showForm) {

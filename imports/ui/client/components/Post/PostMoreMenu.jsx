@@ -14,15 +14,13 @@ import {
 
 export default React.createClass({
   getInitialState() {
-    return {
-      showForm: false
-    };
+    return { showForm: false };
   },
-  showPostForm() {
-    this.setState({showForm: true});
+  showForm() {
+    this.setState({ showForm: true });
   },
-  hidePostForm() {
-    this.setState({showForm: false});
+  hideForm() {
+    this.setState({ showForm: false });
   },
   reroll() {
     Meteor.call("rerollPost", this.props.post._id);
@@ -36,12 +34,12 @@ export default React.createClass({
         title="Edit Post"
         formId={"form" + this.props.post._id}
         open={true}
-        onClose={this.hidePostForm}
+        onClose={this.hideForm}
       >
         <PostForm
           id={"form" + this.props.post._id}
           post={this.props.post}
-          onClose={this.hidePostForm}
+          onClose={this.hideForm}
         />
       </Dialog>;
     }
@@ -62,7 +60,7 @@ export default React.createClass({
         anchorOrigin={{horizontal: "right", vertical: "top"}}
         targetOrigin={{horizontal: "right", vertical: "top"}}
       >
-        <MenuItem primaryText="Edit" onTouchTap={this.showPostForm} />
+        <MenuItem primaryText="Edit" onTouchTap={this.showForm} />
         <MenuItem primaryText="Reroll" onTouchTap={this.reroll} />
         <MenuItem primaryText="Delete" onTouchTap={this.delete} />
       </IconMenu>

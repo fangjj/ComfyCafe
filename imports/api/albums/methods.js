@@ -1,4 +1,5 @@
 import _ from "lodash";
+import slug from "slug";
 
 import Albums from "./collection";
 import Posts from "../posts/collection";
@@ -20,7 +21,7 @@ function postInliner(postId) {
   return _.pick(post, [name, owner, medium, visibility, safety]);
 }
 
-function mentions() {
+function mentions(albumId, data) {
   if (Meteor.isServer) {
     processMentions("album", data.description, {
       album: {
@@ -47,15 +48,10 @@ Meteor.methods({
 			});
 		}
 
-    /*
-    const posts = _.map(data.posts, postInliner);
-    const visibility = _.reduce(
-
-    );*/
-
 		const albumId = Albums.insert(_.defaults({
       createdAt: new Date(),
 			updatedAt: new Date(),
+      slug: slug(data.name),
       owner: {
 				_id: Meteor.userId(),
 				username: Meteor.user().username,
@@ -81,8 +77,9 @@ Meteor.methods({
 		Albums.update(
 			{ _id: albumId },
 			{ $set: _.defaults({
-        updatedAt: new Date()
-      }, data}) }
+        updatedAt: new Date(),
+        slug: slug(data.name)
+      }, data) }
 		);
 
 		Topics.update(

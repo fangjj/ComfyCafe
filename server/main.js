@@ -28,6 +28,7 @@ import "/imports/api/jobs/server/garbageCollection.js";
 import "/imports/api/thumbnails/server/job.js";
 
 // Methods
+import "/imports/api/albums/methods";
 import "/imports/api/badges/methods";
 import "/imports/api/blog/methods";
 import "/imports/api/invites/methods";

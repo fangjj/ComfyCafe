@@ -13,6 +13,6 @@ export default {
     }
   },
   fastRender(params) {
-    this.subscribe("album", params.username, params.albumName);
+    this.subscribe("album", params.username, params.albumSlug);
   }
 };

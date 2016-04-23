@@ -3,11 +3,22 @@ import React from "react";
 
 import Content from "/imports/ui/client/components/Content";
 import List from "/imports/ui/client/components/List";
-import FAB from "/imports/ui/client/components/FAB";
 import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLoadingSpinner";
+import FAB from "/imports/ui/client/components/FAB";
+import Dialog from "/imports/ui/client/components/Dialog";
+import AlbumForm from "/imports/ui/client/components/Album/AlbumForm";
 import AlbumListItem from "/imports/ui/client/components/Album/AlbumListItem";
 
 export default React.createClass({
+  getInitialState() {
+    return { showForm: false };
+  },
+  showForm() {
+    this.setState({ showForm: true });
+  },
+  hideForm() {
+    this.setState({ showForm: false });
+  },
   renderItems() {
     if (this.props.loading) {
       return <InlineLoadingSpinner />;
@@ -17,12 +28,28 @@ export default React.createClass({
       return <AlbumListItem album={album} key={album._id} />;
     });
   },
+  renderForm() {
+    if (this.state.showForm) {
+      return <Dialog
+        title="Create Album"
+        formId="formNewAlbum"
+        open={true}
+        onClose={this.hideForm}
+      >
+        <AlbumForm
+          id="formNewAlbum"
+          onClose={this.hideForm}
+        />
+      </Dialog>;
+    }
+  },
   render() {
     return <Content>
       <List>
         {this.renderItems()}
       </List>
-      <FAB iconName="add" />
+      <FAB iconName="add" onTouchTap={this.showForm} />
+      {this.renderForm()}
     </Content>;
   }
 });

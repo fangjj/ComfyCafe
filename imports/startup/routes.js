@@ -232,10 +232,10 @@ FlowRouter.route("/i/:username/:postName", {
   }
 });
 
-FlowRouter.route("/a/:username/:postName", {
+FlowRouter.route("/a/:username/:albumSlug", {
   name: "album",
   action: function () {
-    setTitle(FlowRouter.getParam("albumName"));
+    setTitle(FlowRouter.getParam("albumSlug"));
     renderView(AlbumView);
   }
 });

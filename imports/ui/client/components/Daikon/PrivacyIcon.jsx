@@ -10,7 +10,8 @@ const iconMap = {
 };
 
 export default (props) => {
-  return <Icon title={_.capitalize(props.privacy)}>
-    {iconMap[props.privacy]}
+  const { privacy, ...leftoverProps } = props;
+  return <Icon title={_.capitalize(privacy)} {...leftoverProps}>
+    {iconMap[privacy]}
   </Icon>;
 };

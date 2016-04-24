@@ -46,6 +46,9 @@ export default React.createClass({
   handleSelect(albumId) {
     Meteor.call("albumAddPost", albumId, this.props.postId);
   },
+  handleRemove(albumId) {
+    Meteor.call("albumRemovePost", albumId, this.props.postId);
+  },
   handleName(e) {
     this.setState({ name: e.target.value });
   },
@@ -64,7 +67,13 @@ export default React.createClass({
     }
 
     return _.map(this.data.albums, (album) => {
-      return <AlbumSelectorItem album={album} onSelect={this.handleSelect} key={album._id} />;
+      return <AlbumSelectorItem
+        album={album}
+        postId={this.props.postId}
+        onSelect={this.handleSelect}
+        onRemove={this.handleRemove}
+        key={album._id}
+      />;
     });
   },
   renderForm() {

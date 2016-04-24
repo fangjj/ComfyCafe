@@ -132,6 +132,23 @@ Meteor.methods({
       } }
     );
   },
+  albumRemovePost(albumId, postId) {
+    check(albumId, String);
+    check(postId, String);
+
+    const album = Albums.findOne(albumId);
+
+    if (! isOwner(album)) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    Albums.update(
+      { _id: albumId },
+      { $pull: {
+        posts: postId
+      } }
+    );
+  },
 	deleteAlbum(albumId) {
 		check(albumId, String);
 

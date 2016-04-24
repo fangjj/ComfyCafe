@@ -19,11 +19,23 @@
     cursor: pointer;
 
     .title {
-
+      font-size: 19px;
     }
 
     .undertitle {
       font-size: 18px;
+    }
+
+    .indicator {
+      i {
+        color: $success-color !important;
+      }
+    }
+
+    .remove {
+      position: absolute;
+      right: 6px;
+      top: 6px;
     }
   }
 

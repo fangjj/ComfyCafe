@@ -9,12 +9,9 @@ import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLo
 import FAB from "/imports/ui/client/components/FAB";
 import Dialog from "/imports/ui/client/components/Dialog";
 import PageForm from "/imports/ui/client/components/Page/PageForm";
-import Avatar from "/imports/ui/client/components/Avatar/Avatar";
-import TextBody from "/imports/ui/client/components/TextBody";
-import Moment from "/imports/ui/client/components/Moment";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
-import PrivacyIcon from "/imports/ui/client/components/Daikon/PrivacyIcon";
-import UserLink from "/imports/ui/client/components/User/UserLink";
+import Moment from "/imports/ui/client/components/Moment";
+import FlexHead from "/imports/ui/client/components/FlexHead";
 import InlineTopic from "/imports/ui/client/components/Chat/InlineTopic";
 
 export default React.createClass({
@@ -26,6 +23,14 @@ export default React.createClass({
   },
   hideForm() {
     this.setState({ showForm: false });
+  },
+  renderUpdated() {
+    const page = this.props.page;
+    if (! _.isEqual(page.createdAt, page.updatedAt)) {
+      return <span>
+        <Icon className="sigil">edit</Icon> Last updated <Moment time={page.updatedAt} />
+      </span>
+    }
   },
   renderFab(isOwner) {
     if (isOwner) {
@@ -61,39 +66,16 @@ export default React.createClass({
     const isOwner = _.get(this.props.currentUser, "_id") === page.owner._id;
 
     return <article className="album contentLayout">
-      <section className="content">
-        <header>
-          <h2>{page.name}</h2>
-        </header>
-        <TextBody text={page.body} className="body" />
-      </section>
-      <section className="infoBox content">
-        <div className="flexColumn">
-          <div className="flexLayout">
-            <div className="leftSide">
-              <a href={ownerUrl}>
-                <Avatar size="small" user={owner} />
-              </a>
-            </div>
-            <div className="rightSide">
-              <div className="top">
-                <div className="genericCol">
-                  <div className="info">
-                    <Icon className="sigil">collections</Icon>
-                    Written by <UserLink user={owner} /> <Moment time={page.createdAt} />
-                  </div>
-                  <div className="privacy">
-                    <PrivacyIcon
-                      className="sigil"
-                      privacy={page.visibility}
-                    /> {_.capitalize(page.visibility)}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <FlexHead
+        className="content"
+        title={page.name}
+        item={this.props.page}
+        sigil="ac_unit"
+        verb="Written"
+        renderInfo={this.renderUpdated}
+        body={this.props.page.body}
+        section={true}
+      />
       <section className="comments content">
         <InlineTopic
           topicId={page.topic._id}

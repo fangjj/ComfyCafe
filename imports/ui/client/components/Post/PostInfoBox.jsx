@@ -3,7 +3,7 @@ import React from "react";
 
 import "/imports/api/posts/methods";
 import goBack from "/imports/ui/client/utils/goBack";
-import TextBody from "/imports/ui/client/components/TextBody";
+import setPattern from "/imports/ui/client/utils/setPattern";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import ToggleButton from "/imports/ui/client/components/Button/ToggleButton";
@@ -11,13 +11,8 @@ import BookmarkButton from "/imports/ui/client/components/Button/BookmarkButton"
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
-import OriginalityIcon from "/imports/ui/client/components/Daikon/OriginalityIcon";
-import PrivacyIcon from "/imports/ui/client/components/Daikon/PrivacyIcon";
 import ActionWell from "/imports/ui/client/components/ActionWell";
-import Moment from "/imports/ui/client/components/Moment";
-import Avatar from "/imports/ui/client/components/Avatar/Avatar";
-import UserLink from "/imports/ui/client/components/User/UserLink";
-import setPattern from "/imports/ui/client/utils/setPattern";
+import FlexHead from "/imports/ui/client/components/FlexHead";
 
 const verbMap = {
   original: "Created",
@@ -106,51 +101,15 @@ export default React.createClass({
       return <TextBody text={"Source: " + this.props.post.source} className="source" />;
     }
   },
-  renderDescription() {
-    if (this.props.post.description) {
-      return <TextBody text={this.props.post.description} className="body" />;
-    }
-  },
   render() {
-    const post = this.props.post;
-
-    const owner = post.owner;
-    const ownerUrl = FlowRouter.path("profile", {username: owner.username});
-
-    const verb = verbMap[post.originality];
-
-    return <section className="infoBox content">
-      <div className="flexColumn">
-        <div className="flexLayout">
-          <div className="leftSide">
-            <a href={ownerUrl}>
-              <Avatar size="small" user={owner} />
-            </a>
-          </div>
-          <div className="rightSide">
-            <div className="top">
-              <div className="genericCol">
-                <div className="info">
-                  <OriginalityIcon
-                    className="sigil"
-                    originality={post.originality}
-                  />
-                  {verb} by <UserLink user={owner} /> <Moment time={post.createdAt} />
-                </div>
-                <div className="privacy">
-                  <PrivacyIcon
-                    className="sigil"
-                    privacy={post.visibility}
-                  /> {_.capitalize(post.visibility)}
-                </div>
-                {this.renderSource()}
-              </div>
-            </div>
-          </div>
-        </div>
-        {this.renderButtons()}
-        {this.renderDescription()}
-      </div>
-    </section>;
+    return <FlexHead
+      className="content"
+      item={this.props.post}
+      verb={verbMap[this.props.post.originality]}
+      renderInfo={this.renderSource}
+      renderButtons={this.renderButtons}
+      body={this.props.post.description}
+      section={true}
+    />;
   }
 });

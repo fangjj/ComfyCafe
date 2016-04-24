@@ -9,12 +9,7 @@ import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLo
 import FAB from "/imports/ui/client/components/FAB";
 import Dialog from "/imports/ui/client/components/Dialog";
 import AlbumForm from "/imports/ui/client/components/Album/AlbumForm";
-import Avatar from "/imports/ui/client/components/Avatar/Avatar";
-import TextBody from "/imports/ui/client/components/TextBody";
-import Moment from "/imports/ui/client/components/Moment";
-import Icon from "/imports/ui/client/components/Daikon/Icon";
-import PrivacyIcon from "/imports/ui/client/components/Daikon/PrivacyIcon";
-import UserLink from "/imports/ui/client/components/User/UserLink";
+import FlexHead from "/imports/ui/client/components/FlexHead";
 import InlineTopic from "/imports/ui/client/components/Chat/InlineTopic";
 
 export default React.createClass({
@@ -49,11 +44,6 @@ export default React.createClass({
         null
       );
     });
-  },
-  renderDescription(album) {
-    if (album.description) {
-      return <TextBody text={album.description} className="body" />;
-    }
   },
   renderFab(isOwner) {
     if (isOwner) {
@@ -95,34 +85,14 @@ export default React.createClass({
         </header>
         {this.renderPosts(album)}
       </section>
-      <section className="infoBox content">
-        <div className="flexColumn">
-          <div className="flexLayout">
-            <div className="leftSide">
-              <a href={ownerUrl}>
-                <Avatar size="small" user={owner} />
-              </a>
-            </div>
-            <div className="rightSide">
-              <div className="top">
-                <div className="genericCol">
-                  <div className="info">
-                    <Icon className="sigil">collections</Icon>
-                    Assembled by <UserLink user={owner} /> <Moment time={album.createdAt} />
-                  </div>
-                  <div className="privacy">
-                    <PrivacyIcon
-                      className="sigil"
-                      privacy={album.visibility}
-                    /> {_.capitalize(album.visibility)}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {this.renderDescription(album)}
-        </div>
-      </section>
+      <FlexHead
+        className="content"
+        item={album}
+        sigil="collections"
+        verb="Collected"
+        body={album.description}
+        section={true}
+      />
       <section className="comments content">
         <InlineTopic
           topicId={album.topic._id}

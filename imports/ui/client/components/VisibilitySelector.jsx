@@ -7,7 +7,7 @@ import PrivacyIcon from "/imports/ui/client/components/Daikon/PrivacyIcon";
 export default React.createClass({
   render() {
     return <MeatballSelector
-      label="Visibility"
+      label={this.props.label || "Visibility"}
       value={this.props.visibility}
       onChange={this.props.onChange}
     >

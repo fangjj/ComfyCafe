@@ -15,6 +15,7 @@ import Actions from "/imports/ui/client/components/Actions";
 import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import PostFilters from "/imports/ui/client/components/Post/PostFilters";
+import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
 
 import {
   TextField,
@@ -33,7 +34,11 @@ const UserSettings = React.createClass({
       defaultFilter: _.get(this.props.currentUser, "settings.defaultFilter", "sfw"),
       uploadAction: _.get(this.props.currentUser, "settings.uploadAction", "redirect"),
       autoWatch: _.get(this.props.currentUser, "settings.autoWatch", false),
-      patternSeed: _.get(this.props.currentUser, "settings.patternSeed", "")
+      defaultAlbumVisibility: _.get(
+        this.props.currentUser,
+        "settings.defaultAlbumVisibility",
+        "unlisted"
+      )
     };
   },
   componentWillReceiveProps(nextProps) {
@@ -72,20 +77,19 @@ const UserSettings = React.createClass({
     });
   },
   handleDefaultPage(event, index, value) {
-    this.setState({defaultPage: value})
+    this.setState({ defaultPage: value });
   },
   handleDefaultFilter(event, index, value) {
-    this.setState({defaultFilter: value})
+    this.setState({ defaultFilter: value });
   },
   handleUploadAction(event, index, value) {
-    this.setState({uploadAction: value})
+    this.setState({ uploadAction: value });
   },
   handleAutoWatch(event) {
-    this.setState({autoWatch: event.target.checked})
+    this.setState({ autoWatch: event.target.checked });
   },
-  handlePatternSeed(event) {
-    this.props.setPattern(event.target.value);
-    this.setState({patternSeed: event.target.value})
+  handleDefaultAlbumVisibility(value) {
+    this.setState({ defaultAlbumVisibility: value });
   },
   submit(event) {
     var self = this;
@@ -95,7 +99,7 @@ const UserSettings = React.createClass({
       defaultFilter: this.state.defaultFilter,
       uploadAction: this.state.uploadAction,
       autoWatch: this.state.autoWatch,
-      patternSeed: this.state.patternSeed
+      defaultAlbumVisibility: this.state.defaultAlbumVisibility
     }, () => {
 	    this.setState({snackbarOpen: true});
     });
@@ -156,14 +160,10 @@ const UserSettings = React.createClass({
         onToggle={this.handleAutoWatch}
       />
 
-      <TextField
-        defaultValue={this.state.patternSeed}
-        floatingLabelText="Pattern Seed"
-        floatingLabelStyle={{fontSize: "20px"}}
-        multiLine={true}
-        rows={1}
-        onChange={this.handlePatternSeed}
-        fullWidth={true}
+      <VisibilitySelector
+        label="Default album visibility"
+        visibility={this.state.defaultAlbumVisibility}
+        onChange={this.handleDefaultAlbumVisibility}
       />
 
       <br />

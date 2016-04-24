@@ -1,4 +1,4 @@
-const UserSettingsView = {
+export default {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
@@ -13,5 +13,3 @@ const UserSettingsView = {
     }
   }
 };
-
-export default UserSettingsView;

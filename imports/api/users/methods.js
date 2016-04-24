@@ -60,7 +60,7 @@ Meteor.methods({
 			defaultFilter: String,
 			uploadAction: String,
 			autoWatch: Boolean,
-			patternSeed: String
+			defaultAlbumVisibility: String
 		});
 
 		if (! Meteor.userId()) {
@@ -78,7 +78,7 @@ Meteor.methods({
 				"settings.defaultFilter": data.defaultFilter,
 				"settings.uploadAction": data.uploadAction,
 				"settings.autoWatch": data.autoWatch,
-				"settings.patternSeed": data.patternSeed
+				"settings.defaultAlbumVisibility": data.defaultAlbumVisibility
 			} }
 		);
 	},

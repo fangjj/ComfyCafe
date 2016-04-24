@@ -11,11 +11,14 @@ import Avatar from "/imports/ui/client/components/Avatar/Avatar";
 export default React.createClass({
   shouldComponentUpdate(nextProps) {
     const should = (
-      nextProps.currentUser._id !== this.props.currentUser._id
+      _.get(nextProps.currentUser, "_id") !== _.get(this.props.currentUser, "_id")
       || (
-        nextProps.currentUser.bookmarks !== this.props.currentUser.bookmarks
+        _.get(nextProps.currentUser, "bookmarks") !== _.get(this.props.currentUser, "bookmarks")
         && _.includes(
-          _.xor(nextProps.currentUser.bookmarks, this.props.currentUser.bookmarks),
+          _.xor(
+            _.get(nextProps.currentUser, "bookmarks"),
+            _.get(this.props.currentUser, "bookmarks")
+          ),
           nextProps.post._id
         )
       )
@@ -25,8 +28,7 @@ export default React.createClass({
     return should;
   },
   renderMoreMenu() {
-    const isOwner = this.props.currentUser
-      && this.props.currentUser._id === this.props.post.owner._id;
+    const isOwner = _.get(this.props.currentUser, "_id") === this.props.post.owner._id;
     if (isOwner) {
       return <PostMoreMenu post={this.props.post} currentUser={this.props.currentUser} />;
     } else if (this.props.currentUser) {

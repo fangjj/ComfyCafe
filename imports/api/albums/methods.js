@@ -115,7 +115,24 @@ Meteor.methods({
 
 		mentions(albumId, data);
 	},
-	deleteAlbum: function (albumId) {
+  albumAddPost(albumId, postId) {
+    check(albumId, String);
+    check(postId, String);
+
+    const album = Albums.findOne(albumId);
+
+    if (! isOwner(album)) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    Albums.update(
+      { _id: albumId },
+      { $addToSet: {
+        posts: postId
+      } }
+    );
+  },
+	deleteAlbum(albumId) {
 		check(albumId, String);
 
 		const album = Albums.findOne(albumId);

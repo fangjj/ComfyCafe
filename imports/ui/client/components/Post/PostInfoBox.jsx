@@ -41,10 +41,22 @@ export default React.createClass({
       goBack();
     });
   },
+  showAlbumSelector() {
+    const $albumBtn = $("#albumBtn");
+    const anchor = $albumBtn.offset().left;
+    this.props.showAlbumSelector(anchor);
+  },
   renderButtons() {
     if (! this.props.currentUser) {
       return;
     }
+
+    const albumButton = <SubmitButton
+      id="albumBtn"
+      label="Add to Album"
+      iconName="collections"
+      onTouchTap={this.showAlbumSelector}
+    />;
 
     let cropButton = <SubmitButton
       label="Set Avatar"
@@ -55,6 +67,11 @@ export default React.createClass({
       cropButton = <CancelButton onTouchTap={this.props.hideAvatarCropper} />;
     }
 
+    const rightGroup = <ButtonGroup>
+      {albumButton}
+      {cropButton}
+    </ButtonGroup>;
+
     const owner = this.props.post.owner;
     const isOwner = _.get(this.props, "currentUser._id") === owner._id;
     if (! isOwner) {
@@ -63,9 +80,7 @@ export default React.createClass({
           <BookmarkButton post={this.props.post} currentUser={this.props.currentUser} />
           <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />
         </ButtonGroup>
-        <ButtonGroup>
-          {cropButton}
-        </ButtonGroup>
+        {rightGroup}
       </ActionWell>;
     } else {
       return <ActionWell>
@@ -82,9 +97,7 @@ export default React.createClass({
             onTouchTap={this.delete}
           />
         </ButtonGroup>
-        <ButtonGroup>
-          {cropButton}
-        </ButtonGroup>
+        {rightGroup}
       </ActionWell>;
     }
   },

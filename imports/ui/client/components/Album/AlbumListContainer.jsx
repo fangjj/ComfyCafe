@@ -8,7 +8,10 @@ export default createContainer(({ params }) => {
 
   return {
     loading: ! handle.ready(),
-    albums: Albums.find({ "owner.username": FlowRouter.getParam("username") }).fetch(),
+    albums: Albums.find(
+      { "owner.username": FlowRouter.getParam("username") },
+      { sort: { createdAt: -1, name: 1 } }
+    ).fetch(),
     currentUser: Meteor.user()
   };
 }, AlbumList);

@@ -11,6 +11,7 @@ import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner
 import Err404 from "/imports/ui/client/components/Err404";
 import Content from "/imports/ui/client/components/Content";
 import FAB from "/imports/ui/client/components/FAB";
+import AlbumSelector from "/imports/ui/client/components/Album/AlbumSelector";
 import AvatarCropper from "/imports/ui/client/components/Avatar/AvatarCropper";
 import TagTree from "/imports/ui/client/components/Tag/TagTree";
 import InlineTopic from "/imports/ui/client/components/Chat/InlineTopic";
@@ -18,6 +19,7 @@ import InlineTopic from "/imports/ui/client/components/Chat/InlineTopic";
 export default React.createClass({
   getInitialState() {
     return {
+      showAlbumSelector: false,
       avatarCropper: false,
       showForm: false
     };
@@ -31,6 +33,15 @@ export default React.createClass({
     if (nextProps.post) {
       setPattern(nextProps.post.name, nextProps.post.complement);
     }
+  },
+  showAlbumSelector(anchor) {
+    this.setState({
+      showAlbumSelector: true,
+      albumSelectorAnchor: anchor
+    });
+  },
+  hideAlbumSelector() {
+    this.setState({ showAlbumSelector: false });
   },
   showAvatarCropper() {
     this.setState({ avatarCropper: true });
@@ -76,6 +87,15 @@ export default React.createClass({
       return <PostLikes likes={this.props.post.likes} />;
     }
   },
+  renderAlbumSelector() {
+    if (this.state.showAlbumSelector) {
+      return <AlbumSelector
+        postId={this.props.post._id}
+        anchor={this.state.albumSelectorAnchor}
+        onClose={this.hideAlbumSelector}
+      />;
+    }
+  },
   renderAvatarCropper() {
     if (this.state.avatarCropper) {
       const src = "/gridfs/media/" + this.props.post.medium.md5;
@@ -115,9 +135,11 @@ export default React.createClass({
         post={this.props.post}
         currentUser={this.props.currentUser}
         isCropping={this.state.avatarCropper}
+        showAlbumSelector={this.showAlbumSelector}
         showAvatarCropper={this.showAvatarCropper}
         hideAvatarCropper={this.hideAvatarCropper}
       />
+      {this.renderAlbumSelector()}
       {this.renderAvatarCropper()}
       {this.renderTags()}
       <section className="comments content">

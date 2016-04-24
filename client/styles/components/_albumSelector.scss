@@ -1,0 +1,27 @@
+.albumSelector {
+  @include paper;
+
+  z-index: index($elements, albumSelector);
+
+  position: absolute;
+
+  max-height: 560px;
+
+  background-color: $sg-color;
+
+  li {
+    @include hoverAlt;
+
+    cursor: pointer;
+
+    .title {
+
+    }
+
+    .undertitle {
+      opacity: 0.7;
+
+      font-size: 16px;
+    }
+  }
+}

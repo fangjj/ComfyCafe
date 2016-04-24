@@ -97,6 +97,31 @@ export default React.createClass({
         </a>
       ];
     },
+    albumMentioned() {
+      prettyPrint(this.props.notification);
+      const url = FlowRouter.path("album", {
+        username: this.props.notification.owner.username,
+        albumSlug: this.props.notification.album.slug
+      });
+      return [
+        "mentioned you in ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
+          {this.props.notification.album.name}
+        </a>
+      ];
+    },
+    pageMentioned() {
+      const url = FlowRouter.path("page", {
+        username: this.props.notification.owner.username,
+        slug: this.props.notification.page.slug
+      });
+      return [
+        "mentioned you in ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
+          {this.props.notification.page.name}
+        </a>
+      ];
+    },
     blogMentioned() {
       const url = FlowRouter.path("blogPost", {
         postId: this.props.notification.blog._id

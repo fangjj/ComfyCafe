@@ -20,6 +20,7 @@ function mentions(pageId, data) {
     processMentions("page", data.body, {
       page: {
         _id: pageId,
+        slug: data.slug,
         name: data.name
       }
     });
@@ -42,12 +43,11 @@ Meteor.methods({
 			});
 		}
 
-    const slug = slugCycle(null, data.name);
+    data.slug = slugCycle(null, data.name);
 
 		const pageId = Pages.insert(_.defaults({
       createdAt: new Date(),
 			updatedAt: new Date(),
-      slug: slug,
       owner: {
 				_id: Meteor.userId(),
 				username: Meteor.user().username,
@@ -70,13 +70,12 @@ Meteor.methods({
 			throw new Meteor.Error("not-authorized");
 		}
 
-    const slug = slugCycle(pageId, data.name);
+    data.slug = slugCycle(pageId, data.name);
 
 		Pages.update(
 			{ _id: pageId },
 			{ $set: _.defaults({
-        updatedAt: new Date(),
-        slug: slug
+        updatedAt: new Date()
       }, data) }
 		);
 

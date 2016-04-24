@@ -12,7 +12,9 @@ export default React.createClass({
     };
   },
   handleTouch(event) {
-    this.setState({ showMoonbox: true });
+    if (event.nativeEvent.which === 1) {
+      this.setState({ showMoonbox: true });
+    }
   },
   closeMoonbox() {
     this.setState({ showMoonbox: false });

@@ -31,13 +31,22 @@ export default React.createClass({
       return <InlineLoadingSpinner />;
     }
 
-    return _.map(this.props.posts, (post) => {
-      return <figure key={post._id}>
-        <Medium
-          medium={post.medium}
-          filter={post.pretentiousFilter}
-        />
-      </figure>;
+    return _.map(album.posts, (postId) => {
+      return _.reduce(
+        this.props.posts,
+        (result, post) => {
+          if (post._id === postId) {
+            result = <figure key={post._id}>
+              <Medium
+                medium={post.medium}
+                filter={post.pretentiousFilter}
+              />
+            </figure>;
+          }
+          return result;
+        },
+        null
+      );
     });
   },
   renderDescription(album) {

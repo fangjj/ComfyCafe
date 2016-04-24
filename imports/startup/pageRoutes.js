@@ -1,12 +1,23 @@
 import renderView from "/imports/api/common/renderView";
 import setTitle from "/imports/api/common/setTitle";
 
-import DummyView from "/imports/ui/views/DummyView";
+import PageView from "/imports/ui/views/PageView";
+import PageListView from "/imports/ui/views/PageListView";
 
-FlowRouter.route("/p/:username", {
+const pageRoutes = FlowRouter.group({ prefix: "/p" });
+
+pageRoutes.route("/:username", {
   name: "pagesBy",
   action: function () {
     setTitle(FlowRouter.getParam("username") + "'s Pages");
-    renderView(DummyView);
+    renderView(PageListView);
+  }
+});
+
+pageRoutes.route("/:username/:slug", {
+  name: "page",
+  action: function () {
+    setTitle(FlowRouter.getParam("slug"));
+    renderView(PageView);
   }
 });

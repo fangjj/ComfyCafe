@@ -1,12 +1,12 @@
 import _ from "lodash";
-import slugify from "slug";
 
-import Albums from "./collection";
-import Posts from "../posts/collection";
-import "../topics/methods";
-import Topics from "../topics/collection";
-import Notifications from "../notifications/collection";
-import processMentions from "../common/processMentions";
+import Albums from "/imports/api/albums/collection";
+import Posts from "/imports/api/posts/collection";
+import "/imports/api/topics/methods";
+import Topics from "/imports/api/topics/collection";
+import Notifications from "/imports/api/notifications/collection";
+import processMentions from "/imports/api/common/processMentions";
+import createSlugCycler from "/imports/api/common/createSlugCycler";
 
 const match = {
   name: String,
@@ -15,25 +15,7 @@ const match = {
 	description: String
 };
 
-function slugCycle(albumId, name, i=0) {
-  let postfixed = name;
-  if (i > 0) {
-    postfixed = name + "-" + i;
-  }
-
-  const slug = slugify(postfixed);
-
-  if (Albums.findOne(
-    {
-      _id: { $ne: albumId },
-      slug: slug
-    }
-  )) {
-    return slugCycle(albumId, name, i+1);
-  }
-
-  return slug;
-}
+const slugCycle = createSlugCycler(Albums);
 
 // Intended to be used via _.map(posts, postInliner)
 function postInliner(postId) {

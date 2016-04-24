@@ -8,8 +8,8 @@ import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLo
 import InlineUhoh from "/imports/ui/client/components/InlineUhoh";
 import FAB from "/imports/ui/client/components/FAB";
 import Dialog from "/imports/ui/client/components/Dialog";
-import AlbumForm from "/imports/ui/client/components/Album/AlbumForm";
-import AlbumListItem from "/imports/ui/client/components/Album/AlbumListItem";
+import PageForm from "/imports/ui/client/components/Page/PageForm";
+import PageListItem from "/imports/ui/client/components/Page/PageListItem";
 
 export default React.createClass({
   getInitialState() {
@@ -26,26 +26,26 @@ export default React.createClass({
       return <InlineLoadingSpinner />;
     }
 
-    if (this.props.albums.length) {
-      return _.map(this.props.albums, (album) => {
-        return <AlbumListItem album={album} key={album._id} />;
+    if (this.props.pages.length) {
+      return _.map(this.props.pages, (page) => {
+        return <PageListItem page={page} key={page._id} />;
       });
     } else {
       return <InlineUhoh>
-        {FlowRouter.getParam("username") + " hasn't created any albums yet!"}
+        {FlowRouter.getParam("username") + " hasn't written any pages yet!"}
       </InlineUhoh>;
     }
   },
   renderForm() {
     if (this.state.showForm) {
       return <Dialog
-        title="Create Album"
-        formId="formNewAlbum"
+        title="Compose Page"
+        formId="formNewPage"
         open={true}
         onClose={this.hideForm}
       >
-        <AlbumForm
-          id="formNewAlbum"
+        <PageForm
+          id="formNewPage"
           onClose={this.hideForm}
         />
       </Dialog>;

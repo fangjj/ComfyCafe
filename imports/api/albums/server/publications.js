@@ -43,10 +43,6 @@ Meteor.publish("albumPosts", function (username, albumSlug) {
 	check(username, String);
 	check(albumSlug, String);
 	this.autorun(function (computation) {
-		const user = Meteor.users.findOne(this.userId, { fields: {
-			friends: 1
-		} });
-
 		const album = Albums.findOne(
 			{
 				"owner.username": username,
@@ -55,14 +51,31 @@ Meteor.publish("albumPosts", function (username, albumSlug) {
 			{ fields: { "owner._id": 1, posts: 1 } }
 		);
 
-		return Posts.find(
-			privacyWrap(
-				{ _id: { $in: album.posts } },
-				this.userId,
-				user.friends,
-				{ "owner._id": album.owner._id }
-			),
-			{ fields: { name: 1, owner: 1, medium: 1, visibility: 1, safety: 1, pretentiousFilter: 1 } }
-		);
+		if (this.userId) {
+			const user = Meteor.users.findOne(this.userId, { fields: {
+				friends: 1
+			} });
+
+			return Posts.find(
+				privacyWrap(
+					{ _id: { $in: album.posts } },
+					this.userId,
+					user.friends,
+					{ "owner._id": album.owner._id }
+				),
+				{ fields: { name: 1, owner: 1, medium: 1, visibility: 1, safety: 1, pretentiousFilter: 1 } }
+			);
+		} else {
+			return Posts.find(
+				{ $and: [
+					{ _id: { $in: album.posts } },
+					{ $or: [
+						{ visibility: "public" },
+						{ "owner._id": album.owner._id }
+					] }
+				] },
+				{ fields: { name: 1, owner: 1, medium: 1, visibility: 1, safety: 1, pretentiousFilter: 1 } }
+			);
+		}
 	});
 });

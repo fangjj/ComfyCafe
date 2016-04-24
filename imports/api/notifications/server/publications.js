@@ -1,7 +1,6 @@
 import Notifications from "../collection";
 
 Meteor.publish("notifications", function (clientUserId) {
-	check(clientUserId, Match.Optional(String));
 	if (clientUserId === this.userId) {
 		return Notifications.find(
 			{
@@ -15,7 +14,6 @@ Meteor.publish("notifications", function (clientUserId) {
 });
 
 Meteor.publish("friendRequest", function (clientUserId, recipId) {
-	check(clientUserId, Match.Optional(String));
 	if (clientUserId === this.userId) {
 		return Notifications.find(
 			{

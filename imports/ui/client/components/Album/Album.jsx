@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 
 import setTitle from "/imports/api/common/setTitle";
@@ -85,7 +86,7 @@ export default React.createClass({
 
     const owner = album.owner;
     const ownerUrl = FlowRouter.path("profile", { username: owner.username });
-    const isOwner = this.props.currentUser._id === album.owner._id;
+    const isOwner = _.get(this.props.currentUser, "_id") === album.owner._id;
 
     return <article className="album contentLayout">
       <section className="content">

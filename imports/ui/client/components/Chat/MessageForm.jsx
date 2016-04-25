@@ -21,7 +21,11 @@ export default React.createClass({
     }
   },
   handleBody(e) {
-    this.setState({ body: e.target.value });
+    if (this.props.directValue) {
+      this.props.handleBody(e);
+    } else {
+      this.setState({ body: e.target.value });
+    }
   },
   handleSubmit() {
     const data = {
@@ -44,11 +48,10 @@ export default React.createClass({
   },
   render() {
     const value = {};
-    const body = _.get(this.props, "message.body");
     if (this.props.directValue) {
-      value.value = body;
+      value.value = this.props.body;
     } else {
-      value.defaultValue = body;
+      value.defaultValue = _.get(this.props, "message.body");
     }
     return <Form
       className="messageInput"

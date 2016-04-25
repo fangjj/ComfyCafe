@@ -62,7 +62,7 @@ export default React.createClass({
       onTouchTap={this.props.showAvatarCropper}
     />;
     if (this.props.isCropping) {
-      cropButton = <CancelButton onTouchTap={this.props.hideAvatarCropper} />;
+      cropButton = <CancelButton width={149} onTouchTap={this.props.hideAvatarCropper} />;
     }
 
     const rightGroup = <ButtonGroup>

@@ -1,15 +1,21 @@
 import BlogPosts from "../collection";
 import privacyWrap from "/imports/api/common/privacyWrap";
 
-Meteor.publish("blogPost", function (postId) {
-	check(postId, String);
-	return BlogPosts.find({ _id: postId });
+Meteor.publish("blogPost", function (username, slug) {
+	check(username, String);
+	check(slug, String);
+	return BlogPosts.find(
+		{
+			slug: slug,
+			"owner.username": username
+		}
+	);
 });
 
 Meteor.publish("allBlogPosts", function () {
 	this.autorun(function (computation) {
 		if (this.userId) {
-			var user = Meteor.users.findOne(this.userId, { fields: {
+			const user = Meteor.users.findOne(this.userId, { fields: {
 				friends: 1
 			} });
 			return BlogPosts.find(privacyWrap(
@@ -32,7 +38,7 @@ Meteor.publish("blogBy", function (username) {
 
 	this.autorun(function (computation) {
 		if (this.userId) {
-			var user = Meteor.users.findOne(this.userId, { fields: {
+			const user = Meteor.users.findOne(this.userId, { fields: {
 				friends: 1
 			} });
 			return BlogPosts.find(privacyWrap(
@@ -54,7 +60,7 @@ Meteor.publish("blogBy", function (username) {
 Meteor.publish("blogFeed", function () {
 	this.autorun(function (computation) {
 		if (this.userId) {
-			var user = Meteor.users.findOne(this.userId, { fields: {
+			const user = Meteor.users.findOne(this.userId, { fields: {
 				subscriptions: 1,
 				friends: 1
 			} });

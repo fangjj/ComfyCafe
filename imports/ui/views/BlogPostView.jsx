@@ -1,4 +1,4 @@
-const BlogPostView = {
+export default {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
@@ -13,8 +13,6 @@ const BlogPostView = {
     }
   },
   fastRender(params) {
-    this.subscribe("blogPost", params.postId);
+    this.subscribe("blogPost", params.username, params.slug);
   }
 };
-
-export default BlogPostView;

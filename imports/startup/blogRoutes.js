@@ -23,10 +23,10 @@ blogRoutes.route("/:username", {
   }
 });
 
-blogRoutes.route("/:username/:postId", {
+blogRoutes.route("/:username/:slug", {
   name: "blogPost",
   action: function () {
-    setTitle(FlowRouter.getParam("postId"));
+    setTitle(FlowRouter.getParam("slug"));
     renderView(BlogPostView);
   }
 });

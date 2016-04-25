@@ -3,7 +3,6 @@ import _ from "lodash";
 import Pages from "/imports/api/pages/collection";
 import "/imports/api/topics/methods";
 import Topics from "/imports/api/topics/collection";
-import Notifications from "/imports/api/notifications/collection";
 import processMentions from "/imports/api/common/processMentions";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
 

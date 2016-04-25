@@ -4,6 +4,7 @@ import BlogPosts from "/imports/api/blog/collection";
 import BlogListItem from "./BlogListItem";
 import FAB from "/imports/ui/client/components/FAB";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
+import InlineTopic from "/imports/ui/client/components/Chat/InlineTopic";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -11,11 +12,17 @@ export default React.createClass({
     return { showForm: false };
   },
   getMeteorData() {
-    const id = FlowRouter.getParam("postId");
-    const handle = Meteor.subscribe("blogPost", id);
+    const username = FlowRouter.getParam("username");
+    const slug = FlowRouter.getParam("slug");
+    const handle = Meteor.subscribe("blogPost", username, slug);
     return {
       loading: ! handle.ready(),
-      post: BlogPosts.findOne({ _id: id }),
+      post: BlogPosts.findOne(
+        {
+          slug: slug,
+          "owner.username": username
+        }
+      ),
       currentUser: Meteor.user()
     };
   },
@@ -37,9 +44,17 @@ export default React.createClass({
       return <LoadingSpinner />;
     }
 
-    return <ol className="contentList">
-      <BlogListItem post={this.data.post} currentUser={this.data.currentUser} />
+    return <article className="blog contentLayout">
+      <ol className="contentList">
+        <BlogListItem post={this.data.post} currentUser={this.data.currentUser} />
+      </ol>
+      <section className="comments content">
+        <InlineTopic
+          topicId={this.data.post.topic._id}
+          currentUser={this.data.currentUser}
+        />
+      </section>
       {this.renderFab()}
-    </ol>;
+    </article>;
   }
 });

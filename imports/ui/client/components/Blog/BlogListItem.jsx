@@ -19,9 +19,9 @@ export default React.createClass({
     const post = this.props.post;
 
     const owner = post.owner;
-    const ownerUrl = FlowRouter.path("profile", {username: owner.username});
+    const ownerUrl = FlowRouter.path("profile", { username: owner.username });
 
-    const permaLink = FlowRouter.path("blogPost", {postId: post._id});
+    const permaLink = FlowRouter.path("blogPost", { username: owner.username, slug: post.slug });
 
     return <li className="blogPost">
       <article className="flexLayout">

@@ -58,7 +58,7 @@ export default React.createClass({
       onClose={this.props.onClose}
     >
       <TextField
-        label="Name"
+        label="Title"
         defaultValue={this.state.name}
         onChange={this.handleName}
       />

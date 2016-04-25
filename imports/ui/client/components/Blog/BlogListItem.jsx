@@ -31,6 +31,7 @@ export default React.createClass({
           </a>
         </div>
         <div className="rightSide">
+          <h2>{post.name}</h2>
           <div className="top">
             <div className="info">
               by <UserLink user={owner} /> <Moment time={post.createdAt} />

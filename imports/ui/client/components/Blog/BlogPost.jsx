@@ -1,5 +1,6 @@
 import React from "react";
 
+import setTitle from "/imports/api/common/setTitle";
 import BlogPosts from "/imports/api/blog/collection";
 import BlogListItem from "./BlogListItem";
 import FAB from "/imports/ui/client/components/FAB";
@@ -43,6 +44,8 @@ export default React.createClass({
     if (this.data.loading) {
       return <LoadingSpinner />;
     }
+
+    setTitle(this.data.post.name);
 
     return <article className="blog contentLayout">
       <ol className="contentList">

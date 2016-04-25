@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 
 import "/imports/api/messages/methods";
@@ -43,10 +44,11 @@ export default React.createClass({
   },
   render() {
     const value = {};
+    const body = _.get(this.props, "message.body");
     if (this.props.directValue) {
-      value.value = this.props.body;
+      value.value = body;
     } else {
-      value.defaultValue = this.props.body;
+      value.defaultValue = body;
     }
     return <Form
       className="messageInput"
@@ -60,7 +62,7 @@ export default React.createClass({
         hintText={generateMessageHint()}
         rows={3}
         rowsMax={10}
-        onChange={this.props.handleBody}
+        onChange={this.handleBody}
       />
     </Form>;
   }

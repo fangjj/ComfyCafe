@@ -1,31 +1,39 @@
 import _ from "lodash";
 import React from "react";
 
-import BadgeGroup from "/imports/ui/client/components/BadgeGroup";
+import UserPopover from "/imports/ui/client/components/User/UserPopover";
 
 export default React.createClass({
   getInitialState() {
     return { open: false }
   },
-  handleTouchTap(event) {
+  showPopover(e) {
+    const $link = $(this.refs.link);
+    const anchor = $link.offset().left;
     this.setState({
       open: true,
-      anchorEl: event.currentTarget,
+      anchor: anchor,
     });
   },
-  handleRequestClose() {
+  hidePopover() {
     this.setState({ open: false });
   },
-  renderBadges() {
-    return <BadgeGroup badges={_.get(this.props.user, "profile.badges", {})} />;
+  renderPopover() {
+    return <UserPopover
+      user={this.props.user}
+      anchor={this.state.anchor}
+      open={this.state.open}
+      onClose={this.hidePopover}
+    />;
   },
   render() {
-    var user = this.props.user;
-    var path = FlowRouter.path("profile", {username: user.username});
+    const user = this.props.user;
+    const path = FlowRouter.path("profile", {username: user.username});
     return <span className="userLink">
-      <a href={path} title={user.profile.blurb}>
+      <a ref="link" href={path} onMouseEnter={this.showPopover}>
         {user.profile.displayName || user.username}
       </a>
+      {this.renderPopover()}
     </span>;
   }
 });

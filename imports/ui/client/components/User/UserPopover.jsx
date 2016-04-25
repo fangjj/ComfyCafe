@@ -1,24 +1,27 @@
 import React from "react";
+import OnClickOutside from "react-onclickoutside";
 
-import {
-  Popover
-} from "material-ui";
+import BadgeGroup from "/imports/ui/client/components/BadgeGroup";
 
-const UserPopover = React.createClass({
+export default React.createClass({
+  mixins: [OnClickOutside],
+  handleClickOutside(e) {
+    this.props.onClose();
+  },
+  renderBadges(user) {
+    return <BadgeGroup badges={_.get(user, "profile.badges", {})} />;
+  },
   render() {
-    return <Popover
-      open={this.props.open}
-      anchorEl={this.props.anchorEl}
-      anchorOrigin={{horizontal: "left", vertical: "bottom"}}
-      targetOrigin={{horizontal: "left", vertical: "top"}}
-      useLayerForClickAway={false}
-      onRequestClose={this.props.onRequestClose}
+    const user = this.props.user;
+    return <div
+      className="userPopover"
+      style={{
+        display: (this.props.open ? "block" : "none"),
+        left: this.props.anchor
+      }}
     >
-      <div style={{padding: 16}}>
-        {this.props.user.profile.blurb}
-      </div>
-    </Popover>;
+      {user.profile.blurb}
+      {this.renderBadges(user)}
+    </div>;
   }
 });
-
-export default UserPopover;

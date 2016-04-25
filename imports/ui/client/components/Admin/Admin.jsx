@@ -38,17 +38,14 @@ export default React.createClass({
           {
             users: <UserPanel />,
             images: <ImagePanel />,
+            blog: <DenseContent>
+              <a onTouchTap={() => { Meteor.call("migrateBlog") }}>Migrate</a>
+            </DenseContent>,
             badges: <BadgePanel />
           },
           panel,
           <DenseContent>
             Admin panel
-            <section>
-              <header>
-                <h3>Private Mode</h3>
-              </header>
-              If active, invite keys are required for registration.
-            </section>
           </DenseContent>
         );
       }

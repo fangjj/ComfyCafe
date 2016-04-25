@@ -26,9 +26,7 @@ export default React.createClass({
   },
   renderTitle() {
     if (this.props.title) {
-      return <header>
-        <h2>{this.props.title}</h2>
-      </header>;
+      return <h2>{this.props.title}</h2>;
     }
   },
   renderSigil() {

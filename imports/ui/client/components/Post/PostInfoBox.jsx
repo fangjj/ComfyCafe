@@ -9,6 +9,7 @@ import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import ToggleButton from "/imports/ui/client/components/Button/ToggleButton";
 import BookmarkButton from "/imports/ui/client/components/Button/BookmarkButton";
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
+import ReportButton from "/imports/ui/client/components/Button/ReportButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/client/components/ActionWell";
@@ -76,6 +77,7 @@ export default React.createClass({
         <ButtonGroup>
           <BookmarkButton post={this.props.post} currentUser={this.props.currentUser} />
           <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />
+          <ReportButton />
         </ButtonGroup>
         {rightGroup}
       </ActionWell>;

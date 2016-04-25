@@ -81,6 +81,7 @@ Meteor.methods({
 		Topics.update(
 			{ _id: page.topic._id },
 			{ $set: {
+        name: data.name,
 				visibility: data.visibility
 			} }
 		);

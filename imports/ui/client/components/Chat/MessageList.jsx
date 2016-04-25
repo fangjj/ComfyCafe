@@ -9,7 +9,7 @@ import MessageInlineForm from "./MessageInlineForm";
 import EllipsisAnimation from "/imports/ui/client/components/EllipsisAnimation";
 import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLoadingSpinner";
 
-const MessageList = React.createClass({
+export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const id = this.props.topic._id;
@@ -145,5 +145,3 @@ const MessageList = React.createClass({
     </ol>;
   }
 });
-
-export default MessageList;

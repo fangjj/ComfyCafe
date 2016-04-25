@@ -6,7 +6,7 @@ import setTitle from "/imports/api/common/setTitle";
 import MessageList from "./MessageList";
 import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLoadingSpinner";
 
-const InlineTopic = React.createClass({
+export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const id = this.props.topicId;
@@ -37,5 +37,3 @@ const InlineTopic = React.createClass({
     />;
   }
 });
-
-export default InlineTopic;

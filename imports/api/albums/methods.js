@@ -90,6 +90,7 @@ Meteor.methods({
 		Topics.update(
 			{ _id: album.topic._id },
 			{ $set: {
+        name: data.name,
 				visibility: data.visibility
 			} }
 		);

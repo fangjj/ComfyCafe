@@ -12,6 +12,7 @@ import SubscriptionButton from "/imports/ui/client/components/Button/Subscriptio
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/client/components/ActionWell";
+import TextBody from "/imports/ui/client/components/TextBody";
 import FlexHead from "/imports/ui/client/components/FlexHead";
 
 const verbMap = {

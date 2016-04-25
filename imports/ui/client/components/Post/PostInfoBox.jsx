@@ -12,6 +12,7 @@ import SubscriptionButton from "/imports/ui/client/components/Button/Subscriptio
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/client/components/ActionWell";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 import TextBody from "/imports/ui/client/components/TextBody";
 import FlexHead from "/imports/ui/client/components/FlexHead";
 
@@ -99,7 +100,11 @@ export default React.createClass({
   },
   renderSource() {
     if (this.props.post.source) {
-      return <TextBody text={"Source: " + this.props.post.source} className="source" />;
+      return <span>
+        <Icon className="sigil">copyright</Icon> <TextBody
+          text={"Source: " + this.props.post.source} className="source"
+        />
+      </span>;
     }
   },
   render() {

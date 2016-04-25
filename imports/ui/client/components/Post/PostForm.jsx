@@ -148,7 +148,7 @@ export default React.createClass({
   renderSourceField() {
     if (this.props.originality !== "original") {
       return <TextArea
-        defaultValue={this.props.source}
+        defaultValue={this.state.source}
         label="Source"
         rows={1}
         rowsMax={3}
@@ -188,7 +188,7 @@ export default React.createClass({
       />
       <div className="autoSafety">
         <span className="label">
-          Auto Safety: {safetyLabels[this.props.autoSafety]}
+          Auto Safety: {safetyLabels[this.state.autoSafety]}
         </span>
         <FlatButton
           label="Apply"
@@ -203,7 +203,7 @@ export default React.createClass({
         receiveAutoSafety={this.receiveAutoSafety}
       />
       <PretentiousFilterSelector
-        pretentiousFilter={this.props.pretentiousFilter}
+        pretentiousFilter={this.state.pretentiousFilter}
         onChange={this.handlePretentiousFilter}
       />
     </Form>;

@@ -5,6 +5,9 @@ import Messages from "./collection";
 import Topics from "../topics/collection";
 import Rooms from "../rooms/collection";
 import Posts from "../posts/collection";
+import Albums from "../albums/collection";
+import Pages from "../pages/collection";
+import BlogPosts from "../blog/collection";
 import Notifications from "../notifications/collection";
 import processMentions from "../common/processMentions";
 
@@ -55,12 +58,28 @@ Meteor.methods({
       } }
     );
 
-    var post = Posts.findOne({ "topic._id": topicId });
-    var comment = Boolean(post);
+    const root = _.reduce(
+      [
+        [Posts, "post"],
+        [Albums, "album"],
+        [Pages, "page"],
+        [BlogPosts, "blog"]
+      ],
+      (result, coll) => {
+        const doc = coll[0].findOne({ "topic._id": topicId });
+        if (doc) {
+          result = [doc, coll[1]];
+        }
+        return result;
+      },
+      null
+    );
+
+    const isComment = Boolean(root);
 
     _.each(topic.watchers, function (watcherId) {
       if (watcherId !== Meteor.userId()) {
-        var doc = {
+        const doc = {
           createdAt: new Date(),
           to: watcherId,
 
@@ -71,7 +90,7 @@ Meteor.methods({
           }
         };
 
-        if (! comment) {
+        if (! isComment) {
           doc.action = "topicPosted";
           doc.topic = {
             _id: topicId,
@@ -82,12 +101,44 @@ Meteor.methods({
             }
           };
         } else {
-          doc.action = "postCommented";
-          doc.post = {
-            _id: post._id,
-            name: post.name,
-            username: post.owner.username
+          const commentedMap = {
+            post(item) {
+              doc.action = "postCommented";
+              doc.post = {
+                _id: item._id,
+                name: item.name,
+                username: item.owner.username
+              };
+            },
+            album(item) {
+              doc.action = "albumCommented";
+              doc.album = {
+                _id: item._id,
+                name: item.name,
+                slug: item.slug,
+                username: item.owner.username
+              };
+            },
+            page(item) {
+              doc.action = "pageCommented";
+              doc.page = {
+                _id: item._id,
+                name: item.name,
+                slug: item.slug,
+                username: item.owner.username
+              };
+            },
+            blog(item) {
+              doc.action = "blogCommented";
+              doc.blog = {
+                _id: item._id,
+                name: item.name,
+                slug: item.slug,
+                username: item.owner.username
+              };
+            }
           };
+          commentedMap[root[1]](root[0]);
         }
 
         Notifications.insert(doc);
@@ -102,7 +153,7 @@ Meteor.methods({
         }
       };
 
-      if (! comment) {
+      if (! isComment) {
         label = "topic";
         doc.topic = {
           _id: topicId,
@@ -113,12 +164,44 @@ Meteor.methods({
           }
         };
       } else {
-        label = "comment";
-        doc.post = {
-          _id: post._id,
-          name: post.name,
-          username: post.owner.username
+        const mentionedMap = {
+          post(item) {
+            label = "postComment";
+            doc.post = {
+              _id: item._id,
+              name: item.name,
+              username: item.owner.username
+            };
+          },
+          album(item) {
+            label = "albumComment";
+            doc.album = {
+              _id: item._id,
+              name: item.name,
+              slug: item.slug,
+              username: item.owner.username
+            };
+          },
+          page(item) {
+            label = "pageComment";
+            doc.page = {
+              _id: item._id,
+              name: item.name,
+              slug: item.slug,
+              username: item.owner.username
+            };
+          },
+          blog(item) {
+            label = "blogComment";
+            doc.blog = {
+              _id: item._id,
+              name: item.name,
+              slug: item.slug,
+              username: item.owner.username
+            };
+          }
         };
+        mentionedMap[root[1]](root[0]);
       }
 
       processMentions(label, data.body, doc);

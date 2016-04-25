@@ -85,7 +85,43 @@ export default React.createClass({
         </a>
       ];
     },
-    commentMentioned() {
+    albumCommented() {
+      const url = FlowRouter.path("album", {
+        username: this.props.notification.album.username,
+        albumSlug: this.props.notification.album.slug
+      });
+      return [
+        "commented on ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
+          {this.props.notification.album.name}
+        </a>
+      ];
+    },
+    pageCommented() {
+      const url = FlowRouter.path("page", {
+        username: this.props.notification.page.username,
+        slug: this.props.notification.page.slug
+      });
+      return [
+        "commented on ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
+          {this.props.notification.page.name}
+        </a>
+      ];
+    },
+    blogCommented() {
+      const url = FlowRouter.path("blog", {
+        username: this.props.notification.blog.username,
+        slug: this.props.notification.blog.slug
+      });
+      return [
+        "commented on ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
+          {this.props.notification.blog.name}
+        </a>
+      ];
+    },
+    postCommentMentioned() {
       const url = FlowRouter.path("post", {
         username: this.props.notification.post.username,
         postName: this.props.notification.post.name
@@ -97,8 +133,43 @@ export default React.createClass({
         </a>
       ];
     },
+    albumCommentMentioned() {
+      const url = FlowRouter.path("album", {
+        username: this.props.notification.album.username,
+        albumSlug: this.props.notification.album.slug
+      });
+      return [
+        "mentioned you in a comment on ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
+          {this.props.notification.album.name}
+        </a>
+      ];
+    },
+    pageCommentMentioned() {
+      const url = FlowRouter.path("page", {
+        username: this.props.notification.page.username,
+        slug: this.props.notification.page.slug
+      });
+      return [
+        "mentioned you in a comment on ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
+          {this.props.notification.page.name}
+        </a>
+      ];
+    },
+    blogCommentMentioned() {
+      const url = FlowRouter.path("blog", {
+        username: this.props.notification.blog.username,
+        slug: this.props.notification.blog.slug
+      });
+      return [
+        "mentioned you in a comment on ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
+          {this.props.notification.blog.name}
+        </a>
+      ];
+    },
     albumMentioned() {
-      prettyPrint(this.props.notification);
       const url = FlowRouter.path("album", {
         username: this.props.notification.owner.username,
         albumSlug: this.props.notification.album.slug

@@ -17,7 +17,7 @@ export default React.createClass({
   renderForm() {
     if (this.state.showForm) {
       return <Dialog
-        title="Create Room"
+        title="Create Community"
         formId="formNewRoom"
         open={true}
         onClose={this.hideRoomForm}

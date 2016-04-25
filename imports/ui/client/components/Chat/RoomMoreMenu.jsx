@@ -31,7 +31,7 @@ export default React.createClass({
   renderForm() {
     if (this.state.showForm) {
       return <Dialog
-        title="Edit Room"
+        title="Edit Community"
         formId={"form" + this.props.room._id}
         open={true}
         onClose={this.hideRoomForm}

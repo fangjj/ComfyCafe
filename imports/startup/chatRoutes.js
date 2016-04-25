@@ -9,7 +9,7 @@ const chatRoutes = FlowRouter.group({ prefix: "/c" });
 chatRoutes.route("/", {
   name: "roomList",
   action: function () {
-    setTitle("Chat Rooms");
+    setTitle("Communities");
     renderView(RoomListView);
   }
 });
@@ -17,7 +17,7 @@ chatRoutes.route("/", {
 chatRoutes.route("/:roomId", {
   name: "room",
   action: function () {
-    setTitle("Loading Room...");
+    setTitle("Loading Community...");
     renderView(ChatView);
   }
 });

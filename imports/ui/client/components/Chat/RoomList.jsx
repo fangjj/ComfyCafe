@@ -1,9 +1,8 @@
 import React from "react";
 
 import Rooms from "/imports/api/rooms/collection";
-
-import RoomListItem from "./RoomListItem";
-import RoomFAB from "./RoomFAB";
+import RoomListItem from "/imports/ui/client/components/Chat/RoomListItem";
+import RoomFAB from "/imports/ui/client/components/Chat/RoomFAB";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 
 export default React.createClass({

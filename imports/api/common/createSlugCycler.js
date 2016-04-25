@@ -3,7 +3,10 @@ import slugify from "slug";
 function createSlugCycler(coll) {
   function slugCycle (id, name, i=0) {
     let postfixed = name;
-    if (i > 0) {
+    if (! name) {
+      name = i;
+      postfixed = name;
+    } else if (i > 0) {
       postfixed = name + "-" + i;
     }
 

@@ -39,6 +39,7 @@ import "/imports/api/migrations/methods";
 import "/imports/api/notifications/methods";
 import "/imports/api/pages/methods";
 import "/imports/api/posts/methods";
+import "/imports/api/reports/methods";
 import "/imports/api/rooms/methods";
 import "/imports/api/tags/methods";
 import "/imports/api/topics/methods";

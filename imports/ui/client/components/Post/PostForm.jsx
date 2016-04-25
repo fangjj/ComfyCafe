@@ -1,4 +1,6 @@
 import React from "react";
+import Checkbox from "material-ui/Checkbox";
+import FlatButton from "material-ui/FlatButton";
 
 import "/imports/api/posts/methods";
 import media from "/imports/api/media/collection";
@@ -12,11 +14,6 @@ import OriginalitySelector from "/imports/ui/client/components/OriginalitySelect
 import SafetySelector from "/imports/ui/client/components/SafetySelector";
 import PretentiousFilterSelector from "/imports/ui/client/components/PretentiousFilterSelector";
 import TagField from "/imports/ui/client/components/Tag/TagField";
-
-import {
-  Checkbox,
-  FlatButton
-} from "material-ui";
 
 const defaultState = {
   visibility: "public",

@@ -168,7 +168,7 @@ Meteor.methods({
 			});
 		}
 	},
-	deletePost: function (postId) {
+	deletePost(postId) {
 		check(postId, String);
 
 		const post = Posts.findOne(postId);

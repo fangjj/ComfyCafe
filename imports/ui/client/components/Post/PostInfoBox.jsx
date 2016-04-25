@@ -77,7 +77,7 @@ export default React.createClass({
         <ButtonGroup>
           <BookmarkButton post={this.props.post} currentUser={this.props.currentUser} />
           <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />
-          <ReportButton />
+          <ReportButton onTouchTap={this.props.showReportForm} />
         </ButtonGroup>
         {rightGroup}
       </ActionWell>;

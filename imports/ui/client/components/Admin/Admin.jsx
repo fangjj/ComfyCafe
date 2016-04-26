@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import "/imports/api/migrations/methods";
+import AdminPanel from "./AdminPanel";
 import UserPanel from "./UserPanel";
 import ImagePanel from "./ImagePanel";
 import BadgePanel from "./BadgePanel";
@@ -44,9 +45,7 @@ export default React.createClass({
             badges: <BadgePanel />
           },
           panel,
-          <DenseContent>
-            Admin panel
-          </DenseContent>
+          <AdminPanel />
         );
       }
     } else {

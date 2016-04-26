@@ -9,6 +9,7 @@ import "/imports/api/messages/server/publications";
 import "/imports/api/notifications/server/publications";
 import "/imports/api/pages/server/publications";
 import "/imports/api/posts/server/publications";
+import "/imports/api/reports/server/adminPublications";
 import "/imports/api/rooms/server/publications";
 import "/imports/api/tags/server/publications";
 import "/imports/api/topics/server/publications";

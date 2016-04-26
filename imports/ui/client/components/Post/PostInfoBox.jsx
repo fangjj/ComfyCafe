@@ -41,8 +41,11 @@ export default React.createClass({
   },
   showAlbumSelector() {
     const $albumBtn = $("#albumBtn");
-    const anchor = $albumBtn.offset().left;
-    this.props.showAlbumSelector(anchor);
+    const offset = $albumBtn.offset();
+    this.props.showAlbumSelector({
+      left: offset.left,
+      top: offset.top + $albumBtn.height()
+    });
   },
   renderButtons() {
     if (! this.props.currentUser) {

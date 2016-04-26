@@ -36,10 +36,10 @@ export default React.createClass({
       setPattern(nextProps.post.name, nextProps.post.complement);
     }
   },
-  showAlbumSelector(anchor) {
+  showAlbumSelector(offset) {
     this.setState({
       showAlbumSelector: true,
-      albumSelectorAnchor: anchor
+      albumSelectorOffset: offset
     });
   },
   hideAlbumSelector() {
@@ -116,7 +116,7 @@ export default React.createClass({
     if (this.state.showAlbumSelector) {
       return <AlbumSelector
         postId={this.props.post._id}
-        anchor={this.state.albumSelectorAnchor}
+        offset={this.state.albumSelectorOffset}
         onClose={this.hideAlbumSelector}
       />;
     }

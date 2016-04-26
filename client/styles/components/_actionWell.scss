@@ -11,9 +11,7 @@
 
   background: rgba($text-color, 0.1);
 
-  .button-group:nth-child(even) {
-    > div {
-      float: right;
-    }
+  .buttonGroup:nth-child(even) {
+    text-align: right;
   }
 }

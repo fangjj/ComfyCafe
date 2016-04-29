@@ -8,6 +8,13 @@ const thumbnailPolicies = {
   "postMedium": {
     "list": {
       size: [240, 240]
+    },
+
+    "opengraph": {
+      size: [1500, 1500]
+    },
+    "twitterCard": {
+      size: [600, 321]
     }
   },
   "avatar": {
@@ -29,6 +36,13 @@ const thumbnailPolicies = {
     },
     "favicon": {
       size: [16, 16]
+    },
+
+    "opengraph": {
+      size: [1500, 1500]
+    },
+    "twitterCard": {
+      size: [600, 321]
     }
   }
 };
@@ -36,33 +50,18 @@ const thumbnailPolicies = {
 if (Meteor.isServer) {
   _.each(thumbnailPolicies.postMedium, function (value, key) {
     value.success = function (job) {
-      var orig = media.findOne({ _id: job.data.inputFileId });
-      var thumb = media.findOne({ _id: job.data.outputFileId });
-      var doc = { $set: {} };
-      doc.$set["medium.thumbnails.fullsize"] = {
-        _id: orig._id,
-        md5: orig.md5
-      };
-      doc.$set["medium.thumbnails." + thumb.metadata.sizeKey] = {
-        _id: thumb._id,
-        md5: thumb.md5,
-        size: thumb.metadata.size
-      };
+      const orig = media.findOne({ _id: job.data.inputFileId });
       Posts.update(
-        { _id: orig.metadata.post },
-        doc
+        { "medium._id": job.data.inputFileId },
+        { $set: { "medium.thumbsComplete": orig.metadata.thumbsComplete } }
       );
     };
 
     value.fail = function (job) {
-      var orig = media.findOne({ _id: job.data.inputFileId });
-      var doc = { $set: {} };
-      doc.$set["medium.thumbnails." + job.data.sizeKey] = {
-        terminated: true
-      };
+      const orig = media.findOne({ _id: job.data.inputFileId });
       Posts.update(
-        { _id: orig.metadata.post },
-        doc
+        { "medium._id": job.data.inputFileId },
+        { $set: { "medium.thumbsTerminated": orig.metadata.thumbsTerminated } }
       );
     };
   });
@@ -87,11 +86,11 @@ if (Meteor.isServer) {
         doc
       );
       updateOwnerDocs(
-				{ "owner._id": job.data.owner },
-				{ $set: {
-					"owner.profile.avatar._id": orig._id
-				} }
-			);
+        { "owner._id": job.data.owner },
+        { $set: {
+          "owner.profile.avatar._id": orig._id
+        } }
+      );
     };
 
     value.fail = function (job) {};

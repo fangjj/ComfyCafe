@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 
 import "/imports/api/pages/methods";
@@ -19,8 +20,8 @@ export default React.createClass({
   handleName(e) {
     this.setState({ name: e.target.value });
   },
-  handleVisibility(value) {
-    this.setState({ visibility: value });
+  handlePrivacy(value) {
+    this.setState({ privacy: value });
   },
   handleBody(e) {
     this.setState({ body: e.target.value });

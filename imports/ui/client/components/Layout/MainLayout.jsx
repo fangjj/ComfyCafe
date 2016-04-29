@@ -34,7 +34,8 @@ export default React.createClass({
           {
             "metadata.owner": Meteor.userId(),
             "metadata.complete": true,
-            "metadata.bound": { $ne: true }
+            "metadata.bound": { $ne: true },
+            "metadata.thumbnailPolicy": { $exists: true }
           },
           {
             sort: { uploadDate: -1, filename: 1 },

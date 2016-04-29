@@ -4,31 +4,34 @@ import magickImageResize from "./backends/imageMagick.js";
 import getVideoThumbnail from "./backends/ffmpeg.js";
 import media from "/imports/api/media/collection";
 
-export default function (job, callback) {
-  var policy = thumbnailPolicies[job.data.policyName][job.data.sizeKey];
+function thumbnailWorker(job, callback) {
+  const policy = thumbnailPolicies[job.data.policyName][job.data.sizeKey];
 
-  job.log("Beginning work on thumbnail: " + (job.data.inputFileId.toHexString()), {
-    level: "info",
-    data: {
-      input: job.data.inputFileId,
-      output: job.data.outputFileId,
-      policy: policy,
-      contentType: job.data.contentType
-    },
-    echo: true
-  });
+  job.log("Beginning work on thumbnail: "
+    + (job.data.inputFileId.toHexString()) + " (" + job.data.sizeKey + ")",
+    {
+      level: "info",
+      data: {
+        input: job.data.inputFileId,
+        output: job.data.outputFileId,
+        policy: policy,
+        contentType: job.data.contentType
+      },
+      echo: true
+    }
+  );
 
   job.progress(20, 100);
 
-  var contentType = job.data.contentType.split("/");
-  var backend;
+  const contentType = job.data.contentType.split("/");
+  let backend;
 
   if (contentType[0] === "video") {
     backend = getVideoThumbnail;
   }
 
   if (contentType[0] === "image") {
-    if (policy.preserveFormat) {
+    if (policy.preserveFormat && contentType[1] !== "png") {
       backend = magickImageResize;
     } else {
       backend = sharpImageResize;
@@ -42,21 +45,26 @@ export default function (job, callback) {
 
     media.update(
       { _id: job.data.outputFileId },
-      { $set: { "metadata.terminated": true } }
+      { $set: { "metadata.thumbTerminated": true } }
+    );
+
+    media.update(
+      { _id: job.data.inputFileId },
+      { $addToSet: { "metadata.thumbsTerminated": job.data.policyName } },
     );
 
     policy.fail(job);
     return callback();
   }
 
-  var inStream = media.findOneStream({ _id: job.data.inputFileId });
+  const inStream = media.findOneStream({ _id: job.data.inputFileId });
   if (! inStream) {
     job.fail("Input file not found", { fatal: true });
     policy.fail(job);
     return callback();
   }
 
-  var outStream = media.upsertStream({
+  const outStream = media.upsertStream({
     _id: job.data.outputFileId
   }, {}, function (err, file) {
     if (err) {
@@ -78,16 +86,24 @@ export default function (job, callback) {
       { $set: { "metadata.thumbComplete": true } }
     );
 
-    job.log("Finished work on thumbnail image: " + job.data.outputFileId, {
-      level: "info",
-      data: {
-        input: job.data.inputFileId,
-        output: job.data.outputFileId,
-        policy: policy,
-        contentType: job.data.contentType
-      },
-      echo: true
-    });
+    media.update(
+      { _id: job.data.inputFileId },
+      { $addToSet: { "metadata.thumbsComplete": job.data.sizeKey } }
+    );
+
+    job.log("Finished work on thumbnail: "
+      + job.data.outputFileId + " (" + job.data.sizeKey + ")",
+      {
+        level: "info",
+        data: {
+          input: job.data.inputFileId,
+          output: job.data.outputFileId,
+          policy: policy,
+          contentType: job.data.contentType
+        },
+        echo: true
+      }
+    );
 
     job.done();
     policy.success(job);
@@ -95,4 +111,6 @@ export default function (job, callback) {
   }));
 
   backend(inStream, outStream, policy.size[0], policy.size[1]);
-};
+}
+
+export default thumbnailWorker;

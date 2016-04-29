@@ -3,7 +3,7 @@ import thumbnailPolicies from "../policies";
 import jobs from "/imports/api/jobs/collection";
 import media from "/imports/api/media/collection";
 
-var addedFileJob = function (file) {
+function addedFileJob(file) {
   return media.rawCollection().findAndModify(
     {
       _id: new MongoInternals.NpmModule.ObjectID(file._id.toHexString()),
@@ -18,14 +18,14 @@ var addedFileJob = function (file) {
       return console.error("Error locking file document in job creation: ", err);
     }
     if (doc) {
-      var outputMetadata = _.clone(file.metadata);
+      const outputMetadata = _.clone(file.metadata);
       delete outputMetadata.thumbnails;
       delete outputMetadata.thumbnailPolicy;
-      var outputExt = ".png";
-      var outputContentType = "image/png";
+      let outputExt = ".png";
+      let outputContentType = "image/png";
 
-      var policy = thumbnailPolicies[file.metadata.thumbnailPolicy];
-      var thumbnails = {};
+      const policy = thumbnailPolicies[file.metadata.thumbnailPolicy];
+      const thumbnails = {};
       _.each(policy, function (config, key) {
         outputMetadata.sizeKey = key;
         outputMetadata.size = config.size;
@@ -43,7 +43,7 @@ var addedFileJob = function (file) {
 
         thumbnails[key] = outputFileId;
 
-        var job = new Job(jobs, "makeThumb", {
+        const job = new Job(jobs, "makeThumb", {
           owner: file.metadata.owner,
           contentType: file.contentType,
           inputFileId: file._id,
@@ -52,7 +52,7 @@ var addedFileJob = function (file) {
           sizeKey: key
         });
 
-        var jobId = job.delay(0).retry({
+        const jobId = job.delay(0).retry({
           wait: 20000,
           retries: 5
         }).save();
@@ -78,12 +78,12 @@ var addedFileJob = function (file) {
       });
     }
   }));
-};
+}
 
-var removedFileJob = function (file) {
+function removedFileJob(file) {
   if (file.metadata) {
     _.each(file.metadata._Jobs, function (jobId) {
-      var job = jobs.findOne(
+      const job = jobs.findOne(
         {
           _id: jobId,
           status: { $in: jobs.jobStatusCancellable }
@@ -105,20 +105,20 @@ var removedFileJob = function (file) {
   }
 };
 
-var changedFileJob = function(oldFile, newFile) {
-  if (oldFile.md5 !== newFile.md5) {
+function changedFileJob(newFile, oldFile) {
+  if (oldFile.md5 !== newFile.md5 || ! newFile.metadata._Jobs) {
     if (oldFile.metadata._Jobs) {
       removedFileJob(oldFile);
     }
     return addedFileJob(newFile);
   }
-};
+}
 
-var fileObserve = media.find(
+const fileObserve = media.find(
   {
     "metadata._Resumable": { $exists: false },
     "metadata.thumbnailPolicy": { $exists: true },
-    "metadata.bound": true
+    "metadata.complete": true
   }
 ).observe({
   added: addedFileJob,
@@ -126,7 +126,7 @@ var fileObserve = media.find(
   removed: removedFileJob
 });
 
-var workers = jobs.processJobs("makeThumb", {
+const workers = jobs.processJobs("makeThumb", {
   concurrency: 4,
   prefetch: 2,
   pollInterval: 1000000000

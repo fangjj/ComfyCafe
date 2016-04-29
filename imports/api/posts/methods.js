@@ -69,7 +69,9 @@ Meteor.methods({
 		const mediumDoc = {
 			_id: medium._id,
 			contentType: medium.contentType,
-			md5: medium.md5
+			md5: medium.md5,
+			thumbsComplete: _.get(medium.metadata, "thumbsComplete", []),
+			thumbsTerminated: _.get(medium.metadata, "thumbsTerminated", [])
 		};
 		if (_.has(medium.metadata, "width")) {
 			mediumDoc.width = medium.metadata.width;

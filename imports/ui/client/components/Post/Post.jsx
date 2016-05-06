@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React from "react";
 
+import { getMediaUrlMD5 } from "/imports/api/media/urls";
 import setPattern from "/imports/ui/client/utils/setPattern";
 import PostLikes from "./PostLikes";
 import PostInfoBox from "./PostInfoBox";
@@ -15,13 +16,15 @@ import AlbumSelector from "/imports/ui/client/components/Album/AlbumSelector";
 import AvatarCropper from "/imports/ui/client/components/Avatar/AvatarCropper";
 import TagTree from "/imports/ui/client/components/Tag/TagTree";
 import InlineTopic from "/imports/ui/client/components/Chat/InlineTopic";
+import ReportForm from "/imports/ui/client/components/Report/ReportForm";
 
 export default React.createClass({
   getInitialState() {
     return {
       showAlbumSelector: false,
       avatarCropper: false,
-      showForm: false
+      showForm: false,
+      showReportForm: false
     };
   },
   componentWillMount() {
@@ -34,10 +37,10 @@ export default React.createClass({
       setPattern(nextProps.post.name, nextProps.post.complement);
     }
   },
-  showAlbumSelector(anchor) {
+  showAlbumSelector(offset) {
     this.setState({
       showAlbumSelector: true,
-      albumSelectorAnchor: anchor
+      albumSelectorOffset: offset
     });
   },
   hideAlbumSelector() {
@@ -59,6 +62,12 @@ export default React.createClass({
   hideForm() {
     this.setState({ showForm: false });
   },
+  showReportForm() {
+    this.setState({ showReportForm: true });
+  },
+  hideReportForm() {
+    this.setState({ showReportForm: false });
+  },
   renderForm() {
     if (this.state.showForm) {
       return <Dialog
@@ -71,6 +80,23 @@ export default React.createClass({
           id={"form" + this.props.post._id}
           post={this.props.post}
           onClose={this.hideForm}
+        />
+      </Dialog>;
+    }
+  },
+  renderReportForm() {
+    if (this.state.showReportForm) {
+      return <Dialog
+        title="Report Post"
+        formId={"formReport" + this.props.post._id}
+        open={true}
+        onClose={this.hideReportForm}
+      >
+        <ReportForm
+          id={"formReport" + this.props.post._id}
+          item={this.props.post}
+          itemType="post"
+          onClose={this.hideReportForm}
         />
       </Dialog>;
     }
@@ -91,14 +117,14 @@ export default React.createClass({
     if (this.state.showAlbumSelector) {
       return <AlbumSelector
         postId={this.props.post._id}
-        anchor={this.state.albumSelectorAnchor}
+        offset={this.state.albumSelectorOffset}
         onClose={this.hideAlbumSelector}
       />;
     }
   },
   renderAvatarCropper() {
     if (this.state.avatarCropper) {
-      const src = "/gridfs/media/" + this.props.post.medium.md5;
+      const src = getMediaUrlMD5(this.props.post.medium.md5);
       return <Content>
         <AvatarCropper src={src} cancelAction={this.hideAvatarCropper} />
       </Content>;
@@ -135,6 +161,7 @@ export default React.createClass({
         post={this.props.post}
         currentUser={this.props.currentUser}
         isCropping={this.state.avatarCropper}
+        showReportForm={this.showReportForm}
         showAlbumSelector={this.showAlbumSelector}
         showAvatarCropper={this.showAvatarCropper}
         hideAvatarCropper={this.hideAvatarCropper}
@@ -151,6 +178,7 @@ export default React.createClass({
       {this.renderLikes()}
       {this.renderFab(isOwner)}
       {this.renderForm()}
+      {this.renderReportForm()}
     </article>;
   }
 });

@@ -45,65 +45,67 @@ Meteor.methods({
 			throw new Meteor.Error("not-logged-in");
 		}
 
-		const name = nameCycle();
-
-		const medium = media.findOne({ _id: new Mongo.ObjectID(mediumId) });
-
-		if (medium.length === 0) {
-			throw new Meteor.Error("empty-medium", "Medium " + mediumId + " has length 0.");
-		}
-
-		let tags = tagParser(data.tags, {reformat: true});
 		if (Meteor.isServer) {
-			tags = tagFullResolver(tags);
-		}
+			const name = nameCycle();
 
-		let topicId;
-		if (Meteor.isServer) {
-			topicId = Meteor.call("addTopic", Meteor.user().room._id, {
-				name: name,
-				visibility: data.visibility
-			});
-		}
+			const medium = media.findOne({ _id: new Mongo.ObjectID(mediumId) });
 
-		const mediumDoc = {
-			_id: medium._id,
-			contentType: medium.contentType,
-			md5: medium.md5
-		};
-		if (_.has(medium.metadata, "width")) {
-			mediumDoc.width = medium.metadata.width;
-			mediumDoc.height = medium.metadata.height;
-		}
-
-		const postId = Posts.insert(
-			{
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				name: name,
-				owner: {
-					_id: Meteor.userId(),
-					username: Meteor.user().username,
-					profile: Meteor.user().profile
-				},
-				medium: mediumDoc,
-				color: medium.metadata.color,
-				complement: medium.metadata.complement,
-				topic: {
-					_id: topicId
-				},
-				visibility: data.visibility,
-				originality: data.originality,
-				source: data.source,
-				description: data.description,
-				safety: data.safety,
-				tags: tags,
-				tagsCondExpanded: data.tagsCondExpanded,
-				pretentiousFilter: data.pretentiousFilter
+			if (medium.length === 0) {
+				throw new Meteor.Error("empty-medium", "Medium " + mediumId + " has length 0.");
 			}
-		);
 
-		if (Meteor.isServer) {
+			let tags = tagParser(data.tags, {reformat: true});
+			if (Meteor.isServer) {
+				tags = tagFullResolver(tags);
+			}
+
+			let topicId;
+			if (Meteor.isServer) {
+				topicId = Meteor.call("addTopic", Meteor.user().room._id, {
+					name: name,
+					visibility: data.visibility
+				});
+			}
+
+			const mediumDoc = {
+				_id: medium._id,
+				contentType: medium.contentType,
+				md5: medium.md5,
+				thumbsComplete: _.get(medium.metadata, "thumbsComplete", []),
+				thumbsTerminated: _.get(medium.metadata, "thumbsTerminated", [])
+			};
+			if (_.has(medium.metadata, "width")) {
+				mediumDoc.width = medium.metadata.width;
+				mediumDoc.height = medium.metadata.height;
+			}
+
+			const postId = Posts.insert(
+				{
+					createdAt: new Date(),
+					updatedAt: new Date(),
+					name: name,
+					owner: {
+						_id: Meteor.userId(),
+						username: Meteor.user().username,
+						profile: Meteor.user().profile
+					},
+					medium: mediumDoc,
+					color: medium.metadata.color,
+					complement: medium.metadata.complement,
+					topic: {
+						_id: topicId
+					},
+					visibility: data.visibility,
+					originality: data.originality,
+					source: data.source,
+					description: data.description,
+					safety: data.safety,
+					tags: tags,
+					tagsCondExpanded: data.tagsCondExpanded,
+					pretentiousFilter: data.pretentiousFilter
+				}
+			);
+
 			media.update(
 				{ _id: new Mongo.ObjectID(mediumId) },
 				{ $set: {
@@ -118,9 +120,9 @@ Meteor.methods({
           name: name
         }
       });
-    }
 
-		return name;
+			return name;
+    }
 	},
 	updatePost(postId, data) {
 		check(postId, String);
@@ -168,7 +170,7 @@ Meteor.methods({
 			});
 		}
 	},
-	deletePost: function (postId) {
+	deletePost(postId) {
 		check(postId, String);
 
 		const post = Posts.findOne(postId);

@@ -1,5 +1,6 @@
 import React from "react";
 
+import { getMediaUrlAvatar, getMediaUrlDjent } from "/imports/api/media/urls";
 import thumbnailPolicies from "/imports/api/thumbnails/policies";
 
 const Avatar = React.createClass({
@@ -9,11 +10,10 @@ const Avatar = React.createClass({
     const user = this.props.user;
     let url;
     if (user.profile.avatar) {
-      url = "/gridfs/media/user/" + user._id + "/" + user.profile.avatar._id;
+      url = getMediaUrlAvatar(user._id, user.profile.avatar._id, this.props.size);
     } else {
-      url = "/gridfs/media/djent/" + user._id;
-    }
-    url += "?size=" + this.props.size;
+      url = getMediaUrlDjent(user._id);
+    };
     return <img
       className={"avatar " + this.props.size}
       src={url}

@@ -1,5 +1,6 @@
 import React from "react";
 
+import { getMediaUrlMD5, getMediaUrlDjent } from "/imports/api/media/urls";
 import thumbnailPolicies from "/imports/api/thumbnails/policies";
 
 const DirectAvatar = React.createClass({
@@ -13,7 +14,7 @@ const DirectAvatar = React.createClass({
       if (avatar) {
         return <img
           className={"avatar " + this.props.size}
-          src={"/gridfs/media/" + avatar.md5}
+          src={getMediaUrlMD5(avatar.md5)}
           title={user.profile.displayName || user.username}
           width={size[0]}
           height={size[1]}
@@ -23,7 +24,7 @@ const DirectAvatar = React.createClass({
 
     return <img
       className={"avatar " + this.props.size}
-      src={"/gridfs/media/djent/" + user._id}
+      src={getMediaUrlDjent(user._id)}
       title={user.profile.displayName || user.username}
       width={size[0]}
       height={size[1]}

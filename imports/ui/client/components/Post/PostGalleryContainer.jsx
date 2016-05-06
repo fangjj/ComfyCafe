@@ -120,14 +120,16 @@ export default React.createClass({
     }
     this.first = false;
 
-    let arg1 = page;
-    let arg2;
+    let arg1 = _.omit(this.state, "noPush");
+    let arg2 = page;
+    let arg3;
     if (typeof this.props.subData !== "undefined") {
+      arg3 = page;
+      arg2 = arg1;
       arg1 = this.props.subData;
-      arg2 = page;
     }
 
-    const handle = Meteor.subscribe(this.props.subName, arg1, arg2);
+    const handle = Meteor.subscribe(this.props.subName, arg1, arg2, arg3);
     return {
       loading: ! handle.ready(),
       page: page,

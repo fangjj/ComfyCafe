@@ -5,7 +5,7 @@ function adminPublication(callback) {
       this.autorun(function (computation) {
         const isAdmin = Roles.userIsInRole(this.userId, ["admin"], Roles.GLOBAL_GROUP);
         if (isAdmin) {
-          return callback();
+          return callback.apply(this, arguments);
         } else {
           console.log("You're just a poser!");
         }

@@ -9,6 +9,7 @@ import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import ToggleButton from "/imports/ui/client/components/Button/ToggleButton";
 import BookmarkButton from "/imports/ui/client/components/Button/BookmarkButton";
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
+import ReportButton from "/imports/ui/client/components/Button/ReportButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/client/components/ActionWell";
@@ -40,8 +41,11 @@ export default React.createClass({
   },
   showAlbumSelector() {
     const $albumBtn = $("#albumBtn");
-    const anchor = $albumBtn.offset().left;
-    this.props.showAlbumSelector(anchor);
+    const offset = $albumBtn.offset();
+    this.props.showAlbumSelector({
+      left: offset.left,
+      top: offset.top + $albumBtn.height()
+    });
   },
   renderButtons() {
     if (! this.props.currentUser) {
@@ -61,7 +65,7 @@ export default React.createClass({
       onTouchTap={this.props.showAvatarCropper}
     />;
     if (this.props.isCropping) {
-      cropButton = <CancelButton onTouchTap={this.props.hideAvatarCropper} />;
+      cropButton = <CancelButton width={149} onTouchTap={this.props.hideAvatarCropper} />;
     }
 
     const rightGroup = <ButtonGroup>
@@ -76,6 +80,7 @@ export default React.createClass({
         <ButtonGroup>
           <BookmarkButton post={this.props.post} currentUser={this.props.currentUser} />
           <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />
+          <ReportButton onTouchTap={this.props.showReportForm} />
         </ButtonGroup>
         {rightGroup}
       </ActionWell>;

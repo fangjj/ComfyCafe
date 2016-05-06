@@ -11,7 +11,8 @@ Meteor.publish("mediaQueue", function (clientUserId) {
 			{
 				"metadata.owner": clientUserId,
 				"metadata.complete": true,
-				"metadata.bound": { $ne: true }
+				"metadata.bound": { $ne: true },
+				"metadata.thumbnailPolicy": { $exists: true }
 			},
 			{ fields: {
 				filename: 1,
@@ -19,7 +20,8 @@ Meteor.publish("mediaQueue", function (clientUserId) {
 				md5: 1,
 				"metadata.owner": 1,
 				"metadata.complete": 1,
-				"metadata.bound": 1
+				"metadata.bound": 1,
+				"metadata.thumbnailPolicy": 1
 			} }
 		);
 	} else {

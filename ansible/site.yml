@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: git.teru.sexy
   become: yes
   roles:
     - meteor

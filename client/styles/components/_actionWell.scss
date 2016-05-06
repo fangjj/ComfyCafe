@@ -10,4 +10,8 @@
   min-width: 100%;
 
   background: rgba($text-color, 0.1);
+
+  .buttonGroup:nth-child(even) {
+    text-align: right;
+  }
 }

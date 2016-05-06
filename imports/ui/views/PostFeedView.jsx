@@ -1,4 +1,4 @@
-const PostFeedView = {
+export default {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
@@ -16,5 +16,3 @@ const PostFeedView = {
     this.subscribe("postFeed");
   }
 };
-
-export default PostFeedView;

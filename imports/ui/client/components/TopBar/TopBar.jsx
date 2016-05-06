@@ -2,7 +2,6 @@ import _ from "lodash";
 import React from "react";
 
 import Notifications from "/imports/api/notifications/collection";
-
 import TopBarArtButton from "./TopBarArtButton";
 import TopBarBlogButton from "./TopBarBlogButton";
 import TopBarTagButton from "./TopBarTagButton";
@@ -16,7 +15,7 @@ import LoginButton from "../User/LoginButton";
 import AccountActionsButton from "../User/AccountActionsButton";
 import AccountActionsList from "../User/AccountActionsList";
 
-const TopBar = React.createClass({
+export default React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
@@ -27,7 +26,7 @@ const TopBar = React.createClass({
     };
   },
   getMeteorData() {
-    var handle = Meteor.subscribe("notifications", Meteor.userId());
+    const handle = Meteor.subscribe("notifications", Meteor.userId());
     return {
       loading: ! handle.ready(),
       notifications: Notifications.find(
@@ -161,5 +160,3 @@ const TopBar = React.createClass({
   	</nav>;
   }
 });
-
-export default TopBar;

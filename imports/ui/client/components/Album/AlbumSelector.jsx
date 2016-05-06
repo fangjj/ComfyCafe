@@ -98,7 +98,11 @@ export default React.createClass({
     }
   },
   render() {
-    return <div className="albumSelector" style={{ left: this.props.anchor }}>
+    const style = {
+      left: this.props.offset.left,
+      top: this.props.offset.top
+    };
+    return <div className="albumSelector" style={style}>
       <Scrollable>
         <List>
           {this.renderAlbums()}

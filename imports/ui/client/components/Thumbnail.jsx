@@ -1,5 +1,7 @@
+import _ from "lodash";
 import React from "react";
 
+import { getMediaUrlID } from "/imports/api/media/urls";
 import Image from "/imports/ui/client/components/Image";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 import Spinner from "/imports/ui/client/components/Spinner/Spinner";
@@ -8,7 +10,7 @@ export default React.createClass({
   renderPlay(type) {
     if (type === "video") {
       return <div className="play">
-        <i className="material-icons large">play_circle_outline</i>
+        <Icon className="large">play_circle_outline</Icon>
       </div>;
     }
   },
@@ -16,19 +18,17 @@ export default React.createClass({
     const medium = this.props.medium;
     const type = medium.contentType.split("/")[0];
     const size = this.props.size;
-    const thumbTerminated = medium.thumbnails
-      && medium.thumbnails[size]
-      && medium.thumbnails[size].terminated;
+    const thumbComplete = _.includes(medium.thumbsComplete, size);
+    const thumbTerminated = _.includes(medium.thumbsTerminated, size);
 
     let thumbnail;
 
     if (type !== "audio") {
       if (! thumbTerminated) {
-        if (medium.thumbnails) {
-          let thumb = medium.thumbnails[size];
+        if (thumbComplete) {
           thumbnail = <Image
             className="thumbnail"
-            src={"/gridfs/media/id/" + thumb._id + "?size=" + size}
+            src={getMediaUrlID(medium._id, size)}
             filter={this.props.filter}
           />;
         } else {
@@ -36,12 +36,12 @@ export default React.createClass({
         }
       } else {
         thumbnail = <div className="thumbnail">
-          <i className="material-icons large">image</i>
+          <Icon className="large">image</Icon>
         </div>;
       }
     } else {
       thumbnail = <div className="thumbnail">
-        <i className="material-icons large">audiotrack</i>
+        <Icon className="large">audiotrack</Icon>
       </div>;
     }
 

@@ -2,10 +2,13 @@ import _ from "lodash";
 import React from "react";
 
 import "/imports/api/migrations/methods";
+import AdminPanel from "./AdminPanel";
 import UserPanel from "./UserPanel";
 import ImagePanel from "./ImagePanel";
 import BadgePanel from "./BadgePanel";
+import MediaPanel from "./MediaPanel";
 import UserViewContainer from "./UserViewContainer";
+import ImageViewContainer from "./ImageViewContainer";
 import BadgeViewContainer from "./BadgeViewContainer";
 import Content from "/imports/ui/client/components/Content";
 import List from "/imports/ui/client/components/List";
@@ -26,6 +29,7 @@ export default React.createClass({
         return _.get(
           {
             users: <UserViewContainer />,
+            images: <ImageViewContainer />,
             badges: <BadgeViewContainer />
           },
           panel,
@@ -41,12 +45,11 @@ export default React.createClass({
             blog: <DenseContent>
               <a onTouchTap={() => { Meteor.call("migrateBlog") }}>Migrate</a>
             </DenseContent>,
-            badges: <BadgePanel />
+            badges: <BadgePanel />,
+            media: <MediaPanel />
           },
           panel,
-          <DenseContent>
-            Admin panel
-          </DenseContent>
+          <AdminPanel />
         );
       }
     } else {
@@ -65,7 +68,7 @@ export default React.createClass({
           <li><a href="/admin/blog">Blog</a></li>
           <li><a href="/admin/tags">Tags</a></li>
           <li><a href="/admin/badges">Badges</a></li>
-          <li><a href="/admin/invites">Invites</a></li>
+          <li><a href="/admin/media">Media</a></li>
         </List>
       </DenseCol>
 

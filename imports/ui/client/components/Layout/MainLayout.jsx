@@ -4,6 +4,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 import "/imports/api/media/methods";
 import media from "/imports/api/media/collection";
+import { getMediaUrlMD5 } from "/imports/api/media/urls";
 import mediaUpload from "/imports/api/media/client/handlers/media";
 import avatarUpload from "/imports/api/media/client/handlers/avatar";
 import setPattern from "/imports/ui/client/utils/setPattern";
@@ -34,7 +35,8 @@ export default React.createClass({
           {
             "metadata.owner": Meteor.userId(),
             "metadata.complete": true,
-            "metadata.bound": { $ne: true }
+            "metadata.bound": { $ne: true },
+            "metadata.thumbnailPolicy": { $exists: true }
           },
           {
             sort: { uploadDate: -1, filename: 1 },
@@ -49,7 +51,7 @@ export default React.createClass({
               progress: 100,
               name: medium.filename,
               type: medium.contentType,
-              url: "/gridfs/media/" + medium.md5
+              url: getMediaUrlMD5(medium.md5)
             };
           }
           return result;

@@ -28,6 +28,15 @@ function migrationBuilder(functionBody) {
 }
 
 Meteor.methods({
+  migrateMedia: migrationBuilder(function () {
+    media.update(
+      { "metadata.bound": true },
+      { $set: {
+        "metadata.complete": true
+      } },
+      { multi: true }
+    );
+  }),
   migrateBlog: migrationBuilder(function () {
     const slugCycle = createSlugCycler(BlogPosts);
     BlogPosts.find().map(function (post) {

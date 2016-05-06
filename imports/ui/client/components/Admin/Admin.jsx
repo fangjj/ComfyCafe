@@ -6,6 +6,7 @@ import AdminPanel from "./AdminPanel";
 import UserPanel from "./UserPanel";
 import ImagePanel from "./ImagePanel";
 import BadgePanel from "./BadgePanel";
+import MediaPanel from "./MediaPanel";
 import UserViewContainer from "./UserViewContainer";
 import ImageViewContainer from "./ImageViewContainer";
 import BadgeViewContainer from "./BadgeViewContainer";
@@ -44,7 +45,8 @@ export default React.createClass({
             blog: <DenseContent>
               <a onTouchTap={() => { Meteor.call("migrateBlog") }}>Migrate</a>
             </DenseContent>,
-            badges: <BadgePanel />
+            badges: <BadgePanel />,
+            media: <MediaPanel />
           },
           panel,
           <AdminPanel />
@@ -66,7 +68,7 @@ export default React.createClass({
           <li><a href="/admin/blog">Blog</a></li>
           <li><a href="/admin/tags">Tags</a></li>
           <li><a href="/admin/badges">Badges</a></li>
-          <li><a href="/admin/invites">Invites</a></li>
+          <li><a href="/admin/media">Media</a></li>
         </List>
       </DenseCol>
 

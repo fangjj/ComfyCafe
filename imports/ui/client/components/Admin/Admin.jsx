@@ -7,6 +7,7 @@ import UserPanel from "./UserPanel";
 import ImagePanel from "./ImagePanel";
 import BadgePanel from "./BadgePanel";
 import UserViewContainer from "./UserViewContainer";
+import ImageViewContainer from "./ImageViewContainer";
 import BadgeViewContainer from "./BadgeViewContainer";
 import Content from "/imports/ui/client/components/Content";
 import List from "/imports/ui/client/components/List";
@@ -27,6 +28,7 @@ export default React.createClass({
         return _.get(
           {
             users: <UserViewContainer />,
+            images: <ImageViewContainer />,
             badges: <BadgeViewContainer />
           },
           panel,

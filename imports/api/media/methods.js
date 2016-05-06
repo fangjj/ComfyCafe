@@ -1,8 +1,35 @@
+import _ from "lodash";
+
 import media from "./collection";
 import Posts from "../posts/collection";
 
 if (Meteor.isServer) {
 	getPalette = require("./server/palette").default;
+}
+
+function regenThumbs(mediumId, authFunc) {
+	if (_.isString(mediumId)) {
+		mediumId = new Mongo.ObjectID(mediumId);
+	}
+
+	const medium = media.findOne({ _id: mediumId });
+
+	if (! authFunc(medium)) {
+		throw new Meteor.Error("not-authorized");
+	}
+
+	if (Meteor.isServer) {
+		media.remove({ "metadata.thumbOf": medium._id });
+		media.update(
+			{ _id: medium._id },
+			{ $unset: {
+				"metadata._Jobs": 1,
+				"metadata.thumbnails": 1,
+				"metadata.thumbsComplete": 1,
+				"metadata.thumbsTerminated": 1
+			} }
+		);
+	}
 }
 
 Meteor.methods({
@@ -85,24 +112,14 @@ Meteor.methods({
 	},
 	mediumRegenThumbs(mediumId) {
 		check(mediumId, String);
-
-		const medium = media.findOne({ _id: new Mongo.ObjectID(mediumId) });
-
-		if (medium.metadata.owner !== Meteor.userId()) {
-			throw new Meteor.Error("not-authorized");
-		}
-
-		if (Meteor.isServer) {
-			media.remove({ "metadata.thumbOf": medium._id });
-			media.update(
-				{ _id: medium._id },
-				{ $unset: {
-					"metadata._Jobs": 1,
-					"metadata.thumbnails": 1,
-					"metadata.thumbsComplete": 1,
-					"metadata.thumbsTerminated": 1
-				} }
-			);
-		}
+		regenThumbs(mediumId, (medium) => {
+			if (medium.metadata.owner !== Meteor.userId()) {
+				throw new Meteor.Error("not-authorized");
+			}
+		});
 	}
 });
+
+export {
+	regenThumbs
+};

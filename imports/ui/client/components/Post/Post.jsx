@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React from "react";
 
+import { getMediaUrlMD5 } from "/imports/api/media/urls";
 import setPattern from "/imports/ui/client/utils/setPattern";
 import PostLikes from "./PostLikes";
 import PostInfoBox from "./PostInfoBox";
@@ -123,7 +124,7 @@ export default React.createClass({
   },
   renderAvatarCropper() {
     if (this.state.avatarCropper) {
-      const src = "/gridfs/media/" + this.props.post.medium.md5;
+      const src = getMediaUrlMD5(this.props.post.medium.md5);
       return <Content>
         <AvatarCropper src={src} cancelAction={this.hideAvatarCropper} />
       </Content>;

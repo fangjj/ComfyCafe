@@ -1,29 +1,57 @@
+import _ from "lodash";
+
 const base = "/gridfs/media/";
 
-function queryBuilder(str, size) {
-  if (typeof size !== "undefined") {
-    return str + "?size=" + size;
+function daysToSeconds(d) {
+  // This constant isn't a perfect representation, but it's a highly suitable representation.
+  // 86400 = 24 * 60 * 60
+  return d * 86400;
+}
+
+const oneMonth = daysToSeconds(30);
+
+function queryBuilder(str, params) {
+  if (params && ! _.isEmpty(params)) {
+    str += "?" + _.reduce(params, (result, v, k) => {
+      if (result) {
+        result += "&";
+      }
+      return result + k + "=" + v;
+    }, "");
   } return str;
 }
 
 function getMediaUrlMD5(md5) {
-  return base + md5;
+  return queryBuilder(base + md5, {
+    cache: oneMonth
+  });
 }
 
 function getMediaUrlID(id, size) {
-  return queryBuilder(base + "id/" + id, size);
+  return queryBuilder(base + "id/" + id, {
+    size,
+    cache: oneMonth
+  });
 }
 
 function getMediaUrlPost(postId, size) {
-  return queryBuilder(base + "post/" + postId, size);
+  return queryBuilder(base + "post/" + postId, {
+    size,
+    cache: daysToSeconds(1)
+  });
 }
 
 function getMediaUrlAvatar(userId, avatarId, size) {
-  return queryBuilder(base + "user/" + userId + "/" + avatarId, size);
+  return queryBuilder(base + "user/" + userId + "/" + avatarId, {
+    size,
+    cache: oneMonth
+  });
 }
 
 function getMediaUrlDjent(userId) {
-  return base + "djent/" + userId;
+  return queryBuilder(base + "djent/" + userId, {
+    cache: oneMonth
+  });
 }
 
 export {

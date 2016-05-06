@@ -1,8 +1,10 @@
 import React from "react";
 
+import "/imports/api/media/adminMethods";
 import Posts from "/imports/api/posts/collection";
 import DenseContent from "/imports/ui/client/components/DenseContent";
 import List from "/imports/ui/client/components/List";
+import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -15,6 +17,9 @@ export default React.createClass({
         { sort: { createdAt: -1, name: 1 } }
       ).fetch()
     };
+  },
+  handleRegen() {
+    Meteor.call("adminRegenThumbs", "postMedium");
   },
   renderList() {
     return _.map(this.data.images, (image) => {
@@ -29,6 +34,11 @@ export default React.createClass({
   },
   render() {
     return <DenseContent>
+      <SubmitButton
+        label="Regenerate All Thumbnails"
+        iconName="broken_image"
+        onTouchTap={this.handleRegen}
+      />
       <List>
         {this.renderList()}
       </List>

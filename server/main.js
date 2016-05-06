@@ -36,6 +36,7 @@ import "/imports/api/badges/methods";
 import "/imports/api/blog/methods";
 import "/imports/api/invites/methods";
 import "/imports/api/media/methods";
+import "/imports/api/media/adminMethods";
 import "/imports/api/messages/methods";
 import "/imports/api/migrations/methods";
 import "/imports/api/notifications/methods";

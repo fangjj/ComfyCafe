@@ -94,13 +94,15 @@ function removedFileJob(file) {
       if (job) {
         console.log("Cancelling the job for the removed file!", job._id);
         job.cancel(function (err, res) {
-          return media.remove({ _id: { $in: _.values(job.data.thumbnails) } });
+          if (_.isObject(file.metadata.thumbnails)) {
+            return media.remove({ _id: { $in: _.values(job.data.thumbnails) } });
+          }
         });
       }
     });
   }
 
-  if (file.metadata && file.metadata.thumbnails) {
+  if (file.metadata && _.isObject(file.metadata.thumbnails)) {
     return media.remove({ _id: { $in: _.values(file.metadata.thumbnails) } });
   }
 };

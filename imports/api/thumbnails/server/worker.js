@@ -110,11 +110,7 @@ function thumbnailWorker(job, callback) {
     callback();
   }));
 
-  try {
-    backend(inStream, outStream, policy.size[0], policy.size[1]);
-  } catch (e) {
-    job.fail(e.message, { fatal: true });
-  }
+  backend(inStream, outStream, policy.size[0], policy.size[1]);
 }
 
 export default thumbnailWorker;

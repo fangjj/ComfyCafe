@@ -19,9 +19,9 @@ function regenThumbs(mediumId, authFunc) {
 	}
 
 	if (Meteor.isServer) {
-		media.remove({ "metadata.thumbOf": medium._id });
+		media.remove({ "metadata.thumbOf": mediumId });
 		media.update(
-			{ _id: medium._id },
+			{ _id: mediumId },
 			{ $unset: {
 				"metadata._Jobs": 1,
 				"metadata.thumbnails": 1,

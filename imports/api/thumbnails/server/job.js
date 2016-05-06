@@ -100,7 +100,7 @@ function removedFileJob(file) {
     });
   }
 
-  if (file.metadata && file.metadata.thumbnails) {
+  if (file.metadata && _.isObject(file.metadata.thumbnails)) {
     return media.remove({ _id: { $in: _.values(file.metadata.thumbnails) } });
   }
 };

@@ -1,14 +1,10 @@
-const InviteListView = {
+export default {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const InviteListComponent = require("../client/components/Invite/InviteListComponent").default;
       return {
-        layout: MainLayout,
-        content: {
-          main: <InviteListComponent />
-        }
+        main: <InviteListComponent />
       };
     }
   },
@@ -16,5 +12,3 @@ const InviteListView = {
     this.subscribe("invites");
   }
 };
-
-export default InviteListView;

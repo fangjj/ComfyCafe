@@ -19,6 +19,10 @@ export default React.createClass({
   mixins: [ReactMeteorData],
   uploads: {},
   deleted: [],
+  childContextTypes: { currentUser: React.PropTypes.object },
+  getChildContext() {
+    return { currentUser: this.props.currentUser };
+  },
   getInitialState() {
     return {
       updateQueue: _.uniqueId(),
@@ -57,12 +61,11 @@ export default React.createClass({
           return result;
         },
         {}
-      ),
-      currentUser: Meteor.user()
+      )
     };
   },
   componentWillMount() {
-    const seed = _.get(this, "data.currentUser.settings.patternSeed");
+    const seed = _.get(this, "props.currentUser.settings.patternSeed");
     if (seed) {
       setPattern(seed);
     }

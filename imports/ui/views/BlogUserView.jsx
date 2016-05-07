@@ -1,14 +1,10 @@
-const BlogUserView = {
+export default {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const BlogUser = require("../client/components/Blog/BlogUser").default;
       return {
-        layout: MainLayout,
-        content: {
-          main: <BlogUser />
-        }
+        main: <BlogUser />
       };
     }
   },
@@ -16,5 +12,3 @@ const BlogUserView = {
     this.subscribe("blogBy", params.username);
   }
 };
-
-export default BlogUserView;

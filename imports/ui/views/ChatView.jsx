@@ -1,15 +1,11 @@
-const ChatView = {
+export default {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const Chat = require("../client/components/Chat/Chat").default;
       return {
-        layout: MainLayout,
-        content: {
-          main: <Chat />,
-          dense: true
-        }
+        main: <Chat />,
+        dense: true
       };
     }
   },
@@ -21,5 +17,3 @@ const ChatView = {
     }
   }
 };
-
-export default ChatView;

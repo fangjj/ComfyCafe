@@ -1,14 +1,10 @@
-const RoomListView = {
+export default {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const RoomList = require("../client/components/Chat/RoomList").default;
       return {
-        layout: MainLayout,
-        content: {
-          main: <RoomList />
-        }
+        main: <RoomList />
       };
     }
   },
@@ -16,5 +12,3 @@ const RoomListView = {
     this.subscribe("allRooms");
   }
 };
-
-export default RoomListView;

@@ -1,14 +1,10 @@
-const TagTestView = {
+export default {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const TagTest = require("../client/components/Tag/TagTest").default;
       return {
-        layout: MainLayout,
-        content: {
-          main: <TagTest />
-        }
+        main: <TagTest />
       };
     }
   },
@@ -16,5 +12,3 @@ const TagTestView = {
     this.subscribe("allTags");
   }
 };
-
-export default TagTestView;

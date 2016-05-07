@@ -1,14 +1,10 @@
-const PostBrowseLikesView = {
+export default {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const PostBrowseLikes = require("../client/components/Post/PostBrowseLikes").default;
       return {
-        layout: MainLayout,
-        content: {
-          main: <PostBrowseLikes />
-        }
+        main: <PostBrowseLikes />
       };
     }
   },
@@ -16,5 +12,3 @@ const PostBrowseLikesView = {
     this.subscribe("likes");
   }
 };
-
-export default PostBrowseLikesView;

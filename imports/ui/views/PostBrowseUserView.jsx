@@ -1,14 +1,10 @@
-const PostBrowseUserView = {
+export default {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const MainLayout = require("../client/components/Layout/MainLayout").default;
       const PostBrowseUser = require("../client/components/Post/PostBrowseUser").default;
       return {
-        layout: MainLayout,
-        content: {
-          main: <PostBrowseUser />
-        }
+        main: <PostBrowseUser />
       };
     }
   },
@@ -16,5 +12,3 @@ const PostBrowseUserView = {
     this.subscribe("imagesBy", params.username);
   }
 };
-
-export default PostBrowseUserView;

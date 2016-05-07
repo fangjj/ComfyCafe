@@ -58,6 +58,8 @@ Meteor.methods({
     }, data));
 
 		mentions(pageId, data);
+
+    return data.slug;
 	},
 	updatePage(pageId, data) {
 		check(pageId, String);
@@ -68,8 +70,6 @@ Meteor.methods({
 		if (! isOwner(page)) {
 			throw new Meteor.Error("not-authorized");
 		}
-
-    data.slug = slugCycle(pageId, data.name);
 
 		Pages.update(
 			{ _id: pageId },
@@ -87,6 +87,15 @@ Meteor.methods({
 		);
 
 		mentions(pageId, data);
+
+    if (Meteor.isServer) {
+      const slug = slugCycle(pageId, data.name);
+      Pages.update(
+        { _id: pageId },
+        { $set: { slug } }
+      );
+      return slug;
+    }
 	},
 	deletePage(pageId) {
 		check(pageId, String);

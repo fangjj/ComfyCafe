@@ -46,6 +46,7 @@ export default React.createClass({
       >
         <PageForm
           id="formNewPage"
+          currentUser={this.props.currentUser}
           onClose={this.hideForm}
         />
       </Dialog>;

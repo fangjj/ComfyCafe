@@ -17,7 +17,11 @@ export default React.createClass({
     const isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.post.owner._id;
     if (isOwner) {
-      return <BlogMoreMenu post={this.props.post} currentUser={this.props.currentUser} />;
+      return <BlogMoreMenu
+        post={this.props.post}
+        solo={this.props.solo}
+        currentUser={this.props.currentUser}
+      />;
     }
   },
   render() {

@@ -67,7 +67,7 @@ export default React.createClass({
     }
   },
   render() {
-    if (this.props.loading) {
+    if (this.props.loading || ! this.props.album) {
       return <LoadingSpinner />;
     }
 

@@ -29,6 +29,13 @@ export default React.createClass({
   handleDescription(e) {
     this.setState({ description: e.target.value });
   },
+  redirect(slug) {
+    const path = FlowRouter.path("album", {
+      username: _.get(this.props, "album.owner.username", this.props.currentUser.username),
+      albumSlug: slug
+    });
+    FlowRouter.go(path);
+  },
   handleSubmit() {
     const data = this.state;
 
@@ -40,18 +47,15 @@ export default React.createClass({
           if (this.props.onSuccess) {
             this.props.onSuccess();
           }
-
-          const path = FlowRouter.path("album", {
-            username: this.data.currentUser.username,
-            albumSlug: slug
-          });
-          FlowRouter.go(path);
+          this.redirect(slug);
         }
       });
     } else {
-      Meteor.call("updateAlbum", this.props.album._id, data, (err) => {
+      Meteor.call("updateAlbum", this.props.album._id, data, (err, slug) => {
         if (err) {
           prettyPrint(err);
+        } else {
+          this.redirect(slug);
         }
       });
     }

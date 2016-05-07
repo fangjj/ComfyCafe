@@ -67,6 +67,8 @@ Meteor.methods({
     }, data));
 
 		mentions(albumId, data);
+
+    return data.slug;
 	},
 	updateAlbum(albumId, data) {
 		check(albumId, String);
@@ -77,8 +79,6 @@ Meteor.methods({
 		if (! isOwner(album)) {
 			throw new Meteor.Error("not-authorized");
 		}
-
-    data.slug = slugCycle(albumId, data.name);
 
 		Albums.update(
 			{ _id: albumId },
@@ -96,6 +96,15 @@ Meteor.methods({
 		);
 
 		mentions(albumId, data);
+
+    if (Meteor.isServer) {
+      const slug = slugCycle(albumId, data.name);
+      Albums.update(
+        { _id: albumId },
+        { $set: { slug } }
+      );
+      return slug;
+    }
 	},
   albumAddPost(albumId, postId) {
     check(albumId, String);

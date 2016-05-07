@@ -43,9 +43,17 @@ export default React.createClass({
         }
       });
     } else {
-      Meteor.call("updateBlogPost", this.props.post._id, data, (err) => {
+      Meteor.call("updateBlogPost", this.props.post._id, data, (err, slug) => {
         if (err) {
           prettyPrint(err);
+        } else {
+          if (this.props.redirect) {
+            const path = FlowRouter.path("blogPost", {
+              username: this.props.post.owner.username,
+              slug: slug
+            });
+            FlowRouter.go(path);
+          }
         }
       });
     }

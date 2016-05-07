@@ -46,6 +46,7 @@ export default React.createClass({
       >
         <AlbumForm
           id="formNewAlbum"
+          currentUser={this.props.currentUser}
           onClose={this.hideForm}
         />
       </Dialog>;

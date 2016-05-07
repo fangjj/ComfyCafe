@@ -9,9 +9,6 @@ import InlineTopic from "/imports/ui/client/components/Chat/InlineTopic";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
-  getInitialState() {
-    return { showForm: false };
-  },
   getMeteorData() {
     const username = FlowRouter.getParam("username");
     const slug = FlowRouter.getParam("slug");
@@ -27,21 +24,8 @@ export default React.createClass({
       currentUser: Meteor.user()
     };
   },
-  showForm() {
-    this.setState({ showForm: true });
-  },
-  hideForm() {
-    this.setState({ showForm: false });
-  },
-  renderFab() {
-    const isOwner = this.data.currentUser
-      && this.data.currentUser._id === this.data.post.owner._id;
-    if (isOwner) {
-      return <FAB iconName="edit" onTouchTap={this.showForm} />;
-    }
-  },
   render() {
-    if (this.data.loading) {
+    if (this.data.loading || ! this.data.post) {
       return <LoadingSpinner />;
     }
 
@@ -49,7 +33,7 @@ export default React.createClass({
 
     return <article className="blog contentLayout">
       <ol className="contentList">
-        <BlogListItem post={this.data.post} currentUser={this.data.currentUser} />
+        <BlogListItem post={this.data.post} solo={true} currentUser={this.data.currentUser} />
       </ol>
       <section className="comments content">
         <InlineTopic
@@ -57,7 +41,6 @@ export default React.createClass({
           currentUser={this.data.currentUser}
         />
       </section>
-      {this.renderFab()}
     </article>;
   }
 });

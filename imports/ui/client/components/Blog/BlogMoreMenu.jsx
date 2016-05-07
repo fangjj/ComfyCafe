@@ -12,10 +12,10 @@ export default React.createClass({
   getInitialState() {
     return { showForm: false };
   },
-  showBlogForm() {
+  showForm() {
     this.setState({ showForm: true });
   },
-  hideBlogForm() {
+  hideForm() {
     this.setState({ showForm: false });
   },
   delete() {
@@ -27,12 +27,13 @@ export default React.createClass({
         title="Edit Blog Post"
         formId={"form" + this.props.post._id}
         open={true}
-        onClose={this.hideBlogForm}
+        onClose={this.hideForm}
       >
         <BlogForm
           id={"form" + this.props.post._id}
           post={this.props.post}
-          onClose={this.hideBlogForm}
+          redirect={this.props.solo}
+          onClose={this.hideForm}
         />
       </Dialog>;
     }
@@ -53,7 +54,7 @@ export default React.createClass({
         anchorOrigin={{horizontal: "right", vertical: "top"}}
         targetOrigin={{horizontal: "right", vertical: "top"}}
       >
-        <MenuItem primaryText="Edit" onTouchTap={this.showBlogForm} />
+        <MenuItem primaryText="Edit" onTouchTap={this.showForm} />
         <MenuItem primaryText="Delete" onTouchTap={this.delete} />
       </IconMenu>
       {this.renderForm()}

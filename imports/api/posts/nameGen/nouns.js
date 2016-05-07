@@ -21,6 +21,8 @@ const nouns = [
   "Cake",
   "Cupcake",
   "Developer",
+  "Monographer",
+  "Rangeomorph",
   "Radicchio",
   "Socks",
   "Pancake",

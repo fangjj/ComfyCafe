@@ -26,6 +26,14 @@ export default React.createClass({
   handleBody(e) {
     this.setState({ body: e.target.value });
   },
+  redirect(slug) {
+    console.log(this.props.currentUser);
+    const path = FlowRouter.path("page", {
+      username: _.get(this.props, "page.owner.username", this.props.currentUser.username),
+      slug: slug
+    });
+    FlowRouter.go(path);
+  },
   handleSubmit() {
     const data = this.state;
 
@@ -37,18 +45,15 @@ export default React.createClass({
           if (this.props.onSuccess) {
             this.props.onSuccess();
           }
-
-          const path = FlowRouter.path("page", {
-            username: this.data.currentUser.username,
-            slug: slug
-          });
-          FlowRouter.go(path);
+          this.redirect(slug);
         }
       });
     } else {
-      Meteor.call("updatePage", this.props.page._id, data, (err) => {
+      Meteor.call("updatePage", this.props.page._id, data, (err, slug) => {
         if (err) {
           prettyPrint(err);
+        } else {
+          this.redirect(slug);
         }
       });
     }

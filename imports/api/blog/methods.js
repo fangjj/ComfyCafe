@@ -69,8 +69,6 @@ Meteor.methods({
 			throw new Meteor.Error("not-authorized");
 		}
 
-		data.slug = slugCycle(postId, data.name);
-
 		BlogPosts.update(
 			{ _id: postId },
 			{ $set: _.defaults({
@@ -87,6 +85,15 @@ Meteor.methods({
 		);
 
 		mentions(postId, data);
+
+		if (Meteor.isServer) {
+			const slug = slugCycle(postId, data.name);
+			BlogPosts.update(
+				{ _id: postId },
+				{ $set: { slug } }
+			);
+			return slug;
+		}
 	},
 	deleteBlogPost: function (postId) {
 		check(postId, String);

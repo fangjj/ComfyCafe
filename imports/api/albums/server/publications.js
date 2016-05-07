@@ -51,6 +51,10 @@ Meteor.publish("albumPosts", function (username, albumSlug) {
 			{ fields: { "owner._id": 1, posts: 1 } }
 		);
 
+		if (! album) {
+			return;
+		}
+
 		if (this.userId) {
 			const user = Meteor.users.findOne(this.userId, { fields: {
 				friends: 1

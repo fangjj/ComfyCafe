@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import { updateOwnerDocs, updateProfile } from "/imports/api/users/updateProfile";
+import { ownerPrefixer, updateOwnerDocs, updateProfile } from "/imports/api/users/updateProfile";
 import {
 	validateUsername
 } from "./validators";
@@ -45,11 +45,17 @@ Meteor.methods({
 
 		if (Meteor.isServer) {
 			Accounts.setUsername(Meteor.userId(), username);
+			const normalizedUsername = username.toLowerCase();
+			Meteor.users.update(
+				{ _id: Meteor.userId() },
+				{ $set: { normalizedUsername } }
+			);
 			updateOwnerDocs(
 				{ "owner._id": Meteor.userId() },
-				{ $set: {
-					"owner.username": username
-				} }
+				{ $set: ownerPrefixer({
+					username,
+					normalizedUsername
+				}) }
 			);
 		}
 	},

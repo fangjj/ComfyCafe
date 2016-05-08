@@ -3,6 +3,7 @@ Meteor.publish(null, function () {
   return Meteor.users.find(
 		{ _id: this.userId },
     { fields: {
+      normalizedUsername: 1,
 			settings: 1,
 			avatars: 1,
 			subscriptions: 1,
@@ -17,6 +18,7 @@ Meteor.publish(null, function () {
 // for public consumption
 const publicFields = {
   username: 1,
+  normalizedUsername: 1,
   profile: 1,
   avatars: 1,
   subscriptions: 1,

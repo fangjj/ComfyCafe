@@ -16,6 +16,8 @@ Accounts.onCreateUser(function (options, user) {
     user.inviteKey = options.profile.key;
     delete user.profile.key;
 
+    user.normalizedUsername = user.username.toLowerCase();
+
     // Generate default avatar.
     generateDjenticon(user._id, CryptoJS.SHA256(user.emails[0].address).toString());
 

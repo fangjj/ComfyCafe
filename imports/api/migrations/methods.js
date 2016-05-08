@@ -1,5 +1,6 @@
 import _ from "lodash";
 
+import { ownerPrefixer, updateOwnerDocs } from "/imports/api/users/updateProfile";
 import Posts from "../posts/collection";
 import BlogPosts from "../blog/collection";
 import Pages from "../pages/collection";
@@ -42,15 +43,24 @@ Meteor.methods({
       const blogCount = BlogPosts.find({ "owner._id": user._id }).count();
       const pageCount = Pages.find({ "owner._id": user._id }).count();
       const albumCount = Albums.find({ "owner._id": user._id }).count();
+      const doc = profilePrefixer({
+        imageCount,
+        blogCount,
+        pageCount,
+        albumCount
+      });
+      const normalizedUsername = user.username.toLowerCase();
+      doc.normalizedUsername = normalizedUsername;
       Meteor.users.update(
         { _id: user._id },
-        { $set: profilePrefixer({
-          imageCount,
-          blogCount,
-          pageCount,
-          albumCount
-        }) }
+        { $set: doc }
       );
+      updateOwnerDocs(
+				{ "owner._id": user._id },
+				{ $set: ownerPrefixer({
+					normalizedUsername
+				}) }
+			);
     });
   }),
   migrateMedia: migrationBuilder(function () {

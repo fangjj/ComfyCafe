@@ -32,6 +32,7 @@ Meteor.methods({
       owner: {
         _id: Meteor.userId(),
         username: Meteor.user().username,
+        normalizedUsername: Meteor.user().normalizedUsername,
         profile: Meteor.user().profile
       }
     }, data));

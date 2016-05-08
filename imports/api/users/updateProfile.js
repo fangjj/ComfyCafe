@@ -39,6 +39,7 @@ function updateProfile(query, update) {
 }
 
 export {
+  ownerPrefixer,
   updateOwnerDocs,
   updateProfile
 };

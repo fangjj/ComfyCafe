@@ -70,10 +70,15 @@ export default React.createClass({
       setPattern(seed);
     }
   },
+  navWarning() {
+    return "You have uploads in progress! Are you sure you want to leave?";
+  },
   componentDidMount() {
     media.resumable.assignDrop(document.querySelector("html"));
 
     media.resumable.on("fileAdded", (file) => {
+      window.onbeforeunload = this.navWarning;
+
       this.uploads[file.uniqueIdentifier] = {
         _id: file.uniqueIdentifier,
         name: file.fileName,
@@ -139,6 +144,9 @@ export default React.createClass({
     this.deleted.push(id);
     if (_.has(this.uploads, id)) {
       delete this.uploads[id];
+      if (_.isEmpty(this.uploads)) {
+        window.onbeforeunload = null;
+      }
     }
     Meteor.call("mediumDelete", id);
     this.setState({ updateQueue: _.uniqueId() });
@@ -148,6 +156,9 @@ export default React.createClass({
   },
   postSuccess(mediumId) {
     delete this.uploads[mediumId];
+    if (_.isEmpty(this.uploads)) {
+      window.onbeforeunload = null;
+    }
     this.setState({
       mediumId: null,
       updateQueue: _.uniqueId()

@@ -196,28 +196,6 @@ Meteor.publish("likes", function (state, page=0) {
 	}
 });
 
-Meteor.publish("bookmarks", function (state, page=0) {
-	checkState(state);
-	check(page, Number);
-
-	this.autorun(function (computation) {
-		if (this.userId) {
-			const user = Meteor.users.findOne(this.userId, { fields: {
-				bookmarks: 1
-			} });
-
-			return Posts.find(
-				queryBuilder(
-					this.userId,
-					{ _id: { $in: user.bookmarks || [] } },
-					state
-				),
-				options(page)
-			);
-		}
-	});
-});
-
 Meteor.publish("searchPosts", function (tagStr, state, page=0) {
 	check(tagStr, String);
 	checkState(state);

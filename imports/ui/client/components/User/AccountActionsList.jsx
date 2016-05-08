@@ -33,12 +33,9 @@ export default React.createClass({
     }
 
     const profileUrl = FlowRouter.path("profile", {username: this.props.currentUser.username});
-    const bookmarksUrl = FlowRouter.path("bookmarks");
     const likesUrl = FlowRouter.path("likes");
-    const friendsUrl = FlowRouter.path("friends");
     const yourAlbumsUrl = FlowRouter.path("albumsBy", {username: this.props.currentUser.username});
     const yourPagesUrl = FlowRouter.path("pagesBy", {username: this.props.currentUser.username});
-    const favoritesUrl = FlowRouter.path("favorites");
     const invitesUrl = FlowRouter.path("invites");
     const settingsUrl = FlowRouter.path("settings");
 
@@ -51,19 +48,13 @@ export default React.createClass({
           href={profileUrl}
         />
         <TopMenuItem
-          primaryText="Bookmarks"
-          leftIconName="bookmark"
-          href={bookmarksUrl}
+          primaryText="Filters"
+          leftIconName="filter_list"
         />
         <TopMenuItem
           primaryText="Likes"
           leftIconName="favorite"
           href={likesUrl}
-        />
-        <TopMenuItem
-          primaryText="Friends"
-          leftIconName="looks"
-          href={friendsUrl}
         />
         <TopMenuItem
           primaryText="Albums"

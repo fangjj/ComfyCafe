@@ -2,7 +2,6 @@ import renderView from "/imports/api/common/renderView";
 import setTitle from "/imports/api/common/setTitle";
 
 import LoginView from "/imports/ui/views/LoginView";
-import FriendListView from "/imports/ui/views/FriendListView";
 import UserProfileView from "/imports/ui/views/UserProfileView";
 import UserSettingsView from "/imports/ui/views/UserSettingsView";
 
@@ -19,14 +18,6 @@ FlowRouter.route("/register", {
   action: function () {
     setTitle("Register");
     renderView(LoginView);
-  }
-});
-
-FlowRouter.route("/friends", {
-  name: "friends",
-  action: function () {
-    setTitle("Friends");
-    renderView(FriendListView);
   }
 });
 

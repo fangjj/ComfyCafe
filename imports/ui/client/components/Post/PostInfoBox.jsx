@@ -7,7 +7,6 @@ import setPattern from "/imports/ui/client/utils/setPattern";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import ToggleButton from "/imports/ui/client/components/Button/ToggleButton";
-import BookmarkButton from "/imports/ui/client/components/Button/BookmarkButton";
 import SubscriptionButton from "/imports/ui/client/components/Button/SubscriptionButton";
 import ReportButton from "/imports/ui/client/components/Button/ReportButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
@@ -78,7 +77,6 @@ export default React.createClass({
     if (! isOwner) {
       return <ActionWell>
         <ButtonGroup>
-          <BookmarkButton post={this.props.post} currentUser={this.props.currentUser} />
           <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />
           <ReportButton onTouchTap={this.props.showReportForm} />
         </ButtonGroup>

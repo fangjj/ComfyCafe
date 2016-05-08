@@ -5,7 +5,6 @@ import { tagStrFromUrl } from "/imports/api/tags/urlify";
 import PostView from "/imports/ui/views/PostView";
 import PostFeedView from "/imports/ui/views/PostFeedView";
 import PostBrowseAllView from "/imports/ui/views/PostBrowseAllView";
-import PostBrowseBookmarksView from "/imports/ui/views/PostBrowseBookmarksView";
 import PostBrowseLikesView from "/imports/ui/views/PostBrowseLikesView";
 import PostBrowseUserView from "/imports/ui/views/PostBrowseUserView";
 import PostSearchView from "/imports/ui/views/PostSearchView";
@@ -23,14 +22,6 @@ FlowRouter.route("/likes", {
   action: function () {
     setTitle("Likes");
     renderView(PostBrowseLikesView);
-  }
-});
-
-FlowRouter.route("/bookmarks", {
-  name: "bookmarks",
-  action: function () {
-    setTitle("Bookmarks");
-    renderView(PostBrowseBookmarksView);
   }
 });
 

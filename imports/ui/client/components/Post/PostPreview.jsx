@@ -2,7 +2,6 @@ import _ from "lodash";
 import React from "react";
 
 import PostMoreMenu from "./PostMoreMenu";
-import PostBookmarkButton from "./PostBookmarkButton";
 import OriginalityIcon from "/imports/ui/client/components/Daikon/OriginalityIcon";
 import VisibilityLink from "/imports/ui/client/components/VisibilityLink";
 import Thumbnail from "/imports/ui/client/components/Thumbnail";
@@ -32,7 +31,7 @@ export default React.createClass({
     if (isOwner) {
       return <PostMoreMenu post={this.props.post} currentUser={this.props.currentUser} />;
     } else if (this.props.currentUser) {
-      return <PostBookmarkButton post={this.props.post} currentUser={this.props.currentUser} />;
+      return;
     }
   },
   renderStar() {

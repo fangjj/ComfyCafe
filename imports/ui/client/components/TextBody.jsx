@@ -1,6 +1,6 @@
 import React from "react";
 import marked from "marked";
-import Autolinker from "autolinker.js";
+import Autolinker from "autolinker";
 import emojione from "emojione";
 
 import classConcat from "/imports/ui/client/utils/classConcat";

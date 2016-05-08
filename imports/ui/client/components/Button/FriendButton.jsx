@@ -60,7 +60,7 @@ export default React.createClass({
         iconActivated="sentiment_very_satisfied"
         labelDeactivate="Unfriend"
         iconDeactivate="delete_sweep"
-        width={140}
+        width={141}
       />;
     }
   }

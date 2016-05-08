@@ -1,7 +1,9 @@
 import React from "react";
 
+import "/imports/api/migrations/methods";
 import DenseContent from "/imports/ui/client/components/DenseContent";
 import List from "/imports/ui/client/components/List";
+import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -14,6 +16,9 @@ export default React.createClass({
         { sort: { username: 1 } }
       ).fetch()
     };
+  },
+  handleMigrate() {
+    Meteor.call("migrateUsers");
   },
   renderList() {
     return _.map(this.data.users, (user) => {
@@ -28,6 +33,11 @@ export default React.createClass({
   },
   render() {
     return <DenseContent>
+      <SubmitButton
+        label="Apply Migration"
+        iconName="cached"
+        onTouchTap={this.handleMigrate}
+      />
       <List>
         {this.renderList()}
       </List>

@@ -130,6 +130,24 @@ export default React.createClass({
   renderBadges() {
     return <BadgeGroup badges={_.get(this.data.user, "profile.badges", {})} />;
   },
+  renderStats(user) {
+    const path = (where) => FlowRouter.path(where, { username: user.username });
+    const count = (what) => _.get(user.profile, what + "Count", 0);
+    return <div className="genericCol">
+      <a href={path("imagesBy")}>
+        <Icon className="sigil">image</Icon> {count("image")} Images
+      </a>
+      <a href={path("blogBy")}>
+        <Icon className="sigil">weekend</Icon> {count("blog")} Blog Posts
+      </a>
+      <a href={path("pagesBy")}>
+        <Icon className="sigil">import_contacts</Icon> {count("page")} Pages
+      </a>
+      <a href={path("albumsBy")}>
+        <Icon className="sigil">collections</Icon> {count("album")} Albums
+      </a>
+    </div>;
+  },
   renderForm(isOwner) {
     if (isOwner && this.state.isEditing) {
       return <UserProfileForm
@@ -152,6 +170,7 @@ export default React.createClass({
               {this.renderCatchphrase()}
               {this.renderBadges()}
             </header>
+            {this.renderStats(this.data.user)}
           </div>
         </div>
         <ActionWell>

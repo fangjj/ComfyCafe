@@ -66,6 +66,11 @@ Meteor.methods({
 			}
     }, data));
 
+    Meteor.users.update(
+      { _id: Meteor.userId() },
+      { $inc: { "profile.albumCount": 1 } }
+    );
+
 		mentions(albumId, data);
 
     return data.slug;
@@ -151,5 +156,9 @@ Meteor.methods({
 
 		Albums.remove(albumId);
 		Topics.remove({ _id: album.topic._id });
+    Meteor.users.update(
+      { _id: Meteor.userId() },
+      { $inc: { "profile.albumCount": -1 } }
+    );
 	}
 });

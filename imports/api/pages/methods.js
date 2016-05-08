@@ -57,6 +57,11 @@ Meteor.methods({
 			}
     }, data));
 
+    Meteor.users.update(
+      { _id: Meteor.userId() },
+      { $inc: { "profile.pageCount": 1 } }
+    );
+
 		mentions(pageId, data);
 
     return data.slug;
@@ -108,5 +113,9 @@ Meteor.methods({
 
 		Pages.remove(pageId);
 		Topics.remove({ _id: page.topic._id });
+    Meteor.users.update(
+      { _id: Meteor.userId() },
+      { $inc: { "profile.pageCount": -1 } }
+    );
 	}
 });

@@ -2,6 +2,8 @@ import _ from "lodash";
 
 import Posts from "../posts/collection";
 import BlogPosts from "../blog/collection";
+import Pages from "../pages/collection";
+import Albums from "../albums/collection";
 import "../blog/methods";
 import "../media/methods";
 import media from "../media/collection";
@@ -27,7 +29,30 @@ function migrationBuilder(functionBody) {
   };
 }
 
+function profilePrefixer(obj) {
+  return _.mapKeys(obj, (v, k) => {
+    return "profile." + k;
+  });
+}
+
 Meteor.methods({
+  migrateUsers: migrationBuilder(function () {
+    Meteor.users.find().map(function (user) {
+      const imageCount = Posts.find({ "owner._id": user._id }).count();
+      const blogCount = BlogPosts.find({ "owner._id": user._id }).count();
+      const pageCount = Pages.find({ "owner._id": user._id }).count();
+      const albumCount = Albums.find({ "owner._id": user._id }).count();
+      Meteor.users.update(
+        { _id: user._id },
+        { $set: profilePrefixer({
+          imageCount,
+          blogCount,
+          pageCount,
+          albumCount
+        }) }
+      );
+    });
+  }),
   migrateMedia: migrationBuilder(function () {
     media.update(
       { "metadata.bound": true },

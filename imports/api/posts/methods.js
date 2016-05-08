@@ -114,6 +114,11 @@ Meteor.methods({
 				} }
 			);
 
+			Meteor.users.update(
+				{ _id: Meteor.userId() },
+				{ $inc: { "profile.imageCount": 1 } }
+			);
+
       processMentions("post", data.description, {
         post: {
           _id: postId,
@@ -182,6 +187,10 @@ Meteor.methods({
 		Posts.remove(postId);
 		media.remove({ "metadata.post": postId });
 		Topics.remove({ _id: post.topic._id });
+		Meteor.users.update(
+			{ _id: Meteor.userId() },
+			{ $inc: { "profile.imageCount": -1 } }
+		);
 	},
 	rerollPost(postId) {
 		check(postId, String);

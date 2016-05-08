@@ -57,6 +57,11 @@ Meteor.methods({
 			}
 		}, data));
 
+		Meteor.users.update(
+      { _id: Meteor.userId() },
+      { $inc: { "profile.blogCount": 1 } }
+    );
+
 		mentions(postId, data);
 	},
 	updateBlogPost: function (postId, data) {
@@ -106,5 +111,9 @@ Meteor.methods({
 
 		BlogPosts.remove(postId);
 		Topics.remove({ _id: post.topic._id });
+		Meteor.users.update(
+      { _id: Meteor.userId() },
+      { $inc: { "profile.blogCount": -1 } }
+    );
 	}
 });

@@ -8,34 +8,19 @@ import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLo
 import Avatar from "/imports/ui/client/components/Avatar/Avatar";
 
 export default React.createClass({
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    const handle = Meteor.subscribe("users", this.props.userIds);
-    return {
-      loading: ! handle.ready(),
-      users: Meteor.users.find(
-  			{ _id: { $in: this.props.userIds } }
-  		).fetch()
-    };
-  },
   renderUsers() {
-    if (this.props.userIds && this.props.userIds.length) {
-      return this.props.userIds.map((userId) => {
-        const user = Meteor.users.findOne({ _id: userId });
-        const userUrl = FlowRouter.path("profile", {username: user.username});
-        return <li key={userId}>
-          <a href={userUrl} style={{float: "left"}}>
-            <Avatar size="icon" user={user} />
-          </a>
-          <UserLink
-            user={user}
-          />
-        </li>;
-      });
-    }
+    return this.props.users.map((user) => {
+      const userUrl = FlowRouter.path("profile", { username: user.username });
+      return <li key={user._id}>
+        <a href={userUrl} style={{ float: "left" }}>
+          <Avatar size="icon" user={user} />
+        </a>
+        <UserLink user={user} />
+      </li>;
+    });
   },
   render() {
-    if (this.data.loading) {
+    if (this.props.loading) {
       return <InlineLoadingSpinner />;
     }
 

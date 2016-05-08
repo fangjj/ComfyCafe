@@ -1,6 +1,6 @@
 import React from "react";
 
-import UserList from "/imports/ui/client/components/User/UserList";
+import UserListContainer from "/imports/ui/client/components/User/UserListContainer";
 
 export default React.createClass({
   render() {
@@ -8,7 +8,7 @@ export default React.createClass({
       <header>
         <h4>Liked by</h4>
       </header>
-      <UserList userIds={this.props.likes} />
+      <UserListContainer userIds={this.props.likes} />
     </section>;
   }
 });

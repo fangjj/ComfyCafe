@@ -37,6 +37,7 @@ export default React.createClass({
     const yourAlbumsUrl = FlowRouter.path("albumsBy", {username: this.props.currentUser.username});
     const yourPagesUrl = FlowRouter.path("pagesBy", {username: this.props.currentUser.username});
     const invitesUrl = FlowRouter.path("invites");
+    const usersUrl = FlowRouter.path("users");
     const settingsUrl = FlowRouter.path("settings");
 
     return <div>
@@ -70,6 +71,11 @@ export default React.createClass({
           primaryText="Beta Invites"
           leftIconName="vpn_key"
           href={invitesUrl}
+        />
+        <TopMenuItem
+          primaryText="Users"
+          leftIconName="looks"
+          href={usersUrl}
         />
         <TopMenuItem
           primaryText="Settings"

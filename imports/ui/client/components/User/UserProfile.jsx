@@ -5,7 +5,7 @@ import "/imports/api/users/methods";
 import setTitle from "/imports/api/common/setTitle";
 import UserInfo from "/imports/ui/client/components/User/UserInfo";
 import UserProfileForm from "/imports/ui/client/components/User/UserProfileForm";
-import UserList from "/imports/ui/client/components/User/UserList";
+import UserSearch from "/imports/ui/client/components/User/UserSearch";
 import Content from "/imports/ui/client/components/Content";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
@@ -184,32 +184,17 @@ export default React.createClass({
   },
   renderFriends(user) {
     if (user.friends.length) {
-      return <Content>
-        <header>
-          <h2>Friends</h2>
-        </header>
-        <UserList userIds={user.friends} />
-      </Content>;
+      return <UserSearch title="Friends" userIds={user.friends} />;
     }
   },
   renderSubscriptions(user) {
     if (user.subscriptions.length) {
-      return <Content>
-        <header>
-          <h2>Subscriptions</h2>
-        </header>
-        <UserList userIds={user.subscriptions} />
-      </Content>;
+      return <UserSearch title="Subscriptions" userIds={user.subscriptions} />;
     }
   },
   renderSubscribers(user) {
     if (user.subscribers.length) {
-      return <Content>
-        <header>
-          <h2>Subscribers</h2>
-        </header>
-        <UserList userIds={user.subscribers} />
-      </Content>;
+      return <UserSearch title="Subscribers" userIds={user.subscribers} />;
     }
   },
   render() {

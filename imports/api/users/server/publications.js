@@ -47,3 +47,10 @@ Meteor.publish("users", function (ids) {
 		{ fields: publicFields }
 	);
 });
+
+Meteor.publish("allUsers", function () {
+	return Meteor.users.find(
+		{},
+		{ fields: publicFields }
+	);
+});

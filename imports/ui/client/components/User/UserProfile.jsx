@@ -3,8 +3,9 @@ import React from "react";
 
 import "/imports/api/users/methods";
 import setTitle from "/imports/api/common/setTitle";
-import UserInfo from "./UserInfo";
-import UserProfileForm from "./UserProfileForm";
+import UserInfo from "/imports/ui/client/components/User/UserInfo";
+import UserProfileForm from "/imports/ui/client/components/User/UserProfileForm";
+import UserList from "/imports/ui/client/components/User/UserList";
 import Content from "/imports/ui/client/components/Content";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
@@ -162,6 +163,16 @@ export default React.createClass({
       return <AvatarCropper cancelAction={this.stopChangingAvatar} />;
     }
   },
+  renderFriends(user) {
+    if ((user.friends || []).length) {
+      return <Content>
+        <header>
+          <h2>Friends</h2>
+        </header>
+        <UserList userIds={user.friends} />
+      </Content>;
+    }
+  },
   render() {
     if (this.data.loading) {
       return <LoadingSpinner />;
@@ -173,10 +184,14 @@ export default React.createClass({
     const displayName = user.profile.displayName || user.username;
     setTitle(displayName);
 
-    return <Content className="profile">
-      {this.renderInner(isOwner, displayName)}
-      {this.renderInfo()}
-      {this.renderForm(isOwner)}
-    </Content>;
+    return <article className="contentLayout">
+      <Content className="profile">
+        {this.renderInner(isOwner, displayName)}
+        {this.renderInfo()}
+        {this.renderForm(isOwner)}
+      </Content>
+
+      {this.renderFriends(user)}
+    </article>;
   }
 });

@@ -14,15 +14,18 @@ Meteor.publish(null, function () {
 });
 
 // for public consumption
+const publicFields = {
+  username: 1,
+  profile: 1,
+  avatars: 1,
+  friends: 1
+};
+
 Meteor.publish("user", function (username) {
 	check(username, String);
 	return Meteor.users.find(
 		{ username: username },
-		{ fields: {
-			username: 1,
-			profile: 1,
-			avatars: 1
-		} }
+		{ fields: publicFields }
 	);
 });
 
@@ -30,11 +33,7 @@ Meteor.publish("userId", function (userId) {
 	check(userId, String);
 	return Meteor.users.find(
 		{ _id: userId },
-		{ fields: {
-			username: 1,
-			profile: 1,
-			avatars: 1
-		} }
+		{ fields: publicFields }
 	);
 });
 
@@ -42,10 +41,6 @@ Meteor.publish("users", function (ids) {
 	check(ids, [String]);
 	return Meteor.users.find(
 		{ _id: { $in: ids } },
-		{ fields: {
-			username: 1,
-			profile: 1,
-			avatars: 1
-		} }
+		{ fields: publicFields }
 	);
 });

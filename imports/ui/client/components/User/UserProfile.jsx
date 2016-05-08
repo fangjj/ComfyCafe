@@ -164,12 +164,32 @@ export default React.createClass({
     }
   },
   renderFriends(user) {
-    if ((user.friends || []).length) {
+    if (user.friends.length) {
       return <Content>
         <header>
           <h2>Friends</h2>
         </header>
         <UserList userIds={user.friends} />
+      </Content>;
+    }
+  },
+  renderSubscriptions(user) {
+    if (user.subscriptions.length) {
+      return <Content>
+        <header>
+          <h2>Subscriptions</h2>
+        </header>
+        <UserList userIds={user.subscriptions} />
+      </Content>;
+    }
+  },
+  renderSubscribers(user) {
+    if (user.subscribers.length) {
+      return <Content>
+        <header>
+          <h2>Subscribers</h2>
+        </header>
+        <UserList userIds={user.subscribers} />
       </Content>;
     }
   },
@@ -184,6 +204,12 @@ export default React.createClass({
     const displayName = user.profile.displayName || user.username;
     setTitle(displayName);
 
+    user.friends = _.get(user, "friends", []);
+    user.subscribers = _.get(user, "subscribers", []);
+    user.subscribers = _.difference(user.subscribers, user.friends);
+    user.subscriptions = _.get(user, "subscriptions", []);
+    user.subscriptions = _.difference(user.subscriptions, user.friends);
+
     return <article className="contentLayout">
       <Content className="profile">
         {this.renderInner(isOwner, displayName)}
@@ -192,6 +218,8 @@ export default React.createClass({
       </Content>
 
       {this.renderFriends(user)}
+      {this.renderSubscriptions(user)}
+      {this.renderSubscribers(user)}
     </article>;
   }
 });

@@ -6,6 +6,7 @@ Meteor.publish(null, function () {
 			settings: 1,
 			avatars: 1,
 			subscriptions: 1,
+			subscribers: 1,
       friends: 1,
       room: 1,
       bookmarks: 1
@@ -18,6 +19,8 @@ const publicFields = {
   username: 1,
   profile: 1,
   avatars: 1,
+  subscriptions: 1,
+  subscribers: 1,
   friends: 1
 };
 

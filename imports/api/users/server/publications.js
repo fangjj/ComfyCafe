@@ -29,7 +29,7 @@ const publicFields = {
 Meteor.publish("user", function (username) {
 	check(username, String);
 	return Meteor.users.find(
-		{ username: username },
+		{ normalizedUsername: username.toLowerCase() },
 		{ fields: publicFields }
 	);
 });

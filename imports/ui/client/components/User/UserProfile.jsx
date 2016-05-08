@@ -26,7 +26,9 @@ export default React.createClass({
     const handle = Meteor.subscribe("user", FlowRouter.getParam("username"));
     return {
       loading: ! handle.ready(),
-      user: Meteor.users.findOne({ username: FlowRouter.getParam("username") }),
+      user: Meteor.users.findOne(
+        { normalizedUsername: FlowRouter.getParam("username").toLowerCase() }
+      ),
       currentUser: Meteor.user()
     };
   },

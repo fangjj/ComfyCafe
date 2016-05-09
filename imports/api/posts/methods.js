@@ -32,8 +32,7 @@ const match = {
 	description: String,
 	safety: Number,
 	tags: String,
-	tagsCondExpanded: Object,
-	pretentiousFilter: String
+	tagsCondExpanded: Object
 };
 
 Meteor.methods({
@@ -102,8 +101,7 @@ Meteor.methods({
 					description: data.description,
 					safety: data.safety,
 					tags: tags,
-					tagsCondExpanded: data.tagsCondExpanded,
-					pretentiousFilter: data.pretentiousFilter
+					tagsCondExpanded: data.tagsCondExpanded
 				}
 			);
 
@@ -155,8 +153,7 @@ Meteor.methods({
 				description: data.description,
 				safety: data.safety,
 				tags: tags,
-				tagsCondExpanded: data.tagsCondExpanded,
-				pretentiousFilter: data.pretentiousFilter
+				tagsCondExpanded: data.tagsCondExpanded
 			} }
 		);
 

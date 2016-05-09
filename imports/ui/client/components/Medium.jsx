@@ -17,7 +17,6 @@ export default React.createClass({
         src={src}
         width={medium.width}
         height={medium.height}
-        filter={this.props.filter}
         safety={this.props.safety}
       />,
       video: <video className="medium" id={"video" + medium._id} src={src} controls>

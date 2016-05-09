@@ -154,7 +154,6 @@ export default React.createClass({
       <figure className="content">
         <Medium
           medium={this.props.post.medium}
-          filter={this.props.post.pretentiousFilter}
           safety={this.props.post.safety}
         />
       </figure>

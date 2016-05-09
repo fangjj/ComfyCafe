@@ -35,7 +35,6 @@ export default React.createClass({
             result = <figure key={post._id}>
               <Medium
                 medium={post.medium}
-                filter={post.pretentiousFilter}
                 safety={post.safety}
               />
             </figure>;

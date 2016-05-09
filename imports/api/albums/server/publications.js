@@ -67,7 +67,7 @@ Meteor.publish("albumPosts", function (username, albumSlug) {
 					user.friends,
 					{ "owner._id": album.owner._id }
 				),
-				{ fields: { name: 1, owner: 1, medium: 1, visibility: 1, safety: 1, pretentiousFilter: 1 } }
+				{ fields: { name: 1, owner: 1, medium: 1, visibility: 1, safety: 1 } }
 			);
 		} else {
 			return Posts.find(
@@ -78,7 +78,7 @@ Meteor.publish("albumPosts", function (username, albumSlug) {
 						{ "owner._id": album.owner._id }
 					] }
 				] },
-				{ fields: { name: 1, owner: 1, medium: 1, visibility: 1, safety: 1, pretentiousFilter: 1 } }
+				{ fields: { name: 1, owner: 1, medium: 1, visibility: 1, safety: 1 } }
 			);
 		}
 	});

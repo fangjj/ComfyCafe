@@ -12,7 +12,6 @@ import TextArea from "/imports/ui/client/components/TextArea";
 import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
 import OriginalitySelector from "/imports/ui/client/components/OriginalitySelector";
 import SafetySelector from "/imports/ui/client/components/SafetySelector";
-import PretentiousFilterSelector from "/imports/ui/client/components/PretentiousFilterSelector";
 import TagField from "/imports/ui/client/components/Tag/TagField";
 
 const defaultState = {
@@ -23,8 +22,7 @@ const defaultState = {
   safety: 0,
   autoSafety: 0,
   tags: "tagme",
-  condExpanded: {},
-  pretentiousFilter: "none"
+  condExpanded: {}
 };
 
 export default React.createClass({
@@ -40,8 +38,7 @@ export default React.createClass({
         safety: post.safety || defaultState.safety,
         autoSafety: post.safety || defaultState.safety,
         tags: post.tags.text || defaultState.tags,
-        condExpanded: post.tagsCondExpanded || defaultState.condExpanded,
-        pretentiousFilter: post.pretentiousFilter || defaultState.pretentiousFilter
+        condExpanded: post.tagsCondExpanded || defaultState.condExpanded
       };
     } else {
       return defaultState;
@@ -86,9 +83,6 @@ export default React.createClass({
       condExpanded: condExpanded
     });
   },
-  handlePretentiousFilter(event, index, value) {
-    this.setState({pretentiousFilter: value});
-  },
   handleSubmit() {
     const data = {
       visibility: this.state.visibility,
@@ -97,8 +91,7 @@ export default React.createClass({
       description: this.state.description,
       safety: this.state.safety,
       tags: this.state.tags,
-      tagsCondExpanded: this.state.condExpanded,
-      pretentiousFilter: this.state.pretentiousFilter
+      tagsCondExpanded: this.state.condExpanded
     };
 
     if (! this.props.post) {
@@ -198,10 +191,6 @@ export default React.createClass({
         floatingLabelText="Tags"
         onChange={this.handleTags}
         receiveAutoSafety={this.receiveAutoSafety}
-      />
-      <PretentiousFilterSelector
-        pretentiousFilter={this.state.pretentiousFilter}
-        onChange={this.handlePretentiousFilter}
       />
     </Form>;
   }

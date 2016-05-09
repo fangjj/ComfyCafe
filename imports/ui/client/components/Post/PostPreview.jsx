@@ -60,7 +60,6 @@ export default React.createClass({
         <Thumbnail
           medium={this.props.post.medium}
           size="list"
-          filter={this.props.post.pretentiousFilter}
         />
         <div className="label">
           {this.props.post.name}

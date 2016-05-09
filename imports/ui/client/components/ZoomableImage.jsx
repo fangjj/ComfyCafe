@@ -49,7 +49,6 @@ export default React.createClass({
   },
   renderMoonbox() {
     return <Moonbox
-      imgClassName={"filter-" + this.props.pretentiousFilter || "none"}
       src={this.props.src}
       width={this.state.width}
       height={this.state.height}
@@ -58,14 +57,11 @@ export default React.createClass({
     />;
   },
   render() {
-    const { className, filter, ...leftoverProps } = this.props;
-    const classes = classConcat(className, "filter-" + filter || "none");
     return <div>
       <img
         ref="image"
-        className={classes}
         onTouchTap={this.handleTouch}
-        {...leftoverProps}
+        {...this.props}
       />
       {this.renderMoonbox()}
     </div>;

@@ -2,6 +2,7 @@ import renderView from "/imports/api/common/renderView";
 import setTitle from "/imports/api/common/setTitle";
 
 import LoginView from "/imports/ui/views/LoginView";
+import ChangePasswordView from "/imports/ui/views/ChangePasswordView";
 import ForgotPasswordView from "/imports/ui/views/ForgotPasswordView";
 import UserProfileView from "/imports/ui/views/UserProfileView";
 import UserSettingsView from "/imports/ui/views/UserSettingsView";
@@ -20,6 +21,14 @@ FlowRouter.route("/register", {
   action: function () {
     setTitle("Register");
     renderView(LoginView);
+  }
+});
+
+FlowRouter.route("/change-password", {
+  name: "changePassword",
+  action: function () {
+    setTitle("Change Password");
+    renderView(ChangePasswordView);
   }
 });
 

@@ -12,6 +12,7 @@ import Powerless from "/imports/ui/client/components/Powerless";
 import Actions from "/imports/ui/client/components/Actions";
 import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
+import FlatButton from "/imports/ui/client/components/Button/FlatButton";
 import PostFilters from "/imports/ui/client/components/Post/PostFilters";
 import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
 import TextField from "/imports/ui/client/components/TextField";
@@ -20,7 +21,7 @@ import Snackbar from "/imports/ui/client/components/Snackbar";
 import {
   SelectField,
   MenuItem,
-  Toggle
+  Toggle,
 } from "material-ui";
 
 export default React.createClass({
@@ -105,6 +106,7 @@ export default React.createClass({
   cancel(event) {
     goBack();
   },
+
   render() {
     if (! this.props.currentUser) {
       return <Powerless />;
@@ -118,6 +120,11 @@ export default React.createClass({
         fullWidth={true}
         onChange={this.handleUsername}
       />
+
+      <a
+        className="authLink"
+        href={FlowRouter.path("changePassword")}
+      >Change Password</a>
 
       <SelectField
         value={this.state.defaultPage}

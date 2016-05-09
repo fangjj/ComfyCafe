@@ -7,28 +7,21 @@ import Content from "/imports/ui/client/components/Content";
 import Actions from "/imports/ui/client/components/Actions";
 import Error from "/imports/ui/client/components/Error";
 import TextField from "/imports/ui/client/components/TextField";
+import Snackbar from "/imports/ui/client/components/Snackbar";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
-
-function errorBuilder(obj) {
-  const base = {
-    passwordError: undefined
-  };
-
-  _.each(obj, (v, k) => {
-    base[k] = v;
-  });
-
-  return base;
-}
 
 export default React.createClass({
   getInitialState() {
-    return {};
+    return { snackbarOpen: false };
+  },
+  handleSnackbarRequestClose() {
+    this.setState({ snackbarOpen: false });
   },
   hasErrors() {
     return _.reduce(
       [
-        this.state.passwordError
+        this.state.oldPasswordError,
+        this.state.newPasswordError
       ],
       (result, value) => {
         return result || Boolean(value);
@@ -36,16 +29,25 @@ export default React.createClass({
       false
     );
   },
-  handlePassword(e) {
+  handleOldPassword(e) {
     this.setState({
-      password: e.target.value,
-      passwordError: undefined
+      oldPassword: e.target.value,
+      oldPasswordError: undefined
+    });
+  },
+  handleNewPassword(e) {
+    this.setState({
+      newPassword: e.target.value,
+      newPasswordError: undefined
     });
   },
   enforceRequired() {
     const errors = {};
-    if (! this.state.password) {
-      errors.passwordError = strings.passwordRequired;
+    if (! this.state.oldPassword) {
+      errors.oldPasswordError = strings.passwordRequired;
+    }
+    if (! this.state.newPassword) {
+      errors.newPasswordError = strings.passwordRequired;
     }
     if (! _.isEmpty(errors)) {
       this.setState(errors);
@@ -59,23 +61,19 @@ export default React.createClass({
       return;
     }
 
-    Accounts.resetPassword(this.props.passwordResetToken, this.state.password, (err) => {
+    Accounts.changePassword(this.state.oldPassword, this.state.newPassword, (err) => {
       if (err) {
         this.error = err;
         const errorMap = {
           "403": {
-            "Token expired": () => {
-              this.setState(errorBuilder({
-                generalError: true,
-                tokenError: true
-              }));
+            "Incorrect password": () => {
+              this.setState({ oldPasswordError: strings.passwordRejected });
             }
           }
         };
         errorMapper(errorMap, err);
       } else {
-        this.props.doneCallback();
-        Session.set("passwordResetToken", null);
+        this.setState({ snackbarOpen: true });
       }
     });
   },
@@ -92,21 +90,33 @@ export default React.createClass({
   render() {
     return <Content className="loginForm">
       <header>
-        <h2>Reset Password</h2>
+        <h2>Change Password</h2>
       </header>
       {this.renderError()}
       <form onSubmit={this.handleSubmit}>
         <TextField
           name="password"
           type="password"
+          label="Old Password"
+          errorText={this.state.oldPasswordError}
+          onChange={this.handleOldPassword}
+        />
+        <TextField
+          type="password"
           label="New Password"
-          errorText={this.state.passwordError}
-          onChange={this.handlePassword}
+          errorText={this.state.newPasswordError}
+          onChange={this.handleNewPassword}
         />
         <Actions>
           <SubmitButton type="submit" />
         </Actions>
       </form>
+
+      <Snackbar
+        open={this.state.snackbarOpen}
+        message="Password changed successfully."
+        onRequestClose={this.handleSnackbarRequestClose}
+      />
     </Content>;
   }
 });

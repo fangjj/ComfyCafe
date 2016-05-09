@@ -1,6 +1,5 @@
 import _ from "lodash";
 import React from "react";
-import FlatButton from "material-ui/FlatButton";
 
 import setTitle from "/imports/api/common/setTitle"
 import {
@@ -18,6 +17,7 @@ import TextField from "/imports/ui/client/components/TextField";
 import Checkbox from "/imports/ui/client/components/Checkbox";
 import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
+import FlatButton from "/imports/ui/client/components/Button/FlatButton";
 
 function errorBuilder(obj) {
   const base = {
@@ -339,7 +339,6 @@ export default React.createClass({
     if (! this.state.register) {
       left = <FlatButton
         label="Register"
-        labelStyle={{fontSize: "18px"}}
         onTouchTap={this.handleRegister}
       />;
     }

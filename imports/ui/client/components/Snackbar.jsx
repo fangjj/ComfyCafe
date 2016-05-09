@@ -2,16 +2,12 @@ import React from "react";
 
 export default React.createClass({
   autoHide(props) {
-    console.log("A");
     if (props.open) {
-      console.log("B");
       const duration = props.autoHideDuration || 4000;
       this.timeoutId = window.setTimeout(() => {
-        console.log("C");
         props.onRequestClose();
       }, duration);
     } else {
-      console.log("D");
       window.clearTimeout(this.timeoutId);
     }
   },

@@ -3,12 +3,11 @@ import React from "react";
 
 import "/imports/api/filters/methods";
 import Form from "/imports/ui/client/components/Form";
-import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
+import TextField from "/imports/ui/client/components/TextField";
 import TagInlineField from "/imports/ui/client/components/Tag/TagInlineField";
 
 const defaultState = {
   name: "",
-  visibility: "public",
   spoilers: "",
   hides: ""
 };
@@ -80,17 +79,19 @@ export default React.createClass({
       onClose={this.props.onClose}
     >
       <TextField
-        defaultValue={this.state.name}
         label="Name"
+        defaultValue={this.state.name}
         onChange={this.handleName}
       />
       <TagInlineField
         hintText="Spoilers"
+        defaultValue={this.state.spoilers}
         delim=";"
         onChange={this.handleSpoilers}
       />
       <TagInlineField
         hintText="Hides"
+        defaultValue={this.state.hides}
         delim=";"
         onChange={this.handleHides}
       />

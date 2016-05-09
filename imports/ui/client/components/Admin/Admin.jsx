@@ -11,6 +11,7 @@ import FilterPanelContainer from "./FilterPanelContainer";
 import UserViewContainer from "./UserViewContainer";
 import ImageViewContainer from "./ImageViewContainer";
 import BadgeViewContainer from "./BadgeViewContainer";
+import FilterViewContainer from "./FilterViewContainer";
 import Content from "/imports/ui/client/components/Content";
 import List from "/imports/ui/client/components/List";
 import DenseLayout from "/imports/ui/client/components/DenseLayout";
@@ -31,7 +32,8 @@ export default React.createClass({
           {
             users: <UserViewContainer />,
             images: <ImageViewContainer />,
-            badges: <BadgeViewContainer />
+            badges: <BadgeViewContainer />,
+            filters: <FilterViewContainer />
           },
           panel,
           <DenseContent>

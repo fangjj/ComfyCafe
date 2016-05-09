@@ -7,7 +7,6 @@ import createSlugCycler from "/imports/api/common/createSlugCycler";
 
 const match = {
 	name: String,
-	visibility: String,
 	spoilers: String,
 	hides: String
 };

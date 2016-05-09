@@ -44,7 +44,6 @@ export default React.createClass({
         <FilterForm
           id="formNewGlobalFilter"
           global={true}
-          onSubmit={this.handleSubmit}
           onClose={this.hideForm}
         />
       </Dialog>;

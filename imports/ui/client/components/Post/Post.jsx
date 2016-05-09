@@ -155,6 +155,7 @@ export default React.createClass({
         <Medium
           medium={this.props.post.medium}
           filter={this.props.post.pretentiousFilter}
+          safety={this.props.post.safety}
         />
       </figure>
       <PostInfoBox

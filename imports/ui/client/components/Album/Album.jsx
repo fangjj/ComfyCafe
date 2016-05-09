@@ -36,6 +36,7 @@ export default React.createClass({
               <Medium
                 medium={post.medium}
                 filter={post.pretentiousFilter}
+                safety={post.safety}
               />
             </figure>;
           }

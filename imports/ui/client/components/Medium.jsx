@@ -3,7 +3,7 @@ import React from "react";
 import { getMediaUrlMD5 } from "/imports/api/media/urls";
 import classConcat from "/imports/ui/client/utils/classConcat";
 
-import ZoomableImage from "./ZoomableImage";
+import ZoomableImageProxy from "./ZoomableImageProxy";
 
 export default React.createClass({
   render() {
@@ -12,12 +12,13 @@ export default React.createClass({
     const src = getMediaUrlMD5(medium.md5);
     let classes = classConcat("medium", this.props.className);
     const mediumCmp = {
-      image: <ZoomableImage
+      image: <ZoomableImageProxy
         className={classes}
         src={src}
         width={medium.width}
         height={medium.height}
         filter={this.props.filter}
+        safety={this.props.safety}
       />,
       video: <video className="medium" id={"video" + medium._id} src={src} controls>
         <source src={src} type={medium.contentType} />

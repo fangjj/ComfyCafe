@@ -28,6 +28,9 @@ export default React.createClass({
   handleBlurb(event) {
     this.setState({ blurb: event.target.value });
   },
+  handleBirthday(event, date) {
+    this.setState({ birthday: date });
+  },
   handleInfo(info, order) {
     this.setState({
       info: info,

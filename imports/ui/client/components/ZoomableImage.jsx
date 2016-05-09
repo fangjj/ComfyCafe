@@ -2,10 +2,12 @@ import React from "react";
 
 import classConcat from "/imports/ui/client/utils/classConcat";
 import Moonbox from "/imports/ui/client/components/Moonbox";
+import ImageSpoiler from "/imports/ui/client/components/ImageSpoiler";
 
 export default React.createClass({
   getInitialState() {
     return {
+      spoilered: true,
       showMoonbox: false,
       width: this.props.width || 0,
       height: this.props.height || 0
@@ -13,7 +15,11 @@ export default React.createClass({
   },
   handleTouch(event) {
     if (event.nativeEvent.which === 1) {
-      this.setState({ showMoonbox: true });
+      if (this.state.spoilered) {
+        this.setState({ spoilered: false });
+      } else {
+        this.setState({ showMoonbox: true });
+      }
     }
   },
   closeMoonbox() {

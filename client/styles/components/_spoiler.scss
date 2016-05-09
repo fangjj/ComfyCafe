@@ -1,0 +1,30 @@
+$boxy-green-thing: url(/images/greenbox.svg);
+$purple-stopsign-thing: url(/images/purplestopsign.svg);
+$pink-bubble-thing: url(/images/pinkbubble.svg);
+$red-triangle-thing: url(/images/redtri.svg);
+
+.spoiler {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  $size: 268px;
+  width: $size;
+  height: $size;
+
+  background: $boxy-green-thing;
+  &.level1 { // Risqué
+    background: $purple-stopsign-thing;
+  }
+  &.level2 { // Nudity
+    background: $pink-bubble-thing;
+  }
+  &.level3 { // Explicit
+    background: $red-triangle-thing;
+  }
+
+  @include quickShadow;
+  font-size: 32px;
+
+  cursor: pointer;
+}

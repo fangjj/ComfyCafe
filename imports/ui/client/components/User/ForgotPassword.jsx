@@ -1,6 +1,5 @@
 import _ from "lodash";
 import React from "react";
-import Snackbar from "material-ui/Snackbar";
 
 import { validateEmail } from "/imports/api/users/validators";
 import strings from "/imports/api/users/strings";
@@ -9,6 +8,7 @@ import Content from "/imports/ui/client/components/Content";
 import Actions from "/imports/ui/client/components/Actions";
 import Error from "/imports/ui/client/components/Error";
 import TextField from "/imports/ui/client/components/TextField";
+import Snackbar from "/imports/ui/client/components/Snackbar";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
 function errorBuilder(obj) {
@@ -112,7 +112,6 @@ export default React.createClass({
       <Snackbar
         open={this.state.snackbarOpen}
         message="Password reset link sent successfully."
-        autoHideDuration={4000}
         onRequestClose={this.handleSnackbarRequestClose}
       />
     </Content>;

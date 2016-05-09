@@ -294,7 +294,7 @@ export default React.createClass({
       You have to wait <Countdown ms={this.error.details.timeToReset} /> before trying again.
     </Error>;
   },
-  renderReset() {
+  renderForgot() {
     if (! this.state.register) {
       const url = FlowRouter.path("forgotPassword");
       return <a className="authLink" href={url}>Forgot Password?</a>;
@@ -363,7 +363,7 @@ export default React.createClass({
           errorText={this.state.passwordError}
           onChange={this.handlePassword}
         />
-        {this.renderReset()}
+        {this.renderForgot()}
         {this.renderEmail()}
         {this.renderBetaKey()}
         <Actions left={left}>

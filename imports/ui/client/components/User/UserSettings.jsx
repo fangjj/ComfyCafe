@@ -7,8 +7,6 @@ import {
 } from "/imports/api/users/validators";
 import strings from  "/imports/api/users/strings";
 import goBack from "/imports/ui/client/utils/goBack";
-import Colors from "/imports/ui/client/utils/colors";
-
 import Content from "/imports/ui/client/components/Content";
 import Powerless from "/imports/ui/client/components/Powerless";
 import Actions from "/imports/ui/client/components/Actions";
@@ -16,16 +14,16 @@ import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import PostFilters from "/imports/ui/client/components/Post/PostFilters";
 import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
+import TextField from "/imports/ui/client/components/TextField";
+import Snackbar from "/imports/ui/client/components/Snackbar";
 
 import {
-  TextField,
   SelectField,
   MenuItem,
-  Toggle,
-  Snackbar
+  Toggle
 } from "material-ui";
 
-const UserSettings = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       snackbarOpen: false,
@@ -115,13 +113,8 @@ const UserSettings = React.createClass({
     return <Content className="settings">
       <TextField
         defaultValue={this.state.username}
-        floatingLabelText="Username"
-        floatingLabelStyle={{fontSize: "20px"}}
+        label="Username"
         errorText={this.state.usernameError}
-        errorStyle={{
-          fontSize: "16px",
-          color: Colors.poisonPink
-        }}
         fullWidth={true}
         onChange={this.handleUsername}
       />
@@ -179,15 +172,10 @@ const UserSettings = React.createClass({
       </Actions>
 
       <Snackbar
-        className="snackbar"
         open={this.state.snackbarOpen}
         message="Settings saved successfully."
-        autoHideDuration={4000}
         onRequestClose={this.handleSnackbarRequestClose}
-        bodyStyle={{backgroundColor: "#237B4C"}}
       />
     </Content>;
   }
 });
-
-export default UserSettings;

@@ -1,26 +1,23 @@
 import _ from "lodash";
 import React from "react";
+import FlatButton from "material-ui/FlatButton";
 
 import setTitle from "/imports/api/common/setTitle"
 import {
   validateUsername,
   validateEmail
 } from "/imports/api/users/validators";
-import strings from  "/imports/api/users/strings";
+import strings from "/imports/api/users/strings";
 import goBack from "/imports/ui/client/utils/goBack"
-import Colors from "/imports/ui/client/utils/colors"
+import { errorMapper } from "/imports/ui/client/utils/error"
 import Content from "/imports/ui/client/components/Content";
 import Actions from "/imports/ui/client/components/Actions";
 import Error from "/imports/ui/client/components/Error";
 import Countdown from "/imports/ui/client/components/Countdown";
+import TextField from "/imports/ui/client/components/TextField";
+import Checkbox from "/imports/ui/client/components/Checkbox";
 import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
-
-import {
-  TextField,
-  Checkbox,
-  FlatButton
-} from "material-ui";
 
 function errorBuilder(obj) {
   const base = {
@@ -37,24 +34,6 @@ function errorBuilder(obj) {
   });
 
   return base;
-}
-
-function errorMapper(errorMap, err) {
-  const subMap = errorMap[err.error];
-  if (subMap) {
-    if (_.isFunction(subMap)) {
-      subMap();
-    } else {
-      const func = subMap[err.reason];
-      if (func) {
-        func();
-      } else {
-        prettyPrint(err);
-      }
-    }
-  } else {
-    prettyPrint(err);
-  }
 }
 
 export default React.createClass({
@@ -307,7 +286,7 @@ export default React.createClass({
     }
   },
   renderWait() {
-    const path = FlowRouter.path("forgot-password");
+    const path = FlowRouter.path("forgotPassword");
     return <Error>
       Slow down! Are you some sort of creepy hacker,
       or do you just need to <a href={path}>reset your password?</a>
@@ -315,19 +294,19 @@ export default React.createClass({
       You have to wait <Countdown ms={this.error.details.timeToReset} /> before trying again.
     </Error>;
   },
+  renderReset() {
+    if (! this.state.register) {
+      const url = FlowRouter.path("forgotPassword");
+      return <a className="authLink" href={url}>Forgot Password?</a>;
+    }
+  },
   renderEmail() {
     if (this.state.register) {
       return <TextField
         name="email"
         value={this.state.email}
-        floatingLabelText="Email"
-        floatingLabelStyle={{fontSize: "20px"}}
+        label="Email"
         errorText={this.state.emailError}
-        errorStyle={{
-          fontSize: "16px",
-          color: Colors.poisonPink
-        }}
-        fullWidth={true}
         onChange={this.handleEmail}
       />;
     }
@@ -336,14 +315,8 @@ export default React.createClass({
     if (this.state.register) {
       return <TextField
         value={this.state.betaKey}
-        floatingLabelText="Beta Key"
-        floatingLabelStyle={{fontSize: "20px"}}
+        label="Beta Key"
         errorText={this.state.betaKeyError}
-        errorStyle={{
-          fontSize: "16px",
-          color: Colors.poisonPink
-        }}
-        fullWidth={true}
         onChange={this.handleBetaKey}
       />;
     }
@@ -379,29 +352,18 @@ export default React.createClass({
       <form onSubmit={this.handleSubmit}>
         <TextField
           name="username"
-          floatingLabelText="Username"
-          floatingLabelStyle={{fontSize: "20px"}}
+          label="Username"
           errorText={this.state.usernameError}
-          errorStyle={{
-            fontSize: "16px",
-            color: Colors.poisonPink
-          }}
-          fullWidth={true}
           onChange={this.handleUsername}
         />
         <TextField
           name="password"
           type="password"
-          floatingLabelText="Password"
-          floatingLabelStyle={{fontSize: "20px"}}
+          label="Password"
           errorText={this.state.passwordError}
-          errorStyle={{
-            fontSize: "16px",
-            color: Colors.poisonPink
-          }}
-          fullWidth={true}
           onChange={this.handlePassword}
         />
+        {this.renderReset()}
         {this.renderEmail()}
         {this.renderBetaKey()}
         <Actions left={left}>

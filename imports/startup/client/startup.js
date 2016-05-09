@@ -4,6 +4,8 @@ import emojione from "emojione";
 import marked from "marked";
 import "blueimp-canvas-to-blob";
 
+import "/imports/startup/client/accounts";
+
 Meteor.startup(function () {
   injectTapEventPlugin();
   hotkey.activate();

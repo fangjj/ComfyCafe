@@ -14,6 +14,7 @@ import PseudoBodyContainer from "/imports/ui/client/components/PseudoBodyContain
 import TopBar from "/imports/ui/client/components/TopBar/TopBar";
 import Dialog from "/imports/ui/client/components/Dialog";
 import PostForm from "/imports/ui/client/components/Post/PostForm";
+import ResetPassword from "/imports/ui/client/components/User/ResetPassword";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -204,6 +205,15 @@ export default React.createClass({
       />;
     }
   },
+  renderMain() {
+    if (this.props.passwordResetToken) {
+      return <ResetPassword
+        passwordResetToken={this.props.passwordResetToken}
+        doneCallback={this.props.doneCallback}
+      />;
+    }
+    return this.props.main;
+  },
   render() {
     return <MuiThemeProvider muiTheme={muiTheme}>
       <div onPaste={this.handlePaste}>
@@ -214,7 +224,7 @@ export default React.createClass({
           <TopBar color={this.state.color} />
         </header>
         <main>
-          {this.props.main}
+          {this.renderMain()}
         </main>
         {this.renderPostForm()}
         {this.renderFooter()}

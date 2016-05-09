@@ -4,7 +4,15 @@
   width: 100%;
   height: 36px + 6px;
 
+  .left {
+    float: left;
+  }
+
   > div {
     float: right;
   }
+}
+
+.authLink {
+  line-height: 2;
 }

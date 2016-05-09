@@ -5,14 +5,10 @@ import getCaretCoordinates from "textarea-caret";
 import Tags from "/imports/api/tags/collection";
 import getActiveToken from "/imports/api/common/getActiveToken";
 import replaceActiveToken from "/imports/api/common/replaceActiveToken";
+import Suggestions from "/imports/ui/client/components/Suggestions";
+import TextField from "/imports/ui/client/components/TextField";
 
-import Suggestions from "../Suggestions";
-
-import {
-  TextField
-} from "material-ui";
-
-const TagInlineField = React.createClass({
+export default React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
@@ -123,9 +119,7 @@ const TagInlineField = React.createClass({
       <TextField
         value={this.state.text}
         hintText={this.props.hintText}
-        floatingLabelText={this.props.floatingLabelText}
-        floatingLabelStyle={{fontSize: "20px"}}
-        fullWidth={true}
+        label={this.props.label || this.props.floatingLabelText}
         onChange={this.onChange}
         onBlur={this.onBlur}
         onFocus={this.onFocus}
@@ -134,5 +128,3 @@ const TagInlineField = React.createClass({
     </div>;
   }
 });
-
-export default TagInlineField;

@@ -2,6 +2,8 @@
 import "/imports/api/albums/server/publications";
 import "/imports/api/badges/server/publications";
 import "/imports/api/blog/server/publications";
+import "/imports/api/filters/server/publications";
+import "/imports/api/filters/server/adminPublications";
 import "/imports/api/invites/server/publications";
 import "/imports/api/jobs/server/publications";
 import "/imports/api/media/server/publications";
@@ -34,6 +36,7 @@ import "/imports/api/thumbnails/server/job.js";
 import "/imports/api/albums/methods";
 import "/imports/api/badges/methods";
 import "/imports/api/blog/methods";
+import "/imports/api/filters/methods";
 import "/imports/api/invites/methods";
 import "/imports/api/media/methods";
 import "/imports/api/media/adminMethods";

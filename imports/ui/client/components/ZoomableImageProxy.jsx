@@ -1,9 +1,11 @@
+import _ from "lodash";
 import React from "react";
 
 import ImageSpoiler from "/imports/ui/client/components/ImageSpoiler";
 import ZoomableImage from "/imports/ui/client/components/ZoomableImage";
 
 export default React.createClass({
+  contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
     return { spoilered: false };
   },

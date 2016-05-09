@@ -255,7 +255,7 @@ const TagField = React.createClass({
       <div ref="tfContainer">
         <TextField
           value={this.state.text}
-          floatingLabelText={this.props.floatingLabelText || "Tags"}
+          floatingLabelText={this.props.label || this.props.floatingLabelText || "Tags"}
           floatingLabelStyle={{fontSize: "20px"}}
           multiLine={true}
           rows={1}

@@ -37,6 +37,13 @@ function profilePrefixer(obj) {
 }
 
 Meteor.methods({
+  migrateUserFilters: migrationBuilder(function () {
+    Meteor.users.update(
+      {},
+      { $unset: { "settings.defaultFilter": 1 } },
+      { multi: true }
+    );
+  }),
   migrateUsers: migrationBuilder(function () {
     Meteor.users.find().map(function (user) {
       const imageCount = Posts.find({ "owner._id": user._id }).count();

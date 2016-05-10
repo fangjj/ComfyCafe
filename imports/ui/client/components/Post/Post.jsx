@@ -139,7 +139,7 @@ export default React.createClass({
     }
   },
   render() {
-    if (this.props.loading) {
+    if (this.props.loading || this.props.filterLoading) {
       return <LoadingSpinner />;
     }
 
@@ -149,12 +149,14 @@ export default React.createClass({
 
     const isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.post.owner._id;
-
+    prettyPrint(this.props.spoilered);
     return <article className="post contentLayout">
       <figure className="content">
         <Medium
           medium={this.props.post.medium}
           safety={this.props.post.safety}
+          spoilered={_.has(this.props.spoilered, this.props.post._id)}
+          reason={_.get(this.props.spoilered, this.props.post._id)}
         />
       </figure>
       <PostInfoBox

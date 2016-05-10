@@ -18,6 +18,8 @@ export default React.createClass({
         width={medium.width}
         height={medium.height}
         safety={this.props.safety}
+        spoilered={this.props.spoilered}
+        reason={this.props.reason}
       />,
       video: <video className="medium" id={"video" + medium._id} src={src} controls>
         <source src={src} type={medium.contentType} />

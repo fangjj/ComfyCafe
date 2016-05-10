@@ -6,12 +6,7 @@ import ZoomableImage from "/imports/ui/client/components/ZoomableImage";
 
 export default React.createClass({
   getInitialState() {
-    return { spoilered: false };
-  },
-  componentWillMount() {
-    if (this.props.safety > 0) {
-      this.setState({ spoilered: true });
-    }
+    return { spoilered: this.props.spoilered };
   },
   handleTouch(event) {
     if (event.nativeEvent.which === 1) {

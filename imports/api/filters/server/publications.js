@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import Filters from "/imports/api/filters/collection";
 
 Meteor.publish("globalFilters", function () {
@@ -13,10 +15,11 @@ Meteor.publish("defaultFilter", function () {
 	this.autorun(function (computation) {
 		if (this.userId) {
 			const user = Meteor.users.findOne(this.userId, { fields: {
-				defaultFilter: 1
+				"settings.defaultFilter": 1
 			} });
-			if (user.defaultFilter) {
-				return Filters.find({ _id: user.defaultFilter });
+			const defaultFilter = _.get(user, "settings.defaultFilter");
+			if (defaultFilter) {
+				return Filters.find({ _id: defaultFilter });
 			}
 		}
 

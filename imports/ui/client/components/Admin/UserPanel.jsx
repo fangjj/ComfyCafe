@@ -18,7 +18,7 @@ export default React.createClass({
     };
   },
   handleMigrate() {
-    Meteor.call("migrateUsers");
+    Meteor.call("migrateUserFilters");
   },
   renderList() {
     return _.map(this.data.users, (user) => {

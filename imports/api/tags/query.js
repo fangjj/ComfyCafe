@@ -31,6 +31,16 @@ function queryGeneratorOrigins(parsed, queryDoc) {
   }
 }
 
+function queryGeneratorSafeties(parsed, queryDoc) {
+  var safetyQuery = {};
+  if (parsed.safeties.length) {
+    safetyQuery.$in = parsed.safeties;
+  }
+  if (! _.isEmpty(safetyQuery)) {
+    queryDoc["safety"] = safetyQuery;
+  }
+}
+
 function queryGeneratorMeta(parsed, queryDoc) {
   if (_.has(parsed.meta, "id")) {
     // The query specifies a post ID, i.e. `id neJk82uvXvGH3Meig`.
@@ -226,6 +236,7 @@ function tagQuery(str) {
 
   queryGeneratorAuthors(parsed, queryDoc);
   queryGeneratorOrigins(parsed, queryDoc);
+  queryGeneratorSafeties(parsed, queryDoc);
   queryGeneratorMeta(parsed, queryDoc);
   queryGeneratorWithout(parsed, extLookup, wAnd);
   queryGeneratorSubjects(parsed, extLookup, sAnd);

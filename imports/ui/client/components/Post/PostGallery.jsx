@@ -37,6 +37,7 @@ export default React.createClass({
       return this.props.posts.map((post) => {
         return <PostPreview
           post={post}
+          spoilered={_.includes(this.props.spoilered, post._id)}
           currentUser={this.props.currentUser}
           key={post._id}
         />;
@@ -93,6 +94,7 @@ export default React.createClass({
           </div>
           <div style={{flexGrow: 1}}>
             <PostFilters
+              filters={this.props.filters}
               value={this.props.filter}
               onChange={this.props.handleFilter}
             />

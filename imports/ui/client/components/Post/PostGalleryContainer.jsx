@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import Posts from "/imports/api/posts/collection";
+import Filters from "/imports/api/filters/collection";
 import { postsPerPage } from "/imports/api/posts/constants";
 import tagQuery from "/imports/api/tags/query";
 import PostGallery from "./PostGallery";
@@ -88,18 +89,6 @@ export default React.createClass({
       } else {
         queuedParams.push({ filter: undefined });
       }
-      if (this.state.filter === "all") {
-        // noop
-      }
-      if (this.state.filter === "sfw") {
-        doc["safety"] = { $lte: 1 };
-      }
-      if (this.state.filter === "nsfw") {
-        doc["safety"] = { $gte: 2 };
-      }
-      if (this.state.filter === "your") {
-        doc["owner._id"] = Meteor.userId();
-      }
     }
 
     return queuedParams;
@@ -120,7 +109,8 @@ export default React.createClass({
     }
     this.first = false;
 
-    let arg1 = _.omit(this.state, "noPush");
+    let arg1 = _.omit(this.state, [ "noPush", "filterChanged" ]);
+    arg1.filter = _.get(arg1.filter, "hides.text", "");
     let arg2 = page;
     let arg3;
     if (typeof this.props.subData !== "undefined") {
@@ -130,8 +120,10 @@ export default React.createClass({
     }
 
     const handle = Meteor.subscribe(this.props.subName, arg1, arg2, arg3);
-    return {
+    const filterHandle = Meteor.subscribe("globalFilters");
+    const data = {
       loading: ! handle.ready(),
+      filterLoading: ! filterHandle.ready(),
       page: page,
       posts: Posts.find(
         doc,
@@ -140,8 +132,20 @@ export default React.createClass({
           limit: (page + 1) * postsPerPage
         }
       ).fetch(),
+      filters: Filters.find({ owner: { $exists: false } }).fetch(),
+      spoilered: [],
       currentUser: Meteor.user()
     };
+
+    const filter = Filters.findOne({ _id: this.state.filter });
+    if (filter) {
+      const doc = tagQuery(filter.spoilers);
+      data.spoilered = Posts.find(doc).map((post) => {
+          return post._id;
+      });
+    }
+
+    return data;
   },
   componentDidMount() {
     window.addEventListener("popstate", this.readQueryParams);
@@ -174,15 +178,12 @@ export default React.createClass({
     }
 
     return <PostGallery
-      loading={this.data.loading}
-      page={this.data.page}
-      posts={this.data.posts}
-      currentUser={this.data.currentUser}
       handleOriginalOnly={this.handleOriginalOnly}
       handleSearch={this.handleSearch}
       handleFilter={this.handleFilter}
       {...this.state}
       {...this.props}
+      {...this.data}
     />;
   }
 });

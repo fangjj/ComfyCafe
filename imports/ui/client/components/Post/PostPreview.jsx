@@ -4,7 +4,7 @@ import React from "react";
 import PostMoreMenu from "./PostMoreMenu";
 import OriginalityIcon from "/imports/ui/client/components/Daikon/OriginalityIcon";
 import VisibilityLink from "/imports/ui/client/components/VisibilityLink";
-import Thumbnail from "/imports/ui/client/components/Thumbnail";
+import ThumbnailProxy from "/imports/ui/client/components/ThumbnailProxy";
 import Avatar from "/imports/ui/client/components/Avatar/Avatar";
 
 export default React.createClass({
@@ -57,9 +57,10 @@ export default React.createClass({
         {this.renderStar()}
       </a>
       <VisibilityLink href={postUrl} visibility={this.props.post.visibility}>
-        <Thumbnail
+        <ThumbnailProxy
           medium={this.props.post.medium}
           size="list"
+          spoilered={this.props.spoilered}
         />
         <div className="label">
           {this.props.post.name}

@@ -209,7 +209,10 @@ function tagQuery(str) {
     return {};
   }
 
-  var parsed = tagParser(str);
+  var parsed = str;
+  if (_.isString(str)) {
+    parsed = tagParser(str);
+  }
   var queryDoc = {}, wAnd = [], sAnd = [];
 
   var extLookup = _.reduce(

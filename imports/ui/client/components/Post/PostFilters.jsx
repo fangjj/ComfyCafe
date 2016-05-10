@@ -1,11 +1,14 @@
+import _ from "lodash";
 import React from "react";
-
-import {
-  SelectField,
-  MenuItem
-} from "material-ui";
+import SelectField from "material-ui/SelectField";
+import MenuItem from "material-ui/MenuItem";
 
 export default React.createClass({
+  renderInner() {
+    return _.map(this.props.filters, (filter) => {
+      return <MenuItem value={filter._id} primaryText={filter.name} key={filter._id} />;
+    });
+  },
   render() {
     return <SelectField
       value={this.props.value}
@@ -14,10 +17,7 @@ export default React.createClass({
       floatingLabelText={this.props.floatingLabelText}
       floatingLabelStyle={{fontSize: "20px"}}
     >
-      <MenuItem value="all" primaryText="Everything" />
-      <MenuItem value="sfw" primaryText="SFW" />
-      <MenuItem value="nsfw" primaryText="NSFW" />
-      <MenuItem value="your" primaryText="Your Images" />
+      {this.renderInner()}
     </SelectField>;
   }
 });

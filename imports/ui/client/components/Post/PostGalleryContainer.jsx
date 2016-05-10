@@ -133,15 +133,15 @@ export default React.createClass({
         }
       ).fetch(),
       filters: Filters.find({ owner: { $exists: false } }).fetch(),
-      spoilered: [],
+      spoilered: {},
       currentUser: Meteor.user()
     };
 
     const filter = Filters.findOne({ _id: this.state.filter });
     if (filter) {
       const doc = tagQuery(filter.spoilers);
-      data.spoilered = Posts.find(doc).map((post) => {
-          return post._id;
+      Posts.find(doc).map((post) => {
+        data.spoilered[post._id] = _.intersection(post.tags.allTags, filter.spoilers.allTags);
       });
     }
 

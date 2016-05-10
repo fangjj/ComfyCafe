@@ -1,6 +1,7 @@
 import React from "react";
 
 import classConcat from "/imports/ui/client/utils/classConcat";
+import fancyCommaJoin from "/imports/api/common/fancyCommaJoin";
 
 const labels = [
   "Spoilered",
@@ -9,10 +10,21 @@ const labels = [
   "This is porn."
 ];
 
+function renderSub(reason, safety) {
+  if (reason) {
+    return <div className="sub">{labels[safety]}</div>;
+  }
+}
+
 export default (props) => {
-  const { className, safety, ...leftoverProps } = props;
+  prettyPrint(props);
+  let { className, safety, reason, ...leftoverProps } = props;
+  if (reason) {
+    reason = fancyCommaJoin(reason);
+  }
   const classes = classConcat("spoiler level" + safety, className);
   return <div className={classes} {...leftoverProps}>
-    {labels[safety] || labels[0]}
+    {reason || labels[safety] || labels[0]}
+    {renderSub(reason, safety)}
   </div>;
 };

@@ -5,6 +5,7 @@ $red-triangle-thing: url(/images/redtri.svg);
 
 .spoiler {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
@@ -27,4 +28,16 @@ $red-triangle-thing: url(/images/redtri.svg);
   font-size: 32px;
 
   cursor: pointer;
+
+  .sub {
+    font-size: 27px;
+
+    &:before {
+      content: "(";
+    }
+
+    &:after {
+      content: ")";
+    }
+  }
 }

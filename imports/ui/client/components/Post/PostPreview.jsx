@@ -11,6 +11,8 @@ export default React.createClass({
   shouldComponentUpdate(nextProps) {
     const should = (
       _.get(nextProps.currentUser, "_id") !== _.get(this.props.currentUser, "_id")
+      || nextProps.spoilered !== this.props.spoilered
+      || JSON.stringify(nextProps.reason) !== JSON.stringify(this.props.reason)
       || (
         _.get(nextProps.currentUser, "bookmarks") !== _.get(this.props.currentUser, "bookmarks")
         && _.includes(
@@ -60,7 +62,9 @@ export default React.createClass({
         <ThumbnailProxy
           medium={this.props.post.medium}
           size="list"
+          safety={this.props.post.safety}
           spoilered={this.props.spoilered}
+          reason={this.props.reason}
         />
         <div className="label">
           {this.props.post.name}

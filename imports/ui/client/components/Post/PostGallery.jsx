@@ -37,7 +37,8 @@ export default React.createClass({
       return this.props.posts.map((post) => {
         return <PostPreview
           post={post}
-          spoilered={_.includes(this.props.spoilered, post._id)}
+          spoilered={_.has(this.props.spoilered, post._id)}
+          reason={_.get(this.props.spoilered, post._id)}
           currentUser={this.props.currentUser}
           key={post._id}
         />;

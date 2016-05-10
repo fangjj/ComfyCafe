@@ -1,14 +1,37 @@
 import _ from "lodash";
 
+import safetyLabels from "/imports/api/common/safetyLabels";
+
 function tagStringify(tagObj) {
   // This currently ignores all negativity.
   var chunks = [];
+
   _.each(tagObj.authors, function (author) {
     chunks.push("by " + author);
   });
   _.each(tagObj.origins, function (origin) {
     chunks.push("from " + origin);
   });
+
+  const safety = _.reduce(
+    tagObj.safeties,
+    function (result, s, i) {
+      if (i > 1) {
+        prev = result[i-1];
+        twoAgo = result[i-2];
+        if (twoAgo == prev - 1 && twoAgo == s - 2) {
+          const x = result.splice(i-1, 1);
+        }
+      }
+      result.push(safetyLabels[s].toLowerCase());
+      return result;
+    },
+    []
+  );
+  if (safety.length) {
+    chunks.push("safety " + safety.join("-"));
+  }
+
   _.each(tagObj.subjects, function (descriptors, rootNoun) {
     if (_.isEmpty(descriptors)) {
       chunks.push(rootNoun);
@@ -25,6 +48,7 @@ function tagStringify(tagObj) {
       chunks.push(str + dChunks.join(", "));
     }
   });
+
   return chunks.join("; ");
 }
 

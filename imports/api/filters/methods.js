@@ -63,7 +63,7 @@ Meteor.methods({
 
     const isGlobal = ! _.has(filter, "owner");
     const isAdmin = Roles.userIsInRole(Meteor.userId(), ["admin"], Roles.GLOBAL_GROUP);
-		if (isGlobal && ! isAdmin 
+		if (isGlobal && ! isAdmin
 			|| !isGlobal && ! isOwner(filter)
 		) {
 			throw new Meteor.Error("not-authorized");

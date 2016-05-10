@@ -6,6 +6,7 @@ import {
 	tagSubjectTokenizer,
 	tagDescriptorTokenizer
 } from "./tokenizer";
+import missingInts from "/imports/api/common/missingInts";
 
 const tagStrSample = "nia-teppelin: young, short multicolored hair, cat ears;"
 	+ "yoko-littner: flame bikini, pink stockings, long red hair, without gun";
@@ -158,6 +159,7 @@ function tagParser(tagStr, reformat) {
 		notAuthors: [],
 		origins: [],
 		notOrigins: [],
+		safeties: [],
 		subjects: {},
 		subjectsReverse: {},
 		subjectsFlat: [],
@@ -201,6 +203,34 @@ function tagParser(tagStr, reformat) {
 
 		if (topToken.substr(0, 5) === "name ") {
 			parsed.meta.name = topToken.substr(5).trim();
+			return;
+		}
+
+		if (topToken.substr(0, 7) === "safety ") {
+			parsed.safeties = _.filter(topToken.substr(7).trim().split("-").map((safety) => {
+				const n = parseInt(safety);
+				if (_.isNaN(n)) {
+					if (_.includes(["s", "safe"], safety.toLowerCase())) {
+						return 0;
+					}
+					if (_.includes(["r", "riqué", "risque"], safety.toLowerCase())) {
+						return 1;
+					}
+					if (_.includes(["n", "nudity"], safety.toLowerCase())) {
+						return 2;
+					}
+					if (_.includes(["e", "explicit"], safety.toLowerCase())) {
+						return 3;
+					}
+				} else {
+					return n;
+				}
+			}), (n) => {
+				return typeof n !== "undefined";
+			});
+
+			parsed.safeties = missingInts(parsed.safeties);
+
 			return;
 		}
 

@@ -23,7 +23,8 @@ function tagFullResolver(parsed) {
   var output = {
     subjects: _.cloneDeep(parsed.subjects),
     authors: _.cloneDeep(parsed.authors),
-    origins: _.cloneDeep(parsed.origins)
+    origins: _.cloneDeep(parsed.origins),
+    safeties: _.cloneDeep(parsed.safeties)
   };
 
   _.each(output.subjects, function (descriptors, rootNoun) {

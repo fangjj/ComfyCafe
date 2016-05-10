@@ -8,7 +8,8 @@ import createSlugCycler from "/imports/api/common/createSlugCycler";
 const match = {
 	name: String,
 	spoilers: String,
-	hides: String
+	hides: String,
+	default: Boolean
 };
 
 const slugCycle = createSlugCycler(Filters);
@@ -54,7 +55,7 @@ Meteor.methods({
       return data.slug;
     }
 	},
-	updatefilter(filterId, data) {
+	updateFilter(filterId, data) {
 		check(filterId, String);
 		check(data, match);
 
@@ -62,7 +63,9 @@ Meteor.methods({
 
     const isGlobal = ! _.has(filter, "owner");
     const isAdmin = Roles.userIsInRole(Meteor.userId(), ["admin"], Roles.GLOBAL_GROUP);
-		if (isGlobal && ! isAdmin || ! isOwner(filter)) {
+		if (isGlobal && ! isAdmin 
+			|| !isGlobal && ! isOwner(filter)
+		) {
 			throw new Meteor.Error("not-authorized");
 		}
 

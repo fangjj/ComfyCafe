@@ -5,11 +5,13 @@ import "/imports/api/filters/methods";
 import Form from "/imports/ui/client/components/Form";
 import TextField from "/imports/ui/client/components/TextField";
 import TagInlineField from "/imports/ui/client/components/Tag/TagInlineField";
+import Checkbox from "/imports/ui/client/components/Checkbox";
 
 const defaultState = {
   name: "",
   spoilers: "",
-  hides: ""
+  hides: "",
+  default: false
 };
 
 export default React.createClass({
@@ -28,6 +30,9 @@ export default React.createClass({
   },
   handleHides(value) {
     this.setState({ hides: value });
+  },
+  handleDefault(e) {
+    this.setState({ default: e.target.checked });
   },
   redirect(slugOrId) {
     const path = expr(() => {
@@ -48,7 +53,7 @@ export default React.createClass({
   handleSubmit() {
     const data = this.state;
 
-    if (! this.props.page) {
+    if (! this.props.filter) {
       Meteor.call("addFilter", data, this.props.global, (err, slugOrId) => {
         if (err) {
           prettyPrint(err);
@@ -69,6 +74,15 @@ export default React.createClass({
           }
         }
       });
+    }
+  },
+  renderDefault() {
+    if (this.props.global) {
+      return <Checkbox
+        label="Default?"
+        checked={this.state.default}
+        onCheck={this.handleDefault}
+      />;
     }
   },
   render() {
@@ -95,6 +109,7 @@ export default React.createClass({
         delim=";"
         onChange={this.handleHides}
       />
+      {this.renderDefault()}
     </Form>
   }
 });

@@ -52,6 +52,9 @@ Meteor.methods({
 			if (medium.length === 0) {
 				throw new Meteor.Error("empty-medium", "Medium " + mediumId + " has length 0.");
 			}
+			if (medium.metadata.bound) {
+				throw new Meteor.Error("duplicate-medium", "Medium " + mediumId + " is already bound.");
+			}
 
 			let tags = tagParser(data.tags, {reformat: true});
 			if (Meteor.isServer) {

@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React from "react";
 
+import safetyLabels from "/imports/api/common/safetyLabels";
 import PostMoreMenu from "./PostMoreMenu";
 import OriginalityIcon from "/imports/ui/client/components/Daikon/OriginalityIcon";
 import VisibilityLink from "/imports/ui/client/components/VisibilityLink";
@@ -28,6 +29,10 @@ export default React.createClass({
     console.log(should);
     return should;
   },
+  buildTitle() {
+    const post = this.props.post;
+    return `(${safetyLabels[post.safety]}) ${post.tags.text}`;
+  },
   renderMoreMenu() {
     const isOwner = _.get(this.props.currentUser, "_id") === this.props.post.owner._id;
     if (isOwner) {
@@ -53,7 +58,7 @@ export default React.createClass({
     });
     const owner = this.props.post.owner;
     const ownerUrl = FlowRouter.path("profile", {username: owner.username});
-    return <li className={"postPreview " + this.props.post.visibility}>
+    return <li className={"postPreview " + this.props.post.visibility} title={this.buildTitle()}>
       <a href={ownerUrl} className="avatarLink">
         <Avatar size="icon" user={owner} />
         {this.renderStar()}

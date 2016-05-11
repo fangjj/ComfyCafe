@@ -23,7 +23,7 @@ export default React.createClass({
     this.setState({ showForm: false });
   },
   renderPosts(album) {
-    if (this.props.postsLoading) {
+    if (this.props.postsLoading || this.props.filterLoading) {
       return <InlineLoadingSpinner />;
     }
 
@@ -36,6 +36,8 @@ export default React.createClass({
               <Medium
                 medium={post.medium}
                 safety={post.safety}
+                spoilered={_.has(this.props.spoilered, post._id)}
+                reason={_.get(this.props.spoilered, post._id)}
               />
             </figure>;
           }

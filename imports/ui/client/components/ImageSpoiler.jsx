@@ -17,7 +17,6 @@ function renderSub(reason, safety) {
 }
 
 export default (props) => {
-  prettyPrint(props);
   let { className, safety, reason, ...leftoverProps } = props;
   if (reason) {
     reason = fancyCommaJoin(reason);

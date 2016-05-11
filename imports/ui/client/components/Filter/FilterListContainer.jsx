@@ -10,6 +10,10 @@ export default createContainer(({ params }) => {
     filters: Filters.find(
       { "owner.username": FlowRouter.getParam("username") },
       { sort: { createdAt: -1, name: 1 } }
+    ).fetch(),
+    favoriteFilters: Filters.find(
+      { xxx: "yyy" },
+      { sort: { createdAt: -1, name: 1 } }
     ).fetch()
   };
 }, FilterList);

@@ -4,8 +4,8 @@ import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 
 export default React.createClass({
-  renderInner() {
-    return _.map(this.props.filters, (filter) => {
+  renderInner(filters) {
+    return _.map(filters, (filter) => {
       return <MenuItem value={filter._id} primaryText={filter.name} key={filter._id} />;
     });
   },
@@ -17,7 +17,7 @@ export default React.createClass({
       floatingLabelText={this.props.floatingLabelText}
       floatingLabelStyle={{fontSize: "20px"}}
     >
-      {this.renderInner()}
+      {this.renderInner(this.props.filters)}
     </SelectField>;
   }
 });

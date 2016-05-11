@@ -27,6 +27,26 @@ Meteor.publish("filtersBy", function (username) {
 	return Filters.find({ "owner.username": username });
 });
 
+Meteor.publish("filtersFor", function () {
+	this.autorun(function (computation) {
+		let userFilters = [];
+		if (this.userId) {
+			const user = Meteor.users.findOne(this.userId, { fields: {
+				filter: 1
+			} });
+			userFilters = user.filters || [];
+		}
+
+		return Filters.find(
+			{ $or: [
+				{ "owner._id": this.userId },
+				{ _id: { $in: userFilters } },
+				{ owner: { $exists: false } },
+			] }
+		);
+	});
+});
+
 Meteor.publish("defaultFilter", function () {
 	this.autorun(function (computation) {
 		if (this.userId) {

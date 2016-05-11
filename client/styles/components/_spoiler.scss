@@ -29,8 +29,13 @@ $red-triangle-thing: url(/images/redtri.svg);
 
   cursor: pointer;
 
+  .reason {
+    text-align: center;
+  }
+
   .sub {
     font-size: 27px;
+    text-align: center;
 
     &:before {
       content: "(";

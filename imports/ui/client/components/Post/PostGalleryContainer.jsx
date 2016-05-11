@@ -3,6 +3,7 @@ import React from "react";
 
 import Posts from "/imports/api/posts/collection";
 import Filters from "/imports/api/filters/collection";
+import filtersFor from "/imports/api/filters/filtersFor";
 import { postsPerPage } from "/imports/api/posts/constants";
 import tagQuery from "/imports/api/tags/query";
 import PostGallery from "./PostGallery";
@@ -98,7 +99,7 @@ export default React.createClass({
 
     const doc = this.props.generateDoc.bind(this)();
 
-    const filterHandle = Meteor.subscribe("globalFilters");
+    const filterHandle = Meteor.subscribe("filtersFor");
     const defaultFilter = Filters.findOne(
       {
         owner: { $exists: false },
@@ -141,7 +142,7 @@ export default React.createClass({
           limit: (page + 1) * postsPerPage
         }
       ).fetch(),
-      filters: Filters.find({ owner: { $exists: false } }).fetch(),
+      filters: filtersFor().fetch(),
       filter: Filters.findOne({ _id: filterId }),
       spoilered: {},
       currentUser: Meteor.user()

@@ -24,7 +24,7 @@ export default (props) => {
   }
   const classes = classConcat("spoiler level" + safety, className);
   return <div className={classes} {...leftoverProps}>
-    {reason || labels[safety] || labels[0]}
+    <div className="reason">{reason || labels[safety] || labels[0]}</div>
     {renderSub(reason, safety)}
   </div>;
 };

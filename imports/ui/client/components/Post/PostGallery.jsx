@@ -96,6 +96,7 @@ export default React.createClass({
           <div style={{flexGrow: 1}}>
             <PostFilters
               filters={this.props.filters}
+              globalFilters={this.props.globalFilters}
               value={_.get(this.props.filter, "_id")}
               onChange={this.props.handleFilter}
             />

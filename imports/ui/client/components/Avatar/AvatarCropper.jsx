@@ -77,7 +77,12 @@ export default React.createClass({
       // Use NativeListener to prevent bubbling to the global dropzone on <html>
       return <NativeListener onDrop={this.addToCropzone}>
         <div className="cropzone">
-          <input className="addAvatar" type="file" onChange={this.addToCropzone} />
+          <input
+						className="addAvatar"
+						type="file"
+						accept="image/*"
+						onChange={this.addToCropzone}
+					/>
           <img className="newAvatar" />
         </div>
       </NativeListener>;

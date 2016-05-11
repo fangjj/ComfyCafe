@@ -30,7 +30,8 @@ export default React.createClass({
       snackbarOpen: false,
       username: this.props.currentUser.username,
       defaultPage: _.get(this.props.currentUser, "settings.defaultPage", "art"),
-      defaultFilter: _.get(this.props.currentUser, "settings.defaultFilter", "sfw"),
+      defaultFilter: _.get(this.props.currentUser, "settings.defaultFilter",
+        this.props.defaultFilterId),
       uploadAction: _.get(this.props.currentUser, "settings.uploadAction", "redirect"),
       autoWatch: _.get(this.props.currentUser, "settings.autoWatch", false),
       defaultAlbumVisibility: _.get(
@@ -41,6 +42,12 @@ export default React.createClass({
     };
   },
   componentWillReceiveProps(nextProps) {
+    if (nextProps.defaultFilterId !== this.props.defaultFilterId) {
+      if (! this.state.defaultFilter) {
+        this.setState({ defaultFilter: nextProps.defaultFilterId });
+      }
+    }
+
     if (! this.state.usernameError) {
       if (nextProps.user !== this.props.user) {
         if (nextProps.user) {
@@ -126,6 +133,13 @@ export default React.createClass({
         href={FlowRouter.path("changePassword")}
       >Change Password</a>
 
+      <PostFilters
+        filters={this.props.filters}
+        value={this.state.defaultFilter}
+        floatingLabelText="Default Filter"
+        onChange={this.handleDefaultFilter}
+      />
+      <br />
       <SelectField
         value={this.state.defaultPage}
         floatingLabelText="Default Page"
@@ -135,12 +149,6 @@ export default React.createClass({
         <MenuItem value="art" primaryText="Images" />
         <MenuItem value="blog" primaryText="Blog" />
       </SelectField>
-      <br />
-      <PostFilters
-        value={this.state.defaultFilter}
-        floatingLabelText="Default Filter"
-        onChange={this.handleDefaultFilter}
-      />
       <br />
       <SelectField
         value={this.state.uploadAction}

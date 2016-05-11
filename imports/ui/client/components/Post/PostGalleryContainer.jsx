@@ -138,7 +138,7 @@ export default React.createClass({
     };
 
     const filter = Filters.findOne({ _id: this.state.filter });
-    if (filter) {
+    if (filter && filter.spoilers.text) {
       const doc = tagQuery(filter.spoilers);
       Posts.find(doc).map((post) => {
         data.spoilered[post._id] = _.intersection(post.tags.allTags, filter.spoilers.allTags);

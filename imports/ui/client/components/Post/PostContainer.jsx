@@ -36,7 +36,7 @@ export default createContainer(({ params }) => {
     currentUser: Meteor.user()
   };
 
-  if (data.filter) {
+  if (data.filter && data.filter.spoilers.text) {
     const doc = tagQuery(data.filter.spoilers);
     Posts.find(doc).map((post) => {
       data.spoilered[post._id] = _.intersection(post.tags.allTags, data.filter.spoilers.allTags);

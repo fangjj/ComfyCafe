@@ -8,6 +8,7 @@ import TopMenuItem from "/imports/ui/client/components/TopBar/TopMenuItem";
 
 export default React.createClass({
   mixins: [OnClickOutside],
+  contextTypes: { currentUser: React.PropTypes.object },
   handleClickOutside(event) {
     if (this.props.visible) {
       this.props.action();
@@ -17,7 +18,7 @@ export default React.createClass({
     Meteor.logout();
   },
   renderAdminItem() {
-    if (isPriveleged(this.props.currentUser._id)) {
+    if (isPriveleged(this.context.currentUser._id)) {
       const adminUrl = FlowRouter.path("admin");
       return <TopMenuItem
         primaryText="Admin Panel"
@@ -32,10 +33,12 @@ export default React.createClass({
       classes = "topMenu active";
     }
 
-    const profileUrl = FlowRouter.path("profile", {username: this.props.currentUser.username});
+    const username = this.context.currentUser.username;
+    const profileUrl = FlowRouter.path("profile", { username });
+    const filtersUrl = FlowRouter.path("filtersBy", { username });
     const likesUrl = FlowRouter.path("likes");
-    const yourAlbumsUrl = FlowRouter.path("albumsBy", {username: this.props.currentUser.username});
-    const yourPagesUrl = FlowRouter.path("pagesBy", {username: this.props.currentUser.username});
+    const yourAlbumsUrl = FlowRouter.path("albumsBy", { username });
+    const yourPagesUrl = FlowRouter.path("pagesBy", { username });
     const invitesUrl = FlowRouter.path("invites");
     const usersUrl = FlowRouter.path("users");
     const settingsUrl = FlowRouter.path("settings");
@@ -51,6 +54,7 @@ export default React.createClass({
         <TopMenuItem
           primaryText="Filters"
           leftIconName="filter_list"
+          href={filtersUrl}
         />
         <TopMenuItem
           primaryText="Likes"

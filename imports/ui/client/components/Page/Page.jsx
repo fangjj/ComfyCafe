@@ -3,7 +3,6 @@ import React from "react";
 
 import setTitle from "/imports/api/common/setTitle";
 import Content from "/imports/ui/client/components/Content";
-import Medium from "/imports/ui/client/components/Medium";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLoadingSpinner";
 import FAB from "/imports/ui/client/components/FAB";

@@ -1,21 +1,19 @@
 import { createContainer } from "meteor/react-meteor-data";
 
-import Pages from "/imports/api/pages/collection";
-import Page from "./Page";
+import Filters from "/imports/api/filters/collection";
+import Filter from "./Filter";
 
 export default createContainer(({ params }) => {
   const username = FlowRouter.getParam("username");
   const slug = FlowRouter.getParam("slug");
-  const handle = Meteor.subscribe("page", username, slug);
-
+  const handle = Meteor.subscribe("filterSlug", username, slug);
   return {
     loading: ! handle.ready(),
-    page: Pages.findOne(
+    filter: Filters.findOne(
       {
         "owner.username": username,
-        slug: slug
+        slug
       }
-    ),
-    currentUser: Meteor.user()
+    )
   };
-}, Page);
+}, Filter);

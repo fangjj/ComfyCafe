@@ -9,6 +9,7 @@ import "./blogRoutes";
 import "./pageRoutes";
 import "./chatRoutes";
 import "./tagRoutes";
+import "./filterRoutes";
 import "./inviteRoutes";
 
 import BlogFeedView from "/imports/ui/views/BlogFeedView";

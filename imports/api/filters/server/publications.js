@@ -11,6 +11,22 @@ Meteor.publish("filter", function (filterId) {
 	return Filters.find({ _id: filterId });
 });
 
+Meteor.publish("filterSlug", function (username, slug) {
+	check(username, String);
+	check(slug, String);
+	return Filters.find(
+		{
+			"owner.username": username,
+			slug
+		}
+	);
+});
+
+Meteor.publish("filtersBy", function (username) {
+	check(username, String);
+	return Filters.find({ "owner.username": username });
+});
+
 Meteor.publish("defaultFilter", function () {
 	this.autorun(function (computation) {
 		if (this.userId) {

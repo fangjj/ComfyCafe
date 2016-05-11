@@ -8,7 +8,7 @@ export default React.createClass({
   renderItems() {
     const itemStyle = { fontSize: "17px" };
     return _.map(violationMap, (value, key) => {
-      return <MenuItem value={key} primaryText={key} style={itemStyle} key={key} />;
+      return <MenuItem value={key} primaryText={value} style={itemStyle} key={key} />;
     });
   },
   render() {

@@ -13,6 +13,7 @@ function lookupGenerator(docGen) {
 
 export default new FileCollection("media",
   { resumable: true,
+    maxUploadSize: 64 * Math.pow(10, 6),
     http: [
       { method: "get",
         path: "/:md5",

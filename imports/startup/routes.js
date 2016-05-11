@@ -16,7 +16,7 @@ import DummyView from "/imports/ui/views/DummyView";
 import Err404View from "/imports/ui/views/Err404View";
 import LoadingTestView from "/imports/ui/views/LoadingTestView";
 import PostFeedView from "/imports/ui/views/PostFeedView";
-import PostUnauthBrowseView from "/imports/ui/views/PostUnauthBrowseView";
+import PostBrowseAllView from "/imports/ui/views/PostBrowseAllView";
 
 if (Meteor.isServer) {
   FastRender.onAllRoutes(function (path) {
@@ -49,7 +49,7 @@ FlowRouter.route("/", {
 
       renderView(view);
     } else {
-      renderView(PostUnauthBrowseView);
+      renderView(PostBrowseAllView);
     }
   }
 });

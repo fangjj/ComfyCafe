@@ -10,7 +10,7 @@ function checkState(state) {
 		{
 			originalOnly: Boolean,
 			tagStr: String,
-			filter: String
+			filterId: Match.Optional(String)
 		}
 	));
 }
@@ -39,19 +39,8 @@ function queryBuilder(userId, doc, state) {
 		});
 	}
 
-	if (state.filter) {
-		if (state.filter === "all") {
-			// noop
-		}
-		if (state.filter === "sfw") {
-			doc["safety"] = { $lte: 1 };
-		}
-		if (state.filter === "nsfw") {
-			doc["safety"] = { $gte: 2 };
-		}
-		if (state.filter === "your") {
-			doc["owner._id"] = userId;
-		}
+	if (state.filterId) {
+
 	}
 
 	return doc;

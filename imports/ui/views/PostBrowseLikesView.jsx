@@ -9,6 +9,7 @@ export default {
     }
   },
   fastRender(params) {
+    this.subscribe("globalFilters");
     this.subscribe("likes");
   }
 };

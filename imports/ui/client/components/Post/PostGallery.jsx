@@ -96,7 +96,7 @@ export default React.createClass({
           <div style={{flexGrow: 1}}>
             <PostFilters
               filters={this.props.filters}
-              value={this.props.filter}
+              value={_.get(this.props.filter, "_id")}
               onChange={this.props.handleFilter}
             />
           </div>

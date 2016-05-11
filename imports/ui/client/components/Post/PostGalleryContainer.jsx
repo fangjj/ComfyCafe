@@ -11,7 +11,7 @@ import Powerless from "/imports/ui/client/components/Powerless";
 const defaultState = {
   originalOnly: false,
   tagStr: "",
-  filter: "sfw",
+  filterId: undefined,
   noPush: false
 };
 
@@ -20,11 +20,11 @@ export default React.createClass({
   first: true,
   seeded: false,
   getInitialState() {
-    const filter = _.get(Meteor.user(), "settings.defaultFilter");
+    const filterId = _.get(Meteor.user(), "settings.defaultFilter");
     return {
       originalOnly: (getQueryParam("originalOnly") === "true") || defaultState.originalOnly,
       tagStr: getQueryParam("query") || defaultState.tagStr,
-      filter: getQueryParam("filter") || filter || defaultState.filter
+      filterId: getQueryParam("filter") || filterId || defaultState.filterId
     }
   },
   readQueryParams(event) {
@@ -83,9 +83,9 @@ export default React.createClass({
       queuedParams.push({ query: undefined });
     }
 
-    if (this.state.filter) {
-      if (this.state.filter !== defaultState.filter) {
-        queuedParams.push({ filter: this.state.filter });
+    if (this.state.filterId) {
+      if (this.state.filterId !== defaultState.filterId) {
+        queuedParams.push({ filter: this.state.filterId });
       } else {
         queuedParams.push({ filter: undefined });
       }
@@ -98,7 +98,17 @@ export default React.createClass({
 
     const doc = this.props.generateDoc.bind(this)();
 
-    defaultState.filter = _.get(Meteor.user(), "settings.defaultFilter", defaultState.filter);
+    const filterHandle = Meteor.subscribe("globalFilters");
+    const defaultFilter = Filters.findOne(
+      {
+        owner: { $exists: false },
+        default: true
+      }
+    );
+    defaultState.filterId = _.get(Meteor.user(), "settings.defaultFilter",
+      _.get(defaultFilter, "_id")
+    );
+    filterId = this.state.filterId || defaultState.filterId;
 
     if (! this.state.noPush) {
       const queuedParams = this.queryBuilder(doc);
@@ -110,7 +120,7 @@ export default React.createClass({
     this.first = false;
 
     let arg1 = _.omit(this.state, [ "noPush", "filterChanged" ]);
-    arg1.filter = _.get(arg1.filter, "hides.text", "");
+    arg1.filterId = filterId;
     let arg2 = page;
     let arg3;
     if (typeof this.props.subData !== "undefined") {
@@ -120,7 +130,6 @@ export default React.createClass({
     }
 
     const handle = Meteor.subscribe(this.props.subName, arg1, arg2, arg3);
-    const filterHandle = Meteor.subscribe("globalFilters");
     const data = {
       loading: ! handle.ready(),
       filterLoading: ! filterHandle.ready(),
@@ -133,11 +142,12 @@ export default React.createClass({
         }
       ).fetch(),
       filters: Filters.find({ owner: { $exists: false } }).fetch(),
+      filter: Filters.findOne({ _id: filterId }),
       spoilered: {},
       currentUser: Meteor.user()
     };
 
-    const filter = Filters.findOne({ _id: this.state.filter });
+    const filter = Filters.findOne({ _id: filterId });
     if (filter && filter.spoilers.text) {
       const doc = tagQuery(filter.spoilers);
       Posts.find(doc).map((post) => {
@@ -167,7 +177,7 @@ export default React.createClass({
   },
   handleFilter(event, index, value) {
     this.setState({
-      filter: value,
+      filterId: value,
       filterChanged: true,
       noPush: false
     });

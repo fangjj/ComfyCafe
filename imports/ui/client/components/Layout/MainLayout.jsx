@@ -72,7 +72,7 @@ export default React.createClass({
     }
   },
   navWarning() {
-    return "You have uploads in progress! Are you sure you want to leave?";
+    return "You have uploads in progress!";
   },
   componentDidMount() {
     media.resumable.assignDrop(document.querySelector("html"));

@@ -5,6 +5,9 @@
   line-height: 0;
 
   .medium {
+    width: auto;
+    height: auto;
+
     max-width: 100%;
     max-height: calc(100vh - 128px);
   }
@@ -23,9 +26,9 @@
   max-height: calc(100vh - 128px);
 
   .medium {
+    width: 100%;
     height: auto;
 
-    width: 100%;
     max-height: calc(100vh - 128px);
   }
 }

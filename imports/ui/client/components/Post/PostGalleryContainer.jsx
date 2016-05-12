@@ -70,7 +70,6 @@ export default React.createClass({
       const parsed = tagQuery(this.state.tagStr);
       _.each(parsed, (value, key) => {
         if (_.has(doc, key)) {
-          prettyPrint(value);
           if (_.includes(["$and", "$or", "$nor"], key)) {
             doc[key].push.apply(doc[key], value);
           } else {

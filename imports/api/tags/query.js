@@ -250,9 +250,6 @@ function tagQuery(str) {
     }
   }
 
-  //prettyPrint(parsed);
-  prettyPrint(queryDoc);
-
   return queryDoc;
 }
 

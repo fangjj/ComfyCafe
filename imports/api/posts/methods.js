@@ -49,11 +49,17 @@ Meteor.methods({
 
 			const medium = media.findOne({ _id: new Mongo.ObjectID(mediumId) });
 
+			if (! medium) {
+				throw new Meteor.Error("nonexistent-medium", "Medium " + mediumId + " doesn't exist.");
+			}
 			if (medium.length === 0) {
 				throw new Meteor.Error("empty-medium", "Medium " + mediumId + " has length 0.");
 			}
 			if (medium.metadata.bound) {
 				throw new Meteor.Error("duplicate-medium", "Medium " + mediumId + " is already bound.");
+			}
+			if (! medium.metadata.complete) {
+				throw new Meteor.Error("incomplete-medium", "Medium " + mediumId + " isn't complete.");
 			}
 
 			let tags = tagParser(data.tags, {reformat: true});

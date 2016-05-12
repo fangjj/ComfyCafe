@@ -8,7 +8,8 @@ Package.describe({
 
 Npm.depends({
   "sharp": "0.12.2",
-  "attention": "0.1.1"
+  "attention": "0.1.1",
+  "mmmagic": "0.4.4"
 });
 
 Package.onUse(function(api) {
@@ -18,11 +19,13 @@ Package.onUse(function(api) {
 
   api.addFiles([
     "sharp.js",
-    "attention.js"
+    "attention.js",
+    "mmmagic.js"
   ], "server");
 
   api.export([
     "sharp",
-    "attention"
+    "attention",
+    "mmm"
   ], "server");
 });

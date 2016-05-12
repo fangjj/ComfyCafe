@@ -4,6 +4,7 @@ import media from "./collection";
 import Posts from "../posts/collection";
 
 if (Meteor.isServer) {
+	mediumValidate = require("./server/validate").default;
 	getPalette = require("./server/palette").default;
 }
 
@@ -54,12 +55,28 @@ Meteor.methods({
 		}
 
 		if (Meteor.isServer) {
-	    media.update(
-				{ _id: new Mongo.ObjectID(mediumId) },
-				{ $set: {
-					"metadata.complete": true
-				} }
-			);
+			try {
+				mediumValidate(medium._id, Meteor.bindEnvironment((mime, valid) => {
+					if (valid) {
+				    media.update(
+							{ _id: medium._id },
+							{ $set: {
+								contentType: mime,
+								"metadata.complete": true
+							} }
+						);
+					} else {
+						media.remove({ _id: medium._id });
+						console.error("Invalid medium " + mediumId + " purged. (Invalid)");
+						throw new Meteor.Error("invalid-medium");
+					}
+				}));
+			} catch (e) {
+				console.error(e);
+				media.remove({ _id: medium._id });
+				console.error("Invalid medium " + mediumId + " purged. (Caught)");
+				throw e;
+			}
 		}
   },
 	mediumDimensions(mediumId, width, height) {

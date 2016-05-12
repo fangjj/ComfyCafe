@@ -34,11 +34,11 @@ export default React.createClass({
   renderPreview() {
     if (this.props.upload.url) {
       const contentType = this.props.upload.type.split("/")[0];
-      return {
+      return _.get({
         image: this.renderImage,
         video: this.renderVideo,
         audio: this.renderAudio
-      }[contentType]();
+      }, contentType, () => <div />)();
     }
   },
   render() {

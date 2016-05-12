@@ -152,7 +152,7 @@ function parseDescriptors(parsed, kv) {
 }
 
 function tagParser(tagStr, reformat) {
-	tagStr = tagStr.trim().toLowerCase();
+	tagStr = tagStr.trim();
 
 	var parsed = {
 		authors: [],
@@ -234,7 +234,7 @@ function tagParser(tagStr, reformat) {
 			return;
 		}
 
-		var kv = tagSubjectTokenizer(topToken);
+		var kv = tagSubjectTokenizer(topToken.toLowerCase());
 
 		if (kv.length === 1) {
 			parseLonely(parsed, kv);

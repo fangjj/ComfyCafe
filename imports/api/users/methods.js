@@ -7,6 +7,10 @@ import {
 import media from "../media/collection";
 import Notifications from "../notifications/collection";
 
+if (Meteor.isServer) {
+	mediumValidate = require("/imports/api/media/server/validate").default;
+}
+
 Meteor.methods({
 	updateProfile(data) {
 		check(data, {
@@ -96,29 +100,48 @@ Meteor.methods({
 		}
 
 		if (Meteor.isServer) {
-			if (Meteor.user().avatars) {
-				var oldAvatarId = Meteor.user().avatars.fullsize._id;
-				if (oldAvatarId) {
-					// Delete old avatar
-					media.remove({ _id: oldAvatarId });
-				}
+			const medium = media.findOne({ _id: new Mongo.ObjectID(avatarId) });
+			console.log(medium);
+			try {
+				mediumValidate(medium._id, Meteor.bindEnvironment((mime, valid) => {
+					if (valid) {
+						if (Meteor.user().avatars) {
+							var oldAvatarId = Meteor.user().avatars.fullsize._id;
+							if (oldAvatarId) {
+								// Delete old avatar
+								media.remove({ _id: oldAvatarId });
+							}
+						}
+
+						// Unbind djenticon
+						media.update(
+							{ "metadata.avatarFor": Meteor.userId() },
+							{ $unset: {
+								"metadata.avatarFor": "nobody"
+							} }
+						)
+
+						media.update(
+							{ _id: medium._id },
+							{ $set: {
+								contentType: mime,
+								"metadata.bound": true,
+								"metadata.complete": true,
+								"metadata.avatarFor": Meteor.userId()
+							} }
+						);
+					} else {
+						media.remove({ _id: medium._id });
+						console.error("Invalid medium " + avatarId + " purged. (Invalid)");
+						throw new Meteor.Error("invalid-medium");
+					}
+				}));
+			} catch (e) {
+				console.error(e);
+				media.remove({ _id: medium._id });
+				console.error("Invalid medium " + avatarId + " purged. (Caught)");
+				throw e;
 			}
-
-			// Unbind djenticon
-			media.update(
-				{ "metadata.avatarFor": Meteor.userId() },
-				{ $unset: {
-					"metadata.avatarFor": "nobody"
-				} }
-			)
-
-			media.update(
-				{ _id: new Mongo.ObjectID(avatarId) },
-				{ $set: {
-					"metadata.bound": true,
-					"metadata.avatarFor": Meteor.userId()
-				} }
-			);
 		}
 	},
 	deleteAvatar: function () {

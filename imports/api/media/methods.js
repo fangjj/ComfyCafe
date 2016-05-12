@@ -65,6 +65,7 @@ Meteor.methods({
 								"metadata.complete": true
 							} }
 						);
+						Meteor.call("mediumColor", mediumId);
 					} else {
 						media.remove({ _id: medium._id });
 						console.error("Invalid medium " + mediumId + " purged. (Invalid)");

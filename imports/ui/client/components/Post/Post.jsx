@@ -29,12 +29,12 @@ export default React.createClass({
   },
   componentWillMount() {
     if (this.props.post) {
-      setPattern(this.props.post.name, this.props.post.complement);
+      setPattern(this.props.post.name, this.props.post.complementsdf);
     }
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.post) {
-      setPattern(nextProps.post.name, nextProps.post.complement);
+      setPattern(nextProps.post.name, nextProps.post.complementsdf);
     }
   },
   showAlbumSelector(offset) {

@@ -110,6 +110,9 @@ export default React.createClass({
         // This is definitely an avatar!
         avatarUpload(file, (id) => {
           delete this.uploads[id];
+          if (_.isEmpty(this.uploads)) {
+            window.onbeforeunload = null;
+          }
           this.setState({ updateQueue: _.uniqueId() });
         });
       } else {

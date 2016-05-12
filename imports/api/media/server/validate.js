@@ -13,7 +13,22 @@ const whitelist = [
   "audio/ogg"
 ];
 
-function mediumValidate(mediumId, callback) {
+function mediumValidate(mediumId, subset, callback) {
+  const sublist = _.reduce(
+    whitelist,
+    (result, item) => {
+      if (subset) {
+        if (item.split("/")[0] == subset) {
+          result.push(item);
+        }
+      } else {
+        result.push(item);
+      }
+      return result;
+    },
+    []
+  );
+
   const rstream = media.findOneStream({ _id: mediumId });
   let buff = new Buffer(0);
   rstream.on("data", Meteor.bindEnvironment(function (data) {
@@ -23,7 +38,7 @@ function mediumValidate(mediumId, callback) {
     const magic = new mmm.Magic(mmm.MAGIC_MIME_TYPE);
     magic.detect(buff, Meteor.bindEnvironment(function (err, result) {
       if (err) throw err;
-      const valid = _.includes(whitelist, result);
+      const valid = _.includes(sublist, result);
       callback(result, valid);
     }));
   }));

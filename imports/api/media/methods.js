@@ -56,7 +56,7 @@ Meteor.methods({
 
 		if (Meteor.isServer) {
 			try {
-				mediumValidate(medium._id, Meteor.bindEnvironment((mime, valid) => {
+				mediumValidate(medium._id, null, Meteor.bindEnvironment((mime, valid) => {
 					if (valid) {
 				    media.update(
 							{ _id: medium._id },

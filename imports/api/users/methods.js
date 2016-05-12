@@ -103,7 +103,7 @@ Meteor.methods({
 			const medium = media.findOne({ _id: new Mongo.ObjectID(avatarId) });
 			console.log(medium);
 			try {
-				mediumValidate(medium._id, Meteor.bindEnvironment((mime, valid) => {
+				mediumValidate(medium._id, "image", Meteor.bindEnvironment((mime, valid) => {
 					if (valid) {
 						if (Meteor.user().avatars) {
 							var oldAvatarId = Meteor.user().avatars.fullsize._id;

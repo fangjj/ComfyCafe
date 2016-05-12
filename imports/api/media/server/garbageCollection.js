@@ -17,6 +17,7 @@ q = jobs.processJobs("mediaGc", {
   const ids = media.find(
     {
       "metadata.bound": { $ne: true },
+      "metadata.djenticon": { $ne: true },
       uploadDate: { $lt: oneWeekAgo }
     },
     { fields: { _id: 1 } }

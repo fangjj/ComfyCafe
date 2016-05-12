@@ -48,7 +48,7 @@ export default React.createClass({
         iconActivated="check"
         labelDeactivate="Cancel Request"
         iconDeactivate="undo"
-        width={208}
+        width={211}
       />;
     } else {
       return <ToggleButton

@@ -1,33 +1,31 @@
 .mediumContainer {
   display: flex;
+  justify-content: center;
+
+  line-height: 0;
+
+  .medium {
+    max-width: 100%;
+    max-height: calc(100vh - 128px);
+  }
+
+  img.medium {
+    cursor: zoom-in;
+  }
+}
+
+.mediumContainer.video {
+  display: flex;
   align-items: center;
   justify-content: center;
 
   width: 100%;
   max-height: calc(100vh - 128px);
 
-  > div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .medium {
+    height: auto;
 
     width: 100%;
     max-height: calc(100vh - 128px);
-  }
-
-  .medium {
-    max-width: 100%;
-    max-height: calc(100vh - 128px);
-
-    object-fit: contain;
-  }
-
-  img.medium {
-    cursor: zoom-in;
-  }
-
-  img.medium, video.medium {
-    width: auto;
-    height: auto;
   }
 }

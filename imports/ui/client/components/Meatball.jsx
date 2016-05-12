@@ -6,19 +6,33 @@ export default React.createClass({
   handleTouch() {
     this.props.onTouchTap(this.props.name);
   },
+  renderIcon() {
+    if (this.props.icon) {
+      return <div className="iconContainer">
+        {this.props.icon}
+      </div>;
+    }
+  },
+  renderLabel() {
+    if (this.props.label) {
+      return <div className="label">
+        {this.props.label}
+      </div>;
+    }
+  },
   render() {
     const active = this.props.value === this.props.name;
     let classes = classConcat("meatball", this.props.className);
     if (active) {
       classes = classConcat(classes, "active");
     }
-    return <div className={classes} onTouchTap={this.handleTouch}>
-      <div className="iconContainer">
-        {this.props.icon}
-      </div>
-      <div className="label">
-        {this.props.label}
-      </div>
+    const style = {};
+    if (this.props.color) {
+      style.backgroundColor = this.props.color;
+    }
+    return <div className={classes} style={style} onTouchTap={this.handleTouch}>
+      {this.renderIcon()}
+      {this.renderLabel()}
       {this.props.children}
     </div>;
   }

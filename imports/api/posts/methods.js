@@ -3,6 +3,7 @@ import _ from "lodash";
 import Posts from "./collection";
 import generateName from "./nameGen/generator";
 import media from "../media/collection";
+import colors from "/imports/api/media/colors";
 import "../topics/methods";
 import Topics from "../topics/collection";
 import Notifications from "../notifications/collection";
@@ -25,6 +26,12 @@ function nameCycle() {
 	}
 }
 
+function validateColor(color) {
+	if (_.includes(colors, color)) {
+		return color;
+	} return null;
+}
+
 const match = {
 	visibility: String,
 	originality: String,
@@ -32,7 +39,8 @@ const match = {
 	description: String,
 	safety: Number,
 	tags: String,
-	tagsCondExpanded: Object
+	tagsCondExpanded: Object,
+	bgColor: String
 };
 
 Meteor.methods({
@@ -87,6 +95,8 @@ Meteor.methods({
 				mediumDoc.height = medium.metadata.height;
 			}
 
+			data.bgColor = validateColor(data.bgColor);
+
 			const postId = Posts.insert(
 				{
 					createdAt: new Date(),
@@ -110,7 +120,8 @@ Meteor.methods({
 					description: data.description,
 					safety: data.safety,
 					tags: tags,
-					tagsCondExpanded: data.tagsCondExpanded
+					tagsCondExpanded: data.tagsCondExpanded,
+					bgColor: data.bgColor
 				}
 			);
 
@@ -152,6 +163,8 @@ Meteor.methods({
 			tags = tagFullResolver(tags);
 		}
 
+		data.bgColor = validateColor(data.bgColor);
+
 		Posts.update(
 			{ _id: postId },
 			{ $set: {
@@ -162,7 +175,8 @@ Meteor.methods({
 				description: data.description,
 				safety: data.safety,
 				tags: tags,
-				tagsCondExpanded: data.tagsCondExpanded
+				tagsCondExpanded: data.tagsCondExpanded,
+				bgColor: data.bgColor
 			} }
 		);
 

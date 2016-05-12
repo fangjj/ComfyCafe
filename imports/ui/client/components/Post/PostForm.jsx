@@ -13,6 +13,7 @@ import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector
 import OriginalitySelector from "/imports/ui/client/components/OriginalitySelector";
 import SafetySelector from "/imports/ui/client/components/SafetySelector";
 import TagField from "/imports/ui/client/components/Tag/TagField";
+import BgColorSelector from "/imports/ui/client/components/BgColorSelector";
 
 const defaultState = {
   visibility: "public",
@@ -22,7 +23,8 @@ const defaultState = {
   safety: 0,
   autoSafety: 0,
   tags: "tagme",
-  condExpanded: {}
+  condExpanded: {},
+  bgColor: "default"
 };
 
 export default React.createClass({
@@ -38,7 +40,8 @@ export default React.createClass({
         safety: post.safety || defaultState.safety,
         autoSafety: post.safety || defaultState.safety,
         tags: post.tags.text || defaultState.tags,
-        condExpanded: post.tagsCondExpanded || defaultState.condExpanded
+        condExpanded: post.tagsCondExpanded || defaultState.condExpanded,
+        bgColor: post.bgColor || defaultState.bgColor
       };
     } else {
       return defaultState;
@@ -83,6 +86,9 @@ export default React.createClass({
       condExpanded: condExpanded
     });
   },
+  handleBgColor(value) {
+    this.setState({ bgColor: value });
+  },
   handleSubmit() {
     const data = {
       visibility: this.state.visibility,
@@ -91,7 +97,8 @@ export default React.createClass({
       description: this.state.description,
       safety: this.state.safety,
       tags: this.state.tags,
-      tagsCondExpanded: this.state.condExpanded
+      tagsCondExpanded: this.state.condExpanded,
+      bgColor: this.state.bgColor
     };
 
     if (! this.props.post) {
@@ -191,6 +198,10 @@ export default React.createClass({
         floatingLabelText="Tags"
         onChange={this.handleTags}
         receiveAutoSafety={this.receiveAutoSafety}
+      />
+      <BgColorSelector
+        value={this.state.bgColor}
+        onChange={this.handleBgColor}
       />
     </Form>;
   }

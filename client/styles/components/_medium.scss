@@ -15,6 +15,12 @@
   img.medium {
     cursor: zoom-in;
   }
+
+  .spoiler {
+    $size: 268px;
+    width: $size;
+    height: $size;
+  }
 }
 
 .mediumContainer.video {

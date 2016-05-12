@@ -9,10 +9,6 @@ $red-triangle-thing: url(/images/redtri.svg);
   align-items: center;
   justify-content: center;
 
-  $size: 268px;
-  width: $size;
-  height: $size;
-
   background: $boxy-green-thing;
   &.level1 { // Risqué
     background: $purple-stopsign-thing;

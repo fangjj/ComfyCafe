@@ -40,6 +40,9 @@
 
 	min-width: 270px;
   max-width: calc(95vw - #{$offset});
+  max-height: 72px * 5;
+
+  overflow: auto;
 
   background-color: $sg-color;
 
@@ -53,8 +56,6 @@
 		width: 100%;
 
     overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 
     text-align: left;
 
@@ -81,5 +82,17 @@
 
   .dismiss {
     right: -16px;
+  }
+}
+
+
+@media #{$small-and-down} {
+  #notificationList {
+    left: 0;
+    right: 0;
+    top: $top-nav-height;
+
+    width: 100%;
+    max-width: none;
   }
 }

@@ -35,7 +35,15 @@
 
   border-radius: 0 !important;
 
-	#at-nav-button {
-		width: 100%;
-	}
+	text-align: left;
+}
+
+@media #{$small-and-down} {
+  #accountActions {
+		left: -14px;
+		right: auto;
+	  top: $top-nav-height;
+
+		width: 100vw;
+  }
 }

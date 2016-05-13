@@ -80,6 +80,25 @@ export default React.createClass({
       {this.renderLeftSub()}
     </ul>;
   },
+  renderSubMenus() {
+    if (this.userReady()) {
+      return [
+        <NotificationList
+          notifications={this.data.notifications}
+          currentUser={this.data.currentUser}
+          visible={this.state.visibleMenu === "notifications"}
+          action={this.toggleNotificationList}
+          key="notificationList"
+        />,
+        <AccountActionsList
+          currentUser={this.data.currentUser}
+          visible={this.state.visibleMenu === "account"}
+          action={this.toggleAccountActions}
+          key="accountActionsList"
+        />
+      ];
+    }
+  },
   renderRightSub() {
     if (this.data.loading) {
       return;
@@ -117,21 +136,6 @@ export default React.createClass({
     var notificationList;
     var actionList;
 
-    if (this.userReady()) {
-      notificationList = <NotificationList
-        notifications={this.data.notifications}
-        currentUser={this.data.currentUser}
-        visible={this.state.visibleMenu === "notifications"}
-        action={this.toggleNotificationList}
-      />;
-
-      actionList = <AccountActionsList
-        currentUser={this.data.currentUser}
-        visible={this.state.visibleMenu === "account"}
-        action={this.toggleAccountActions}
-      />;
-    }
-
     return <ul className="rightSide topLevel">
       <TopBarExploreButton />
       {this.renderRightSub()}
@@ -149,6 +153,7 @@ export default React.createClass({
         currentUser={this.data.currentUser}
         onClose={this.handleHotdog}
       />
+      {this.renderSubMenus()}
 
       {this.renderLeft()}
 

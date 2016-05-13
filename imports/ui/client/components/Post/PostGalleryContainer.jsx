@@ -22,50 +22,29 @@ export default React.createClass({
   seeded: false,
   getInitialState() {
     const filterId = _.get(Meteor.user(), "settings.defaultFilter");
+    prettyPrint(
+      FlowRouter.getQueryParam("originalOnly"),
+      FlowRouter.getQueryParam("query"),
+      FlowRouter.getQueryParam("filter")
+    );
     return {
-      originalOnly: (getQueryParam("originalOnly") === "true") || defaultState.originalOnly,
-      tagStr: getQueryParam("query") || defaultState.tagStr,
-      filterId: getQueryParam("filter") || filterId || defaultState.filterId
+      originalOnly: (FlowRouter.getQueryParam("originalOnly") === "true") || defaultState.originalOnly,
+      tagStr: FlowRouter.getQueryParam("query") || defaultState.tagStr,
+      filterId: FlowRouter.getQueryParam("filter") || filterId || defaultState.filterId
     }
-  },
-  readQueryParams(event) {
-    let doc = {
-      noPush: true
-    };
-    const params = {
-      originalOnly: getQueryParam("originalOnly"),
-      tagStr: getQueryParam("query"),
-      filter: getQueryParam("filter")
-    };
-    _.each(params, (v, k) => {
-      if (v !== null) {
-        if (typeof defaultState[k] !== "boolean") {
-          doc[k] = v;
-        } else {
-          doc[k] = v === "true";
-        }
-      }
-    });
-    if (! _.isEmpty(doc)) {
-      this.seeded = true;
-    }
-    if (params.filter) {
-      doc.filterChanged = true;
-    }
-    this.setState(doc);
   },
   queryBuilder(doc) {
-    const queuedParams = [];
+    const queuedParams = {};
 
     if (this.state.originalOnly) {
-      queuedParams.push({ originalOnly: this.state.originalOnly });
+      queuedParams.originalOnly = this.state.originalOnly;
       doc.originality = { $ne: "repost" };
     } else {
-      queuedParams.push({ originalOnly: undefined });
+      queuedParams.originalOnly = null;
     }
 
     if (this.state.tagStr) {
-      queuedParams.push({ query: this.state.tagStr });
+      queuedParams.query = this.state.tagStr;
 
       const parsed = tagQuery(this.state.tagStr);
       _.each(parsed, (value, key) => {
@@ -80,14 +59,14 @@ export default React.createClass({
         }
       });
     } else {
-      queuedParams.push({ query: undefined });
+      queuedParams.query = null;
     }
 
     if (this.state.filterId) {
       if (this.state.filterId !== defaultState.filterId) {
-        queuedParams.push({ filter: this.state.filterId });
+        queuedParams.filter = this.state.filterId;
       } else {
-        queuedParams.push({ filter: undefined });
+        queuedParams.filter = null;
       }
     }
 
@@ -112,9 +91,8 @@ export default React.createClass({
 
     if (! this.state.noPush) {
       const queuedParams = this.queryBuilder(doc);
-      const query = setQueryParams(queuedParams);
       if (! this.first || this.seeded) {
-        pushState(query);
+        FlowRouter.setQueryParams(queuedParams);
       }
     }
     this.first = false;
@@ -156,12 +134,6 @@ export default React.createClass({
     }
 
     return data;
-  },
-  componentDidMount() {
-    window.addEventListener("popstate", this.readQueryParams);
-  },
-  componentWillUnmount() {
-    window.removeEventListener("popstate", this.readQueryParams);
   },
   handleOriginalOnly(event) {
     this.setState({

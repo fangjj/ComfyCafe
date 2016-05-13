@@ -33,6 +33,30 @@ export default React.createClass({
       filterId: FlowRouter.getQueryParam("filter") || filterId || defaultState.filterId
     }
   },
+  readQueryParams(event) {
+    let doc = { noPush: true };
+    const params = {
+      originalOnly: FlowRouter.getQueryParam("originalOnly"),
+      tagStr: FlowRouter.getQueryParam("query"),
+      filter: FlowRouter.getQueryParam("filter")
+    };
+    _.each(params, (v, k) => {
+      if (v !== null) {
+        if (typeof defaultState[k] !== "boolean") {
+          doc[k] = v;
+        } else {
+          doc[k] = v === "true";
+        }
+      }
+    });
+    if (! _.isEmpty(doc)) {
+      this.seeded = true;
+    }
+    if (params.filter) {
+      doc.filterChanged = true;
+    }
+    this.setState(doc);
+  },
   queryBuilder(doc) {
     const queuedParams = {};
 
@@ -92,7 +116,26 @@ export default React.createClass({
     if (! this.state.noPush) {
       const queuedParams = this.queryBuilder(doc);
       if (! this.first || this.seeded) {
-        FlowRouter.setQueryParams(queuedParams);
+        const where = window.location.pathname + _.reduce(
+          queuedParams,
+          (result, value, key) => {
+            if (value) {
+              if (! result) {
+                result = `?${key}=${value}`;
+              } else {
+                result += `&${key}=${value}`;
+              }
+            }
+            return result;
+          },
+          ""
+        );
+        const lastState = Session.get("lastHistState");
+        if (where !== lastState) {
+          console.log("pushState", where, "lastHistState", lastState);
+          FlowRouter.setQueryParams(queuedParams);
+          Session.set("lastHistState", where);
+        }
       }
     }
     this.first = false;
@@ -134,6 +177,12 @@ export default React.createClass({
     }
 
     return data;
+  },
+  componentDidMount() {
+    window.addEventListener("popstate", this.readQueryParams);
+  },
+  componentWillUnmount() {
+    window.removeEventListener("popstate", this.readQueryParams);
   },
   handleOriginalOnly(event) {
     this.setState({

@@ -30,6 +30,8 @@ export default (props) => {
     modal={false}
     autoScrollBodyContent={true}
     onRequestClose={onClose}
+    titleStyle={{ padding: "12px 12px 6px" }}
+    actionsContainerStyle={{ padding: "6px", paddingTop: "7px" }}
     {...leftoverProps}
   >
     {children}

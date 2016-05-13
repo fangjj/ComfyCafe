@@ -60,25 +60,25 @@ export default React.createClass({
     }
   },
   handleVisibility(value) {
-    this.setState({visibility: value});
+    this.setState({ visibility: value });
   },
   handleOriginality(value) {
-    this.setState({originality: value});
+    this.setState({ originality: value });
   },
-  handleSource(event) {
-    this.setState({source: event.target.value});
+  handleSource(e) {
+    this.setState({ source: e.target.value });
   },
-  handleDescription(event) {
-    this.setState({description: event.target.value});
+  handleDescription(e) {
+    this.setState({ description: e.target.value });
   },
-  handleSafety(event, index, value) {
-    this.setState({safety: parseInt(value)});
+  handleSafety(value) {
+    this.setState({ safety: parseInt(value) });
   },
   receiveAutoSafety(value) {
-    this.setState({autoSafety: value});
+    this.setState({ autoSafety: value });
   },
   applyAutoSafety() {
-    this.setState({safety: this.state.autoSafety});
+    this.setState({ safety: this.state.autoSafety });
   },
   handleTags(value, parsed, condExpanded) {
     this.setState({

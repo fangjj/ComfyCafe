@@ -76,7 +76,7 @@ export default React.createClass({
   handleOrigin(value) {
     this.setState({ origin: value });
   },
-  handleSafety(e, index, value) {
+  handleSafety(value) {
     this.setState({ safety: parseInt(value) });
   },
   handleImplications(tagStr, parsed) {

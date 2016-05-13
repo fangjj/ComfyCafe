@@ -16,7 +16,8 @@
   .inner {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 }
 
@@ -25,14 +26,11 @@
 
   flex: 1;
 
-  &:not(:last-child) {
-    margin-right: 20px;
-  }
-
   padding: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
 
-  border: 2px solid rgba($text-color, 0.7);
-  border-radius: 6px;
+  border-bottom: 2px solid rgba($text-color, 0.7);
 
   cursor: pointer;
   user-select: none;

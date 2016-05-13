@@ -1,15 +1,12 @@
 import React from "react";
 import OnClickOutside from "react-onclickoutside";
+import Menu from "material-ui/Menu";
+import MenuItem from "material-ui/MenuItem";
+import Divider from "material-ui/Divider";
 
 import TopMenuItem from "./TopMenuItem";
 
-import {
-  Menu,
-  MenuItem,
-  Divider
-} from "material-ui";
-
-const TopBarMenu = React.createClass({
+export default React.createClass({
   mixins: [OnClickOutside],
   handleClickOutside(event) {
     if (this.props.open) {
@@ -44,23 +41,18 @@ const TopBarMenu = React.createClass({
     }
   },
   render() {
-    var classes = "topMenu";
+    let classes = "topMenu";
     if (this.props.open) {
       classes = "topMenu active";
     }
 
-    return <div className={classes}>
-      <div id="mobileMenuArrow" className={classes}></div>
-      <Menu id="mobileMenu" className={classes} autoWidth={false}>
-        {this.renderTop()}
-        <TopMenuItem
-          primaryText="Explore"
-          leftIconName="explore"
-          href={FlowRouter.path("explore")}
-        />
-      </Menu>
-    </div>;
+    return <Menu id="mobileMenu" className={classes} autoWidth={false}>
+      {this.renderTop()}
+      <TopMenuItem
+        primaryText="Explore"
+        leftIconName="explore"
+        href={FlowRouter.path("explore")}
+      />
+    </Menu>;
   }
 });
-
-export default TopBarMenu;

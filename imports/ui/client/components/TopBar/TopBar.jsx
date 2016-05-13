@@ -77,12 +77,6 @@ export default React.createClass({
           <i className="material-icons">menu</i>
         </a>
       </NavItem>
-      <TopBarMenu
-        open={this.state.visibleMenu === "hotdog"}
-        currentUser={this.data.currentUser}
-        onClose={this.handleHotdog}
-      />
-
       {this.renderLeftSub()}
     </ul>;
   },
@@ -150,6 +144,12 @@ export default React.createClass({
       backgroundColor: this.props.color
     };
     return <nav className="topNav" style={style}>
+      <TopBarMenu
+        open={this.state.visibleMenu === "hotdog"}
+        currentUser={this.data.currentUser}
+        onClose={this.handleHotdog}
+      />
+
       {this.renderLeft()}
 
       <div className="logoWrapper center hide-on-small-only">

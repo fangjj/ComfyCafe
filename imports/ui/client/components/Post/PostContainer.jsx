@@ -31,7 +31,7 @@ export default createContainer(({ params }) => {
         name: FlowRouter.getParam("postName")
       }
     ),
-    filter: Filters.findOne(filterDoc),
+    filter: Session.get("filter") || Filters.findOne(filterDoc),
     spoilered: {},
     currentUser: Meteor.user()
   };

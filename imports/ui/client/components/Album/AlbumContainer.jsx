@@ -36,7 +36,7 @@ export default createContainer(({ params }) => {
     postsLoading: ! postsHandle.ready(),
     album,
     posts: Posts.find({ _id: { $in: _.get(album, "posts", []) } }).fetch(),
-    filter: Filters.findOne(filterDoc),
+    filter: Session.get("filter") || Filters.findOne(filterDoc),
     spoilered: {},
     currentUser: Meteor.user()
   };

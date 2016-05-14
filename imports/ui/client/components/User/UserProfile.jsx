@@ -80,7 +80,12 @@ export default React.createClass({
     }
   },
   renderAvatar(isOwner) {
-    return <DirectAvatar size="large" user={this.data.user} editable={isOwner} />;
+    return <DirectAvatar
+      size="large"
+      user={this.data.user}
+      safety={_.get(this.data.user, "profile.avatarSafety", 0)}
+      editable={isOwner}
+    />;
   },
   renderEditButtons(isOwner) {
     if (isOwner) {

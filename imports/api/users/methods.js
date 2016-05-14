@@ -9,6 +9,7 @@ import {
 import { validateUsername } from "/imports/api/users/validators";
 import media from "/imports/api/media/collection";
 import Notifications from "/imports/api/notifications/collection";
+import Filters from "/imports/api/filters/collection";
 
 if (Meteor.isServer) {
 	mediumValidate = require("/imports/api/media/server/validate").default;
@@ -85,6 +86,8 @@ Meteor.methods({
 			Meteor.call("changeUsername", data.username);
 		}
 
+		const defaultFilter = Filters.findOne({ _id: data.defaultFilter });
+
 		Meteor.users.update(
 			{ _id: Meteor.userId() },
 			{ $set: {
@@ -92,7 +95,8 @@ Meteor.methods({
 				"settings.defaultFilter": data.defaultFilter,
 				"settings.uploadAction": data.uploadAction,
 				"settings.autoWatch": data.autoWatch,
-				"settings.defaultAlbumVisibility": data.defaultAlbumVisibility
+				"settings.defaultAlbumVisibility": data.defaultAlbumVisibility,
+				defaultFilter
 			} }
 		);
 	},

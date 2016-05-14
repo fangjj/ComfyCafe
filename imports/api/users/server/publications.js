@@ -10,7 +10,7 @@ Meteor.publish(null, function () {
 			subscribers: 1,
       friends: 1,
       room: 1,
-      bookmarks: 1
+      defaultFilter: 1
 		} }
 	);
 });

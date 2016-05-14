@@ -15,10 +15,6 @@
   template: src=site.conf.j2 dest=/etc/nginx/sites-enabled/teru-images.conf
   notify:
   - reload nginx
-- name: copy nginx cors-anywhere configuration
-  template: src=cors-anywhere.conf.j2 dest=/etc/nginx/sites-enabled/cors-anywhere.conf
-  notify:
-  - reload nginx
 - name: remove nginx default site
   file: path=/etc/nginx/sites-enabled/default state=absent
   notify:

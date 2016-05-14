@@ -88,8 +88,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 9001",
-    "cors-anywhere": "node ./.cors-anywhere/server.js"
+    "storybook": "start-storybook -p 9001"
   },
   "repository": {
     "type": "git",

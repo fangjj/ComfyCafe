@@ -3,13 +3,13 @@ import React from "react";
 import { getMediaUrlMD5, getMediaUrlDjent } from "/imports/api/media/urls";
 import thumbnailPolicies from "/imports/api/thumbnails/policies";
 
-const DirectAvatar = React.createClass({
+export default React.createClass({
   render() {
     const size = thumbnailPolicies.avatar[this.props.size].size;
 
     const user = this.props.user;
-    var hasAvatars = Boolean(user.avatars);
-    if (hasAvatars) {
+    const hasAvatars = Boolean(user.avatars);
+    if (hasAvatars && ! this.props.spoilered) {
       const avatar = user.avatars[this.props.size] || user.avatars.fullsize;
       if (avatar) {
         return <img
@@ -31,5 +31,3 @@ const DirectAvatar = React.createClass({
     />
   }
 });
-
-export default DirectAvatar;

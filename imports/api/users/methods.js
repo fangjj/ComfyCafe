@@ -1,11 +1,14 @@
 import _ from "lodash";
 
-import { ownerPrefixer, updateOwnerDocs, updateProfile } from "/imports/api/users/updateProfile";
 import {
-	validateUsername
-} from "./validators";
-import media from "../media/collection";
-import Notifications from "../notifications/collection";
+	ownerPrefixer,
+	updateOwnerDocs,
+	profilePrefixer,
+	updateProfile
+} from "/imports/api/users/updateProfile";
+import { validateUsername } from "/imports/api/users/validators";
+import media from "/imports/api/media/collection";
+import Notifications from "/imports/api/notifications/collection";
 
 if (Meteor.isServer) {
 	mediumValidate = require("/imports/api/media/server/validate").default;
@@ -14,10 +17,16 @@ if (Meteor.isServer) {
 Meteor.methods({
 	updateProfile(data) {
 		check(data, {
+			displayName: String,
+			blurb: String,
+			bio: String,
+			birthday: {
+				month: Number,
+				day: Number
+			},
+			avatarSafety: Number,
 			info: Object,
 			infoOrder: [String],
-			displayName: String,
-			blurb: String
 		});
 
 		if (! Meteor.userId()) {
@@ -26,12 +35,7 @@ Meteor.methods({
 
 		updateProfile(
 			{ _id: Meteor.userId() },
-			{ $set: {
-				"profile.info": data.info,
-				"profile.infoOrder": data.infoOrder,
-				"profile.displayName": data.displayName,
-				"profile.blurb": data.blurb
-			} }
+			{ $set: profilePrefixer(data) }
 		);
 	},
 	changeUsername(username) {

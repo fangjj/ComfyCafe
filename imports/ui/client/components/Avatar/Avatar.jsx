@@ -3,13 +3,13 @@ import React from "react";
 import { getMediaUrlAvatar, getMediaUrlDjent } from "/imports/api/media/urls";
 import thumbnailPolicies from "/imports/api/thumbnails/policies";
 
-const Avatar = React.createClass({
+export default React.createClass({
   render() {
     const size = thumbnailPolicies.avatar[this.props.size].size;
 
     const user = this.props.user;
     let url;
-    if (user.profile.avatar) {
+    if (user.profile.avatar && ! this.props.spoilered) {
       url = getMediaUrlAvatar(user._id, user.profile.avatar._id, this.props.size);
     } else {
       url = getMediaUrlDjent(user._id);
@@ -23,5 +23,3 @@ const Avatar = React.createClass({
     />;
   }
 });
-
-export default Avatar;

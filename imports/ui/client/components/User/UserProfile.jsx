@@ -1,8 +1,10 @@
 import _ from "lodash";
 import React from "react";
+import moment from "moment";
 
 import "/imports/api/users/methods";
 import setTitle from "/imports/api/common/setTitle";
+import getOrdinal from "/imports/ui/client/utils/ordinal";
 import UserInfo from "/imports/ui/client/components/User/UserInfo";
 import UserProfileForm from "/imports/ui/client/components/User/UserProfileForm";
 import UserSearch from "/imports/ui/client/components/User/UserSearch";
@@ -132,10 +134,20 @@ export default React.createClass({
   renderBadges() {
     return <BadgeGroup badges={_.get(this.data.user, "profile.badges", {})} />;
   },
+  renderBirthday(user) {
+    const birthday = _.get(user, "profile.birthday");
+    if (birthday) {
+      const month = moment().month(birthday.month-1).format("MMMM");
+      return <div>
+        <Icon className="sigil">cake</Icon> {month} {getOrdinal(birthday.day)}
+      </div>;
+    }
+  },
   renderStats(user) {
     const path = (where) => FlowRouter.path(where, { username: user.username });
     const count = (what) => _.get(user.profile, what + "Count", 0);
     return <div className="genericCol">
+      {this.renderBirthday(user)}
       <a href={path("imagesBy")}>
         <Icon className="sigil">image</Icon> {count("image")} Images
       </a>
@@ -153,7 +165,6 @@ export default React.createClass({
   renderForm(isOwner) {
     if (isOwner && this.state.isEditing) {
       return <UserProfileForm
-        currentUser={this.data.user}
         actions={true}
         onClose={this.stopEditing}
       />;

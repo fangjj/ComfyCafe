@@ -18,6 +18,12 @@ function updateOwnerDocs(query, update) {
   });
 }
 
+function profilePrefixer(doc) {
+  return _.mapKeys(doc, (value, key) => {
+    return "profile." + key;
+  });
+}
+
 function updateProfile(query, update) {
   Meteor.users.update(
     query,
@@ -30,8 +36,6 @@ function updateProfile(query, update) {
     return ownerPrefixer(subDoc);
   });
 
-  prettyPrint(ownerQuery, ownerUpdate);
-
   updateOwnerDocs(
     ownerQuery,
     ownerUpdate
@@ -41,5 +45,6 @@ function updateProfile(query, update) {
 export {
   ownerPrefixer,
   updateOwnerDocs,
+  profilePrefixer,
   updateProfile
 };

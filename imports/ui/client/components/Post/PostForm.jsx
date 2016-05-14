@@ -180,7 +180,7 @@ export default React.createClass({
       />
       <br />
       <SafetySelector
-        safety={this.state.safety}
+        value={this.state.safety}
         onChange={this.handleSafety}
       />
       <div className="autoSafety">

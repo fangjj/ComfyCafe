@@ -8,7 +8,7 @@ export default React.createClass({
   render() {
     return <MeatballSelector
       label={this.props.label || "Safety"}
-      value={this.props.safety || this.props.value}
+      value={this.props.value}
       defaultValue={this.props.defaultValue}
       onChange={this.props.onChange}
     >

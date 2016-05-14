@@ -86,7 +86,7 @@ export default React.createClass({
 
       <SafetySelector
         label="Avatar Safety"
-        safety={this.state.avatarSafety}
+        value={this.state.avatarSafety}
         onChange={this.handleAvararSafety}
       />
       <br />

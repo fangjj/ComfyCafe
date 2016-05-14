@@ -25,7 +25,10 @@ export default React.createClass({
     return {
       originalOnly: (FlowRouter.getQueryParam("originalOnly") === "true") || defaultState.originalOnly,
       tagStr: FlowRouter.getQueryParam("query") || defaultState.tagStr,
-      filterId: FlowRouter.getQueryParam("filter") || filterId || defaultState.filterId
+      filterId: FlowRouter.getQueryParam("filter")
+        || _.get(Session.get("filter"), "_id")
+        || filterId
+        || defaultState.filterId
     }
   },
   readQueryParams(event) {

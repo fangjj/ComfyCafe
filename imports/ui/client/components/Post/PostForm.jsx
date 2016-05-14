@@ -162,13 +162,13 @@ export default React.createClass({
       onClose={this.props.onClose}
     >
       {this.renderMedium()}
-      <OriginalitySelector
-        value={this.state.originality}
-        onChange={this.handleOriginality}
-      />
       <VisibilitySelector
         visibility={this.state.visibility}
         onChange={this.handleVisibility}
+      />
+      <OriginalitySelector
+        value={this.state.originality}
+        onChange={this.handleOriginality}
       />
       {this.renderSourceField()}
       <TextArea

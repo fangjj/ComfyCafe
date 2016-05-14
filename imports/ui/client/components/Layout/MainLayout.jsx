@@ -5,6 +5,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import "/imports/api/media/methods";
 import media from "/imports/api/media/collection";
 import { getMediaUrlMD5 } from "/imports/api/media/urls";
+import { eachFile } from "/imports/api/media/eachFile";
 import mediaUpload from "/imports/api/media/client/handlers/media";
 import avatarUpload from "/imports/api/media/client/handlers/avatar";
 import setPattern from "/imports/ui/client/utils/setPattern";
@@ -75,7 +76,8 @@ export default React.createClass({
     return "You have uploads in progress!";
   },
   componentDidMount() {
-    media.resumable.assignDrop(document.querySelector("html"));
+    // Binding drop here prevents handleDrop from working, so we don't bind drop here.
+    //media.resumable.assignDrop(document.querySelector("html"));
 
     media.resumable.on("fileAdded", (file) => {
       window.onbeforeunload = this.navWarning;
@@ -129,6 +131,35 @@ export default React.createClass({
       this.uploads[file.uniqueIdentifier].progress = file.progress() * 100;
       this.setState({ updateQueue: _.uniqueId() });
     });
+  },
+  preventDefault(e) {
+    e.preventDefault();
+  },
+  handleDrop(e) {
+    e.preventDefault();
+    eachFile(e, (file) => {
+      file.source = "media";
+      media.resumable.addFile(file);
+    });
+    const url = $(e.dataTransfer.getData("text/html")).filter("img").attr("src");
+    if (url) {
+      console.log(url);
+      const img = new Image();
+      const canvas = document.createElement("canvas");
+      img.onload = function(e) {
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+        canvas.toBlob((blob) => {
+          const ext = blob.type.split("/")[1];
+          const fileName = _.first(_.last(url.split("/")).split("."));
+          blob.name = fileName + "." + ext;
+          blob.source = "media";
+          media.resumable.addFile(blob);
+        });
+      };
+      img.crossOrigin = "";
+      img.src = url;
+    }
   },
   handlePaste(e) {
     _.each(e.clipboardData.items, (item) => {
@@ -219,7 +250,7 @@ export default React.createClass({
   },
   render() {
     return <MuiThemeProvider muiTheme={muiTheme}>
-      <div onPaste={this.handlePaste}>
+      <div onDragOver={this.preventDefault} onDrop={this.handleDrop} onPaste={this.handlePaste}>
         <PseudoBodyContainer
           setColor={this.setColor}
         />

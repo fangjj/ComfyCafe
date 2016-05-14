@@ -46,6 +46,12 @@ Meteor.methods({
         { _id: user._id },
         { $set: { defaultFilter } }
       );
+      updateOwnerDocs(
+				{ "owner._id": user._id },
+				{ $set: ownerPrefixer({
+					"profile.avatarSafety": user.profile.avatarSafety
+				}) }
+			);
     });
   }),
   migrateUsers: migrationBuilder(function () {

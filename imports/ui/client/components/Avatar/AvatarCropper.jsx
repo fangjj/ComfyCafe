@@ -3,12 +3,11 @@ import NativeListener from "react-native-listener";
 
 import media from "/imports/api/media/collection";
 import { getFiles } from "/imports/api/media/eachFile";
-
 import Icon from "/imports/ui/client/components/Daikon/Icon";
-import Actions from "../Actions";
+import Actions from "/imports/ui/client/components/Actions";
 import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
-import CropperComponent from "../extern/CropperComponent";
+import CropperComponent from "/imports/ui/client/components/extern/CropperComponent";
 
 export default React.createClass({
 	getInitialState() {

@@ -22,11 +22,6 @@ export default React.createClass({
   seeded: false,
   getInitialState() {
     const filterId = _.get(Meteor.user(), "settings.defaultFilter");
-    prettyPrint(
-      FlowRouter.getQueryParam("originalOnly"),
-      FlowRouter.getQueryParam("query"),
-      FlowRouter.getQueryParam("filter")
-    );
     return {
       originalOnly: (FlowRouter.getQueryParam("originalOnly") === "true") || defaultState.originalOnly,
       tagStr: FlowRouter.getQueryParam("query") || defaultState.tagStr,
@@ -169,6 +164,7 @@ export default React.createClass({
     };
 
     const filter = Filters.findOne({ _id: filterId });
+    Session.set("filter", filter);
     if (filter && filter.spoilers.text) {
       const doc = tagQuery(filter.spoilers);
       Posts.find(doc).map((post) => {

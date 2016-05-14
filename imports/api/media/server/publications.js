@@ -21,7 +21,8 @@ Meteor.publish("mediaQueue", function (clientUserId) {
 				"metadata.owner": 1,
 				"metadata.complete": 1,
 				"metadata.bound": 1,
-				"metadata.thumbnailPolicy": 1
+				"metadata.thumbnailPolicy": 1,
+				"metadata.downloaded": 1
 			} }
 		);
 	} else {

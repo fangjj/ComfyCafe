@@ -46,12 +46,18 @@ export default React.createClass({
           },
           {
             sort: { uploadDate: -1, filename: 1 },
-            fields: { filename: 1, contentType: 1, md5: 1 }
+            fields: { filename: 1, contentType: 1, md5: 1, "metadata.downloaded": 1 }
           }
         ).fetch(),
         (result, medium) => {
           const id = medium._id._str;
           if (! _.has(this.uploads, id) && ! _.includes(this.deleted, id)) {
+            const alreadyHere = expr(() => {
+              const pq = _.get(this, "data.preQueue");
+              if (! pq) {
+                return true;
+              } return _.has(pq, id);
+            });
             result[id] = {
               _id: id,
               progress: 100,
@@ -59,6 +65,13 @@ export default React.createClass({
               type: medium.contentType,
               url: getMediaUrlMD5(medium.md5)
             };
+            if (_.get(medium, "metadata.downloaded")
+              && ! alreadyHere
+              && ! this.state.mediumId
+              && typeof this.directMediumId === "undefined"
+            ) {
+              this.directMediumId = id;
+            }
           }
           return result;
         },
@@ -172,6 +185,7 @@ export default React.createClass({
     this.setState({ updateQueue: _.uniqueId() });
   },
   destroyPostForm() {
+    this.directMediumId = null;
     this.setState({ mediumId: null });
   },
   postSuccess(mediumId) {
@@ -179,6 +193,7 @@ export default React.createClass({
     if (_.isEmpty(this.uploads)) {
       window.onbeforeunload = null;
     }
+    this.directMediumId = null;
     this.setState({
       mediumId: null,
       updateQueue: _.uniqueId()
@@ -190,7 +205,8 @@ export default React.createClass({
     });
   },
   renderPostForm() {
-    if (this.state.mediumId) {
+    const id = this.state.mediumId || this.directMediumId;
+    if (id) {
       return <Dialog
         title="Create Post"
         formId="formNewPost"
@@ -199,7 +215,7 @@ export default React.createClass({
       >
         <PostForm
           id="formNewPost"
-          mediumId={this.state.mediumId}
+          mediumId={id}
           onSuccess={this.postSuccess}
           onClose={this.destroyPostForm}
         />

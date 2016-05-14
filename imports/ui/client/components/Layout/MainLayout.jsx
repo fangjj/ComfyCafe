@@ -146,7 +146,9 @@ export default React.createClass({
       console.log(url);
       const img = new Image();
       const canvas = document.createElement("canvas");
-      img.onload = function(e) {
+      img.onload = function (e) {
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
         const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
         canvas.toBlob((blob) => {
@@ -158,7 +160,8 @@ export default React.createClass({
         });
       };
       img.crossOrigin = "";
-      img.src = url;
+      // This shouldn't be hardcoded, but it is.
+      img.src = "https://crossorigin.me/" + url;
     }
   },
   handlePaste(e) {

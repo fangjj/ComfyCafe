@@ -15,4 +15,7 @@ mongo_url: mongodb://localhost:27017/TeruImages
 ddp_url: http://localhost
 meteor_settings: "{}"
 
+cors_anywhere_domain: localhost
+cors_anywhere_port: 8080
+
 ssh_port: 22

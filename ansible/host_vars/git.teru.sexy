@@ -4,6 +4,7 @@ makej: 5
 
 domain: teru.sexy
 ddp_domain: sock.teru.sexy
+cors_anywhere_domain: cors.teru.sexy
 root_url: https://teru.sexy
 ddp_url: https://sock.teru.sexy
 ssh_port: 222

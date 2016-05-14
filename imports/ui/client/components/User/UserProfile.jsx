@@ -65,14 +65,14 @@ export default React.createClass({
   renderInfo(user) {
     const info = _.get(user, "profile.info", {});
     const order = _.get(user, "profile.infoOrder", []);
-    if (! this.state.isEditing && ! _.isEmpty(info)) {
+    if (! _.isEmpty(info)) {
       return <UserInfo info={info} order={order} />;
     }
   },
   renderBelowWell(user) {
     const bio = this.renderBio(user);
     const info = this.renderInfo(user);
-    if (bio || info) {
+    if (! this.state.isEditing && (bio || info)) {
       return <div className="belowWell">
         {bio}
         {info}

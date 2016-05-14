@@ -31,8 +31,12 @@
     }
   }
 
-  .userInfo {
+  .belowWell {
     margin-top: 36px;
+
+    > div + div {
+      margin-top: 12px;
+    }
   }
 
   form {

@@ -21,6 +21,7 @@ import ActionWell from "/imports/ui/client/components/ActionWell";
 import DirectAvatar from "/imports/ui/client/components/Avatar/DirectAvatar";
 import AvatarCropper from "/imports/ui/client/components/Avatar/AvatarCropper";
 import BadgeGroup from "/imports/ui/client/components/BadgeGroup";
+import TextBody from "/imports/ui/client/components/TextBody";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -55,11 +56,27 @@ export default React.createClass({
   deleteAvatar(event) {
     Meteor.call("deleteAvatar");
   },
-  renderInfo() {
-    const info = _.get(this.data.user, "profile.info", {});
-    const order = _.get(this.data.user, "profile.infoOrder", []);
+  renderBio(user) {
+    const bio = _.get(user, "profile.bio");
+    if (bio) {
+      return <TextBody text={bio} className="body" />;
+    }
+  },
+  renderInfo(user) {
+    const info = _.get(user, "profile.info", {});
+    const order = _.get(user, "profile.infoOrder", []);
     if (! this.state.isEditing && ! _.isEmpty(info)) {
       return <UserInfo info={info} order={order} />;
+    }
+  },
+  renderBelowWell(user) {
+    const bio = this.renderBio(user);
+    const info = this.renderInfo(user);
+    if (bio || info) {
+      return <div className="belowWell">
+        {bio}
+        {info}
+      </div>;
     }
   },
   renderAvatar(isOwner) {
@@ -230,7 +247,7 @@ export default React.createClass({
     return <article className="contentLayout">
       <Content className="profile">
         {this.renderInner(isOwner, displayName)}
-        {this.renderInfo()}
+        {this.renderBelowWell(user)}
         {this.renderForm(isOwner)}
       </Content>
 

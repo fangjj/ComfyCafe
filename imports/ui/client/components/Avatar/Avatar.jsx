@@ -12,7 +12,7 @@ export default React.createClass({
     const user = this.props.user;
 
     const spoilered = _.includes(
-      _.get(this.context.currentUser, "defaultFilter.spoilers.safeties", []),
+      _.get(this.context.currentUser, "defaultFilter.spoilers.safeties", [2, 3]),
       _.get(user, "profile.avatarSafety", 0)
     );
 

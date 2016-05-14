@@ -5,6 +5,7 @@ import Posts from "../posts/collection";
 import BlogPosts from "../blog/collection";
 import Pages from "../pages/collection";
 import Albums from "../albums/collection";
+import Filters from "../filters/collection";
 import "../blog/methods";
 import "../media/methods";
 import media from "../media/collection";
@@ -38,11 +39,14 @@ function profilePrefixer(obj) {
 
 Meteor.methods({
   migrateUserFilters: migrationBuilder(function () {
-    Meteor.users.update(
-      {},
-      { $unset: { "settings.defaultFilter": 1 } },
-      { multi: true }
-    );
+    Meteor.users.find().map((user) => {
+      const id = _.get(user, "settings.defaultFilter");
+      const defaultFilter = Filters.findOne({ _id: id });
+      Meteor.users.update(
+        { _id: user._id },
+        { $set: { defaultFilter } }
+      );
+    });
   }),
   migrateUsers: migrationBuilder(function () {
     Meteor.users.find().map(function (user) {

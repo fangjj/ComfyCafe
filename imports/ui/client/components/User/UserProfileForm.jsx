@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import "/imports/api/users/methods";
+import { initialStateBuilder, dataBuilder } from "/imports/ui/client/utils/forms";
 import Powerless from "/imports/ui/client/components/Powerless";
 import Form from "/imports/ui/client/components/Form";
 import TextField from "/imports/ui/client/components/TextField";
@@ -24,25 +25,7 @@ const defaultState = {
 export default React.createClass({
   contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
-    return _.reduce(
-      defaultState,
-      (result, defaultValue, key) => {
-        if (_.isPlainObject(defaultValue) && ! _.isEmpty(defaultValue)) {
-          result[key] = {};
-          _.each(defaultValue, (v, k) => {
-            result[key][k] = _.get(
-              this.context.currentUser,
-              "profile." + key + "." + k,
-              v
-            );
-          });
-        } else {
-          result[key] = _.get(this.context.currentUser, "profile." + key, defaultValue);
-        }
-        return result;
-      },
-      {}
-    );
+    return initialStateBuilder(this.context.currentUser.profile, defaultState);
   },
   handleDisplayName(event) {
     this.setState({ displayName: e.target.value });
@@ -66,7 +49,7 @@ export default React.createClass({
     });
   },
   handleSubmit(e) {
-    Meteor.call("updateProfile", this.state);
+    Meteor.call("updateProfile", dataBuilder(this.state, defaultState));
   },
   render() {
     return <Form

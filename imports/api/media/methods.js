@@ -148,7 +148,7 @@ Meteor.methods({
 		if (Meteor.isServer) {
 			const wstream = media.upsertStream(
 				{
-					filename: _.last(url.split("/")),
+					filename: _.first(_.last(url.split("/")).split("?")),
 					metadata: {
 						owner: Meteor.userId(),
 						downloaded: true,

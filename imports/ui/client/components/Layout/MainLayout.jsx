@@ -143,25 +143,7 @@ export default React.createClass({
     });
     const url = $(e.dataTransfer.getData("text/html")).filter("img").attr("src");
     if (url) {
-      console.log(url);
-      const img = new Image();
-      const canvas = document.createElement("canvas");
-      img.onload = function (e) {
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-        canvas.toBlob((blob) => {
-          const ext = blob.type.split("/")[1];
-          const fileName = _.first(_.last(url.split("/")).split("."));
-          blob.name = fileName + "." + ext;
-          blob.source = "media";
-          media.resumable.addFile(blob);
-        });
-      };
-      img.crossOrigin = "";
-      // This shouldn't be hardcoded, but it is.
-      img.src = "https://crossorigin.me/" + url;
+      Meteor.call("mediumDownload", url);
     }
   },
   handlePaste(e) {

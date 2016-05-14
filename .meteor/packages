@@ -2,6 +2,7 @@ standard-app-packages
 gadicc:ecmascript-hot
 reactive-var
 accounts-password
+http
 email
 react-meteor-data
 force-ssl

@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { HTTP } from "meteor/http";
 
 import media from "./collection";
 import Posts from "../posts/collection";
@@ -135,6 +136,36 @@ Meteor.methods({
 				throw new Meteor.Error("not-authorized");
 			}
 		});
+	},
+
+	mediumDownload(url) {
+		check(url, String);
+
+		if (! Meteor.userId()) {
+			throw new Meteor.Error("not-authorized");
+		}
+
+		if (Meteor.isServer) {
+			const wstream = media.upsertStream(
+				{
+					filename: _.last(url.split("/")),
+					metadata: {
+						owner: Meteor.userId(),
+						downloaded: true,
+						thumbnailPolicy: "postMedium"
+					}
+				},
+				{},
+				(err, file) => {
+					Meteor.call("mediumComplete", file._id._str);
+				}
+			);
+
+			const http = require("http");
+			const request = http.get(url, (res) => {
+				res.pipe(wstream);
+			});
+		}
 	}
 });
 

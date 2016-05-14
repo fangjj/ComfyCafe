@@ -89,6 +89,12 @@ Meteor.methods({
         { _id: filterId },
         { $set: { slug } }
       );
+			Meteor.users.update(
+				{ "defaultFilter._id": filterId },
+				{ $set: {
+					defaultFilter: Filters.findOne(filterId)
+				} }
+			);
       return slug;
     }
 	},

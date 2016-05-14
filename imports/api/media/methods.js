@@ -161,8 +161,10 @@ Meteor.methods({
 				}
 			);
 
+			const https = require("https");
 			const http = require("http");
-			const request = http.get(url, (res) => {
+			const mod = _.first(url.split(":")) === "https" ? https : http;
+			const request = mod.get(url, (res) => {
 				res.pipe(wstream);
 			});
 		}

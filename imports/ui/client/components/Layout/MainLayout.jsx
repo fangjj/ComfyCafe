@@ -68,7 +68,7 @@ export default React.createClass({
             if (_.get(medium, "metadata.downloaded")
               && ! alreadyHere
               && ! this.state.mediumId
-              && typeof this.directMediumId === "undefined"
+              && ! this.directMediumId
             ) {
               this.directMediumId = id;
             }

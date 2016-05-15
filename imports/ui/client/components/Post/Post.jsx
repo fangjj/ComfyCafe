@@ -149,7 +149,6 @@ export default React.createClass({
 
     const isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.post.owner._id;
-    prettyPrint(this.props.spoilered);
     return <article className="post contentLayout">
       <figure className="content">
         <Medium

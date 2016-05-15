@@ -4,6 +4,7 @@ import Posts from "../collection";
 import { postsPerPage } from "../constants";
 import privacyWrap from "/imports/api/common/privacyWrap";
 import tagQuery from "/imports/api/tags/query";
+import Albums from "/imports/api/albums/collection";
 
 function checkState(state) {
 	check(state, Match.Optional(
@@ -199,6 +200,51 @@ Meteor.publish("searchPosts", function (tagStr, state, page=0) {
 					friends: 1
 				} });
 				return privacyWrap(query, this.userId, user.friends);
+			} else {
+				return privacyWrap(query);
+			}
+		});
+
+		return Posts.find(
+			queryBuilder(
+				this.userId,
+				doc,
+				state
+			),
+			options(page)
+		);
+	});
+});
+
+Meteor.publish("postAlbum", function (albumData, state, page=0) {
+	check(albumData, {
+		username: String,
+		slug: String
+	});
+	checkState(state);
+	check(page, Number);
+
+	this.autorun(function (computation) {
+		const album = Albums.findOne(
+			{
+				"owner.username": albumData.username,
+				slug: albumData.slug
+			},
+			{ fields: { "owner._id": 1, posts: 1 } }
+		);
+
+		if (! album) {
+			return;
+		}
+
+		const query = { _id: { $in: album.posts } };
+
+		const doc = expr(() => {
+			if (this.userId) {
+				const user = Meteor.users.findOne(this.userId, { fields: {
+					friends: 1
+				} });
+				return privacyWrap(query, this.userId, user.friends, { "owner._id": album.owner._id });
 			} else {
 				return privacyWrap(query);
 			}

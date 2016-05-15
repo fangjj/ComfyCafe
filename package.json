@@ -61,8 +61,6 @@
     "react-addons-test-utils": "^15.0.1",
     "react-addons-transition-group": "^15.0.1",
     "react-addons-update": "^15.0.1",
-    "react-dnd": "^2.1.4",
-    "react-dnd-html5-backend": "^2.1.2",
     "react-dom": "^15.0.1",
     "react-hotkey": "^0.5.0",
     "react-mounter": "^1.1.0",
@@ -95,5 +93,6 @@
     "url": "ssh://git@git.teru.sexy/diffusion/IMAGES/images.git"
   },
   "author": "ComfySoft LLC",
-  "license": "MIT"
+  "license": "MIT",
+  "private": true
 }

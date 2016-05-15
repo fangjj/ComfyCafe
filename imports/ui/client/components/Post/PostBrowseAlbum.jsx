@@ -6,15 +6,20 @@ import InlineUhoh from "/imports/ui/client/components/InlineUhoh";
 export default React.createClass({
   render() {
     return <PostGalleryContainer
-      subName="imagesBy"
-      subData={FlowRouter.getParam("username")}
-      noFab={true}
+      subName="postAlbum"
+      subData={{
+        username: FlowRouter.getParam("username"),
+        slug: FlowRouter.getParam("albumSlug")
+      }}
+      fabCond={function () {
+        return this.props.currentUser.username === FlowRouter.getParam("username");
+      }}
       generateDoc={function () {
-        return { "owner.username": FlowRouter.getParam("username") };
+        return {};
       }}
       ifEmpty={function () {
         return <InlineUhoh>
-          {FlowRouter.getParam("username") + " hasn't uploaded anything yet!"}
+          This album is empty.
         </InlineUhoh>;
       }}
     />;

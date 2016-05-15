@@ -11,6 +11,7 @@ import Dialog from "/imports/ui/client/components/Dialog";
 import AlbumForm from "/imports/ui/client/components/Album/AlbumForm";
 import FlexHead from "/imports/ui/client/components/FlexHead";
 import InlineTopic from "/imports/ui/client/components/Chat/InlineTopic";
+import PostBrowseAlbum from "/imports/ui/client/components/Post/PostBrowseAlbum";
 
 export default React.createClass({
   getInitialState() {
@@ -81,14 +82,10 @@ export default React.createClass({
     const isOwner = _.get(this.props.currentUser, "_id") === album.owner._id;
 
     return <article className="album contentLayout">
-      <section className="content">
-        <header>
-          <h2>{album.name}</h2>
-        </header>
-        {this.renderPosts(album)}
-      </section>
+      <PostBrowseAlbum />
       <FlexHead
         className="content"
+        title={album.name}
         item={album}
         sigil="collections"
         verb="Collected"

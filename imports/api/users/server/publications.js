@@ -4,6 +4,8 @@ Meteor.publish(null, function () {
 		{ _id: this.userId },
     { fields: {
       normalizedUsername: 1,
+      "status.online": 1,
+      "status.idle": 1,
 			settings: 1,
 			avatars: 1,
 			subscriptions: 1,
@@ -19,6 +21,8 @@ Meteor.publish(null, function () {
 const publicFields = {
   username: 1,
   normalizedUsername: 1,
+  "status.online": 1,
+  "status.idle": 1,
   profile: 1,
   avatars: 1,
   subscriptions: 1,

@@ -6,6 +6,7 @@ import "/imports/api/users/methods";
 import setTitle from "/imports/api/common/setTitle";
 import getOrdinal from "/imports/ui/client/utils/ordinal";
 import UserInfo from "/imports/ui/client/components/User/UserInfo";
+import UserStatus from "/imports/ui/client/components/User/UserStatus";
 import UserProfileForm from "/imports/ui/client/components/User/UserProfileForm";
 import UserSearch from "/imports/ui/client/components/User/UserSearch";
 import Content from "/imports/ui/client/components/Content";
@@ -193,6 +194,7 @@ export default React.createClass({
     }
   },
   renderInner(isOwner, displayName) {
+    const user = this.data.user;
     if (! this.state.isChangingAvatar) {
       return <div className="flexColumn">
         <div className="flexLayout">
@@ -204,8 +206,9 @@ export default React.createClass({
               <h2>{displayName}</h2>
               {this.renderCatchphrase()}
               {this.renderBadges()}
+              <UserStatus user={user} />
             </header>
-            {this.renderStats(this.data.user)}
+            {this.renderStats(user)}
           </div>
         </div>
         <ActionWell>

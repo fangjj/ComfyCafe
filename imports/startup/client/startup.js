@@ -27,5 +27,19 @@ Meteor.startup(function () {
 
 Tracker.autorun(function () {
   document.title = Session.get("pageTitle") || "ComfyCafé";
+});
+
+Tracker.autorun(function () {
   Cookie.set("X-Auth-Token", Accounts._storedLoginToken());
+});
+
+Tracker.autorun(function (c) {
+  try {
+    UserStatus.startMonitor({
+      threshold: 30000,
+      interval: 10000,
+      idleOnBlur: false
+    });
+    c.stop();
+  } catch (e) {}
 });

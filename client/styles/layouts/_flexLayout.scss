@@ -57,6 +57,11 @@
 
       width: 100%;
 
+      // Prevents things from overlapping with more button.
+      > *:nth-last-child(2) {
+        margin-right: 42px;
+      }
+
       .more {
         position: absolute;
         right: 0;

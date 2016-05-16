@@ -24,10 +24,10 @@
 	z-index: index($elements, topMenu);
 
   position: absolute;
-  left: -14px;
+  left: 0;
   top: $top-nav-height;
 
-	width: calc(100% + #{14px*2});
+	width: calc(100% + 14px);
 
   background-color: $sg-color;
 

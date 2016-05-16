@@ -13,7 +13,7 @@ export default {
     if (_.has(params, "topicId")) {
       this.subscribe("topic", params.topicId);
     } else {
-      this.subscribe("room", params.roomId);
+      this.subscribe("room", params.roomSlug);
     }
   }
 };

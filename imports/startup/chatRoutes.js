@@ -14,7 +14,7 @@ chatRoutes.route("/", {
   }
 });
 
-chatRoutes.route("/:roomId", {
+chatRoutes.route("/:roomSlug", {
   name: "room",
   action: function () {
     setTitle("Loading Community...");
@@ -22,7 +22,7 @@ chatRoutes.route("/:roomId", {
   }
 });
 
-chatRoutes.route("/:roomId/:topicId", {
+chatRoutes.route("/:roomSlug/:topicId", {
   name: "topic",
   action: function () {
     setTitle("Loading Topic...");

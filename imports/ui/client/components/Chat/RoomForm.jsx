@@ -2,14 +2,14 @@ import React from "react";
 
 import "/imports/api/rooms/methods";
 import generateRoom from "/imports/api/rooms/nameGen/generator";
+import { initialStateBuilder, dataBuilder } from "/imports/ui/client/utils/forms";
 import Form from "/imports/ui/client/components/Form";
 import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
 import TextField from "/imports/ui/client/components/TextField";
 import TextArea from "/imports/ui/client/components/TextArea";
 
 const defaultState = {
-  name: generateRoom(),
-  nameGenerated: true,
+  name: generateRoom,
   visibility: "public",
   description: "",
   rules: ""
@@ -17,17 +17,9 @@ const defaultState = {
 
 export default React.createClass({
   getInitialState() {
-    if (this.props.room) {
-      return {
-        name: this.props.room.name,
-        nameGenerated: false,
-        visibility: this.props.room.visibility,
-        description: this.props.room.description,
-        rules: this.props.room.rules
-      };
-    } else {
-      return defaultState;
-    }
+    const state = initialStateBuilder(this.props.room, defaultState);
+    state.nameGenerated = ! this.props.room;
+    return state;
   },
   componentWillReceiveProps() {
     if (this.state.nameGenerated) {
@@ -50,26 +42,24 @@ export default React.createClass({
     this.setState({ rules: e.target.value });
   },
   handleSubmit(e) {
-    const data = {
-      name: this.state.name,
-      visibility: this.state.visibility,
-      description: this.state.description,
-      rules: this.state.rules
-    };
+    const data = dataBuilder(this.state, defaultState);
 
     if (! this.props.room) {
-      Meteor.call("addRoom", data, (err, roomId) => {
+      Meteor.call("addRoom", data, (err, roomSlug) => {
         if (err) {
           prettyPrint(err);
         } else {
-          const path = FlowRouter.path("room", { roomId: roomId });
+          const path = FlowRouter.path("room", { roomSlug });
           FlowRouter.go(path);
         }
       });
     } else {
-      Meteor.call("updateRoom", this.props.room._id, data, (err) => {
+      Meteor.call("updateRoom", this.props.room._id, data, (err, roomSlug) => {
         if (err) {
           prettyPrint(err);
+        } else {
+          const path = FlowRouter.path("room", { roomSlug });
+          FlowRouter.go(path);
         }
       });
     }

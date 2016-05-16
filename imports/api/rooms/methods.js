@@ -1,6 +1,8 @@
-import Rooms from "./collection";
+import _ from "lodash";
 
+import Rooms from "./collection";
 import Topics from "../topics/collection";
+import createSlugCycler from "/imports/api/common/createSlugCycler";
 
 const match = {
 	name: String,
@@ -8,6 +10,8 @@ const match = {
 	description: String,
 	rules: String
 };
+
+const slugCycle = createSlugCycler(Rooms, true);
 
 Meteor.methods({
 	addRoom(data) {
@@ -17,25 +21,22 @@ Meteor.methods({
 			throw new Meteor.Error("not-logged-in");
 		}
 
-		const roomId = Rooms.insert(
-			{
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				lastActivity: new Date(),
-				name: data.name,
-				owner: {
-					_id: Meteor.userId(),
-					username: Meteor.user().username,
-					normalizedUsername: Meteor.user().normalizedUsername,
-					profile: Meteor.user().profile
-				},
-				visibility: data.visibility,
-				description: data.description,
-				rules: data.rules,
-				topicCount: 0
-			}
-		);
-		return roomId;
+		data.slug = slugCycle(null, data.name);
+
+		const roomId = Rooms.insert(_.defaults({
+			createdAt: new Date(),
+			updatedAt: new Date(),
+			lastActivity: new Date(),
+			owner: {
+				_id: Meteor.userId(),
+				username: Meteor.user().username,
+				normalizedUsername: Meteor.user().normalizedUsername,
+				profile: Meteor.user().profile
+			},
+			topicCount: 0
+		}, data));
+
+		return data.slug;
 	},
 	updateRoom(roomId, data) {
 		check(roomId, String);
@@ -49,22 +50,27 @@ Meteor.methods({
 
 		Rooms.update(
 			{ _id: roomId },
-			{ $set: {
-				updatedAt: new Date(),
-        name: data.name,
-				visibility: data.visibility,
-				description: data.description,
-				rules: data.rules
-			} }
+			{ $set: _.defaults({
+        updatedAt: new Date()
+      }, data) }
 		);
 
-		Topics.update(
-			{ "room._id": roomId },
-			{ $set: {
-				"room.name": data.name
-			} },
-			{ multi: true }
-		);
+		if (Meteor.isServer) {
+      const slug = slugCycle(roomId, data.name);
+      Rooms.update(
+        { _id: roomId },
+        { $set: { slug } }
+      );
+			Topics.update(
+				{ "room._id": roomId },
+				{ $set: {
+					"room.name": data.name,
+					"room.slug": slug
+				} },
+				{ multi: true }
+			);
+      return slug;
+    }
 	},
 	deleteRoom(roomId) {
 		check(roomId, String);

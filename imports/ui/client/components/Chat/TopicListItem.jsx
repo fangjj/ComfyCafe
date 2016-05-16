@@ -22,7 +22,7 @@ export default React.createClass({
   render() {
     const topic = this.props.topic;
     const topicUrl = FlowRouter.path("topic", {
-      roomId: topic.room._id,
+      roomSlug: topic.room.slug,
       topicId: topic._id
     });
 

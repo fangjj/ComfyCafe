@@ -1,12 +1,15 @@
 import _ from "lodash";
 
-import { ownerPrefixer, updateOwnerDocs } from "/imports/api/users/updateProfile";
+import prefixer from "/imports/api/common/prefixer";
+import { ownerPrefixer, updateOwnerDocs, profilePrefixer  } from "/imports/api/users/updateProfile";
 import Posts from "../posts/collection";
 import BlogPosts from "../blog/collection";
 import Pages from "../pages/collection";
 import Albums from "../albums/collection";
 import Filters from "../filters/collection";
 import Notifications from "../notifications/collection";
+import Rooms from "../rooms/collection";
+import Topics from "../topics/collection";
 import "../blog/methods";
 import "../media/methods";
 import media from "../media/collection";
@@ -32,13 +35,25 @@ function migrationBuilder(functionBody) {
   };
 }
 
-function profilePrefixer(obj) {
-  return _.mapKeys(obj, (v, k) => {
-    return "profile." + k;
-  });
-}
-
 Meteor.methods({
+  migrateCommunities: migrationBuilder(function () {
+    const slugCycle = createSlugCycler(Rooms, true);
+    Rooms.find().map((room) => {
+      const slug = slugCycle(room._id, room.name);
+      const fdoc = { _id: room._id };
+      const udoc = { slug };
+      Rooms.update(
+        fdoc,
+        { $set: udoc }
+      );
+      Topics.update(
+        prefixer("room", fdoc),
+        { $set: prefixer("room", udoc) },
+        { multi: true }
+      );
+      logMigrate(room.name, room.slug);
+    });
+  }),
   migrateNotifications: migrationBuilder(function () {
     Notifications.remove(
       {

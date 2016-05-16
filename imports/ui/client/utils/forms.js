@@ -9,6 +9,8 @@ function initialStateBuilder(obj, defaultState) {
         _.each(defaultValue, (v, k) => {
           result[key][k] = _.get(obj, key + "." + k, v);
         });
+      } else if (_.isFunction(defaultValue)) {
+        result[key] = _.get(obj, key, defaultValue());
       } else {
         result[key] = _.get(obj, key, defaultValue);
       }

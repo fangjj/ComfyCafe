@@ -29,7 +29,8 @@ Meteor.methods({
 				lastActivity: new Date(),
         room: {
           _id: roomId,
-          name: room.name
+          name: room.name,
+          slug: room.slug
         },
 				name: data.name,
 				owner: {

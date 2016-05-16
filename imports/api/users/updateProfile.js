@@ -1,11 +1,10 @@
 import _ from "lodash";
 
 import profileSyncList from "/imports/api/users/syncList";
+import prefixer from "/imports/api/common/prefixer";
 
 function ownerPrefixer(doc) {
-  return _.mapKeys(doc, (value, key) => {
-    return "owner." + key;
-  });
+  return prefixer("owner", doc);
 }
 
 function updateOwnerDocs(query, update) {
@@ -19,9 +18,7 @@ function updateOwnerDocs(query, update) {
 }
 
 function profilePrefixer(doc) {
-  return _.mapKeys(doc, (value, key) => {
-    return "profile." + key;
-  });
+  return prefixer("profile", doc);
 }
 
 function updateProfile(query, update) {

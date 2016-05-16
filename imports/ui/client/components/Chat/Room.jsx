@@ -23,11 +23,11 @@ export default React.createClass({
     this.setState({ showForm: false });
   },
   getMeteorData() {
-    const id = FlowRouter.getParam("roomId");
-    const handle = Meteor.subscribe("room", id);
+    const slug = FlowRouter.getParam("roomSlug");
+    const handle = Meteor.subscribe("room", slug);
     return {
       loading: ! handle.ready(),
-      room: Rooms.findOne({ _id: id }),
+      room: Rooms.findOne({ slug }),
       currentUser: Meteor.user()
     };
   },

@@ -46,7 +46,7 @@ export default React.createClass({
     this.setState({ showForm: false });
   },
   delete() {
-    const path = FlowRouter.path("room", { roomId: this.data.topic.room._id });
+    const path = FlowRouter.path("room", { roomSlug: this.data.topic.room.slug });
     Meteor.call("deleteTopic", this.data.topic._id, () => {
       FlowRouter.go(path);
     });
@@ -102,7 +102,7 @@ export default React.createClass({
     const topic = this.data.topic;
 
     const room = topic.room;
-    const roomUrl = FlowRouter.path("room", {roomId: room._id});
+    const roomUrl = FlowRouter.path("room", { roomSlug: room.slug });
 
     return <section className="msgList">
       <header>

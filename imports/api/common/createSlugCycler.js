@@ -1,6 +1,6 @@
 import slugify from "slug";
 
-function createSlugCycler(coll) {
+function createSlugCycler(coll, noScope) {
   function slugCycle (id, name, i=0) {
     let postfixed = name;
     if (! name) {
@@ -12,14 +12,16 @@ function createSlugCycler(coll) {
 
     const slug = slugify(postfixed);
 
+    const doc = {
+      _id: { $ne: id }, // it doesn't count if it's the same item
+      slug: slug
+    };
+    if (! noScope) {
+      doc["owner._id"] = Meteor.userId(); // slugs are namespaced
+    }
+
     // make sure slug isn't taken
-    if (coll.findOne(
-      {
-        _id: { $ne: id }, // it doesn't count if it's the same item
-        slug: slug,
-        "owner._id": Meteor.userId() // slugs are namespaced
-      }
-    )) {
+    if (coll.findOne(doc)) {
       return slugCycle(id, name, i+1);
     }
 

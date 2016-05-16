@@ -1,9 +1,9 @@
-import Rooms from "../collection";
+import Rooms from "/imports/api/rooms/collection";
 import privacyWrap from "/imports/api/common/privacyWrap";
 
-Meteor.publish("room", function (roomId) {
-	check(roomId, String);
-	return Rooms.find({ _id: roomId });
+Meteor.publish("room", function (slug) {
+	check(slug, String);
+	return Rooms.find({ slug });
 });
 
 Meteor.publish("allRooms", function () {

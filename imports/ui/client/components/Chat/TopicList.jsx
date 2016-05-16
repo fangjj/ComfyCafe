@@ -17,12 +17,12 @@ export default React.createClass({
     };
   },
   getMeteorData() {
-    var id = FlowRouter.getParam("roomId");
-    var handleRoom = Meteor.subscribe("room", id);
-    var handleTopics = Meteor.subscribe("roomTopics", id);
+    const roomSlug = FlowRouter.getParam("roomSlug");
+    const handleRoom = Meteor.subscribe("room", roomSlug);
+    const handleTopics = Meteor.subscribe("roomTopics", roomSlug);
 
-    let query = {
-      "room._id": id,
+    const query = {
+      "room.slug": roomSlug,
       $or: [
         { visibility: { $ne: "unlisted" } },
         { "owner._id": Meteor.userId() }
@@ -34,7 +34,7 @@ export default React.createClass({
 
     return {
       loading: ! handleRoom.ready() || ! handleTopics.ready(),
-      room: Rooms.findOne({ _id: id }),
+      room: Rooms.findOne({ slug: roomSlug }),
       topics: Topics.find(
         query,
         { sort: { lastActivity: -1, createdAt: -1 } }
@@ -63,7 +63,7 @@ export default React.createClass({
       return <DenseLoadingSpinner />;
     }
 
-    const url = FlowRouter.path("room", {roomId: this.data.room._id});
+    const url = FlowRouter.path("room", { roomSlug: this.data.room.slug });
 
     return <List ordered={true} className="topicList">
       <li className="roomHead">

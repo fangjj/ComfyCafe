@@ -1,29 +1,29 @@
-import Topics from "../collection";
+import Topics from "/imports/api/topics/collection";
 import privacyWrap from "/imports/api/common/privacyWrap";
+import prefixer from "/imports/api/common/prefixer";
 
 Meteor.publish("topic", function (topicId) {
 	check(topicId, String);
 	return Topics.find({ _id: topicId });
 });
 
-Meteor.publish("roomTopics", function (roomId) {
-	check(roomId, String);
-
+Meteor.publish("roomTopics", function (slug) {
+	check(slug, String);
 	this.autorun(function (computation) {
 		if (this.userId) {
-			var user = Meteor.users.findOne(this.userId, { fields: {
+			const user = Meteor.users.findOne(this.userId, { fields: {
 				friends: 1
 			} });
 
 			return Topics.find(privacyWrap(
-				{ "room._id": roomId },
+				prefixer("room", { slug }),
 				this.userId,
 				user.friends
 			));
 		} else {
 			return Topics.find(
 				{
-					"room._id": roomId,
+					"room.slug": slug,
 					visibility: "public"
 				}
 			);

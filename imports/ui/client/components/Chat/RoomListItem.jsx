@@ -1,16 +1,13 @@
 import React from "react";
+import Avatar from "material-ui/Avatar";
 
 import RoomMoreMenu from "./RoomMoreMenu";
 import VisibilityLink from "../VisibilityLink";
 import Moment from "../Moment";
 
-import {
-  Avatar
-} from "material-ui";
-
-const RoomListItem = React.createClass({
+export default React.createClass({
   renderMoreMenu() {
-    var isOwner = this.props.currentUser
+    const isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.room.owner._id;
     if (isOwner) {
       return <RoomMoreMenu room={this.props.room} currentUser={this.props.currentUser} />;
@@ -25,7 +22,7 @@ const RoomListItem = React.createClass({
   },
   render() {
     const room = this.props.room;
-    const path = FlowRouter.path("room", {roomId: room._id});
+    const path = FlowRouter.path("room", { roomSlug: room.slug });
 
     return <li className="roomListItem">
       <div className="flexLayout">
@@ -53,5 +50,3 @@ const RoomListItem = React.createClass({
     </li>;
   }
 });
-
-export default RoomListItem;

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 
 import MessageMoreMenu from "/imports/ui/client/components/Chat/MessageMoreMenu";
@@ -10,6 +11,11 @@ export default React.createClass({
   onVisibility(visible) {
     if (visible) {
       this.props.onVisible();
+    }
+  },
+  renderEdited(msg, wasEdited) {
+    if (wasEdited) {
+      return <span> (edited <Moment time={msg.updatedAt} />)</span>;
     }
   },
   renderMoreMenu() {
@@ -25,6 +31,8 @@ export default React.createClass({
     const owner = msg.owner;
     const ownerUrl = FlowRouter.path("profile", {username: owner.username});
 
+    const wasEdited = ! _.isEqual(msg.createdAt, msg.updatedAt);
+
     return <li id={msg._id}>
       <div className="flexLayout">
         <div className="leftSide">
@@ -35,7 +43,8 @@ export default React.createClass({
         <div className="rightSide">
           <div className="top">
             <div className="info">
-              by <UserLink user={owner} /> <Moment time={msg.createdAt} />
+              <UserLink user={owner} /> <Moment time={msg.createdAt} />
+              {this.renderEdited(msg, wasEdited)}
               &nbsp;<a href={"#" + msg._id}>(link)</a>
             </div>
             {this.renderMoreMenu()}

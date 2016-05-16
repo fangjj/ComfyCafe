@@ -30,9 +30,9 @@ export default React.createClass({
         <TopicList deactivateLeft={this.deactivateLeft} />
       </DenseCol>
 
-      <DenseCol className="mainCol">
+      <div className="col mainCol">
         {this.renderMain()}
-      </DenseCol>
+      </div>
     </DenseLayout>;
   }
 });

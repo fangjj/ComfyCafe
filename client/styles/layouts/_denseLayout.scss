@@ -101,8 +101,8 @@
     }
   }
 
-  .denseLayout .hotdog + * {
-    margin-left: 28px;
+  .denseLayout .hotdog + *, .denseLayout .closedog + * {
+    margin-left: 48px;
   }
 
   .denseLayout .closedog {
@@ -116,9 +116,5 @@
     i {
       font-size: 32px;
     }
-  }
-
-  .denseLayout .closedog + * {
-    margin-left: 28px;
   }
 }

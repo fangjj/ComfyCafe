@@ -20,12 +20,12 @@ const MessageListItem = React.createClass({
     }
   },
   render() {
-    var msg = this.props.message;
+    const msg = this.props.message;
 
-    var owner = msg.owner;
-    var ownerUrl = FlowRouter.path("profile", {username: owner.username});
+    const owner = msg.owner;
+    const ownerUrl = FlowRouter.path("profile", {username: owner.username});
 
-    return <li>
+    return <li id={msg._id}>
       <div className="flexLayout">
         <div className="leftSide">
           <a href={ownerUrl}>
@@ -36,6 +36,7 @@ const MessageListItem = React.createClass({
           <div className="top">
             <div className="info">
               by <UserLink user={owner} /> <Moment time={msg.createdAt} />
+              &nbsp;<a href={"#" + msg._id}>(link)</a>
             </div>
             {this.renderMoreMenu()}
           </div>

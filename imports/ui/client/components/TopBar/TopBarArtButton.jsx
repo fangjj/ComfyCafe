@@ -2,7 +2,7 @@ import React from "react";
 
 import NavItem from "./NavItem";
 
-const TopBarArtButton = () => {
+export default () => {
   return <NavItem
     label="Images"
     iconName="image"
@@ -10,5 +10,3 @@ const TopBarArtButton = () => {
     className="hide-on-small-only"
   />;
 };
-
-export default TopBarArtButton;

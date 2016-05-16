@@ -73,7 +73,7 @@ export default React.createClass({
   renderLeft() {
     return <ul className="leftSide topLevel">
       <NavItem className="hotdog ignore-react-onclickoutside hide-on-med-and-up">
-        <a onTouchTap={this.handleHotdog} className="waves-effect waves-teal">
+        <a onTouchTap={this.handleHotdog}>
           <i className="material-icons">menu</i>
         </a>
       </NavItem>

@@ -2,7 +2,6 @@ import React from "react";
 
 import Rooms from "/imports/api/rooms/collection";
 import setTitle from "/imports/api/common/setTitle";
-
 import RoomForm from "./RoomForm";
 import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
 import TextBody from "/imports/ui/client/components/TextBody";
@@ -10,6 +9,7 @@ import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/client/components/ActionWell";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -112,15 +112,13 @@ export default React.createClass({
 
     return <section>
       <header>
+        <div className="hotdog hide-on-med-and-up" onTouchTap={this.props.activateLeft}>
+          <Icon>menu</Icon>
+        </div>
         <h2>{room.name}</h2>
         <ActionWell>
           {this.renderEditButtons(isOwner)}
-          <ButtonGroup>
-            <SubmitButton
-              label="Drop the Bass"
-              iconName="all_out"
-            />
-          </ButtonGroup>
+          <div />
         </ActionWell>
       </header>
       <div className="denseBox">

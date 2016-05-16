@@ -2,15 +2,12 @@ import React from "react";
 
 import Topics from "/imports/api/topics/collection";
 import Rooms from "/imports/api/rooms/collection";
-
-import TopicButton from "./TopicButton";
-import TopicListItem from "./TopicListItem";
+import TopicButton from "/imports/ui/client/components/Chat/TopicButton";
+import TopicListItem from "/imports/ui/client/components/Chat/TopicListItem";
 import List from "/imports/ui/client/components/List";
 import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
-
-import {
-  TextField
-} from "material-ui";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
+import TextField from "/imports/ui/client/components/TextField";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -51,7 +48,12 @@ export default React.createClass({
   renderTopics() {
     if (this.data.topics.length) {
       return this.data.topics.map((topic) => {
-        return <TopicListItem topic={topic} currentUser={this.data.currentUser} key={topic._id} />;
+        return <TopicListItem
+          topic={topic}
+          currentUser={this.data.currentUser}
+          deactivateLeft={this.props.deactivateLeft}
+          key={topic._id}
+        />;
       });
     }
     return <li>No topics.</li>;
@@ -61,9 +63,14 @@ export default React.createClass({
       return <DenseLoadingSpinner />;
     }
 
+    const url = FlowRouter.path("room", {roomId: this.data.room._id});
+
     return <List ordered={true} className="topicList">
       <li className="roomHead">
-        <a href={FlowRouter.path("room", {roomId: this.data.room._id})}>
+        <div className="closedog hide-on-med-and-up" onTouchTap={this.props.deactivateLeft}>
+          <Icon>arrow_back</Icon>
+        </div>
+        <a href={url} onTouchTap={this.props.deactivateLeft}>
           <header>
             <h2>{this.data.room.name}</h2>
           </header>
@@ -73,7 +80,6 @@ export default React.createClass({
         <TopicButton room={this.data.room} />
         <TextField
           hintText="Search"
-          fullWidth={true}
           onChange={this.handleSearch}
         />
       </li>

@@ -15,6 +15,7 @@ import ActionWell from "/imports/ui/client/components/ActionWell";
 import PrivacyIcon from "/imports/ui/client/components/Daikon/PrivacyIcon";
 import Moment from "/imports/ui/client/components/Moment";
 import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -105,6 +106,9 @@ export default React.createClass({
 
     return <section className="msgList">
       <header>
+        <div className="hotdog hide-on-med-and-up" onTouchTap={this.props.activateLeft}>
+          <Icon>menu</Icon>
+        </div>
         <h2>{topic.name}</h2>
         <ActionWell>
           {this.renderEditButtons()}

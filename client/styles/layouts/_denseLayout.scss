@@ -54,3 +54,60 @@
 .denseContent {
   padding: $content-padding;
 }
+
+@media #{$small-and-down} {
+  .denseLayout .leftCol {
+    display: none;
+    &.active { display: block; }
+    z-index: index($elements, leftHotdog);
+
+		position: absolute;
+    left: 0;
+    top: $top-nav-height;
+
+    padding: 0;
+
+		width: 100vw;
+		height: calc(100vh - #{$top-nav-height});
+
+    background-color: $fg-color;
+  }
+
+  .denseLayout .mainCol {
+    width: 100vw;
+  }
+
+  .denseLayout .hotdog {
+    position: absolute;
+    left: 16px;
+    top: 15px;
+
+    cursor: pointer;
+    user-select: none;
+
+    i {
+      font-size: 42px;
+    }
+  }
+
+  .denseLayout .hotdog + * {
+    margin-left: 28px;
+  }
+
+  .denseLayout .closedog {
+    position: absolute;
+    left: 16px;
+    top: 15px;
+
+    cursor: pointer;
+    user-select: none;
+
+    i {
+      font-size: 32px;
+    }
+  }
+
+  .denseLayout .closedog + * {
+    margin-left: 28px;
+  }
+}

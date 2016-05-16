@@ -70,3 +70,9 @@
     }
   }
 }
+
+@media #{$small-and-down} {
+  .topNav {
+    padding-left: 0;
+  }
+}

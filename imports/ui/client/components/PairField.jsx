@@ -1,11 +1,8 @@
 import React from "react";
+import IconButton from "material-ui/IconButton";
 
 import Icon from "/imports/ui/client/components/Daikon/Icon";
-
-import {
-  TextField,
-  IconButton
-} from "material-ui";
+import TextField from "/imports/ui/client/components/TextField";
 
 export default React.createClass({
   getInitialState() {
@@ -36,9 +33,7 @@ export default React.createClass({
       <div className="labelField">
         <TextField
           value={this.state.label}
-          floatingLabelText="Label"
-          floatingLabelStyle={{fontSize: "20px"}}
-          fullWidth={true}
+          label="Label"
           autoFocus={this.props.autoFocus}
           onChange={this.handleLabel}
         />
@@ -46,9 +41,7 @@ export default React.createClass({
       <div className="valueField">
         <TextField
           value={this.state.value}
-          floatingLabelText="Value"
-          floatingLabelStyle={{fontSize: "20px"}}
-          fullWidth={true}
+          label="Value"
           onChange={this.handleValue}
         />
       </div>

@@ -6,6 +6,7 @@ import BlogPosts from "../blog/collection";
 import Pages from "../pages/collection";
 import Albums from "../albums/collection";
 import Filters from "../filters/collection";
+import Notifications from "../notifications/collection";
 import "../blog/methods";
 import "../media/methods";
 import media from "../media/collection";
@@ -38,6 +39,25 @@ function profilePrefixer(obj) {
 }
 
 Meteor.methods({
+  migrateNotifications: migrationBuilder(function () {
+    Notifications.remove(
+      {
+        action: { $in: [
+          "topicPosted",
+          "topicMentioned",
+          "postCommented",
+          "postCommentMentioned",
+          "albumCommented",
+          "albumCommentMentioned",
+          "pageCommented",
+          "pageCommentMentioned",
+          "blogCommented",
+          "blogCommentMentioned",
+        ] },
+        message: { $exists: false }
+      }
+    );
+  }),
   migrateUserFilters: migrationBuilder(function () {
     Meteor.users.find().map((user) => {
       const id = _.get(user, "settings.defaultFilter");

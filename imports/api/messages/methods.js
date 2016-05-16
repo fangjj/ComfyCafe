@@ -83,7 +83,7 @@ Meteor.methods({
         const doc = {
           createdAt: new Date(),
           to: watcherId,
-
+          message: { _id: messageId },
           owner: {
             _id: Meteor.userId(),
             username: Meteor.user().username,

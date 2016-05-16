@@ -77,7 +77,7 @@ export default React.createClass({
       const url = FlowRouter.path("post", {
         username: this.props.notification.post.username,
         postName: this.props.notification.post.name
-      });
+      }) + "#" + this.props.notification.message._id;
       return [
         "commented on ",
         <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
@@ -89,7 +89,7 @@ export default React.createClass({
       const url = FlowRouter.path("album", {
         username: this.props.notification.album.username,
         albumSlug: this.props.notification.album.slug
-      });
+      }) + "#" + this.props.notification.message._id;
       return [
         "commented on ",
         <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
@@ -101,7 +101,7 @@ export default React.createClass({
       const url = FlowRouter.path("page", {
         username: this.props.notification.page.username,
         slug: this.props.notification.page.slug
-      });
+      }) + "#" + this.props.notification.message._id;
       return [
         "commented on ",
         <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
@@ -113,7 +113,7 @@ export default React.createClass({
       const url = FlowRouter.path("blog", {
         username: this.props.notification.blog.username,
         slug: this.props.notification.blog.slug
-      });
+      }) + "#" + this.props.notification.message._id;
       return [
         "commented on ",
         <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
@@ -125,7 +125,7 @@ export default React.createClass({
       const url = FlowRouter.path("post", {
         username: this.props.notification.post.username,
         postName: this.props.notification.post.name
-      });
+      }) + "#" + this.props.notification.message._id;
       return [
         "mentioned you in a comment on ",
         <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
@@ -137,7 +137,7 @@ export default React.createClass({
       const url = FlowRouter.path("album", {
         username: this.props.notification.album.username,
         albumSlug: this.props.notification.album.slug
-      });
+      }) + "#" + this.props.notification.message._id;
       return [
         "mentioned you in a comment on ",
         <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
@@ -149,7 +149,7 @@ export default React.createClass({
       const url = FlowRouter.path("page", {
         username: this.props.notification.page.username,
         slug: this.props.notification.page.slug
-      });
+      }) + "#" + this.props.notification.message._id;
       return [
         "mentioned you in a comment on ",
         <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
@@ -161,7 +161,7 @@ export default React.createClass({
       const url = FlowRouter.path("blog", {
         username: this.props.notification.blog.username,
         slug: this.props.notification.blog.slug
-      });
+      }) + "#" + this.props.notification.message._id;
       return [
         "mentioned you in a comment on ",
         <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
@@ -208,7 +208,7 @@ export default React.createClass({
       const url = FlowRouter.path("topic", {
         roomId: this.props.notification.topic.room._id,
         topicId: this.props.notification.topic._id
-      });
+      }) + "#" + this.props.notification.message._id;
       return [
         "posted in ",
         <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
@@ -220,7 +220,7 @@ export default React.createClass({
       const url = FlowRouter.path("topic", {
         roomId: this.props.notification.topic.room._id,
         topicId: this.props.notification.topic._id
-      });
+      }) + "#" + this.props.notification.message._id;
       return [
         "mentioned you in ",
         <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>

@@ -8,6 +8,7 @@ import ImagePanel from "./ImagePanel";
 import BadgePanel from "./BadgePanel";
 import MediaPanel from "./MediaPanel";
 import FilterPanelContainer from "./FilterPanelContainer";
+import NotificationPanel from "./NotificationPanel";
 import UserViewContainer from "./UserViewContainer";
 import ImageViewContainer from "./ImageViewContainer";
 import BadgeViewContainer from "./BadgeViewContainer";
@@ -50,7 +51,8 @@ export default React.createClass({
             </DenseContent>,
             badges: <BadgePanel />,
             media: <MediaPanel />,
-            filters: <FilterPanelContainer />
+            filters: <FilterPanelContainer />,
+            notifications: <NotificationPanel />
           },
           panel,
           <AdminPanel />
@@ -74,6 +76,7 @@ export default React.createClass({
           <li><a href="/admin/badges">Badges</a></li>
           <li><a href="/admin/media">Media</a></li>
           <li><a href="/admin/filters">Filters</a></li>
+          <li><a href="/admin/notifications">Notifications</a></li>
         </List>
       </DenseCol>
 

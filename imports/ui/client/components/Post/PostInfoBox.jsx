@@ -4,6 +4,7 @@ import React from "react";
 import "/imports/api/posts/methods";
 import goBack from "/imports/ui/client/utils/goBack";
 import setPattern from "/imports/ui/client/utils/setPattern";
+import safetyLabels from "/imports/api/common/safetyLabels";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import ToggleButton from "/imports/ui/client/components/Button/ToggleButton";
@@ -101,21 +102,29 @@ export default React.createClass({
       </ActionWell>;
     }
   },
-  renderSource() {
+  renderInfo() {
+    let source;
     if (this.props.post.source) {
-      return <span>
+      source = <div>
         <Icon className="sigil">copyright</Icon> <TextBody
           text={"Source: " + this.props.post.source} className="source"
         />
-      </span>;
+      </div>;
     }
+
+    return <div>
+      <div>
+        <Icon className="sigil">flash_on</Icon> {safetyLabels[this.props.post.safety]}
+      </div>
+      {source}
+    </div>;
   },
   render() {
     return <FlexHead
       className="content"
       item={this.props.post}
       verb={verbMap[this.props.post.originality]}
-      renderInfo={this.renderSource}
+      renderInfo={this.renderInfo}
       renderButtons={this.renderButtons}
       body={this.props.post.description}
       section={true}

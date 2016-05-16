@@ -10,6 +10,7 @@ import MediaPanel from "./MediaPanel";
 import FilterPanelContainer from "./FilterPanelContainer";
 import NotificationPanel from "./NotificationPanel";
 import CommunityPanel from "./CommunityPanel";
+import TopicPanel from "./TopicPanel";
 import UserViewContainer from "./UserViewContainer";
 import ImageViewContainer from "./ImageViewContainer";
 import BadgeViewContainer from "./BadgeViewContainer";
@@ -54,7 +55,8 @@ export default React.createClass({
             media: <MediaPanel />,
             filters: <FilterPanelContainer />,
             notifications: <NotificationPanel />,
-            communities: <CommunityPanel />
+            communities: <CommunityPanel />,
+            topics: <TopicPanel />
           },
           panel,
           <AdminPanel />
@@ -80,6 +82,7 @@ export default React.createClass({
           <li><a href="/admin/filters">Filters</a></li>
           <li><a href="/admin/notifications">Notifications</a></li>
           <li><a href="/admin/communities">Communities</a></li>
+          <li><a href="/admin/topics">Topics</a></li>
         </List>
       </DenseCol>
 

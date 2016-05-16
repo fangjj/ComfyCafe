@@ -1,19 +1,19 @@
 import React from "react";
 
-import MessageMoreMenu from "./MessageMoreMenu";
-import TextBody from "../TextBody";
-import Moment from "../Moment";
-import Avatar from "../Avatar/Avatar";
-import UserLink from "../User/UserLink";
+import MessageMoreMenu from "/imports/ui/client/components/Chat/MessageMoreMenu";
+import TextBody from "/imports/ui/client/components/TextBody";
+import Moment from "/imports/ui/client/components/Moment";
+import Avatar from "/imports/ui/client/components/Avatar/Avatar";
+import UserLink from "/imports/ui/client/components/User/UserLink";
 
-const MessageListItem = React.createClass({
+export default React.createClass({
   onVisibility(visible) {
     if (visible) {
       this.props.onVisible();
     }
   },
   renderMoreMenu() {
-    var isOwner = this.props.currentUser
+    const isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.message.owner._id;
     if (isOwner) {
       return <MessageMoreMenu message={this.props.message} currentUser={this.props.currentUser} />;
@@ -46,5 +46,3 @@ const MessageListItem = React.createClass({
     </li>;
   }
 });
-
-export default MessageListItem;

@@ -1,7 +1,8 @@
 import _ from "lodash";
 
-import Rooms from "./collection";
-import Topics from "../topics/collection";
+import Rooms from "/imports/api/rooms/collection";
+import Topics from "/imports/api/topics/collection";
+import Messages from "/imports/api/messages/collection";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
 
 const match = {
@@ -69,6 +70,11 @@ Meteor.methods({
 				} },
 				{ multi: true }
 			);
+			Messages.update(
+        { "topic.room._id": roomId },
+        { $set: { "topic.room.slug": topic.room.slug } },
+				{ multi: true }
+      );
       return slug;
     }
 	},

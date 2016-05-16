@@ -80,7 +80,7 @@ Meteor.methods({
 				topicId = Meteor.call("addTopic", Meteor.user().room._id, {
 					name: name,
 					visibility: data.visibility
-				});
+				}, true);
 			}
 
 			const mediumDoc = {
@@ -236,7 +236,8 @@ Meteor.methods({
 			Topics.update(
 				{ _id: post.topic._id },
 				{ $set: {
-					name: name
+					name,
+					slug: name
 				} }
 			);
 

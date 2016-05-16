@@ -22,7 +22,7 @@ chatRoutes.route("/:roomSlug", {
   }
 });
 
-chatRoutes.route("/:roomSlug/:topicId", {
+chatRoutes.route("/:roomSlug/:topicSlug", {
   name: "topic",
   action: function () {
     setTitle("Loading Topic...");

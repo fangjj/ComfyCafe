@@ -2,36 +2,30 @@ import React from "react";
 
 import "/imports/api/topics/methods";
 import generateTopic from "/imports/api/topics/nameGen/generator";
+import { initialStateBuilder, dataBuilder } from "/imports/ui/client/utils/forms";
 import Form from "/imports/ui/client/components/Form";
 import TextField from "/imports/ui/client/components/TextField";
 import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
 
 const defaultState = {
-  name: generateTopic(),
-  nameGenerated: true,
+  name: generateTopic,
   visibility: "public"
 };
 
 export default React.createClass({
   getInitialState() {
-    if (this.props.topic) {
-      return {
-        name: this.props.topic.name,
-        nameGenerated: false,
-        visibility: this.props.topic.visibility
-      };
-    } else {
-      return defaultState;
-    }
+    const state = initialStateBuilder(this.props.topic, defaultState);
+    state.nameGenerated = ! this.props.topic;
+    return state;
   },
   componentWillReceiveProps() {
     if (this.state.nameGenerated) {
       this.setState({ name: generateTopic() });
     }
   },
-  handleName(event) {
+  handleName(e) {
     this.setState({
-      name: event.target.value,
+      name: e.target.value,
       nameGenerated: false
     });
   },
@@ -39,27 +33,30 @@ export default React.createClass({
     this.setState({ visibility: value });
   },
   handleSubmit(e) {
-    const data = {
-      name: this.state.name,
-      visibility: this.state.visibility
-    };
+    const data = dataBuilder(this.state, defaultState);
 
     if (! this.props.topic) {
-      Meteor.call("addTopic", this.props.room._id, data, (err, topicId) => {
+      Meteor.call("addTopic", this.props.room._id, data, false, (err, topicSlug) => {
         if (err) {
           prettyPrint(err);
         } else {
           const path = FlowRouter.path("topic", {
-            roomId: this.props.room._id,
-            topicId: topicId
+            roomSlug: this.props.room.slug,
+            topicSlug: topicSlug
           });
           FlowRouter.go(path);
         }
       });
     } else {
-      Meteor.call("updateTopic", this.props.topic._id, data, (err) => {
+      Meteor.call("updateTopic", this.props.topic._id, data, (err, topicSlug) => {
         if (err) {
           prettyPrint(err);
+        } else {
+          const path = FlowRouter.path("topic", {
+            roomSlug: this.props.room.slug,
+            topicSlug: topicSlug
+          });
+          FlowRouter.go(path);
         }
       });
     }

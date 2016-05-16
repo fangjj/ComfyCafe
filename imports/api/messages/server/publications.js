@@ -1,4 +1,4 @@
-import Messages from "../collection";
+import Messages from "/imports/api/messages/collection";
 
 Meteor.publish("topicMessages", function (topicId) {
 	check(topicId, String);

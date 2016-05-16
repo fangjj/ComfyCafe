@@ -10,8 +10,8 @@ export default {
     }
   },
   fastRender(params) {
-    if (_.has(params, "topicId")) {
-      this.subscribe("topic", params.topicId);
+    if (_.has(params, "topicSlug")) {
+      this.subscribe("topic", params.roomSlug, params.topicSlug);
     } else {
       this.subscribe("room", params.roomSlug);
     }

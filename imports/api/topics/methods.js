@@ -1,20 +1,27 @@
-import Topics from "./collection";
-import Rooms from "../rooms/collection";
-import Notifications from "../notifications/collection";
+import Topics from "/imports/api/topics/collection";
+import Rooms from "/imports/api/rooms/collection";
+import Messages from "/imports/api/messages/collection";
+import Notifications from "/imports/api/notifications/collection";
+import createSlugCycler from "/imports/api/common/createSlugCycler";
+
+const match = {
+  name: String,
+  visibility: String
+};
+
+const slugCycle = createSlugCycler(Topics, true);
 
 Meteor.methods({
-  addTopic: function (roomId, data) {
+  addTopic: function (roomId, data, retId) {
     check(roomId, String);
-    check(data, {
-      name: String,
-      visibility: String
-    });
+    check(data, match);
+    check(retId, Boolean);
 
 		if (! Meteor.userId()) {
 			throw new Meteor.Error("not-logged-in");
 		}
 
-    var room = Rooms.findOne(roomId);
+    const room = Rooms.findOne(roomId);
 
     if (room.system && Meteor.userId() !== room.owner._id) {
       if (! Roles.userIsInRole(Meteor.userId(), ["admin"], Roles.GLOBAL_GROUP)) {
@@ -22,30 +29,26 @@ Meteor.methods({
       }
     }
 
-		var topicId = Topics.insert(
-			{
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				lastActivity: new Date(),
-        room: {
-          _id: roomId,
-          name: room.name,
-          slug: room.slug
-        },
-				name: data.name,
-				owner: {
-					_id: Meteor.userId(),
-					username: Meteor.user().username,
-          normalizedUsername: Meteor.user().normalizedUsername,
-					profile: Meteor.user().profile
-				},
-				visibility: data.visibility,
-        messageCount: 0,
-        watchers: [
-          Meteor.userId()
-        ]
-			}
-		);
+    data.slug = slugCycle(null, data.name, { "room.slug": room.slug });
+
+		const topicId = Topics.insert(_.defaults({
+			createdAt: new Date(),
+			updatedAt: new Date(),
+			lastActivity: new Date(),
+      room: {
+        _id: roomId,
+        name: room.name,
+        slug: room.slug
+      },
+			owner: {
+				_id: Meteor.userId(),
+				username: Meteor.user().username,
+        normalizedUsername: Meteor.user().normalizedUsername,
+				profile: Meteor.user().profile
+			},
+      messageCount: 0,
+      watchers: [ Meteor.userId() ]
+		}, data));
 
     Rooms.update(
       { _id: roomId },
@@ -56,34 +59,46 @@ Meteor.methods({
       } }
     );
 
-		return topicId;
+    if (retId) {
+      return topicId;
+    }
+		return data.slug;
   },
   updateTopic: function (topicId, data) {
 		check(topicId, String);
-		check(data, {
-      name: String,
-			visibility: String
-		});
+		check(data, match);
 
-		var topic = Topics.findOne(topicId);
+		const topic = Topics.findOne(topicId);
 
     if (! isOwner(topic)) {
 			throw new Meteor.Error("not-authorized");
 		}
 
-		Topics.update(
-			{ _id: topicId },
-			{ $set: {
-				updatedAt: new Date(),
-        name: data.name,
-				visibility: data.visibility
-			} }
-		);
+    Topics.update(
+      { _id: topicId },
+      { $set: _.defaults({
+        updatedAt: new Date()
+      }, data) }
+    );
+
+    if (Meteor.isServer) {
+      const slug = slugCycle(topicId, data.name, { "room.slug": topic.room.slug });
+      Topics.update(
+        { _id: topicId },
+        { $set: { slug } }
+      );
+      Messages.update(
+        { "topic._id": topicId },
+        { $set: { "topic.slug": slug } },
+        { multi: true }
+      );
+      return slug;
+    }
 	},
   deleteTopic: function (topicId) {
     check(topicId, String);
 
-    var topic = Topics.findOne(topicId);
+    const topic = Topics.findOne(topicId);
 
     if (! isOwner(topic)) {
       throw new Meteor.Error("not-authorized");

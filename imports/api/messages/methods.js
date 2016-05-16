@@ -1,15 +1,15 @@
 import _ from "lodash";
 
-import "../topics/methods";
-import Messages from "./collection";
-import Topics from "../topics/collection";
-import Rooms from "../rooms/collection";
-import Posts from "../posts/collection";
-import Albums from "../albums/collection";
-import Pages from "../pages/collection";
-import BlogPosts from "../blog/collection";
-import Notifications from "../notifications/collection";
-import processMentions from "../common/processMentions";
+import "/imports/api/topics/methods";
+import Messages from "/imports/api/messages/collection";
+import Topics from "/imports/api/topics/collection";
+import Rooms from "/imports/api/rooms/collection";
+import Posts from "/imports/api/posts/collection";
+import Albums from "/imports/api/albums/collection";
+import Pages from "/imports/api/pages/collection";
+import BlogPosts from "/imports/api/blog/collection";
+import Notifications from "/imports/api/notifications/collection";
+import processMentions from "/imports/api/common/processMentions";
 
 Meteor.methods({
   addMessage: function (topicId, data) {
@@ -22,7 +22,9 @@ Meteor.methods({
       throw new Meteor.Error("not-logged-in");
     }
 
-    var messageId = Messages.insert({
+    const topic = Topics.findOne(topicId);
+
+    const messageId = Messages.insert({
       createdAt: new Date(),
       updatedAt: new Date(),
       body: data.body,
@@ -33,7 +35,12 @@ Meteor.methods({
         profile: Meteor.user().profile
       },
       topic: {
-        _id: topicId
+        _id: topicId,
+        slug: topic.slug,
+        room: {
+          _id: topic.room._id,
+          slug: topic.room.slug
+        }
       }
     });
 
@@ -49,8 +56,6 @@ Meteor.methods({
         messageCount: 1
       } }
     );
-
-    var topic = Topics.findOne(topicId);
 
     Rooms.update(
       { _id: topic.room._id },
@@ -96,9 +101,11 @@ Meteor.methods({
           doc.topic = {
             _id: topicId,
             name: topic.name,
+            slug: topic.slug,
             room: {
               _id: topic.room._id,
-              name: topic.room.name
+              name: topic.room.name,
+              slug: topic.room.slug
             }
           };
         } else {
@@ -159,9 +166,11 @@ Meteor.methods({
         doc.topic = {
           _id: topicId,
           name: topic.name,
+          slug: topic.slug,
           room: {
             _id: topic.room._id,
-            name: topic.room.name
+            name: topic.room.name,
+            slug: topic.room.slug
           }
         };
       } else {
@@ -214,7 +223,7 @@ Meteor.methods({
       body: String
     });
 
-    var msg = Messages.findOne(messageId);
+    const msg = Messages.findOne(messageId);
 
     if (! isOwner(msg)) {
 			throw new Meteor.Error("not-authorized");

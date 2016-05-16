@@ -3,7 +3,6 @@ import React from "react";
 import Topics from "/imports/api/topics/collection";
 import "/imports/api/topics/methods";
 import setTitle from "/imports/api/common/setTitle";
-
 import MessageList from "./MessageList";
 import TopicForm from "./TopicForm";
 import Dialog from "/imports/ui/client/components/Dialog";
@@ -23,11 +22,17 @@ export default React.createClass({
     return { showForm: false };
   },
   getMeteorData() {
-    const id = FlowRouter.getParam("topicId");
-    const handle = Meteor.subscribe("topic", id);
+    const roomSlug = FlowRouter.getParam("roomSlug");
+    const slug = FlowRouter.getParam("topicSlug");
+    const handle = Meteor.subscribe("topic", slug);
     return {
       loading: ! handle.ready(),
-      topic: Topics.findOne({ _id: id }),
+      topic: Topics.findOne(
+        {
+          "room.slug": roomSlug,
+          slug
+        }
+      ),
       currentUser: Meteor.user()
     };
   },
@@ -39,10 +44,10 @@ export default React.createClass({
     }
     setTitle(pre + body);
   },
-  showTopicForm() {
+  showForm() {
     this.setState({ showForm: true });
   },
-  hideTopicForm() {
+  hideForm() {
     this.setState({ showForm: false });
   },
   delete() {
@@ -59,7 +64,7 @@ export default React.createClass({
         <SubmitButton
           label="Edit"
           iconName="edit"
-          onTouchTap={this.showTopicForm}
+          onTouchTap={this.showForm}
         />
         <DangerButton
           label="Delete"
@@ -84,12 +89,12 @@ export default React.createClass({
         title="Edit Topic"
         formId={"form" + this.data.topic._id}
         open={true}
-        onClose={this.hideTopicForm}
+        onClose={this.hideForm}
       >
         <TopicForm
           id={"form" + this.data.topic._id}
           topic={this.data.topic}
-          onClose={this.hideTopicForm}
+          onClose={this.hideForm}
         />
       </Dialog>;
     }

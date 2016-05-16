@@ -18,7 +18,7 @@ export default React.createClass({
     this.setState({ activeLeft: false });
   },
   renderMain() {
-    if (FlowRouter.getParam("topicId")) {
+    if (FlowRouter.getParam("topicSlug")) {
       return <Topic activateLeft={this.activateLeft} />;
     }
     return <Room activateLeft={this.activateLeft} />;

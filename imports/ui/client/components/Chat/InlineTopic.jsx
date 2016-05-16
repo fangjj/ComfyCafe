@@ -2,15 +2,14 @@ import React from "react";
 
 import Topics from "/imports/api/topics/collection";
 import setTitle from "/imports/api/common/setTitle";
-
-import MessageList from "./MessageList";
+import MessageList from "/imports/ui/client/components/Chat/MessageList";
 import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLoadingSpinner";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const id = this.props.topicId;
-    let handle = Meteor.subscribe("topic", id);
+    const handle = Meteor.subscribe("topicId", id);
     return {
       loading: ! handle.ready(),
       topic: Topics.findOne({ _id: id })

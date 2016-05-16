@@ -2,17 +2,18 @@ import _ from "lodash";
 
 import prefixer from "/imports/api/common/prefixer";
 import { ownerPrefixer, updateOwnerDocs, profilePrefixer  } from "/imports/api/users/updateProfile";
-import Posts from "../posts/collection";
-import BlogPosts from "../blog/collection";
-import Pages from "../pages/collection";
-import Albums from "../albums/collection";
-import Filters from "../filters/collection";
-import Notifications from "../notifications/collection";
-import Rooms from "../rooms/collection";
-import Topics from "../topics/collection";
-import "../blog/methods";
-import "../media/methods";
-import media from "../media/collection";
+import Posts from "/imports/api/posts/collection";
+import BlogPosts from "/imports/api/blog/collection";
+import Pages from "/imports/api/pages/collection";
+import Albums from "/imports/api/albums/collection";
+import Filters from "/imports/api/filters/collection";
+import Notifications from "/imports/api/notifications/collection";
+import Rooms from "/imports/api/rooms/collection";
+import Topics from "/imports/api/topics/collection";
+import Messages from "/imports/api/messages/collection";
+import "/imports/api/blog/methods";
+import "/imports/api/media/methods";
+import media from "/imports/api/media/collection";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
 
 function logMigrate(body, note) {
@@ -36,6 +37,26 @@ function migrationBuilder(functionBody) {
 }
 
 Meteor.methods({
+  migrateTopics: migrationBuilder(function () {
+    const slugCycle = createSlugCycler(Topics, true);
+    Topics.find().map((topic) => {
+      const slug = slugCycle(topic._id, topic.name, { "room.slug": topic.room.slug });
+      Topics.update(
+        { _id: topic._id },
+        { $set: { slug } }
+      );
+      Messages.update(
+        { "topic._id": topic._id },
+        { $set: {
+          "topic.slug": slug,
+          "topic.room._id": topic.room._id,
+          "topic.room.slug": topic.room.slug
+        } },
+        { multi: true }
+      );
+      logMigrate(topic.name, slug);
+    });
+  }),
   migrateCommunities: migrationBuilder(function () {
     const slugCycle = createSlugCycler(Rooms, true);
     Rooms.find().map((room) => {
@@ -51,7 +72,7 @@ Meteor.methods({
         { $set: prefixer("room", udoc) },
         { multi: true }
       );
-      logMigrate(room.name, room.slug);
+      logMigrate(room.name, slug);
     });
   }),
   migrateNotifications: migrationBuilder(function () {
@@ -135,7 +156,7 @@ Meteor.methods({
       const topicId = Meteor.call("addTopic", user.room._id, {
         name: post.name,
         visibility: post.visibility
-      });
+      }, true);
       BlogPosts.update(
         { _id: post._id },
         { $set: {

@@ -6,7 +6,7 @@ import Avatar from "/imports/ui/client/components/Avatar/Avatar";
 
 export default React.createClass({
   renderMoreMenu() {
-    var isOwner = this.props.currentUser
+    const isOwner = this.props.currentUser
       && this.props.currentUser._id === this.props.topic.owner._id;
     if (isOwner) {
       return <TopicMoreMenu topic={this.props.topic} currentUser={this.props.currentUser} />;
@@ -23,11 +23,11 @@ export default React.createClass({
     const topic = this.props.topic;
     const topicUrl = FlowRouter.path("topic", {
       roomSlug: topic.room.slug,
-      topicId: topic._id
+      topicSlug: topic.slug
     });
 
     const owner = topic.owner;
-    const ownerUrl = FlowRouter.path("profile", {username: owner.username});
+    const ownerUrl = FlowRouter.path("profile", { username: owner.username });
 
     return <li className="topicListItem">
       <div className="flexLayout">

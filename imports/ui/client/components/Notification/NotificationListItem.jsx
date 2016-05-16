@@ -207,7 +207,7 @@ export default React.createClass({
     topicPosted() {
       const url = FlowRouter.path("topic", {
         roomSlug: this.props.notification.topic.room.slug,
-        topicId: this.props.notification.topic._id
+        topicSlug: this.props.notification.topic.slug
       }) + "#" + this.props.notification.message._id;
       return [
         "posted in ",
@@ -219,7 +219,7 @@ export default React.createClass({
     topicMentioned() {
       const url = FlowRouter.path("topic", {
         roomSlug: this.props.notification.topic.room.slug,
-        topicId: this.props.notification.topic._id
+        topicSlug: this.props.notification.topic.slug
       }) + "#" + this.props.notification.message._id;
       return [
         "mentioned you in ",

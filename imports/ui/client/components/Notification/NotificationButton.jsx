@@ -1,12 +1,18 @@
 import React from "react";
 
+import { isBirthday, shouldCelebrate } from "/imports/api/users/birthday";
 import Ripple from "/imports/ui/client/components/Ripple";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 export default React.createClass({
+  contextTypes: { currentUser: React.PropTypes.object },
   renderCount() {
-    if (this.props.notifications.length) {
-      return <span className="push teal">{this.props.notifications.length}</span>;
+    let count = this.props.notifications.length;
+    if (isBirthday(this.context.currentUser) && shouldCelebrate(this.context.currentUser)) {
+      count += 1;
+    }
+    if (count) {
+      return <span className="push teal">{count}</span>;
     }
   },
   toggleListVisibility(event) {

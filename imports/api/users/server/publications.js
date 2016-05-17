@@ -12,7 +12,8 @@ Meteor.publish(null, function () {
 			subscribers: 1,
       friends: 1,
       room: 1,
-      defaultFilter: 1
+      defaultFilter: 1,
+      lastCelebrated: 1
 		} }
 	);
 });

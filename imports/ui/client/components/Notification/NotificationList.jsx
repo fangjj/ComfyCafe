@@ -2,6 +2,7 @@ import React from "react";
 import OnClickOutside from "react-onclickoutside";
 
 import NotificationListItem from "./NotificationListItem";
+import HappyBirthday from "./HappyBirthday";
 
 export default React.createClass({
   mixins: [OnClickOutside],
@@ -10,7 +11,7 @@ export default React.createClass({
       this.props.action();
     }
   },
-  renderNotifications() {
+  renderNotifications(isBday) {
     if (this.props.notifications.length) {
       return this.props.notifications.map((notification) => {
         return <NotificationListItem
@@ -20,18 +21,23 @@ export default React.createClass({
         />;
       });
     }
-    return <li>No notifications.</li>;
+    if (! isBday) {
+      return <li>No notifications.</li>;
+    }
   },
   render() {
-    var classes = "topMenu";
+    let classes = "topMenu";
     if (this.props.visible) {
       classes = "topMenu active";
     }
 
+    const bday = <HappyBirthday />;
+
     return <div>
       <div id="notificationArrow" className={classes}></div>
       <ol id="notificationList" className={classes}>
-        {this.renderNotifications()}
+        {bday}
+        {this.renderNotifications(bday === null)}
       </ol>
     </div>;
   }

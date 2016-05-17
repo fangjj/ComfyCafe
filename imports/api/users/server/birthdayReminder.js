@@ -4,7 +4,7 @@ import jobs from "/imports/api/jobs/collection";
 import Notifications from "/imports/api/notifications/collection";
 
 new Job(jobs, "birthdayReminder", {}).repeat({
-  schedule: jobs.later.parse.text("at 0:00")
+  schedule: jobs.later.parse.text("at 0:00") // UTC
 }).save({ cancelRepeats: true });
 
 q = jobs.processJobs("birthdayReminder", {

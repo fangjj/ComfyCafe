@@ -408,5 +408,18 @@ Meteor.methods({
 				]
 			}
 		);
+	},
+
+	stopCelebrating(year) {
+		check(year, Number);
+
+		if (! Meteor.userId()) {
+			throw new Meteor.Error("not-logged-in");
+		}
+
+		Meteor.users.update(
+			{ _id: Meteor.userId() },
+			{ $set: { lastCelebrated: year } }
+		);
 	}
 });

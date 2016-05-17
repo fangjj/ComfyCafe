@@ -10,6 +10,8 @@
   user: name=teruimages group=teruimages home=/srv/TeruImages/
 - name: load email config
   include_vars: ~/.mailgun.json
+- name: load kadira config
+  include_vars: ~/.kadira.json
 
 - name: copy Meteor bundle
   copy: src=../TeruImages.tar.gz dest=/srv/TeruImages/TeruImages.tar.gz

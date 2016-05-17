@@ -1,23 +1,20 @@
 import React from "react";
-import {
-  IconMenu,
-  MenuItem,
-  IconButton
-} from "material-ui";
+import MenuItem from "material-ui/MenuItem";
 
 import "/imports/api/rooms/methods";
-import RoomForm from "./RoomForm";
-import Dialog from "/imports/ui/client/components/Dialog";
-import Icon from "/imports/ui/client/components/Daikon/Icon";
+import RoomForm from "/imports/ui/client/components/Chat/RoomForm";
+import DialogForm from "/imports/ui/client/components/DialogForm";
+import MoreMenu from "/imports/ui/client/components/MoreMenu";
 
 export default React.createClass({
+  contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
     return { showForm: false };
   },
-  showRoomForm() {
+  showForm() {
     this.setState({ showForm: true });
   },
-  hideRoomForm() {
+  hideForm() {
     this.setState({ showForm: false });
   },
   delete() {
@@ -30,40 +27,27 @@ export default React.createClass({
   },
   renderForm() {
     if (this.state.showForm) {
-      return <Dialog
+      return <DialogForm
         title="Edit Community"
-        formId={"form" + this.props.room._id}
-        open={true}
-        onClose={this.hideRoomForm}
-      >
-        <RoomForm
-          id={"form" + this.props.room._id}
-          room={this.props.room}
-          onClose={this.hideRoomForm}
-        />
-      </Dialog>;
+        id={"form" + this.props.room._id}
+        form={<RoomForm room={this.props.room} />}
+        onClose={this.hideForm}
+      />;
     }
   },
   render() {
     const room = this.props.room;
 
     const owner = room.owner;
-    const isOwner = this.props.currentUser && this.props.currentUser._id === owner._id;
+    const isOwner = this.context.currentUser && this.context.currentUser._id === owner._id;
 
-    const moreBtn = <IconButton>
-      <Icon>more_horiz</Icon>
-    </IconButton>;
+    if (! isOwner) {
+      return null;
+    }
 
-    return <div className="more">
-      <IconMenu
-        iconButtonElement={moreBtn}
-        anchorOrigin={{horizontal: "right", vertical: "top"}}
-        targetOrigin={{horizontal: "right", vertical: "top"}}
-      >
-        <MenuItem primaryText="Edit" onTouchTap={this.showRoomForm} />
-        <MenuItem primaryText="Delete" onTouchTap={this.delete} />
-      </IconMenu>
-      {this.renderForm()}
-    </div>;
+    return <MoreMenu form={this.renderForm()}>
+      <MenuItem primaryText="Edit" onTouchTap={this.showForm} />
+      <MenuItem primaryText="Delete" onTouchTap={this.delete} />
+    </MoreMenu>;
   }
 });

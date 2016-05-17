@@ -2,9 +2,9 @@ export default {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const RoomList = require("../client/components/Chat/RoomList").default;
+      const RoomListContainer = require("../client/components/Chat/RoomListContainer").default;
       return {
-        main: <RoomList />
+        main: <RoomListContainer />
       };
     }
   },

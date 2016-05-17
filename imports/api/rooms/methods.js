@@ -4,10 +4,10 @@ import Rooms from "/imports/api/rooms/collection";
 import Topics from "/imports/api/topics/collection";
 import Messages from "/imports/api/messages/collection";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
+import docBuilder from "/imports/api/common/docBuilder";
 
 const match = {
 	name: String,
-	visibility: String,
 	description: String,
 	rules: String
 };
@@ -24,18 +24,11 @@ Meteor.methods({
 
 		data.slug = slugCycle(null, data.name);
 
-		const roomId = Rooms.insert(_.defaults({
-			createdAt: new Date(),
-			updatedAt: new Date(),
+		const doc = docBuilder({
 			lastActivity: new Date(),
-			owner: {
-				_id: Meteor.userId(),
-				username: Meteor.user().username,
-				normalizedUsername: Meteor.user().normalizedUsername,
-				profile: Meteor.user().profile
-			},
 			topicCount: 0
-		}, data));
+		}, data);
+		const roomId = Rooms.insert(doc);
 
 		return data.slug;
 	},

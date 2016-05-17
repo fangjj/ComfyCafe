@@ -1,9 +1,8 @@
 import React from "react";
 import Avatar from "material-ui/Avatar";
 
-import RoomMoreMenu from "./RoomMoreMenu";
-import VisibilityLink from "../VisibilityLink";
-import Moment from "../Moment";
+import RoomMoreMenu from "/imports/ui/client/components/Chat/RoomMoreMenu";
+import Moment from "/imports/ui/client/components/Moment";
 
 export default React.createClass({
   renderMoreMenu() {
@@ -34,10 +33,7 @@ export default React.createClass({
         <div className="rightSide">
           <div className="top">
             <div className="info">
-              <VisibilityLink
-                href={path}
-                visibility={room.visibility}
-              >{room.name}</VisibilityLink>
+              <a href={path}>{room.name}</a>
               <br />
               {room.topicCount + " " + this.renderCountLabel()}
               <br />

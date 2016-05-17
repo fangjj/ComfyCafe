@@ -4,13 +4,11 @@ import "/imports/api/rooms/methods";
 import generateRoom from "/imports/api/rooms/nameGen/generator";
 import { initialStateBuilder, dataBuilder } from "/imports/ui/client/utils/forms";
 import Form from "/imports/ui/client/components/Form";
-import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
 import TextField from "/imports/ui/client/components/TextField";
 import TextArea from "/imports/ui/client/components/TextArea";
 
 const defaultState = {
   name: generateRoom,
-  visibility: "public",
   description: "",
   rules: ""
 };
@@ -75,10 +73,6 @@ export default React.createClass({
         defaultValue={this.state.name}
         label="Name"
         onChange={this.handleName}
-      />
-      <VisibilitySelector
-        visibility={this.state.visibility}
-        onChange={this.handleVisibility}
       />
       <TextArea
         defaultValue={this.state.description}

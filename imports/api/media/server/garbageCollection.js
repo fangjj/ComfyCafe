@@ -9,7 +9,7 @@ q = jobs.processJobs("mediaGc", {
   pollInterval: false,
   workTimeout: 60 * 1000
 }, function (job, callback) {
-  console.log("Run media garbage collector...");
+  console.log("Running media garbage collector...");
 
   const oneWeekAgo = new Date();
   oneWeekAgo.setHours(oneWeekAgo.getHours() - 7 * 24);

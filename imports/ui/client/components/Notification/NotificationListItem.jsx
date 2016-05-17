@@ -1,23 +1,30 @@
 import _ from "lodash";
 import React from "react";
+import moment from "moment";
+import IconButton from "material-ui/IconButton";
 
 import "/imports/api/users/methods";
 import "/imports/api/notifications/methods";
-
+import getOrdinal from "/imports/ui/client/utils/ordinal";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import UserLink from "/imports/ui/client/components/User/UserLink";
 
-import {
-  IconButton
-} from "material-ui";
-
 export default React.createClass({
   actionMap: {
     subscribed() {
       return "subscribed!";
+    },
+    happyBirthday() {
+      return "Happy birthday!";
+    },
+    birthdayReminder() {
+      const birthday = this.props.notification.birthday;
+      const month = moment().month(birthday.month-1).format("MMMM");
+      const day = getOrdinal(birthday.day);
+      return `was born on ${month} ${day}, which is probably tomorrow. Don't forget!`;
     },
     friendRequest() {
       return {

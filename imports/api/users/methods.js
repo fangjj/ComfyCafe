@@ -6,6 +6,7 @@ import {
 	profilePrefixer,
 	updateProfile
 } from "/imports/api/users/updateProfile";
+import prefixer from "/imports/api/common/prefixer";
 import { validateUsername } from "/imports/api/users/validators";
 import media from "/imports/api/media/collection";
 import Notifications from "/imports/api/notifications/collection";
@@ -75,6 +76,8 @@ Meteor.methods({
 			defaultFilter: String,
 			uploadAction: String,
 			autoWatch: Boolean,
+			defaultImageVisibility: String,
+			defaultImageOriginality: String,
 			defaultAlbumVisibility: String
 		});
 
@@ -90,14 +93,10 @@ Meteor.methods({
 
 		Meteor.users.update(
 			{ _id: Meteor.userId() },
-			{ $set: {
-				"settings.defaultPage": data.defaultPage,
-				"settings.defaultFilter": data.defaultFilter,
-				"settings.uploadAction": data.uploadAction,
-				"settings.autoWatch": data.autoWatch,
-				"settings.defaultAlbumVisibility": data.defaultAlbumVisibility,
-				defaultFilter
-			} }
+			{ $set: _.defaults(
+				{ defaultFilter },
+				prefixer("settings", data)
+			) }
 		);
 	},
 	setAvatar: function (avatarId) {

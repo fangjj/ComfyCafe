@@ -7,7 +7,7 @@ import OriginalityIcon from "/imports/ui/client/components/Daikon/OriginalityIco
 export default React.createClass({
   render() {
     return <MeatballSelector
-      label="Originality"
+      label={this.props.label || "Originality"}
       value={this.props.value}
       onChange={this.props.onChange}
     >

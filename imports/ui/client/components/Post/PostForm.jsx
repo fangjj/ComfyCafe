@@ -3,6 +3,7 @@ import Checkbox from "material-ui/Checkbox";
 import FlatButton from "material-ui/FlatButton";
 
 import "/imports/api/posts/methods";
+import { initialStateBuilder, dataBuilder } from "/imports/ui/client/utils/forms";
 import media from "/imports/api/media/collection";
 import safetyLabels from "/imports/api/common/safetyLabels";
 import RainbowSpinner from "/imports/ui/client/components/Spinner/RainbowSpinner";
@@ -21,31 +22,24 @@ const defaultState = {
   source: "",
   description: "",
   safety: 0,
-  autoSafety: 0,
   tags: "tagme",
-  condExpanded: {},
+  tagsCondExpanded: {},
   bgColor: "default"
 };
 
 export default React.createClass({
   mixins: [ReactMeteorData],
+  contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
-    if (this.props.post) {
-      const post = this.props.post;
-      return {
-        visibility: post.visibility,
-        originality: post.originality,
-        source: post.source || defaultState.source,
-        description: post.description || defaultState.description,
-        safety: post.safety || defaultState.safety,
-        autoSafety: post.safety || defaultState.safety,
-        tags: post.tags.text || defaultState.tags,
-        condExpanded: post.tagsCondExpanded || defaultState.condExpanded,
-        bgColor: post.bgColor || defaultState.bgColor
-      };
-    } else {
-      return defaultState;
-    }
+    defaultState.visibility = _.get(this.context.currentUser,
+      "settings.defaultImageVisibility", defaultState.visibility
+    );
+    defaultState.originality = _.get(this.context.currentUser,
+      "settings.defaultImageOriginality", defaultState.originality
+    );
+    const state = initialStateBuilder(this.props.post, defaultState);
+    state.autoSafety = 0;;
+    return state;
   },
   getMeteorData() {
     if (this.props.mediumId) {
@@ -80,26 +74,14 @@ export default React.createClass({
   applyAutoSafety() {
     this.setState({ safety: this.state.autoSafety });
   },
-  handleTags(value, parsed, condExpanded) {
-    this.setState({
-      tags: value,
-      condExpanded: condExpanded
-    });
+  handleTags(tags, parsed, tagsCondExpanded) {
+    this.setState({ tags, tagsCondExpanded });
   },
   handleBgColor(value) {
     this.setState({ bgColor: value });
   },
   handleSubmit() {
-    const data = {
-      visibility: this.state.visibility,
-      originality: this.state.originality,
-      source: this.state.source,
-      description: this.state.description,
-      safety: this.state.safety,
-      tags: this.state.tags,
-      tagsCondExpanded: this.state.condExpanded,
-      bgColor: this.state.bgColor
-    };
+    const data = dataBuilder(this.state, defaultState);
 
     if (! this.props.post) {
       Meteor.call("addPost", this.props.mediumId, data, (err, name) => {
@@ -194,7 +176,7 @@ export default React.createClass({
       </div>
       <TagField
         defaultValue={this.state.tags}
-        condExpanded={this.state.condExpanded}
+        condExpanded={this.state.tagsCondExpanded}
         floatingLabelText="Tags"
         onChange={this.handleTags}
         receiveAutoSafety={this.receiveAutoSafety}

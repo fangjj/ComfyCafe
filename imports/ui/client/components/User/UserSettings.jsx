@@ -2,7 +2,6 @@ import _ from "lodash";
 import React from "react";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
-import Toggle from "material-ui/Toggle";
 
 import "/imports/api/users/methods";
 import { validateUsername } from "/imports/api/users/validators";
@@ -17,7 +16,9 @@ import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import FlatButton from "/imports/ui/client/components/Button/FlatButton";
 import PostFilters from "/imports/ui/client/components/Post/PostFilters";
 import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
+import OriginalitySelector from "/imports/ui/client/components/OriginalitySelector";
 import TextField from "/imports/ui/client/components/TextField";
+import Toggle from "/imports/ui/client/components/Toggle";
 import Snackbar from "/imports/ui/client/components/Snackbar";
 
 const defaultState = {
@@ -26,6 +27,8 @@ const defaultState = {
   defaultFilter: null,
   uploadAction: "redirect",
   autoWatch: true,
+  defaultImageVisibility: "public",
+  defaultImageOriginality: "original",
   defaultAlbumVisibility: "unlisted"
 };
 
@@ -91,6 +94,12 @@ export default React.createClass({
   handleAutoWatch(e) {
     this.setState({ autoWatch: e.target.checked });
   },
+  handleDefaultImageVisibility(value) {
+    this.setState({ defaultImageVisibility: value });
+  },
+  handleDefaultImageOriginality(value) {
+    this.setState({ defaultImageOriginality: value });
+  },
   handleDefaultAlbumVisibility(value) {
     this.setState({ defaultAlbumVisibility: value });
   },
@@ -155,8 +164,22 @@ export default React.createClass({
       <br />
       <Toggle
         label="Auto-watch topics you post in"
-        defaultToggled={this.state.autoWatch}
-        onToggle={this.handleAutoWatch}
+        value={this.state.autoWatch}
+        onChange={this.handleAutoWatch}
+      />
+
+      <br />
+
+      <VisibilitySelector
+        label="Default image visibility"
+        visibility={this.state.defaultImageVisibility}
+        onChange={this.handleDefaultImageVisibility}
+      />
+
+      <OriginalitySelector
+        label="Default image originality"
+        value={this.state.defaultImageOriginality}
+        onChange={this.handleDefaultImageOriginality}
       />
 
       <VisibilitySelector

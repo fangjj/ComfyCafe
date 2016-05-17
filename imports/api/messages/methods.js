@@ -12,7 +12,7 @@ const match = {
 };
 
 Meteor.methods({
-  addMessage: function (topicId, data) {
+  addMessage(topicId, data) {
     check(topicId, String);
     check(data, match);
 
@@ -66,34 +66,29 @@ Meteor.methods({
 
     Messages.update(
       { _id: messageId },
-      { $set: {
-        updatedAt: new Date(),
-        body: data.body
-      } }
+      { $set: _.defaults({
+        updatedAt: new Date()
+      }, data) }
     );
 
     Topics.update(
       { _id: msg.topic._id },
-      { $set: {
-        lastActivity: new Date()
-      } }
+      { $set: { lastActivity: new Date() } }
     );
 
     const topic = Topics.findOne(msg.topic._id);
 
     Rooms.update(
       { _id: topic.room._id },
-      { $set: {
-        lastActivity: new Date()
-      } }
+      { $set: { lastActivity: new Date() } }
     );
 
     notificationDispatch(messageId, data, topic);
   },
-  deleteMessage: function (messageId) {
+  deleteMessage(messageId) {
     check(messageId, String);
 
-    var msg = Messages.findOne(messageId);
+    const msg = Messages.findOne(messageId);
 
     if (! isOwner(msg)) {
 			throw new Meteor.Error("not-authorized");
@@ -112,20 +107,17 @@ Meteor.methods({
 
     Topics.update(
       { _id: msg.topic._id },
-      { $set: {
-        lastActivity: new Date(),
-      }, $inc: {
-        messageCount: -1
-      } }
+      {
+        $set: { lastActivity: new Date(), },
+        $inc: { messageCount: -1 }
+      }
     );
 
-    var topic = Topics.findOne(msg.topic._id);
+    const topic = Topics.findOne(msg.topic._id);
 
     Rooms.update(
       { _id: topic.room._id },
-      { $set: {
-        lastActivity: new Date()
-      } }
+      { $set: { lastActivity: new Date() } }
     );
   }
 });

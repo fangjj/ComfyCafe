@@ -1,6 +1,5 @@
 import React from "react";
 
-import VisibilityLink from "/imports/ui/client/components/VisibilityLink";
 import Moment from "/imports/ui/client/components/Moment";
 import Avatar from "/imports/ui/client/components/Avatar/Avatar";
 
@@ -34,10 +33,7 @@ export default React.createClass({
         <div className="rightSide">
           <div className="top">
             <div className="info">
-              <VisibilityLink
-                href={topicUrl}
-                visibility={topic.visibility}
-              >{topic.name}</VisibilityLink>
+              <a href={topicUrl}>{topic.name}</a>
               <br />
               <Moment time={topic.lastActivity} />
             </div>

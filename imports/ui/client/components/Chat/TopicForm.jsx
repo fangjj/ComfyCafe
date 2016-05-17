@@ -5,11 +5,9 @@ import generateTopic from "/imports/api/topics/nameGen/generator";
 import { initialStateBuilder, dataBuilder } from "/imports/ui/client/utils/forms";
 import Form from "/imports/ui/client/components/Form";
 import TextField from "/imports/ui/client/components/TextField";
-import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector";
 
 const defaultState = {
-  name: generateTopic,
-  visibility: "public"
+  name: generateTopic
 };
 
 export default React.createClass({
@@ -28,9 +26,6 @@ export default React.createClass({
       name: e.target.value,
       nameGenerated: false
     });
-  },
-  handleVisibility(value) {
-    this.setState({ visibility: value });
   },
   handleSubmit(e) {
     const data = dataBuilder(this.state, defaultState);
@@ -72,10 +67,6 @@ export default React.createClass({
         defaultValue={this.state.name}
         label="Name"
         onChange={this.handleName}
-      />
-      <VisibilitySelector
-        visibility={this.state.visibility}
-        onChange={this.handleVisibility}
       />
     </Form>;
   }

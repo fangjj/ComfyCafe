@@ -2,11 +2,11 @@ import Topics from "/imports/api/topics/collection";
 import Rooms from "/imports/api/rooms/collection";
 import Messages from "/imports/api/messages/collection";
 import Notifications from "/imports/api/notifications/collection";
+import docBuilder from "/imports/api/common/docBuilder";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
 
 const match = {
-  name: String,
-  visibility: String
+  name: String
 };
 
 const slugCycle = createSlugCycler(Topics, true);
@@ -31,24 +31,17 @@ Meteor.methods({
 
     data.slug = slugCycle(null, data.name, { "room.slug": room.slug });
 
-		const topicId = Topics.insert(_.defaults({
-			createdAt: new Date(),
-			updatedAt: new Date(),
-			lastActivity: new Date(),
+    const doc = docBuilder({
+      lastActivity: new Date(),
       room: {
         _id: roomId,
         name: room.name,
         slug: room.slug
       },
-			owner: {
-				_id: Meteor.userId(),
-				username: Meteor.user().username,
-        normalizedUsername: Meteor.user().normalizedUsername,
-				profile: Meteor.user().profile
-			},
       messageCount: 0,
       watchers: [ Meteor.userId() ]
-		}, data));
+    }, data);
+		const topicId = Topics.insert(doc);
 
     Rooms.update(
       { _id: roomId },
@@ -95,7 +88,7 @@ Meteor.methods({
       return slug;
     }
 	},
-  deleteTopic: function (topicId) {
+  deleteTopic(topicId) {
     check(topicId, String);
 
     const topic = Topics.findOne(topicId);
@@ -116,7 +109,7 @@ Meteor.methods({
     Notifications.remove({ "topic._id": topicId });
   },
 
-  watchTopic: function (topicId) {
+  watchTopic(topicId) {
     check(topicId, String);
 
     if (! Meteor.userId()) {
@@ -125,12 +118,10 @@ Meteor.methods({
 
     Topics.update(
       { _id: topicId },
-      { $addToSet: {
-        watchers: Meteor.userId()
-      } }
+      { $addToSet: { watchers: Meteor.userId() } }
     );
   },
-  unwatchTopic: function (topicId) {
+  unwatchTopic(topicId) {
     check(topicId, String);
 
     if (! Meteor.userId()) {
@@ -139,12 +130,10 @@ Meteor.methods({
 
     Topics.update(
       { _id: topicId },
-      { $pull: {
-        watchers: Meteor.userId()
-      } }
+      { $pull: { watchers: Meteor.userId() } }
     );
   },
-  viewTopic: function (topicId) {
+  viewTopic(topicId) {
     check(topicId, String);
 
     if (! Meteor.userId()) {
@@ -159,7 +148,7 @@ Meteor.methods({
     );
   },
 
-  startTyping: function (topicId) {
+  startTyping(topicId) {
     check(topicId, String);
 
     if (! Meteor.userId()) {
@@ -186,7 +175,7 @@ Meteor.methods({
 			} }
 		);
   },
-  stopTyping: function (topicId) {
+  stopTyping(topicId) {
     check(topicId, String);
 
     if (! Meteor.userId()) {

@@ -1,4 +1,5 @@
 import React from "react";
+import pluralize from "pluralize";
 import Avatar from "material-ui/Avatar";
 
 import RoomMoreMenu from "/imports/ui/client/components/Chat/RoomMoreMenu";
@@ -10,13 +11,6 @@ export default React.createClass({
       && this.props.currentUser._id === this.props.room.owner._id;
     if (isOwner) {
       return <RoomMoreMenu room={this.props.room} currentUser={this.props.currentUser} />;
-    }
-  },
-  renderCountLabel() {
-    if (this.props.room.topicCount !== 1) {
-      return "topics";
-    } else {
-      return "topic";
     }
   },
   render() {
@@ -35,7 +29,7 @@ export default React.createClass({
             <div className="info">
               <a href={path}>{room.name}</a>
               <br />
-              {room.topicCount + " " + this.renderCountLabel()}
+              {room.topicCount + " " + pluralize("topic", this.props.room.topicCount)}
               <br />
               (last activity <Moment time={room.lastActivity} />)
             </div>

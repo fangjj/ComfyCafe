@@ -52,6 +52,7 @@
     "nearest-color": "^0.4.0",
     "normalize.css": "^3.0.3",
     "perfect-scrollbar": "^0.6.10",
+    "pluralize": "^2.0.0",
     "react": "^15.0.1",
     "react-addons-create-fragment": "^15.0.1",
     "react-addons-css-transition-group": "^15.0.1",

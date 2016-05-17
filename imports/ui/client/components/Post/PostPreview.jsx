@@ -26,7 +26,6 @@ export default React.createClass({
       )
       || JSON.stringify(nextProps.post) !== JSON.stringify(this.props.post)
     );
-    console.log(should);
     return should;
   },
   buildTitle() {
@@ -60,7 +59,7 @@ export default React.createClass({
     const ownerUrl = FlowRouter.path("profile", {username: owner.username});
     return <li className={"postPreview " + this.props.post.visibility} title={this.buildTitle()}>
       <a href={ownerUrl} className="avatarLink">
-        <Avatar size="icon" user={owner} />
+        <Avatar size="icon" user={owner} noStatus={true} />
         {this.renderStar()}
       </a>
       <VisibilityLink href={postUrl} visibility={this.props.post.visibility}>

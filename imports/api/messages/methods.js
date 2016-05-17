@@ -50,11 +50,11 @@ Meteor.methods({
 
     Topics.update(
       { _id: topicId },
-      { $set: {
-        lastActivity: new Date()
-      }, $inc: {
-        messageCount: 1
-      } }
+      {
+        $set: { lastActivity: new Date() },
+        $inc: { messageCount: 1 },
+        $addToSet: { users: Meteor.userId() }
+      }
     );
 
     Rooms.update(
@@ -279,6 +279,15 @@ Meteor.methods({
 		}
 
     Messages.remove(messageId);
+
+    if (! Messages.find(
+      {
+        "topic._id": msg.topic._id,
+        "owner._id": Meteor.userId()
+      }
+    ).fetch().length) {
+      doc.$pull = { users: Meteor.userId() };
+    }
 
     Topics.update(
       { _id: msg.topic._id },

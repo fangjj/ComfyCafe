@@ -56,8 +56,14 @@ export default React.createClass({
     } else {
       return <ButtonGroup>
         <SubmitButton
-          label="Experience Happiness"
+          label="Join"
           iconName="sentiment_satisfied"
+        />
+        <DangerButton
+          label="Report"
+          iconName="flag"
+          subtle={true}
+          onTouchTap={this.report}
         />
       </ButtonGroup>;
     }

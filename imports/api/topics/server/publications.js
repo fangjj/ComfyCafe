@@ -4,7 +4,19 @@ import prefixer from "/imports/api/common/prefixer";
 
 Meteor.publish("topic", function (slug) {
 	check(slug, String);
-	return Topics.find({ slug });
+	this.autorun(function (computation) {
+		const topics = Topics.find({ slug });
+		const exists = Boolean(topics.fetch().length);
+		if (exists) {
+			const users = Meteor.users.find(
+				{ _id: { $in: topics.fetch()[0].users } },
+				{ fields: { "status.online": 1, "status.idle": 1 } }
+			);
+			return [ topics, users ];
+		} else {
+			return null;
+		}
+	});
 });
 
 Meteor.publish("topicId", function (id) {

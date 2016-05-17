@@ -3,6 +3,7 @@ import React from "react";
 
 import { getMediaUrlAvatar, getMediaUrlDjent } from "/imports/api/media/urls";
 import thumbnailPolicies from "/imports/api/thumbnails/policies";
+import UserStatus from "/imports/ui/client/components/User/UserStatus";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -10,10 +11,15 @@ export default React.createClass({
   getMeteorData() {
     return { filter: Session.get("filter") };
   },
+  renderStatus(user) {
+    if (! this.props.noStatus) {
+      return <UserStatus user={user} />;
+    }
+  },
   render() {
     const size = thumbnailPolicies.avatar[this.props.size].size;
 
-    const user = this.props.user;
+    const user = _.defaults(this.props.user, Meteor.users.findOne({ _id: this.props.user._id }));
 
     const spoilered = _.includes(
       _.get(this.data.filter, "spoilers.safeties",
@@ -28,12 +34,15 @@ export default React.createClass({
     } else {
       url = getMediaUrlDjent(user._id);
     };
-    return <img
-      className={"avatar " + this.props.size}
-      src={url}
-      title={user.profile.displayName || user.username}
-      width={size[0]}
-      height={size[1]}
-    />;
+    return <div className={"avatarContainer " + this.props.size}>
+      <img
+        className={"avatar " + this.props.size}
+        src={url}
+        title={user.profile.displayName || user.username}
+        width={size[0]}
+        height={size[1]}
+      />
+      {this.renderStatus(user)}
+    </div>;
   }
 });

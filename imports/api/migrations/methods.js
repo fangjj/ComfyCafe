@@ -37,6 +37,14 @@ function migrationBuilder(functionBody) {
 }
 
 Meteor.methods({
+  migrateTopicUsers: migrationBuilder(function () {
+    Messages.find().map((msg) => {
+      Topics.update(
+        { _id: msg.topic._id },
+        { $addToSet: { users: msg.owner._id } }
+      );
+    });
+  }),
   migrateMembers: migrationBuilder(function () {
     Rooms.find().map((room) => {
       Rooms.update(

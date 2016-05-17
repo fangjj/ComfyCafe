@@ -41,7 +41,7 @@ FlowRouter.route("/", {
   action: function () {
     setTitle();
     if (Meteor.user()) {
-      const page = Meteor.user().profile.defaultPage || "art";
+      const page = Meteor.user().settings.defaultPage || "art";
 
       const view = {
         art: PostFeedView,

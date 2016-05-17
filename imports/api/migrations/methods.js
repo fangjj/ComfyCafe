@@ -37,6 +37,15 @@ function migrationBuilder(functionBody) {
 }
 
 Meteor.methods({
+  migrateMembers: migrationBuilder(function () {
+    Rooms.find().map((room) => {
+      Rooms.update(
+        { _id: room._id },
+        { $set: { members: [ room.owner._id ] } }
+      );
+      logMigrate(room.name);
+    });
+  }),
   migrateTopics: migrationBuilder(function () {
     const slugCycle = createSlugCycler(Topics, true);
     Topics.find().map((topic) => {

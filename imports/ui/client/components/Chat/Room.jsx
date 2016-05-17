@@ -10,6 +10,7 @@ import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/client/components/ActionWell";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
+import UserSearch from "/imports/ui/client/components/User/UserSearch";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -100,6 +101,11 @@ export default React.createClass({
       />;
     }
   },
+  renderMembers(room) {
+    if (room.members.length) {
+      return <UserSearch title="Members" userIds={room.members} />;
+    }
+  },
   render() {
     if (this.data.loading || ! this.data.room) {
       return <DenseLoadingSpinner />;
@@ -126,6 +132,7 @@ export default React.createClass({
         {this.renderProfile()}
         {this.renderForm(isOwner)}
       </div>
+      {this.renderMembers(room)}
     </section>;
   }
 });

@@ -26,7 +26,8 @@ Meteor.methods({
 
 		const doc = docBuilder({
 			lastActivity: new Date(),
-			topicCount: 0
+			topicCount: 0,
+			members: [ Meteor.userId() ]
 		}, data);
 		const roomId = Rooms.insert(doc);
 

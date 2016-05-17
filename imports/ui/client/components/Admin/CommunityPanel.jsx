@@ -6,7 +6,7 @@ import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
 export default React.createClass({
   handleMigrate() {
-    Meteor.call("migrateCommunities");
+    Meteor.call("migrateMembers");
   },
   render() {
     return <DenseContent>

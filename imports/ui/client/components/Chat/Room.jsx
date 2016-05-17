@@ -16,10 +16,10 @@ export default React.createClass({
   getInitialState() {
     return { showForm: false };
   },
-  showRoomForm() {
+  showForm() {
     this.setState({ showForm: true });
   },
-  hideRoomForm() {
+  hideForm() {
     this.setState({ showForm: false });
   },
   getMeteorData() {
@@ -43,7 +43,7 @@ export default React.createClass({
         <SubmitButton
           label="Edit"
           iconName="edit"
-          onTouchTap={this.showRoomForm}
+          onTouchTap={this.showForm}
         />
         <DangerButton
           label="Delete"
@@ -94,8 +94,9 @@ export default React.createClass({
     if (isOwner && this.state.showForm) {
       return <RoomForm
         room={this.data.room}
+        redirect={true}
         actions={true}
-        onClose={this.hideRoomForm}
+        onClose={this.hideForm}
       />;
     }
   },

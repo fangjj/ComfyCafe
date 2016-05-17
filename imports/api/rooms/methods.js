@@ -65,7 +65,10 @@ Meteor.methods({
 			);
 			Messages.update(
         { "topic.room._id": roomId },
-        { $set: { "topic.room.slug": topic.room.slug } },
+        { $set: {
+					"topic.room.name": data.name,
+					"topic.room.slug": slug
+				} },
 				{ multi: true }
       );
       return slug;

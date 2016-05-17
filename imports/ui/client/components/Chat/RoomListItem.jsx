@@ -27,7 +27,7 @@ export default (props) => {
             (last activity <Moment time={room.lastActivity} />)
           </div>
           <NoSSR>
-            <RoomMoreMenu room={room} />
+            <RoomMoreMenu room={room} redirect={false} />
           </NoSSR>
         </div>
       </div>

@@ -30,7 +30,7 @@ export default React.createClass({
       return <DialogForm
         title="Edit Community"
         id={"form" + this.props.room._id}
-        form={<RoomForm room={this.props.room} />}
+        form={<RoomForm room={this.props.room} redirect={this.props.redirect} />}
         onClose={this.hideForm}
       />;
     }

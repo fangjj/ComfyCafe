@@ -39,6 +39,15 @@ export default React.createClass({
   handleRules(e) {
     this.setState({ rules: e.target.value });
   },
+  redirect(slug) {
+    if (this.props.redirect) {
+      const url = FlowRouter.path("blogPost", {
+        username: this.props.post.owner.username,
+        slug: slug
+      });
+      FlowRouter.go(url);
+    }
+  },
   handleSubmit(e) {
     const data = dataBuilder(this.state, defaultState);
 
@@ -47,8 +56,7 @@ export default React.createClass({
         if (err) {
           prettyPrint(err);
         } else {
-          const path = FlowRouter.path("room", { roomSlug });
-          FlowRouter.go(path);
+          this.redirect(roomSlug);
         }
       });
     } else {
@@ -56,8 +64,7 @@ export default React.createClass({
         if (err) {
           prettyPrint(err);
         } else {
-          const path = FlowRouter.path("room", { roomSlug });
-          FlowRouter.go(path);
+          this.redirect(roomSlug);
         }
       });
     }

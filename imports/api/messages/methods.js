@@ -44,7 +44,7 @@ Meteor.methods({
       }
     });
 
-    if (Meteor.user().settings.autoWatch) {
+    if (_.get(Meteor.user(), "settings.autoWatch", true)) {
       Meteor.call("watchTopic", topicId);
     }
 

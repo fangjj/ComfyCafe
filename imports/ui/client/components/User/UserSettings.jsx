@@ -1,11 +1,13 @@
 import _ from "lodash";
 import React from "react";
+import SelectField from "material-ui/SelectField";
+import MenuItem from "material-ui/MenuItem";
+import Toggle from "material-ui/Toggle";
 
 import "/imports/api/users/methods";
-import {
-  validateUsername
-} from "/imports/api/users/validators";
+import { validateUsername } from "/imports/api/users/validators";
 import strings from  "/imports/api/users/strings";
+import { initialStateBuilder, dataBuilder } from "/imports/ui/client/utils/forms";
 import goBack from "/imports/ui/client/utils/goBack";
 import Content from "/imports/ui/client/components/Content";
 import Powerless from "/imports/ui/client/components/Powerless";
@@ -18,28 +20,23 @@ import VisibilitySelector from "/imports/ui/client/components/VisibilitySelector
 import TextField from "/imports/ui/client/components/TextField";
 import Snackbar from "/imports/ui/client/components/Snackbar";
 
-import {
-  SelectField,
-  MenuItem,
-  Toggle,
-} from "material-ui";
+const defaultState = {
+  username: null,
+  defaultPage: "art",
+  defaultFilter: null,
+  uploadAction: "redirect",
+  autoWatch: true,
+  defaultAlbumVisibility: "unlisted"
+};
 
 export default React.createClass({
+  contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
-    return {
-      snackbarOpen: false,
-      username: this.props.currentUser.username,
-      defaultPage: _.get(this.props.currentUser, "settings.defaultPage", "art"),
-      defaultFilter: _.get(this.props.currentUser, "settings.defaultFilter",
-        this.props.defaultFilterId),
-      uploadAction: _.get(this.props.currentUser, "settings.uploadAction", "redirect"),
-      autoWatch: _.get(this.props.currentUser, "settings.autoWatch", false),
-      defaultAlbumVisibility: _.get(
-        this.props.currentUser,
-        "settings.defaultAlbumVisibility",
-        "unlisted"
-      )
-    };
+    defaultState.defaultFilter = this.props.defaultFilterId;
+    const state = initialStateBuilder(this.context.currentUser.settings, defaultState);
+    state.username = this.context.currentUser.username;
+    state.snackbarOpen = false;
+    return state;
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.defaultFilterId !== this.props.defaultFilterId) {
@@ -82,35 +79,29 @@ export default React.createClass({
       this.props.setUsername(doc.username);
     });
   },
-  handleDefaultPage(event, index, value) {
+  handleDefaultPage(e, index, value) {
     this.setState({ defaultPage: value });
   },
-  handleDefaultFilter(event, index, value) {
+  handleDefaultFilter(e, index, value) {
     this.setState({ defaultFilter: value });
   },
-  handleUploadAction(event, index, value) {
+  handleUploadAction(e, index, value) {
     this.setState({ uploadAction: value });
   },
-  handleAutoWatch(event) {
-    this.setState({ autoWatch: event.target.checked });
+  handleAutoWatch(e) {
+    this.setState({ autoWatch: e.target.checked });
   },
   handleDefaultAlbumVisibility(value) {
     this.setState({ defaultAlbumVisibility: value });
   },
-  submit(event) {
-    var self = this;
-    Meteor.call("updateSettings", {
-      username: this.state.username,
-      defaultPage: this.state.defaultPage,
-      defaultFilter: this.state.defaultFilter,
-      uploadAction: this.state.uploadAction,
-      autoWatch: this.state.autoWatch,
-      defaultAlbumVisibility: this.state.defaultAlbumVisibility
-    }, () => {
-	    this.setState({snackbarOpen: true});
+  submit() {
+    const data = dataBuilder(this.state, defaultState);
+
+    Meteor.call("updateSettings", data, () => {
+	    this.setState({ snackbarOpen: true });
     });
   },
-  cancel(event) {
+  cancel(e) {
     goBack();
   },
 

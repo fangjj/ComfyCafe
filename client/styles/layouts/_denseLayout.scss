@@ -61,7 +61,9 @@
   }
 
   .content {
-    width: 95%;
+    margin-top: 0;
+
+    width: calc(100% - 20px);
 
     background: none;
 

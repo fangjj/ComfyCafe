@@ -82,23 +82,28 @@ export default React.createClass({
       </section>;
     }
   },
-  renderProfile() {
+  renderProfile(room) {
     if (! this.state.showForm) {
-      const room = this.data.room;
-      return <div className="denseBox">
-        {this.renderDescription(room)}
-        {this.renderRules(room)}
-      </div>;
+      const desc = this.renderDescription(room);
+      const rules = this.renderRules(room);
+      if (desc || rules) {
+        return <div className="denseBox">
+          {desc}
+          {rules}
+        </div>;
+      }
     }
   },
   renderForm(isOwner) {
     if (isOwner && this.state.showForm) {
-      return <RoomForm
-        room={this.data.room}
-        redirect={true}
-        actions={true}
-        onClose={this.hideForm}
-      />;
+      return <div className="denseBox">
+        <RoomForm
+          room={this.data.room}
+          redirect={true}
+          actions={true}
+          onClose={this.hideForm}
+        />
+      </div>;
     }
   },
   renderMembers(room) {
@@ -128,10 +133,8 @@ export default React.createClass({
           <div />
         </ActionWell>
       </header>
-      <div className="denseBox">
-        {this.renderProfile()}
-        {this.renderForm(isOwner)}
-      </div>
+      {this.renderProfile(room)}
+      {this.renderForm(isOwner)}
       {this.renderMembers(room)}
     </section>;
   }

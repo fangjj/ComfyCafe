@@ -9,7 +9,15 @@ import docBuilder from "/imports/api/common/docBuilder";
 const match = {
 	name: String,
 	description: String,
-	rules: String
+	rules: String,
+
+	requireInvite: Boolean,
+	membersCanInvite: Boolean,
+	moderatorsCanInvite: Boolean,
+	adminsCanInvite: Boolean,
+	membersOnlyView: Boolean,
+	membersOnlyPost: Boolean,
+	membersOnlyCreate: Boolean
 };
 
 const slugCycle = createSlugCycler(Rooms, true);

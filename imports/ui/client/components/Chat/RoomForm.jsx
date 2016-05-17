@@ -6,11 +6,21 @@ import { initialStateBuilder, dataBuilder } from "/imports/ui/client/utils/forms
 import Form from "/imports/ui/client/components/Form";
 import TextField from "/imports/ui/client/components/TextField";
 import TextArea from "/imports/ui/client/components/TextArea";
+import Toggle from "/imports/ui/client/components/Toggle";
+import Checkbox from "/imports/ui/client/components/Checkbox";
 
 const defaultState = {
   name: generateRoom,
   description: "",
-  rules: ""
+  rules: "",
+
+  requireInvite: false,
+  membersCanInvite: true,
+  moderatorsCanInvite: true,
+  adminsCanInvite: true,
+  membersOnlyView: false,
+  membersOnlyPost: false,
+  membersOnlyCreate: false
 };
 
 export default React.createClass({
@@ -95,6 +105,54 @@ export default React.createClass({
         rowsMax={10}
         onChange={this.handleRules}
       />
+
+      <Toggle
+        label="Require invite to join"
+        value={this.state.requireInvite}
+        onChange={(e) => { this.setState({ requireInvite: e.target.checked }); }}
+      />
+
+      <section>
+        <header>
+          <h3>Invites can be made by...</h3>
+        </header>
+        <Checkbox
+          label="Members"
+          checked={this.state.membersCanInvite}
+          onCheck={(e) => { this.setState({ membersCanInvite: e.target.checked }); }}
+        />
+        <Checkbox
+          label="Community Moderators"
+          checked={this.state.moderatorsCanInvite}
+          onCheck={(e) => { this.setState({ moderatorsCanInvite: e.target.checked }); }}
+        />
+        <Checkbox
+          label="Community Admins"
+          checked={this.state.adminsCanInvite}
+          onCheck={(e) => { this.setState({ adminsCanInvite: e.target.checked }); }}
+        />
+      </section>
+
+      <section>
+        <header>
+          <h3>Require membership to...</h3>
+        </header>
+        <Checkbox
+          label="View topics"
+          checked={this.state.membersOnlyView}
+          onCheck={(e) => { this.setState({ membersOnlyView: e.target.checked }); }}
+        />
+        <Checkbox
+          label="Post in topics"
+          checked={this.state.membersOnlyPost}
+          onCheck={(e) => { this.setState({ membersOnlyPost: e.target.checked }); }}
+        />
+        <Checkbox
+          label="Create topics"
+          checked={this.state.membersOnlyCreate}
+          onCheck={(e) => { this.setState({ membersOnlyCreate: e.target.checked }); }}
+        />
+      </section>
     </Form>;
   }
 });

@@ -1,6 +1,6 @@
 import processMentions from "/imports/api/common/processMentions";
 
-function mentionDispatch(messageId, data, topic, isComment) {
+function mentionDispatch(messageId, data, topic, root, isComment) {
   if (! Meteor.isServer) {
     return;
   }

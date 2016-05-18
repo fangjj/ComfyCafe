@@ -2,7 +2,7 @@ import _ from "lodash";
 
 import Notifications from "/imports/api/notifications/collection";
 
-function watcherDispatch(messageId, topic, isComment) {
+function watcherDispatch(messageId, topic, root, isComment) {
   _.each(topic.watchers, function (watcherId) {
     if (watcherId !== Meteor.userId()) {
       const doc = {

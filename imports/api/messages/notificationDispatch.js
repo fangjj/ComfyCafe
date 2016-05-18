@@ -28,9 +28,9 @@ function notificationDispatch(messageId, data, topic, isNew) {
   const isComment = Boolean(root);
 
   if (isNew) {
-    watcherDispatch(messageId, topic, isComment);
+    watcherDispatch(messageId, topic, root, isComment);
   }
-  mentionDispatch(messageId, data, topic, isComment);
+  mentionDispatch(messageId, data, topic, root, isComment);
 }
 
 export default notificationDispatch;

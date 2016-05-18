@@ -22,7 +22,7 @@ const defaultState = {
   source: "",
   description: "",
   safety: 0,
-  tags: "tagme",
+  tags: { text: "tagme" },
   tagsCondExpanded: {},
   bgColor: "default"
 };
@@ -38,7 +38,8 @@ export default React.createClass({
       "settings.defaultImageOriginality", defaultState.originality
     );
     const state = initialStateBuilder(this.props.post, defaultState);
-    state.autoSafety = 0;;
+    state.autoSafety = 0;
+    state.tags = state.tags.text;
     return state;
   },
   getMeteorData() {

@@ -2,9 +2,8 @@ import React from "react";
 
 import "/imports/api/messages/methods";
 import "/imports/api/topics/methods";
-
-import MessageForm from "./MessageForm";
-import Actions from "../Actions";
+import MessageForm from "/imports/ui/client/components/Chat/MessageForm";
+import Actions from "/imports/ui/client/components/Actions";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
 export default React.createClass({

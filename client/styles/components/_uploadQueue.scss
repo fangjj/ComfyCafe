@@ -57,11 +57,25 @@
     .label {
       margin-left: 12px;
 
+      overflow: hidden;
+
       text-align: left;
     }
 
     .delete {
       right: -12px;
     }
+  }
+}
+
+@media #{$small-and-down} {
+  .uploadQueue {
+    left: 0;
+    bottom: 0;
+
+    // 56 = fab width; 22 = fab right offset
+    width: calc(100vw - #{56px + 22px*2 - 12px});
+
+    max-width: none;
   }
 }

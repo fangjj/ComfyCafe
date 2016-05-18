@@ -12,10 +12,8 @@ hsts_max_age: 31536000 # set to 0 to disable, 31536000 for 1 year, etc.
 root_url: http://localhost:9000 // use HTTPS if not local! i.e. https://teru.sexy
 meteor_port: 3000
 mongo_url: mongodb://localhost:27017/TeruImages
+mongo_oplog_url: mongodb://localhost:27017/local
 ddp_url: http://localhost
 meteor_settings: "{}"
-
-cors_anywhere_domain: localhost
-cors_anywhere_port: 8080
 
 ssh_port: 22

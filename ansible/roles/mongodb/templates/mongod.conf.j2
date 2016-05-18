@@ -1,4 +1,5 @@
 # mongod.conf
+# Note: this config is never used in the playbook, but may be used in the future.
 
 # for documentation of all options, see:
 #   http://docs.mongodb.org/manual/reference/configuration-options/
@@ -29,6 +30,7 @@ net:
 
 #operationProfiling:
 
-#replication:
+replication:
+  replSetName: meteor
 
 #sharding:

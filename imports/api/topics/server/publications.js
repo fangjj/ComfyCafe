@@ -1,10 +1,9 @@
 import Topics from "/imports/api/topics/collection";
 import prefixer from "/imports/api/common/prefixer";
 
-Meteor.publish("topic", function (slug) {
-	check(slug, String);
+function baseTopicPub(doc) {
 	this.autorun(function (computation) {
-		const topics = Topics.find({ slug });
+		const topics = Topics.find(doc);
 		const exists = Boolean(topics.fetch().length);
 		if (exists) {
 			const users = Meteor.users.find(
@@ -16,11 +15,16 @@ Meteor.publish("topic", function (slug) {
 			return null;
 		}
 	});
+}
+
+Meteor.publish("topic", function (slug) {
+	check(slug, String);
+	return baseTopicPub.call(this, { slug });
 });
 
 Meteor.publish("topicId", function (id) {
 	check(id, String);
-	return Topics.find({ _id: id });
+	return baseTopicPub.call(this, { _id: id });
 });
 
 Meteor.publish("roomTopics", function (slug) {

@@ -37,6 +37,25 @@ function migrationBuilder(functionBody) {
 }
 
 Meteor.methods({
+  migrateMedia: migrationBuilder(function () {
+    media.find(
+      {
+        "metadata.bound": { $ne: true },
+        "metadata.thumbOf": { $exists: true }
+      }
+    ).map((m) => {
+      const parent = media.findOne({ _id: m.metadata.thumbOf });
+      media.update(
+        { _id: m._id },
+        { $set: prefixer("metadata", _.pick(parent.metadata, [
+          "bound",
+          "complete",
+          "post",
+          "avatarFor"
+        ])) }
+      );
+    });
+  }),
   migrateTopicUsers: migrationBuilder(function () {
     Messages.find().map((msg) => {
       Topics.update(
@@ -152,15 +171,6 @@ Meteor.methods({
 				}) }
 			);
     });
-  }),
-  migrateMedia: migrationBuilder(function () {
-    media.update(
-      { "metadata.bound": true },
-      { $set: {
-        "metadata.complete": true
-      } },
-      { multi: true }
-    );
   }),
   migrateBlog: migrationBuilder(function () {
     const slugCycle = createSlugCycler(BlogPosts);

@@ -137,6 +137,16 @@ Meteor.methods({
 								"metadata.avatarFor": Meteor.userId()
 							} }
 						);
+
+						media.update(
+							{ "metadata.thumbOf": medium._id },
+							{ $set: {
+								"metadata.bound": true,
+								"metadata.complete": true,
+								"metadata.avatarFor": Meteor.userId()
+							} },
+							{ multi: true }
+						);
 					} else {
 						media.remove({ _id: medium._id });
 						console.error("Invalid medium " + avatarId + " purged. (Invalid)");

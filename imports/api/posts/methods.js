@@ -107,12 +107,17 @@ Meteor.methods({
 			}, data);
 			const postId = Posts.insert(doc);
 
+			const moid = new Mongo.ObjectID(mediumId);
 			media.update(
-				{ _id: new Mongo.ObjectID(mediumId) },
+				{ $or: [
+					{ _id: moid },
+					{ "metadata.thumbOf": moid },
+				] },
 				{ $set: {
 					"metadata.post": postId,
 					"metadata.bound": true
-				} }
+				} },
+				{ multi: true }
 			);
 
 			Meteor.users.update(

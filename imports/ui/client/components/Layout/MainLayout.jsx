@@ -1,5 +1,6 @@
 import _ from "lodash";
 import React from "react";
+import NoSSR from "react-no-ssr";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 import "/imports/api/media/methods";
@@ -21,6 +22,7 @@ export default React.createClass({
   mixins: [ReactMeteorData],
   uploads: {},
   deleted: [],
+  downloaded: [],
   childContextTypes: { currentUser: React.PropTypes.object },
   getChildContext() {
     return { currentUser: this.props.currentUser };
@@ -46,7 +48,10 @@ export default React.createClass({
           },
           {
             sort: { uploadDate: -1, filename: 1 },
-            fields: { filename: 1, contentType: 1, md5: 1, "metadata.downloaded": 1 }
+            fields: {
+              filename: 1, contentType: 1, md5: 1,
+              "metadata.downloaded": 1, "metadata.origUrl": 1
+            }
           }
         ).fetch(),
         (result, medium) => {
@@ -66,6 +71,7 @@ export default React.createClass({
               url: getMediaUrlMD5(medium.md5)
             };
             if (_.get(medium, "metadata.downloaded")
+              && _.includes(this.downloaded, medium.metadata.origUrl)
               && ! alreadyHere
               && ! this.state.mediumId
               && ! this.directMediumId
@@ -156,6 +162,7 @@ export default React.createClass({
     });
     const url = $(e.dataTransfer.getData("text/html")).filter("img").attr("src");
     if (url) {
+      this.downloaded.push(url);
       Meteor.call("mediumDownload", url);
     }
   },
@@ -239,6 +246,7 @@ export default React.createClass({
         onDelete={this.deleteMedium}
       />;
     }
+    return null;
   },
   renderMain() {
     if (this.props.passwordResetToken) {
@@ -263,7 +271,9 @@ export default React.createClass({
         </main>
         {this.renderPostForm()}
         {this.renderFooter()}
-        {this.renderQueue()}
+        <NoSSR>
+          {this.renderQueue()}
+        </NoSSR>
       </div>
     </MuiThemeProvider>;
   }

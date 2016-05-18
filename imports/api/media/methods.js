@@ -152,6 +152,7 @@ Meteor.methods({
 					metadata: {
 						owner: Meteor.userId(),
 						downloaded: true,
+						origUrl: url,
 						thumbnailPolicy: "postMedium"
 					}
 				},

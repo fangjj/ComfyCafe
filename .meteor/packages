@@ -2,7 +2,6 @@ standard-app-packages
 gadicc:ecmascript-hot
 reactive-var
 accounts-password
-http
 email
 react-meteor-data
 force-ssl
@@ -21,6 +20,5 @@ vsivsi:job-collection
 comfysoft:utility
 comfysoft:sharp
 ongoworks:security
-nathantreid:css-modules
 meteorhacks:kadira
 meteorhacks:zones

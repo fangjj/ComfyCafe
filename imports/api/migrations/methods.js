@@ -45,15 +45,17 @@ Meteor.methods({
       }
     ).map((m) => {
       const parent = media.findOne({ _id: m.metadata.thumbOf });
-      media.update(
-        { _id: m._id },
-        { $set: prefixer("metadata", _.pick(parent.metadata, [
-          "bound",
-          "complete",
-          "post",
-          "avatarFor"
-        ])) }
-      );
+      if (parent) {
+        media.update(
+          { _id: m._id },
+          { $set: prefixer("metadata", _.pick(parent.metadata, [
+            "bound",
+            "complete",
+            "post",
+            "avatarFor"
+          ])) }
+        );
+      }
     });
   }),
   migrateTopicUsers: migrationBuilder(function () {

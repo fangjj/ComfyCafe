@@ -170,10 +170,7 @@ Meteor.methods({
         post.name = "Untitled";
         post.slug = slugCycle(post._id, post.name);
       }
-      const topicId = Meteor.call("addTopic", user.room._id, {
-        name: post.name,
-        visibility: post.visibility
-      }, true);
+      const topicId = Meteor.call("addTopic", user.room._id, { name: post.name }, true);
       BlogPosts.update(
         { _id: post._id },
         { $set: {

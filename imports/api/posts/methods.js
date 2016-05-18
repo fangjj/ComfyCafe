@@ -2,14 +2,15 @@ import _ from "lodash";
 
 import Posts from "./collection";
 import generateName from "./nameGen/generator";
-import media from "../media/collection";
+import media from "/imports/api/media/collection";
 import colors from "/imports/api/media/colors";
-import "../topics/methods";
-import Topics from "../topics/collection";
-import Notifications from "../notifications/collection";
-import processMentions from "../common/processMentions";
-import tagParser from "../tags/parser";
-import { tagFullResolver } from "../tags/resolver";
+import "/imports/api/topics/methods";
+import Topics from "/imports/api/topics/collection";
+import Notifications from "/imports/api/notifications/collection";
+import docBuilder from "/imports/api/common/docBuilder";
+import processMentions from "/imports/api/common/processMentions";
+import tagParser from "/imports/api/tags/parser";
+import { tagFullResolver } from "/imports/api/tags/resolver";
 
 function nameCycle() {
 	const name = generateName();
@@ -77,10 +78,7 @@ Meteor.methods({
 
 			let topicId;
 			if (Meteor.isServer) {
-				topicId = Meteor.call("addTopic", Meteor.user().room._id, {
-					name: name,
-					visibility: data.visibility
-				}, true);
+				topicId = Meteor.call("addTopic", Meteor.user().room._id, { name }, true);
 			}
 
 			const mediumDoc = {
@@ -97,33 +95,17 @@ Meteor.methods({
 
 			data.bgColor = validateColor(data.bgColor);
 
-			const postId = Posts.insert(
-				{
-					createdAt: new Date(),
-					updatedAt: new Date(),
-					name: name,
-					owner: {
-						_id: Meteor.userId(),
-						username: Meteor.user().username,
-						normalizedUsername: Meteor.user().normalizedUsername,
-						profile: Meteor.user().profile
-					},
-					medium: mediumDoc,
-					color: medium.metadata.color,
-					complement: medium.metadata.complement,
-					topic: {
-						_id: topicId
-					},
-					visibility: data.visibility,
-					originality: data.originality,
-					source: data.source,
-					description: data.description,
-					safety: data.safety,
-					tags: tags,
-					tagsCondExpanded: data.tagsCondExpanded,
-					bgColor: data.bgColor
-				}
-			);
+			const doc = docBuilder({
+				name,
+				medium: mediumDoc,
+				color: medium.metadata.color,
+				complement: medium.metadata.complement,
+				topic: {
+					_id: topicId
+				},
+				tags
+			}, data);
+			const postId = Posts.insert(doc);
 
 			media.update(
 				{ _id: new Mongo.ObjectID(mediumId) },

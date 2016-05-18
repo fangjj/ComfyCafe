@@ -36,10 +36,7 @@ Meteor.methods({
 
 		let topicId;
 		if (Meteor.isServer) {
-			topicId = Meteor.call("addTopic", Meteor.user().room._id, {
-				name: data.name,
-				visibility: data.visibility
-			}, true);
+			topicId = Meteor.call("addTopic", Meteor.user().room._id, { name: data.name }, true);
 		}
 
 		data.slug = slugCycle(null, data.name);

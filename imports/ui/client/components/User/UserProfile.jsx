@@ -5,6 +5,7 @@ import moment from "moment";
 import "/imports/api/users/methods";
 import setTitle from "/imports/api/common/setTitle";
 import getOrdinal from "/imports/ui/client/utils/ordinal";
+import statusLabel from "/imports/ui/client/utils/statusLabel";
 import UserInfo from "/imports/ui/client/components/User/UserInfo";
 import UserStatus from "/imports/ui/client/components/User/UserStatus";
 import UserProfileForm from "/imports/ui/client/components/User/UserProfileForm";
@@ -170,6 +171,9 @@ export default React.createClass({
     const path = (where) => FlowRouter.path(where, { username: user.username });
     const count = (what) => _.get(user.profile, what + "Count", 0);
     return <div className="genericCol">
+      <div className="stat">
+        <UserStatus user={user} /> {_.capitalize(statusLabel(user))}
+      </div>
       {this.renderBirthday(user)}
       <a href={path("imagesBy")}>
         <Icon className="sigil">image</Icon> {count("image")} Images
@@ -206,7 +210,6 @@ export default React.createClass({
               <h2>{displayName}</h2>
               {this.renderCatchphrase()}
               {this.renderBadges()}
-              <UserStatus user={user} />
             </header>
             {this.renderStats(user)}
           </div>

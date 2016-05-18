@@ -74,7 +74,7 @@
     bottom: 0;
 
     // 56 = fab width; 22 = fab right offset
-    width: calc(100vw - #{56px + 22px*2 - 12px});
+    width: calc(100vw - #{56px + 22px*2});
 
     max-width: none;
   }

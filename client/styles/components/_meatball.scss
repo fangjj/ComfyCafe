@@ -27,8 +27,6 @@
   flex: 1;
 
   padding: 16px;
-  padding-top: 16px;
-  padding-bottom: 16px;
 
   border-bottom: 2px solid rgba($text-color, 0.7);
 
@@ -58,6 +56,20 @@
 
     &:hover {
       border-color: $secondary-color;
+    }
+  }
+}
+
+@media #{$small-and-down} {
+  .meatball {
+    padding: 12px;
+
+    i {
+      font-size: 28px !important;
+    }
+
+    .label {
+      font-size: 16px;
     }
   }
 }

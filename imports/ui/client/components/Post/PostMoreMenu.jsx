@@ -1,16 +1,12 @@
 import React from "react";
+import IconMenu from "material-ui/IconMenu";
+import MenuItem from "material-ui/MenuItem";
+import IconButton from "material-ui/IconButton";
 
 import "/imports/api/posts/methods";
-
-import PostForm from "./PostForm";
+import PostForm from "/imports/ui/client/components/Post/PostForm";
 import Dialog from "/imports/ui/client/components/Dialog";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
-
-import {
-  IconMenu,
-  MenuItem,
-  IconButton
-} from "material-ui";
 
 export default React.createClass({
   getInitialState() {

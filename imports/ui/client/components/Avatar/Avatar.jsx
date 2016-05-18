@@ -11,15 +11,10 @@ export default React.createClass({
   getMeteorData() {
     return { filter: Session.get("filter") };
   },
-  renderStatus(user) {
-    if (! this.props.noStatus) {
-      return <UserStatus user={user} />;
-    }
-  },
   render() {
     const size = thumbnailPolicies.avatar[this.props.size].size;
 
-    const user = _.defaults(this.props.user, Meteor.users.findOne({ _id: this.props.user._id }));
+    const user = this.props.user;
 
     const spoilered = _.includes(
       _.get(this.data.filter, "spoilers.safeties",
@@ -42,7 +37,7 @@ export default React.createClass({
         width={size[0]}
         height={size[1]}
       />
-      {this.renderStatus(user)}
+      <UserStatus user={user} />
     </div>;
   }
 });

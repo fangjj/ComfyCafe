@@ -59,7 +59,7 @@ export default React.createClass({
     const ownerUrl = FlowRouter.path("profile", {username: owner.username});
     return <li className={"postPreview " + this.props.post.visibility} title={this.buildTitle()}>
       <a href={ownerUrl} className="avatarLink">
-        <Avatar size="icon" user={owner} noStatus={true} />
+        <Avatar size="icon" user={owner} />
         {this.renderStar()}
       </a>
       <VisibilityLink href={postUrl} visibility={this.props.post.visibility}>

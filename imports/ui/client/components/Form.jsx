@@ -20,7 +20,7 @@ export default React.createClass({
   },
   renderActions(actions) {
     if (actions) {
-      return <Actions>
+      return <Actions left={this.props.left}>
         <CancelButton
           onTouchTap={this.handleCancel}
         />

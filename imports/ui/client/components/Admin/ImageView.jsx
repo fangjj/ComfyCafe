@@ -7,6 +7,8 @@ import List from "/imports/ui/client/components/List";
 import Form from "/imports/ui/client/components/Form";
 import TextField from "/imports/ui/client/components/TextField";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
+import DangerButton from "/imports/ui/client/components/Button/DangerButton";
+import PostForm from "/imports/ui/client/components/Post/PostForm";
 
 export default React.createClass({
   getInitialState() {
@@ -16,12 +18,43 @@ export default React.createClass({
     Meteor.call("adminRegenPostThumbs", this.props.image._id);
   },
   render() {
+    const image = this.props.image;
+    const url = FlowRouter.path("post", {
+      username: image.owner.username,
+      postName: image.name
+    });
+    const ownerUrl = FlowRouter.path("profile", { username: image.owner.username });
     return <DenseContent>
-      <SubmitButton
-        label="Regenerate Thumbnails"
-        iconName="broken_image"
-        onTouchTap={this.handleRegen}
-      />
+      <header>
+        <h2><a href={ownerUrl}>{image.owner.username}</a>/<a href={url}>{image.name}</a></h2>
+      </header>
+
+      <section>
+        <header>
+          <h3>Actions</h3>
+        </header>
+        <SubmitButton
+          label="Regenerate Thumbnails"
+          iconName="broken_image"
+          onTouchTap={this.handleRegen}
+        />
+      </section>
+
+      <section>
+        <header>
+          <h3>Modify</h3>
+        </header>
+        <PostForm
+          post={image}
+          mod={true}
+          actions={true}
+          left={<DangerButton
+            label="Delete"
+            iconName="delete"
+            subtle={true}
+          />}
+        />
+      </section>
     </DenseContent>;
   }
 });

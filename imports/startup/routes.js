@@ -18,6 +18,7 @@ import Err404View from "/imports/ui/views/Err404View";
 import LoadingTestView from "/imports/ui/views/LoadingTestView";
 import PostFeedView from "/imports/ui/views/PostFeedView";
 import PostBrowseAllView from "/imports/ui/views/PostBrowseAllView";
+import ModLogView from "/imports/ui/views/ModLogView";
 
 if (Meteor.isServer) {
   FastRender.onAllRoutes(function (path) {
@@ -52,6 +53,14 @@ FlowRouter.route("/", {
     } else {
       renderView(PostBrowseAllView);
     }
+  }
+});
+
+FlowRouter.route("/modlog", {
+  name: "modlog",
+  action: function () {
+    setTitle("Moderation Log");
+    renderView(ModLogView);
   }
 });
 

@@ -8,6 +8,7 @@ import "/imports/api/invites/server/publications";
 import "/imports/api/jobs/server/publications";
 import "/imports/api/media/server/publications";
 import "/imports/api/messages/server/publications";
+import "/imports/api/modlog/server/publications";
 import "/imports/api/notifications/server/publications";
 import "/imports/api/pages/server/publications";
 import "/imports/api/posts/server/publications";

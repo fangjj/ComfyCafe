@@ -5,6 +5,7 @@ import "/imports/api/reports/methods";
 import Form from "/imports/ui/client/components/Form";
 import TextArea from "/imports/ui/client/components/TextArea";
 import ViolationSelector from "/imports/ui/client/components/ViolationSelector";
+import ReportFormGuts from "/imports/ui/client/components/Report/ReportFormGuts";
 
 const defaultState = {
   violation: "spam",
@@ -61,16 +62,11 @@ export default React.createClass({
       onSubmit={this.handleSubmit}
       onClose={this.props.onClose}
     >
-      <ViolationSelector
-        value={this.state.violation}
-        onChange={this.handleViolation}
-      />
-      <TextArea
-        defaultValue={this.state.details}
-        label="Details"
-        rows={3}
-        rowsMax={5}
-        onChange={this.handleDetails}
+      <ReportFormGuts
+        violation={this.state.violation}
+        handleViolation={this.handleViolation}
+        details={this.state.details}
+        handleDetails={this.handleDetails}
       />
     </Form>;
   }

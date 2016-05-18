@@ -15,6 +15,7 @@ import OriginalitySelector from "/imports/ui/client/components/OriginalitySelect
 import SafetySelector from "/imports/ui/client/components/SafetySelector";
 import TagField from "/imports/ui/client/components/Tag/TagField";
 import BgColorSelector from "/imports/ui/client/components/BgColorSelector";
+import ReportFormGuts from "/imports/ui/client/components/Report/ReportFormGuts";
 
 const defaultState = {
   visibility: "public",
@@ -40,6 +41,9 @@ export default React.createClass({
     const state = initialStateBuilder(this.props.post, defaultState);
     state.autoSafety = 0;
     state.tags = state.tags.text;
+    if (! state.bgColor) {
+      state.bgColor = defaultState.bgColor;
+    }
     return state;
   },
   getMeteorData() {
@@ -81,10 +85,27 @@ export default React.createClass({
   handleBgColor(value) {
     this.setState({ bgColor: value });
   },
+  handleViolation(e, index, value) {
+    this.setState({ violation: value });
+  },
+  handleDetails(e) {
+    this.setState({ details: e.target.value });
+  },
   handleSubmit() {
     const data = dataBuilder(this.state, defaultState);
 
-    if (! this.props.post) {
+    if (this.props.mod) {
+      const report = _.pick(this.state, [ "violation", "details" ]);
+      Meteor.call("modUpdatePost", this.props.post._id, data, report, (err) => {
+        if (err) {
+          prettyPrint(err);
+        } else {
+          if (this.props.onSuccess) {
+            this.props.onSuccess();
+          }
+        }
+      });
+    } else if (! this.props.post) {
       Meteor.call("addPost", this.props.mediumId, data, (err, name) => {
         if (err) {
           prettyPrint(err);
@@ -136,14 +157,26 @@ export default React.createClass({
       />;
     }
   },
+  renderReportForm() {
+    if (this.props.mod) {
+      return <ReportFormGuts
+        violation={this.state.violation}
+        handleViolation={this.handleViolation}
+        details={this.state.details}
+        handleDetails={this.handleDetails}
+      />;
+    }
+  },
   render() {
     return <Form
       className="postForm"
       id={this.props.id}
       actions={this.props.actions}
+      left={this.props.left}
       onSubmit={this.handleSubmit}
       onClose={this.props.onClose}
     >
+      {this.renderReportForm()}
       {this.renderMedium()}
       <VisibilitySelector
         visibility={this.state.visibility}

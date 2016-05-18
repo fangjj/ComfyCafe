@@ -11,6 +11,8 @@ import docBuilder from "/imports/api/common/docBuilder";
 import processMentions from "/imports/api/common/processMentions";
 import tagParser from "/imports/api/tags/parser";
 import { tagFullResolver } from "/imports/api/tags/resolver";
+import { isMod } from "/imports/api/common/persimmons";
+import ModLog from "/imports/api/modlog/collection";
 
 function nameCycle() {
 	const name = generateName();
@@ -43,6 +45,43 @@ const match = {
 	tagsCondExpanded: Object,
 	bgColor: String
 };
+
+function updatePost(postId, data, auth) {
+	const post = Posts.findOne(postId);
+
+	auth(post);
+
+	let tags = tagParser(data.tags, {reformat: true});
+	if (Meteor.isServer) {
+		tags = tagFullResolver(tags);
+	}
+
+	data.bgColor = validateColor(data.bgColor);
+
+	Posts.update(
+		{ _id: postId },
+		{ $set: _.defaults({
+			updatedAt: new Date(),
+			tags
+		}, data) }
+	);
+
+	Topics.update(
+		{ _id: post.topic._id },
+		{ $set: { visibility: data.visibility } }
+	);
+
+	if (Meteor.isServer) {
+		processMentions("post", data.description, {
+			post: {
+				_id: postId,
+				name: post.name
+			}
+		});
+	}
+
+	return post;
+}
 
 Meteor.methods({
 	addPost(mediumId, data) {
@@ -138,50 +177,39 @@ Meteor.methods({
 	updatePost(postId, data) {
 		check(postId, String);
 		check(data, match);
+		updatePost(postId, data, (post) => {
+			if (! isOwner(post)) {
+				throw new Meteor.Error("not-authorized");
+			}
+		});
+	},
+	modUpdatePost(postId, data, reason) {
+		check(postId, String);
+		check(data, match);
+		check(reason, {
+			violation: String,
+			details: String
+		});
 
-		const post = Posts.findOne(postId);
+		const post = updatePost(postId, data, (post) => {
+			if (! Meteor.userId()) {
+				throw new Meteor.Error("not-logged-in");
+			}
 
-		if (! isOwner(post)) {
-			throw new Meteor.Error("not-authorized");
-		}
+			if (! isMod(Meteor.userId())) {
+				throw new Meteor.Error("not-authorized");
+			}
+		});
 
-		let tags = tagParser(data.tags, {reformat: true});
-		if (Meteor.isServer) {
-			tags = tagFullResolver(tags);
-		}
-
-		data.bgColor = validateColor(data.bgColor);
-
-		Posts.update(
-			{ _id: postId },
-			{ $set: {
-				updatedAt: new Date(),
-				visibility: data.visibility,
-				originality: data.originality,
-				source: data.source,
-				description: data.description,
-				safety: data.safety,
-				tags: tags,
-				tagsCondExpanded: data.tagsCondExpanded,
-				bgColor: data.bgColor
-			} }
-		);
-
-		Topics.update(
-			{ _id: post.topic._id },
-			{ $set: {
-				visibility: data.visibility
-			} }
-		);
-
-		if (Meteor.isServer) {
-			processMentions("post", data.description, {
-				post: {
-					_id: postId,
-					name: post.name
-				}
-			});
-		}
+		const doc = docBuilder({
+			item: {
+				_id: postId,
+				ownerId: post.owner._id,
+				type: "post",
+				action: "updated"
+			}
+		}, reason);
+		ModLog.insert(doc);
 	},
 	deletePost(postId) {
 		check(postId, String);

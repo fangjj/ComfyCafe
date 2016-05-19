@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 
 import "/imports/api/users/adminMethods";
@@ -6,6 +7,7 @@ import List from "/imports/ui/client/components/List";
 import Form from "/imports/ui/client/components/Form";
 import TextField from "/imports/ui/client/components/TextField";
 import RoleField from "/imports/ui/client/components/RoleField";
+import Snackbar from "/imports/ui/client/components/Snackbar";
 
 export default React.createClass({
   getInitialState() {
@@ -15,8 +17,12 @@ export default React.createClass({
       }).join(", "),
       isAdmin: isAdmin(this.props.user._id),
       isDev: isDev(this.props.user._id),
-      isMod: isMod(this.props.user._id)
+      isMod: isMod(this.props.user._id),
+      snackbarOpen: false
     };
+  },
+  handleSnackbarRequestClose() {
+    this.setState({ snackbarOpen: false });
   },
   handleBadges(e) {
     this.setState({ badges: e.target.value });
@@ -31,7 +37,14 @@ export default React.createClass({
     this.setState({ isMod: e.target.checked });
   },
   handleSubmit() {
-    Meteor.call("adminUpdateUser", this.props.user._id, this.state);
+    const data = _.omit(this.state, [ "snackbarOpen" ]);
+    Meteor.call("adminUpdateUser", this.props.user._id, data, (err) => {
+      if (err) {
+        prettyPrint(err);
+      } else {
+        this.setState({ snackbarOpen: true });
+      }
+    });
   },
   render() {
     return <Form actions={true} onSubmit={this.handleSubmit}>
@@ -47,6 +60,11 @@ export default React.createClass({
         handleAdmin={this.handleAdmin}
         handleDev={this.handleDev}
         handleMod={this.handleMod}
+      />
+      <Snackbar
+        open={this.state.snackbarOpen}
+        message="User updated successfully."
+        onRequestClose={this.handleSnackbarRequestClose}
       />
     </Form>;
   }

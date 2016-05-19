@@ -1,5 +1,6 @@
 const panelMap = {
-  post: "images"
+  user: "users",
+  image: "images"
 };
 
 function adminUrlBuilder(item) {

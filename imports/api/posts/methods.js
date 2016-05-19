@@ -224,7 +224,7 @@ Meteor.methods({
 			item: {
 				_id: postId,
 				ownerId: post.owner._id,
-				type: "post",
+				type: "image",
 				action: "updated",
 				url: FlowRouter.path("post", {
 					username: post.owner.username,
@@ -260,7 +260,7 @@ Meteor.methods({
 			item: {
 				_id: postId,
 				ownerId: post.owner._id,
-				type: "post",
+				type: "image",
 				action: "deleted"
 			}
 		}, reason);

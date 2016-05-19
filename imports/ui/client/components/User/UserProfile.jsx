@@ -19,7 +19,9 @@ import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import FriendButton from "/imports/ui/client/components/Button/FriendButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import ReportButton from "/imports/ui/client/components/Button/ReportButton";
+import ReportForm from "/imports/ui/client/components/Report/ReportForm";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
+import DialogForm from "/imports/ui/client/components/DialogForm";
 import ActionWell from "/imports/ui/client/components/ActionWell";
 import DirectAvatar from "/imports/ui/client/components/Avatar/DirectAvatar";
 import AvatarCropper from "/imports/ui/client/components/Avatar/AvatarCropper";
@@ -28,20 +30,21 @@ import TextBody from "/imports/ui/client/components/TextBody";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
+  contextTypes: { currentUser: React.PropTypes.object },
+  getInitialState() {
+    return {
+      isEditing: false,
+      isChangingAvatar: false,
+      showReportForm: false
+    };
+  },
   getMeteorData() {
     const handle = Meteor.subscribe("user", FlowRouter.getParam("username"));
     return {
       loading: ! handle.ready(),
       user: Meteor.users.findOne(
         { normalizedUsername: FlowRouter.getParam("username").toLowerCase() }
-      ),
-      currentUser: Meteor.user()
-    };
-  },
-  getInitialState() {
-    return {
-      isEditing: false,
-      isChangingAvatar: false
+      )
     };
   },
   startEditing(event) {
@@ -58,6 +61,25 @@ export default React.createClass({
   },
   deleteAvatar(event) {
     Meteor.call("deleteAvatar");
+  },
+  showReportForm() {
+    this.setState({ showReportForm: true });
+  },
+  hideReportForm() {
+    this.setState({ showReportForm: false });
+  },
+  renderReportForm() {
+    if (this.state.showReportForm) {
+      return <DialogForm
+        title="Report User"
+        id={"formReport" + this.data.user._id}
+        onClose={this.hideReportForm}
+        form={<ReportForm
+          item={this.data.user}
+          itemType="user"
+        />}
+      />;
+    }
   },
   renderBio(user) {
     const bio = _.get(user, "profile.bio");
@@ -109,10 +131,10 @@ export default React.createClass({
       </ButtonGroup>;
     } else {
       return <ButtonGroup>
-        <SubscriptionButton owner={this.data.user} currentUser={this.data.currentUser} />
+        <SubscriptionButton owner={this.data.user} currentUser={this.context.currentUser} />
         <FriendButton
           user={this.data.user}
-          currentUser={this.data.currentUser}
+          currentUser={this.context.currentUser}
         />
       </ButtonGroup>;
     }
@@ -141,7 +163,7 @@ export default React.createClass({
       </ButtonGroup>;
     } else {
       return <ButtonGroup>
-        <ReportButton />
+        <ReportButton onTouchTap={this.showReportForm} />
         <SubmitButton
           label="Send Good Vibes"
           iconName="wb_sunny"
@@ -246,7 +268,7 @@ export default React.createClass({
     }
 
     const user = this.data.user;
-    const isOwner = this.data.currentUser && this.data.currentUser._id === user._id;
+    const isOwner = this.context.currentUser && this.context.currentUser._id === user._id;
 
     const displayName = user.profile.displayName || user.username;
     setTitle(displayName);
@@ -267,6 +289,8 @@ export default React.createClass({
       {this.renderFriends(user)}
       {this.renderSubscriptions(user)}
       {this.renderSubscribers(user)}
+
+      {this.renderReportForm()}
     </article>;
   }
 });

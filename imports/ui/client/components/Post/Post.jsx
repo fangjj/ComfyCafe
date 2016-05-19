@@ -95,7 +95,7 @@ export default React.createClass({
         <ReportForm
           id={"formReport" + this.props.post._id}
           item={this.props.post}
-          itemType="post"
+          itemType="image"
           onClose={this.hideReportForm}
         />
       </Dialog>;

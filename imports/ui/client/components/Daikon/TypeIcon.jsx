@@ -4,10 +4,16 @@ import React from "react";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 
 const iconMap = {
-  user: "user",
-  post: "image",
+  user: "person",
+  image: "image",
   blog: "weekend",
-  tag: "style"
+  page: "import_contacts",
+  album: "collections",
+  communitiy: "forum",
+  topic: "speaker_notes",
+  message: "chat_bubble",
+  tag: "style",
+  filter: "filter_list"
 };
 
 export default (props) => {

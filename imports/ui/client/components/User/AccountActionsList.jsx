@@ -62,14 +62,14 @@ export default React.createClass({
           href={likesUrl}
         />
         <TopMenuItem
-          primaryText="Albums"
-          leftIconName="collections"
-          href={yourAlbumsUrl}
-        />
-        <TopMenuItem
           primaryText="Pages"
           leftIconName="import_contacts"
           href={yourPagesUrl}
+        />
+        <TopMenuItem
+          primaryText="Albums"
+          leftIconName="collections"
+          href={yourAlbumsUrl}
         />
         <TopMenuItem
           primaryText="Beta Invites"

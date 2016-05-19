@@ -68,6 +68,12 @@ export default React.createClass({
   handleSnackbarRequestClose() {
     this.setState({ snackbarOpen: false });
   },
+  handleViolation(e, index, value) {
+    this.setState({ violation: value });
+  },
+  handleDetails(e) {
+    this.setState({ details: e.target.value });
+  },
   handleVisibility(value) {
     this.setState({ visibility: value });
   },
@@ -94,12 +100,6 @@ export default React.createClass({
   },
   handleBgColor(value) {
     this.setState({ bgColor: value });
-  },
-  handleViolation(e, index, value) {
-    this.setState({ violation: value });
-  },
-  handleDetails(e) {
-    this.setState({ details: e.target.value });
   },
   handleSubmit() {
     const data = dataBuilder(this.state, defaultState);
@@ -203,7 +203,7 @@ export default React.createClass({
       onClose={this.props.onClose}
     >
       {this.renderReportForm()}
-      
+
       {this.renderMedium()}
       <VisibilitySelector
         visibility={this.state.visibility}

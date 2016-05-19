@@ -40,6 +40,12 @@ export default React.createClass({
   handleSnackbarRequestClose() {
     this.setState({ snackbarOpen: false });
   },
+  handleViolation(e, index, value) {
+    this.setState({ violation: value });
+  },
+  handleDetails(e) {
+    this.setState({ details: e.target.value });
+  },
   handleDisplayName(event) {
     this.setState({ displayName: e.target.value });
   },
@@ -60,12 +66,6 @@ export default React.createClass({
       info: info,
       infoOrder: order
     });
-  },
-  handleViolation(e, index, value) {
-    this.setState({ violation: value });
-  },
-  handleDetails(e) {
-    this.setState({ details: e.target.value });
   },
   handleSubmit(e) {
     const data = dataBuilder(this.state, defaultState);

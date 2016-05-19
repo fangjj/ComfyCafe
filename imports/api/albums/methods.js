@@ -7,6 +7,10 @@ import Topics from "/imports/api/topics/collection";
 import Notifications from "/imports/api/notifications/collection";
 import processMentions from "/imports/api/common/processMentions";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
+import docBuilder from "/imports/api/common/docBuilder";
+import { isMod } from "/imports/api/common/persimmons";
+import checkReason from "/imports/api/common/checkReason";
+import ModLog from "/imports/api/modlog/collection";
 
 const match = {
   name: String,
@@ -16,12 +20,6 @@ const match = {
 };
 
 const slugCycle = createSlugCycler(Albums);
-
-// Intended to be used via _.map(posts, postInliner)
-function postInliner(postId) {
-  const post = Posts.findOne({ _id: postId });
-  return _.pick(post, [name, owner, medium, visibility, safety]);
-}
 
 function mentions(albumId, data) {
   if (Meteor.isServer) {
@@ -33,6 +31,53 @@ function mentions(albumId, data) {
       }
     });
   }
+}
+
+function updateAlbum(albumId, data, auth) {
+  const album = Albums.findOne(albumId);
+
+  auth(album);
+
+  Albums.update(
+    { _id: albumId },
+    { $set: _.defaults({
+      updatedAt: new Date()
+    }, data) }
+  );
+
+  Topics.update(
+    { _id: album.topic._id },
+    { $set: {
+      name: data.name,
+      visibility: data.visibility
+    } }
+  );
+
+  mentions(albumId, data);
+
+  if (Meteor.isServer) {
+    const slug = slugCycle(albumId, data.name);
+    Albums.update(
+      { _id: albumId },
+      { $set: { slug } }
+    );
+    return slug;
+  }
+}
+
+function deleteAlbum(albumId, auth) {
+  const album = Albums.findOne(albumId);
+
+  auth(album);
+
+  Albums.remove(albumId);
+  Topics.remove({ _id: album.topic._id });
+  Meteor.users.update(
+    { _id: Meteor.userId() },
+    { $inc: { "profile.albumCount": -1 } }
+  );
+
+  return album;
 }
 
 Meteor.methods({
@@ -76,38 +121,43 @@ Meteor.methods({
 	updateAlbum(albumId, data) {
 		check(albumId, String);
 		check(data, match);
+		return updateAlbum(albumId, data, (album) => {
+      if (! isOwner(album)) {
+        throw new Meteor.Error("not-authorized");
+      }
+    });
+	},
+  modUpdateAlbum(albumId, data, reason) {
+		check(albumId, String);
+		check(data, match);
+		checkReason(reason);
 
-		const album = Albums.findOne(albumId);
+		let owner;
+		const slug = updateAlbum(albumId, data, (album) => {
+			if (! Meteor.userId()) {
+				throw new Meteor.Error("not-logged-in");
+			}
 
-		if (! isOwner(album)) {
-			throw new Meteor.Error("not-authorized");
-		}
+			if (! isMod(Meteor.userId())) {
+				throw new Meteor.Error("not-authorized");
+			}
 
-		Albums.update(
-			{ _id: albumId },
-			{ $set: _.defaults({
-        updatedAt: new Date()
-      }, data) }
-		);
+			owner = album.owner;
+		});
 
-		Topics.update(
-			{ _id: album.topic._id },
-			{ $set: {
-        name: data.name,
-				visibility: data.visibility
-			} }
-		);
-
-		mentions(albumId, data);
-
-    if (Meteor.isServer) {
-      const slug = slugCycle(albumId, data.name);
-      Albums.update(
-        { _id: albumId },
-        { $set: { slug } }
-      );
-      return slug;
-    }
+		const doc = docBuilder({
+			item: {
+				_id: albumId,
+				ownerId: owner._id,
+				type: "album",
+				action: "updated",
+				url: FlowRouter.path("album", {
+					username: owner.username,
+					albumSlug: slug
+				})
+			}
+		}, reason);
+		ModLog.insert(doc);
 	},
   albumAddPost(albumId, postId) {
     check(albumId, String);
@@ -145,18 +195,34 @@ Meteor.methods({
   },
 	deleteAlbum(albumId) {
 		check(albumId, String);
+    deleteAlbum(albumId, (album) => {
+      if (! isOwner(album)) {
+        throw new Meteor.Error("not-authorized");
+      }
+    });
+	},
+  modDeleteAlbum(albumId, reason) {
+		check(albumId, String);
+		checkReason(reason);
 
-		const album = Albums.findOne(albumId);
+		const album = deleteAlbum(albumId, (album) => {
+			if (! Meteor.userId()) {
+				throw new Meteor.Error("not-logged-in");
+			}
 
-		if (! isOwner(album)) {
-			throw new Meteor.Error("not-authorized");
-		}
+			if (! isMod(Meteor.userId())) {
+				throw new Meteor.Error("not-authorized");
+			}
+		});
 
-		Albums.remove(albumId);
-		Topics.remove({ _id: album.topic._id });
-    Meteor.users.update(
-      { _id: Meteor.userId() },
-      { $inc: { "profile.albumCount": -1 } }
-    );
+		const doc = docBuilder({
+			item: {
+				_id: albumId,
+				ownerId: album.owner._id,
+				type: "album",
+				action: "deleted"
+			}
+		}, reason);
+		ModLog.insert(doc);
 	}
 });

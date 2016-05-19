@@ -7,6 +7,8 @@ import ReportPanel from "./ReportPanel";
 import UserPanelContainer from "./UserPanelContainer";
 import ImagePanelContainer from "./ImagePanelContainer";
 import BlogPanelContainer from "./BlogPanelContainer";
+import PagePanelContainer from "./PagePanelContainer";
+import AlbumPanelContainer from "./AlbumPanelContainer";
 import BadgePanel from "./BadgePanel";
 import MediaPanel from "./MediaPanel";
 import FilterPanelContainer from "./FilterPanelContainer";
@@ -16,6 +18,8 @@ import TopicPanel from "./TopicPanel";
 import UserViewContainer from "./UserViewContainer";
 import ImageViewContainer from "./ImageViewContainer";
 import BlogViewContainer from "./BlogViewContainer";
+import PageViewContainer from "./PageViewContainer";
+import AlbumViewContainer from "./AlbumViewContainer";
 import BadgeViewContainer from "./BadgeViewContainer";
 import FilterViewContainer from "./FilterViewContainer";
 import Err403 from "/imports/ui/client/components/Err403";
@@ -37,6 +41,8 @@ export default React.createClass({
             users: <UserViewContainer />,
             images: <ImageViewContainer />,
             blog: <BlogViewContainer />,
+            pages: <PageViewContainer />,
+            albums: <AlbumViewContainer />,
             filters: <FilterViewContainer />,
             badges: <BadgeViewContainer />
           },
@@ -51,6 +57,8 @@ export default React.createClass({
             users: <UserPanelContainer />,
             images: <ImagePanelContainer />,
             blog: <BlogPanelContainer />,
+            pages: <PagePanelContainer />,
+            albums: <AlbumPanelContainer />,
             badges: <BadgePanel />,
             media: <MediaPanel />,
             filters: <FilterPanelContainer />,

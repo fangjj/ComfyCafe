@@ -1,5 +1,6 @@
 import Pages from "/imports/api/pages/collection";
 import privacyWrap from "/imports/api/common/privacyWrap";
+import { isMod } from "/imports/api/common/persimmons";
 
 Meteor.publish("page", function (username, slug) {
 	check(username, String);
@@ -36,4 +37,17 @@ Meteor.publish("pagesBy", function (username) {
 			);
 		}
 	});
+});
+
+Meteor.publish("modAllPages", function () {
+	if (isMod(this.userId)) {
+  	return Pages.find({});
+	}
+});
+
+Meteor.publish("modPage", function (pageId) {
+  check(pageId, String);
+	if (isMod(this.userId)) {
+		return Pages.find({ _id: pageId });
+	}
 });

@@ -1,6 +1,7 @@
 import Albums from "/imports/api/albums/collection";
 import Posts from "/imports/api/posts/collection";
 import privacyWrap from "/imports/api/common/privacyWrap";
+import { isMod } from "/imports/api/common/persimmons";
 
 Meteor.publish("album", function (username, albumSlug) {
 	check(username, String);
@@ -82,4 +83,17 @@ Meteor.publish("albumPosts", function (username, albumSlug) {
 			);
 		}
 	});
+});
+
+Meteor.publish("modAllAlbums", function () {
+	if (isMod(this.userId)) {
+  	return Albums.find({});
+	}
+});
+
+Meteor.publish("modAlbum", function (albumId) {
+  check(albumId, String);
+	if (isMod(this.userId)) {
+		return Albums.find({ _id: albumId });
+	}
 });

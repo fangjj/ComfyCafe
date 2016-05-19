@@ -11,6 +11,7 @@ import docBuilder from "/imports/api/common/docBuilder";
 import processMentions from "/imports/api/common/processMentions";
 import tagParser from "/imports/api/tags/parser";
 import { tagFullResolver } from "/imports/api/tags/resolver";
+import { regenThumbs } from "/imports/api/media/methods";
 import { isMod } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
 import ModLog from "/imports/api/modlog/collection";
@@ -350,5 +351,20 @@ Meteor.methods({
 				}
 			);
 		}
+	},
+
+	modRegenPostThumbs(postId) {
+		check(postId, String);
+
+		if (! Meteor.userId()) {
+			throw new Meteor.Error("not-logged-in");
+		}
+
+		if (! isMod(Meteor.userId())) {
+			throw new Meteor.Error("not-authorized");
+		}
+
+		const post = Posts.findOne({ _id: postId });
+		regenThumbs(post.medium._id, () => true);
 	}
 });

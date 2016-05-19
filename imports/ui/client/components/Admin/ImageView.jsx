@@ -1,6 +1,6 @@
 import React from "react";
 
-import "/imports/api/posts/adminMethods";
+import "/imports/api/posts/methods";
 import { isAdmin, isDev, isMod } from "/imports/api/common/persimmons";
 import DenseContent from "/imports/ui/client/components/DenseContent";
 import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
@@ -17,7 +17,7 @@ export default React.createClass({
     return {};
   },
   handleRegen() {
-    Meteor.call("adminRegenPostThumbs", this.props.image._id);
+    Meteor.call("modRegenPostThumbs", this.props.image._id);
   },
   render() {
     if (this.props.loading) {

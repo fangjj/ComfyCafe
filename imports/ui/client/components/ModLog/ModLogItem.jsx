@@ -8,7 +8,7 @@ import UserLink from "/imports/ui/client/components/User/UserLink";
 
 export default (props) => {
   const { ml } = props;
-  const verb = _.capitalize(ml.item.action);
+  const verb = _.upperFirst(ml.item.action);
   return <li className="modLogItem">
     <a href={ml.item.url}>
       <TypeIcon className="sigil" value={ml.item.type} />

@@ -63,9 +63,7 @@ export default React.createClass({
     }
   },
   handleSnackbarRequestClose() {
-    this.setState({
-      snackbarOpen: false
-    });
+    this.setState({ snackbarOpen: false });
   },
   handleUsername(e) {
     const doc = {};

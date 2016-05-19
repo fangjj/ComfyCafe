@@ -6,11 +6,11 @@ import ViolationSelector from "/imports/ui/client/components/ViolationSelector";
 export default (props) => {
   return <div>
     <ViolationSelector
-      value={props.violation || "spam"}
+      value={props.violation}
       onChange={props.handleViolation}
     />
     <TextArea
-      defaultValue={props.details || ""}
+      defaultValue={props.details}
       label="Details"
       rows={3}
       rowsMax={5}

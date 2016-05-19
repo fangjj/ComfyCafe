@@ -1,11 +1,13 @@
-import Posts from "../posts/collection";
-import Albums from "../albums/collection";
-import Pages from "../pages/collection";
-import BlogPosts from "../blog/collection";
-import Rooms from "../rooms/collection";
-import Topics from "../topics/collection";
-import Messages from "../messages/collection";
-import Notifications from "../notifications/collection";
+import Posts from "/imports/api/posts/collection";
+import Albums from "/imports/api/albums/collection";
+import Pages from "/imports/api/pages/collection";
+import BlogPosts from "/imports/api/blog/collection";
+import Rooms from "/imports/api/rooms/collection";
+import Topics from "/imports/api/topics/collection";
+import Messages from "/imports/api/messages/collection";
+import Notifications from "/imports/api/notifications/collection";
+import Reports from "/imports/api/reports/collection";
+import ModLog from "/imports/api/modlog/collection";
 
 export default [
   Posts,
@@ -15,5 +17,7 @@ export default [
   Rooms,
   Topics,
   Messages,
-  Notifications
+  Notifications,
+  Reports,
+  ModLog
 ];

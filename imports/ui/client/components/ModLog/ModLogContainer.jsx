@@ -7,6 +7,6 @@ export default createContainer(({ params }) => {
   const handle = Meteor.subscribe("modlog");
   return {
     loading: ! handle.ready(),
-    modlog: ModLog.find({}).fetch()
+    modlog: ModLog.find({}, { sort: { createdAt: -1 } }).fetch()
   };
 }, ModLogCmp);

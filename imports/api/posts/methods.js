@@ -13,6 +13,7 @@ import tagParser from "/imports/api/tags/parser";
 import { tagFullResolver } from "/imports/api/tags/resolver";
 import { isMod } from "/imports/api/common/persimmons";
 import ModLog from "/imports/api/modlog/collection";
+import violationMap from "/imports/api/common/violationMap";
 
 function nameCycle() {
 	const name = generateName();
@@ -187,8 +188,8 @@ Meteor.methods({
 		check(postId, String);
 		check(data, match);
 		check(reason, {
-			violation: String,
-			details: String
+			violation: Match.Where((v) => _.has(violationMap, v)),
+			details: Match.Where((d) => (d.length > 0 || reason.violation !== "other"))
 		});
 
 		const post = updatePost(postId, data, (post) => {
@@ -206,7 +207,11 @@ Meteor.methods({
 				_id: postId,
 				ownerId: post.owner._id,
 				type: "post",
-				action: "updated"
+				action: "updated",
+				url: FlowRouter.path("post", {
+					username: post.owner.username,
+					postName: post.name
+				})
 			}
 		}, reason);
 		ModLog.insert(doc);

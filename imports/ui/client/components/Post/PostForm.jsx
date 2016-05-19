@@ -16,6 +16,7 @@ import SafetySelector from "/imports/ui/client/components/SafetySelector";
 import TagField from "/imports/ui/client/components/Tag/TagField";
 import BgColorSelector from "/imports/ui/client/components/BgColorSelector";
 import ReportFormGuts from "/imports/ui/client/components/Report/ReportFormGuts";
+import Snackbar from "/imports/ui/client/components/Snackbar";
 
 const defaultState = {
   visibility: "public",
@@ -44,6 +45,11 @@ export default React.createClass({
     if (! state.bgColor) {
       state.bgColor = defaultState.bgColor;
     }
+    if (this.props.mod) {
+      state.violation = "spam";
+      state.details = "";
+    }
+    state.snackbarOpen = false;
     return state;
   },
   getMeteorData() {
@@ -51,12 +57,14 @@ export default React.createClass({
       const handle = Meteor.subscribe("medium", this.props.mediumId);
       return {
         loading: ! handle.ready(),
-        medium: media.findOne({ _id: new Mongo.ObjectID(this.props.mediumId) }),
-        currentUser: Meteor.user()
+        medium: media.findOne({ _id: new Mongo.ObjectID(this.props.mediumId) })
       };
     } else {
       return { loading: false };
     }
+  },
+  handleSnackbarRequestClose() {
+    this.setState({ snackbarOpen: false });
   },
   handleVisibility(value) {
     this.setState({ visibility: value });
@@ -103,6 +111,7 @@ export default React.createClass({
           if (this.props.onSuccess) {
             this.props.onSuccess();
           }
+          this.setState({ snackbarOpen: true });
         }
       });
     } else if (! this.props.post) {
@@ -115,14 +124,14 @@ export default React.createClass({
           }
 
           const path = FlowRouter.path("post", {
-            username: this.data.currentUser.username,
+            username: this.context.currentUser.username,
             postName: name
           });
           const actions = {
             redirect() { FlowRouter.go(path); },
             tab() { window.open(path); },
             nothing() {}
-          }[this.data.currentUser.settings.uploadAction || "redirect"]();
+          }[this.context.currentUser.settings.uploadAction || "redirect"]();
         }
       });
     } else {
@@ -218,6 +227,12 @@ export default React.createClass({
       <BgColorSelector
         value={this.state.bgColor}
         onChange={this.handleBgColor}
+      />
+
+      <Snackbar
+        open={this.state.snackbarOpen}
+        message="Post updated successfully."
+        onRequestClose={this.handleSnackbarRequestClose}
       />
     </Form>;
   }

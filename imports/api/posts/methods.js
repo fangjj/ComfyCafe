@@ -47,6 +47,11 @@ const match = {
 	bgColor: String
 };
 
+const matchReason = {
+	violation: Match.Where((v) => _.has(violationMap, v)),
+	details: Match.Where((d) => (d.length > 0 || reason.violation !== "other"))
+};
+
 function updatePost(postId, data, auth) {
 	const post = Posts.findOne(postId);
 
@@ -80,6 +85,22 @@ function updatePost(postId, data, auth) {
 			}
 		});
 	}
+
+	return post;
+}
+
+function deletePost(postId, auth) {
+	const post = Posts.findOne(postId);
+
+	auth();
+
+	Posts.remove(postId);
+	media.remove({ "metadata.post": postId });
+	Topics.remove({ _id: post.topic._id });
+	Meteor.users.update(
+		{ _id: Meteor.userId() },
+		{ $inc: { "profile.imageCount": -1 } }
+	);
 
 	return post;
 }
@@ -187,10 +208,7 @@ Meteor.methods({
 	modUpdatePost(postId, data, reason) {
 		check(postId, String);
 		check(data, match);
-		check(reason, {
-			violation: Match.Where((v) => _.has(violationMap, v)),
-			details: Match.Where((d) => (d.length > 0 || reason.violation !== "other"))
-		});
+		check(reason, matchReason);
 
 		const post = updatePost(postId, data, (post) => {
 			if (! Meteor.userId()) {
@@ -218,20 +236,35 @@ Meteor.methods({
 	},
 	deletePost(postId) {
 		check(postId, String);
+		deletePost(postId, (post) => {
+			if (! isOwner(post)) {
+				throw new Meteor.Error("not-authorized");
+			}
+		});
+	},
+	modDeletePost(postId, reason) {
+		check(postId, String);
+		check(reason, matchReason);
 
-		const post = Posts.findOne(postId);
+		const post = deletePost(postId, (post) => {
+			if (! Meteor.userId()) {
+				throw new Meteor.Error("not-logged-in");
+			}
 
-		if (! isOwner(post)) {
-			throw new Meteor.Error("not-authorized");
-		}
+			if (! isMod(Meteor.userId())) {
+				throw new Meteor.Error("not-authorized");
+			}
+		});
 
-		Posts.remove(postId);
-		media.remove({ "metadata.post": postId });
-		Topics.remove({ _id: post.topic._id });
-		Meteor.users.update(
-			{ _id: Meteor.userId() },
-			{ $inc: { "profile.imageCount": -1 } }
-		);
+		const doc = docBuilder({
+			item: {
+				_id: postId,
+				ownerId: post.owner._id,
+				type: "post",
+				action: "deleted"
+			}
+		}, reason);
+		ModLog.insert(doc);
 	},
 	rerollPost(postId) {
 		check(postId, String);

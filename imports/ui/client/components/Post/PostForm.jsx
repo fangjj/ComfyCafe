@@ -17,6 +17,7 @@ import TagField from "/imports/ui/client/components/Tag/TagField";
 import BgColorSelector from "/imports/ui/client/components/BgColorSelector";
 import ReportFormGuts from "/imports/ui/client/components/Report/ReportFormGuts";
 import Snackbar from "/imports/ui/client/components/Snackbar";
+import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 
 const defaultState = {
   visibility: "public",
@@ -142,6 +143,16 @@ export default React.createClass({
       });
     }
   },
+  handleModDelete() {
+    const report = _.pick(this.state, [ "violation", "details" ]);
+    Meteor.call("modDeletePost", this.props.post._id, report, (err) => {
+      if (err) {
+        prettyPrint(err);
+      } else {
+        FlowRouter.go(FlowRouter.path("adminPanel", { panel: "images" }));
+      }
+    });
+  },
   renderMedium() {
     if (this.data.loading) {
       return <div className="medium center">
@@ -181,7 +192,12 @@ export default React.createClass({
       className="postForm"
       id={this.props.id}
       actions={this.props.actions}
-      left={this.props.left}
+      left={this.props.mod && <DangerButton
+        label="Delete"
+        iconName="delete"
+        subtle={true}
+        onTouchTap={this.handleModDelete}
+      />}
       onSubmit={this.handleSubmit}
       onClose={this.props.onClose}
     >

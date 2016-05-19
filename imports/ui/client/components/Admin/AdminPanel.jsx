@@ -6,13 +6,8 @@ import ReportListContainer from "/imports/ui/client/components/Report/ReportList
 export default () => {
   return <DenseContent>
     <header>
-      <h2>Admin panel</h2>
+      <h2>Reports</h2>
     </header>
-    <section>
-      <header>
-        <h3>Reports</h3>
-      </header>
-      <ReportListContainer />
-    </section>
+    <ReportListContainer />
   </DenseContent>;
 };

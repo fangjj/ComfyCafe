@@ -4,6 +4,7 @@ import "/imports/api/posts/adminMethods";
 import { isAdmin, isDev, isMod } from "/imports/api/common/persimmons";
 import DenseContent from "/imports/ui/client/components/DenseContent";
 import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
+import Err404 from "/imports/ui/client/components/Err404";
 import List from "/imports/ui/client/components/List";
 import Form from "/imports/ui/client/components/Form";
 import TextField from "/imports/ui/client/components/TextField";
@@ -24,6 +25,10 @@ export default React.createClass({
     }
 
     const image = this.props.image;
+    if (! image) {
+      return <Err404 />;
+    }
+
     const url = FlowRouter.path("post", {
       username: image.owner.username,
       postName: image.name
@@ -53,11 +58,6 @@ export default React.createClass({
           post={image}
           mod={true}
           actions={true}
-          left={<DangerButton
-            label="Delete"
-            iconName="delete"
-            subtle={true}
-          />}
         />
       </section>
     </DenseContent>;

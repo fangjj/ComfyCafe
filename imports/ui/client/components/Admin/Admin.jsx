@@ -70,7 +70,7 @@ export default React.createClass({
     return <DenseLayout>
       <div className="col leftCol">
         <List>
-          <li><a href="/admin">Admin</a></li>
+          <li><a href="/admin">Reports</a></li>
           <li><a href="/admin/users">Users</a></li>
           <li><a href="/admin/images">Images</a></li>
           <li><a href="/admin/blog">Blog</a></li>

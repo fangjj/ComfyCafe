@@ -1,6 +1,8 @@
 import _ from "lodash";
 import React from "react";
 
+import { isMod } from "/imports/api/common/persimmons";
+import adminUrlBuilder from "/imports/ui/client/utils/adminUrlBuilder";
 import InfoBox from "/imports/ui/client/components/InfoBox";
 import TextBody from "/imports/ui/client/components/TextBody";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
@@ -11,8 +13,10 @@ import Avatar from "/imports/ui/client/components/Avatar/Avatar";
 import UserLink from "/imports/ui/client/components/User/UserLink";
 
 export default React.createClass({
+  contextTypes: { currentUser: React.PropTypes.object },
   propTypes: {
     item: React.PropTypes.object.isRequired,
+    itemType: React.PropTypes.string,
     title: React.PropTypes.string,
     sigil: React.PropTypes.string,
     verb: React.PropTypes.string.isRequired,
@@ -64,6 +68,17 @@ export default React.createClass({
       return <TextBody text={this.props.body} className="body" />;
     }
   },
+  renderModIcon(item) {
+    if (this.context.currentUser && isMod(this.context.currentUser._id) && this.props.itemType) {
+      item.type = this.props.itemType;
+      const url = adminUrlBuilder(item);
+      return <div className="modIcon">
+        <a href={url} title="Moderate">
+          <Icon>gavel</Icon>
+        </a>
+      </div>;
+    }
+  },
   render() {
     const item = this.props.item;
     const owner = item.owner;
@@ -93,6 +108,7 @@ export default React.createClass({
         {this.renderButtons()}
         {this.renderBody()}
       </div>
+      {this.renderModIcon(item)}
     </InfoBox>;
   }
 });

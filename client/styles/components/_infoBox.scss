@@ -2,7 +2,7 @@
   .flexLayout {
     width: 100%;
   }
-  
+
   .body {
     margin-top: 0;
 
@@ -20,5 +20,11 @@
       padding: $pad;
       padding-bottom: $pad - $content-padding;
     }
+  }
+
+  .modIcon {
+    position: absolute;
+    right: $content-padding;
+    top: $content-padding;
   }
 }

@@ -123,6 +123,7 @@ export default React.createClass({
     return <FlexHead
       className="content"
       item={this.props.post}
+      itemType="image"
       verb={verbMap[this.props.post.originality]}
       renderInfo={this.renderInfo}
       renderButtons={this.renderButtons}

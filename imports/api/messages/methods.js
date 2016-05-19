@@ -6,10 +6,76 @@ import Topics from "/imports/api/topics/collection";
 import Rooms from "/imports/api/rooms/collection";
 import notificationDispatch from "/imports/api/messages/notificationDispatch";
 import docBuilder from "/imports/api/common/docBuilder";
+import { isMod } from "/imports/api/common/persimmons";
+import checkReason from "/imports/api/common/checkReason";
+import ModLog from "/imports/api/modlog/collection";
 
 const match = {
   body: String
 };
+
+function updateMessage(messageId, data, auth) {
+  const msg = Messages.findOne(messageId);
+
+  auth(msg);
+
+  Messages.update(
+    { _id: messageId },
+    { $set: _.defaults({
+      updatedAt: new Date()
+    }, data) }
+  );
+
+  Topics.update(
+    { _id: msg.topic._id },
+    { $set: { lastActivity: new Date() } }
+  );
+
+  const topic = Topics.findOne(msg.topic._id);
+
+  Rooms.update(
+    { _id: topic.room._id },
+    { $set: { lastActivity: new Date() } }
+  );
+
+  notificationDispatch(messageId, data, topic);
+
+  return msg;
+}
+
+function deleteMessage(messageId, auth) {
+  const msg = Messages.findOne(messageId);
+
+  auth(msg);
+
+  Messages.remove(messageId);
+
+  if (! Messages.find(
+    {
+      "topic._id": msg.topic._id,
+      "owner._id": Meteor.userId()
+    }
+  ).fetch().length) {
+    doc.$pull = { users: Meteor.userId() };
+  }
+
+  Topics.update(
+    { _id: msg.topic._id },
+    {
+      $set: { lastActivity: new Date(), },
+      $inc: { messageCount: -1 }
+    }
+  );
+
+  const topic = Topics.findOne(msg.topic._id);
+
+  Rooms.update(
+    { _id: topic.room._id },
+    { $set: { lastActivity: new Date() } }
+  );
+
+  return msg;
+}
 
 Meteor.methods({
   addMessage(topicId, data) {
@@ -54,70 +120,74 @@ Meteor.methods({
 
     notificationDispatch(messageId, data, topic, true);
   },
-  updateMessage: function (messageId, data) {
+  updateMessage(messageId, data) {
     check(messageId, String);
     check(data, match);
+    updateMessage(messageId, data, (msg) => {
+      if (! isOwner(msg)) {
+        throw new Meteor.Error("not-authorized");
+      }
+    });
+  },
+  modUpdateMessage(messageId, data, reason) {
+    check(messageId, String);
+    check(data, match);
+    checkReason(reason);
 
-    const msg = Messages.findOne(messageId);
+    const msg = updateMessage(messageId, data, (msg) => {
+      if (! Meteor.userId()) {
+        throw new Meteor.Error("not-logged-in");
+      }
 
-    if (! isOwner(msg)) {
-			throw new Meteor.Error("not-authorized");
-		}
+      if (! isMod(Meteor.userId())) {
+        throw new Meteor.Error("not-authorized");
+      }
+    });
 
-    Messages.update(
-      { _id: messageId },
-      { $set: _.defaults({
-        updatedAt: new Date()
-      }, data) }
-    );
-
-    Topics.update(
-      { _id: msg.topic._id },
-      { $set: { lastActivity: new Date() } }
-    );
-
-    const topic = Topics.findOne(msg.topic._id);
-
-    Rooms.update(
-      { _id: topic.room._id },
-      { $set: { lastActivity: new Date() } }
-    );
-
-    notificationDispatch(messageId, data, topic);
+    const doc = docBuilder({
+      item: {
+        _id: messageId,
+        ownerId: msg.owner._id,
+        type: "message",
+        action: "updated",
+        url: FlowRouter.path("topic", {
+          roomSlug: _.get(msg, "topic.room.slug"),
+          topicSlug: _.get(msg, "topic.slug")
+        }) + "#" + messageId
+      }
+    }, reason);
+    ModLog.insert(doc);
   },
   deleteMessage(messageId) {
     check(messageId, String);
-
-    const msg = Messages.findOne(messageId);
-
-    if (! isOwner(msg)) {
-			throw new Meteor.Error("not-authorized");
-		}
-
-    Messages.remove(messageId);
-
-    if (! Messages.find(
-      {
-        "topic._id": msg.topic._id,
-        "owner._id": Meteor.userId()
+    deleteMessage(messageId, (msg) => {
+      if (! isOwner(msg)) {
+        throw new Meteor.Error("not-authorized");
       }
-    ).fetch().length) {
-      doc.$pull = { users: Meteor.userId() };
-    }
+    });
+  },
+  modDeleteMessage(messageId, reason) {
+    check(messageId, String);
+    checkReason(reason);
 
-    Topics.update(
-      { _id: msg.topic._id },
-      {
-        $set: { lastActivity: new Date(), },
-        $inc: { messageCount: -1 }
+    const msg = deleteMessage(messageId, (msg) => {
+      if (! Meteor.userId()) {
+        throw new Meteor.Error("not-logged-in");
       }
-    );
 
-    const topic = Topics.findOne(msg.topic._id);
+      if (! isMod(Meteor.userId())) {
+        throw new Meteor.Error("not-authorized");
+      }
+    });
 
-    Rooms.update(
-      { _id: topic.room._id },
-      { $set: { lastActivity: new Date() } }
-    );
+    const doc = docBuilder({
+			item: {
+				_id: messageId,
+				ownerId: msg.owner._id,
+				type: "message",
+				action: "deleted"
+			}
+		}, reason);
+		ModLog.insert(doc);
   }
 });

@@ -9,7 +9,7 @@ const iconMap = {
   blog: "weekend",
   page: "import_contacts",
   album: "collections",
-  communitiy: "forum",
+  community: "forum",
   topic: "speaker_notes",
   message: "chat_bubble",
   tag: "style",

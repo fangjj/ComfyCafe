@@ -5,6 +5,9 @@ import Topics from "/imports/api/topics/collection";
 import Messages from "/imports/api/messages/collection";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
 import docBuilder from "/imports/api/common/docBuilder";
+import { isMod } from "/imports/api/common/persimmons";
+import checkReason from "/imports/api/common/checkReason";
+import ModLog from "/imports/api/modlog/collection";
 
 const match = {
 	name: String,
@@ -21,6 +24,51 @@ const match = {
 };
 
 const slugCycle = createSlugCycler(Rooms, true);
+
+function updateCommunity(communityId, data, auth) {
+	const room = Rooms.findOne(communityId);
+
+	auth(room);
+
+	Rooms.update(
+		{ _id: communityId },
+		{ $set: _.defaults({
+			updatedAt: new Date()
+		}, data) }
+	);
+
+	if (Meteor.isServer) {
+		const slug = slugCycle(communityId, data.name);
+		Rooms.update(
+			{ _id: communityId },
+			{ $set: { slug } }
+		);
+		Topics.update(
+			{ "room._id": communityId },
+			{ $set: {
+				"room.name": data.name,
+				"room.slug": slug
+			} },
+			{ multi: true }
+		);
+		Messages.update(
+			{ "topic.room._id": communityId },
+			{ $set: {
+				"topic.room.name": data.name,
+				"topic.room.slug": slug
+			} },
+			{ multi: true }
+		);
+		return slug;
+	}
+}
+
+function deleteCommunity(communityId, auth) {
+	const room = Rooms.findOne(communityId);
+	auth(room);
+	Rooms.remove(communityId);
+	return room;
+}
 
 Meteor.methods({
 	addRoom(data) {
@@ -44,54 +92,71 @@ Meteor.methods({
 	updateRoom(roomId, data) {
 		check(roomId, String);
 		check(data, match);
+		return updateCommunity(roomId, data, (room) => {
+			if (! isOwner(room)) {
+				throw new Meteor.Error("not-authorized");
+			}
+		});
+	},
+	modUpdateCommunity(communityId, data, reason) {
+		check(communityId, String);
+		check(data, match);
+		checkReason(reason);
 
-		const room = Rooms.findOne(roomId);
+		let owner;
+		const slug = updateCommunity(communityId, data, (community) => {
+			if (! Meteor.userId()) {
+				throw new Meteor.Error("not-logged-in");
+			}
 
-		if (! isOwner(room)) {
-			throw new Meteor.Error("not-authorized");
-		}
+			if (! isMod(Meteor.userId())) {
+				throw new Meteor.Error("not-authorized");
+			}
 
-		Rooms.update(
-			{ _id: roomId },
-			{ $set: _.defaults({
-        updatedAt: new Date()
-      }, data) }
-		);
+			owner = community.owner;
+		});
 
-		if (Meteor.isServer) {
-      const slug = slugCycle(roomId, data.name);
-      Rooms.update(
-        { _id: roomId },
-        { $set: { slug } }
-      );
-			Topics.update(
-				{ "room._id": roomId },
-				{ $set: {
-					"room.name": data.name,
-					"room.slug": slug
-				} },
-				{ multi: true }
-			);
-			Messages.update(
-        { "topic.room._id": roomId },
-        { $set: {
-					"topic.room.name": data.name,
-					"topic.room.slug": slug
-				} },
-				{ multi: true }
-      );
-      return slug;
-    }
+		const doc = docBuilder({
+			item: {
+				_id: communityId,
+				ownerId: owner._id,
+				type: "community",
+				action: "updated",
+				url: FlowRouter.path("room", { roomSlug: slug })
+			}
+		}, reason);
+		ModLog.insert(doc);
 	},
 	deleteRoom(roomId) {
 		check(roomId, String);
+		deleteCommunity(roomId, (room) => {
+			if (! isOwner(room)) {
+				throw new Meteor.Error("not-authorized");
+			}
+		});
+	},
+	modDeleteCommunity(communityId, reason) {
+		check(communityId, String);
+		checkReason(reason);
 
-		const room = Rooms.findOne(roomId);
+		const community = deleteCommunity(communityId, (community) => {
+			if (! Meteor.userId()) {
+				throw new Meteor.Error("not-logged-in");
+			}
 
-		if (! isOwner(room)) {
-			throw new Meteor.Error("not-authorized");
-		}
+			if (! isMod(Meteor.userId())) {
+				throw new Meteor.Error("not-authorized");
+			}
+		});
 
-		Rooms.remove(roomId);
+		const doc = docBuilder({
+			item: {
+				_id: communityId,
+				ownerId: community.owner._id,
+				type: "community",
+				action: "deleted"
+			}
+		}, reason);
+		ModLog.insert(doc);
 	}
 });

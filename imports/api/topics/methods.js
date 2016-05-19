@@ -1,9 +1,14 @@
+import _ from "lodash";
+
 import Topics from "/imports/api/topics/collection";
 import Rooms from "/imports/api/rooms/collection";
 import Messages from "/imports/api/messages/collection";
 import Notifications from "/imports/api/notifications/collection";
 import docBuilder from "/imports/api/common/docBuilder";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
+import { isMod } from "/imports/api/common/persimmons";
+import checkReason from "/imports/api/common/checkReason";
+import ModLog from "/imports/api/modlog/collection";
 
 const match = {
   name: String
@@ -11,8 +16,54 @@ const match = {
 
 const slugCycle = createSlugCycler(Topics, true);
 
+function updateTopic(topicId, data, auth) {
+  const topic = Topics.findOne(topicId);
+
+  auth(topic);
+
+  Topics.update(
+    { _id: topicId },
+    { $set: _.defaults({
+      updatedAt: new Date()
+    }, data) }
+  );
+
+  if (Meteor.isServer) {
+    const slug = slugCycle(topicId, data.name, { "room.slug": topic.room.slug });
+    Topics.update(
+      { _id: topicId },
+      { $set: { slug } }
+    );
+    Messages.update(
+      { "topic._id": topicId },
+      { $set: { "topic.slug": slug } },
+      { multi: true }
+    );
+    return slug;
+  }
+}
+
+function deleteTopic(topicId, auth) {
+  const topic = Topics.findOne(topicId);
+
+  auth(topic);
+
+  Topics.remove(topicId);
+
+  Rooms.update(
+    { _id: topic.room._id },
+    { $inc: {
+      topicCount: -1
+    } }
+  );
+
+  Notifications.remove({ "topic._id": topicId });
+
+  return topic;
+}
+
 Meteor.methods({
-  addTopic: function (roomId, data, retId) {
+  addTopic(roomId, data, retId) {
     check(roomId, String);
     check(data, match);
     check(retId, Boolean);
@@ -57,57 +108,79 @@ Meteor.methods({
     }
 		return data.slug;
   },
-  updateTopic: function (topicId, data) {
+  updateTopic(topicId, data) {
 		check(topicId, String);
 		check(data, match);
+		return updateTopic(topicId, data, (topic) => {
+      if (! isOwner(topic)) {
+        throw new Meteor.Error("not-authorized");
+      }
+    });
+	},
+  modUpdateTopic(topicId, data, reason) {
+		check(topicId, String);
+		check(data, match);
+    checkReason(reason);
 
-		const topic = Topics.findOne(topicId);
+    let topic;
+    const slug = updateTopic(topicId, data, (t) => {
+      if (! Meteor.userId()) {
+        throw new Meteor.Error("not-logged-in");
+      }
 
-    if (! isOwner(topic)) {
-			throw new Meteor.Error("not-authorized");
-		}
+      if (! isMod(Meteor.userId())) {
+        throw new Meteor.Error("not-authorized");
+      }
 
-    Topics.update(
-      { _id: topicId },
-      { $set: _.defaults({
-        updatedAt: new Date()
-      }, data) }
-    );
+      topic = t;
+    });
 
-    if (Meteor.isServer) {
-      const slug = slugCycle(topicId, data.name, { "room.slug": topic.room.slug });
-      Topics.update(
-        { _id: topicId },
-        { $set: { slug } }
-      );
-      Messages.update(
-        { "topic._id": topicId },
-        { $set: { "topic.slug": slug } },
-        { multi: true }
-      );
-      return slug;
-    }
+    const doc = docBuilder({
+      item: {
+        _id: topicId,
+        ownerId: topic.owner._id,
+        type: "topic",
+        action: "updated",
+        url: FlowRouter.path("topic", {
+          roomSlug: _.get(topic, "room.slug"),
+          topicSlug: slug
+        })
+      }
+    }, reason);
+    ModLog.insert(doc);
 	},
   deleteTopic(topicId) {
     check(topicId, String);
-
-    const topic = Topics.findOne(topicId);
-
-    if (! isOwner(topic)) {
-      throw new Meteor.Error("not-authorized");
-    }
-
-    Topics.remove(topicId);
-
-    Rooms.update(
-      { _id: topic.room._id },
-      { $inc: {
-        topicCount: -1
-      } }
-    );
-
-    Notifications.remove({ "topic._id": topicId });
+    deleteTopic(topicId, (topic) => {
+      if (! isOwner(topic)) {
+        throw new Meteor.Error("not-authorized");
+      }
+    });
   },
+  modDeleteTopic(topicId, reason) {
+		check(topicId, String);
+		checkReason(reason);
+
+		const topic = deleteTopic(topicId, (topic) => {
+			if (! Meteor.userId()) {
+				throw new Meteor.Error("not-logged-in");
+			}
+
+			if (! isMod(Meteor.userId())) {
+				throw new Meteor.Error("not-authorized");
+			}
+		});
+
+		const doc = docBuilder({
+			item: {
+				_id: topicId,
+				ownerId: topic.owner._id,
+				type: "topic",
+				action: "deleted"
+			}
+		}, reason);
+		ModLog.insert(doc);
+	},
 
   watchTopic(topicId) {
     check(topicId, String);

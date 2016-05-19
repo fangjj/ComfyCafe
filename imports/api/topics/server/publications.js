@@ -1,5 +1,6 @@
 import Topics from "/imports/api/topics/collection";
 import prefixer from "/imports/api/common/prefixer";
+import { isMod } from "/imports/api/common/persimmons";
 
 function baseTopicPub(doc) {
 	this.autorun(function (computation) {
@@ -30,4 +31,17 @@ Meteor.publish("topicId", function (id) {
 Meteor.publish("roomTopics", function (slug) {
 	check(slug, String);
 	return Topics.find(prefixer("room", { slug }));
+});
+
+Meteor.publish("modAllTopics", function () {
+	if (isMod(this.userId)) {
+  	return Topics.find({});
+	}
+});
+
+Meteor.publish("modTopic", function (topicId) {
+  check(topicId, String);
+	if (isMod(this.userId)) {
+		return Topics.find({ _id: topicId });
+	}
 });

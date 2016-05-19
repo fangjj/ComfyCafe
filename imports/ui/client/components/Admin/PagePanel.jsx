@@ -1,6 +1,5 @@
 import React from "react";
 
-import "/imports/api/media/adminMethods";
 import DenseContent from "/imports/ui/client/components/DenseContent";
 import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
 import List from "/imports/ui/client/components/List";

@@ -1,20 +1,31 @@
 import React from "react";
 
-import "/imports/api/migrations/methods";
 import DenseContent from "/imports/ui/client/components/DenseContent";
+import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
+import List from "/imports/ui/client/components/List";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
 export default React.createClass({
-  handleMigrate() {
-    Meteor.call("migrateTopicUsers");
+  renderList() {
+    if (this.props.loading) {
+      return <DenseLoadingSpinner />;
+    }
+
+    return _.map(this.props.topics, (topic) => {
+      const url = FlowRouter.path("adminView", {
+        panel: "topics",
+        id: topic._id
+      });
+      return <li key={topic._id}>
+        <a href={url}>{topic.room.slug + "/" + topic.slug}</a>
+      </li>;
+    });
   },
   render() {
     return <DenseContent>
-      <SubmitButton
-        label="Apply Migration"
-        iconName="cached"
-        onTouchTap={this.handleMigrate}
-      />
+      <List>
+        {this.renderList()}
+      </List>
     </DenseContent>;
   }
 });

@@ -11,13 +11,13 @@ export default React.createClass({
       return <DenseLoadingSpinner />;
     }
 
-    return _.map(this.props.blogPosts, (blog) => {
+    return _.map(this.props.messages, (message) => {
       const url = FlowRouter.path("adminView", {
-        panel: "blog",
-        id: blog._id
+        panel: "messages",
+        id: message._id
       });
-      return <li key={blog._id}>
-        <a href={url}>{blog.owner.username + "/" + blog.name}</a>
+      return <li key={message._id}>
+        <a href={url}>{message.owner.username + "/" + message._id}</a>
       </li>;
     });
   },

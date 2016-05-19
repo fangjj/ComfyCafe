@@ -9,17 +9,22 @@ import ImagePanelContainer from "./ImagePanelContainer";
 import BlogPanelContainer from "./BlogPanelContainer";
 import PagePanelContainer from "./PagePanelContainer";
 import AlbumPanelContainer from "./AlbumPanelContainer";
+import CommunityPanelContainer from "./CommunityPanelContainer";
+import TopicPanelContainer from "./TopicPanelContainer";
+import MessagePanelContainer from "./MessagePanelContainer";
 import BadgePanel from "./BadgePanel";
 import MediaPanel from "./MediaPanel";
 import FilterPanelContainer from "./FilterPanelContainer";
 import NotificationPanel from "./NotificationPanel";
-import CommunityPanel from "./CommunityPanel";
 import TopicPanel from "./TopicPanel";
 import UserViewContainer from "./UserViewContainer";
 import ImageViewContainer from "./ImageViewContainer";
 import BlogViewContainer from "./BlogViewContainer";
 import PageViewContainer from "./PageViewContainer";
 import AlbumViewContainer from "./AlbumViewContainer";
+import CommunityViewContainer from "./CommunityViewContainer";
+import TopicViewContainer from "./TopicViewContainer";
+import MessageViewContainer from "./MessageViewContainer";
 import BadgeViewContainer from "./BadgeViewContainer";
 import FilterViewContainer from "./FilterViewContainer";
 import Err403 from "/imports/ui/client/components/Err403";
@@ -43,6 +48,9 @@ export default React.createClass({
             blog: <BlogViewContainer />,
             pages: <PageViewContainer />,
             albums: <AlbumViewContainer />,
+            communities: <CommunityViewContainer />,
+            topics: <TopicViewContainer />,
+            messages: <MessageViewContainer />,
             filters: <FilterViewContainer />,
             badges: <BadgeViewContainer />
           },
@@ -59,12 +67,13 @@ export default React.createClass({
             blog: <BlogPanelContainer />,
             pages: <PagePanelContainer />,
             albums: <AlbumPanelContainer />,
+            communities: <CommunityPanelContainer />,
+            topics: <TopicPanelContainer />,
+            messages: <MessagePanelContainer />,
             badges: <BadgePanel />,
             media: <MediaPanel />,
             filters: <FilterPanelContainer />,
-            notifications: <NotificationPanel />,
-            communities: <CommunityPanel />,
-            topics: <TopicPanel />
+            notifications: <NotificationPanel />
           },
           panel,
           <ReportPanel />

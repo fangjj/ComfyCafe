@@ -8,6 +8,10 @@ import TextField from "/imports/ui/client/components/TextField";
 import TextArea from "/imports/ui/client/components/TextArea";
 import Toggle from "/imports/ui/client/components/Toggle";
 import Checkbox from "/imports/ui/client/components/Checkbox";
+import reasonBuilder from "/imports/ui/client/utils/reasonBuilder";
+import ReportFormGuts from "/imports/ui/client/components/Report/ReportFormGuts";
+import Snackbar from "/imports/ui/client/components/Snackbar";
+import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 
 const defaultState = {
   name: generateRoom,
@@ -27,12 +31,26 @@ export default React.createClass({
   getInitialState() {
     const state = initialStateBuilder(this.props.room, defaultState);
     state.nameGenerated = ! this.props.room;
+    if (this.props.mod) {
+      state.violation = "spam";
+      state.details = "";
+    }
+    state.snackbarOpen = false;
     return state;
   },
   componentWillReceiveProps() {
     if (this.state.nameGenerated) {
       this.setState({ name: generateRoom() });
     }
+  },
+  handleSnackbarRequestClose() {
+    this.setState({ snackbarOpen: false });
+  },
+  handleViolation(e, index, value) {
+    this.setState({ violation: value });
+  },
+  handleDetails(e) {
+    this.setState({ details: e.target.value });
   },
   handleName(e) {
     this.setState({
@@ -61,7 +79,19 @@ export default React.createClass({
   handleSubmit(e) {
     const data = dataBuilder(this.state, defaultState);
 
-    if (! this.props.room) {
+    if (this.props.mod) {
+      const reason = reasonBuilder(this.state);
+      Meteor.call("modUpdateCommunity", this.props.room._id, data, reason, (err) => {
+        if (err) {
+          prettyPrint(err);
+        } else {
+          if (this.props.onSuccess) {
+            this.props.onSuccess();
+          }
+          this.setState({ snackbarOpen: true });
+        }
+      });
+    } else if (! this.props.room) {
       Meteor.call("addRoom", data, (err, roomSlug) => {
         if (err) {
           prettyPrint(err);
@@ -74,18 +104,47 @@ export default React.createClass({
         if (err) {
           prettyPrint(err);
         } else {
+          this.setState({ snackbarOpen: true });
           this.redirect(roomSlug);
         }
       });
+    }
+  },
+  handleModDelete() {
+    const reason = reasonBuilder(this.state);
+    Meteor.call("modDeleteCommunity", this.props.room._id, reason, (err) => {
+      if (err) {
+        prettyPrint(err);
+      } else {
+        FlowRouter.go(FlowRouter.path("adminPanel", { panel: "communities" }));
+      }
+    });
+  },
+  renderReportForm() {
+    if (this.props.mod) {
+      return <ReportFormGuts
+        violation={this.state.violation}
+        handleViolation={this.handleViolation}
+        details={this.state.details}
+        handleDetails={this.handleDetails}
+      />;
     }
   },
   render() {
     return <Form
       id={this.props.id}
       actions={this.props.actions}
+      left={this.props.mod && <DangerButton
+        label="Delete"
+        iconName="delete"
+        subtle={true}
+        onTouchTap={this.handleModDelete}
+      />}
       onSubmit={this.handleSubmit}
       onClose={this.props.onClose}
     >
+      {this.renderReportForm()}
+
       <TextField
         defaultValue={this.state.name}
         label="Name"
@@ -153,6 +212,12 @@ export default React.createClass({
           onCheck={(e) => { this.setState({ membersOnlyCreate: e.target.checked }); }}
         />
       </section>
+
+      <Snackbar
+        open={this.state.snackbarOpen}
+        message="Community updated successfully."
+        onRequestClose={this.handleSnackbarRequestClose}
+      />
     </Form>;
   }
 });

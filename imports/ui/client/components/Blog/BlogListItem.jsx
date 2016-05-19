@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 
 import BlogMoreMenu from "./BlogMoreMenu";
@@ -11,6 +12,11 @@ export default React.createClass({
   renderTitle(post, permaLink) {
     if (post.name && post.name.toLowerCase() !== "untitled") {
       return <h2><a href={permaLink}>{post.name}</a></h2>;
+    }
+  },
+  renderEdited(post, wasEdited) {
+    if (wasEdited) {
+      return <span> (edited <Moment time={post.updatedAt} />)</span>;
     }
   },
   renderMoreMenu() {
@@ -29,7 +35,7 @@ export default React.createClass({
 
     const owner = post.owner;
     const ownerUrl = FlowRouter.path("profile", { username: owner.username });
-
+    const wasEdited = ! _.isEqual(post.createdAt, post.updatedAt);
     const permaLink = FlowRouter.path("blogPost", { username: owner.username, slug: post.slug });
 
     return <li className="blogPost">
@@ -44,6 +50,7 @@ export default React.createClass({
           <div className="top">
             <div className="info">
               by <UserLink user={owner} /> <Moment time={post.createdAt} />
+              {this.renderEdited(post, wasEdited)}
               &nbsp;<VisibilityLink
                 href={permaLink}
                 visibility={post.visibility}

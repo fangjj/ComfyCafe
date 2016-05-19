@@ -22,5 +22,6 @@ export default (props) => {
       </div>
       <div>{ml.details}</div>
     </div>
+    {props.children}
   </li>;
 };

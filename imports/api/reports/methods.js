@@ -2,6 +2,7 @@ import _ from "lodash";
 
 import collectionMap from "/imports/api/common/collectionMap";
 import Reports from "/imports/api/reports/collection";
+import { isMod } from "/imports/api/common/persimmons";
 
 const match = {
   item: {
@@ -52,5 +53,19 @@ Meteor.methods({
         updatedAt: new Date()
       }, data) }
     );
+  },
+
+  modDeleteReport(reportId) {
+    check(reportId, String);
+
+    if (! Meteor.userId()) {
+      throw new Meteor.Error("not-logged-in");
+    }
+
+    if (! isMod(Meteor.userId())) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    Reports.remove({ _id: reportId });
   }
 });

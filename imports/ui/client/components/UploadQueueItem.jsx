@@ -1,12 +1,9 @@
 import _ from "lodash";
 import React from "react";
+import IconButton from "material-ui/IconButton";
 
 import ProgressBar from "/imports/ui/client/components/ProgressBar";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
-
-import {
-  IconButton
-} from "material-ui";
 
 export default React.createClass({
   handleTouch(e) {

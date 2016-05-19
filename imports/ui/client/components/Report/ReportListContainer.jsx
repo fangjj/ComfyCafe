@@ -8,10 +8,6 @@ export default createContainer(({ params }) => {
 
   return {
     loading: ! handle.ready(),
-    reports: Reports.find(
-      {},
-      { sort: { createdAt: -1 } }
-    ).fetch(),
-    currentUser: Meteor.user()
+    reports: Reports.find({}, { sort: { createdAt: -1 } }).fetch()
   };
 }, ReportList);

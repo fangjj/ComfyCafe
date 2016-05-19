@@ -6,6 +6,7 @@ Meteor.publish(null, function () {
 		{ _id: this.userId },
     { fields: {
       normalizedUsername: 1,
+      roles: 1,
       "status.online": 1,
       "status.idle": 1,
 			settings: 1,
@@ -68,9 +69,9 @@ Meteor.publish("allUsers", function () {
 const modFields = {
   username: 1,
   normalizedUsername: 1,
+  roles: 1,
   profile: 1,
-  avatars: 1,
-  roles: 1
+  avatars: 1
 };
 
 Meteor.publish("modUser", function (userId) {

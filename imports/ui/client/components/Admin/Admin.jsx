@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import "/imports/api/migrations/methods";
+import { isPriveleged } from "/imports/api/common/persimmons";
 import AdminPanel from "./AdminPanel";
 import UserPanel from "./UserPanel";
 import ImagePanel from "./ImagePanel";
@@ -23,12 +24,9 @@ import DenseCol from "/imports/ui/client/components/DenseCol";
 import DenseContent from "/imports/ui/client/components/DenseContent";
 
 export default React.createClass({
-  doIt() {
-    Meteor.call("migrateColor");
-  },
+  contextTypes: { currentUser: React.PropTypes.object },
   renderInner() {
-    const isAdmin = Roles.userIsInRole(Meteor.userId(), ["admin"], Roles.GLOBAL_GROUP);
-    if (isAdmin) {
+    if (isPriveleged(this.context.currentUser._id)) {
       const panel = FlowRouter.getParam("panel");
       const entityId = FlowRouter.getParam("id");
       if (entityId) {

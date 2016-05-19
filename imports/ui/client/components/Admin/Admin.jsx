@@ -72,6 +72,7 @@ export default React.createClass({
             messages: <MessagePanelContainer />,
             badges: <BadgePanel />,
             media: <MediaPanel />,
+            tags: <DenseContent>nope</DenseContent>,
             filters: <FilterPanelContainer />,
             notifications: <NotificationPanel />
           },

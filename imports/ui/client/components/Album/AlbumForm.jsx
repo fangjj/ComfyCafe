@@ -150,6 +150,7 @@ export default React.createClass({
       />
 
       <Snackbar
+        unexist={! this.props.mod}
         open={this.state.snackbarOpen}
         message="Album updated successfully."
         onRequestClose={this.handleSnackbarRequestClose}

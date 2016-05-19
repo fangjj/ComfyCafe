@@ -21,6 +21,10 @@ export default React.createClass({
     window.clearTimeout(this.timeoutId);
   },
   render() {
+    if (this.props.unexist) {
+      return null;
+    }
+
     const style = {};
     const y = this.props.open ? 0 : 52; // 52 = snackbar height (hopefully)
     style.transform = "translate3d(0, " + y + "px, 0)";

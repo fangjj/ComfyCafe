@@ -159,6 +159,7 @@ export default React.createClass({
       />
 
       <Snackbar
+        unexist={! this.props.mod}
         open={this.state.snackbarOpen}
         message="User updated successfully."
         onRequestClose={this.handleSnackbarRequestClose}

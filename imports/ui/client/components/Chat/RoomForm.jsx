@@ -214,6 +214,7 @@ export default React.createClass({
       </section>
 
       <Snackbar
+        unexist={! this.props.mod}
         open={this.state.snackbarOpen}
         message="Community updated successfully."
         onRequestClose={this.handleSnackbarRequestClose}

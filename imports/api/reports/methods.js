@@ -2,6 +2,7 @@ import _ from "lodash";
 
 import collectionMap from "/imports/api/common/collectionMap";
 import Reports from "/imports/api/reports/collection";
+import docBuilder from "/imports/api/common/docBuilder";
 import { isMod } from "/imports/api/common/persimmons";
 
 const match = {
@@ -27,16 +28,7 @@ Meteor.methods({
       throw new Meteor.Error("fraud", "Why would you try to deceive me?");
     }
 
-    const reportId = Reports.insert(_.defaults({
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      owner: {
-        _id: Meteor.userId(),
-        username: Meteor.user().username,
-        normalizedUsername: Meteor.user().normalizedUsername,
-        profile: Meteor.user().profile
-      }
-    }, data));
+    Reports.insert(docBuilder({}, data));
   },
 	updateReport(reportId, data) {
     check(data, match);

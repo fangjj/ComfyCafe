@@ -65,11 +65,28 @@ Meteor.publish("allUsers", function () {
 });
 
 // for mods
+const modFields = {
+  username: 1,
+  normalizedUsername: 1,
+  profile: 1,
+  avatars: 1,
+  roles: 1
+};
+
+Meteor.publish("modUser", function (userId) {
+  if (isMod(this.userId)) {
+    return Meteor.users.find(
+      { _id: userId },
+      { fields: modFields }
+    );
+  }
+});
+
 Meteor.publish("modAllUsers", function () {
   if (isMod(this.userId)) {
     return Meteor.users.find(
       {},
-      { fields: publicFields }
+      { fields: modFields }
     );
   }
 });

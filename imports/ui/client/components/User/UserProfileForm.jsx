@@ -75,15 +75,22 @@ export default React.createClass({
         if (err) {
           prettyPrint(err);
         } else {
-          if (this.props.onSuccess) {
-            this.props.onSuccess();
-          }
           this.setState({ snackbarOpen: true });
         }
       });
     } else {
       Meteor.call("updateProfile", data);
     }
+  },
+  handleModDeleteAvatar() {
+    const reason = reasonBuilder(this.state);
+    Meteor.call("modDeleteAvatar", this.props.user._id, reason, (err) => {
+      if (err) {
+        prettyPrint(err);
+      } else {
+        this.setState({ snackbarOpen: true });
+      }
+    });
   },
   renderReportForm() {
     if (this.props.mod) {
@@ -103,7 +110,7 @@ export default React.createClass({
         label="Delete Avatar"
         iconName="delete"
         subtle={true}
-        onTouchTap={this.handleModDelete}
+        onTouchTap={this.handleModDeleteAvatar}
       />}
       onSubmit={this.handleSubmit}
       onClose={this.props.onClose}

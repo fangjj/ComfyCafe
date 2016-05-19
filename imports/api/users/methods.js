@@ -33,6 +33,37 @@ const matchProfile = {
 	infoOrder: [String],
 };
 
+function deleteAvatar(userId) {
+	if (Meteor.isServer) {
+		const user = Meteor.users.findOne({ _id: userId });
+
+		const oldAvatarId = _.get(user, "avatars.fullsize._id");
+		if (oldAvatarId) {
+			// Delete old avatar
+			media.remove({ _id: oldAvatarId });
+		}
+
+		// Rebind djenticon
+		media.update(
+			{
+				"metadata.owner": userId,
+				"metadata.djenticon": true
+			},
+			{ $set: { "metadata.avatarFor": userId } }
+		);
+	}
+
+	Meteor.users.update(
+		{ _id: userId },
+		{ $unset: { avatars: "RIP" } }
+	);
+
+	updateOwnerDocs(
+		{ "owner._id": userId },
+		{ $unset: { "owner.profile.avatar": "RIP" } }
+	);
+}
+
 Meteor.methods({
 	updateProfile(data) {
 		check(data, matchProfile);
@@ -198,41 +229,38 @@ Meteor.methods({
 			}
 		}
 	},
-	deleteAvatar: function () {
+	deleteAvatar() {
+		if (! Meteor.userId()) {
+			throw new Meteor.Error("not-logged-in");
+		}
+		deleteAvatar(Meteor.userId());
+	},
+	modDeleteAvatar(userId, reason) {
+		check(userId, String);
+		checkReason(reason);
+
 		if (! Meteor.userId()) {
 			throw new Meteor.Error("not-logged-in");
 		}
 
-		if (Meteor.isServer) {
-			var oldAvatarId = Meteor.user().avatars.fullsize._id;
-			if (oldAvatarId) {
-				// Delete old avatar
-				media.remove({ _id: oldAvatarId });
-			}
-
-			// Rebind djenticon
-			media.update(
-				{
-					"metadata.owner": Meteor.userId(),
-					"metadata.djenticon": true
-				},
-				{ $set: {
-					"metadata.avatarFor": Meteor.userId()
-				} }
-			)
+		if (! isMod(Meteor.userId())) {
+			throw new Meteor.Error("not-authorized");
 		}
 
-    Meteor.users.update(
-			{ _id: Meteor.userId() },
-			{ $unset: { avatars: "RIP" } }
-		);
+		deleteAvatar(userId);
 
-		updateOwnerDocs(
-			{ "owner._id": Meteor.userId() },
-			{ $unset: {
-				"owner.profile.avatar": "RIP"
-			} }
-		);
+		const user = Meteor.users.findOne({ _id: userId });
+
+		const doc = docBuilder({
+			item: {
+				_id: userId,
+				ownerId: userId,
+				type: "user",
+				action: "deletedAvatar",
+				url: FlowRouter.path("profile", { username: user.username })
+			}
+		}, reason);
+		ModLog.insert(doc);
 	},
 	toggleSubscription: function (userId) {
 		check(userId, String);

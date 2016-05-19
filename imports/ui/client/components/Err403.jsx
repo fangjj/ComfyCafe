@@ -4,6 +4,6 @@ import Uhoh from "/imports/ui/client/components/Uhoh";
 
 export default () => {
   return <Uhoh>
-    404 - Dead Forever
+    403 - You don't have persimmons to view this!
   </Uhoh>;
 };

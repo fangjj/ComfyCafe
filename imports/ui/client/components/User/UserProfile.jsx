@@ -18,6 +18,7 @@ import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import CancelButton from "/imports/ui/client/components/Button/CancelButton";
 import FriendButton from "/imports/ui/client/components/Button/FriendButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
+import ReportButton from "/imports/ui/client/components/Button/ReportButton";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/client/components/ActionWell";
 import DirectAvatar from "/imports/ui/client/components/Avatar/DirectAvatar";
@@ -140,6 +141,7 @@ export default React.createClass({
       </ButtonGroup>;
     } else {
       return <ButtonGroup>
+        <ReportButton />
         <SubmitButton
           label="Send Good Vibes"
           iconName="wb_sunny"

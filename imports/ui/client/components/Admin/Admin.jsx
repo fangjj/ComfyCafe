@@ -3,7 +3,7 @@ import React from "react";
 
 import "/imports/api/migrations/methods";
 import { isPriveleged } from "/imports/api/common/persimmons";
-import AdminPanel from "./AdminPanel";
+import ReportPanel from "./ReportPanel";
 import UserPanelContainer from "./UserPanelContainer";
 import ImagePanelContainer from "./ImagePanelContainer";
 import BadgePanel from "./BadgePanel";
@@ -16,6 +16,7 @@ import UserViewContainer from "./UserViewContainer";
 import ImageViewContainer from "./ImageViewContainer";
 import BadgeViewContainer from "./BadgeViewContainer";
 import FilterViewContainer from "./FilterViewContainer";
+import Err403 from "/imports/ui/client/components/Err403";
 import Content from "/imports/ui/client/components/Content";
 import List from "/imports/ui/client/components/List";
 import DenseLayout from "/imports/ui/client/components/DenseLayout";
@@ -57,13 +58,11 @@ export default React.createClass({
             topics: <TopicPanel />
           },
           panel,
-          <AdminPanel />
+          <ReportPanel />
         );
       }
     } else {
-      return <DenseContent>
-        You don't have persimmons to view this!
-      </DenseContent>;
+      return <Err403 />;
     }
   },
   render() {
@@ -74,13 +73,16 @@ export default React.createClass({
           <li><a href="/admin/users">Users</a></li>
           <li><a href="/admin/images">Images</a></li>
           <li><a href="/admin/blog">Blog</a></li>
-          <li><a href="/admin/tags">Tags</a></li>
-          <li><a href="/admin/badges">Badges</a></li>
-          <li><a href="/admin/media">Media</a></li>
-          <li><a href="/admin/filters">Filters</a></li>
-          <li><a href="/admin/notifications">Notifications</a></li>
+          <li><a href="/admin/pages">Pages</a></li>
+          <li><a href="/admin/albums">Albums</a></li>
           <li><a href="/admin/communities">Communities</a></li>
           <li><a href="/admin/topics">Topics</a></li>
+          <li><a href="/admin/messages">Messages</a></li>
+          <li><a href="/admin/tags">Tags</a></li>
+          <li><a href="/admin/filters">Filters</a></li>
+          <li><a href="/admin/notifications">Notifications</a></li>
+          <li><a href="/admin/badges">Badges</a></li>
+          <li><a href="/admin/media">Media</a></li>
         </List>
       </div>
 

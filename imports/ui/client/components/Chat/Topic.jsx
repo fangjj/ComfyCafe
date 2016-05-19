@@ -9,6 +9,7 @@ import Dialog from "/imports/ui/client/components/Dialog";
 import WatchButton from "/imports/ui/client/components/Button/WatchButton";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
+import ReportButton from "/imports/ui/client/components/Button/ReportButton";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/client/components/ActionWell";
 import PrivacyIcon from "/imports/ui/client/components/Daikon/PrivacyIcon";
@@ -75,11 +76,7 @@ export default React.createClass({
       </ButtonGroup>;
     } else {
       return <ButtonGroup>
-        <DangerButton
-          label="Flag"
-          iconName="flag"
-          subtle={true}
-        />
+        <ReportButton />
       </ButtonGroup>;
     }
   },

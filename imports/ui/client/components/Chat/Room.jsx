@@ -7,6 +7,7 @@ import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoad
 import TextBody from "/imports/ui/client/components/TextBody";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 import DangerButton from "/imports/ui/client/components/Button/DangerButton";
+import ReportButton from "/imports/ui/client/components/Button/ReportButton";
 import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/client/components/ActionWell";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
@@ -59,12 +60,7 @@ export default React.createClass({
           label="Join"
           iconName="sentiment_satisfied"
         />
-        <DangerButton
-          label="Report"
-          iconName="flag"
-          subtle={true}
-          onTouchTap={this.report}
-        />
+        <ReportButton />
       </ButtonGroup>;
     }
   },

@@ -1,3 +1,5 @@
+import { isMod } from "/imports/api/common/persimmons";
+
 // for Meteor.user()
 Meteor.publish(null, function () {
   return Meteor.users.find(
@@ -60,4 +62,14 @@ Meteor.publish("allUsers", function () {
 		{},
 		{ fields: publicFields }
 	);
+});
+
+// for mods
+Meteor.publish("modAllUsers", function () {
+  if (isMod(this.userId)) {
+    return Meteor.users.find(
+      {},
+      { fields: publicFields }
+    );
+  }
 });

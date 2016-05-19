@@ -4,8 +4,8 @@ import React from "react";
 import "/imports/api/migrations/methods";
 import { isPriveleged } from "/imports/api/common/persimmons";
 import AdminPanel from "./AdminPanel";
-import UserPanel from "./UserPanel";
-import ImagePanel from "./ImagePanel";
+import UserPanelContainer from "./UserPanelContainer";
+import ImagePanelContainer from "./ImagePanelContainer";
 import BadgePanel from "./BadgePanel";
 import MediaPanel from "./MediaPanel";
 import FilterPanelContainer from "./FilterPanelContainer";
@@ -25,7 +25,7 @@ import DenseContent from "/imports/ui/client/components/DenseContent";
 export default React.createClass({
   contextTypes: { currentUser: React.PropTypes.object },
   renderInner() {
-    if (isPriveleged(this.context.currentUser._id)) {
+    if (this.context.currentUser && isPriveleged(this.context.currentUser._id)) {
       const panel = FlowRouter.getParam("panel");
       const entityId = FlowRouter.getParam("id");
       if (entityId) {
@@ -44,8 +44,8 @@ export default React.createClass({
       } else {
         return _.get(
           {
-            users: <UserPanel />,
-            images: <ImagePanel />,
+            users: <UserPanelContainer />,
+            images: <ImagePanelContainer />,
             blog: <DenseContent>
               <a onTouchTap={() => { Meteor.call("migrateBlog") }}>Migrate</a>
             </DenseContent>,
@@ -68,7 +68,7 @@ export default React.createClass({
   },
   render() {
     return <DenseLayout>
-      <DenseCol className="leftCol">
+      <div className="col leftCol">
         <List>
           <li><a href="/admin">Admin</a></li>
           <li><a href="/admin/users">Users</a></li>
@@ -82,7 +82,7 @@ export default React.createClass({
           <li><a href="/admin/communities">Communities</a></li>
           <li><a href="/admin/topics">Topics</a></li>
         </List>
-      </DenseCol>
+      </div>
 
       <div className="col mainCol">
         {this.renderInner()}

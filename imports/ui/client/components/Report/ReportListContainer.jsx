@@ -4,7 +4,7 @@ import Reports from "/imports/api/reports/collection";
 import ReportList from "./ReportList";
 
 export default createContainer(({ params }) => {
-  const handle = Meteor.subscribe("adminAllReports", Meteor.userId());
+  const handle = Meteor.subscribe("modAllReports");
 
   return {
     loading: ! handle.ready(),

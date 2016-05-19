@@ -8,7 +8,10 @@ function hasRoles(userId, something) {
 
 function isSomething(roles) {
   return function (userId) {
-    return hasRoles(userId || Meteor.userId(), roles);
+    if (typeof userId === "undefined") {
+      userId = Meteor.userId();
+    }
+    return hasRoles(userId, roles);
   }
 }
 

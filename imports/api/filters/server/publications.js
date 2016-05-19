@@ -1,6 +1,7 @@
 import _ from "lodash";
 
 import Filters from "/imports/api/filters/collection";
+import { isMod } from "/imports/api/common/persimmons";
 
 Meteor.publish("globalFilters", function () {
 	return Filters.find({ owner: { $exists: false } });
@@ -66,4 +67,10 @@ Meteor.publish("defaultFilter", function () {
 			}
 		);
 	});
+});
+
+Meteor.publish("modAllFilters", function () {
+	if (isMod(this.userId)) {
+  	return Filters.find({ owner: { $exists: true } });
+	}
 });

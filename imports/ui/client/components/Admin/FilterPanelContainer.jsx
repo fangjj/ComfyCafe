@@ -6,7 +6,7 @@ import FilterPanel from "./FilterPanel";
 
 export default createContainer(({ params }) => {
   const globalHandle = Meteor.subscribe("globalFilters");
-  const handle = Meteor.subscribe("adminAllFilters", Meteor.userId());
+  const handle = Meteor.subscribe("modAllFilters");
   return {
     globalLoading: ! globalHandle.ready(),
     loading: ! handle.ready(),

@@ -3,7 +3,6 @@ import "/imports/api/albums/server/publications";
 import "/imports/api/badges/server/publications";
 import "/imports/api/blog/server/publications";
 import "/imports/api/filters/server/publications";
-import "/imports/api/filters/server/adminPublications";
 import "/imports/api/invites/server/publications";
 import "/imports/api/jobs/server/publications";
 import "/imports/api/media/server/publications";
@@ -12,13 +11,11 @@ import "/imports/api/modlog/server/publications";
 import "/imports/api/notifications/server/publications";
 import "/imports/api/pages/server/publications";
 import "/imports/api/posts/server/publications";
-import "/imports/api/posts/server/adminPublications";
-import "/imports/api/reports/server/adminPublications";
+import "/imports/api/reports/server/publications";
 import "/imports/api/rooms/server/publications";
 import "/imports/api/tags/server/publications";
 import "/imports/api/topics/server/publications";
 import "/imports/api/users/server/publications";
-import "/imports/api/users/server/adminPublications";
 
 // Security
 import "/imports/api/jobs/server/security";

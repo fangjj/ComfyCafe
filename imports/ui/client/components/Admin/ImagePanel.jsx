@@ -1,28 +1,21 @@
 import React from "react";
 
 import "/imports/api/media/adminMethods";
-import Posts from "/imports/api/posts/collection";
 import DenseContent from "/imports/ui/client/components/DenseContent";
+import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
 import List from "/imports/ui/client/components/List";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
 export default React.createClass({
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    const handle = Meteor.subscribe("adminAllPosts", Meteor.userId());
-    return {
-      loading: ! handle.ready(),
-      images: Posts.find(
-        {},
-        { sort: { createdAt: -1, name: 1 } }
-      ).fetch()
-    };
-  },
   handleRegen() {
     Meteor.call("adminRegenThumbs", "postMedium");
   },
   renderList() {
-    return _.map(this.data.images, (image) => {
+    if (this.props.loading) {
+      return <DenseLoadingSpinner />;
+    }
+
+    return _.map(this.props.images, (image) => {
       const path = FlowRouter.path("adminView", {
         panel: "images",
         id: image._id

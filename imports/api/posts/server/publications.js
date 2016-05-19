@@ -5,6 +5,7 @@ import { postsPerPage } from "../constants";
 import privacyWrap from "/imports/api/common/privacyWrap";
 import tagQuery from "/imports/api/tags/query";
 import Albums from "/imports/api/albums/collection";
+import { isMod } from "/imports/api/common/persimmons";
 
 function checkState(state) {
 	check(state, Match.Optional(
@@ -259,4 +260,17 @@ Meteor.publish("postAlbum", function (albumData, state, page=0) {
 			options(page)
 		);
 	});
+});
+
+Meteor.publish("modAllPosts", function () {
+	if (isMod(this.userId)) {
+  	return Posts.find({});
+	}
+});
+
+Meteor.publish("modPost", function (postId) {
+  check(postId, String);
+	if (isMod(this.userId)) {
+		return Posts.find({ _id: postId });
+	}
 });

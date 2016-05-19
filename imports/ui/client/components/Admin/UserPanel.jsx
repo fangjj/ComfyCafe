@@ -1,23 +1,14 @@
+import _ from "lodash";
 import React from "react";
 
 import "/imports/api/migrations/methods";
 import "/imports/api/users/adminMethods";
 import DenseContent from "/imports/ui/client/components/DenseContent";
+import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
 import List from "/imports/ui/client/components/List";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
 
 export default React.createClass({
-  mixins: [ReactMeteorData],
-  getMeteorData() {
-    const handle = Meteor.subscribe("adminAllUsers", Meteor.userId());
-    return {
-      loading: ! handle.ready(),
-      users: Meteor.users.find(
-        {},
-        { sort: { username: 1 } }
-      ).fetch()
-    };
-  },
   handleMigrate() {
     Meteor.call("migrateUserFilters");
   },
@@ -25,7 +16,11 @@ export default React.createClass({
     Meteor.call("adminDjentRegen");
   },
   renderList() {
-    return _.map(this.data.users, (user) => {
+    if (this.props.loading) {
+      return <DenseLoadingSpinner />;
+    }
+
+    return _.map(this.props.users, (user) => {
       const path = FlowRouter.path("adminView", {
         panel: "users",
         id: user._id

@@ -1,59 +1,31 @@
 import React from "react";
 
 import "/imports/api/users/adminMethods";
-import { isAdmin, isDev, isMod } from "/imports/api/common/persimmons";
+import { isAdmin } from "/imports/api/common/persimmons";
 import DenseContent from "/imports/ui/client/components/DenseContent";
-import List from "/imports/ui/client/components/List";
-import Form from "/imports/ui/client/components/Form";
-import TextField from "/imports/ui/client/components/TextField";
-import RoleField from "/imports/ui/client/components/RoleField";
+import UserAdminForm from "/imports/ui/client/components/Admin/UserAdminForm";
+import UserProfileForm from "/imports/ui/client/components/User/UserProfileForm";
 
 export default React.createClass({
-  getInitialState() {
-    return {
-      badges: _.map(_.get(this.props.user, "profile.badges", []), (badge) => {
-        return badge.name;
-      }).join(", "),
-      isAdmin: isAdmin(this.props.user._id),
-      isDev: isDev(this.props.user._id),
-      isMod: isMod(this.props.user._id)
-    };
-  },
-  handleBadges(e) {
-    this.setState({ badges: e.target.value });
-  },
-  handleAdmin(e) {
-    this.setState({ isAdmin: e.target.checked });
-  },
-  handleDev(e) {
-    this.setState({ isDev: e.target.checked });
-  },
-  handleMod(e) {
-    this.setState({ isMod: e.target.checked });
-  },
-  handleSubmit() {
-    Meteor.call("adminUpdateUser", this.props.user._id, this.state);
+  contextTypes: { currentUser: React.PropTypes.object },
+  renderAdminForm(user) {
+    if (isAdmin(this.context.currentUser._id)) {
+      return <UserAdminForm user={user} />;
+    }
   },
   render() {
+    const { user } = this.props;
     return <DenseContent>
-      {this.props.user.username
-        + " (" + _.get(this.props.user, "profile.displayName", this.props.user.username) + ")"
-      }
-      <Form actions={true} onSubmit={this.handleSubmit}>
-        <TextField
-          label="Badges (comma separated)"
-          defaultValue={this.state.badges}
-          onChange={this.handleBadges}
-        />
-        <RoleField
-          isAdmin={this.state.isAdmin}
-          isDev={this.state.isDev}
-          isMod={this.state.isMod}
-          handleAdmin={this.handleAdmin}
-          handleDev={this.handleDev}
-          handleMod={this.handleMod}
-        />
-      </Form>
+      <header>
+        <h2>
+          <a href={FlowRouter.path("profile", { username: user.username })}>
+            {_.get(user, "profile.displayName", user.username) + " (" + user.username + ")"}
+          </a>
+        </h2>
+      </header>
+
+      {this.renderAdminForm(user)}
+      <UserProfileForm user={user} mod={true} actions={true} />
     </DenseContent>;
   }
 });

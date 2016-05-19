@@ -11,25 +11,31 @@ import { validateUsername } from "/imports/api/users/validators";
 import media from "/imports/api/media/collection";
 import Notifications from "/imports/api/notifications/collection";
 import Filters from "/imports/api/filters/collection";
+import docBuilder from "/imports/api/common/docBuilder";
+import { isMod } from "/imports/api/common/persimmons";
+import checkReason from "/imports/api/common/checkReason";
+import ModLog from "/imports/api/modlog/collection";
 
 if (Meteor.isServer) {
 	mediumValidate = require("/imports/api/media/server/validate").default;
 }
 
+const matchProfile = {
+	displayName: String,
+	blurb: String,
+	bio: String,
+	birthday: {
+		month: Number,
+		day: Number
+	},
+	avatarSafety: Number,
+	info: Object,
+	infoOrder: [String],
+};
+
 Meteor.methods({
 	updateProfile(data) {
-		check(data, {
-			displayName: String,
-			blurb: String,
-			bio: String,
-			birthday: {
-				month: Number,
-				day: Number
-			},
-			avatarSafety: Number,
-			info: Object,
-			infoOrder: [String],
-		});
+		check(data, matchProfile);
 
 		if (! Meteor.userId()) {
 			throw new Meteor.Error("not-logged-in");
@@ -39,6 +45,37 @@ Meteor.methods({
 			{ _id: Meteor.userId() },
 			{ $set: profilePrefixer(data) }
 		);
+	},
+	modUpdateProfile(userId, data, reason) {
+		check(userId, String);
+		check(data, matchProfile);
+		checkReason(reason);
+
+		if (! Meteor.userId()) {
+			throw new Meteor.Error("not-logged-in");
+		}
+
+		if (! isMod(Meteor.userId())) {
+			throw new Meteor.Error("not-authorized");
+		}
+
+		updateProfile(
+			{ _id: userId },
+			{ $set: profilePrefixer(data) }
+		);
+
+		const user = Meteor.users.findOne({ _id: userId });
+
+		const doc = docBuilder({
+			item: {
+				_id: userId,
+				ownerId: userId,
+				type: "user",
+				action: "updated",
+				url: FlowRouter.path("profile", { username: user.username })
+			}
+		}, reason);
+		ModLog.insert(doc);
 	},
 	changeUsername(username) {
 		check(username, String);
@@ -99,7 +136,7 @@ Meteor.methods({
 			) }
 		);
 	},
-	setAvatar: function (avatarId) {
+	setAvatar(avatarId) {
 		check(avatarId, String);
 
 		if (! Meteor.userId()) {

@@ -3,6 +3,7 @@ import React from "react";
 
 import "/imports/api/users/methods";
 import { initialStateBuilder, dataBuilder } from "/imports/ui/client/utils/forms";
+import reasonBuilder from "/imports/ui/client/utils/reasonBuilder";
 import Powerless from "/imports/ui/client/components/Powerless";
 import Form from "/imports/ui/client/components/Form";
 import TextField from "/imports/ui/client/components/TextField";
@@ -11,6 +12,9 @@ import MultiField from "/imports/ui/client/components/MultiField";
 import SafetySelector from "/imports/ui/client/components/SafetySelector";
 import BirthdaySelector from "/imports/ui/client/components/BirthdaySelector";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
+import ReportFormGuts from "/imports/ui/client/components/Report/ReportFormGuts";
+import Snackbar from "/imports/ui/client/components/Snackbar";
+import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 
 const defaultState = {
   displayName: "",
@@ -25,7 +29,16 @@ const defaultState = {
 export default React.createClass({
   contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
-    return initialStateBuilder(this.context.currentUser.profile, defaultState);
+    const state = initialStateBuilder(this.props.user.profile, defaultState);
+    if (this.props.mod) {
+      state.violation = "spam";
+      state.details = "";
+    }
+    state.snackbarOpen = false;
+    return state;
+  },
+  handleSnackbarRequestClose() {
+    this.setState({ snackbarOpen: false });
   },
   handleDisplayName(event) {
     this.setState({ displayName: e.target.value });
@@ -48,16 +61,55 @@ export default React.createClass({
       infoOrder: order
     });
   },
+  handleViolation(e, index, value) {
+    this.setState({ violation: value });
+  },
+  handleDetails(e) {
+    this.setState({ details: e.target.value });
+  },
   handleSubmit(e) {
-    Meteor.call("updateProfile", dataBuilder(this.state, defaultState));
+    const data = dataBuilder(this.state, defaultState);
+    if (this.props.mod) {
+      const reason = reasonBuilder(this.state);
+      Meteor.call("modUpdateProfile", this.props.user._id, data, reason, (err) => {
+        if (err) {
+          prettyPrint(err);
+        } else {
+          if (this.props.onSuccess) {
+            this.props.onSuccess();
+          }
+          this.setState({ snackbarOpen: true });
+        }
+      });
+    } else {
+      Meteor.call("updateProfile", data);
+    }
+  },
+  renderReportForm() {
+    if (this.props.mod) {
+      return <ReportFormGuts
+        violation={this.state.violation}
+        handleViolation={this.handleViolation}
+        details={this.state.details}
+        handleDetails={this.handleDetails}
+      />;
+    }
   },
   render() {
     return <Form
       id={this.props.id}
       actions={this.props.actions}
+      left={this.props.mod && <DangerButton
+        label="Delete Avatar"
+        iconName="delete"
+        subtle={true}
+        onTouchTap={this.handleModDelete}
+      />}
       onSubmit={this.handleSubmit}
       onClose={this.props.onClose}
     >
+      {this.renderReportForm()}
+
       <TextField
         defaultValue={this.state.displayName}
         label="Display Name"
@@ -97,6 +149,12 @@ export default React.createClass({
         defaultOrder={this.state.infoOrder}
         defaultQty={1}
         onChange={this.handleInfo}
+      />
+
+      <Snackbar
+        open={this.state.snackbarOpen}
+        message="User updated successfully."
+        onRequestClose={this.handleSnackbarRequestClose}
       />
     </Form>;
   }

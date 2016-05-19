@@ -54,11 +54,7 @@ export default React.createClass({
         <header>
           <h3>Modify</h3>
         </header>
-        <PostForm
-          post={image}
-          mod={true}
-          actions={true}
-        />
+        <PostForm post={image} mod={true} actions={true} />
       </section>
     </DenseContent>;
   }

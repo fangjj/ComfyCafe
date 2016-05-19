@@ -4,6 +4,7 @@ import FlatButton from "material-ui/FlatButton";
 
 import "/imports/api/posts/methods";
 import { initialStateBuilder, dataBuilder } from "/imports/ui/client/utils/forms";
+import reasonBuilder from "/imports/ui/client/utils/reasonBuilder";
 import media from "/imports/api/media/collection";
 import safetyLabels from "/imports/api/common/safetyLabels";
 import RainbowSpinner from "/imports/ui/client/components/Spinner/RainbowSpinner";
@@ -104,8 +105,8 @@ export default React.createClass({
     const data = dataBuilder(this.state, defaultState);
 
     if (this.props.mod) {
-      const report = _.pick(this.state, [ "violation", "details" ]);
-      Meteor.call("modUpdatePost", this.props.post._id, data, report, (err) => {
+      const reason = reasonBuilder(this.state);
+      Meteor.call("modUpdatePost", this.props.post._id, data, reason, (err) => {
         if (err) {
           prettyPrint(err);
         } else {
@@ -144,8 +145,8 @@ export default React.createClass({
     }
   },
   handleModDelete() {
-    const report = _.pick(this.state, [ "violation", "details" ]);
-    Meteor.call("modDeletePost", this.props.post._id, report, (err) => {
+    const reason = reasonBuilder(this.state);
+    Meteor.call("modDeletePost", this.props.post._id, reason, (err) => {
       if (err) {
         prettyPrint(err);
       } else {

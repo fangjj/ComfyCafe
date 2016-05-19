@@ -12,8 +12,8 @@ import processMentions from "/imports/api/common/processMentions";
 import tagParser from "/imports/api/tags/parser";
 import { tagFullResolver } from "/imports/api/tags/resolver";
 import { isMod } from "/imports/api/common/persimmons";
+import checkReason from "/imports/api/common/checkReason";
 import ModLog from "/imports/api/modlog/collection";
-import violationMap from "/imports/api/common/violationMap";
 
 function nameCycle() {
 	const name = generateName();
@@ -45,11 +45,6 @@ const match = {
 	tags: String,
 	tagsCondExpanded: Object,
 	bgColor: String
-};
-
-const matchReason = {
-	violation: Match.Where((v) => _.has(violationMap, v)),
-	details: Match.Where((d) => (d.length > 0 || reason.violation !== "other"))
 };
 
 function updatePost(postId, data, auth) {
@@ -208,7 +203,7 @@ Meteor.methods({
 	modUpdatePost(postId, data, reason) {
 		check(postId, String);
 		check(data, match);
-		check(reason, matchReason);
+		checkReason(reason);
 
 		const post = updatePost(postId, data, (post) => {
 			if (! Meteor.userId()) {
@@ -244,7 +239,7 @@ Meteor.methods({
 	},
 	modDeletePost(postId, reason) {
 		check(postId, String);
-		check(reason, matchReason);
+		checkReason(reason);
 
 		const post = deletePost(postId, (post) => {
 			if (! Meteor.userId()) {

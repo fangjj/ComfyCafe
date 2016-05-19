@@ -216,6 +216,7 @@ export default React.createClass({
   renderForm(isOwner) {
     if (isOwner && this.state.isEditing) {
       return <UserProfileForm
+        user={this.context.currentUser}
         actions={true}
         onClose={this.stopEditing}
       />;

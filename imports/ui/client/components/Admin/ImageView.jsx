@@ -1,21 +1,13 @@
 import React from "react";
 
 import "/imports/api/posts/methods";
-import { isAdmin, isDev, isMod } from "/imports/api/common/persimmons";
 import DenseContent from "/imports/ui/client/components/DenseContent";
 import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
 import Err404 from "/imports/ui/client/components/Err404";
-import List from "/imports/ui/client/components/List";
-import Form from "/imports/ui/client/components/Form";
-import TextField from "/imports/ui/client/components/TextField";
 import SubmitButton from "/imports/ui/client/components/Button/SubmitButton";
-import DangerButton from "/imports/ui/client/components/Button/DangerButton";
 import PostForm from "/imports/ui/client/components/Post/PostForm";
 
 export default React.createClass({
-  getInitialState() {
-    return {};
-  },
   handleRegen() {
     Meteor.call("modRegenPostThumbs", this.props.image._id);
   },

@@ -1,5 +1,6 @@
-import BlogPosts from "../collection";
+import BlogPosts from "/imports/api/blog/collection";
 import privacyWrap from "/imports/api/common/privacyWrap";
+import { isMod } from "/imports/api/common/persimmons";
 
 Meteor.publish("blogPost", function (username, slug) {
 	check(username, String);
@@ -80,4 +81,17 @@ Meteor.publish("blogFeed", function () {
 			);
 		}
 	});
+});
+
+Meteor.publish("modAllBlogPosts", function () {
+	if (isMod(this.userId)) {
+  	return BlogPosts.find({});
+	}
+});
+
+Meteor.publish("modBlogPost", function (blogId) {
+  check(blogId, String);
+	if (isMod(this.userId)) {
+		return BlogPosts.find({ _id: blogId });
+	}
 });

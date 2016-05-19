@@ -5,6 +5,10 @@ import "/imports/api/topics/methods";
 import Topics from "/imports/api/topics/collection";
 import processMentions from "/imports/api/common/processMentions";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
+import docBuilder from "/imports/api/common/docBuilder";
+import { isMod } from "/imports/api/common/persimmons";
+import checkReason from "/imports/api/common/checkReason";
+import ModLog from "/imports/api/modlog/collection";
 
 const match = {
 	name: String,
@@ -26,8 +30,55 @@ function mentions(postId, data) {
   }
 }
 
+function updateBlogPost(postId, data, auth) {
+	const post = BlogPosts.findOne(postId);
+
+	auth(post);
+
+	BlogPosts.update(
+		{ _id: postId },
+		{ $set: _.defaults({
+			updatedAt: new Date()
+		}, data) }
+	);
+
+	Topics.update(
+		{ _id: post.topic._id },
+		{ $set: {
+			name: data.name,
+			visibility: data.visibility
+		} }
+	);
+
+	mentions(postId, data);
+
+	if (Meteor.isServer) {
+		const slug = slugCycle(postId, data.name);
+		BlogPosts.update(
+			{ _id: postId },
+			{ $set: { slug } }
+		);
+		return slug;
+	}
+}
+
+function deleteBlogPost(postId, auth) {
+	const post = BlogPosts.findOne(postId);
+
+	auth(postId);
+
+	BlogPosts.remove(postId);
+	Topics.remove({ _id: post.topic._id });
+	Meteor.users.update(
+    { _id: Meteor.userId() },
+    { $inc: { "profile.blogCount": -1 } }
+  );
+
+	return post;
+}
+
 Meteor.methods({
-	addBlogPost: function (data) {
+	addBlogPost(data) {
 		check(data, match);
 
 		if (! Meteor.userId()) {
@@ -41,19 +92,12 @@ Meteor.methods({
 
 		data.slug = slugCycle(null, data.name);
 
-		const postId = BlogPosts.insert(_.defaults({
-			createdAt: new Date(),
-			updatedAt: new Date(),
-			owner: {
-				_id: Meteor.userId(),
-				username: Meteor.user().username,
-				normalizedUsername: Meteor.user().normalizedUsername,
-				profile: Meteor.user().profile
-			},
+		const doc = docBuilder({
 			topic: {
 				_id: topicId
 			}
-		}, data));
+		}, data);
+		const postId = BlogPosts.insert(doc);
 
 		Meteor.users.update(
       { _id: Meteor.userId() },
@@ -66,52 +110,74 @@ Meteor.methods({
 		check(postId, String);
 		check(data, match);
 
-		const post = BlogPosts.findOne(postId);
-
-		if (! isOwner(post)) {
-			throw new Meteor.Error("not-authorized");
-		}
-
-		BlogPosts.update(
-			{ _id: postId },
-			{ $set: _.defaults({
-        updatedAt: new Date()
-      }, data) }
-		);
-
-		Topics.update(
-			{ _id: post.topic._id },
-			{ $set: {
-				name: data.name,
-				visibility: data.visibility
-			} }
-		);
-
-		mentions(postId, data);
-
-		if (Meteor.isServer) {
-			const slug = slugCycle(postId, data.name);
-			BlogPosts.update(
-				{ _id: postId },
-				{ $set: { slug } }
-			);
-			return slug;
-		}
+		return updateBlogPost(postId, data, (post) => {
+			if (! isOwner(post)) {
+				throw new Meteor.Error("not-authorized");
+			}
+		});
 	},
-	deleteBlogPost: function (postId) {
+	modUpdateBlogPost(postId, data, reason) {
 		check(postId, String);
+		check(data, match);
+		checkReason(reason);
 
-		const post = BlogPosts.findOne(postId);
+		let owner;
+		const slug = updateBlogPost(postId, data, (post) => {
+			if (! Meteor.userId()) {
+				throw new Meteor.Error("not-logged-in");
+			}
 
-		if (! isOwner(post)) {
-			throw new Meteor.Error("not-authorized");
-		}
+			if (! isMod(Meteor.userId())) {
+				throw new Meteor.Error("not-authorized");
+			}
 
-		BlogPosts.remove(postId);
-		Topics.remove({ _id: post.topic._id });
-		Meteor.users.update(
-      { _id: Meteor.userId() },
-      { $inc: { "profile.blogCount": -1 } }
-    );
+			owner = post.owner;
+		});
+
+		const doc = docBuilder({
+			item: {
+				_id: postId,
+				ownerId: owner._id,
+				type: "blog",
+				action: "updated",
+				url: FlowRouter.path("blogPost", {
+					username: owner.username,
+					slug
+				})
+			}
+		}, reason);
+		ModLog.insert(doc);
+	},
+	deleteBlogPost(postId) {
+		check(postId, String);
+		deleteBlogPost(postId, (post) => {
+			if (! isOwner(post)) {
+				throw new Meteor.Error("not-authorized");
+			}
+		});
+	},
+	modDeleteBlogPost(postId, reason) {
+		check(postId, String);
+		checkReason(reason);
+
+		const post = deleteBlogPost(postId, (post) => {
+			if (! Meteor.userId()) {
+				throw new Meteor.Error("not-logged-in");
+			}
+
+			if (! isMod(Meteor.userId())) {
+				throw new Meteor.Error("not-authorized");
+			}
+		});
+
+		const doc = docBuilder({
+			item: {
+				_id: postId,
+				ownerId: post.owner._id,
+				type: "blog",
+				action: "deleted"
+			}
+		}, reason);
+		ModLog.insert(doc);
 	}
 });

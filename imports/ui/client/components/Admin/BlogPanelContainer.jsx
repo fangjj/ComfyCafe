@@ -1,15 +1,15 @@
 import { createContainer } from "meteor/react-meteor-data";
 
-import Posts from "/imports/api/posts/collection";
-import ImagePanel from "./ImagePanel";
+import BlogPosts from "/imports/api/blog/collection";
+import BlogPanel from "./BlogPanel";
 
 export default createContainer(({ params }) => {
-  const handle = Meteor.subscribe("modAllPosts");
+  const handle = Meteor.subscribe("modAllBlogPosts");
   return {
     loading: ! handle.ready(),
-    images: Posts.find(
+    blogPosts: BlogPosts.find(
       {},
       { sort: { createdAt: -1, name: 1 } }
     ).fetch()
   };
-}, ImagePanel);
+}, BlogPanel);

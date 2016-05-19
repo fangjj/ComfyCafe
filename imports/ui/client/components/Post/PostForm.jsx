@@ -203,6 +203,7 @@ export default React.createClass({
       onClose={this.props.onClose}
     >
       {this.renderReportForm()}
+      
       {this.renderMedium()}
       <VisibilitySelector
         visibility={this.state.visibility}

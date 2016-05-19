@@ -6,6 +6,7 @@ import { isPriveleged } from "/imports/api/common/persimmons";
 import ReportPanel from "./ReportPanel";
 import UserPanelContainer from "./UserPanelContainer";
 import ImagePanelContainer from "./ImagePanelContainer";
+import BlogPanelContainer from "./BlogPanelContainer";
 import BadgePanel from "./BadgePanel";
 import MediaPanel from "./MediaPanel";
 import FilterPanelContainer from "./FilterPanelContainer";
@@ -14,6 +15,7 @@ import CommunityPanel from "./CommunityPanel";
 import TopicPanel from "./TopicPanel";
 import UserViewContainer from "./UserViewContainer";
 import ImageViewContainer from "./ImageViewContainer";
+import BlogViewContainer from "./BlogViewContainer";
 import BadgeViewContainer from "./BadgeViewContainer";
 import FilterViewContainer from "./FilterViewContainer";
 import Err403 from "/imports/ui/client/components/Err403";
@@ -34,8 +36,9 @@ export default React.createClass({
           {
             users: <UserViewContainer />,
             images: <ImageViewContainer />,
-            badges: <BadgeViewContainer />,
-            filters: <FilterViewContainer />
+            blog: <BlogViewContainer />,
+            filters: <FilterViewContainer />,
+            badges: <BadgeViewContainer />
           },
           panel,
           <DenseContent>
@@ -47,9 +50,7 @@ export default React.createClass({
           {
             users: <UserPanelContainer />,
             images: <ImagePanelContainer />,
-            blog: <DenseContent>
-              <a onTouchTap={() => { Meteor.call("migrateBlog") }}>Migrate</a>
-            </DenseContent>,
+            blog: <BlogPanelContainer />,
             badges: <BadgePanel />,
             media: <MediaPanel />,
             filters: <FilterPanelContainer />,

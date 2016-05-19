@@ -29,6 +29,11 @@
       height: auto;
 
       object-fit: contain;
+
+      // WARNING: this disables hardware acceleration, but prevents blurring.
+      // https://github.com/timmywil/jquery.panzoom/issues/84
+      -webkit-backface-visibility: initial !important;
+      -webkit-transform-origin: 50% 50%;
     }
   }
 

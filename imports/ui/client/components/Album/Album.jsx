@@ -12,16 +12,40 @@ import AlbumForm from "/imports/ui/client/components/Album/AlbumForm";
 import FlexHead from "/imports/ui/client/components/FlexHead";
 import InlineTopic from "/imports/ui/client/components/Chat/InlineTopic";
 import PostBrowseAlbum from "/imports/ui/client/components/Post/PostBrowseAlbum";
+import ReportButton from "/imports/ui/client/components/Button/ReportButton";
+import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
+import ActionWell from "/imports/ui/client/components/ActionWell";
+import DialogForm from "/imports/ui/client/components/DialogForm";
+import ReportForm from "/imports/ui/client/components/Report/ReportForm";
 
 export default React.createClass({
   getInitialState() {
-    return { showForm: false };
+    return { showForm: false, showReportForm: false };
   },
   showForm() {
     this.setState({ showForm: true });
   },
   hideForm() {
     this.setState({ showForm: false });
+  },
+  showReportForm() {
+    this.setState({ showReportForm: true });
+  },
+  hideReportForm() {
+    this.setState({ showReportForm: false });
+  },
+  renderReportForm() {
+    if (this.state.showReportForm) {
+      return <DialogForm
+        title="Report Album"
+        id={"formReport" + this.props.album._id}
+        onClose={this.hideReportForm}
+        form={<ReportForm
+          item={this.props.album}
+          itemType="album"
+        />}
+      />;
+    }
   },
   renderPosts(album) {
     if (this.props.postsLoading || this.props.filterLoading) {
@@ -47,6 +71,19 @@ export default React.createClass({
         null
       );
     });
+  },
+  renderButtons() {
+    const isOwner = _.get(this.props.currentUser, "_id") === this.props.album.owner._id;
+    if (isOwner) {
+      return;
+    }
+
+    return <ActionWell>
+      <ButtonGroup>
+        <ReportButton onTouchTap={this.showReportForm} />
+      </ButtonGroup>
+      <div />
+    </ActionWell>;
   },
   renderFab(isOwner) {
     if (isOwner) {
@@ -90,6 +127,7 @@ export default React.createClass({
         itemType="album"
         sigil="collections"
         verb="Collected"
+        renderButtons={this.renderButtons}
         body={album.description}
         section={true}
       />
@@ -101,6 +139,7 @@ export default React.createClass({
       </section>
       {this.renderFab(isOwner)}
       {this.renderForm(album)}
+      {this.renderReportForm()}
     </article>;
   }
 });

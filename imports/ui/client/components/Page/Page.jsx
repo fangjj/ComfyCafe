@@ -12,16 +12,40 @@ import Icon from "/imports/ui/client/components/Daikon/Icon";
 import Moment from "/imports/ui/client/components/Moment";
 import FlexHead from "/imports/ui/client/components/FlexHead";
 import InlineTopic from "/imports/ui/client/components/Chat/InlineTopic";
+import ReportButton from "/imports/ui/client/components/Button/ReportButton";
+import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
+import ActionWell from "/imports/ui/client/components/ActionWell";
+import DialogForm from "/imports/ui/client/components/DialogForm";
+import ReportForm from "/imports/ui/client/components/Report/ReportForm";
 
 export default React.createClass({
   getInitialState() {
-    return { showForm: false };
+    return { showForm: false, showReportForm: false };
   },
   showForm() {
     this.setState({ showForm: true });
   },
   hideForm() {
     this.setState({ showForm: false });
+  },
+  showReportForm() {
+    this.setState({ showReportForm: true });
+  },
+  hideReportForm() {
+    this.setState({ showReportForm: false });
+  },
+  renderReportForm() {
+    if (this.state.showReportForm) {
+      return <DialogForm
+        title="Report Page"
+        id={"formReport" + this.props.page._id}
+        onClose={this.hideReportForm}
+        form={<ReportForm
+          item={this.props.page}
+          itemType="page"
+        />}
+      />;
+    }
   },
   renderUpdated() {
     const page = this.props.page;
@@ -30,6 +54,19 @@ export default React.createClass({
         <Icon className="sigil">edit</Icon> Last updated <Moment time={page.updatedAt} />
       </span>
     }
+  },
+  renderButtons() {
+    const isOwner = _.get(this.props.currentUser, "_id") === this.props.page.owner._id;
+    if (isOwner) {
+      return;
+    }
+
+    return <ActionWell>
+      <ButtonGroup>
+        <ReportButton onTouchTap={this.showReportForm} />
+      </ButtonGroup>
+      <div />
+    </ActionWell>;
   },
   renderFab(isOwner) {
     if (isOwner) {
@@ -73,6 +110,7 @@ export default React.createClass({
         sigil="ac_unit"
         verb="Written"
         renderInfo={this.renderUpdated}
+        renderButtons={this.renderButtons}
         body={this.props.page.body}
         section={true}
       />
@@ -84,6 +122,7 @@ export default React.createClass({
       </section>
       {this.renderFab(isOwner)}
       {this.renderForm(page)}
+      {this.renderReportForm()}
     </article>;
   }
 });

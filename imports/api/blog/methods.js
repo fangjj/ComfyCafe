@@ -3,6 +3,7 @@ import _ from "lodash";
 import BlogPosts from "/imports/api/blog/collection";
 import "/imports/api/topics/methods";
 import Topics from "/imports/api/topics/collection";
+import prefixer from "/imports/api/common/prefixer";
 import processMentions from "/imports/api/common/processMentions";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
 import docBuilder from "/imports/api/common/docBuilder";
@@ -35,11 +36,16 @@ function updateBlogPost(postId, data, auth) {
 
 	auth(post);
 
+	const doc = _.defaults({
+		updatedAt: new Date()
+	}, data);
 	BlogPosts.update(
 		{ _id: postId },
-		{ $set: _.defaults({
-			updatedAt: new Date()
-		}, data) }
+		{ $set: doc }
+	);
+	BlogPosts.update(
+		{ "reblogOf._id": postId },
+		{ $set: _.omit(prefixer("reblogOf", doc), [ "slug" ]) }
 	);
 
 	Topics.update(
@@ -67,12 +73,25 @@ function deleteBlogPost(postId, auth) {
 
 	auth(postId);
 
-	BlogPosts.remove(postId);
+	BlogPosts.remove(
+		{ $or: [
+			{ _id: postId },
+			{ "reblogOf._id": postId }
+		] }
+	);
 	Topics.remove({ _id: post.topic._id });
 	Meteor.users.update(
     { _id: Meteor.userId() },
     { $inc: { "profile.blogCount": -1 } }
   );
+
+	const reblogId = _.get(post, "reblogOf._id");
+	if (reblogId) {
+		BlogPosts.update(
+			{ _id: reblogId },
+			{ $inc: { reblogCount: -1 } }
+		);
+	}
 
 	return post;
 }
@@ -179,5 +198,34 @@ Meteor.methods({
 			}
 		}, reason);
 		ModLog.insert(doc);
+	},
+	reblogBlogPost(postId, body) {
+		check(postId, String);
+		check(body, String);
+
+		if (! Meteor.userId()) {
+			throw new Meteor.Error("not-logged-in");
+		}
+
+		const post = BlogPosts.findOne({ _id: postId });
+		if (! post) {
+			throw new Meteor.Error("existential-crisis");
+		}
+
+		// Only public posts can be reblogged. (unless it's your post; then I don't care)
+		if (post.visibility !== "public" && post.owner._id !== Meteor.userId()) {
+			throw new Meteor.Error("not-authorized");
+		}
+
+		const doc = docBuilder({ body }, _.pick(post, [ "name", "visibility", "topic" ]));
+		doc.slug = slugCycle(null, doc.name);
+		doc.reblogOf = post;
+		BlogPosts.insert(doc);
+		BlogPosts.update(
+			{ _id: post._id },
+			{ $inc: { reblogCount: 1 } }
+		);
+
+		return doc.slug;
 	}
 });

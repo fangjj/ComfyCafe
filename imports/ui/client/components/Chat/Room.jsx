@@ -12,11 +12,13 @@ import ButtonGroup from "/imports/ui/client/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/client/components/ActionWell";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
 import UserSearch from "/imports/ui/client/components/User/UserSearch";
+import DialogForm from "/imports/ui/client/components/DialogForm";
+import ReportForm from "/imports/ui/client/components/Report/ReportForm";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
-    return { showForm: false };
+    return { showForm: false, showReportForm: false };
   },
   showForm() {
     this.setState({ showForm: true });
@@ -39,6 +41,25 @@ export default React.createClass({
       FlowRouter.go(path);
     });
   },
+  showReportForm() {
+    this.setState({ showReportForm: true });
+  },
+  hideReportForm() {
+    this.setState({ showReportForm: false });
+  },
+  renderReportForm() {
+    if (this.state.showReportForm) {
+      return <DialogForm
+        title="Report Community"
+        id={"formReport" + this.data.room._id}
+        onClose={this.hideReportForm}
+        form={<ReportForm
+          item={this.data.room}
+          itemType="community"
+        />}
+      />;
+    }
+  },
   renderEditButtons(isOwner) {
     if (isOwner) {
       return <ButtonGroup>
@@ -56,11 +77,17 @@ export default React.createClass({
       </ButtonGroup>;
     } else {
       return <ButtonGroup>
+        <ReportButton onTouchTap={this.showReportForm} />
+      </ButtonGroup>;
+    }
+  },
+  renderJoinButton(isOwner) {
+    if (! isOwner) {
+      return <ButtonGroup>
         <SubmitButton
           label="Join"
           iconName="sentiment_satisfied"
         />
-        <ReportButton />
       </ButtonGroup>;
     }
   },
@@ -132,12 +159,13 @@ export default React.createClass({
         <h2>{room.name}</h2>
         <ActionWell>
           {this.renderEditButtons(isOwner)}
-          <div />
+          {this.renderJoinButton(isOwner)}
         </ActionWell>
       </header>
       {this.renderProfile(room)}
       {this.renderForm(isOwner)}
       {this.renderMembers(room)}
+      {this.renderReportForm()}
     </section>;
   }
 });

@@ -16,11 +16,13 @@ import PrivacyIcon from "/imports/ui/client/components/Daikon/PrivacyIcon";
 import Moment from "/imports/ui/client/components/Moment";
 import DenseLoadingSpinner from "/imports/ui/client/components/Spinner/DenseLoadingSpinner";
 import Icon from "/imports/ui/client/components/Daikon/Icon";
+import DialogForm from "/imports/ui/client/components/DialogForm";
+import ReportForm from "/imports/ui/client/components/Report/ReportForm";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
-    return { showForm: false };
+    return { showForm: false, showReportForm: false };
   },
   getMeteorData() {
     const roomSlug = FlowRouter.getParam("roomSlug");
@@ -57,6 +59,25 @@ export default React.createClass({
       FlowRouter.go(path);
     });
   },
+  showReportForm() {
+    this.setState({ showReportForm: true });
+  },
+  hideReportForm() {
+    this.setState({ showReportForm: false });
+  },
+  renderReportForm() {
+    if (this.state.showReportForm) {
+      return <DialogForm
+        title="Report Topic"
+        id={"formReport" + this.data.topic._id}
+        onClose={this.hideReportForm}
+        form={<ReportForm
+          item={this.data.topic}
+          itemType="topic"
+        />}
+      />;
+    }
+  },
   renderEditButtons() {
     const isOwner = this.data.currentUser
       && this.data.currentUser._id === this.data.topic.owner._id;
@@ -76,7 +97,7 @@ export default React.createClass({
       </ButtonGroup>;
     } else {
       return <ButtonGroup>
-        <ReportButton />
+        <ReportButton onTouchTap={this.showReportForm} />
       </ButtonGroup>;
     }
   },
@@ -128,6 +149,7 @@ export default React.createClass({
         updateTitle={this.updateTitle}
       />
       {this.renderForm()}
+      {this.renderReportForm()}
     </section>;
   }
 });

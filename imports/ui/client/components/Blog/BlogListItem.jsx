@@ -12,9 +12,33 @@ import Icon from "/imports/ui/client/components/Daikon/Icon";
 import Toolbar from "/imports/ui/client/components/Toolbar";
 import ModButton from "/imports/ui/client/components/ModButton";
 import ReportButton from "/imports/ui/client/components/Button/ReportButton";
+import DialogForm from "/imports/ui/client/components/DialogForm";
+import ReportForm from "/imports/ui/client/components/Report/ReportForm";
 
 export default React.createClass({
   contextTypes: { currentUser: React.PropTypes.object },
+  getInitialState() {
+    return { showReportForm: false };
+  },
+  showReportForm() {
+    this.setState({ showReportForm: true });
+  },
+  hideReportForm() {
+    this.setState({ showReportForm: false });
+  },
+  renderReportForm() {
+    if (this.state.showReportForm) {
+      return <DialogForm
+        title="Report Blog Post"
+        id={"formReport" + this.props.post._id}
+        onClose={this.hideReportForm}
+        form={<ReportForm
+          item={this.props.post}
+          itemType="blog"
+        />}
+      />;
+    }
+  },
   renderTitle(post, permaLink) {
     if (post.name && post.name.toLowerCase() !== "untitled") {
       return <h2><a href={permaLink}>{post.name}</a></h2>;
@@ -41,8 +65,15 @@ export default React.createClass({
       if (isMod(this.context.currentUser._id)) {
         return <ModButton item={post} itemType="blog" />;
       } else {
-        return <ReportButton icon={true} />;
+        return <ReportButton icon={true} onTouchTap={this.showReportForm} />;
       }
+    }
+  },
+  renderReblogButton(post) {
+    if (post.visibility === "public" || isOwner) {
+      return <span>
+        <Icon title="Reblog">repeat</Icon> {post.reblogCount}
+      </span>;
     }
   },
   render() {
@@ -76,15 +107,12 @@ export default React.createClass({
           </div>
           <TextBody text={post.body} className="body" />
           <Toolbar>
-            <a href={permaLink}>
-              <Icon title="Comment">comment</Icon> {post.commentCount}
-            </a>
-            {post.visibility === "public" || isOwner
-              ? <span><Icon title="Reblog">repeat</Icon> {post.reblogCount}</span>
-              : null}
+            <a href={permaLink}><Icon title="Comment">comment</Icon></a>
+            {this.renderReblogButton(post)}
           </Toolbar>
         </div>
       </article>
+      {this.renderReportForm()}
     </li>;
   }
 });

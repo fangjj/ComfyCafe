@@ -3,6 +3,7 @@ import _ from "lodash";
 import BlogPosts from "/imports/api/blog/collection";
 import "/imports/api/topics/methods";
 import Topics from "/imports/api/topics/collection";
+import Notifications from "/imports/api/notifications/collection";
 import prefixer from "/imports/api/common/prefixer";
 import processMentions from "/imports/api/common/processMentions";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
@@ -71,7 +72,7 @@ function updateBlogPost(postId, data, auth) {
 function deleteBlogPost(postId, auth) {
 	const post = BlogPosts.findOne(postId);
 
-	auth(postId);
+	auth(post);
 
 	BlogPosts.remove(
 		{ $or: [
@@ -92,6 +93,8 @@ function deleteBlogPost(postId, auth) {
 			{ $inc: { reblogCount: -1 } }
 		);
 	}
+
+	Notifications.remove({ "blog._id": post._id });
 
 	return post;
 }
@@ -199,7 +202,7 @@ Meteor.methods({
 		}, reason);
 		ModLog.insert(doc);
 	},
-	
+
 	addReblog(reblogId, body) {
 		check(reblogId, String);
 		check(body, String);
@@ -226,6 +229,18 @@ Meteor.methods({
 			{ _id: post._id },
 			{ $inc: { reblogCount: 1 } }
 		);
+
+		Notifications.insert(docBuilder(
+			{
+				to: post.owner._id,
+				action: "reblogged",
+				blog: {
+					_id: reblogId,
+					name: post.name,
+					slug: post.slug
+				}
+			}
+		));
 
 		return doc.slug;
 	},

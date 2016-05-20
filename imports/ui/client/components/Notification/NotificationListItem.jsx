@@ -202,12 +202,25 @@ export default React.createClass({
     },
     blogMentioned() {
       const url = FlowRouter.path("blogPost", {
-        postId: this.props.notification.blog._id
+        username: this.props.notification.owner.username,
+        slug: this.props.notification.blog.slug
       });
       return [
         "mentioned you in ",
         <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
-          Untitled
+          {this.props.notification.blog.name}
+        </a>
+      ];
+    },
+    reblogged() {
+      const url = FlowRouter.path("blogPost", {
+        username: this.props.notification.owner.username,
+        slug: this.props.notification.blog.slug
+      });
+      return [
+        "reblogged your post ",
+        <a href={url} key={_.uniqueId()} onTouchTap={this.dismiss}>
+          {this.props.notification.blog.name}
         </a>
       ];
     },

@@ -69,6 +69,7 @@ export default React.createClass({
         className="content"
         title={page.name}
         item={this.props.page}
+        itemType="page"
         sigil="ac_unit"
         verb="Written"
         renderInfo={this.renderUpdated}

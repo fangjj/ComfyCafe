@@ -87,6 +87,7 @@ export default React.createClass({
         className="content"
         title={album.name}
         item={album}
+        itemType="album"
         sigil="collections"
         verb="Collected"
         body={album.description}

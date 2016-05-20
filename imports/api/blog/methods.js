@@ -224,7 +224,7 @@ Meteor.methods({
 		const doc = docBuilder({ body }, _.pick(post, [ "name", "visibility", "topic" ]));
 		doc.slug = slugCycle(null, doc.name);
 		doc.reblogOf = post;
-		BlogPosts.insert(doc);
+		const postId = BlogPosts.insert(doc);
 		BlogPosts.update(
 			{ _id: post._id },
 			{ $inc: { reblogCount: 1 } }
@@ -235,9 +235,9 @@ Meteor.methods({
 				to: post.owner._id,
 				action: "reblogged",
 				blog: {
-					_id: reblogId,
-					name: post.name,
-					slug: post.slug
+					_id: postId,
+					name: doc.name,
+					slug: doc.slug
 				}
 			}
 		));

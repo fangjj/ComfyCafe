@@ -46,7 +46,7 @@ function updateBlogPost(postId, data, auth) {
 	);
 	BlogPosts.update(
 		{ "reblogOf._id": postId },
-		{ $set: _.omit(prefixer("reblogOf", doc), [ "slug" ]) }
+		{ $set: prefixer("reblogOf", doc) }
 	);
 
 	Topics.update(

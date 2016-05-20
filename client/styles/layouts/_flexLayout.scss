@@ -67,6 +67,14 @@
         right: 0;
         top: -8px;
       }
+
+      .modIcon, .reportIcon {
+        margin-right: 10px;
+        margin-bottom: -12px;
+
+        cursor: pointer;
+        user-select: none;
+      }
     }
   }
 }

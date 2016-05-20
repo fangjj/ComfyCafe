@@ -1,9 +1,8 @@
 import React from "react";
 
 import BlogPosts from "/imports/api/blog/collection";
-
-import BlogListItem from "./BlogListItem";
-import BlogForm from "./BlogForm";
+import BlogListItem from "/imports/ui/client/components/Blog/BlogListItem";
+import BlogForm from "/imports/ui/client/components/Blog/BlogForm";
 import Dialog from "/imports/ui/client/components/Dialog";
 import LoadingSpinner from "/imports/ui/client/components/Spinner/LoadingSpinner";
 import Powerless from "/imports/ui/client/components/Powerless";
@@ -12,6 +11,7 @@ import FAB from "/imports/ui/client/components/FAB";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
+  contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
     return { showForm: false };
   },
@@ -33,8 +33,7 @@ export default React.createClass({
           }
         ] },
         { sort: { createdAt: -1, name: 1 } }
-      ).fetch(),
-      currentUser: Meteor.user()
+      ).fetch()
     };
   },
   showForm() {
@@ -46,7 +45,7 @@ export default React.createClass({
   renderPosts() {
     if (this.data.posts.length) {
       return this.data.posts.map((post) => {
-        return <BlogListItem post={post} currentUser={this.data.currentUser} key={post._id} />;
+        return <BlogListItem post={post} key={post._id} />;
       });
     }
     return <li>No posts.</li>;
@@ -58,7 +57,7 @@ export default React.createClass({
       </ol>
     } else {
       let msg;
-      if (this.data.currentUser.subscriptions && this.data.currentUser.subscriptions.length) {
+      if (this.context.currentUser.subscriptions && this.context.currentUser.subscriptions.length) {
         msg = "None of your subscriptions have posted anything...";
       } else {
         msg = "You haven't subscribed to anyone!";
@@ -69,7 +68,7 @@ export default React.createClass({
     }
   },
   renderFab() {
-    if (this.data.currentUser) {
+    if (this.context.currentUser) {
       return <FAB iconName="add" onTouchTap={this.showForm} />;
     }
   },
@@ -93,7 +92,7 @@ export default React.createClass({
       return <LoadingSpinner />;
     }
 
-    if (! this.data.currentUser) {
+    if (! this.context.currentUser) {
       return <Powerless />;
     }
 

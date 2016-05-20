@@ -1,14 +1,20 @@
 import _ from "lodash";
 import React from "react";
 
-import BlogMoreMenu from "./BlogMoreMenu";
+import { isMod } from "/imports/api/common/persimmons";
+import BlogMoreMenu from "/imports/ui/client/components/Blog/BlogMoreMenu";
 import TextBody from "/imports/ui/client/components/TextBody";
 import Moment from "/imports/ui/client/components/Moment";
 import VisibilityLink from "/imports/ui/client/components/VisibilityLink";
 import UserLink from "/imports/ui/client/components/User/UserLink";
 import Avatar from "/imports/ui/client/components/Avatar/Avatar";
+import Icon from "/imports/ui/client/components/Daikon/Icon";
+import Toolbar from "/imports/ui/client/components/Toolbar";
+import ModButton from "/imports/ui/client/components/ModButton";
+import ReportButton from "/imports/ui/client/components/Button/ReportButton";
 
 export default React.createClass({
+  contextTypes: { currentUser: React.PropTypes.object },
   renderTitle(post, permaLink) {
     if (post.name && post.name.toLowerCase() !== "untitled") {
       return <h2><a href={permaLink}>{post.name}</a></h2>;
@@ -19,15 +25,24 @@ export default React.createClass({
       return <span> (edited <Moment time={post.updatedAt} />)</span>;
     }
   },
-  renderMoreMenu() {
-    const isOwner = this.props.currentUser
-      && this.props.currentUser._id === this.props.post.owner._id;
+  renderMoreMenu(post) {
+    if (! this.context.currentUser) {
+      return;
+    }
+
+    const isOwner = this.context.currentUser._id === post.owner._id;
     if (isOwner) {
       return <BlogMoreMenu
-        post={this.props.post}
+        post={post}
         solo={this.props.solo}
-        currentUser={this.props.currentUser}
+        currentUser={this.context.currentUser}
       />;
+    } else {
+      if (isMod(this.context.currentUser._id)) {
+        return <ModButton item={post} itemType="blog" />;
+      } else {
+        return <ReportButton icon={true} />;
+      }
     }
   },
   render() {
@@ -35,6 +50,7 @@ export default React.createClass({
 
     const owner = post.owner;
     const ownerUrl = FlowRouter.path("profile", { username: owner.username });
+    const isOwner = this.context.currentUser && owner._id === this.context.currentUser._id;
     const wasEdited = ! _.isEqual(post.createdAt, post.updatedAt);
     const permaLink = FlowRouter.path("blogPost", { username: owner.username, slug: post.slug });
 
@@ -56,9 +72,17 @@ export default React.createClass({
                 visibility={post.visibility}
               >(link)</VisibilityLink>
             </div>
-            {this.renderMoreMenu()}
+            {this.renderMoreMenu(post)}
           </div>
           <TextBody text={post.body} className="body" />
+          <Toolbar>
+            <a href={permaLink}>
+              <Icon title="Comment">comment</Icon> {post.commentCount}
+            </a>
+            {post.visibility === "public" || isOwner
+              ? <span><Icon title="Reblog">repeat</Icon> {post.reblogCount}</span>
+              : null}
+          </Toolbar>
         </div>
       </article>
     </li>;

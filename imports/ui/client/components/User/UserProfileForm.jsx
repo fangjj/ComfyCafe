@@ -46,7 +46,7 @@ export default React.createClass({
   handleDetails(e) {
     this.setState({ details: e.target.value });
   },
-  handleDisplayName(event) {
+  handleDisplayName(e) {
     this.setState({ displayName: e.target.value });
   },
   handleBlurb(e) {

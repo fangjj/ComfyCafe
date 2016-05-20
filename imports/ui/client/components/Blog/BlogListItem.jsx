@@ -14,11 +14,29 @@ import ModButton from "/imports/ui/client/components/ModButton";
 import ReportButton from "/imports/ui/client/components/Button/ReportButton";
 import DialogForm from "/imports/ui/client/components/DialogForm";
 import ReportForm from "/imports/ui/client/components/Report/ReportForm";
+import BlogForm from "/imports/ui/client/components/Blog/BlogForm";
+import Reblog from "/imports/ui/client/components/Blog/Reblog";
 
 export default React.createClass({
   contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
-    return { showReportForm: false };
+    return { showReblogForm: false, showReportForm: false };
+  },
+  showReblogForm() {
+    this.setState({ showReblogForm: true });
+  },
+  hideReblogForm() {
+    this.setState({ showReblogForm: false });
+  },
+  renderReblogForm() {
+    if (this.state.showReblogForm) {
+      return <DialogForm
+        title="Reblog"
+        id={"formReblog" + this.props.post._id}
+        onClose={this.hideReblogForm}
+        form={<BlogForm reblogOf={this.props.post} />}
+      />;
+    }
   },
   showReportForm() {
     this.setState({ showReportForm: true });
@@ -40,7 +58,7 @@ export default React.createClass({
     }
   },
   renderTitle(post, permaLink) {
-    if (post.name && post.name.toLowerCase() !== "untitled") {
+    if (! this.props.isChild && post.name && post.name.toLowerCase() !== "untitled") {
       return <h2><a href={permaLink}>{post.name}</a></h2>;
     }
   },
@@ -69,11 +87,17 @@ export default React.createClass({
       }
     }
   },
+  renderToolbar(post, permaLink) {
+    if (! this.props.isChild) {
+      return <Toolbar>
+        <a href={permaLink}><Icon title="Comment">comment</Icon></a>
+        {this.renderReblogButton(post)}
+      </Toolbar>;
+    }
+  },
   renderReblogButton(post) {
     if (post.visibility === "public" || isOwner) {
-      return <span>
-        <Icon title="Reblog">repeat</Icon> {post.reblogCount}
-      </span>;
+      return <Icon title="Reblog" onTouchTap={this.showReblogForm}>repeat</Icon>;
     }
   },
   render() {
@@ -85,17 +109,18 @@ export default React.createClass({
     const wasEdited = ! _.isEqual(post.createdAt, post.updatedAt);
     const permaLink = FlowRouter.path("blogPost", { username: owner.username, slug: post.slug });
 
-    return <li className="blogPost">
+    return <li className={"blogPost" + (post.reblogOf ? " isReblog" : "")}>
       <article className="flexLayout">
         <div className="leftSide">
           <a href={ownerUrl}>
-            <Avatar size="small" user={owner} />
+            <Avatar size={! this.props.isChild ? "small" : "icon"} user={owner} />
           </a>
         </div>
         <div className="rightSide">
           {this.renderTitle(post, permaLink)}
           <div className="top">
             <div className="info">
+              {post.reblogOf ? "reblogged " : null}
               by <UserLink user={owner} /> <Moment time={post.createdAt} />
               {this.renderEdited(post, wasEdited)}
               &nbsp;<VisibilityLink
@@ -105,13 +130,12 @@ export default React.createClass({
             </div>
             {this.renderMoreMenu(post)}
           </div>
+          <Reblog post={post.reblogOf} />
           <TextBody text={post.body} className="body" />
-          <Toolbar>
-            <a href={permaLink}><Icon title="Comment">comment</Icon></a>
-            {this.renderReblogButton(post)}
-          </Toolbar>
+          {this.renderToolbar(post, permaLink)}
         </div>
       </article>
+      {this.renderReblogForm()}
       {this.renderReportForm()}
     </li>;
   }

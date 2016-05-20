@@ -199,15 +199,16 @@ Meteor.methods({
 		}, reason);
 		ModLog.insert(doc);
 	},
-	reblogBlogPost(postId, body) {
-		check(postId, String);
+	
+	addReblog(reblogId, body) {
+		check(reblogId, String);
 		check(body, String);
 
 		if (! Meteor.userId()) {
 			throw new Meteor.Error("not-logged-in");
 		}
 
-		const post = BlogPosts.findOne({ _id: postId });
+		const post = BlogPosts.findOne({ _id: reblogId });
 		if (! post) {
 			throw new Meteor.Error("existential-crisis");
 		}
@@ -227,5 +228,20 @@ Meteor.methods({
 		);
 
 		return doc.slug;
+	},
+	updateReblog(postId, body) {
+		check(postId, String);
+		check(body, String);
+
+		const post = BlogPosts.findOne({ _id: postId });
+
+		if (! isOwner(post)) {
+			throw new Meteor.Error("not-authorized");
+		}
+
+		BlogPosts.update(
+			{ _id: postId },
+			{ $set: { body } }
+		);
 	}
 });

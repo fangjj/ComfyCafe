@@ -17,6 +17,10 @@ const defaultState = {
   body: ""
 };
 
+function isReblog(props) {
+  return props.reblogOf || _.get(props.post, "reblogOf");
+}
+
 export default React.createClass({
   getInitialState() {
     const state = initialStateBuilder(this.props.post, defaultState);
@@ -47,6 +51,24 @@ export default React.createClass({
   },
   handleSubmit() {
     const data = dataBuilder(this.state, defaultState);
+
+    if (isReblog(this.props)) {
+      if (! this.props.post) {
+        Meteor.call("addReblog", this.props.reblogOf._id, data.body, (err) => {
+          if (err) {
+            prettyPrint(err);
+          }
+        });
+      } else {
+        Meteor.call("updateReblog", this.props.post._id, data.body, (err) => {
+          if (err) {
+            prettyPrint(err);
+          }
+        });
+      }
+
+      return;
+    }
 
     if (this.props.mod) {
       const reason = reasonBuilder(this.state);
@@ -102,6 +124,23 @@ export default React.createClass({
       />;
     }
   },
+  renderTitle() {
+    if (! isReblog(this.props)) {
+      return <TextField
+        label="Title"
+        defaultValue={this.state.name}
+        onChange={this.handleName}
+      />;
+    }
+  },
+  renderVisibility() {
+    if (! isReblog(this.props)) {
+      return <VisibilitySelector
+        visibility={this.state.visibility}
+        onChange={this.handleVisibility}
+      />;
+    }
+  },
   render() {
     return <Form
       id={this.props.id}
@@ -117,15 +156,8 @@ export default React.createClass({
     >
       {this.renderReportForm()}
 
-      <TextField
-        label="Title"
-        defaultValue={this.state.name}
-        onChange={this.handleName}
-      />
-      <VisibilitySelector
-        visibility={this.state.visibility}
-        onChange={this.handleVisibility}
-      />
+      {this.renderTitle()}
+      {this.renderVisibility()}
       <TextArea
         label="Body"
         defaultValue={this.state.body}

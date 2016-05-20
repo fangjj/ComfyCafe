@@ -1,16 +1,41 @@
 import _ from "lodash";
 import React from "react";
 
+import { isMod } from "/imports/api/common/persimmons";
 import MessageMoreMenu from "/imports/ui/client/components/Chat/MessageMoreMenu";
 import MessageForm from "/imports/ui/client/components/Chat/MessageForm";
 import TextBody from "/imports/ui/client/components/TextBody";
 import Moment from "/imports/ui/client/components/Moment";
 import Avatar from "/imports/ui/client/components/Avatar/Avatar";
 import UserLink from "/imports/ui/client/components/User/UserLink";
+import ModButton from "/imports/ui/client/components/ModButton";
+import ReportButton from "/imports/ui/client/components/Button/ReportButton";
+import DialogForm from "/imports/ui/client/components/DialogForm";
+import ReportForm from "/imports/ui/client/components/Report/ReportForm";
 
 export default React.createClass({
+  contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
-    return { isEditing: false };
+    return { isEditing: false, showReportForm: false };
+  },
+  showReportForm() {
+    this.setState({ showReportForm: true });
+  },
+  hideReportForm() {
+    this.setState({ showReportForm: false });
+  },
+  renderReportForm() {
+    if (this.state.showReportForm) {
+      return <DialogForm
+        title="Report Blog Post"
+        id={"formReport" + this.props.message._id}
+        onClose={this.hideReportForm}
+        form={<ReportForm
+          item={this.props.message}
+          itemType="message"
+        />}
+      />;
+    }
   },
   startEditing() {
     this.setState({ isEditing: true });
@@ -39,15 +64,24 @@ export default React.createClass({
       />;
     }
   },
-  renderMoreMenu() {
-    const isOwner = this.props.currentUser
-      && this.props.currentUser._id === this.props.message.owner._id;
+  renderMoreMenu(msg) {
+    if (! this.context.currentUser) {
+      return;
+    }
+
+    const isOwner = this.context.currentUser._id === msg.owner._id;
     if (isOwner) {
       return <MessageMoreMenu
         message={this.props.message}
-        currentUser={this.props.currentUser}
+        currentUser={this.context.currentUser}
         onEdit={this.startEditing}
       />;
+    } else {
+      if (isMod(this.context.currentUser._id)) {
+        return <ModButton item={msg} itemType="message" />;
+      } else {
+        return <ReportButton icon={true} onTouchTap={this.showReportForm} />;
+      }
     }
   },
   render() {
@@ -72,11 +106,12 @@ export default React.createClass({
               {this.renderEdited(msg, wasEdited)}
               &nbsp;<a href={"#" + msg._id}>(link)</a>
             </div>
-            {this.renderMoreMenu()}
+            {this.renderMoreMenu(msg)}
           </div>
           {this.renderBody(msg)}
         </div>
       </div>
+      {this.renderReportForm()}
     </li>;
   }
 });

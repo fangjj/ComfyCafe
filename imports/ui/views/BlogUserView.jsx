@@ -2,9 +2,9 @@ export default {
   build() {
     if (Meteor.isClient) {
       const React = require("react");
-      const BlogUser = require("../client/components/Blog/BlogUser").default;
+      const BlogUserContainer = require("../client/components/Blog/BlogUserContainer").default;
       return {
-        main: <BlogUser />
+        main: <BlogUserContainer />
       };
     }
   },

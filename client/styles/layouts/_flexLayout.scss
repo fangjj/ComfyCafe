@@ -69,7 +69,10 @@
       }
 
       .modIcon, .reportIcon {
-        margin-right: 10px;
+        position: absolute;
+        right: 10px;
+        top: 4px;
+
         margin-bottom: -12px;
 
         cursor: pointer;

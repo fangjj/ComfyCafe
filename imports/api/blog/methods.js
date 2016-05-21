@@ -81,10 +81,6 @@ function deleteBlogPost(postId, auth) {
 			{ "reblogOf._id": postId }
 		] }
 	);
-	Meteor.users.update(
-    { _id: Meteor.userId() },
-    { $inc: { "profile.blogCount": -1 } }
-  );
 
 	if (post.reblogOf) {
 		BlogPosts.update(
@@ -93,6 +89,10 @@ function deleteBlogPost(postId, auth) {
 		);
 	} else {
 		Topics.remove({ _id: post.topic._id });
+		Meteor.users.update(
+			{ _id: Meteor.userId() },
+			{ $inc: { "profile.blogCount": -1 } }
+		);
 	}
 	BlogPosts.remove({ reblogData: { $elemMatch: { _id: postId } } });
 

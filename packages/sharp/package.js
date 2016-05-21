@@ -7,7 +7,7 @@ Package.describe({
 });
 
 Npm.depends({
-  "sharp": "0.14.1",
+  "sharp": "0.15.0",
   "attention": "0.1.1",
   "mmmagic": "0.4.4"
 });

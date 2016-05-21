@@ -1,11 +1,22 @@
+import _ from "lodash";
 import React from "react";
 
 import BlogListItem from "/imports/ui/client/components/Blog/BlogListItem";
 
 export default (props) => {
-  if (! props.post) {
+  if (! props.reblogOf) {
     return null;
   }
 
-  return <BlogListItem post={props.post} isChild={true} />;
+  const post = _.reduce(
+    props.reblogData,
+    (result, v, k) => {
+      if (v._id === props.reblogOf) {
+        return v;
+      } return result;
+    },
+    null
+  );
+
+  return <BlogListItem post={post} isChild={true} reblogData={props.reblogData} />;
 };

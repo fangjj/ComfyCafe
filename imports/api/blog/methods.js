@@ -45,8 +45,9 @@ function updateBlogPost(postId, data, auth) {
 		{ $set: doc }
 	);
 	BlogPosts.update(
-		{ "reblogOf._id": postId },
-		{ $set: prefixer("reblogOf", doc) }
+		{ reblogData: { $elemMatch: { _id: postId } } },
+		{ $set: prefixer("reblogData.$", doc) },
+		{ multi: true }
 	);
 
 	Topics.update(
@@ -86,13 +87,13 @@ function deleteBlogPost(postId, auth) {
     { $inc: { "profile.blogCount": -1 } }
   );
 
-	const reblogId = _.get(post, "reblogOf._id");
-	if (reblogId) {
+	if (post.reblogOf) {
 		BlogPosts.update(
-			{ _id: reblogId },
+			{ _id: post.reblogOf },
 			{ $inc: { reblogCount: -1 } }
 		);
 	}
+	BlogPosts.remove({ reblogData: { $elemMatch: { _id: postId } } });
 
 	Notifications.remove({ "blog._id": post._id });
 
@@ -223,24 +224,28 @@ Meteor.methods({
 
 		const doc = docBuilder({ body }, _.pick(post, [ "name", "visibility", "topic" ]));
 		doc.slug = slugCycle(null, doc.name);
-		doc.reblogOf = post;
+		doc.reblogOf = post._id;
+		doc.reblogData = post.reblogData || [];
+		doc.reblogData.push(_.omit(post, [ "reblogData" ]));
 		const postId = BlogPosts.insert(doc);
 		BlogPosts.update(
 			{ _id: post._id },
 			{ $inc: { reblogCount: 1 } }
 		);
 
-		Notifications.insert(docBuilder(
-			{
-				to: post.owner._id,
-				action: "reblogged",
-				blog: {
-					_id: postId,
-					name: doc.name,
-					slug: doc.slug
+		if (post.owner._id !== Meteor.userId()) {
+			Notifications.insert(docBuilder(
+				{
+					to: post.owner._id,
+					action: "reblogged",
+					blog: {
+						_id: postId,
+						name: doc.name,
+						slug: doc.slug
+					}
 				}
-			}
-		));
+			));
+		}
 
 		return doc.slug;
 	},
@@ -257,6 +262,11 @@ Meteor.methods({
 		BlogPosts.update(
 			{ _id: postId },
 			{ $set: { body } }
+		);
+		BlogPosts.update(
+			{ reblogData: { $elemMatch: { _id: postId } } },
+			{ $set: prefixer("reblogData.$", { body }) },
+			{ multi: true }
 		);
 	}
 });

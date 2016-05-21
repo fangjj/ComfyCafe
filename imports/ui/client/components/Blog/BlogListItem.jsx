@@ -130,7 +130,7 @@ export default React.createClass({
             </div>
             {this.renderMoreMenu(post)}
           </div>
-          <Reblog post={post.reblogOf} />
+          <Reblog reblogOf={post.reblogOf} reblogData={post.reblogData || this.props.reblogData} />
           <TextBody text={post.body} className="body" />
           {this.renderToolbar(post, permaLink)}
         </div>

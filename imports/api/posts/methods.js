@@ -88,7 +88,7 @@ function updatePost(postId, data, auth) {
 function deletePost(postId, auth) {
 	const post = Posts.findOne(postId);
 
-	auth();
+	auth(post);
 
 	Posts.remove(postId);
 	media.remove({ "metadata.post": postId });

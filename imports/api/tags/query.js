@@ -4,18 +4,30 @@ import tagParser from "./parser";
 import tagExtensions from "./extensions";
 
 function queryGeneratorAuthors(parsed, queryDoc) {
-  var authorQuery = {};
-  if (parsed.authors.length) {
-    // If we're querying for authors, only return posts with all of those authors.
-    authorQuery.$all = parsed.authors;
-  }
+  const and = [];
+
+  // If we're querying for authors, only return posts with all of those authors.
+  _.each(parsed.authors, (a) => {
+    and.push({ $or: [
+      { "tags.authors": a },
+      { "owner.username": a },
+      { "owner.normalizedUsername": a },
+      { "owner.profile.displayName": a }
+    ] });
+  });
+
   if (parsed.notAuthors.length) {
     // If we're excluding some authors, don't return posts with any of those authors.
-    authorQuery.$nin = parsed.notAuthors;
+    and.push({ $or: [
+      { "tags.authors": { $nin: parsed.notAuthors } },
+      { "owner.username": { $nin: parsed.notAuthors } },
+      { "owner.normalizedUsername": { $nin: parsed.notAuthors } },
+      { "owner.profile.displayName": { $nin: parsed.notAuthors } }
+    ] });
   }
-  if (! _.isEmpty(authorQuery)) {
-    queryDoc["tags.authors"] = authorQuery;
-  }
+
+  prettyPrint(and);
+  return and;
 }
 
 function queryGeneratorOrigins(parsed, queryDoc) {
@@ -219,13 +231,15 @@ function tagQuery(str) {
     return {};
   }
 
-  var parsed = str;
+  let parsed = str;
   if (_.isString(str)) {
     parsed = tagParser(str);
   }
-  var queryDoc = {}, wAnd = [], sAnd = [];
+  let queryDoc = {}, wAnd = [], sAnd = [];
 
-  var extLookup = _.reduce(
+  prettyPrint(parsed);
+
+  const extLookup = _.reduce(
     parsed.allTags,
     function (result, tag) {
       result[tag] = tagExtensions(tag);
@@ -234,20 +248,18 @@ function tagQuery(str) {
     {}
   );
 
-  queryGeneratorAuthors(parsed, queryDoc);
   queryGeneratorOrigins(parsed, queryDoc);
   queryGeneratorSafeties(parsed, queryDoc);
   queryGeneratorMeta(parsed, queryDoc);
   queryGeneratorWithout(parsed, extLookup, wAnd);
   queryGeneratorSubjects(parsed, extLookup, sAnd);
 
-  if (wAnd.length || sAnd.length) {
-    and = [];
-    pushApply(and, wAnd);
-    pushApply(and, sAnd);
-    if (and.length) {
-      queryDoc.$and = and;
-    }
+  const and = [];
+  pushApply(and, queryGeneratorAuthors(parsed, queryDoc));
+  pushApply(and, wAnd);
+  pushApply(and, sAnd);
+  if (and.length) {
+    queryDoc.$and = and;
   }
 
   return queryDoc;

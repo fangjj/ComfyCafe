@@ -3,19 +3,20 @@ import _ from "lodash";
 import Tags from "./collection";
 
 function extendsName(name) {
-  var extensions = [];
+  const extensions = [];
   extensions.push(name);
-  var extTags = Tags.find({
+
+  Tags.find({
     extends: name
-  }).fetch();
-  _.each(extTags, function (ext) {
-    extensions.push(ext.name);
+  }).map((ext) => {
+    pushApply(extensions, extendsName(ext.name));
   });
+
   return extensions;
 }
 
 function tagExtensions(name) {
-  var tag = Tags.findOne({ $or: [
+  const tag = Tags.findOne({ $or: [
     { name: name },
     { aliases: name }
   ] });

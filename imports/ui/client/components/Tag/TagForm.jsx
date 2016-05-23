@@ -133,6 +133,27 @@ export default React.createClass({
       </span>;
     }
   },
+  renderImplications() {
+    if (! _.includes(["origin", "artist"], this.state.tagType)) {
+      return <span>
+        <TagField
+          noExpand={true}
+          injectRoot={this.state.name}
+          defaultValue={this.state.implications}
+          floatingLabelText="Implications"
+          onChange={this.handleImplications}
+        />
+        <TagMultiField
+          inheritFrom={this.state.inheritFrom}
+          injectRoot={this.state.name}
+          defaultValue={this.state.condImplications}
+          defaultImplications={this.state.implications}
+          floatingLabelText="Conditional Implications"
+          onChange={this.handleCondImplications}
+        />
+      </span>;
+    }
+  },
   render() {
     return <Form
       id={this.props.id}
@@ -177,21 +198,7 @@ export default React.createClass({
         floatingLabelText="Extends"
         onChange={this.handleExtends}
       />
-      <TagField
-        noExpand={true}
-        injectRoot={this.state.name}
-        defaultValue={this.state.implications}
-        floatingLabelText="Implications"
-        onChange={this.handleImplications}
-      />
-      <TagMultiField
-        inheritFrom={this.state.inheritFrom}
-        injectRoot={this.state.name}
-        defaultValue={this.state.condImplications}
-        defaultImplications={this.state.implications}
-        floatingLabelText="Conditional Implications"
-        onChange={this.handleCondImplications}
-      />
+      {this.renderImplications()}
     </Form>;
   }
 });

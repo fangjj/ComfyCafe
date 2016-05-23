@@ -137,8 +137,6 @@ function parseDescriptors(parsed, kv) {
 		parsed.allTags.push.apply(parsed.allTags, tokens);
 	});
 
-	console.log(wInner);
-
 	if (! _.isEmpty(sInner)) {
 		if (! withoutMode) {
 			parsed.subjects[label] = sInner;
@@ -260,8 +258,6 @@ function tagParser(tagStr, reformat) {
 	if (reformat) {
 		parsed.text = tagStringify(parsed);
 	}
-
-	prettyPrint(parsed.subjects, parsed.without);
 
 	return parsed;
 }

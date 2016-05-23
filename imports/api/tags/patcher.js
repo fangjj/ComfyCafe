@@ -145,6 +145,15 @@ function tagPatcherDirect(diff, diffPreserve, adjOrder, target, authors, origins
           });
         }
       });
+
+      _.each(diff[rootNoun].transmuted, function (next, prev) {
+        // Apply prev if reverse transmutation isn't in diffPreserve.
+        const pairs = _.toPairs(diffPreserve[rootNoun].transmuted);
+        if (! _.includes(pairs, [prev, next])) {
+          output.subjects[rootNoun][next] = _.get(output.subjects[rootNoun], prev, []);
+          delete output.subjects[rootNoun][prev];
+        }
+      });
     }
   });
 

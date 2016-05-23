@@ -133,6 +133,14 @@ export default React.createClass({
       </span>;
     }
   },
+  renderSafety() {
+    if (! _.includes(["origin", "artist"], this.state.tagType)) {
+      return <SafetySelector
+        value={this.state.safety}
+        onChange={this.handleSafety}
+      />;
+    }
+  },
   renderImplications() {
     if (! _.includes(["origin", "artist"], this.state.tagType)) {
       return <span>
@@ -188,10 +196,7 @@ export default React.createClass({
         onChange={this.handleDefinition}
       />
       <br />
-      <SafetySelector
-        value={this.state.safety}
-        onChange={this.handleSafety}
-      />
+      {this.renderSafety()}
       <TagInlineField
         delim=","
         defaultValue={this.state.extends}

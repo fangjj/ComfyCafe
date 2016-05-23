@@ -8,9 +8,6 @@ import {
 } from "./tokenizer";
 import missingInts from "/imports/api/common/missingInts";
 
-const tagStrSample = "nia-teppelin: young, short multicolored hair, cat ears;"
-	+ "yoko-littner: flame bikini, pink stockings, long red hair, without gun";
-
 function parseLonely(parsed, kv) {
 	var tokens = whiteSplit(kv[0]);
 	var noun = tokens.pop();
@@ -260,6 +257,3 @@ function tagParser(tagStr, reformat) {
 }
 
 export default tagParser;
-export {
-	tagStrSample
-};

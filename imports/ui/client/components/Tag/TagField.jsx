@@ -8,16 +8,12 @@ import tagPatcher from "/imports/api/tags/patcher";
 import { tagChunkStringify } from "/imports/api/tags/stringify";
 import getActiveToken from "/imports/api/common/getActiveToken";
 import replaceActiveToken from "/imports/api/common/replaceActiveToken";
-
-import TagTree from "./TagTree";
-import Suggestions from "../Suggestions";
+import TagTree from "/imports/ui/client/components/Tag//TagTree";
+import TextArea from "/imports/ui/client/components/TextArea";
+import Suggestions from "/imports/ui/client/components/Suggestions";
 import InlineLoadingSpinner from "/imports/ui/client/components/Spinner/InlineLoadingSpinner";
 
-import {
-  TextField
-} from "material-ui";
-
-const TagField = React.createClass({
+export default React.createClass({
   mixins: [ReactMeteorData],
   condExpanded: {},
   injectTags(base, props) {
@@ -197,7 +193,7 @@ const TagField = React.createClass({
         expanded += ";"
       }
       if (tag.origin && ! _.includes(this.state.parsed.origins, tag.origin)) {
-        expanded += " from " + tag.origin + ";";
+        expanded = " from " + tag.origin + "; " + expanded;
       }
       expanded = expanded.trim();
     }
@@ -253,14 +249,11 @@ const TagField = React.createClass({
 
     return <div>
       <div ref="tfContainer">
-        <TextField
+        <TextArea
           value={this.state.text}
-          floatingLabelText={this.props.label || this.props.floatingLabelText || "Tags"}
-          floatingLabelStyle={{fontSize: "20px"}}
-          multiLine={true}
+          label={this.props.label || this.props.floatingLabelText || "Tags"}
           rows={1}
           rowsMax={5}
-          fullWidth={true}
           onChange={this.onChange}
           onBlur={this.onBlur}
           onFocus={this.onFocus}
@@ -271,5 +264,3 @@ const TagField = React.createClass({
     </div>;
   }
 });
-
-export default TagField;

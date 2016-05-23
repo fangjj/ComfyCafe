@@ -16,6 +16,10 @@ function extendsName(name) {
 }
 
 function tagExtensions(name) {
+  if (! name) {
+    return [];
+  }
+
   const tag = Tags.findOne({ $or: [
     { name: name },
     { aliases: name }

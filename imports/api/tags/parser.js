@@ -56,10 +56,12 @@ function parseDescriptors(parsed, kv) {
 		let notIndex = tokens.indexOf("not");
 		while (notIndex > -1) {
 			if (! withoutMode) {
-				if (! _.has(wInner, descNoun)) {
-					wInner[descNoun] = [tokens[notIndex+1]];
-				} else {
-					wInner[descNoun].push(tokens[notIndex+1]);
+				if (typeof tokens[notIndex+1] !== "undefined") {
+					if (! _.has(wInner, descNoun)) {
+						wInner[descNoun] = [tokens[notIndex+1]];
+					} else {
+						wInner[descNoun].push(tokens[notIndex+1]);
+					}
 				}
 
 				let notRevInner = {};
@@ -69,12 +71,14 @@ function parseDescriptors(parsed, kv) {
 					notRevInner = parsed.withoutReverse[descNoun];
 				}
 
-				if (! _.has(notRevInner, label)) {
-					notRevInner[label] = [tokens[notIndex+1]];
-				} else {
-					notRevInner[label].push(tokens[notIndex+1]);
+				if (typeof tokens[notIndex+1] !== "undefined") {
+					if (! _.has(notRevInner, label)) {
+						notRevInner[label] = [tokens[notIndex+1]];
+					} else {
+						notRevInner[label].push(tokens[notIndex+1]);
+					}
+					parsed.allTags.push(tokens[notIndex+1]);
 				}
-				parsed.allTags.push(tokens[notIndex+1]);
 
 				parsed.withoutFlat.push(descNoun);
 
@@ -132,6 +136,8 @@ function parseDescriptors(parsed, kv) {
 		parsed.allTags.push(descNoun);
 		parsed.allTags.push.apply(parsed.allTags, tokens);
 	});
+
+	console.log(wInner);
 
 	if (! _.isEmpty(sInner)) {
 		if (! withoutMode) {

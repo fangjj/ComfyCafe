@@ -35,25 +35,25 @@ function parseLonely(parsed, kv) {
 }
 
 function parseDescriptors(parsed, kv) {
-	var label;
-	var withoutMode = false;
-	var topTokens = whiteSplit(kv[0]);
+	let label;
+	let withoutMode = false;
+	const topTokens = whiteSplit(kv[0]);
 	if (topTokens.length === 1) {
 		label = kv[0];
-	} else if (_.includes(["not", "without"], topTokens[0])) {
+	} else if (_.includes([ "not", "without" ], topTokens[0])) {
 		label = topTokens[1];
 		withoutMode = true;
 	}
 
-	var sInner = {}, wInner = {};
+	const sInner = {}, wInner = {};
 
-	var descriptors = tagDescriptorTokenizer(kv[1]);
+	const descriptors = tagDescriptorTokenizer(kv[1]);
 
 	_.each(descriptors, function (descriptor, di) {
-		var tokens = whiteSplit(descriptor);
-		var descNoun = tokens.pop();
+		const tokens = whiteSplit(descriptor);
+		const descNoun = tokens.pop();
 
-		var notIndex = tokens.indexOf("not");
+		let notIndex = tokens.indexOf("not");
 		while (notIndex > -1) {
 			if (! withoutMode) {
 				if (! _.has(wInner, descNoun)) {
@@ -62,7 +62,7 @@ function parseDescriptors(parsed, kv) {
 					wInner[descNoun].push(tokens[notIndex+1]);
 				}
 
-				var notRevInner = {};
+				let notRevInner = {};
 				if (! _.has(parsed.withoutReverse, descNoun)) {
 					parsed.withoutReverse[descNoun] = notRevInner;
 				} else {
@@ -85,19 +85,21 @@ function parseDescriptors(parsed, kv) {
 			}
 		}
 
-		var useSubject;
+		let useSubject;
 		if (tokens[0] !== "without") {
 			useSubject = true;
 		} else {
 			if (! withoutMode) {
 				useSubject = false;
+				parsed.subjects[label] = {};
+				parsed.subjectsFlat.push(label);
 			} else {
 				useSubject = true;
 			}
 			tokens.shift();
 		}
 
-		var target, targetRev, targetFlat, targetFlatAdj;
+		let target, targetRev, targetFlat, targetFlatAdj;
 		if (useSubject) {
 			target = sInner;
 			targetRev = parsed.subjectsReverse;
@@ -252,6 +254,8 @@ function tagParser(tagStr, reformat) {
 	if (reformat) {
 		parsed.text = tagStringify(parsed);
 	}
+
+	prettyPrint(parsed.subjects, parsed.without);
 
 	return parsed;
 }

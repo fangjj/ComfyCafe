@@ -26,7 +26,6 @@ function queryGeneratorAuthors(parsed, queryDoc) {
     ] });
   }
 
-  prettyPrint(and);
   return and;
 }
 
@@ -83,7 +82,7 @@ function queryGeneratorWithout(parsed, extLookup, wAnd) {
           }
         ));
       });
-    } else {
+    } else if (! _.has(parsed.subjects, rootNoun)) {
       exclude.push(rootNoun);
     }
   });
@@ -123,11 +122,20 @@ function queryGeneratorWithout(parsed, extLookup, wAnd) {
               pushApply(wAnd, _.map(
                 rootExts,
                 function (rootExt) {
-                  var doc = {};
-                  doc["tags.subjectsReverse." + rootExt + "." + parentExt] = {
-                    $nin: exts
-                  };
-                  return doc;
+                  const $or = [];
+                  {
+                    const doc = {};
+                    doc["tags.subjects." + parentExt] = { $exists: true };
+                    doc["tags.subjectsReverse." + rootExt + "." + parentExt] = { $exists: false };
+                    $or.push(doc);
+                  }
+                  {
+                    const doc = {};
+                    doc["tags.subjects." + parentExt] = { $exists: true };
+                    doc["tags.subjectsReverse." + rootExt + "." + parentExt] = { $nin: exts };
+                    $or.push(doc);
+                  }
+                  return { $or };
                 }
               ));
             });
@@ -236,8 +244,6 @@ function tagQuery(str) {
     parsed = tagParser(str);
   }
   let queryDoc = {}, wAnd = [], sAnd = [];
-
-  prettyPrint(parsed);
 
   const extLookup = _.reduce(
     parsed.allTags,

@@ -3,6 +3,13 @@ import _ from "lodash";
 import Filters from "/imports/api/filters/collection";
 import { isMod } from "/imports/api/common/persimmons";
 
+Meteor.startup(function () {
+	Filters._ensureIndex({
+		"owner.username": 1,
+		slug: 1
+	});
+});
+
 Meteor.publish("globalFilters", function () {
 	return Filters.find({ owner: { $exists: false } });
 });

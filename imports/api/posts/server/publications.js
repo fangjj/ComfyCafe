@@ -7,6 +7,14 @@ import tagQuery from "/imports/api/tags/query";
 import Albums from "/imports/api/albums/collection";
 import { isMod } from "/imports/api/common/persimmons";
 
+Meteor.startup(function () {
+	Posts._ensureIndex({
+		"owner._id": 1,
+		visibility: 1,
+		originality: 1
+	});
+});
+
 function checkState(state) {
 	check(state, Match.Optional(
 		{
@@ -169,6 +177,8 @@ Meteor.publish("postFeed", function (state, page=0) {
 			);
 		}
 	});
+
+	this.ready();
 });
 
 Meteor.publish("likes", function (state, page=0) {

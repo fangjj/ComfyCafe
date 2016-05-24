@@ -8,7 +8,7 @@ export default React.createClass({
       <header>
         <h4>Liked by</h4>
       </header>
-      <UserListContainer userIds={this.props.likes} />
+      <UserListContainer id={this.props.id} userIds={this.props.likes} />
     </section>;
   }
 });

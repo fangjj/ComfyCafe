@@ -110,7 +110,7 @@ export default React.createClass({
   },
   renderLikes() {
     if (this.props.post.likes && this.props.post.likes.length) {
-      return <PostLikes likes={this.props.post.likes} />;
+      return <PostLikes id={"likes" + this.props.post._id} likes={this.props.post.likes} />;
     }
   },
   renderAlbumSelector() {

@@ -250,17 +250,17 @@ export default React.createClass({
   },
   renderFriends(user) {
     if (user.friends.length) {
-      return <UserSearch title="Friends" userIds={user.friends} />;
+      return <UserSearch id="friends" title="Friends" userIds={user.friends} />;
     }
   },
   renderSubscriptions(user) {
     if (user.subscriptions.length) {
-      return <UserSearch title="Subscriptions" userIds={user.subscriptions} />;
+      return <UserSearch id="subscriptions" title="Subscriptions" userIds={user.subscriptions} />;
     }
   },
   renderSubscribers(user) {
     if (user.subscribers.length) {
-      return <UserSearch title="Subscribers" userIds={user.subscribers} />;
+      return <UserSearch id="subscribers" title="Subscribers" userIds={user.subscribers} />;
     }
   },
   render() {

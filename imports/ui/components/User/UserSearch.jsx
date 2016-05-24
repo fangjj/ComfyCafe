@@ -22,6 +22,7 @@ export default React.createClass({
     return <Content>
       {this.renderHeader()}
       <TextField
+        id={this.props.id}
         hintText="Search"
         onChange={this.handleSearch}
       />

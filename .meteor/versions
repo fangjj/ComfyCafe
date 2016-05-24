@@ -29,7 +29,6 @@ ecmascript@0.4.3
 ecmascript-runtime@0.2.10
 ejson@1.0.11
 email@1.0.12
-erasaur:server-session@0.0.5
 fastclick@1.0.11
 force-ssl@1.0.11
 fourseven:scss@3.4.3

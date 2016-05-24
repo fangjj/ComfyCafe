@@ -1,3 +1,5 @@
+import mongoid from "/imports/api/common/mongoid";
+
 function lookupGenerator(docGen) {
   return function (params, query) {
     const size = query.size;
@@ -24,9 +26,10 @@ export default new FileCollection("media",
       { method: "get",
         path: "/id/:id",
         lookup: lookupGenerator(function (params, query) {
+          const id = mongoid.new(params.id);
           return { $or: [
-            { _id: new Mongo.ObjectID(params.id) },
-            { "metadata.thumbOf": new Mongo.ObjectID(params.id) }
+            { _id: id },
+            { "metadata.thumbOf": id }
           ] };
         })
       },
@@ -49,10 +52,12 @@ export default new FileCollection("media",
       { method: "get",
         path: "/user/:userId/:id",
         lookup: function (params, query) {
+          console.log(params, query);
           const doc = lookupGenerator(function () {
+            const id = mongoid.new(params.id);
             return { $or: [
-              { _id: new Mongo.ObjectID(params.id) },
-              { "metadata.thumbOf": new Mongo.ObjectID(params.id) }
+              { _id: id },
+              { "metadata.thumbOf": id }
             ] };
           })(params, query);
 

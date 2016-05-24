@@ -4,23 +4,23 @@ import Posts from "/imports/api/posts/collection";
 import PseudoBody from "./PseudoBody";
 
 export default createContainer(({ params }) => {
-  if (Meteor.isServer) {
+  const username = FlowRouter.getParam("username");
+  const name = FlowRouter.getParam("postName");
+  if (username && name) {
+    const handle = Meteor.subscribe("postColor", username, name);
     const post = Posts.findOne(
       {
-        "owner.username": FlowRouter.getParam("username"),
-        name: FlowRouter.getParam("postName")
-      }
+        "owner.normalizedUsername": username.toLowerCase(),
+        name
+      },
+      { fields: { name: 1, bgColor: 1, complement: 1 } }
     );
     if (post) {
       return {
         seed: post.name,
         color: post.bgColor || post.complement
       };
-    } return {};
-  } else {
-    return {
-      seed: Session.get("patternSeed"),
-      color: Session.get("patternColor")
-    };
+    }
   }
+  return {};
 }, PseudoBody);

@@ -207,9 +207,8 @@ export default React.createClass({
     });
   },
   setColor(color) {
-    this.setState({
-      color: color
-    });
+    this.setState({ color });
+    console.log(color, this.state);
   },
   renderPostForm() {
     const id = this.state.mediumId || this.directMediumId;
@@ -260,9 +259,7 @@ export default React.createClass({
   render() {
     return <MuiThemeProvider muiTheme={muiTheme()}>
       <div onDragOver={this.preventDefault} onDrop={this.handleDrop} onPaste={this.handlePaste}>
-        <PseudoBodyContainer
-          setColor={this.setColor}
-        />
+        <PseudoBodyContainer setColor={this.setColor} />
         <header>
           <TopBar color={this.state.color} />
         </header>

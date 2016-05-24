@@ -3,6 +3,8 @@ import React from "react";
 import NoSSR from "react-no-ssr";
 
 import Notifications from "/imports/api/notifications/collection";
+import Posts from "/imports/api/posts/collection";
+import topColor from "/imports/ui/utils/topColor";
 import TopBarArtButton from "./TopBarArtButton";
 import TopBarBlogButton from "./TopBarBlogButton";
 import TopBarTagButton from "./TopBarTagButton";
@@ -28,7 +30,7 @@ export default React.createClass({
   },
   getMeteorData() {
     const handle = Meteor.subscribe("notifications", Meteor.userId());
-    return {
+    const data = {
       loading: ! handle.ready(),
       notifications: Notifications.find(
         {
@@ -39,6 +41,24 @@ export default React.createClass({
       ).fetch(),
       currentUser: Meteor.user()
     };
+    {
+      const username = FlowRouter.getParam("username");
+      const name = FlowRouter.getParam("postName");
+      if (username && name) {
+        const handle = Meteor.subscribe("postColor", username, name);
+        const post = Posts.findOne(
+          {
+            "owner.normalizedUsername": username.toLowerCase(),
+            name
+          },
+          { fields: { bgColor: 1, complement: 1 } }
+        );
+        if (post) {
+          data.color = topColor(post.bgColor || post.complement);
+        }
+      }
+    }
+    return data;
   },
   userReady() {
     return ! this.data.loading
@@ -147,9 +167,7 @@ export default React.createClass({
     </ul>;
   },
   render() {
-    const style = {
-      backgroundColor: this.props.color
-    };
+    const style = { backgroundColor: this.props.color || this.data.color };
     return <nav className="topNav" style={style}>
       <TopBarMenu
         open={this.state.visibleMenu === "hotdog"}

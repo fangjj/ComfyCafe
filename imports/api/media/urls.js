@@ -1,5 +1,7 @@
 import _ from "lodash";
 
+import mongoid from "/imports/api/common/mongoid";
+
 const base = "/gridfs/media/";
 
 function daysToSeconds(d) {
@@ -42,7 +44,7 @@ function getMediaUrlPost(postId, size) {
 }
 
 function getMediaUrlAvatar(userId, avatarId, size) {
-  return queryBuilder(base + "user/" + userId + "/" + avatarId, {
+  return queryBuilder(base + "user/" + userId + "/" + mongoid.str(avatarId), {
     size,
     cache: oneMonth
   });

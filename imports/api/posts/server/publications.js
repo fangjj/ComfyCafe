@@ -10,6 +10,8 @@ import { isMod } from "/imports/api/common/persimmons";
 Meteor.startup(function () {
 	Posts._ensureIndex({
 		"owner._id": 1,
+		"owner.normalizedUsername": 1,
+		name: 1,
 		visibility: 1,
 		originality: 1
 	});
@@ -73,7 +75,7 @@ Meteor.publish("post", function (username, postName) {
 	check(postName, String);
 	return Posts.find(
 		{
-			"owner.username": username,
+			"owner.normalizedUsername": username.toLowerCase(),
 			name: postName
 		}
 	);

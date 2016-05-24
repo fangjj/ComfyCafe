@@ -28,7 +28,7 @@ export default createContainer(({ params }) => {
     filterLoading: ! filterHandle.ready(),
     post: Posts.findOne(
       {
-        "owner.username": FlowRouter.getParam("username"),
+        "owner.normalizedUsername": FlowRouter.getParam("username").toLowerCase(),
         name: FlowRouter.getParam("postName")
       }
     ),

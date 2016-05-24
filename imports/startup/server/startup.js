@@ -8,6 +8,9 @@ Meteor.startup(function () {
   FlowRouter.setDeferScriptLoading(true);
 
   if (process.env.NODE_ENV === "production") {
+    const timeInMillis = 1000 * 60; // 60 secs
+    FlowRouter.setPageCacheTimeout(timeInMillis);
+
     process.on("uncaughtException", function (er) {
       console.error(er.stack);
       /*

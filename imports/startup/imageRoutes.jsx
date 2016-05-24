@@ -1,7 +1,7 @@
 import React from "react";
 
 import render from "/imports/ui/utils/render";
-import setTitle from "/imports/api/common/setTitle";
+import setTitle from "/imports/ui/utils/setTitle";
 
 import { tagStrFromUrl } from "/imports/api/tags/urlify";
 import PostBrowseAll from "/imports/ui/components/Post/PostBrowseAll";

@@ -1,6 +1,6 @@
 import React from "react";
 
-import setTitle from "/imports/api/common/setTitle";
+import setTitle from "/imports/ui/utils/setTitle";
 import BlogPosts from "/imports/api/blog/collection";
 import BlogListItem from "./BlogListItem";
 import FAB from "/imports/ui/components/FAB";

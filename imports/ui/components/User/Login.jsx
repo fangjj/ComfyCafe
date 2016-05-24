@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 
-import setTitle from "/imports/api/common/setTitle"
+import setTitle from "/imports/ui/utils/setTitle"
 import {
   validateUsername,
   validateEmail

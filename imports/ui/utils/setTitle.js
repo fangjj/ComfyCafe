@@ -1,9 +1,11 @@
 function setTitle(title) {
+  if (! title) {
+    title = "ComfyCafé";
+  }
   if (Meteor.isClient) {
-    if (! title) {
-      title = "ComfyCafé";
-    }
     Session.set("pageTitle", title);
+  } else {
+    DocHead.setTitle(title);
   }
 };
 

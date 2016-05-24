@@ -1,7 +1,7 @@
 import React from "react";
 
 import Topics from "/imports/api/topics/collection";
-import setTitle from "/imports/api/common/setTitle";
+import setTitle from "/imports/ui/utils/setTitle";
 import MessageList from "/imports/ui/components/Chat/MessageList";
 import InlineLoadingSpinner from "/imports/ui/components/Spinner/InlineLoadingSpinner";
 

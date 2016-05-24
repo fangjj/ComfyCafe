@@ -9,7 +9,7 @@ export default React.createClass({
   render() {
     const medium = this.props.medium;
     const type = medium.contentType.split("/")[0];
-    const src = getMediaUrlMD5(medium.md5);
+    const src = getMediaUrlMD5(medium.md5, medium.contentType.split("/")[1]);
     let classes = classConcat("medium", this.props.className);
     const mediumCmp = {
       image: <ZoomableImageProxy

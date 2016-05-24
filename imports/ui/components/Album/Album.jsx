@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 
-import setTitle from "/imports/api/common/setTitle";
+import setTitle from "/imports/ui/utils/setTitle";
 import Content from "/imports/ui/components/Content";
 import Medium from "/imports/ui/components/Medium";
 import LoadingSpinner from "/imports/ui/components/Spinner/LoadingSpinner";

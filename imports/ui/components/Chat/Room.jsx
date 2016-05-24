@@ -1,7 +1,7 @@
 import React from "react";
 
 import Rooms from "/imports/api/rooms/collection";
-import setTitle from "/imports/api/common/setTitle";
+import setTitle from "/imports/ui/utils/setTitle";
 import RoomForm from "./RoomForm";
 import DenseLoadingSpinner from "/imports/ui/components/Spinner/DenseLoadingSpinner";
 import TextBody from "/imports/ui/components/TextBody";

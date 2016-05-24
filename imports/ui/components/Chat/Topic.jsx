@@ -2,7 +2,7 @@ import React from "react";
 
 import Topics from "/imports/api/topics/collection";
 import "/imports/api/topics/methods";
-import setTitle from "/imports/api/common/setTitle";
+import setTitle from "/imports/ui/utils/setTitle";
 import MessageList from "./MessageList";
 import TopicForm from "./TopicForm";
 import Dialog from "/imports/ui/components/Dialog";

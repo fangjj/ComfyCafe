@@ -1,7 +1,7 @@
 import React from "react";
 
 import render from "/imports/ui/utils/render";
-import setTitle from "/imports/api/common/setTitle";
+import setTitle from "/imports/ui/utils/setTitle";
 
 import AlbumListContainer from "/imports/ui/components/Album/AlbumListContainer";
 import AlbumContainer from "/imports/ui/components/Album/AlbumContainer";

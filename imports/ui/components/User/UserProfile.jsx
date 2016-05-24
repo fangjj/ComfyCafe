@@ -3,7 +3,7 @@ import React from "react";
 import moment from "moment";
 
 import "/imports/api/users/methods";
-import setTitle from "/imports/api/common/setTitle";
+import setTitle from "/imports/ui/utils/setTitle";
 import getOrdinal from "/imports/ui/utils/ordinal";
 import statusLabel from "/imports/ui/utils/statusLabel";
 import UserInfo from "/imports/ui/components/User/UserInfo";

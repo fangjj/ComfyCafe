@@ -1,7 +1,8 @@
 import _ from "lodash";
 import React from "react";
 
-import { getMediaUrlMD5 } from "/imports/api/media/urls";
+import { getMediaUrlMD5, getMediaUrlPost } from "/imports/api/media/urls";
+import metaBuilder from "/imports/ui/utils/metaBuilder";
 import setPattern from "/imports/ui/utils/setPattern";
 import PostLikes from "./PostLikes";
 import PostInfoBox from "./PostInfoBox";
@@ -29,6 +30,15 @@ export default React.createClass({
   },
   componentWillMount() {
     if (this.props.post) {
+      const post = this.props.post;
+      metaBuilder({
+        title: post.name,
+        description: post.description,
+        image: (size) => {
+          return getMediaUrlPost(post._id, size, post.medium.contentType.split("/")[1]);
+        }
+      });
+
       setPattern(this.props.post.name, this.props.post.bgColor || this.props.post.complement);
     }
   },

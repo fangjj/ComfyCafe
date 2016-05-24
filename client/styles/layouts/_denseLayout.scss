@@ -4,9 +4,13 @@
   width: 100vw;
   height: calc(100vh - #{$top-nav-height});
 
-  overflow-x: hidden;
+  overflow: hidden;
 
   background-color: $fg-color;
+
+  .col {
+    height: calc(100vh - #{$top-nav-height});
+  }
 
   .leftCol {
     @include shadow2;
@@ -14,13 +18,14 @@
     position: fixed;
 
     width: 20%;
-    height: calc(100vh - #{$top-nav-height});
   }
 
   .mainCol {
     margin-left: calc(20% + 2px);
 
     width: 80%;
+
+    overflow-y: auto;
   }
 
   .bottomLeft {

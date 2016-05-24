@@ -12,7 +12,8 @@ adminRoutes.route("/", {
   action: function () {
     setTitle("Admin Panel");
     render({
-      main: <Admin />
+      main: <Admin />,
+      dense: true
     });
   }
 });
@@ -22,7 +23,8 @@ adminRoutes.route("/:panel", {
   action: function () {
     setTitle("Admin Panel");
     render({
-      main: <Admin />
+      main: <Admin />,
+      dense: true
     });
   }
 });
@@ -32,7 +34,8 @@ adminRoutes.route("/:panel/:id", {
   action: function () {
     setTitle("Admin Panel");
     render({
-      main: <Admin />
+      main: <Admin />,
+      dense: true
     });
   }
 });

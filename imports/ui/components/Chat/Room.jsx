@@ -137,7 +137,7 @@ export default React.createClass({
   },
   renderMembers(room) {
     if (room.members.length) {
-      return <UserSearch title="Members" userIds={room.members} />;
+      return <UserSearch id={"members" + room._id} title="Members" userIds={room.members} />;
     }
   },
   render() {

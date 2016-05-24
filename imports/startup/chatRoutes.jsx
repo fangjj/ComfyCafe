@@ -23,7 +23,8 @@ chatRoutes.route("/:roomSlug", {
   action: function () {
     setTitle("Loading Community...");
     render({
-      main: <Chat />
+      main: <Chat />,
+      dense: true
     });
   }
 });
@@ -33,7 +34,8 @@ chatRoutes.route("/:roomSlug/:topicSlug", {
   action: function () {
     setTitle("Loading Topic...");
     render({
-      main: <Chat />
+      main: <Chat />,
+      dense: true
     });
   }
 });

@@ -58,14 +58,14 @@ function updateBlogPost(postId, data, auth) {
 		} }
 	);
 
-	mentions(postId, data);
-
 	if (Meteor.isServer) {
 		const slug = slugCycle(postId, data.name);
 		BlogPosts.update(
 			{ _id: postId },
 			{ $set: { slug } }
 		);
+		data.slug = slug;
+    mentions(postId, data);
 		return slug;
 	}
 }

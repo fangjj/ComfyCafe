@@ -53,14 +53,14 @@ function updateAlbum(albumId, data, auth) {
     } }
   );
 
-  mentions(albumId, data);
-
   if (Meteor.isServer) {
     const slug = slugCycle(albumId, data.name);
     Albums.update(
       { _id: albumId },
       { $set: { slug } }
     );
+    data.slug = slug;
+    mentions(albumId, data);
     return slug;
   }
 }

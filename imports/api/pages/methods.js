@@ -50,14 +50,14 @@ function updatePage(pageId, data, auth) {
     } }
   );
 
-  mentions(pageId, data);
-
   if (Meteor.isServer) {
     const slug = slugCycle(pageId, data.name);
     Pages.update(
       { _id: pageId },
       { $set: { slug } }
     );
+    data.slug = slug;
+    mentions(pageId, data);
     return slug;
   }
 }

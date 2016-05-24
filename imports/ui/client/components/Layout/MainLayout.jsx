@@ -232,7 +232,7 @@ export default React.createClass({
   renderFooter() {
     if (! this.props.dense) {
       return <footer>
-        © 2016 ComfySoft LLC
+        Help · About · Legal
       </footer>;
     }
   },

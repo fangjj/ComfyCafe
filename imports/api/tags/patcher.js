@@ -116,7 +116,7 @@ function tagPatcherDirect(diff, diffPreserve, adjOrder, target, authors, origins
             return ! isRemovedFrom(diffPreserve, rootNoun, descNoun, adj);
           });
           var targetAdjs = _.get(output.subjects, rootNoun + "." + descNoun, []);
-          var merged = arrayMerge(
+          const merged = arrayMerge(
             targetAdjs,
             _.intersection(
               adjOrder[rootNoun][descNoun],
@@ -161,7 +161,7 @@ function tagPatcherDirect(diff, diffPreserve, adjOrder, target, authors, origins
 }
 
 function tagPatcher(a, b, c) {
-  var diffPreserve = tagDiffer(a, c);
+  const diffPreserve = tagDiffer(a, c);
   return tagPatcherDirect(
     tagDiffer(a, b),
     diffPreserve,
@@ -173,6 +173,4 @@ function tagPatcher(a, b, c) {
 }
 
 export default tagPatcher;
-export {
-  tagPatcherDirect
-};
+export { tagPatcherDirect };

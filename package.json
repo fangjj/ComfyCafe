@@ -87,7 +87,8 @@
     "redbox-react": "^1.2.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "meteor --settings=settings.json",
+    "test": "meteor test --driver-package=practicalmeteor:mocha",
     "storybook": "start-storybook -p 9001"
   },
   "repository": {

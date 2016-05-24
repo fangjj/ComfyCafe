@@ -81,6 +81,19 @@ Meteor.publish("post", function (username, postName) {
 	);
 });
 
+Meteor.publish("postColor", function (username, postName) {
+	check(username, String);
+	check(postName, String);
+	// We unfortunately have to publish owner in its entirety (thanks mergebox)
+	return Posts.find(
+		{
+			"owner.normalizedUsername": username.toLowerCase(),
+			name: postName
+		},
+		{ fields: { name: 1, bgColor: 1, complement: 1, owner: 1 } }
+	);
+});
+
 Meteor.publish("allPosts", function (state, page=0) {
 	checkState(state);
 	check(page, Number);

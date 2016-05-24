@@ -1,4 +1,4 @@
-const postsPerPage = 64;
+const postsPerPage = 32;
 
 export {
   postsPerPage

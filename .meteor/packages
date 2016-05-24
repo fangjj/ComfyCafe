@@ -11,7 +11,7 @@ jaywon:meteor-node-uuid
 jparker:crypto-sha256
 peerlibrary:reactive-publish
 meteorhacks:fast-render
-kadira:flow-router
+kadira:flow-router-ssr
 chuangbo:cookie
 alanning:roles
 mizzao:user-status
@@ -23,3 +23,5 @@ ongoworks:security
 meteorhacks:kadira
 meteorhacks:zones
 practicalmeteor:mocha
+reactive-dict
+kadira:dochead

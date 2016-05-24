@@ -1,5 +1,7 @@
 import _ from "lodash";
 
+import mongoid from "/imports/api/common/mongoid";
+
 const base = "/gridfs/media/";
 
 function daysToSeconds(d) {
@@ -9,6 +11,12 @@ function daysToSeconds(d) {
 }
 
 const oneMonth = daysToSeconds(30);
+
+function addExt(str, ext) {
+  if (ext) {
+    return str + "." + ext;
+  } return str;
+}
 
 function queryBuilder(str, params) {
   if (params && ! _.isEmpty(params)) {
@@ -21,35 +29,35 @@ function queryBuilder(str, params) {
   } return str;
 }
 
-function getMediaUrlMD5(md5) {
-  return queryBuilder(base + md5, {
+function getMediaUrlMD5(md5, ext) {
+  return queryBuilder(addExt(base + md5, ext), {
     cache: oneMonth
   });
 }
 
-function getMediaUrlID(id, size) {
-  return queryBuilder(base + "id/" + id, {
+function getMediaUrlID(id, size, ext) {
+  return queryBuilder(addExt(base + "id/" + id, ext), {
     size,
     cache: oneMonth
   });
 }
 
-function getMediaUrlPost(postId, size) {
-  return queryBuilder(base + "post/" + postId, {
+function getMediaUrlPost(postId, size, ext) {
+  return queryBuilder(addExt(base + "post/" + postId, ext), {
     size,
     cache: daysToSeconds(1)
   });
 }
 
-function getMediaUrlAvatar(userId, avatarId, size) {
-  return queryBuilder(base + "user/" + userId + "/" + avatarId, {
+function getMediaUrlAvatar(userId, avatarId, size, ext) {
+  return queryBuilder(addExt(base + "user/" + userId + "/" + mongoid.str(avatarId), ext), {
     size,
     cache: oneMonth
   });
 }
 
 function getMediaUrlDjent(userId) {
-  return queryBuilder(base + "djent/" + userId, {
+  return queryBuilder(addExt(base + "djent/" + userId, "svg"), {
     cache: oneMonth
   });
 }

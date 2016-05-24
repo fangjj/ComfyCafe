@@ -1,5 +1,6 @@
 import _ from "lodash";
 import React from "react";
+import NoSSR from "react-no-ssr";
 
 import safetyLabels from "/imports/api/common/safetyLabels";
 import PostMoreMenu from "./PostMoreMenu";
@@ -35,7 +36,9 @@ export default React.createClass({
   renderMoreMenu() {
     const isOwner = _.get(this.props.currentUser, "_id") === this.props.post.owner._id;
     if (isOwner) {
-      return <PostMoreMenu post={this.props.post} currentUser={this.props.currentUser} />;
+      return <NoSSR>
+        <PostMoreMenu post={this.props.post} currentUser={this.props.currentUser} />
+      </NoSSR>;
     } else if (this.props.currentUser) {
       return;
     }

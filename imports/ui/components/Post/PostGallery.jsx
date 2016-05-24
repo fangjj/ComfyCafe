@@ -80,6 +80,7 @@ export default React.createClass({
         <div className="filter">
           <div>
             <Checkbox
+              id="galleryOriginalOnly"
               label="Original only"
               defaultChecked={this.props.originalOnly}
               onCheck={this.props.handleOriginalOnly}
@@ -87,6 +88,7 @@ export default React.createClass({
           </div>
           <div style={{flexGrow: 2}}>
             <TagInlineField
+              id="gallerySearch"
               delim=";"
               defaultValue={this.props.tagStr}
               hintText="Search"
@@ -95,6 +97,7 @@ export default React.createClass({
           </div>
           <div style={{flexGrow: 1}}>
             <PostFilters
+              id="galleryFilters"
               filters={this.props.filters}
               globalFilters={this.props.globalFilters}
               value={_.get(this.props.filter, "_id")}

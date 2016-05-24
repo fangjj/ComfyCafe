@@ -1,5 +1,6 @@
 import _ from "lodash";
 import React from "react";
+import NoSSR from "react-no-ssr";
 
 import Notifications from "/imports/api/notifications/collection";
 import TopBarArtButton from "./TopBarArtButton";
@@ -83,19 +84,21 @@ export default React.createClass({
   renderSubMenus() {
     if (this.userReady()) {
       return [
-        <NotificationList
-          notifications={this.data.notifications}
-          currentUser={this.data.currentUser}
-          visible={this.state.visibleMenu === "notifications"}
-          action={this.toggleNotificationList}
-          key="notificationList"
-        />,
-        <AccountActionsList
-          currentUser={this.data.currentUser}
-          visible={this.state.visibleMenu === "account"}
-          action={this.toggleAccountActions}
-          key="accountActionsList"
-        />
+        <NoSSR key="notificationList">
+          <NotificationList
+            notifications={this.data.notifications}
+            currentUser={this.data.currentUser}
+            visible={this.state.visibleMenu === "notifications"}
+            action={this.toggleNotificationList}
+          />
+        </NoSSR>,
+        <NoSSR key="accountActionsList">
+          <AccountActionsList
+            currentUser={this.data.currentUser}
+            visible={this.state.visibleMenu === "account"}
+            action={this.toggleAccountActions}
+          />
+        </NoSSR>
       ];
     }
   },

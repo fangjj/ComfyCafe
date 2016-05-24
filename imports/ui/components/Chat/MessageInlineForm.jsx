@@ -45,6 +45,7 @@ export default React.createClass({
         directValue={true}
         body={this.state.body}
         handleBody={this.handleBody}
+        topic={this.props.topic}
       />
       <Actions>
         <SubmitButton

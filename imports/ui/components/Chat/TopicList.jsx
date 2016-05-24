@@ -79,6 +79,7 @@ export default React.createClass({
       <li className="roomTools">
         <TopicButton room={this.data.room} />
         <TextField
+          id={"topicSearch" + this.data.room._id}
           hintText="Search"
           onChange={this.handleSearch}
         />

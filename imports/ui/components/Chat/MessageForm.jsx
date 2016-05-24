@@ -114,6 +114,7 @@ export default React.createClass({
 
       <TextArea
         {...value}
+        id={"msgNew" + this.props.topic._id}
         hintText={generateMessageHint()}
         rows={3}
         rowsMax={10}

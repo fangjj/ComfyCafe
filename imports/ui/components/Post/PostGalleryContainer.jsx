@@ -26,7 +26,11 @@ export default React.createClass({
       originalOnly: (FlowRouter.getQueryParam("originalOnly") === "true") || defaultState.originalOnly,
       tagStr: FlowRouter.getQueryParam("query") || defaultState.tagStr,
       filterId: FlowRouter.getQueryParam("filter")
-        || _.get(Session.get("filter"), "_id")
+        || expr(() => {
+          if (Meteor.isClient) {
+            return _.get(Session.get("filter"), "_id");
+          } return null;
+        })
         || filterId
         || defaultState.filterId
     }

@@ -117,6 +117,7 @@ export default React.createClass({
   render() {
     return <div ref="tfContainer">
       <TextField
+        id={this.props.id}
         value={this.state.text}
         hintText={this.props.hintText}
         label={this.props.label || this.props.floatingLabelText}

@@ -5,17 +5,14 @@ import TagRoot from "./TagRoot";
 import TagletAuthor from "./TagletAuthor";
 import TagletOrigin from "./TagletOrigin";
 
-const TagTree = React.createClass({
-  componentWillMount() {
-    this.prefix = _.uniqueId();
-  },
+export default React.createClass({
   renderRoots() {
     return _.map(this.props.tags.subjects, (descriptors, rootNoun) => {
       return <TagRoot
         noun={rootNoun}
         descriptors={descriptors}
         injectDescriptors={this.props.injectDescriptors}
-        key={this.prefix + "_root_" + rootNoun}
+        key={"root " + rootNoun}
       />;
     });
   },
@@ -31,7 +28,7 @@ const TagTree = React.createClass({
       const elems = this.props.tags.authors.map((author) => {
         return <TagletAuthor
           name={author}
-          key={this.prefix + "_author_" + author}
+          key={"by " + author}
         />;
       });
       return <ul className="metaRow">
@@ -44,7 +41,7 @@ const TagTree = React.createClass({
       const elems = this.props.tags.origins.map((name) => {
         return <TagletOrigin
           name={name}
-          key={this.prefix + "_origin_" + name}
+          key={"from " + name}
         />;
       });
       return <ul className="metaRow">
@@ -60,5 +57,3 @@ const TagTree = React.createClass({
 		</div>;
   }
 });
-
-export default TagTree;

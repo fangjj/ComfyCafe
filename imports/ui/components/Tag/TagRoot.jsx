@@ -6,15 +6,12 @@ import TagRootClause from "./TagRootClause";
 import TagDescriptor from "./TagDescriptor";
 
 export default React.createClass({
-  componentWillMount() {
-    this.prefix = _.uniqueId();
-  },
   renderDescriptors(descriptors) {
     return _.map(_.omit(descriptors, ["_pre"]), (adjs, descNoun) => {
       return <TagDescriptor
         noun={descNoun}
         adjs={adjs}
-        key={this.prefix + "_desc_" + descNoun}
+        key={"desc " + descNoun}
       />;
     });
   },

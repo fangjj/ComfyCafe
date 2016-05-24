@@ -11,6 +11,7 @@ export default React.createClass({
   },
   render() {
     return <SelectField
+      id={this.props.id}
       value={this.props.value}
       onChange={this.props.onChange}
       fullWidth={true}

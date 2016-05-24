@@ -9,7 +9,7 @@ export default (props) => {
     }
     const options = _.pick(props, [ "color" ]);
     const pattern = GeoPattern.generate(props.seed, options);
-    pattern.toDataUrl();
+    return pattern.toDataUrl();
   });
 
   const style = { backgroundImage: bg };

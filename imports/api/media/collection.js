@@ -52,7 +52,6 @@ export default new FileCollection("media",
       { method: "get",
         path: "/user/:userId/:id",
         lookup: function (params, query) {
-          console.log(params, query);
           const doc = lookupGenerator(function () {
             const id = mongoid.new(params.id);
             return { $or: [

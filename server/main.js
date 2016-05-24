@@ -53,5 +53,6 @@ import "/imports/api/users/methods";
 import "/imports/api/users/adminMethods";
 
 // Startup
+Session = new ReactiveDict("ssr-session");
 import "/imports/startup/server/startup";
 import "/imports/startup/routes";

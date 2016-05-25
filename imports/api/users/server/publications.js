@@ -91,3 +91,33 @@ Meteor.publish("modAllUsers", function () {
     );
   }
 });
+
+// for community mods
+const communityModFields = {
+  username: 1,
+  normalizedUsername: 1,
+  roles: 1
+};
+
+Meteor.publish("communityModMember", function (slug, userId) {
+  check(slug, String);
+  if (isMod(this.userId, "community_" + slug)) {
+    return Meteor.users.find(
+      { _id: userId },
+      { fields: communityModFields }
+    );
+  }
+});
+
+Meteor.publish("communityModAllMembers", function (slug) {
+  check(slug, String);
+  const group = "community_" + slug;
+  if (isMod(this.userId, group)) {
+    const doc = {};
+    doc["roles." + group] = "member";
+    return Meteor.users.find(
+      doc,
+      { fields: communityModFields }
+    );
+  }
+});

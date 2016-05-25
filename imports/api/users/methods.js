@@ -495,5 +495,51 @@ Meteor.methods({
 			{ _id: Meteor.userId() },
 			{ $set: { lastCelebrated: year } }
 		);
-	}
+	},
+
+	communityUpdateMember(slug, userId, data) {
+		check(slug, String);
+		check(userId, String);
+		check(data, {
+			badges: String,
+			isAdmin: Boolean,
+			isMod: Boolean,
+			isMember: Boolean
+		});
+
+		const group = "community_" + slug;
+
+    if (! Meteor.userId()) {
+      throw new Meteor.Error("not-logged-in");
+    }
+
+    if (! isMod(Meteor.userId(), group)) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+		/*
+		const badges = _.map(commaSplit(data.badges), (badge) => {
+			return Badges.findOne({ name: badge });
+		});*/
+
+		/*
+		updateProfile(
+			{ _id: userId },
+			{ $set: {
+				"profile.badges": badges
+			} }
+		);*/
+
+		const roles = [];
+		if (data.isAdmin) {
+			roles.push("admin");
+		}
+		if (data.isMod) {
+			roles.push("moderator");
+		}
+		if (data.isMember) {
+			roles.push("member");
+		}
+		Roles.setUserRoles(userId, roles, group);
+	},
 });

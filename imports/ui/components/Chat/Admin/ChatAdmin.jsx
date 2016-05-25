@@ -4,12 +4,12 @@ import React from "react";
 import "/imports/api/migrations/methods";
 import { isPriveleged } from "/imports/api/common/persimmons";
 import ChatReportPanel from "./ChatReportPanel";
-//import ChatUserPanelContainer from "./ChatUserPanelContainer";
+import ChatMemberPanelContainer from "./ChatMemberPanelContainer";
 //import ChatTopicPanelContainer from "./ChatTopicPanelContainer";
 //import ChatMessagePanelContainer from "./ChatMessagePanelContainer";
 import ChatBadgePanelContainer from "./ChatBadgePanelContainer";
 //import ChatTopicPanelContainer from "./ChatTopicPanelContainer";
-//import ChatUserViewContainer from "./ChatUserViewContainer";
+import ChatMemberViewContainer from "./ChatMemberViewContainer";
 //import ChatTopicViewContainer from "./ChatTopicViewContainer";
 //import ChatMessageViewContainer from "./ChatMessageViewContainer";
 //import ChatBadgeViewContainer from "./ChatBadgeViewContainer";
@@ -40,7 +40,7 @@ export default React.createClass({
       if (entityId) {
         return _.get(
           {
-            //members: <ChatUserViewContainer />,
+            members: <ChatMemberViewContainer />,
           //topics: <ChatTopicViewContainer />,
           //messages: <ChatMessageViewContainer />,
             //badges: <ChatBadgeViewContainer />
@@ -53,7 +53,7 @@ export default React.createClass({
       } else {
         return _.get(
           {
-            //members: <ChatUserPanelContainer />
+            members: <ChatMemberPanelContainer />,
           //topics: <ChatTopicPanelContainer />,
           //messages: <ChatMessagePanelContainer />,
             badges: <ChatBadgePanelContainer />

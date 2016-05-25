@@ -1,20 +1,17 @@
 import _ from "lodash";
 import React from "react";
 
-import "/imports/api/users/adminMethods";
-import { isAdmin } from "/imports/api/common/persimmons";
 import DenseContent from "/imports/ui/components/DenseContent";
-import UserAdminForm from "/imports/ui/components/Admin/UserAdminForm";
-import UserProfileForm from "/imports/ui/components/User/UserProfileForm";
+import DenseLoadingSpinner from "/imports/ui/components/Spinner/DenseLoadingSpinner";
+import ChatRoleForm from "/imports/ui/components/Chat/Admin/ChatRoleForm";
 
 export default React.createClass({
   contextTypes: { currentUser: React.PropTypes.object },
-  renderAdminForm(user) {
-    if (isAdmin(this.context.currentUser._id)) {
-      return <UserAdminForm user={user} />;
-    }
-  },
   render() {
+    if (this.props.loading) {
+      return <DenseLoadingSpinner />;
+    }
+
     const { user } = this.props;
     return <DenseContent>
       <header>
@@ -24,9 +21,7 @@ export default React.createClass({
           </a>
         </h2>
       </header>
-
-      {this.renderAdminForm(user)}
-      <UserProfileForm user={user} mod={true} actions={true} />
+      <ChatRoleForm user={user} />
     </DenseContent>;
   }
 });

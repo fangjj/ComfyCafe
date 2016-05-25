@@ -9,15 +9,20 @@ export default (props) => {
       checked={props.isAdmin}
       onCheck={props.handleAdmin}
     />
-    <Checkbox
+    { typeof props.isDev !== "undefined" ? <Checkbox
       label="Developer"
       checked={props.isDev}
       onCheck={props.handleDev}
-    />
+    /> : null }
     <Checkbox
       label="Moderator"
       checked={props.isMod}
       onCheck={props.handleMod}
     />
+    { typeof props.isMember !== "undefined" ? <Checkbox
+      label="Member"
+      checked={props.isMember}
+      onCheck={props.handleMember}
+    /> : null }
   </div>;
 };

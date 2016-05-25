@@ -26,7 +26,7 @@ export default React.createClass({
       iconActivated="sentiment_very_satisfied"
       labelDeactivate="Leave"
       iconDeactivate="sentiment_very_dissatisfied"
-      width={113}
+      width={115}
     />;
   }
 });

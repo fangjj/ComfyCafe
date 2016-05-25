@@ -20,21 +20,15 @@ import DenseLayout from "/imports/ui/components/DenseLayout";
 import DenseCol from "/imports/ui/components/DenseCol";
 import DenseContent from "/imports/ui/components/DenseContent";
 
-/*
-Report Passthrough
-spam: "Spam" -> Comm
-copyright: "Copyright" -> Global
-harassment: "Harassment" -> Global
-fraud: "Fraudulent" -> Global
-mistagged: "Intentionally Mistagged" -> N/A
-unsafe: "Wrong Safety" -> N/A
-offtopic: "Off-Topic/Indecorum/Nongermane" -> Comm
-broken: "Broken" -> Global
-illegal: "Illegal" -> Global
-other: "Other" -> Comm
-
-Communities can choose to forward to Global
-*/
+function panelUrl(panel) {
+  if (panel === "reports") {
+    return FlowRouter.path("communityAdmin", { roomSlug: FlowRouter.getParam("roomSlug") });
+  }
+  return FlowRouter.path("communityAdminPanel", {
+    roomSlug: FlowRouter.getParam("roomSlug"),
+    panel
+  });
+}
 
 export default React.createClass({
   contextTypes: { currentUser: React.PropTypes.object },
@@ -76,11 +70,11 @@ export default React.createClass({
     return <DenseLayout>
       <div className="col leftCol">
         <List>
-          <li><a href="/ca">Reports</a></li>
-          <li><a href="/ca/members">Members</a></li>
-          <li><a href="/ca/topics">Topics</a></li>
-          <li><a href="/ca/messages">Messages</a></li>
-          <li><a href="/ca/badges">Badges</a></li>
+          <li><a href={panelUrl("reports")}>Reports</a></li>
+          <li><a href={panelUrl("members")}>Members</a></li>
+          <li><a href={panelUrl("topics")}>Topics</a></li>
+          <li><a href={panelUrl("messages")}>Messages</a></li>
+          <li><a href={panelUrl("badges")}>Badges</a></li>
         </List>
       </div>
 

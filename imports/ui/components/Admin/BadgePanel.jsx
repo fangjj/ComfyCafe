@@ -11,7 +11,6 @@ import Form from "/imports/ui/components/Form";
 import TextField from "/imports/ui/components/TextField";
 
 export default React.createClass({
-  mixins: [ReactMeteorData],
   getInitialState() {
     return { showForm: false };
   },
@@ -38,7 +37,7 @@ export default React.createClass({
       return <DenseLoadingSpinner />;
     }
 
-    return _.map(this.data.badges, (badge) => {
+    return _.map(this.props.badges, (badge) => {
       const path = FlowRouter.path("adminView", {
         panel: "badges",
         id: badge._id

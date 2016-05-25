@@ -12,7 +12,7 @@ import AlbumPanelContainer from "./AlbumPanelContainer";
 import CommunityPanelContainer from "./CommunityPanelContainer";
 import TopicPanelContainer from "./TopicPanelContainer";
 import MessagePanelContainer from "./MessagePanelContainer";
-import BadgePanel from "./BadgePanel";
+import BadgePanelContainer from "./BadgePanelContainer";
 import MediaPanel from "./MediaPanel";
 import FilterPanelContainer from "./FilterPanelContainer";
 import NotificationPanel from "./NotificationPanel";
@@ -70,7 +70,7 @@ export default React.createClass({
             communities: <CommunityPanelContainer />,
             topics: <TopicPanelContainer />,
             messages: <MessagePanelContainer />,
-            badges: <BadgePanel />,
+            badges: <BadgePanelContainer />,
             media: <MediaPanel />,
             tags: <DenseContent>nope</DenseContent>,
             filters: <FilterPanelContainer />,

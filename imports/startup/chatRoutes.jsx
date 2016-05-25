@@ -5,6 +5,7 @@ import setTitle from "/imports/ui/utils/setTitle";
 
 import RoomListContainer from "/imports/ui/components/Chat/RoomListContainer";
 import Chat from "/imports/ui/components/Chat/Chat";
+import ChatAdmin from "/imports/ui/components/Chat/Admin/ChatAdmin";
 
 const chatRoutes = FlowRouter.group({ prefix: "/c" });
 
@@ -35,6 +36,41 @@ chatRoutes.route("/:roomSlug/:topicSlug", {
     setTitle("Loading Topic...");
     render({
       main: <Chat />,
+      dense: true
+    });
+  }
+});
+
+const communityAdminRoutes = FlowRouter.group({ prefix: "/ca" });
+
+communityAdminRoutes.route("/:roomSlug", {
+  name: "communityAdmin",
+  action: function () {
+    setTitle("Admin Panel");
+    render({
+      main: <ChatAdmin />,
+      dense: true
+    });
+  }
+});
+
+communityAdminRoutes.route("/:roomSlug/:panel", {
+  name: "communityAdminPanel",
+  action: function () {
+    setTitle("Admin Panel");
+    render({
+      main: <ChatAdmin />,
+      dense: true
+    });
+  }
+});
+
+communityAdminRoutes.route("/:roomSlug/:panel/:id", {
+  name: "communityAdminView",
+  action: function () {
+    setTitle("Admin Panel");
+    render({
+      main: <ChatAdmin />,
       dense: true
     });
   }

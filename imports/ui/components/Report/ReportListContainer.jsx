@@ -8,6 +8,6 @@ export default createContainer(({ params }) => {
 
   return {
     loading: ! handle.ready(),
-    reports: Reports.find({}, { sort: { createdAt: -1 } }).fetch()
+    reports: Reports.find({ community: { $exists: false } }, { sort: { createdAt: -1 } }).fetch()
   };
 }, ReportList);

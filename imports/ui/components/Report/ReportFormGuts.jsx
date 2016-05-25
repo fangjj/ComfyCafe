@@ -6,6 +6,7 @@ import ViolationSelector from "/imports/ui/components/ViolationSelector";
 export default (props) => {
   return <div>
     <ViolationSelector
+      itemType={props.itemType}
       value={props.violation}
       onChange={props.handleViolation}
     />

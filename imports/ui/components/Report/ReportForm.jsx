@@ -63,6 +63,7 @@ export default React.createClass({
       onClose={this.props.onClose}
     >
       <ReportFormGuts
+        itemType={this.props.itemType}
         violation={this.state.violation}
         handleViolation={this.handleViolation}
         details={this.state.details}

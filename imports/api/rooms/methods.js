@@ -158,5 +158,32 @@ Meteor.methods({
 			}
 		}, reason);
 		ModLog.insert(doc);
+	},
+
+	joinCommunity(communityId) {
+		check(communityId, String);
+
+		if (! Meteor.userId()) {
+			throw new Meteor.Error("not-logged-in");
+		}
+
+		const community = Rooms.findOne(communityId);
+
+		if (community.requireInvite) {
+			throw new Meteor.Error("not-authorized");
+		}
+
+		Roles.setUserRoles(Meteor.userId(), [ "member" ], "community_" + community.slug);
+	},
+	leaveCommunity(communityId) {
+		check(communityId, String);
+
+		if (! Meteor.userId()) {
+			throw new Meteor.Error("not-logged-in");
+		}
+
+		const community = Rooms.findOne(communityId);
+
+		Roles.setUserRoles(Meteor.userId(), [], "community_" + community.slug);
 	}
 });

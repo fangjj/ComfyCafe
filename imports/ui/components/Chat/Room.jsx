@@ -8,6 +8,7 @@ import TextBody from "/imports/ui/components/TextBody";
 import SubmitButton from "/imports/ui/components/Button/SubmitButton";
 import DangerButton from "/imports/ui/components/Button/DangerButton";
 import ReportButton from "/imports/ui/components/Button/ReportButton";
+import JoinButton from "/imports/ui/components/Button/JoinButton";
 import ButtonGroup from "/imports/ui/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/components/ActionWell";
 import Icon from "/imports/ui/components/Daikon/Icon";
@@ -84,10 +85,7 @@ export default React.createClass({
   renderJoinButton(isOwner) {
     if (! isOwner) {
       return <ButtonGroup>
-        <SubmitButton
-          label="Join"
-          iconName="sentiment_satisfied"
-        />
+        <JoinButton room={this.data.room} />
       </ButtonGroup>;
     }
   },

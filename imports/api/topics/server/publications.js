@@ -45,3 +45,10 @@ Meteor.publish("modTopic", function (topicId) {
 		return Topics.find({ _id: topicId });
 	}
 });
+
+Meteor.publish("communityModAllTopics", function (slug) {
+	check(slug, String);
+	if (isMod(this.userId)) {
+  	return Topics.find(prefixer("room", { slug }));
+	}
+});

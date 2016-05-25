@@ -4,7 +4,7 @@ import React from "react";
 import { isPriveleged } from "/imports/api/common/persimmons";
 import ChatReportPanel from "./ChatReportPanel";
 import ChatMemberPanelContainer from "./ChatMemberPanelContainer";
-//import ChatTopicPanelContainer from "./ChatTopicPanelContainer";
+import ChatTopicPanelContainer from "./ChatTopicPanelContainer";
 //import ChatMessagePanelContainer from "./ChatMessagePanelContainer";
 //import ChatTopicPanelContainer from "./ChatTopicPanelContainer";
 import ChatMemberViewContainer from "./ChatMemberViewContainer";
@@ -50,7 +50,7 @@ export default React.createClass({
         return _.get(
           {
             members: <ChatMemberPanelContainer />,
-          //topics: <ChatTopicPanelContainer />,
+            topics: <ChatTopicPanelContainer />,
           //messages: <ChatMessagePanelContainer />
           },
           panel,

@@ -10,8 +10,11 @@ seba:minifiers-autoprefixer
 jaywon:meteor-node-uuid
 jparker:crypto-sha256
 peerlibrary:reactive-publish
-meteorhacks:fast-render
 kadira:flow-router-ssr
+kadira:dochead
+meteorhacks:fast-render
+meteorhacks:kadira
+meteorhacks:zones
 chuangbo:cookie
 alanning:roles
 mizzao:user-status
@@ -20,8 +23,4 @@ vsivsi:job-collection
 comfysoft:utility
 comfysoft:sharp
 ongoworks:security
-meteorhacks:kadira
-meteorhacks:zones
 practicalmeteor:mocha
-reactive-dict
-kadira:dochead

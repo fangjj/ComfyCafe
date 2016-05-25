@@ -12,9 +12,9 @@ There's more to the site than just images, but that's all you need to know to ge
 
 As both an artist and funny picture enthusiast, I often find myself wanting to show people images. So I made a site designed for **convenient and robust image sharing**.
 
-If you look at the \*booru-style image sites, you'll find that they have very good content categorization. You can easily find any image by any artist of any subject matter you like. The issue is that these sites tend to be highly specialized, and they also tend not to be socially-oriented, making them less suitable for content creators cultivating an audience.
+If you look at [booru-style](http://tvtropes.org/pmwiki/pmwiki.php/Main/ImageBooru) image sites, you'll find that they have very good content categorization and permanence. You can easily find any image by any artist of any subject matter you like. The issue is that these sites tend to be highly specialized, and they also tend not to be socially-oriented, making them less suitable for content creators cultivating an audience.
 
-On the other side of the story are sites like Tumblr, DeviantArt, etc. These sites give you the social tools you need for engaging your audience, but finding content tends to be difficult, as their tagging systems aren't as sophisticated as on \*booru-style sites.
+On the other side of the story are sites like Tumblr, DeviantArt, etc. These sites give you the social tools you need for engaging your audience, but finding content tends to be difficult, as their tagging systems aren't as sophisticated as on booru-style sites.
 
 ComfyCafé is designed to combine **content discovery** with **community cultivation**, thus **serving both creators and consumers**. In the interest of inclusivity and reaching as many people as possible, **anyone can use the site and upload images**, artist or otherwise.
 

@@ -18,3 +18,10 @@ Meteor.publish("modMessage", function (messageId) {
 		return Messages.find({ _id: messageId });
 	}
 });
+
+Meteor.publish("communityModAllMessages", function (slug) {
+	check(slug, String);
+	if (isMod(this.userId, "community_" + slug)) {
+		return Messages.find({ "topic.room.slug": slug });
+	}
+});

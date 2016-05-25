@@ -5,8 +5,7 @@ import { isPriveleged } from "/imports/api/common/persimmons";
 import ChatReportPanel from "./ChatReportPanel";
 import ChatMemberPanelContainer from "./ChatMemberPanelContainer";
 import ChatTopicPanelContainer from "./ChatTopicPanelContainer";
-//import ChatMessagePanelContainer from "./ChatMessagePanelContainer";
-//import ChatTopicPanelContainer from "./ChatTopicPanelContainer";
+import ChatMessagePanelContainer from "./ChatMessagePanelContainer";
 import ChatMemberViewContainer from "./ChatMemberViewContainer";
 //import ChatTopicViewContainer from "./ChatTopicViewContainer";
 //import ChatMessageViewContainer from "./ChatMessageViewContainer";
@@ -51,7 +50,7 @@ export default React.createClass({
           {
             members: <ChatMemberPanelContainer />,
             topics: <ChatTopicPanelContainer />,
-          //messages: <ChatMessagePanelContainer />
+            messages: <ChatMessagePanelContainer />
           },
           panel,
           <ChatReportPanel />

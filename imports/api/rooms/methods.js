@@ -5,7 +5,7 @@ import Topics from "/imports/api/topics/collection";
 import Messages from "/imports/api/messages/collection";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
 import docBuilder from "/imports/api/common/docBuilder";
-import { isMod } from "/imports/api/common/persimmons";
+import { isMod, isPriveleged } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
 import ModLog from "/imports/api/modlog/collection";
 
@@ -185,5 +185,25 @@ Meteor.methods({
 		const community = Rooms.findOne(communityId);
 
 		Roles.setUserRoles(Meteor.userId(), [], "community_" + community.slug);
+	},
+	kickUser(slug, userId) {
+		check(slug, String);
+		check(userId, String);
+
+		if (! Meteor.userId()) {
+			throw new Meteor.Error("not-logged-in");
+		}
+
+		const group = "community_" + slug;
+
+		if (! isMod(Meteor.userId(), group)) {
+			throw new Meteor.Error("not-authorized");
+		}
+
+		if (isPriveleged(userId, group)) {
+			throw new Meteor.Error("not-authorized");
+		}
+
+		Roles.setUserRoles(userId, [], group);
 	}
 });

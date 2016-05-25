@@ -12,7 +12,7 @@ import media from "/imports/api/media/collection";
 import Notifications from "/imports/api/notifications/collection";
 import Filters from "/imports/api/filters/collection";
 import docBuilder from "/imports/api/common/docBuilder";
-import { isMod } from "/imports/api/common/persimmons";
+import { isMod, isAdmin } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
 import ModLog from "/imports/api/modlog/collection";
 
@@ -497,11 +497,10 @@ Meteor.methods({
 		);
 	},
 
-	communityUpdateMember(slug, userId, data) {
+	communityUpdateMemberRoles(slug, userId, data) {
 		check(slug, String);
 		check(userId, String);
 		check(data, {
-			badges: String,
 			isAdmin: Boolean,
 			isMod: Boolean,
 			isMember: Boolean
@@ -513,22 +512,9 @@ Meteor.methods({
       throw new Meteor.Error("not-logged-in");
     }
 
-    if (! isMod(Meteor.userId(), group)) {
+    if (! isAdmin(Meteor.userId(), group)) {
       throw new Meteor.Error("not-authorized");
     }
-
-		/*
-		const badges = _.map(commaSplit(data.badges), (badge) => {
-			return Badges.findOne({ name: badge });
-		});*/
-
-		/*
-		updateProfile(
-			{ _id: userId },
-			{ $set: {
-				"profile.badges": badges
-			} }
-		);*/
 
 		const roles = [];
 		if (data.isAdmin) {
@@ -541,5 +527,5 @@ Meteor.methods({
 			roles.push("member");
 		}
 		Roles.setUserRoles(userId, roles, group);
-	},
+	}
 });

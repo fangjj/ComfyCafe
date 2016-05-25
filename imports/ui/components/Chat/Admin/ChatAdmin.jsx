@@ -1,18 +1,15 @@
 import _ from "lodash";
 import React from "react";
 
-import "/imports/api/migrations/methods";
 import { isPriveleged } from "/imports/api/common/persimmons";
 import ChatReportPanel from "./ChatReportPanel";
 import ChatMemberPanelContainer from "./ChatMemberPanelContainer";
 //import ChatTopicPanelContainer from "./ChatTopicPanelContainer";
 //import ChatMessagePanelContainer from "./ChatMessagePanelContainer";
-import ChatBadgePanelContainer from "./ChatBadgePanelContainer";
 //import ChatTopicPanelContainer from "./ChatTopicPanelContainer";
 import ChatMemberViewContainer from "./ChatMemberViewContainer";
 //import ChatTopicViewContainer from "./ChatTopicViewContainer";
 //import ChatMessageViewContainer from "./ChatMessageViewContainer";
-//import ChatBadgeViewContainer from "./ChatBadgeViewContainer";
 import Err403 from "/imports/ui/components/Err403";
 import Content from "/imports/ui/components/Content";
 import List from "/imports/ui/components/List";
@@ -42,8 +39,7 @@ export default React.createClass({
           {
             members: <ChatMemberViewContainer />,
           //topics: <ChatTopicViewContainer />,
-          //messages: <ChatMessageViewContainer />,
-            //badges: <ChatBadgeViewContainer />
+          //messages: <ChatMessageViewContainer />
           },
           panel,
           <DenseContent>
@@ -55,8 +51,7 @@ export default React.createClass({
           {
             members: <ChatMemberPanelContainer />,
           //topics: <ChatTopicPanelContainer />,
-          //messages: <ChatMessagePanelContainer />,
-            badges: <ChatBadgePanelContainer />
+          //messages: <ChatMessagePanelContainer />
           },
           panel,
           <ChatReportPanel />
@@ -74,7 +69,6 @@ export default React.createClass({
           <li><a href={panelUrl("members")}>Members</a></li>
           <li><a href={panelUrl("topics")}>Topics</a></li>
           <li><a href={panelUrl("messages")}>Messages</a></li>
-          <li><a href={panelUrl("badges")}>Badges</a></li>
         </List>
       </div>
 

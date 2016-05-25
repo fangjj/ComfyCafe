@@ -14,10 +14,6 @@ export default React.createClass({
     const slug = FlowRouter.getParam("roomSlug");
     const group = "community_" + slug;
     return {
-      /*badges: _.map(_.get(this.props.user, "profile.badges", []), (badge) => {
-        return badge.name;
-      }).join(", "),*/
-      badges: "",
       isAdmin: isAdmin(this.props.user._id, group),
       isMod: isMod(this.props.user._id, group),
       isMember: isMember(this.props.user._id, group),
@@ -26,9 +22,6 @@ export default React.createClass({
   },
   handleSnackbarRequestClose() {
     this.setState({ snackbarOpen: false });
-  },
-  handleBadges(e) {
-    this.setState({ badges: e.target.value });
   },
   handleAdmin(e) {
     this.setState({ isAdmin: e.target.checked });
@@ -42,7 +35,7 @@ export default React.createClass({
   handleSubmit() {
     const data = _.omit(this.state, [ "snackbarOpen" ]);
     const slug = FlowRouter.getParam("roomSlug");
-    Meteor.call("communityUpdateMember", slug, this.props.user._id, data, (err) => {
+    Meteor.call("communityUpdateMemberRoles", slug, this.props.user._id, data, (err) => {
       if (err) {
         prettyPrint(err);
       } else {
@@ -52,11 +45,6 @@ export default React.createClass({
   },
   render() {
     return <Form actions={true} onSubmit={this.handleSubmit}>
-      <TextField
-        label="Badges (comma separated)"
-        defaultValue={this.state.badges}
-        onChange={this.handleBadges}
-      />
       <RoleField
         isAdmin={this.state.isAdmin}
         isMod={this.state.isMod}

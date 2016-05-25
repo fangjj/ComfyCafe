@@ -1,12 +1,31 @@
 import _ from "lodash";
 import React from "react";
 
+import "/imports/api/rooms/methods";
+import { isAdmin } from "/imports/api/common/persimmons";
 import DenseContent from "/imports/ui/components/DenseContent";
 import DenseLoadingSpinner from "/imports/ui/components/Spinner/DenseLoadingSpinner";
 import ChatRoleForm from "/imports/ui/components/Chat/Admin/ChatRoleForm";
+import DangerButton from "/imports/ui/components/Button/DangerButton";
 
 export default React.createClass({
   contextTypes: { currentUser: React.PropTypes.object },
+  kick() {
+    const slug = FlowRouter.getParam("roomSlug");
+    Meteor.call("kickUser", slug, this.props.user._id);
+  },
+  renderInner(user) {
+    const slug = FlowRouter.getParam("roomSlug");
+    if (isAdmin(this.context.currentUser._id, "community_" + slug)) {
+      return <ChatRoleForm user={user} />;
+    } else {
+      return <DangerButton
+        label="Kick"
+        subtle={true}
+        onTouchTap={this.kick}
+      />;
+    }
+  },
   render() {
     if (this.props.loading) {
       return <DenseLoadingSpinner />;
@@ -21,7 +40,7 @@ export default React.createClass({
           </a>
         </h2>
       </header>
-      <ChatRoleForm user={user} />
+      {this.renderInner(user)}
     </DenseContent>;
   }
 });

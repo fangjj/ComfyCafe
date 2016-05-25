@@ -35,7 +35,7 @@ export default React.createClass({
         title: post.name,
         description: post.description,
         image: (size) => {
-          return getMediaUrlPost(post._id, size, post.medium.contentType.split("/")[1]);
+          return getMediaUrlPost(post._id, size);
         }
       });
 

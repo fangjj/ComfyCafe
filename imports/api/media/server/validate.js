@@ -9,7 +9,7 @@ const whitelist = [
   "video/webm",
   "video/mp4",
   "video/ogg",
-  "audio/mp3",
+  "audio/mpeg",
   "audio/ogg"
 ];
 

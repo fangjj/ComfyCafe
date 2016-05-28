@@ -79,6 +79,8 @@ export default React.createClass({
     } else {
       if (isMod(this.context.currentUser._id)) {
         return <ModButton item={msg} itemType="message" />;
+      } else if (isMod(this.context.currentUser._id, "community_" + msg.topic.room.slug)) {
+        return <ModButton item={msg} itemType="message" community={msg.topic.room.slug} />;
       } else {
         return <ReportButton icon={true} onTouchTap={this.showReportForm} />;
       }

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 
 import "/imports/api/topics/methods";
@@ -50,7 +51,19 @@ export default React.createClass({
 
     if (this.props.mod) {
       const reason = reasonBuilder(this.state);
-      Meteor.call("modUpdateTopic", this.props.topic._id, data, reason, (err) => {
+
+      const method = expr(() => {
+        const slug = FlowRouter.getParam("roomSlug");
+        if (! slug) {
+          // Global
+          return "modUpdateTopic";
+        } else {
+          // Community-level
+          return "communityModUpdateTopic";
+        }
+      });
+
+      Meteor.call(method, this.props.topic._id, data, reason, (err) => {
         if (err) {
           prettyPrint(err);
         } else {
@@ -88,11 +101,33 @@ export default React.createClass({
   },
   handleModDelete() {
     const reason = reasonBuilder(this.state);
-    Meteor.call("modDeleteTopic", this.props.topic._id, reason, (err) => {
+
+    const cfg = expr(() => {
+      const slug = FlowRouter.getParam("roomSlug");
+      if (! slug) {
+        // Global
+        return {
+          method: "modDeleteTopic",
+          urlBuilder: () => {
+            return FlowRouter.path("adminPanel", { panel: "topics" })
+          }
+        };
+      } else {
+        // Community-level
+        return {
+          method: "communityModDeleteTopic",
+          urlBuilder: () => {
+            return FlowRouter.path("communityAdminPanel", { roomSlug: slug, panel: "topics" });
+          }
+        };
+      }
+    });
+
+    Meteor.call(cfg.method, this.props.topic._id, reason, (err) => {
       if (err) {
         prettyPrint(err);
       } else {
-        FlowRouter.go(FlowRouter.path("adminPanel", { panel: "topics" }));
+        FlowRouter.go(cfg.urlBuilder());
       }
     });
   },
@@ -122,6 +157,7 @@ export default React.createClass({
       {this.renderReportForm()}
 
       <TextField
+        id={"topicName" + _.get(this.props, "topic._id", "New" + _.get(this.props, "room._id"))}
         defaultValue={this.state.name}
         label="Name"
         onChange={this.handleName}

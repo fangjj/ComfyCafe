@@ -84,7 +84,6 @@ export default React.createClass({
   },
   handleModDelete() {
     const reason = reasonBuilder(this.state);
-    const slug = FlowRouter.getParam("roomSlug");
 
     const cfg = expr(() => {
       const slug = FlowRouter.getParam("roomSlug");

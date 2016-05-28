@@ -62,6 +62,32 @@ function deleteTopic(topicId, auth) {
   return topic;
 }
 
+function modUpdateDocBuilder(topicId, topic, slug, reason) {
+  return docBuilder({
+    item: {
+      _id: topicId,
+      ownerId: topic.owner._id,
+      type: "topic",
+      action: "updated",
+      url: FlowRouter.path("topic", {
+        roomSlug: _.get(topic, "room.slug"),
+        topicSlug: slug
+      })
+    }
+  }, reason);
+}
+
+function modDeleteDocBuilder(topicId, topic, reason) {
+  return docBuilder({
+    item: {
+      _id: topicId,
+      ownerId: topic.owner._id,
+      type: "topic",
+      action: "deleted"
+    }
+  }, reason);
+}
+
 Meteor.methods({
   addTopic(roomId, data, retId) {
     check(roomId, String);
@@ -135,18 +161,29 @@ Meteor.methods({
       topic = t;
     });
 
-    const doc = docBuilder({
-      item: {
-        _id: topicId,
-        ownerId: topic.owner._id,
-        type: "topic",
-        action: "updated",
-        url: FlowRouter.path("topic", {
-          roomSlug: _.get(topic, "room.slug"),
-          topicSlug: slug
-        })
+    const doc = modUpdateDocBuilder(topicId, topic, slug, reason);
+    ModLog.insert(doc);
+	},
+  communityModUpdateTopic(topicId, data, reason) {
+		check(topicId, String);
+		check(data, match);
+    checkReason(reason);
+
+    let topic;
+    const slug = updateTopic(topicId, data, (t) => {
+      if (! Meteor.userId()) {
+        throw new Meteor.Error("not-logged-in");
       }
-    }, reason);
+
+      if (! isMod(Meteor.userId(), "community_" + t.room.slug)) {
+        throw new Meteor.Error("not-authorized");
+      }
+
+      topic = t;
+    });
+
+    const doc = modUpdateDocBuilder(topicId, topic, slug, reason);
+    doc.community = _.pick(topic.room, [ "_id", "slug" ]);
     ModLog.insert(doc);
 	},
   deleteTopic(topicId) {
@@ -171,14 +208,25 @@ Meteor.methods({
 			}
 		});
 
-		const doc = docBuilder({
-			item: {
-				_id: topicId,
-				ownerId: topic.owner._id,
-				type: "topic",
-				action: "deleted"
+		const doc = modDeleteDocBuilder(topicId, topic, reason);
+		ModLog.insert(doc);
+	},
+  communityModDeleteTopic(topicId, reason) {
+		check(topicId, String);
+		checkReason(reason);
+
+		const topic = deleteTopic(topicId, (topic) => {
+			if (! Meteor.userId()) {
+				throw new Meteor.Error("not-logged-in");
 			}
-		}, reason);
+
+			if (! isMod(Meteor.userId(), "community_" + topic.room.slug)) {
+				throw new Meteor.Error("not-authorized");
+			}
+		});
+
+		const doc = modDeleteDocBuilder(topicId, topic, reason);
+    doc.community = _.pick(topic.room, [ "_id", "slug" ]);
 		ModLog.insert(doc);
 	},
 

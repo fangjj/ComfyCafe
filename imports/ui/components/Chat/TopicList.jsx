@@ -59,7 +59,7 @@ export default React.createClass({
     return <li>No topics.</li>;
   },
   render() {
-    if (this.data.loading) {
+    if (this.data.loading || ! this.data.room) {
       return <DenseLoadingSpinner />;
     }
 

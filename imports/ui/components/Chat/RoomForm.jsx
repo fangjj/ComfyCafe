@@ -67,12 +67,9 @@ export default React.createClass({
   handleRules(e) {
     this.setState({ rules: e.target.value });
   },
-  redirect(slug) {
+  redirect(roomSlug) {
     if (this.props.redirect) {
-      const url = FlowRouter.path("blogPost", {
-        username: this.props.post.owner.username,
-        slug: slug
-      });
+      const url = FlowRouter.path("room", { roomSlug });
       FlowRouter.go(url);
     }
   },

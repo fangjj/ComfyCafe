@@ -19,6 +19,7 @@ import PostFeed from "/imports/ui/components/Post/PostFeed";
 import PostBrowseAll from "/imports/ui/components/Post/PostBrowseAll";
 import BlogListContainer from "/imports/ui/components/Blog/BlogListContainer";
 import ModLogContainer from "/imports/ui/components/ModLog/ModLogContainer";
+import CommunityModLogContainer from "/imports/ui/components/ModLog/CommunityModLogContainer";
 import DummyComponent from "/imports/ui/components/DummyComponent";
 import LoadingSpinner from "/imports/ui/components/Spinner/LoadingSpinner";
 
@@ -62,6 +63,14 @@ FlowRouter.route("/modlog", {
   action: function () {
     setTitle("Moderation Log");
     render({ main: <ModLogContainer /> });
+  }
+});
+
+FlowRouter.route("/modlog/:roomSlug", {
+  name: "communityModlog",
+  action: function () {
+    setTitle("Moderation Log");
+    render({ main: <CommunityModLogContainer /> });
   }
 });
 

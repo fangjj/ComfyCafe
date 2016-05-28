@@ -368,7 +368,8 @@ const adjectives = [
   "Enriched",
   "Enhanced",
   "Impulsive",
-  "Compulsive"
+  "Compulsive",
+  "Agglutinative"
 ];
 
 export default adjectives;

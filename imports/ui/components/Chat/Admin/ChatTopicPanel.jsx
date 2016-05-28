@@ -18,7 +18,7 @@ export default React.createClass({
         id: topic._id
       });
       return <li key={topic._id}>
-        <a href={url}>{topic.room.slug + "/" + topic.slug}</a>
+        <a href={url}>{topic.owner.username + "/" + topic.slug}</a>
       </li>;
     });
   },

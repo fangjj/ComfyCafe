@@ -38,6 +38,16 @@ function migrationBuilder(functionBody) {
 }
 
 Meteor.methods({
+  migrateCommPerms: migrationBuilder(function () {
+    Rooms.find().map((room) => {
+      Roles.setUserRoles(
+  			room.owner._id,
+  			[ "admin", "moderator", "member" ],
+  			"community_" + room.slug
+  		);
+      logMigrate(room.name);
+    });
+  }),
   migrateMedia: migrationBuilder(function () {
     media.find(
       {

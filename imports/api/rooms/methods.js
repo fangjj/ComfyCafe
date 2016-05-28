@@ -215,6 +215,10 @@ Meteor.methods({
 			throw new Meteor.Error("not-authorized");
 		}
 
+		Rooms.update(
+			{ _id: communityId },
+			{ $addToSet: { members: Meteor.userId() } }
+		);
 		Roles.setUserRoles(Meteor.userId(), [ "member" ], "community_" + community.slug);
 	},
 	leaveCommunity(communityId) {
@@ -226,6 +230,10 @@ Meteor.methods({
 
 		const community = Rooms.findOne(communityId);
 
+		Rooms.update(
+			{ _id: communityId },
+			{ $pull: { members: Meteor.userId() } }
+		);
 		Roles.setUserRoles(Meteor.userId(), [], "community_" + community.slug);
 	},
 	kickUser(slug, userId) {
@@ -246,6 +254,10 @@ Meteor.methods({
 			throw new Meteor.Error("not-authorized");
 		}
 
+		Rooms.update(
+			{ _id: communityId },
+			{ $pull: { members: Meteor.userId() } }
+		);
 		Roles.setUserRoles(userId, [], group);
 	}
 });

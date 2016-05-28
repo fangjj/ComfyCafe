@@ -7,6 +7,7 @@ import createSlugCycler from "/imports/api/common/createSlugCycler";
 import docBuilder from "/imports/api/common/docBuilder";
 import { isMod, isPriveleged } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
+import Reports from "/imports/api/reports/collection";
 import ModLog from "/imports/api/modlog/collection";
 
 const match = {
@@ -59,6 +60,30 @@ function updateCommunity(communityId, data, auth) {
 			} },
 			{ multi: true }
 		);
+		Reports.update(
+			{ "community._id": communityId },
+			{ $set: {
+				"community.slug": slug
+			} },
+			{ multi: true }
+		);
+		ModLog.update(
+			{ "community._id": communityId },
+			{ $set: {
+				"community.slug": slug
+			} },
+			{ multi: true }
+		);
+
+		const fdoc = {};
+		fdoc["roles.community_" + room.slug] = { $exists: true };
+		Meteor.users.find(fdoc).map((user) => {
+			const udoc = { $unset: {}, $set: {} };
+			udoc.$unset["roles.community_" + room.slug] = 1;
+			udoc.$set["roles.community_" + slug] = user.roles["community_" + room.slug];
+			Meteor.users.update({ _id: user._id }, udoc);
+		});
+
 		return slug;
 	}
 }
@@ -67,6 +92,17 @@ function deleteCommunity(communityId, auth) {
 	const room = Rooms.findOne(communityId);
 	auth(room);
 	Rooms.remove(communityId);
+	Topics.remove({ "room._id": communityId });
+	Messages.remove({ "topic.room._id": communityId });
+	Reports.remove({ "community._id": communityId });
+	ModLog.remove({ "community._id": communityId });
+
+	const fdoc = {};
+	fdoc["roles.community_" + room.slug] = { $exists: true };
+	const udoc = { $unset: {} };
+	udoc.$unset["roles.community_" + room.slug] = 1;
+	Meteor.users.update(fdoc, udoc, { multi: true });
+
 	return room;
 }
 
@@ -86,6 +122,12 @@ Meteor.methods({
 			members: [ Meteor.userId() ]
 		}, data);
 		const roomId = Rooms.insert(doc);
+
+		Roles.setUserRoles(
+			Meteor.userId(),
+			[ "admin", "moderator", "member" ],
+			"community_" + data.slug
+		);
 
 		return data.slug;
 	},

@@ -38,6 +38,20 @@ function migrationBuilder(functionBody) {
 }
 
 Meteor.methods({
+  migrateCommentPerms: migrationBuilder(function () {
+    Meteor.users.find().map((user) => {
+      Rooms.update(
+        {
+          system: true,
+          "owner._id": user._id
+        },
+        { $set: {
+          membersOnlyCreate: true
+        } }
+      );
+      logMigrate(user.username);
+    });
+  }),
   migrateCommPerms: migrationBuilder(function () {
     Rooms.find().map((room) => {
       Roles.setUserRoles(

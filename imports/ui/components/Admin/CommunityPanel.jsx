@@ -8,7 +8,7 @@ import SubmitButton from "/imports/ui/components/Button/SubmitButton";
 
 export default React.createClass({
   handleMigrate() {
-    Meteor.call("migrateCommPerms");
+    Meteor.call("migrateCommentPerms");
   },
   renderList() {
     if (this.props.loading) {

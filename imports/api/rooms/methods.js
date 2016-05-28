@@ -38,7 +38,7 @@ function updateCommunity(communityId, data, auth) {
 		}, data) }
 	);
 
-	if (Meteor.isServer) {
+	if (Meteor.isServer && data.name !== room.name) {
 		const slug = slugCycle(communityId, data.name);
 		Rooms.update(
 			{ _id: communityId },

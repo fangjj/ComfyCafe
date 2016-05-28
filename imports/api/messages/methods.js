@@ -6,7 +6,7 @@ import Topics from "/imports/api/topics/collection";
 import Rooms from "/imports/api/rooms/collection";
 import notificationDispatch from "/imports/api/messages/notificationDispatch";
 import docBuilder from "/imports/api/common/docBuilder";
-import { isMod } from "/imports/api/common/persimmons";
+import { isMod, isMember } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
 import ModLog from "/imports/api/modlog/collection";
 
@@ -113,6 +113,11 @@ Meteor.methods({
     }
 
     const topic = Topics.findOne(topicId);
+    const room = Rooms.findOne(topic.room._id);
+
+    if (room.membersOnlyPost && ! isMember(Meteor.userId(), "community_" + room.slug)) {
+      throw new Meteor.Error("not-authorized");
+    }
 
     const doc = docBuilder({
       topic: {

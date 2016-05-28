@@ -6,7 +6,7 @@ import Messages from "/imports/api/messages/collection";
 import Notifications from "/imports/api/notifications/collection";
 import docBuilder from "/imports/api/common/docBuilder";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
-import { isMod } from "/imports/api/common/persimmons";
+import { isMod, isMember } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
 import ModLog from "/imports/api/modlog/collection";
 
@@ -99,6 +99,10 @@ Meteor.methods({
 		}
 
     const room = Rooms.findOne(roomId);
+
+    if (room.membersOnlyCreate && ! isMember(Meteor.userId(), "community_" + room.slug)) {
+      throw new Meteor.Error("not-authorized");
+    }
 
     if (room.system && Meteor.userId() !== room.owner._id) {
       if (! Roles.userIsInRole(Meteor.userId(), ["admin"], Roles.GLOBAL_GROUP)) {

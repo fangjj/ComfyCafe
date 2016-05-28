@@ -1,9 +1,24 @@
 import Messages from "/imports/api/messages/collection";
-import { isMod } from "/imports/api/common/persimmons";
+import Topics from "/imports/api/topics/collection";
+import Rooms from "/imports/api/rooms/collection";
+import { isMod, isMember } from "/imports/api/common/persimmons";
 
 Meteor.publish("topicMessages", function (topicId) {
 	check(topicId, String);
-	return Messages.find({ "topic._id": topicId });
+	this.autorun(function (computation) {
+		const topic = Topics.findOne(
+			{ _id: topicId },
+			{ fields: { room: 1 } }
+		);
+		const room = Rooms.findOne(
+			{ _id: topic.room._id },
+			{ fields: { slug: 1, membersOnlyView: 1 } }
+		);
+		if (room.membersOnlyView && ! isMember(this.userId, "community_" + room.slug)) {
+			return null;
+		}
+		return Messages.find({ "topic._id": topicId });
+	});
 });
 
 Meteor.publish("modAllMessages", function () {

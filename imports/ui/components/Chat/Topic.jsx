@@ -1,7 +1,9 @@
 import React from "react";
 
 import Topics from "/imports/api/topics/collection";
+import Rooms from "/imports/api/rooms/collection";
 import "/imports/api/topics/methods";
+import { isMember } from "/imports/api/common/persimmons";
 import setTitle from "/imports/ui/utils/setTitle";
 import MessageList from "./MessageList";
 import TopicForm from "./TopicForm";
@@ -18,6 +20,8 @@ import DenseLoadingSpinner from "/imports/ui/components/Spinner/DenseLoadingSpin
 import Icon from "/imports/ui/components/Daikon/Icon";
 import DialogForm from "/imports/ui/components/DialogForm";
 import ReportForm from "/imports/ui/components/Report/ReportForm";
+import Err403 from "/imports/ui/components/Err403";
+import Err404 from "/imports/ui/components/Err404";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
@@ -36,6 +40,7 @@ export default React.createClass({
           slug
         }
       ),
+      room: Rooms.findOne({ slug: roomSlug }),
       currentUser: Meteor.user()
     };
   },
@@ -118,8 +123,18 @@ export default React.createClass({
     }
   },
   render() {
-    if (this.data.loading || ! this.data.topic) {
+    if (this.data.loading) {
       return <DenseLoadingSpinner />;
+    }
+
+    if (this.data.room.membersOnlyView
+      && ! isMember(this.data.currentUser._id, "community_" + this.data.room.slug)
+    ) {
+      return <Err403 />;
+    }
+
+    if (! this.data.topic) {
+      return <Err404 />;
     }
 
     const topic = this.data.topic;

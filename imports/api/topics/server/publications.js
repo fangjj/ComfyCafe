@@ -1,17 +1,27 @@
 import Topics from "/imports/api/topics/collection";
+import Rooms from "/imports/api/rooms/collection";
 import prefixer from "/imports/api/common/prefixer";
-import { isMod } from "/imports/api/common/persimmons";
+import { isMod, isMember } from "/imports/api/common/persimmons";
 
 function baseTopicPub(doc) {
 	this.autorun(function (computation) {
 		const topics = Topics.find(doc);
 		const exists = Boolean(topics.fetch().length);
 		if (exists) {
+			// Invariant:
+			const rooms = Rooms.find(
+				{ _id: topics.fetch()[0].room._id },
+				{ fields: { slug: 1, membersOnlyView: 1 } }
+			);
+			const room = rooms.fetch()[0];
+			if (room.membersOnlyView && ! isMember(this.userId, "community_" + room.slug)) {
+				return this.ready();
+			}
 			const users = Meteor.users.find(
 				{ _id: { $in: topics.fetch()[0].users || [] } },
 				{ fields: { "status.online": 1, "status.idle": 1 } }
 			);
-			return [ topics, users ];
+			return [ topics, users, rooms ];
 		} else {
 			return null;
 		}
@@ -30,7 +40,13 @@ Meteor.publish("topicId", function (id) {
 
 Meteor.publish("roomTopics", function (slug) {
 	check(slug, String);
-	return Topics.find(prefixer("room", { slug }));
+	this.autorun(function (computation) {
+		const room = Rooms.findOne({ slug }, { fields: { slug: 1, membersOnlyView: 1 } });
+		if (room.membersOnlyView && ! isMember(this.userId, "community_" + room.slug)) {
+			return this.ready();
+		}
+		return Topics.find(prefixer("room", { slug }));
+	});
 });
 
 Meteor.publish("modAllTopics", function () {

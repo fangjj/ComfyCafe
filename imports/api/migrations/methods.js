@@ -15,6 +15,7 @@ import "/imports/api/blog/methods";
 import "/imports/api/media/methods";
 import media from "/imports/api/media/collection";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
+import colors from "/imports/api/media/colors";
 
 function logMigrate(body, note) {
   console.log("[MIGRATED] " + body + " (" + note + ")");
@@ -197,7 +198,19 @@ Meteor.methods({
   migrateColor: migrationBuilder(function () {
     Posts.find().map(function (post) {
       if (media.findOne({ _id: post.medium._id })) {
-        Meteor.call("mediumColor", post.medium._id._str);
+        const type = post.medium.contentType.split("/")[0];
+        if (type === "image") {
+          Meteor.call("mediumColor", post.medium._id._str);
+        } else {
+          if (! post.bgColor && ! post.complement) {
+            Posts.update(
+              { _id: post._id },
+              { $set: {
+                bgColor: _.sample(colors)
+              } }
+            );
+          }
+        }
         logMigrate(post.owner.username + "/" + post.name);
       } else {
         console.log("!!!", post._id, post.name)

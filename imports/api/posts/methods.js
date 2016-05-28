@@ -60,6 +60,11 @@ function updatePost(postId, data, auth) {
 
 	data.bgColor = validateColor(data.bgColor);
 
+	const type = post.medium.contentType.split("/")[0];
+	if (type !== "image" && ! data.bgColor) {
+		data.bgColor = _.sample(colors);
+	}
+
 	Posts.update(
 		{ _id: postId },
 		{ $set: _.defaults({
@@ -151,6 +156,11 @@ Meteor.methods({
 			}
 
 			data.bgColor = validateColor(data.bgColor);
+
+			const type = medium.contentType.split("/")[0];
+			if (type !== "image" && ! data.bgColor) {
+				data.bgColor = _.sample(colors);
+			}
 
 			const doc = docBuilder({
 				name,

@@ -1,6 +1,7 @@
 import React from "react";
 
 import Rooms from "/imports/api/rooms/collection";
+import { isPriveleged } from "/imports/api/common/persimmons";
 import setTitle from "/imports/ui/utils/setTitle";
 import RoomForm from "./RoomForm";
 import DenseLoadingSpinner from "/imports/ui/components/Spinner/DenseLoadingSpinner";
@@ -18,6 +19,7 @@ import ReportForm from "/imports/ui/components/Report/ReportForm";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
+  contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
     return { showForm: false, showReportForm: false };
   },
@@ -32,8 +34,7 @@ export default React.createClass({
     const handle = Meteor.subscribe("room", slug);
     return {
       loading: ! handle.ready(),
-      room: Rooms.findOne({ slug }),
-      currentUser: Meteor.user()
+      room: Rooms.findOne({ slug })
     };
   },
   delete() {
@@ -82,12 +83,21 @@ export default React.createClass({
       </ButtonGroup>;
     }
   },
+  renderAdminButton() {
+    const roomSlug = this.data.room.slug;
+    if (isPriveleged(this.context.currentUser._id, "community_" + roomSlug)) {
+      return <SubmitButton
+        label="Admin"
+        iconName="gavel"
+        linkButton={true}
+        href={FlowRouter.path("communityAdmin", { roomSlug })}
+      />;
+    } return null;
+  },
   renderJoinButton(isOwner) {
     if (! isOwner) {
-      return <ButtonGroup>
-        <JoinButton room={this.data.room} />
-      </ButtonGroup>;
-    }
+      return <JoinButton room={this.data.room} />;
+    } return null;
   },
   renderDescription(room) {
     if (room.description) {
@@ -147,7 +157,7 @@ export default React.createClass({
 
     setTitle(room.name);
 
-    const isOwner = this.data.currentUser && this.data.currentUser._id === this.data.room.owner._id;
+    const isOwner = this.context.currentUser && this.context.currentUser._id === this.data.room.owner._id;
 
     return <section>
       <header>
@@ -157,7 +167,10 @@ export default React.createClass({
         <h2>{room.name}</h2>
         <ActionWell>
           {this.renderEditButtons(isOwner)}
-          {this.renderJoinButton(isOwner)}
+          <ButtonGroup>
+            {this.renderAdminButton()}
+            {this.renderJoinButton(isOwner)}
+          </ButtonGroup>
         </ActionWell>
       </header>
       {this.renderProfile(room)}

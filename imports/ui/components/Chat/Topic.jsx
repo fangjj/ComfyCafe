@@ -130,10 +130,12 @@ export default React.createClass({
     if (this.data.room.membersOnlyView
       && ! isMember(this.data.currentUser._id, "community_" + this.data.room.slug)
     ) {
+      setTitle("Rejected!");
       return <Err403 />;
     }
 
     if (! this.data.topic) {
+      setTitle("Topic not found");
       return <Err404 />;
     }
 

@@ -8,7 +8,7 @@ function baseTopicPub(doc) {
 		const topics = Topics.find(doc);
 		const exists = Boolean(topics.fetch().length);
 		if (exists) {
-			// Invariant:
+			// Unenforced Invariant: all requested topics have the same room.
 			const rooms = Rooms.find(
 				{ _id: topics.fetch()[0].room._id },
 				{ fields: { slug: 1, membersOnlyView: 1 } }
@@ -23,7 +23,7 @@ function baseTopicPub(doc) {
 			);
 			return [ topics, users, rooms ];
 		} else {
-			return null;
+			return this.ready();
 		}
 	});
 }

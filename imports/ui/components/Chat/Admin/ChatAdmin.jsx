@@ -8,7 +8,7 @@ import ChatTopicPanelContainer from "./ChatTopicPanelContainer";
 import ChatMessagePanelContainer from "./ChatMessagePanelContainer";
 import ChatMemberViewContainer from "./ChatMemberViewContainer";
 //import ChatTopicViewContainer from "./ChatTopicViewContainer";
-//import ChatMessageViewContainer from "./ChatMessageViewContainer";
+import ChatMessageViewContainer from "./ChatMessageViewContainer";
 import Err403 from "/imports/ui/components/Err403";
 import Content from "/imports/ui/components/Content";
 import List from "/imports/ui/components/List";
@@ -38,7 +38,7 @@ export default React.createClass({
           {
             members: <ChatMemberViewContainer />,
           //topics: <ChatTopicViewContainer />,
-          //messages: <ChatMessageViewContainer />
+            messages: <ChatMessageViewContainer />
           },
           panel,
           <DenseContent>

@@ -19,6 +19,14 @@ Meteor.publish("modMessage", function (messageId) {
 	}
 });
 
+Meteor.publish("communityModMessage", function (slug, messageId) {
+	check(slug, String);
+	check(messageId, String);
+	if (isMod(this.userId, "community_" + slug)) {
+		return Messages.find({ _id: messageId, "topic.room.slug": slug });
+	}
+});
+
 Meteor.publish("communityModAllMessages", function (slug) {
 	check(slug, String);
 	if (isMod(this.userId, "community_" + slug)) {

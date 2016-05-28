@@ -77,6 +77,32 @@ function deleteMessage(messageId, auth) {
   return msg;
 }
 
+function modUpdateDocBuilder(messageId, msg, reason) {
+  return docBuilder({
+    item: {
+      _id: messageId,
+      ownerId: msg.owner._id,
+      type: "message",
+      action: "updated",
+      url: FlowRouter.path("topic", {
+        roomSlug: _.get(msg, "topic.room.slug"),
+        topicSlug: _.get(msg, "topic.slug")
+      }) + "#" + messageId
+    }
+  }, reason);
+}
+
+function modDeleteDocBuilder(messageId, msg, reason) {
+  return docBuilder({
+    item: {
+      _id: messageId,
+      ownerId: msg.owner._id,
+      type: "message",
+      action: "deleted"
+    }
+  }, reason);
+}
+
 Meteor.methods({
   addMessage(topicId, data) {
     check(topicId, String);
@@ -144,18 +170,26 @@ Meteor.methods({
       }
     });
 
-    const doc = docBuilder({
-      item: {
-        _id: messageId,
-        ownerId: msg.owner._id,
-        type: "message",
-        action: "updated",
-        url: FlowRouter.path("topic", {
-          roomSlug: _.get(msg, "topic.room.slug"),
-          topicSlug: _.get(msg, "topic.slug")
-        }) + "#" + messageId
+    const doc = modUpdateDocBuilder(messageId, msg, reason);
+    ModLog.insert(doc);
+  },
+  communityModUpdateMessage(messageId, data, reason) {
+    check(messageId, String);
+    check(data, match);
+    checkReason(reason);
+
+    const msg = updateMessage(messageId, data, (msg) => {
+      if (! Meteor.userId()) {
+        throw new Meteor.Error("not-logged-in");
       }
-    }, reason);
+
+      if (! isMod(Meteor.userId(), "community_" + msg.topic.room.slug)) {
+        throw new Meteor.Error("not-authorized");
+      }
+    });
+
+    const doc = modUpdateDocBuilder(messageId, msg, reason);
+    doc.community = _.pick(msg.topic.room, [ "_id", "slug" ]);
     ModLog.insert(doc);
   },
   deleteMessage(messageId) {
@@ -180,14 +214,25 @@ Meteor.methods({
       }
     });
 
-    const doc = docBuilder({
-			item: {
-				_id: messageId,
-				ownerId: msg.owner._id,
-				type: "message",
-				action: "deleted"
-			}
-		}, reason);
+    const doc = modDeleteDocBuilder(messageId, msg, reason);
+		ModLog.insert(doc);
+  },
+  communityModDeleteMessage(messageId, reason) {
+    check(messageId, String);
+    checkReason(reason);
+
+    const msg = deleteMessage(messageId, (msg) => {
+      if (! Meteor.userId()) {
+        throw new Meteor.Error("not-logged-in");
+      }
+
+      if (! isMod(Meteor.userId(), "community_" + msg.topic.room.slug)) {
+        throw new Meteor.Error("not-authorized");
+      }
+    });
+
+    const doc = modDeleteDocBuilder(messageId, msg, reason);
+    doc.community = _.pick(msg.topic.room, [ "_id", "slug" ]);
 		ModLog.insert(doc);
   }
 });

@@ -46,7 +46,19 @@ export default React.createClass({
 
     if (this.props.mod) {
       const reason = reasonBuilder(this.state);
-      Meteor.call("modUpdateMessage", this.props.message._id, data, reason, (err) => {
+
+      const method = expr(() => {
+        const slug = FlowRouter.getParam("roomSlug");
+        if (! slug) {
+          // Global
+          return "modUpdateMessage";
+        } else {
+          // Community-level
+          return "communityModUpdateMessage";
+        }
+      });
+
+      Meteor.call(method, this.props.message._id, data, reason, (err) => {
         if (err) {
           prettyPrint(err);
         } else {
@@ -72,11 +84,34 @@ export default React.createClass({
   },
   handleModDelete() {
     const reason = reasonBuilder(this.state);
-    Meteor.call("modDeleteMessage", this.props.message._id, reason, (err) => {
+    const slug = FlowRouter.getParam("roomSlug");
+
+    const cfg = expr(() => {
+      const slug = FlowRouter.getParam("roomSlug");
+      if (! slug) {
+        // Global
+        return {
+          method: "modDeleteMessage",
+          urlBuilder: () => {
+            return FlowRouter.path("adminPanel", { panel: "messages" });
+          }
+        };
+      } else {
+        // Community-level
+        return {
+          method: "communityModDeleteMessage",
+          urlBuilder: () => {
+            return FlowRouter.path("communityAdminPanel", { roomSlug: slug, panel: "messages" });
+          }
+        };
+      }
+    });
+
+    Meteor.call(cfg.method, this.props.message._id, reason, (err) => {
       if (err) {
         prettyPrint(err);
       } else {
-        FlowRouter.go(FlowRouter.path("adminPanel", { panel: "messages" }));
+        FlowRouter.go(cfg.urlBuilder());
       }
     });
   },
@@ -114,7 +149,7 @@ export default React.createClass({
 
       <TextArea
         {...value}
-        id={"msgNew" + this.props.topic._id}
+        id={"msgBody" + _.get(this.props, "message._id", "New" + _.get(this.props, "topic._id"))}
         hintText={generateMessageHint()}
         rows={3}
         rowsMax={10}

@@ -247,6 +247,36 @@ export default React.createClass({
           {this.props.notification.topic.name}
         </a>
       ];
+    },
+    invited() {
+      const url = FlowRouter.path("room", { roomSlug: this.props.notification.room.slug });
+      return [
+        "invited you to join ",
+        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+          {this.props.notification.room.name}
+        </a>,
+        "!"
+      ];
+    },
+    joined() {
+      const url = FlowRouter.path("room", { roomSlug: this.props.notification.room.slug });
+      return [
+        "joined ",
+        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+          {this.props.notification.room.name}
+        </a>,
+        "!"
+      ];
+    },
+    inviteAccepted() {
+      const url = FlowRouter.path("room", { roomSlug: this.props.notification.room.slug });
+      return [
+        "accepted your invite for ",
+        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+          {this.props.notification.room.name}
+        </a>,
+        "!"
+      ];
     }
   },
   dismiss(event) {

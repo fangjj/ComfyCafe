@@ -4,6 +4,7 @@ import Rooms from "/imports/api/rooms/collection";
 import Invites from "/imports/api/invites/collection";
 import Topics from "/imports/api/topics/collection";
 import Messages from "/imports/api/messages/collection";
+import Notifications from "/imports/api/notifications/collection";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
 import docBuilder from "/imports/api/common/docBuilder";
 import { isAdmin, isMod, isPriveleged, isMember } from "/imports/api/common/persimmons";
@@ -27,14 +28,13 @@ const match = {
 
 const slugCycle = createSlugCycler(Rooms, true);
 
-function invited(userId, community) {
-	const invite = Invites.findOne(
+function getInvite(userId, community) {
+	return Invites.findOne(
 		{
 			to: userId,
 			"community._id": community._id
 		}
 	);
-	return Boolean(invite);
 }
 
 function consumeInvite(userId, community) {
@@ -238,7 +238,8 @@ Meteor.methods({
 		}
 
 		Meteor.users.find({ username: { $in: userList } }).map((user) => {
-			if (! invited(user._id, community) && ! isMember(user._id, "community_" + community.slug)) {
+			const invite = getInvite(user._id, community);
+			if (! invite && ! isMember(user._id, "community_" + community.slug)) {
 				const doc = docBuilder({
 					community: _.pick(community, [ "_id", "slug" ]),
 					to: user._id
@@ -246,6 +247,17 @@ Meteor.methods({
 				Invites.insert(doc);
 
 				// notify recipient: "x invited you to y!"
+				Notifications.insert(docBuilder(
+					{
+						to: user._id,
+						action: "invited",
+						room: {
+							_id: communityId,
+							name: community.name,
+							slug: community.slug
+						}
+					}
+				));
 			}
 		});
 	},
@@ -258,7 +270,9 @@ Meteor.methods({
 
 		const community = Rooms.findOne(communityId);
 
-		if (community.requireInvite && ! invited(Meteor.userId(), community)) {
+		const invite = getInvite(Meteor.userId(), community);
+
+		if (community.requireInvite && ! invite) {
 			throw new Meteor.Error("not-authorized");
 		}
 
@@ -271,7 +285,29 @@ Meteor.methods({
 		Roles.setUserRoles(Meteor.userId(), [ "member" ], "community_" + community.slug);
 
 		// notify group owner: "x joined y!"
+		Notifications.insert(docBuilder(
+			{
+				to: community.owner._id,
+				action: "joined",
+				room: {
+					_id: communityId,
+					name: community.name,
+					slug: community.slug
+				}
+			}
+		));
 		// notify inviter, if applicable "x accepted your invite to y!"
+		Notifications.insert(docBuilder(
+			{
+				to: invite.owner._id,
+				action: "inviteAccepted",
+				room: {
+					_id: communityId,
+					name: community.name,
+					slug: community.slug
+				}
+			}
+		));
 	},
 	leaveCommunity(communityId) {
 		check(communityId, String);

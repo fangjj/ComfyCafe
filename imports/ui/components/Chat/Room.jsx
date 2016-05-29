@@ -1,6 +1,7 @@
 import React from "react";
 
 import Rooms from "/imports/api/rooms/collection";
+import Invites from "/imports/api/invites/collection";
 import { isAdmin, isMod, isPriveleged, isMember } from "/imports/api/common/persimmons";
 import setTitle from "/imports/ui/utils/setTitle";
 import RoomForm from "./RoomForm";
@@ -34,10 +35,29 @@ export default React.createClass({
   getMeteorData() {
     const slug = FlowRouter.getParam("roomSlug");
     const handle = Meteor.subscribe("room", slug);
+    const inviteHandle = Meteor.subscribe("yourInvites", slug);
     return {
       loading: ! handle.ready(),
-      room: Rooms.findOne({ slug })
+      inviteLoading: ! inviteHandle.ready(),
+      room: Rooms.findOne({ slug }),
+      invite: Invites.findOne(
+        {
+    			to: Meteor.userId(),
+    			"community.slug": slug
+    		}
+      )
     };
+  },
+  isInvited() {
+    if (! this.context.currentUser) {
+      return false;
+    }
+    if (isMember(this.context.currentUser, "community_" + this.data.room.slug)) {
+      return true;
+    }
+    if (this.data.room.requireInvite) {
+      return Boolean(this.data.invite);
+    } return true;
   },
   delete() {
     Meteor.call("deleteRoom", this.data.room._id, () => {
@@ -99,7 +119,7 @@ export default React.createClass({
     } return null;
   },
   renderJoinButton(isOwner) {
-    if (! isOwner) {
+    if (! isOwner && this.isInvited()) {
       return <JoinButton room={this.data.room} />;
     } return null;
   },

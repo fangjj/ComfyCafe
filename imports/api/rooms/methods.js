@@ -244,6 +244,8 @@ Meteor.methods({
 					to: user._id
 				});
 				Invites.insert(doc);
+
+				// notify recipient: "x invited you to y!"
 			}
 		});
 	},
@@ -267,6 +269,9 @@ Meteor.methods({
 			{ $addToSet: { members: Meteor.userId() } }
 		);
 		Roles.setUserRoles(Meteor.userId(), [ "member" ], "community_" + community.slug);
+
+		// notify group owner: "x joined y!"
+		// notify inviter, if applicable "x accepted your invite to y!"
 	},
 	leaveCommunity(communityId) {
 		check(communityId, String);

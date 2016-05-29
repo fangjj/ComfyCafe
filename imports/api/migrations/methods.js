@@ -46,6 +46,7 @@ Meteor.methods({
           "owner._id": user._id
         },
         { $set: {
+          requireInvite: true,
           membersOnlyCreate: true
         } }
       );

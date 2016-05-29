@@ -35,7 +35,9 @@ Accounts.onCreateUser(function (options, user) {
 					profile: user.profile
 				},
         system: true,
-				topicCount: 0
+				topicCount: 0,
+        requireInvite: true,
+        membersOnlyCreate: true
       }
     );
     user.room = {

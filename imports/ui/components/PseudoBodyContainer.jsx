@@ -20,7 +20,9 @@ export default createContainer(({ params }) => {
         seed: post.name,
         color: post.bgColor || post.complement
       };
-      this.last = obj;
+      if (Meteor.isClient) {
+        this.last = obj;
+      }
       return obj;
     }
   } else if (this.last) {

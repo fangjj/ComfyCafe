@@ -55,7 +55,9 @@ export default React.createClass({
         );
         if (post) {
           data.color = topColor(post.bgColor || post.complement);
-          this.color = data.color;
+          if (Meteor.isClient) {
+            this.color = data.color;
+          }
         }
       }
     }

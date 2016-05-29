@@ -41,6 +41,7 @@ export default React.createClass({
   getInitialState() {
     return {
       register: false
+        || (Meteor.isServer && _.get(FlowRouter.current(), "_serverRequest.url") === "/register")
     };
   },
   getMeteorData() {
@@ -56,7 +57,7 @@ export default React.createClass({
     } return { loading: false };
   },
   componentWillMount() {
-    if (window.location.pathname === "/register") {
+    if (Meteor.isClient && window.location.pathname === "/register") {
       this.handleRegister();
     }
   },
@@ -303,8 +304,8 @@ export default React.createClass({
   renderEmail() {
     if (this.state.register) {
       return <TextField
+        id="email"
         name="email"
-        value={this.state.email}
         label="Email"
         errorText={this.state.emailError}
         onChange={this.handleEmail}
@@ -314,7 +315,7 @@ export default React.createClass({
   renderBetaKey() {
     if (this.state.register && _.get(Meteor.settings, "public.requireInvite", false)) {
       return <TextField
-        value={this.state.betaKey}
+        id="betaKey"
         label="Beta Key"
         errorText={this.state.betaKeyError}
         onChange={this.handleBetaKey}
@@ -350,12 +351,14 @@ export default React.createClass({
       {this.renderError()}
       <form onSubmit={this.handleSubmit}>
         <TextField
+          id="username"
           name="username"
           label="Username"
           errorText={this.state.usernameError}
           onChange={this.handleUsername}
         />
         <TextField
+          id="password"
           name="password"
           type="password"
           label="Password"

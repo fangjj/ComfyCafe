@@ -12,6 +12,7 @@ export default createContainer(({ params }) => {
       { "owner.username": username },
       { sort: { createdAt: -1, name: 1 } }
     ).fetch(),
+    userCentric: true,
     hideFab: ! Boolean(Meteor.user()) || Meteor.user().username !== username
   };
 }, BlogList);

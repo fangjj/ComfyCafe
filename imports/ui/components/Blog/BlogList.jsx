@@ -35,7 +35,11 @@ export default React.createClass({
       </ol>
     } else {
       let msg;
-      if (this.context.currentUser.subscriptions && this.context.currentUser.subscriptions.length) {
+      if (this.props.userCentric) {
+        msg = `${FlowRouter.getParam("username")} hasn't posted anything yet.`;
+      } else if (this.context.currentUser.subscriptions
+         && this.context.currentUser.subscriptions.length
+      ) {
         msg = "None of your subscriptions have posted anything...";
       } else {
         msg = "You haven't subscribed to anyone!";
@@ -70,7 +74,7 @@ export default React.createClass({
       return <LoadingSpinner />;
     }
 
-    if (! this.context.currentUser) {
+    if (! this.context.currentUser && ! this.props.userCentric) {
       return <Powerless />;
     }
 

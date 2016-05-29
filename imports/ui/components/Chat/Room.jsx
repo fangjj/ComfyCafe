@@ -1,10 +1,12 @@
 import React from "react";
 
 import Rooms from "/imports/api/rooms/collection";
-import { isPriveleged } from "/imports/api/common/persimmons";
+import { isAdmin, isMod, isPriveleged, isMember } from "/imports/api/common/persimmons";
 import setTitle from "/imports/ui/utils/setTitle";
 import RoomForm from "./RoomForm";
+import InviteUsers from "/imports/ui/components/Chat/InviteUsers";
 import DenseLoadingSpinner from "/imports/ui/components/Spinner/DenseLoadingSpinner";
+import Content from "/imports/ui/components/Content";
 import TextBody from "/imports/ui/components/TextBody";
 import SubmitButton from "/imports/ui/components/Button/SubmitButton";
 import DangerButton from "/imports/ui/components/Button/DangerButton";
@@ -145,6 +147,21 @@ export default React.createClass({
       </div>;
     }
   },
+  renderInvite(community) {
+    const group = "community_" + community.slug;
+    if (
+      this.context.currentUser
+      && (
+        (community.membersCanInvite && isMember(this.context.currentUser._id, group))
+        || (community.moderatorsCanInvite && isMod(this.context.currentUser._id, group))
+        || (community.adminsCanInvite && isAdmin(this.context.currentUser._id, group))
+      )
+    ) {
+      return <Content>
+        <InviteUsers community={community} />
+      </Content>;
+    } return null;
+  },
   renderMembers(room) {
     if (room.members.length) {
       return <UserSearch id={"members" + room._id} title="Members" userIds={room.members} />;
@@ -177,6 +194,7 @@ export default React.createClass({
       </header>
       {this.renderProfile(room)}
       {this.renderForm(isOwner)}
+      {this.renderInvite(room)}
       {this.renderMembers(room)}
       {this.renderReportForm()}
     </section>;

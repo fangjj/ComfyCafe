@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import { isMod } from "/imports/api/common/persimmons";
 
 // for Meteor.user()
@@ -62,6 +64,35 @@ Meteor.publish("allUsers", function () {
 	return Meteor.users.find(
 		{},
 		{ fields: publicFields }
+	);
+});
+
+const suggestionFields = {
+  username: 1,
+  normalizedUsername: 1,
+  "profile.displayName": 1
+};
+
+Meteor.publish("userSuggestions", function (search) {
+  check(search, Match.Optional(String));
+  const doc = expr(() => {
+    if (search) {
+      const re = new RegExp("^" + _.escapeRegExp(search));
+      return { $or: [
+        { username: re },
+        { normalizedUsername: re },
+        { "profile.displayName": re }
+      ] };
+    } else {
+      return null;
+    }
+  });
+  if (! doc) {
+    return this.ready();
+  }
+	return Meteor.users.find(
+		doc,
+		{ fields: suggestionFields }
 	);
 });
 

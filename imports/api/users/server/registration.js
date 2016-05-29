@@ -13,8 +13,10 @@ Accounts.onCreateUser(function (options, user) {
     user.profile = options.profile;
     user.settings = {};
 
-    user.inviteKey = options.profile.key;
-    delete user.profile.key;
+    if (options.profile.key) {
+      user.inviteKey = options.profile.key;
+      delete user.profile.key;
+    }
 
     user.normalizedUsername = user.username.toLowerCase();
 
@@ -64,6 +66,9 @@ function checkEmail(user) {
 function checkInvite(user) {
   if (! Meteor.users.findOne()) {
     // Always allow registration if this is the first user.
+    return true;
+  }
+  if (! _.get(Meteor.settings, "public.requireInvite", false)) {
     return true;
   }
   if (Invites.findOne({ key: user.inviteKey })) {

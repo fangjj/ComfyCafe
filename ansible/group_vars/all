@@ -14,6 +14,6 @@ meteor_port: 3000
 mongo_url: mongodb://localhost:27017/TeruImages
 mongo_oplog_url: mongodb://localhost:27017/local
 ddp_url: http://localhost
-meteor_settings: "{}"
+meteor_settings: "{\"public\": {\"requireInvite\": true}}"
 
 ssh_port: 22

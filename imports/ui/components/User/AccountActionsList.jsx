@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 import OnClickOutside from "react-onclickoutside";
 import Menu from "material-ui/Menu";
@@ -27,6 +28,16 @@ export default React.createClass({
       />
     }
   },
+  renderInvites() {
+    if (_.get(Meteor.settings, "public.requireInvite", false)) {
+      const invitesUrl = FlowRouter.path("invites");
+      return <TopMenuItem
+        primaryText="Beta Invites"
+        leftIconName="vpn_key"
+        href={invitesUrl}
+      />;
+    }
+  },
   render() {
     let classes = "topMenu";
     if (this.props.visible) {
@@ -39,7 +50,6 @@ export default React.createClass({
     const likesUrl = FlowRouter.path("likes");
     const yourAlbumsUrl = FlowRouter.path("albumsBy", { username });
     const yourPagesUrl = FlowRouter.path("pagesBy", { username });
-    const invitesUrl = FlowRouter.path("invites");
     const usersUrl = FlowRouter.path("users");
     const settingsUrl = FlowRouter.path("settings");
 
@@ -71,11 +81,7 @@ export default React.createClass({
           leftIconName="collections"
           href={yourAlbumsUrl}
         />
-        <TopMenuItem
-          primaryText="Beta Invites"
-          leftIconName="vpn_key"
-          href={invitesUrl}
-        />
+        {this.renderInvites()}
         <TopMenuItem
           primaryText="Users"
           leftIconName="looks"

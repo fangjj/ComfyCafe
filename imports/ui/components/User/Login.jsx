@@ -170,7 +170,7 @@ export default React.createClass({
       if (! this.state.email) {
         errors.emailError = strings.emailRequired;
       }
-      if (! this.state.betaKey) {
+      if (! this.state.betaKey && _.get(Meteor.settings, "public.requireInvite", false)) {
         errors.betaKeyError = strings.betaKeyRequired;
       }
     }
@@ -312,7 +312,7 @@ export default React.createClass({
     }
   },
   renderBetaKey() {
-    if (this.state.register) {
+    if (this.state.register && _.get(Meteor.settings, "public.requireInvite", false)) {
       return <TextField
         value={this.state.betaKey}
         label="Beta Key"

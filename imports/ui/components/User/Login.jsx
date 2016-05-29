@@ -40,8 +40,7 @@ export default React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
-      register: false
-        || (Meteor.isServer && _.get(FlowRouter.current(), "_serverRequest.url") === "/register")
+      register: Boolean(this.props.register)
     };
   },
   getMeteorData() {
@@ -57,7 +56,7 @@ export default React.createClass({
     } return { loading: false };
   },
   componentWillMount() {
-    if (Meteor.isClient && window.location.pathname === "/register") {
+    if (this.state.register) {
       this.handleRegister();
     }
   },

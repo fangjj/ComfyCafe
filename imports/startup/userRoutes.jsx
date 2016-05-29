@@ -22,7 +22,7 @@ FlowRouter.route("/register", {
   name: "register",
   action: function () {
     setTitle("Register");
-    render({ main: <LoginContainer /> });
+    render({ main: <LoginContainer register={true} /> });
   }
 });
 

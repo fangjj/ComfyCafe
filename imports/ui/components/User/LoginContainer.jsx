@@ -28,6 +28,7 @@ export default React.createClass({
     return <Login
       user={this.data.user}
       setUsername={this.setUsername}
+      register={this.props.register}
     />;
   }
 });

@@ -1,11 +1,12 @@
 import _ from "lodash";
 
 import Rooms from "/imports/api/rooms/collection";
+import Invites from "/imports/api/invites/collection";
 import Topics from "/imports/api/topics/collection";
 import Messages from "/imports/api/messages/collection";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
 import docBuilder from "/imports/api/common/docBuilder";
-import { isMod, isPriveleged } from "/imports/api/common/persimmons";
+import { isAdmin, isMod, isPriveleged, isMember } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
 import Reports from "/imports/api/reports/collection";
 import ModLog from "/imports/api/modlog/collection";
@@ -25,6 +26,25 @@ const match = {
 };
 
 const slugCycle = createSlugCycler(Rooms, true);
+
+function invited(userId, community) {
+	const invite = Invites.findOne(
+		{
+			to: userId,
+			"community._id": community._id
+		}
+	);
+	return Boolean(invite);
+}
+
+function consumeInvite(userId, community) {
+	Invites.remove(
+		{
+			to: userId,
+			"community._id": community._id
+		}
+	);
+}
 
 function updateCommunity(communityId, data, auth) {
 	const room = Rooms.findOne(communityId);
@@ -202,6 +222,31 @@ Meteor.methods({
 		ModLog.insert(doc);
 	},
 
+	inviteUsers(communityId, userList) {
+		check(communityId, String);
+		check(userList, [String]);
+
+		const community = Rooms.findOne(communityId);
+
+		const group = "community_" + community.slug;
+		if (! (
+			(community.membersCanInvite && isMember(Meteor.userId(), group))
+			|| (community.moderatorsCanInvite && isMod(Meteor.userId(), group))
+			|| (community.adminsCanInvite && isAdmin(Meteor.userId(), group))
+		)) {
+			throw new Meteor.Error("not-authorized");
+		}
+
+		Meteor.users.find({ username: { $in: userList } }).map((user) => {
+			if (! invited(user._id, community) && ! isMember(user._id, "community_" + community.slug)) {
+				const doc = docBuilder({
+					community: _.pick(community, [ "_id", "slug" ]),
+					to: user._id
+				});
+				Invites.insert(doc);
+			}
+		});
+	},
 	joinCommunity(communityId) {
 		check(communityId, String);
 
@@ -211,9 +256,11 @@ Meteor.methods({
 
 		const community = Rooms.findOne(communityId);
 
-		if (community.requireInvite) {
+		if (community.requireInvite && ! invited(Meteor.userId(), community)) {
 			throw new Meteor.Error("not-authorized");
 		}
+
+		consumeInvite(Meteor.userId(), community);
 
 		Rooms.update(
 			{ _id: communityId },

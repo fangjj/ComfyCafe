@@ -8,6 +8,7 @@ import Messages from "/imports/api/messages/collection";
 import Notifications from "/imports/api/notifications/collection";
 import Reports from "/imports/api/reports/collection";
 import ModLog from "/imports/api/modlog/collection";
+import Invites from "/imports/api/invites/collection";
 
 export default [
   Posts,
@@ -19,5 +20,6 @@ export default [
   Messages,
   Notifications,
   Reports,
-  ModLog
+  ModLog,
+  Invites
 ];

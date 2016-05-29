@@ -11,6 +11,7 @@ import { validateUsername } from "/imports/api/users/validators";
 import media from "/imports/api/media/collection";
 import Notifications from "/imports/api/notifications/collection";
 import Filters from "/imports/api/filters/collection";
+import Rooms from "/imports/api/rooms/collection";
 import docBuilder from "/imports/api/common/docBuilder";
 import { isMod, isAdmin } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
@@ -134,6 +135,15 @@ Meteor.methods({
 					username,
 					normalizedUsername
 				}) }
+			);
+			Rooms.update(
+				{
+					system: true,
+					"owner._id": Meteor.userId()
+				},
+				{ $set: {
+					name: username
+				} }
 			);
 		}
 	},

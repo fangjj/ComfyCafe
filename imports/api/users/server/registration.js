@@ -24,7 +24,7 @@ Accounts.onCreateUser(function (options, user) {
     generateDjenticon(user._id, CryptoJS.SHA256(user.emails[0].address).toString());
 
     // Create system room for user.
-    var roomId = Rooms.insert(
+    const roomId = Rooms.insert(
       {
         createdAt: new Date(),
 				updatedAt: new Date(),

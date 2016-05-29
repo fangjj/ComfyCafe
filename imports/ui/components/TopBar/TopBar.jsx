@@ -55,6 +55,7 @@ export default React.createClass({
         );
         if (post) {
           data.color = topColor(post.bgColor || post.complement);
+          this.color = data.color;
         }
       }
     }
@@ -167,7 +168,7 @@ export default React.createClass({
     </ul>;
   },
   render() {
-    const style = { backgroundColor: this.props.color || this.data.color };
+    const style = { backgroundColor: this.props.color || this.data.color || this.color };
     return <nav className="topNav" style={style}>
       <TopBarMenu
         open={this.state.visibleMenu === "hotdog"}

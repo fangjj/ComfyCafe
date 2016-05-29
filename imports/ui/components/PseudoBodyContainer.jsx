@@ -16,11 +16,15 @@ export default createContainer(({ params }) => {
       { fields: { name: 1, bgColor: 1, complement: 1 } }
     );
     if (post) {
-      return {
+      const obj = {
         seed: post.name,
         color: post.bgColor || post.complement
       };
+      this.last = obj;
+      return obj;
     }
+  } else if (this.last) {
+    return this.last;
   }
   return {};
 }, PseudoBody);

@@ -85,7 +85,9 @@ export default React.createClass({
   },
   renderAdminButton() {
     const roomSlug = this.data.room.slug;
-    if (isPriveleged(this.context.currentUser._id, "community_" + roomSlug)) {
+    if (this.context.currentUser
+      && isPriveleged(this.context.currentUser._id, "community_" + roomSlug)
+    ) {
       return <SubmitButton
         label="Admin"
         iconName="gavel"

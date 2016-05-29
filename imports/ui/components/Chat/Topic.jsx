@@ -127,8 +127,11 @@ export default React.createClass({
       return <DenseLoadingSpinner />;
     }
 
-    if (this.data.room.membersOnlyView
-      && ! isMember(this.data.currentUser._id, "community_" + this.data.room.slug)
+    if (this.data.room.membersOnlyView 
+      && (
+        ! this.data.currentUser
+        || ! isMember(this.data.currentUser._id, "community_" + this.data.room.slug)
+      )
     ) {
       setTitle("Rejected!");
       return <Err403 />;

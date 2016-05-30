@@ -13,25 +13,25 @@ export default React.createClass({
       body: ""
     };
   },
-  handleBody(event) {
+  handleBody(e) {
     if (! this.state.typing) {
       Meteor.call("startTyping", this.props.topic._id);
     }
     this.setState({
       typing: true,
-      body: event.target.value
+      body: e.target.value
     });
-    if (! event.target.value) {
-      this.setState({
-        typing: false
-      });
+    if (! e.target.value) {
+      this.setState({ typing: false });
       Meteor.call("stopTyping", this.props.topic._id);
     }
   },
-  handleSubmit(event) {
-    Meteor.call("addMessage", this.props.topic._id, {
-      body: this.state.body
-    });
+  handleSubmit() {
+    if (! this.props.dmWith) {
+      Meteor.call("addMessage", this.props.topic._id, { body: this.state.body });
+    } else {
+      Meteor.call("addDirectMessage", this.props.dmWith, { body: this.state.body });
+    }
     this.setState({
       typing: false,
       body: ""
@@ -46,6 +46,7 @@ export default React.createClass({
         body={this.state.body}
         handleBody={this.handleBody}
         topic={this.props.topic}
+        dmWith={this.props.dmWith}
       />
       <Actions>
         <SubmitButton

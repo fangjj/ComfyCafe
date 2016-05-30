@@ -4,6 +4,7 @@ import "/imports/api/topics/methods";
 import Messages from "/imports/api/messages/collection";
 import Topics from "/imports/api/topics/collection";
 import Rooms from "/imports/api/rooms/collection";
+import Notifications from "/imports/api/notifications/collection";
 import notificationDispatch from "/imports/api/messages/notificationDispatch";
 import docBuilder from "/imports/api/common/docBuilder";
 import { isMod, isMember } from "/imports/api/common/persimmons";
@@ -243,8 +244,8 @@ Meteor.methods({
 		ModLog.insert(doc);
   },
 
-  addDirectMessage(to, data) {
-    check(to, String);
+  addDirectMessage(username, data) {
+    check(username, String);
     check(data, match);
 
     if (! Meteor.userId()) {
@@ -252,9 +253,9 @@ Meteor.methods({
     }
 
     const topicId = expr(() => {
-      const topic = dmTopic(to);
+      const topic = dmTopic(username);
       if (! topic) {
-        return dmTopicBuilder(to);
+        return dmTopicBuilder(username);
       } return topic._id;
     });
 
@@ -266,15 +267,25 @@ Meteor.methods({
         room: { _id: roomId }
       }
     }, data);
-    Messages.insert(doc);
+    const messageId = Messages.insert(doc);
 
     Topics.update(
-      { _id: message.topic._id },
+      { _id: topicId },
       {
         $set: { lastActivity: new Date() },
         $inc: { messageCount: 1 }
       }
     );
+
+    // notify recipient: "x sent you a direct message."
+    Notifications.insert(docBuilder(
+      {
+        to: Meteor.users.findOne({ normalizedUsername: username.toLowerCase() })._id,
+        action: "directMessaged",
+        message: { _id: messageId },
+        topic: { _id: topicId }
+      }
+    ));
   },
   updateDirectMessage(messageId, data) {
     check(messageId, String);
@@ -313,5 +324,7 @@ Meteor.methods({
       { _id: message.topic._id },
       { $inc: { messageCount: -1 } }
     );
+
+    Notifications.remove({ "message._id": messageId });
   }
 });

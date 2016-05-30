@@ -75,6 +75,7 @@ export default React.createClass({
         message={this.props.message}
         currentUser={this.context.currentUser}
         onEdit={this.startEditing}
+        dmWith={this.props.dmWith}
       />;
     } else {
       if (isMod(this.context.currentUser._id)) {

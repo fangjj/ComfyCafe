@@ -53,9 +53,17 @@ Meteor.publish("directMessageTopics", function () {
 	return Topics.find({ relationship: this.userId });
 });
 
-Meteor.publish("directMessageTopic", function (topicId) {
-	check(topicId);
-	return Topics.find({ _id: topicId, relationship: this.userId });
+Meteor.publish("directMessageTopic", function (username) {
+	check(username, String);
+	this.autorun(function (computation) {
+		const otherUser = Meteor.users.find({ normalizedUsername: username.toLowerCase() });
+		const topics = Topics.find(
+			{
+				relationship: { $all: [ this.userId, otherUser.fetch()[0]._id ] }
+			}
+		);
+		return [ topics, otherUser ];
+	});
 });
 
 Meteor.publish("modAllTopics", function () {

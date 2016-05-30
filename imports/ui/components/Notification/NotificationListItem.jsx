@@ -277,7 +277,17 @@ export default React.createClass({
         </a>,
         "!"
       ];
-    }
+    },
+    directMessaged() {
+      const url = FlowRouter.path("dm", { username: this.props.notification.owner.username });
+      return [
+        "sent you a ",
+        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+          direct message
+        </a>,
+        "."
+      ];
+    },
   },
   dismiss(event) {
     event.stopPropagation();

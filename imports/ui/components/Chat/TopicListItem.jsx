@@ -4,11 +4,12 @@ import Moment from "/imports/ui/components/Moment";
 import Avatar from "/imports/ui/components/Avatar/Avatar";
 
 export default React.createClass({
+  contextTypes: { currentUser: React.PropTypes.object },
   renderMoreMenu() {
-    const isOwner = this.props.currentUser
-      && this.props.currentUser._id === this.props.topic.owner._id;
+    const isOwner = this.context.currentUser
+      && this.context.currentUser._id === this.props.topic.owner._id;
     if (isOwner) {
-      return <TopicMoreMenu topic={this.props.topic} currentUser={this.props.currentUser} />;
+      return <TopicMoreMenu topic={this.props.topic} currentUser={this.context.currentUser} />;
     }
   },
   renderCountLabel() {
@@ -20,24 +21,57 @@ export default React.createClass({
   },
   render() {
     const topic = this.props.topic;
-    const topicUrl = FlowRouter.path("topic", {
-      roomSlug: topic.room.slug,
-      topicSlug: topic.slug
+    const topicUrl = expr(() => {
+      if (! this.props.dm) {
+        return FlowRouter.path("topic", {
+          roomSlug: topic.room.slug,
+          topicSlug: topic.slug
+        });
+      } else {
+        return FlowRouter.path("dm", {
+          username: "test"
+        });
+      }
     });
 
-    const owner = topic.owner;
-    const ownerUrl = FlowRouter.path("profile", { username: owner.username });
+    const owner = expr(() => {
+      if (! this.props.dm) {
+        return topic.owner;
+      } else {
+        if (topic.owner0._id !== this.context.currentUser._id) {
+          return topic.owner0;
+        }
+        if (topic.owner1._id !== this.context.currentUser._id) {
+          return topic.owner1;
+        }
+      }
+    });
+
+    const ownerUrl = expr(() => {
+      if (! this.props.dm) {
+        return FlowRouter.path("profile", { username: owner.username });
+      } else {
+        return FlowRouter.path("profile", { username: "test" });
+      }
+    });
+
+    const topicName = expr(() => {
+      if (! this.props.dm) {
+        return topic.name;
+      } else {
+        return "test";
+      }
+    });
 
     return <li className="topicListItem">
       <div className="flexLayout">
         <div className="rightSide">
           <div className="top">
             <div className="info">
-              <a href={topicUrl}>{topic.name}</a>
+              <a href={topicUrl}>{topicName}</a>
               <br />
               <Moment time={topic.lastActivity} />
             </div>
-            {/*this.renderMoreMenu()*/}
           </div>
         </div>
       </div>

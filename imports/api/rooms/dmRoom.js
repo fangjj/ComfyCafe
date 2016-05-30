@@ -1,3 +1,5 @@
+import Rooms from "/imports/api/rooms/collection";
+
 function dmRoom() {
   return Rooms.findOne(
     {

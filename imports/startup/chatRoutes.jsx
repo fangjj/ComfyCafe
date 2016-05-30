@@ -75,3 +75,28 @@ communityAdminRoutes.route("/:roomSlug/:panel/:id", {
     });
   }
 });
+
+const dmRoutes = FlowRouter.group({ prefix: "/dm" });
+
+dmRoutes.route("/", {
+  name: "dmList",
+  action: function () {
+    setTitle("Direct Messages");
+    render({
+      main: <Chat dmList={true} />,
+      dense: true
+    });
+  }
+});
+
+dmRoutes.route("/:username", {
+  name: "dm",
+  action: function () {
+    const username = FlowRouter.getParam("username");
+    setTitle(username);
+    render({
+      main: <Chat dmWith={username} />,
+      dense: true
+    });
+  }
+});

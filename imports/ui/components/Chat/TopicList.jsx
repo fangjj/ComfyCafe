@@ -12,58 +12,80 @@ import TextField from "/imports/ui/components/TextField";
 export default React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
-    return {
-      search: null
-    };
+    return { search: null };
   },
   getMeteorData() {
-    const roomSlug = FlowRouter.getParam("roomSlug");
-    const handleRoom = Meteor.subscribe("room", roomSlug);
-    const handleTopics = Meteor.subscribe("roomTopics", roomSlug);
+    if (! this.props.dm) {
+      const roomSlug = FlowRouter.getParam("roomSlug");
+      const handleRoom = Meteor.subscribe("room", roomSlug);
+      const handleTopics = Meteor.subscribe("roomTopics", roomSlug);
 
-    const query = {
-      "room.slug": roomSlug,
-      $or: [
-        { visibility: { $ne: "unlisted" } },
-        { "owner._id": Meteor.userId() }
-      ]
-    };
-    if (this.state.search) {
-      query.name = { $regex: this.state.search, $options: "i" };
+      const query = { "room.slug": roomSlug };
+      if (this.state.search) {
+        query.name = { $regex: this.state.search, $options: "i" };
+      }
+
+      return {
+        loading: ! handleRoom.ready() || ! handleTopics.ready(),
+        room: Rooms.findOne({ slug: roomSlug }),
+        topics: Topics.find(
+          query,
+          { sort: { lastActivity: -1, createdAt: -1 } }
+        ).fetch()
+      };
+    } else {
+      const handle = Meteor.subscribe("directMessageTopics");
+
+      const query = { relationship: { $exists: true } };
+      if (this.state.search) {
+        query.relationship = { $regex: this.state.search, $options: "i" };
+      }
+
+      return {
+        loading: ! handle.ready(),
+        room: {
+          _id: null,
+          name: "Direct Messages"
+        },
+        topics: Topics.find(
+          query,
+          { sort: { lastActivity: -1, createdAt: -1 } }
+        ).fetch()
+      };
     }
-
-    return {
-      loading: ! handleRoom.ready() || ! handleTopics.ready(),
-      room: Rooms.findOne({ slug: roomSlug }),
-      topics: Topics.find(
-        query,
-        { sort: { lastActivity: -1, createdAt: -1 } }
-      ).fetch(),
-      currentUser: Meteor.user()
-    };
   },
-  handleSearch(event) {
-    this.setState({search: event.target.value})
+  handleSearch(e) {
+    this.setState({ search: e.target.value });
   },
   renderTopics() {
     if (this.data.topics.length) {
       return this.data.topics.map((topic) => {
         return <TopicListItem
           topic={topic}
-          currentUser={this.data.currentUser}
           deactivateLeft={this.props.deactivateLeft}
+          dm={this.props.dm}
           key={topic._id}
         />;
       });
     }
-    return <li>No topics.</li>;
+    if (! this.props.dm) {
+      return <li>No topics.</li>;
+    } else {
+      return <li>No conversations.</li>;
+    }
   },
   render() {
     if (this.data.loading || ! this.data.room || ! this.data.topics) {
       return <DenseLoadingSpinner />;
     }
 
-    const url = FlowRouter.path("room", { roomSlug: this.data.room.slug });
+    const url = expr(() => {
+      if (! this.props.dm) {
+        return FlowRouter.path("room", { roomSlug: this.data.room.slug });
+      } else {
+        return FlowRouter.path("dmList");
+      }
+    });
 
     return <List ordered={true} className="topicList">
       <li className="roomHead">
@@ -77,7 +99,7 @@ export default React.createClass({
         </a>
       </li>
       <li className="roomTools">
-        <TopicButton room={this.data.room} />
+        <TopicButton dm={this.props.dm} room={this.data.room} />
         <TextField
           id={"topicSearch" + this.data.room._id}
           hintText="Search"

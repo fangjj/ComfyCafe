@@ -21,20 +21,49 @@ export default React.createClass({
   },
   render() {
     const topic = this.props.topic;
-    const topicUrl = FlowRouter.path("topic", {
-      roomSlug: topic.room.slug,
-      topicSlug: topic.slug
+    const topicUrl = expr(() => {
+      if (! this.props.dm) {
+        return FlowRouter.path("topic", {
+          roomSlug: topic.room.slug,
+          topicSlug: topic.slug
+        });
+      } else {
+        return FlowRouter.path("dm", {
+          username: "test"
+        });
+      }
     });
 
-    const owner = topic.owner;
-    const ownerUrl = FlowRouter.path("profile", { username: owner.username });
+    const owner = expr(() => {
+      if (! this.props.dm) {
+        return topic.owner;
+      } else {
+        return this.context.currentUser;
+      }
+    });
+
+    const ownerUrl = expr(() => {
+      if (! this.props.dm) {
+        return FlowRouter.path("profile", { username: owner.username });
+      } else {
+        return FlowRouter.path("profile", { username: "test" });
+      }
+    });
+
+    const topicName = expr(() => {
+      if (! this.props.dm) {
+        return topic.name;
+      } else {
+        return "test";
+      }
+    });
 
     return <li className="topicListItem">
       <div className="flexLayout">
         <div className="rightSide">
           <div className="top">
             <div className="info">
-              <a href={topicUrl}>{topic.name}</a>
+              <a href={topicUrl}>{topicName}</a>
               <br />
               <Moment time={topic.lastActivity} />
             </div>

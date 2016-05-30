@@ -1,35 +1,37 @@
 import React from "react";
 
-import TopicForm from "./TopicForm";
-import Dialog from "/imports/ui/components/Dialog";
+import TopicForm from "/imports/ui/components/Chat/TopicForm";
+import ConvoForm from "/imports/ui/components/Chat/ConvoForm";
+import DialogForm from "/imports/ui/components/DialogForm";
 import SubmitButton from "/imports/ui/components/Button/SubmitButton";
 
 export default React.createClass({
   getInitialState() {
-    return {
-      showForm: false
-    };
+    return { showForm: false };
   },
-  showTopicForm() {
+  showForm() {
     this.setState({ showForm: true });
   },
-  hideTopicForm() {
+  hideForm() {
     this.setState({ showForm: false });
   },
   renderForm() {
     if (this.state.showForm) {
-      return <Dialog
-        title="Create Topic"
-        formId="formNewTopic"
-        open={true}
-        onClose={this.hideTopicForm}
-      >
-        <TopicForm
+      if (! this.props.dm) {
+        return <DialogForm
+          title="Create Topic"
           id="formNewTopic"
-          room={this.props.room}
-          onClose={this.hideTopicForm}
-        />
-      </Dialog>;
+          form={<TopicForm room={this.props.room} />}
+          onClose={this.hideForm}
+        />;
+      } else {
+        return <DialogForm
+          title="Start Conversation"
+          id="formNewConvo"
+          form={<ConvoForm room={this.props.room} />}
+          onClose={this.hideForm}
+        />;
+      }
     }
   },
   render() {
@@ -38,7 +40,7 @@ export default React.createClass({
         iconName="add"
         label={this.props.dm ? "New Victim" : "New Topic"}
         style={{ width: "100%" }}
-        onTouchTap={this.showTopicForm}
+        onTouchTap={this.showForm}
       />
       {this.renderForm()}
     </div>;

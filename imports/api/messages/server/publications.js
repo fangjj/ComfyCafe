@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import Messages from "/imports/api/messages/collection";
 import Topics from "/imports/api/topics/collection";
 import Rooms from "/imports/api/rooms/collection";

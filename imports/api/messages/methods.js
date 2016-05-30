@@ -243,8 +243,8 @@ Meteor.methods({
 		ModLog.insert(doc);
   },
 
-  addDirectMessage(to, data) {
-    check(to, String);
+  addDirectMessage(username, data) {
+    check(username, String);
     check(data, match);
 
     if (! Meteor.userId()) {
@@ -252,9 +252,9 @@ Meteor.methods({
     }
 
     const topicId = expr(() => {
-      const topic = dmTopic(to);
+      const topic = dmTopic(username);
       if (! topic) {
-        return dmTopicBuilder(to);
+        return dmTopicBuilder(username);
       } return topic._id;
     });
 
@@ -269,7 +269,7 @@ Meteor.methods({
     Messages.insert(doc);
 
     Topics.update(
-      { _id: message.topic._id },
+      { _id: topicId },
       {
         $set: { lastActivity: new Date() },
         $inc: { messageCount: 1 }

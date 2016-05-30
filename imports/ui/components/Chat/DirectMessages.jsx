@@ -1,30 +1,21 @@
 import React from "react";
 
 import Topics from "/imports/api/topics/collection";
-import Rooms from "/imports/api/rooms/collection";
 import "/imports/api/topics/methods";
 import { isMember } from "/imports/api/common/persimmons";
 import setTitle from "/imports/ui/utils/setTitle";
 import MessageList from "./MessageList";
-import TopicForm from "./TopicForm";
-import Dialog from "/imports/ui/components/Dialog";
 import SubmitButton from "/imports/ui/components/Button/SubmitButton";
 import DangerButton from "/imports/ui/components/Button/DangerButton";
-import ReportButton from "/imports/ui/components/Button/ReportButton";
 import ButtonGroup from "/imports/ui/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/components/ActionWell";
 import Moment from "/imports/ui/components/Moment";
 import DenseLoadingSpinner from "/imports/ui/components/Spinner/DenseLoadingSpinner";
 import Icon from "/imports/ui/components/Daikon/Icon";
-import DialogForm from "/imports/ui/components/DialogForm";
-import ReportForm from "/imports/ui/components/Report/ReportForm";
 import Err404 from "/imports/ui/components/Err404";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
-  getInitialState() {
-    return { showForm: false, showReportForm: false };
-  },
   getMeteorData() {
     const handle = Meteor.subscribe("directMessageTopic", this.props.dmWith);
     return {
@@ -63,8 +54,8 @@ export default React.createClass({
       </header>
       <MessageList
         topic={this.data.topic}
-        currentUser={this.data.currentUser}
         updateTitle={this.updateTitle}
+        dmWith={this.props.dmWith}
       />
     </section>;
   }

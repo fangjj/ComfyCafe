@@ -69,17 +69,33 @@ export default React.createClass({
         }
       });
     } else if (! this.props.message) {
-      Meteor.call("addMessage", this.props.topic._id, data, (err, name) => {
-        if (err) {
-          prettyPrint(err);
-        }
-      });
+      if (! this.props.dmWith) {
+        Meteor.call("addMessage", this.props.topic._id, data, (err, name) => {
+          if (err) {
+            prettyPrint(err);
+          }
+        });
+      } else {
+        Meteor.call("addDirectMessage", this.props.dmWith, data, (err, name) => {
+          if (err) {
+            prettyPrint(err);
+          }
+        });
+      }
     } else {
-      Meteor.call("updateMessage", this.props.message._id, data, (err) => {
-        if (err) {
-          prettyPrint(err);
-        }
-      });
+      if (! this.props.dmWith) {
+        Meteor.call("updateMessage", this.props.message._id, data, (err) => {
+          if (err) {
+            prettyPrint(err);
+          }
+        });
+      } else {
+        Meteor.call("updateDirectMessage", this.props.message._id, data, (err) => {
+          if (err) {
+            prettyPrint(err);
+          }
+        });
+      }
     }
   },
   handleModDelete() {

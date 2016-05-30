@@ -20,7 +20,7 @@ export default React.createClass({
   },
   renderMain() {
     if (this.props.dmList) {
-      return <div>:^)</div>;
+      return <div />;
     } else if (this.props.dmWith) {
       return <DirectMessages dmWith={this.props.dmWith} />;
     } else if (FlowRouter.getParam("topicSlug")) {
@@ -33,7 +33,10 @@ export default React.createClass({
     const leftClasses = classConcat("leftCol", this.state.activeLeft ? "active" : null);
     return <DenseLayout>
       <DenseCol className={leftClasses}>
-        <TopicList dm={this.props.dmList} deactivateLeft={this.deactivateLeft} />
+        <TopicList
+          dm={this.props.dmList || this.props.dmWith}
+          deactivateLeft={this.deactivateLeft}
+        />
       </DenseCol>
 
       <div className="col mainCol">

@@ -12,13 +12,12 @@ import InlineLoadingSpinner from "/imports/ui/components/Spinner/InlineLoadingSp
 
 export default React.createClass({
   mixins: [ReactMeteorData],
+  contextTypes: { currentUser: React.PropTypes.object },
   getMeteorData() {
     const id = this.props.topic._id;
-    let handle = Meteor.subscribe("topicMessages", id);
-    let sort = 1;
-    if (this.props.comments) {
-      sort = -1;
-    }
+    const subName = (this.props.dmWith ? "directMessages" : "topicMessages");
+    const handle = Meteor.subscribe(subName, id);
+    const sort = (this.props.comments ? -1 : 1);
     return {
       loading: ! handle.ready(),
       messages: Messages.find(
@@ -35,8 +34,7 @@ export default React.createClass({
           return result;
         },
         {}
-      ),
-      currentUser: Meteor.user()
+      )
     };
   },
   getInitialState() {
@@ -49,15 +47,11 @@ export default React.createClass({
     let initialCount = this.state.initialCount;
     if (initialCount === 0) {
       initialCount = this.data.messages.length;
-      this.setState({
-        initialCount: initialCount
-      });
+      this.setState({ initialCount });
     }
 
     const difference = Math.max(this.data.messages.length - initialCount, 0);
-    this.setState({
-      difference: difference
-    });
+    this.setState({ difference });
   },
   decrementDifference() {
     this.setState({
@@ -74,7 +68,7 @@ export default React.createClass({
     }
 
     // Clear notifications
-    if (this.data.currentUser) {
+    if (this.context.currentUser) {
       Meteor.call("viewTopic", this.props.topic._id);
     }
   },
@@ -90,7 +84,6 @@ export default React.createClass({
         statusInjector(msg.owner, this.data.userStatuses || {});
         return <MessageListItem
           message={msg}
-          currentUser={this.props.currentUser}
           key={msg._id}
           onVisible={this.decrementDifference}
         />;
@@ -105,10 +98,10 @@ export default React.createClass({
   renderTyping() {
     if (this.props.topic.typing) {
       var typing = _.filter(this.props.topic.typing, (x) => {
-        if (! this.props.currentUser) {
+        if (! this.context.currentUser) {
           return true;
         }
-        return x._id !== this.props.currentUser._id;
+        return x._id !== this.context.currentUser._id;
       });
       if (typing.length) {
         let verb = "is";
@@ -124,11 +117,12 @@ export default React.createClass({
     }
   },
   renderInput() {
-    if (this.props.currentUser) {
+    if (this.context.currentUser) {
       return <li>
         <MessageInlineForm
           topic={this.props.topic}
           afterSubmit={this.decrementDifference}
+          dmWith={this.props.dmWith}
         />
       </li>;
     }

@@ -9,6 +9,7 @@ import createSlugCycler from "/imports/api/common/createSlugCycler";
 import { isMod, isMember } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
 import ModLog from "/imports/api/modlog/collection";
+import { dmTopic, dmTopicBuilder } from "/imports/api/topics/dmTopic";
 
 const match = {
   name: String
@@ -315,5 +316,12 @@ Meteor.methods({
         }
       } }
     );
+  },
+
+  startConversation(username) {
+    const topic = dmTopic(username);
+    if (! topic) {
+      return dmTopicBuilder(username);
+    } return topic._id;
   }
 });

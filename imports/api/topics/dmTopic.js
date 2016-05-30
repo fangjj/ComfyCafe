@@ -1,11 +1,12 @@
+import Topics from "/imports/api/topics/collection";
 import { dmRoom, dmRoomBuilder } from "/imports/api/rooms/dmRoom";
 
-function dmTopicBuilder(otherUserId) {
-  check(otherUserId, String);
+function dmTopicBuilder(username) {
+  check(username, String);
   if (! Meteor.userId()) {
     throw new Meteor.Error("not-logged-in");
   }
-  const otherUser = Meteor.users.findOne({ _id: otherUserId });
+  const otherUser = Meteor.users.findOne({ normalizedUsername: username.toLowerCase() });
   if (! otherUser) {
     throw new Meteor.Error("return-to-sender-address-unknown-no-such-number-no-such-zone");
   }
@@ -23,17 +24,21 @@ function dmTopicBuilder(otherUserId) {
     lastActivity: new Date(),
     room: { _id: roomId },
     messageCount: 0,
-    relationship: [ Meteor.userId(), otherUserId ]
+    relationship: [ Meteor.userId(), otherUser._id ]
   };
-  const topicId = Topics.insert(doc);
+  return Topics.insert(doc);
 }
 
-function dmTopic(otherUserId) {
-  check(otherUserId, String);
+function dmTopic(username) {
+  check(username, String);
   if (! Meteor.userId()) {
     throw new Meteor.Error("not-logged-in");
   }
-  return Topics.findOne({ relationship: { $all: [ Meteor.userId(), otherUserId ] } });
+  const otherUser = Meteor.users.findOne({ normalizedUsername: username.toLowerCase() });
+  if (! otherUser) {
+    throw new Meteor.Error("return-to-sender-address-unknown-no-such-number-no-such-zone");
+  }
+  return Topics.findOne({ relationship: { $all: [ Meteor.userId(), otherUser._id ] } });
 }
 
 export { dmTopic, dmTopicBuilder };

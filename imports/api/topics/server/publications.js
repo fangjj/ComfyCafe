@@ -59,7 +59,6 @@ Meteor.publish("directMessageTopic", function (username) {
 		const otherUser = Meteor.users.find({ normalizedUsername: username.toLowerCase() });
 		const topics = Topics.find(
 			{
-				_id: topicId,
 				relationship: { $all: [ this.userId, otherUser.fetch()[0]._id ] }
 			}
 		);

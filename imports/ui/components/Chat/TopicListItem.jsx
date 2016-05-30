@@ -4,11 +4,12 @@ import Moment from "/imports/ui/components/Moment";
 import Avatar from "/imports/ui/components/Avatar/Avatar";
 
 export default React.createClass({
+  contextTypes: { currentUser: React.PropTypes.object },
   renderMoreMenu() {
-    const isOwner = this.props.currentUser
-      && this.props.currentUser._id === this.props.topic.owner._id;
+    const isOwner = this.context.currentUser
+      && this.context.currentUser._id === this.props.topic.owner._id;
     if (isOwner) {
-      return <TopicMoreMenu topic={this.props.topic} currentUser={this.props.currentUser} />;
+      return <TopicMoreMenu topic={this.props.topic} currentUser={this.context.currentUser} />;
     }
   },
   renderCountLabel() {
@@ -37,7 +38,6 @@ export default React.createClass({
               <br />
               <Moment time={topic.lastActivity} />
             </div>
-            {/*this.renderMoreMenu()*/}
           </div>
         </div>
       </div>

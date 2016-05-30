@@ -36,8 +36,8 @@ export default React.createClass({
     return <div>
       <SubmitButton
         iconName="add"
-        label="New Topic"
-        style={{width: "100%"}}
+        label={this.props.dm ? "New Victim" : "New Topic"}
+        style={{ width: "100%" }}
         onTouchTap={this.showTopicForm}
       />
       {this.renderForm()}

@@ -9,6 +9,8 @@ import docBuilder from "/imports/api/common/docBuilder";
 import { isMod, isMember } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
 import ModLog from "/imports/api/modlog/collection";
+import { dmRoom } from "/imports/api/rooms/dmRoom";
+import { dmTopic, dmTopicBuilder } from "/imports/api/topics/dmTopic";
 
 const match = {
   body: String
@@ -239,5 +241,77 @@ Meteor.methods({
     const doc = modDeleteDocBuilder(messageId, msg, reason);
     doc.community = _.pick(msg.topic.room, [ "_id", "slug" ]);
 		ModLog.insert(doc);
+  },
+
+  addDirectMessage(to, data) {
+    check(to, String);
+    check(data, match);
+
+    if (! Meteor.userId()) {
+      throw new Meteor.Error("not-logged-in");
+    }
+
+    const topicId = expr(() => {
+      const topic = dmTopic(to);
+      if (! topic) {
+        return dmTopicBuilder(to);
+      } return topic._id;
+    });
+
+    const roomId = dmRoom()._id;
+
+    const doc = docBuilder({
+      topic: {
+        _id: topicId,
+        room: { _id: roomId }
+      }
+    }, data);
+    Messages.insert(doc);
+
+    Topics.update(
+      { _id: message.topic._id },
+      {
+        $set: { lastActivity: new Date() },
+        $inc: { messageCount: 1 }
+      }
+    );
+  },
+  updateDirectMessage(messageId, data) {
+    check(messageId, String);
+    check(data, match);
+
+    const message = Messages.findOne({ _id: messageId });
+
+    if (! isOwner(message)) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    Messages.update(
+      { _id: messageId },
+      { $set: _.defaults({
+        updatedAt: new Date()
+      }, data) }
+    );
+
+    Topics.update(
+      { _id: message.topic._id },
+      { $set: { lastActivity: new Date() } }
+    );
+  },
+  deleteDirectMessage(messageId) {
+    check(messageId, String);
+
+    const message = Messages.findOne({ _id: messageId });
+
+    if (! isOwner(message)) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    Messages.remove({ _id: messageId });
+
+    Topics.update(
+      { _id: message.topic._id },
+      { $inc: { messageCount: -1 } }
+    );
   }
 });

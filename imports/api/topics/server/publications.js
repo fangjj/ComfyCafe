@@ -49,6 +49,15 @@ Meteor.publish("roomTopics", function (slug) {
 	});
 });
 
+Meteor.publish("directMessageTopics", function () {
+	return Topics.find({ relationship: this.userId });
+});
+
+Meteor.publish("directMessageTopic", function (topicId) {
+	check(topicId);
+	return Topics.find({ _id: topicId, relationship: this.userId });
+});
+
 Meteor.publish("modAllTopics", function () {
 	if (isMod(this.userId)) {
   	return Topics.find({});

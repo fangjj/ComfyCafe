@@ -21,6 +21,19 @@ Meteor.publish("topicMessages", function (topicId) {
 	});
 });
 
+Meteor.publish("directMessages", function (topicId) {
+	check(topicId, String);
+	this.autorun(function (computation) {
+		const topic = Topics.findOne(
+			{ _id: topicId },
+			{ fields: { relationship: 1 } }
+		);
+		if (_.includes(topic.relationship, this.userId)) {
+			return Messages.find({ "topic._id": topicId });
+		} return this.ready();
+	});
+});
+
 Meteor.publish("modAllMessages", function () {
 	if (isMod(this.userId)) {
   	return Messages.find({});

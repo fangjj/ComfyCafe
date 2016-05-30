@@ -38,7 +38,12 @@ export default React.createClass({
       if (! this.props.dm) {
         return topic.owner;
       } else {
-        return this.context.currentUser;
+        if (topic.owner0._id !== this.context.currentUser._id) {
+          return topic.owner0;
+        }
+        if (topic.owner1._id !== this.context.currentUser._id) {
+          return topic.owner1;
+        }
       }
     });
 

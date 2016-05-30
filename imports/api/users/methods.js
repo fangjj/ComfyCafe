@@ -38,11 +38,13 @@ function deleteAvatar(userId) {
 	if (Meteor.isServer) {
 		const user = Meteor.users.findOne({ _id: userId });
 
-		const oldAvatarId = _.get(user, "avatars.fullsize._id");
-		if (oldAvatarId) {
-			// Delete old avatar
-			media.remove({ _id: oldAvatarId });
-		}
+		// Delete old avatar
+		media.remove(
+			{
+				"metadata.avatarFor": userId,
+				"metadata.djenticon": { $ne: true }
+			}
+		);
 
 		// Rebind djenticon
 		media.update(
@@ -190,13 +192,13 @@ Meteor.methods({
 			try {
 				mediumValidate(medium._id, "image", Meteor.bindEnvironment((mime, valid) => {
 					if (valid) {
-						if (Meteor.user().avatars) {
-							var oldAvatarId = Meteor.user().avatars.fullsize._id;
-							if (oldAvatarId) {
-								// Delete old avatar
-								media.remove({ _id: oldAvatarId });
+						// Delete old avatar
+						media.remove(
+							{
+								"metadata.avatarFor": Meteor.userId(),
+								"metadata.djenticon": { $ne: true }
 							}
-						}
+						);
 
 						// Unbind djenticon
 						media.update(

@@ -2,14 +2,12 @@ import React from "react";
 
 import Topics from "/imports/api/topics/collection";
 import "/imports/api/topics/methods";
-import { isMember } from "/imports/api/common/persimmons";
 import setTitle from "/imports/ui/utils/setTitle";
 import MessageList from "./MessageList";
 import SubmitButton from "/imports/ui/components/Button/SubmitButton";
 import DangerButton from "/imports/ui/components/Button/DangerButton";
 import ButtonGroup from "/imports/ui/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/components/ActionWell";
-import Moment from "/imports/ui/components/Moment";
 import DenseLoadingSpinner from "/imports/ui/components/Spinner/DenseLoadingSpinner";
 import Icon from "/imports/ui/components/Daikon/Icon";
 import Err404 from "/imports/ui/components/Err404";

@@ -7,7 +7,11 @@ import MoreMenu from "/imports/ui/components/MoreMenu";
 export default React.createClass({
   contextTypes: { currentUser: React.PropTypes.object },
   delete() {
-    Meteor.call("deleteMessage", this.props.message._id);
+    if (! this.props.dmWith) {
+      Meteor.call("deleteMessage", this.props.message._id);
+    } else {
+      Meteor.call("deleteDirectMessage", this.props.message._id);
+    }
   },
   render() {
     const msg = this.props.message;

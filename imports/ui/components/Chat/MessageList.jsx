@@ -86,6 +86,7 @@ export default React.createClass({
           message={msg}
           key={msg._id}
           onVisible={this.decrementDifference}
+          dmWith={this.props.dmWith}
         />;
       });
     }

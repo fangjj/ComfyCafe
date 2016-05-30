@@ -50,6 +50,7 @@ export default React.createClass({
     const likesUrl = FlowRouter.path("likes");
     const yourAlbumsUrl = FlowRouter.path("albumsBy", { username });
     const yourPagesUrl = FlowRouter.path("pagesBy", { username });
+    const dmUrl = FlowRouter.path("dmList");
     const usersUrl = FlowRouter.path("users");
     const settingsUrl = FlowRouter.path("settings");
 
@@ -82,6 +83,11 @@ export default React.createClass({
           href={yourAlbumsUrl}
         />
         {this.renderInvites()}
+        <TopMenuItem
+          primaryText="Direct Messages"
+          leftIconName="chat_bubble"
+          href={dmUrl}
+        />
         <TopMenuItem
           primaryText="Users"
           leftIconName="looks"

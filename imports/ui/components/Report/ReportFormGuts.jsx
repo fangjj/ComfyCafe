@@ -16,7 +16,7 @@ export default (props) => {
       defaultValue={props.details}
       label="Details"
       rows={3}
-      rowsMax={5}
+      
       onChange={props.handleDetails}
     />
   </div>;

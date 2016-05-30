@@ -151,7 +151,7 @@ export default React.createClass({
         id={"msgBody" + _.get(this.props, "message._id", "New" + _.get(this.props, "topic._id"))}
         hintText={generateMessageHint()}
         rows={3}
-        rowsMax={10}
+
         onChange={this.handleBody}
       />
 

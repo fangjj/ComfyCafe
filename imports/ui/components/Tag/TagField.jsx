@@ -253,7 +253,7 @@ export default React.createClass({
           value={this.state.text}
           label={this.props.label || this.props.floatingLabelText || "Tags"}
           rows={1}
-          rowsMax={5}
+          
           onChange={this.onChange}
           onBlur={this.onBlur}
           onFocus={this.onFocus}

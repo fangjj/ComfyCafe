@@ -173,7 +173,7 @@ export default React.createClass({
         defaultValue={this.state.source}
         label="Source"
         rows={1}
-        rowsMax={3}
+        
         onChange={this.handleSource}
       />;
     }
@@ -218,7 +218,7 @@ export default React.createClass({
         defaultValue={this.state.description}
         label="Description"
         rows={3}
-        rowsMax={7}
+        
         onChange={this.handleDescription}
       />
       <br />

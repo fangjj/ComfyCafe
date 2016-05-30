@@ -162,7 +162,7 @@ export default React.createClass({
         label="Body"
         defaultValue={this.state.body}
         rows={4}
-        rowsMax={10}
+        
         onChange={this.handleBody}
       />
 

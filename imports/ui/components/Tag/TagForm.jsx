@@ -183,7 +183,7 @@ export default React.createClass({
         defaultValue={this.state.aliases}
         label="Aliases"
         rows={1}
-        rowsMax={3}
+        
         onChange={this.handleAliases}
       />
       <br />
@@ -192,7 +192,7 @@ export default React.createClass({
         defaultValue={this.state.definition}
         label="Definition"
         rows={3}
-        rowsMax={10}
+        
         onChange={this.handleDefinition}
       />
       <br />

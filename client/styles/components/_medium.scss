@@ -18,8 +18,8 @@
 
   .spoiler {
     $size: 268px;
-    width: $size;
-    height: $size;
+    width: $size !important;
+    height: $size !important;
   }
 }
 

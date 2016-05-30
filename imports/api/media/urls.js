@@ -2,8 +2,7 @@ import _ from "lodash";
 
 import mongoid from "/imports/api/common/mongoid";
 
-const base = "/gridfs/media/";
-const frontBase = expr(() => {
+const base = expr(() => {
   if (process.env.NODE_ENV === "production") {
     return "https://img.comfy.cafe/media/";
   } else {
@@ -37,20 +36,20 @@ function queryBuilder(str, params) {
 }
 
 function getMediaUrlMD5(md5, ext) {
-  return queryBuilder(addExt(frontBase + md5, ext), {
+  return queryBuilder(addExt(base + md5, ext), {
     cache: oneMonth
   });
 }
 
 function getMediaUrlID(id, size, ext) {
-  return queryBuilder(addExt(frontBase + "id/" + id, ext), {
+  return queryBuilder(addExt(base + "id/" + id, ext), {
     size,
     cache: oneMonth
   });
 }
 
 function getMediaUrlPost(postId, size, ext) {
-  return queryBuilder(addExt(frontBase + "post/" + postId, ext), {
+  return queryBuilder(addExt(base + "post/" + postId, ext), {
     size,
     cache: daysToSeconds(1)
   });

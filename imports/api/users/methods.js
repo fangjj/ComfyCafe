@@ -188,7 +188,6 @@ Meteor.methods({
 
 		if (Meteor.isServer) {
 			const medium = media.findOne({ _id: new Mongo.ObjectID(avatarId) });
-			console.log(medium);
 			try {
 				mediumValidate(medium._id, "image", Meteor.bindEnvironment((mime, valid) => {
 					if (valid) {

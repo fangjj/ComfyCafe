@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 
 import Moment from "/imports/ui/components/Moment";
@@ -21,18 +22,6 @@ export default React.createClass({
   },
   render() {
     const topic = this.props.topic;
-    const topicUrl = expr(() => {
-      if (! this.props.dm) {
-        return FlowRouter.path("topic", {
-          roomSlug: topic.room.slug,
-          topicSlug: topic.slug
-        });
-      } else {
-        return FlowRouter.path("dm", {
-          username: "test"
-        });
-      }
-    });
 
     const owner = expr(() => {
       if (! this.props.dm) {
@@ -47,19 +36,26 @@ export default React.createClass({
       }
     });
 
-    const ownerUrl = expr(() => {
+    const topicUrl = expr(() => {
       if (! this.props.dm) {
-        return FlowRouter.path("profile", { username: owner.username });
+        return FlowRouter.path("topic", {
+          roomSlug: topic.room.slug,
+          topicSlug: topic.slug
+        });
       } else {
-        return FlowRouter.path("profile", { username: "test" });
+        return FlowRouter.path("dm", {
+          username: owner.username
+        });
       }
     });
+
+    const ownerUrl = FlowRouter.path("profile", { username: owner.username });
 
     const topicName = expr(() => {
       if (! this.props.dm) {
         return topic.name;
       } else {
-        return "test";
+        return _.get(owner, "profile.displayName", owner.username);
       }
     });
 

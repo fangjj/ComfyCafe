@@ -1,23 +1,18 @@
-$boxy-green-thing: url(/images/greenbox.svg);
-$purple-stopsign-thing: url(/images/purplestopsign.svg);
-$pink-bubble-thing: url(/images/pinkbubble.svg);
-$red-triangle-thing: url(/images/redtri.svg);
-
 .spoiler {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  background: $boxy-green-thing;
+  background: $greenbox;
   &.level1 { // Risqué
-    background: $purple-stopsign-thing;
+    background: $purplestopsign;
   }
   &.level2 { // Nudity
-    background: $pink-bubble-thing;
+    background: $pinkbubble;
   }
   &.level3 { // Explicit
-    background: $red-triangle-thing;
+    background: $redtri;
   }
 
   @include quickShadow;

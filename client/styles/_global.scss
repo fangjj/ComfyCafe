@@ -21,7 +21,7 @@ body {
   overflow-x: hidden;
 
   color: $text-color;
-  background: url(/images/my-little-plaid-dark.png) $bg-color fixed;
+  background: $plaid $bg-color fixed;
 
   font-family: "Slabo 27px";
   font-size: 18px;

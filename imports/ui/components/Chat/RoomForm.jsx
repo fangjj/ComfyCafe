@@ -151,14 +151,14 @@ export default React.createClass({
         defaultValue={this.state.description}
         label="Description"
         rows={3}
-        rowsMax={10}
+        
         onChange={this.handleDescription}
       />
       <TextArea
         defaultValue={this.state.rules}
         label="Rules"
         rows={3}
-        rowsMax={10}
+        
         onChange={this.handleRules}
       />
 

@@ -133,7 +133,7 @@ export default React.createClass({
         defaultValue={this.state.bio}
         label="Who the hell are you?"
         rows={2}
-        rowsMax={5}
+        
         onChange={this.handleBio}
       />
 

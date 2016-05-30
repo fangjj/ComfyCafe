@@ -138,7 +138,7 @@ export default React.createClass({
         defaultValue={this.state.body}
         label="Body"
         rows={3}
-        rowsMax={7}
+        
         onChange={this.handleBody}
       />
 

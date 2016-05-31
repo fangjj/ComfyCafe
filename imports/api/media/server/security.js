@@ -5,6 +5,10 @@ media.allow({
    insert: function (userId, file) {
      // Assign the proper owner when a file is created
      check(userId, String);
+     const user = Meteor.users.findOne({ _id: userId });
+     if (! user) {
+       return false;
+     }
      file.metadata = file.metadata || {};
      file.metadata.owner = userId;
      return true;

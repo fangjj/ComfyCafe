@@ -216,7 +216,7 @@ function tagParser(tagStr, reformat) {
 					if (_.includes(["s", "safe"], safety.toLowerCase())) {
 						return 0;
 					}
-					if (_.includes(["r", "riqué", "risque"], safety.toLowerCase())) {
+					if (_.includes(["r", "risqué", "risque"], safety.toLowerCase())) {
 						return 1;
 					}
 					if (_.includes(["n", "nudity"], safety.toLowerCase())) {

@@ -3,6 +3,10 @@ import _ from "lodash";
 import tagParser from "./parser";
 import tagExtensions from "./extensions";
 
+function orSplit(str) {
+  return str.split(/\s*OR\s*|\s*\|\|\s*/);
+}
+
 function queryGeneratorAuthors(parsed, queryDoc) {
   const and = [];
 
@@ -241,6 +245,20 @@ function tagQuery(str) {
 
   let parsed = str;
   if (_.isString(str)) {
+    const chunks = orSplit(str);
+    if (chunks.length > 1) {
+      // Query for stuff that satisfies at least one chunk.
+      // Don't ask for nesting.
+      return _.reduce(
+        chunks,
+        (result, v, k) => {
+          result.$or.push(tagQuery(v));
+          return result;
+        },
+        { $or: [] }
+      );
+    }
+
     parsed = tagParser(str);
   }
   let queryDoc = {}, wAnd = [], sAnd = [];
@@ -267,8 +285,6 @@ function tagQuery(str) {
   if (and.length) {
     queryDoc.$and = and;
   }
-
-  console.log(queryDoc);
 
   return queryDoc;
 }

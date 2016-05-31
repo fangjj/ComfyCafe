@@ -99,6 +99,10 @@ export default React.createClass({
     //media.resumable.assignDrop(document.querySelector("html"));
 
     media.resumable.on("fileAdded", (file) => {
+      if (! this.props.currentUser) {
+        return;
+      }
+
       window.onbeforeunload = this.navWarning;
 
       this.uploads[file.uniqueIdentifier] = {
@@ -156,6 +160,9 @@ export default React.createClass({
   },
   handleDrop(e) {
     e.preventDefault();
+    if (! this.props.currentUser) {
+      return;
+    }
     eachFile(e, (file) => {
       file.source = "media";
       media.resumable.addFile(file);
@@ -167,6 +174,9 @@ export default React.createClass({
     }
   },
   handlePaste(e) {
+    if (! this.props.currentUser) {
+      return;
+    }
     _.each(e.clipboardData.items, (item) => {
       if (item.kind === "file") {
         const blob = item.getAsFile();
@@ -208,7 +218,6 @@ export default React.createClass({
   },
   setColor(color) {
     this.setState({ color });
-    console.log(color, this.state);
   },
   renderPostForm() {
     const id = this.state.mediumId || this.directMediumId;

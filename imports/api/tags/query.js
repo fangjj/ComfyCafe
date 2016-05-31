@@ -268,6 +268,8 @@ function tagQuery(str) {
     queryDoc.$and = and;
   }
 
+  console.log(queryDoc);
+
   return queryDoc;
 }
 

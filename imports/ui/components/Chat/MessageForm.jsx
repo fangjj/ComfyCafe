@@ -41,6 +41,34 @@ export default React.createClass({
       this.setState({ body: e.target.value });
     }
   },
+  keyHandler(e) {
+    return;
+    const keyDown = e.which;
+    const shifted = e.shiftKey;
+
+    const ENTER = 13;
+    if (keyDown === ENTER && ! shifted) {
+      e.preventDefault();
+
+      console.log("ENTER");
+
+      const ta = e.target;
+      const $ta = $(ta);
+
+      ta.focus();
+      const sel = document.selection.createRange();
+      sel.moveStart("character", -ta.value.length);
+      const pos = ta.text.length;
+
+      console.log(post, ta.value.length);
+    }
+  },
+  componentDidMount() {
+    window.addEventListener("keydown", this.keyHandler);
+  },
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.keyHandler);
+  },
   handleSubmit() {
     const data = dataBuilder(this.state, defaultState);
 

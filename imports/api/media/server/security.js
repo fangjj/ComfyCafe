@@ -4,6 +4,7 @@ media.allow({
    // The creator of a file owns it. UserId may be null.
    insert: function (userId, file) {
      // Assign the proper owner when a file is created
+     check(userId, String);
      file.metadata = file.metadata || {};
      file.metadata.owner = userId;
      return true;

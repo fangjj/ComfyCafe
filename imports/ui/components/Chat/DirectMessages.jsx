@@ -15,13 +15,21 @@ import Err404 from "/imports/ui/components/Err404";
 export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    const handle = Meteor.subscribe("directMessageTopic", this.props.dmWith);
+    const username = this.props.dmWith.toLowerCase();
+    const handle = Meteor.subscribe("directMessageTopic", username);
     return {
       loading: ! handle.ready(),
       topic: Topics.findOne(
-        {
-          relationship: Meteor.userId()
-        }
+        { $or: [
+					{
+						"owner0._id": Meteor.userId(),
+						"owner1.normalizedUsername": username
+					},
+					{
+						"owner1._id": Meteor.userId(),
+						"owner0.normalizedUsername": username
+					}
+				] }
       )
     };
   },

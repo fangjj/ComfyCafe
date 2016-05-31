@@ -13,7 +13,7 @@ function tagDescriptorTokenizer(str) {
 }
 
 function tagOrTokenizer(str) {
-  return _.compact(str.split(/\s*OR\s*|\s*\|\|\s*/i));
+  return _.compact(str.split(/\s+OR\s+|\s*\|\|\s*/i));
 }
 
 export {

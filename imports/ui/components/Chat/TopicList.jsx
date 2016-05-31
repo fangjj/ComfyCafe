@@ -38,7 +38,15 @@ export default React.createClass({
 
       const query = { relationship: { $exists: true } };
       if (this.state.search) {
-        query.relationship = { $regex: this.state.search, $options: "i" };
+        const reg  = { $regex: this.state.search, $options: "i" };
+        query.$or = [
+          { "owner0.username": reg },
+          { "owner0.normalizedUsername": reg },
+          { "owner0.profile.displayName": reg },
+          { "owner1.username": reg },
+          { "owner1.normalizedUsername": reg },
+          { "owner1.profile.displayName": reg }
+        ];
       }
 
       return {

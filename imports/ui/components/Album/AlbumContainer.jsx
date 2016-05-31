@@ -7,7 +7,6 @@ export default createContainer(({ params }) => {
   const username = FlowRouter.getParam("username");
   const slug = FlowRouter.getParam("albumSlug");
   const handle = Meteor.subscribe("album", username, slug);
-  const postsHandle = Meteor.subscribe("albumPosts", username, slug);
 
   const album = Albums.findOne(
     {

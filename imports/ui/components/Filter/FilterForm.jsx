@@ -23,14 +23,8 @@ export default React.createClass({
   handleName(e) {
     this.setState({ name: e.target.value });
   },
-  handleSpoilerSafety(e, index, value) {
-    this.setState({ spoilerSafety: parseInt(value) });
-  },
   handleSpoilers(value) {
     this.setState({ spoilers: value });
-  },
-  handleHideSafety(e, index, value) {
-    this.setState({ hideSafety: parseInt(value) });
   },
   handleHides(value) {
     this.setState({ hides: value });
@@ -109,7 +103,7 @@ export default React.createClass({
       />
       <TagInlineField
         hintText="Hides"
-        value={this.state.hides}
+        defaultValue={this.state.hides}
         delim=";"
         onChange={this.handleHides}
       />

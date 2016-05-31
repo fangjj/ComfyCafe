@@ -3,6 +3,7 @@ import _ from "lodash";
 import Posts from "../collection";
 import { postsPerPage } from "../constants";
 import privacyWrap from "/imports/api/common/privacyWrap";
+import Filters from "/imports/api/filters/collection";
 import tagQuery from "/imports/api/tags/query";
 import Albums from "/imports/api/albums/collection";
 import { isMod } from "/imports/api/common/persimmons";
@@ -58,6 +59,21 @@ function queryBuilder(userId, doc, state) {
 	return doc;
 }
 
+function filter(state, user, query) {
+	const filter = expr(() => {
+		if (state.filterId) {
+			return Filters.findOne({ _id: state.filterId }, { hides: 1 });
+		} else {
+			if (user) {
+				return user.defaultFilter;
+			} return;
+		}
+	});
+	if (filter && filter.hides) {
+		query.$nor = [ tagQuery(filter.hides) ];
+	}
+}
+
 function options(page) {
 	return {
 		sort: { createdAt: -1, name: 1 },
@@ -99,10 +115,12 @@ Meteor.publish("allPosts", function (state, page=0) {
 	check(page, Number);
 
 	this.autorun(function (computation) {
+		let user;
 		const doc = expr(() => {
-		if (this.userId) {
-				const user = Meteor.users.findOne(this.userId, { fields: {
-					friends: 1
+			if (this.userId) {
+				user = Meteor.users.findOne(this.userId, { fields: {
+					friends: 1,
+					defaultFilter: 1
 				} });
 
 				return privacyWrap(
@@ -115,14 +133,14 @@ Meteor.publish("allPosts", function (state, page=0) {
 			}
 		});
 
-		return Posts.find(
-			queryBuilder(
-				this.userId,
-				doc,
-				state
-			),
-			options(page)
+		const query = queryBuilder(
+			this.userId,
+			doc,
+			state
 		);
+
+		filter(state, user, query);
+		return Posts.find(query, options(page));
 	});
 });
 
@@ -132,10 +150,12 @@ Meteor.publish("imagesBy", function (username, state, page=0) {
 	check(page, Number);
 
 	this.autorun(function (computation) {
+		let user;
 		const doc = expr(() => {
 			if (this.userId) {
-				const user = Meteor.users.findOne(this.userId, { fields: {
-					friends: 1
+				user = Meteor.users.findOne(this.userId, { fields: {
+					friends: 1,
+					defaultFilter: 1
 				} });
 
 				return privacyWrap(
@@ -151,14 +171,14 @@ Meteor.publish("imagesBy", function (username, state, page=0) {
 			}
 		});
 
-		return Posts.find(
-			queryBuilder(
-				this.userId,
-				doc,
-				state
-			),
-			options(page)
+		const query = queryBuilder(
+			this.userId,
+			doc,
+			state
 		);
+
+		filter(state, user, query);
+		return Posts.find(query, options(page));
 	});
 });
 
@@ -172,24 +192,25 @@ Meteor.publish("postFeed", function (state, page=0) {
 		if (this.userId) {
 			const user = Meteor.users.findOne(this.userId, { fields: {
 				subscriptions: 1,
-				friends: 1
+				friends: 1,
+				defaultFilter: 1
 			} });
 
-			return Posts.find(
-				queryBuilder(
+			const query = queryBuilder(
+				this.userId,
+				privacyWrap(
+					{ $or: [
+						{ "owner._id": this.userId },
+						{ "owner._id": { $in: user.subscriptions || [] } }
+					] },
 					this.userId,
-					privacyWrap(
-						{ $or: [
-							{ "owner._id": this.userId },
-							{ "owner._id": { $in: user.subscriptions || [] } }
-						] },
-						this.userId,
-						user.friends
-					),
-					state
+					user.friends
 				),
-				options(page)
+				state
 			);
+
+			filter(state, user, query);
+			return Posts.find(query, options(page));
 		}
 	});
 
@@ -217,28 +238,30 @@ Meteor.publish("searchPosts", function (tagStr, state, page=0) {
 	checkState(state);
 	check(page, Number);
 
-	const query = tagQuery(tagStr);
+	const innerQuery = tagQuery(tagStr);
 
 	this.autorun(function (computation) {
+		let user;
 		const doc = expr(() => {
 			if (this.userId) {
-				const user = Meteor.users.findOne(this.userId, { fields: {
-					friends: 1
+				user = Meteor.users.findOne(this.userId, { fields: {
+					friends: 1,
+					defaultFilter: 1
 				} });
-				return privacyWrap(query, this.userId, user.friends);
+				return privacyWrap(innerQuery, this.userId, user.friends);
 			} else {
-				return privacyWrap(query);
+				return privacyWrap(innerQuery);
 			}
 		});
 
-		return Posts.find(
-			queryBuilder(
-				this.userId,
-				doc,
-				state
-			),
-			options(page)
+		const query = queryBuilder(
+			this.userId,
+			doc,
+			state
 		);
+
+		filter(state, user, query);
+		return Posts.find(query, options(page));
 	});
 });
 
@@ -263,27 +286,29 @@ Meteor.publish("postAlbum", function (albumData, state, page=0) {
 			return;
 		}
 
-		const query = { _id: { $in: album.posts } };
+		const innerQuery = { _id: { $in: album.posts } };
 
+		let user;
 		const doc = expr(() => {
 			if (this.userId) {
-				const user = Meteor.users.findOne(this.userId, { fields: {
-					friends: 1
+				user = Meteor.users.findOne(this.userId, { fields: {
+					friends: 1,
+					defaultFilter: 1
 				} });
-				return privacyWrap(query, this.userId, user.friends, { "owner._id": album.owner._id });
+				return privacyWrap(innerQuery, this.userId, user.friends, { "owner._id": album.owner._id });
 			} else {
-				return privacyWrap(query);
+				return privacyWrap(innerQuery);
 			}
 		});
 
-		return Posts.find(
-			queryBuilder(
-				this.userId,
-				doc,
-				state
-			),
-			options(page)
+		const query = queryBuilder(
+			this.userId,
+			doc,
+			state
 		);
+
+		filter(state, user, query);
+		return Posts.find(query, options(page));
 	});
 });
 

@@ -155,6 +155,19 @@ export default React.createClass({
       arg1 = this.props.subData;
     }
 
+    const filter = Filters.findOne({ _id: filterId });
+    Session.set("filter", filter);
+    if (filter && filter.hides) {
+      function pushOrReplace(x) {
+        if (_.isArray(doc.$nor)) {
+          doc.$nor.push(x);
+        } else {
+          doc.$nor = [ x ];
+        }
+      }
+      pushOrReplace(tagQuery(filter.hides));
+    }
+
     const handle = Meteor.subscribe(this.props.subName, arg1, arg2, arg3);
     const data = {
       loading: ! handle.ready(),
@@ -173,8 +186,6 @@ export default React.createClass({
       currentUser: Meteor.user()
     };
 
-    const filter = Filters.findOne({ _id: filterId });
-    Session.set("filter", filter);
     if (filter && filter.spoilers) {
       const doc = tagQuery(filter.spoilers);
       const allTags = _.reduce(

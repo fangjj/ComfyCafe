@@ -6,12 +6,45 @@ import MessageForm from "/imports/ui/components/Chat/MessageForm";
 import Actions from "/imports/ui/components/Actions";
 import SubmitButton from "/imports/ui/components/Button/SubmitButton";
 
+function getCursorPosition(el) {
+  let pos = 0;
+  if ("selectionStart" in el) {
+    pos = el.selectionStart;
+  } else if ("selection" in document) {
+    el.focus();
+    const Sel = document.selection.createRange();
+    const SelLength = document.selection.createRange().text.length;
+    Sel.moveStart('character', -el.value.length);
+    pos = Sel.text.length - SelLength;
+  }
+  return pos;
+}
+
 export default React.createClass({
   getInitialState() {
     return {
       typing: false,
       body: ""
     };
+  },
+  keyHandler(e) {
+    const isEnter = e.which === 13;
+    const isShifted = e.shiftKey;
+    const ENTER = 13;
+    if (isEnter && ! isShifted) {
+      const pos = getCursorPosition(e.target);
+      const end = e.target.value.length;
+      if (pos === end) {
+        e.preventDefault();
+        this.handleSubmit();
+      }
+    }
+  },
+  componentDidMount() {
+    this.refs.form.addEventListener("keydown", this.keyHandler);
+  },
+  componentWillUnmount() {
+    this.refs.form.removeEventListener("keydown", this.keyHandler);
   },
   handleBody(e) {
     if (! this.state.typing) {
@@ -27,6 +60,9 @@ export default React.createClass({
     }
   },
   handleSubmit() {
+    if (! this.state.body) {
+      return;
+    }
     if (! this.props.dmWith) {
       Meteor.call("addMessage", this.props.topic._id, { body: this.state.body });
     } else {
@@ -40,7 +76,7 @@ export default React.createClass({
     this.props.afterSubmit();
   },
   render() {
-    return <div>
+    return <div ref="form">
       <MessageForm
         directValue={true}
         body={this.state.body}

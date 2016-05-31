@@ -5,6 +5,7 @@ import "/imports/api/topics/methods";
 import MessageForm from "/imports/ui/components/Chat/MessageForm";
 import Actions from "/imports/ui/components/Actions";
 import SubmitButton from "/imports/ui/components/Button/SubmitButton";
+import BottomFAB from "/imports/ui/components/BottomFAB";
 
 function getCursorPosition(el) {
   let pos = 0;
@@ -46,6 +47,9 @@ export default React.createClass({
   componentWillUnmount() {
     this.refs.form.removeEventListener("keydown", this.keyHandler);
   },
+  toBottom() {
+    this.refs.form.scrollIntoView({ block: "end", behavior: "smooth" });
+  },
   handleBody(e) {
     if (! this.state.typing) {
       Meteor.call("startTyping", this.props.topic._id);
@@ -75,7 +79,17 @@ export default React.createClass({
     Meteor.call("stopTyping", this.props.topic._id);
     this.props.afterSubmit();
   },
+  renderBottomFAB() {
+    if (! this.props.comments) {
+      return <BottomFAB onTouchTap={this.toBottom} />
+    }
+  },
   render() {
+    const left = <SubmitButton
+      label="Send"
+      iconName="send"
+      onTouchTap={this.handleSubmit}
+    />;
     return <div ref="form">
       <MessageForm
         directValue={true}
@@ -84,13 +98,8 @@ export default React.createClass({
         topic={this.props.topic}
         dmWith={this.props.dmWith}
       />
-      <Actions>
-        <SubmitButton
-          label="Send"
-          iconName="send"
-          onTouchTap={this.handleSubmit}
-        />
-      </Actions>
+      <Actions left={left} />
+      {this.renderBottomFAB()}
     </div>;
   }
 });

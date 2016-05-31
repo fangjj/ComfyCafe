@@ -124,6 +124,7 @@ export default React.createClass({
           topic={this.props.topic}
           afterSubmit={this.decrementDifference}
           dmWith={this.props.dmWith}
+          comments={this.props.comments}
         />
       </li>;
     }

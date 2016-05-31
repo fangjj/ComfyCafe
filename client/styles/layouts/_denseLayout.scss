@@ -15,7 +15,7 @@
   .leftCol {
     @include shadow2;
 
-    position: fixed;
+    position: absolute;
 
     width: 20%;
   }

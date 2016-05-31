@@ -4,7 +4,7 @@ import tagParser from "./parser";
 import tagExtensions from "./extensions";
 
 function orSplit(str) {
-  return str.split(/\s*OR\s*|\s*\|\|\s*/);
+  return str.split(/\s*OR\s*|\s*\|\|\s*/i);
 }
 
 function queryGeneratorAuthors(parsed, queryDoc) {

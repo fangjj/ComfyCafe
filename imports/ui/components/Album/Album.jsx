@@ -3,7 +3,6 @@ import React from "react";
 
 import setTitle from "/imports/ui/utils/setTitle";
 import Content from "/imports/ui/components/Content";
-import Medium from "/imports/ui/components/Medium";
 import LoadingSpinner from "/imports/ui/components/Spinner/LoadingSpinner";
 import InlineLoadingSpinner from "/imports/ui/components/Spinner/InlineLoadingSpinner";
 import FAB from "/imports/ui/components/FAB";
@@ -46,31 +45,6 @@ export default React.createClass({
         />}
       />;
     }
-  },
-  renderPosts(album) {
-    if (this.props.postsLoading || this.props.filterLoading) {
-      return <InlineLoadingSpinner />;
-    }
-
-    return _.map(album.posts, (postId) => {
-      return _.reduce(
-        this.props.posts,
-        (result, post) => {
-          if (post._id === postId) {
-            result = <figure key={post._id}>
-              <Medium
-                medium={post.medium}
-                safety={post.safety}
-                spoilered={_.has(this.props.spoilered, post._id)}
-                reason={_.get(this.props.spoilered, post._id)}
-              />
-            </figure>;
-          }
-          return result;
-        },
-        null
-      );
-    });
   },
   renderButtons() {
     const isOwner = _.get(this.props.currentUser, "_id") === this.props.album.owner._id;

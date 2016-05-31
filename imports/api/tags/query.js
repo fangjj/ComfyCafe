@@ -1,11 +1,8 @@
 import _ from "lodash";
 
-import tagParser from "./parser";
-import tagExtensions from "./extensions";
-
-function orSplit(str) {
-  return str.split(/\s*OR\s*|\s*\|\|\s*/i);
-}
+import tagParser from "/imports/api/tags/parser";
+import tagExtensions from "/imports/api/tags/extensions";
+import { tagOrTokenizer } from "/imports/api/tags/tokenizer";
 
 function queryGeneratorAuthors(parsed, queryDoc) {
   const and = [];
@@ -245,7 +242,7 @@ function tagQuery(str) {
 
   let parsed = str;
   if (_.isString(str)) {
-    const chunks = orSplit(str);
+    const chunks = tagOrTokenizer(str);
     if (chunks.length > 1) {
       // Query for stuff that satisfies at least one chunk.
       // Don't ask for nesting.

@@ -12,8 +12,13 @@ function tagDescriptorTokenizer(str) {
   return commaSplit(str);
 }
 
+function tagOrTokenizer(str) {
+  return _.compact(str.split(/\s*OR\s*|\s*\|\|\s*/i));
+}
+
 export {
 	tagTopLevelTokenizer,
 	tagSubjectTokenizer,
-	tagDescriptorTokenizer
+	tagDescriptorTokenizer,
+  tagOrTokenizer
 };

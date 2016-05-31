@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import "/imports/api/filters/methods";
+import { initialStateBuilder, dataBuilder } from "/imports/ui/utils/forms";
 import Form from "/imports/ui/components/Form";
 import TextField from "/imports/ui/components/TextField";
 import TagInlineField from "/imports/ui/components/Tag/TagInlineField";
@@ -17,10 +18,7 @@ const defaultState = {
 export default React.createClass({
   contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
-    const state = _.defaults(_.pick(this.props.filter, _.keys(defaultState)), defaultState);
-    state.spoilers = _.get(state.spoilers, "text", state.spoilers);
-    state.hides = _.get(state.hides, "text", state.hides);
-    return state;
+    return initialStateBuilder(this.props.filter, defaultState);
   },
   handleName(e) {
     this.setState({ name: e.target.value });
@@ -50,14 +48,14 @@ export default React.createClass({
       } else {
         return FlowRouter.path("filter", {
           username: _.get(this.props, "filter.owner.username", this.context.currentUser.username),
-          slug: slug
+          slug: slugOrId
         });
       }
     });
     FlowRouter.go(path);
   },
   handleSubmit() {
-    const data = this.state;
+    const data = dataBuilder(this.state, defaultState);
 
     if (! this.props.filter) {
       Meteor.call("addFilter", data, this.props.global, (err, slugOrId) => {

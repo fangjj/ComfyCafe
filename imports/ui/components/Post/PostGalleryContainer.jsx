@@ -6,6 +6,8 @@ import Filters from "/imports/api/filters/collection";
 import filtersFor from "/imports/api/filters/filtersFor";
 import { postsPerPage } from "/imports/api/posts/constants";
 import tagQuery from "/imports/api/tags/query";
+import tagParser from "/imports/api/tags/parser";
+import { tagOrTokenizer } from "/imports/api/tags/tokenizer";
 import { tagStrFromUrl } from "/imports/api/tags/urlify";
 import PostGallery from "./PostGallery";
 import Powerless from "/imports/ui/components/Powerless";
@@ -173,10 +175,17 @@ export default React.createClass({
 
     const filter = Filters.findOne({ _id: filterId });
     Session.set("filter", filter);
-    if (filter && filter.spoilers.text) {
+    if (filter && filter.spoilers) {
       const doc = tagQuery(filter.spoilers);
+      const allTags = _.reduce(
+        tagOrTokenizer(filter.spoilers),
+        (result, v, k) => {
+          return _.union(result, tagParser(v).allTags);
+        },
+        []
+      );
       Posts.find(doc).map((post) => {
-        data.spoilered[post._id] = _.intersection(post.tags.allTags, filter.spoilers.allTags);
+        data.spoilered[post._id] = _.intersection(post.tags.allTags, allTags);
       });
     }
 

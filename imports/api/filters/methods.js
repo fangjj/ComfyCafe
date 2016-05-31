@@ -2,6 +2,7 @@ import _ from "lodash";
 
 import Filters from "/imports/api/filters/collection";
 import tagParser from "/imports/api/tags/parser";
+import { tagOrTokenizer } from "/imports/api/tags/tokenizer";
 import { tagFullResolver } from "/imports/api/tags/resolver";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
 
@@ -13,6 +14,23 @@ const match = {
 };
 
 const slugCycle = createSlugCycler(Filters);
+
+function filterParser(data) {
+	function parse(v) {
+		const parsed = tagParser(v, { reformat: true });
+		if (Meteor.isServer) {
+			return tagFullResolver(parsed);
+		} return parsed;
+	}
+
+	function chunk(thing) {
+		const chunks = tagOrTokenizer(data[thing]);
+		data[thing] = _.map(chunks, (v, k) => parse(v).text).join(" || ");
+	}
+
+	chunk("spoilers");
+	chunk("hides");
+}
 
 Meteor.methods({
 	addFilter(data, global=false) {
@@ -37,12 +55,7 @@ Meteor.methods({
 
     data.slug = slugCycle(null, data.name);
 
-		data.spoilers = tagParser(data.spoilers, { reformat: true });
-    data.hides = tagParser(data.hides, { reformat: true });
-		if (Meteor.isServer) {
-			data.spoilers = tagFullResolver(data.spoilers);
-			data.hides = tagFullResolver(data.hides);
-		}
+		filterParser(data);
 
     const filterId = Filters.insert(_.defaults({
       createdAt: new Date(),
@@ -69,12 +82,7 @@ Meteor.methods({
 			throw new Meteor.Error("not-authorized");
 		}
 
-    data.spoilers = tagParser(data.spoilers, { reformat: true });
-    data.hides = tagParser(data.hides, { reformat: true });
-		if (Meteor.isServer) {
-			data.spoilers = tagFullResolver(data.spoilers);
-			data.hides = tagFullResolver(data.hides);
-		}
+		filterParser(data);
 
     Filters.update(
       { _id: filterId },

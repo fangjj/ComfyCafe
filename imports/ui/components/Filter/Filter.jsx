@@ -54,7 +54,7 @@ export default React.createClass({
         <h3>Spoilers</h3>
       </header>
       <div className="textBody body">
-        <p>{filter.spoilers.text || <span className="na">Nothing</span>}</p>
+        <p>{filter.spoilers || <span className="na">Nothing</span>}</p>
       </div>
     </section>;
   },
@@ -64,7 +64,7 @@ export default React.createClass({
         <h3>Hides</h3>
       </header>
       <div className="textBody body">
-        <p>{filter.hides.text || <span className="na">Nothing</span>}</p>
+        <p>{filter.hides || <span className="na">Nothing</span>}</p>
       </div>
     </section>;
   },

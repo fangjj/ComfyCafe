@@ -249,14 +249,7 @@ function tagQuery(str) {
     if (chunks.length > 1) {
       // Query for stuff that satisfies at least one chunk.
       // Don't ask for nesting.
-      return _.reduce(
-        chunks,
-        (result, v, k) => {
-          result.$or.push(tagQuery(v));
-          return result;
-        },
-        { $or: [] }
-      );
+      return { $or: _.map(chunks, (v, k) => tagQuery(v)) };
     }
 
     parsed = tagParser(str);

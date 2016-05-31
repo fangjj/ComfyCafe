@@ -6,6 +6,7 @@ import Filters from "/imports/api/filters/collection";
 import filtersFor from "/imports/api/filters/filtersFor";
 import { postsPerPage } from "/imports/api/posts/constants";
 import tagQuery from "/imports/api/tags/query";
+import { tagStrFromUrl } from "/imports/api/tags/urlify";
 import PostGallery from "./PostGallery";
 import Powerless from "/imports/ui/components/Powerless";
 
@@ -24,7 +25,7 @@ export default React.createClass({
     const filterId = _.get(Meteor.user(), "settings.defaultFilter");
     return {
       originalOnly: (FlowRouter.getQueryParam("originalOnly") === "true") || defaultState.originalOnly,
-      tagStr: FlowRouter.getQueryParam("query") || defaultState.tagStr,
+      tagStr: tagStrFromUrl(FlowRouter.getQueryParam("query") || defaultState.tagStr),
       filterId: FlowRouter.getQueryParam("filter")
         || expr(() => {
           if (Meteor.isClient) {

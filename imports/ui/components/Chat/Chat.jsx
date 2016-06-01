@@ -7,6 +7,7 @@ import TopicList from "/imports/ui/components/Chat/TopicList";
 import DirectMessages from "/imports/ui/components/Chat/DirectMessages";
 import DenseLayout from "/imports/ui/components/DenseLayout";
 import DenseCol from "/imports/ui/components/DenseCol";
+import Icon from "/imports/ui/components/Daikon/Icon";
 
 export default React.createClass({
   getInitialState() {
@@ -20,7 +21,14 @@ export default React.createClass({
   },
   renderMain() {
     if (this.props.dmList) {
-      return <div />;
+      return <section>
+        <header>
+          <div className="hotdog hide-on-med-and-up" onTouchTap={this.activateLeft}>
+            <Icon>menu</Icon>
+          </div>
+          <h2>Direct Messages</h2>
+        </header>
+      </section>;
     } else if (this.props.dmWith) {
       return <DirectMessages dmWith={this.props.dmWith} />;
     } else if (FlowRouter.getParam("topicSlug")) {

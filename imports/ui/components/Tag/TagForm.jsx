@@ -125,16 +125,16 @@ export default React.createClass({
       return <span>
         <TagInlineField
           constrainType="origin"
-          defaultValue={this.props.origin}
+          defaultValue={this.state.origin}
           floatingLabelText="Origin"
-          onChange={this.props.handleOrigin}
+          onChange={this.handleOrigin}
         />
         <br />
       </span>;
     }
   },
   renderSafety() {
-    if (! _.includes(["origin", "artist"], this.state.tagType)) {
+    if (! _.includes(["character", "origin", "artist"], this.state.tagType)) {
       return <SafetySelector
         value={this.state.safety}
         onChange={this.handleSafety}
@@ -183,7 +183,7 @@ export default React.createClass({
         defaultValue={this.state.aliases}
         label="Aliases"
         rows={1}
-        
+
         onChange={this.handleAliases}
       />
       <br />
@@ -192,7 +192,7 @@ export default React.createClass({
         defaultValue={this.state.definition}
         label="Definition"
         rows={3}
-        
+
         onChange={this.handleDefinition}
       />
       <br />

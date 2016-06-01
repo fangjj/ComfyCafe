@@ -19,6 +19,7 @@ const defaultState = {
 };
 
 export default React.createClass({
+  contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
     const state = initialStateBuilder(this.props.album, defaultState);
     if (this.props.mod) {
@@ -51,7 +52,7 @@ export default React.createClass({
   },
   redirect(slug) {
     const path = FlowRouter.path("album", {
-      username: _.get(this.props, "album.owner.username", this.props.currentUser.username),
+      username: _.get(this.props, "album.owner.username", this.context.currentUser.username),
       albumSlug: slug
     });
     FlowRouter.go(path);
@@ -145,7 +146,7 @@ export default React.createClass({
         defaultValue={this.state.description}
         label="Description"
         rows={3}
-        
+
         onChange={this.handleDescription}
       />
 

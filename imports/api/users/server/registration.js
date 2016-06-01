@@ -45,6 +45,9 @@ Accounts.onCreateUser(function (options, user) {
     user.room = {
       _id: roomId
     };
+
+    user.roles = {};
+    user.roles["community_" + user._id] = [ "admin", "moderator", "member" ];
   }
   return user;
 });

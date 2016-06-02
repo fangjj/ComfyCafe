@@ -1,0 +1,1 @@
+sharp = Npm.require("sharp");

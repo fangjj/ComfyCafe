@@ -1,2 +1,4 @@
-client/lib/extern/* linguist-vendored
+client/extern/* linguist-vendored
+client/styles/extern/* linguist-vendored
 client/styles/materialize/* linguist-vendored
+imports/ui/components/extern/* linguist-vendored

@@ -1,0 +1,92 @@
+@mixin genericFlex {
+  .body {
+    margin-top: 8px;
+
+    padding-top: 8px;
+
+    border-top: $border;
+
+    p {
+      margin-bottom: 0;
+
+      word-break: break-word;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+.flexLayout {
+  @include genericFlex;
+
+  display: flex;
+  align-items: left;
+  align-content: left;
+
+  position: relative;
+
+  .genericCol {
+    display: flex;
+    align-items: left;
+    align-content: left;
+    flex-direction: column;
+
+    width: 100%;
+  }
+
+  .rightSide {
+    display: flex;
+    align-items: left;
+    align-content: left;
+    flex-direction: column;
+
+    margin-left: 16px;
+
+    width: 100%;
+
+    .top {
+      display: flex;
+      align-items: left;
+      align-content: left;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      position: relative;
+
+      width: 100%;
+
+      // Prevents things from overlapping with more button.
+      > *:nth-last-child(2) {
+        margin-right: 42px;
+      }
+
+      .more {
+        position: absolute;
+        right: 0;
+        top: -8px;
+      }
+
+      .modIcon, .reportIcon {
+        position: absolute;
+        right: 10px;
+        top: 4px;
+
+        margin-bottom: -12px;
+
+        cursor: pointer;
+        user-select: none;
+      }
+    }
+  }
+}
+
+.flexColumn {
+  @include genericFlex;
+
+  display: flex;
+  align-items: left;
+  align-content: left;
+  flex-direction: column;
+}

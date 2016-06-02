@@ -1,0 +1,19 @@
+.status {
+  $size: 24px;
+
+  width: $size;
+  height: $size;
+
+  border: 2px solid $fg-color;
+  border-radius: $size/2;
+
+  &.online {
+    background-color: $verdant-victory;
+  }
+  &.idle {
+    background-color: $vintage-mustard;
+  }
+  &.offline {
+    background-color: $reassuring-gray;
+  }
+}

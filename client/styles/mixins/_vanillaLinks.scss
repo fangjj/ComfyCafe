@@ -1,0 +1,25 @@
+@mixin vanillaLinks() {
+  a:not(.btn) {
+    &:link, &:visited {
+      color: #29BED6;
+    }
+
+    &:hover, &:active {
+      color: #30F0F0;
+    }
+  }
+}
+
+@mixin lightLinks() {
+  a:not(.btn) {
+    font-weight: 600;
+
+    &:link, &:visited {
+      color: saturate(#29BED6, 40);
+    }
+
+    &:hover, &:active {
+      color: saturate(#30F0F0, 40);
+    }
+  }
+}

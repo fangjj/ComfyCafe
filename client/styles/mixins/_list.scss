@@ -1,0 +1,21 @@
+@mixin list() {
+  margin: 0;
+
+  padding: 0;
+
+  list-style: none;
+
+  > li:nth-child(even) {
+    background: $fg-accent;
+  }
+
+  > li {
+    position: relative;
+
+    padding: 12px;
+  }
+}
+
+.list {
+  @include list;
+}

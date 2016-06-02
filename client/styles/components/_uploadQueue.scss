@@ -1,0 +1,81 @@
+.uploadQueue {
+  position: fixed;
+  left: 22px;
+  bottom: 22px;
+
+  min-width: 25%;
+  max-width: 45%;
+  max-height: 35vh;
+
+  background: rgba($sg-color, 0.9);
+
+  border: 1px solid rgba($text-color, 0.4);
+
+  ul {
+    @include list;
+  }
+
+  li {
+    &.complete {
+      @include hoverAlt;
+
+      border: 1px solid $secondary-color;
+
+      cursor: pointer;
+    }
+
+    .row {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 6px;
+
+      min-height: 36px;
+    }
+
+    .preview {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 36px;
+      height: 36px;
+    }
+
+    img {
+      max-width: 36px;
+      max-height: 36px;
+
+      width: auto;
+      height: auto;
+
+      object-fit: contain;
+    }
+
+    .label {
+      margin-left: 12px;
+
+      overflow: hidden;
+
+      text-align: left;
+    }
+
+    .delete {
+      right: -12px;
+    }
+  }
+}
+
+@media #{$small-and-down} {
+  .uploadQueue {
+    left: 0;
+    bottom: 0;
+
+    // 56 = fab width; 22 = fab right offset
+    width: calc(100vw - #{56px + 22px*2});
+
+    max-width: none;
+  }
+}

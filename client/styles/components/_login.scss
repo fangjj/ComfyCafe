@@ -1,0 +1,25 @@
+.loginForm {
+  max-width: 420px;
+}
+
+#topLogin {
+  a {
+    line-height: normal;
+  }
+
+  i {
+    margin-bottom: 0;
+  }
+
+  span {
+    top: 0;
+  }
+
+  .button {
+    display: flex !important;
+  }
+}
+
+.authLink {
+  line-height: 2.5;
+}

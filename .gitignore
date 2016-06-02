@@ -23,4 +23,8 @@ node_modules
 .npm
 .git
 .build*
-packages/
+.vagrant
+bundle/
+settings.json
+settings.*.json
+site.retry

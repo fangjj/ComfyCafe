@@ -1,0 +1,40 @@
+.mediumContainer {
+  display: flex;
+  justify-content: center;
+
+  line-height: 0;
+
+  .medium:not(audio) {
+    width: auto;
+    height: auto;
+
+    max-width: 100%;
+    max-height: calc(100vh - 128px);
+  }
+
+  img.medium {
+    cursor: zoom-in;
+  }
+
+  .spoiler {
+    $size: 268px;
+    width: $size !important;
+    height: $size !important;
+  }
+}
+
+.mediumContainer.video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-height: calc(100vh - 128px);
+
+  .medium {
+    width: 100%;
+    height: auto;
+
+    max-height: calc(100vh - 128px);
+  }
+}

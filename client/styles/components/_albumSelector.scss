@@ -1,0 +1,46 @@
+.albumSelector {
+  @include paper;
+
+  z-index: index($elements, albumSelector);
+
+  position: absolute;
+
+  min-width: 240px;
+
+  background-color: $sg-color;
+
+  > .scrollable {
+    max-height: 360px;
+  }
+
+  li {
+    @include hoverAlt;
+
+    cursor: pointer;
+
+    .title {
+      font-size: 19px;
+    }
+
+    .undertitle {
+      font-size: 18px;
+    }
+
+    .indicator {
+      i {
+        color: $success-color !important;
+      }
+    }
+
+    .remove {
+      position: absolute;
+      right: 6px;
+      top: 6px;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-flow: column;
+  }
+}

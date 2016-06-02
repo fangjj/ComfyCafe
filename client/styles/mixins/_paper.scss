@@ -1,0 +1,7 @@
+@mixin paper {
+  @include shadow1;
+
+  position: relative;
+
+  background: $fg-color;
+}

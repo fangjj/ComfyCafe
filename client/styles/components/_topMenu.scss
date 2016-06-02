@@ -1,0 +1,37 @@
+@mixin topMenu {
+  z-index: index($elements, topMenuContainer);
+
+  visibility: hidden;
+  opacity: 0;
+
+  transition: visibility 0s, opacity 0.2s linear;
+
+  &.active {
+    visibility: visible;
+    opacity: 1;
+
+    transition: visibility 0s, opacity 0.2s linear;
+  }
+}
+
+.topMenu {
+  @include topMenu;
+}
+
+#mobileMenu {
+  @include shadow2;
+
+	z-index: index($elements, topMenu);
+
+  position: absolute;
+  left: 0;
+  top: $top-nav-height;
+
+	width: calc(100% + 14px);
+
+  background-color: $sg-color;
+
+  border-radius: 0 !important;
+
+  text-align: left;
+}

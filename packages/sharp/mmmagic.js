@@ -1,0 +1,1 @@
+mmm = Npm.require("mmmagic");

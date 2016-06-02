@@ -1,0 +1,5 @@
+---
+- name: ensure mongodb is at the latest version
+  apt: pkg=mongodb state=latest
+  notify:
+  - restart mongodb

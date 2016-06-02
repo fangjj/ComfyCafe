@@ -1,0 +1,30 @@
+.infoBox {
+  .flexLayout {
+    width: 100%;
+  }
+
+  .body {
+    margin-top: 0;
+
+    width: 100%;
+
+    border: 0;
+
+    &:empty {
+      // Fancy!
+      display: none;
+    }
+
+    &:not(:empty) {
+      $pad: 24px;
+      padding: $pad;
+      padding-bottom: $pad - $content-padding;
+    }
+  }
+
+  .modIcon {
+    position: absolute;
+    right: $content-padding;
+    top: $content-padding;
+  }
+}

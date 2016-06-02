@@ -1,0 +1,36 @@
+.postPreview {
+  position: relative;
+
+  .avatarContainer {
+    position: absolute;
+    left: 6px;
+    top: 6px;
+
+    opacity: 0.7;
+  }
+
+  .star {
+    position: absolute;
+    left: 3px;
+    top: 26px;
+
+    opacity: 0.9;
+
+    i {
+      font-size: 18px;
+    }
+  }
+
+  .more {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .spoiler {
+    width: 223px;
+    height: 223px;
+
+    color: $text-color;
+  }
+}

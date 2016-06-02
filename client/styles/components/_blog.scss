@@ -1,0 +1,29 @@
+.blogPost {
+  h2 {
+    @include subtleLinks;
+  }
+
+  &.isReblog, .blogPost {
+    .body {
+      margin-top: 0;
+
+      border-top: 0;
+    }
+  }
+
+  .blogPost {
+    margin-top: 6px !important;
+
+    padding-left: 12px;
+    padding-right: 0;
+    padding-top: 4px;
+    padding-bottom: 6px;
+
+    width: 100%;
+
+    background: none !important;
+
+    box-shadow: none;
+    border-left: $border;
+  }
+}

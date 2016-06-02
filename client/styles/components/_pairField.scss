@@ -1,0 +1,22 @@
+.pairField {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  position: relative;
+
+  width: 100%;
+
+  //.labelField {}
+
+  .valueField {
+    flex-grow: 1;
+  }
+
+  .remove {
+    position: absolute !important;
+    right: -8px;
+    bottom: 2px;
+  }
+}

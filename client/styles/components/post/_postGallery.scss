@@ -1,0 +1,14 @@
+.postGallery {
+  .filter {
+    display: flex;
+    flex-direction: row;
+
+    margin-bottom: 6px;
+
+    width: 100%;
+  }
+
+  .inlineLoadingSpinner {
+    margin-top: 16px;
+  }
+}

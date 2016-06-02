@@ -1,0 +1,13 @@
+.button button, .button a {
+  border-radius: 0 !important;
+
+  user-select: none;
+
+  i {
+    margin-bottom: 4px;
+  }
+}
+
+.button a {
+  vertical-align: baseline !important;
+}

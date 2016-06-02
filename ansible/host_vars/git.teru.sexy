@@ -1,0 +1,10 @@
+local: false
+cores: 4
+makej: 5
+
+domain: teru.sexy
+ddp_domain: sock.teru.sexy
+root_url: https://teru.sexy
+ddp_url: https://sock.teru.sexy
+ssh_port: 222
+ansible_ssh_user: macaron

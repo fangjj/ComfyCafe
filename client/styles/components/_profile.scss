@@ -1,0 +1,71 @@
+.profile {
+  .leftSide {
+    max-width: 45%;
+  }
+
+  .rightSide {
+
+  }
+
+  header {
+    margin-bottom: 16px;
+
+    text-align: left;
+  }
+
+  h2 {
+    margin: 0;
+    // We're going to have to clean this up...
+    margin-bottom: 0 !important;
+  }
+
+  .catchphrase {
+    font-style: italic;
+
+    &:before {
+      content: '"';
+    }
+
+    &:after {
+      content: '"';
+    }
+  }
+
+  .stat .status {
+    $size: 16px;
+
+    display: inline-block;
+
+    position: relative;
+    top: 2px;
+
+    margin-right: 2px;
+
+    width: $size;
+    height: $size;
+
+    border: 0;
+    border-radius: $size/2;
+  }
+
+  .belowWell {
+    margin-top: 36px;
+
+    > div + div {
+      margin-top: 12px;
+    }
+  }
+
+  .body {
+    margin-left: 6px;
+    margin-right: 6px;
+
+    ul, ol {
+      margin-left: 8px;
+    }
+  }
+
+  form {
+    margin-top: 24px;
+  }
+}

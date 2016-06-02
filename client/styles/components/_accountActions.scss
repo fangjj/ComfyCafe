@@ -1,0 +1,49 @@
+#accountActionsToggle {
+	z-index: index($elements, topMenuToggle);
+
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#accountActionsArrow {
+	z-index: index($elements, topMenuArrow);
+
+	position: absolute;
+	right: 10px + 50px/2 - 2px;
+	top: 60px;
+
+	width: 0;
+	height: 0;
+
+	border-style: solid;
+	border-width: 0 16px 16px 16px;
+	border-color: transparent transparent $sg-color transparent;
+}
+
+#accountActions {
+	@include shadow2;
+
+	z-index: index($elements, topMenu);
+
+	position: absolute;
+	right: 10px + 50px/2 - 16px;
+	top: 60px + 16px;
+
+	width: 270px;
+
+	background-color: $sg-color;
+
+  border-radius: 0 !important;
+
+	text-align: left;
+}
+
+@media #{$small-and-down} {
+  #accountActions {
+		left: 0;
+		right: auto;
+	  top: $top-nav-height;
+
+		width: 100vw;
+  }
+}

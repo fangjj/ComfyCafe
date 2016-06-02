@@ -1,0 +1,98 @@
+#notificationListToggle {
+  position: relative;
+
+  .push {
+    @include pushBadge(16px);
+
+    position: absolute;
+    left: 32px;
+    bottom: 14px;
+  }
+}
+
+#notificationArrow {
+	z-index: index($elements, topMenuArrow);
+
+	position: absolute;
+	right: 16px/2 + 50px*1.78; // What am I even doing?
+	top: 60px;
+
+	width: 0;
+	height: 0;
+
+	border-style: solid;
+	border-width: 0 16px 16px 16px;
+	border-color: transparent transparent $sg-color transparent;
+}
+
+#notificationList {
+	@include shadow2;
+  @include vanillaLinks;
+
+	z-index: index($elements, topMenu);
+
+	position: absolute;
+  $offset: 16px/2 + 45px*2;
+	right: $offset;
+	top: 60px + 16px;
+
+  padding: 0;
+
+	min-width: 270px;
+  max-width: calc(95vw - #{$offset});
+  max-height: 72px * 5;
+
+  overflow: auto;
+
+  background-color: $sg-color;
+
+	border-radius: 0 !important;
+
+  list-style: none;
+
+  @include list;
+
+	li {
+		width: 100%;
+
+    overflow: hidden;
+
+    text-align: left;
+
+    .row {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .label {
+      margin-left: 4px;
+      margin-right: 5px;
+    }
+
+    .buttonGroup {
+      display: inline-block;
+
+      margin-left: 6px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+	}
+
+  .dismiss {
+    right: -16px;
+  }
+}
+
+
+@media #{$small-and-down} {
+  #notificationList {
+    left: 0;
+    right: 0;
+    top: $top-nav-height;
+
+    width: 100%;
+    max-width: none;
+  }
+}

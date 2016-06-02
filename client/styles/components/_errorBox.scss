@@ -1,0 +1,12 @@
+.errorBox {
+  @include lightLinks;
+
+  margin-top: 4px;
+
+  padding: 12px;
+
+  width: 100%;
+
+  background-color: rgba($poison-pink, 0.4);
+  border: 2px solid $poison-pink;
+}

@@ -1,0 +1,20 @@
+.suggestionContainer {
+  @include shadow2;
+  z-index: index($elements, suggestions);
+
+  position: absolute;
+}
+
+.suggestions {
+  margin: 0;
+
+  background-color: $sg-color;
+
+  li {
+    cursor: pointer;
+
+    &.selected {
+      background-color: rgba(#B09D63, 0.3);
+    }
+  }
+}

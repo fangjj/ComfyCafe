@@ -1,0 +1,41 @@
+@mixin gallery() {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+
+  li {
+    $size: 240px;
+
+    width: $size + 42px;
+    height: $size + 42px;
+
+    text-align: center;
+
+    .thumbnailContainer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+      height: $size;
+    }
+
+		.thumbnail {
+			max-width: $size;
+			max-height: $size;
+			width: auto;
+			height: auto;
+		}
+
+    .label {
+
+    }
+	}
+}
+
+.gallery {
+  @include list;
+  @include gallery;
+}

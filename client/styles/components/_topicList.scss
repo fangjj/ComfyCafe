@@ -1,0 +1,21 @@
+.topicList {
+  > li {
+    &.topicListItem {
+      @include hoverAlt;
+
+      padding-left: 36px;
+
+      min-height: 90px;
+
+      .pin {
+        position: absolute;
+        left: 9px;
+        top: 9px;
+      }
+
+      .flexLayout {
+        margin-left: 3px;
+      }
+    }
+  }
+}

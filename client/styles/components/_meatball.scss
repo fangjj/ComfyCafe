@@ -1,0 +1,75 @@
+.meatballSelector {
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  header {
+    margin-bottom: 8px;
+
+    h3 {
+      margin: 0;
+
+      font-size: 20px;
+      text-align: left;
+    }
+  }
+
+  .inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.meatball {
+  @include hover;
+
+  flex: 1;
+
+  padding: 16px;
+
+  border-bottom: 2px solid rgba($text-color, 0.7);
+
+  cursor: pointer;
+  user-select: none;
+
+  text-align: center;
+
+  i {
+    font-size: 36px !important;
+  }
+
+  .label {
+    color: $text-color;
+
+    font-size: 20px;
+  }
+
+  &:hover {
+    border-color: $text-color;
+  }
+
+  &.active {
+    background-color: rgba($secondary-color, 0.1);
+
+    border-color: rgba($secondary-color, 0.7);
+
+    &:hover {
+      border-color: $secondary-color;
+    }
+  }
+}
+
+@media #{$small-and-down} {
+  .meatball {
+    padding: 12px;
+
+    i {
+      font-size: 28px !important;
+    }
+
+    .label {
+      font-size: 16px;
+    }
+  }
+}

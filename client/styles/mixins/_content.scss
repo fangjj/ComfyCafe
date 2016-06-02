@@ -1,0 +1,33 @@
+@mixin content {
+  @include paper;
+
+  margin: 0 auto;
+  margin-top: 100px;
+
+  padding: $content-padding;
+
+  width: 85%;
+
+  .topRight {
+    position: absolute;
+    right: 27px;
+    top: 27px;
+  }
+}
+
+.content {
+  @include content;
+}
+
+@mixin contentDepad {
+  margin-left: -$content-padding;
+  margin-right: -$content-padding;
+  &:first-child {
+    margin-top: -$content-padding;
+  }
+  &:last-child {
+    margin-bottom: -$content-padding;
+  }
+
+  width: calc(100% + #{$content-padding * 2});
+}

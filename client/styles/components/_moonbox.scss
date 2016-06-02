@@ -1,0 +1,54 @@
+.moonbox {
+  display: none;
+  z-index: index($elements, viewer);
+
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100vh;
+
+  background-color: rgba($bg-color, 0.7);
+
+  pointer-events: auto;
+
+  .container {
+    overflow: visible !important;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    img {
+      max-width: calc(100% - 10px);
+      max-height: calc(100% - 10px);
+
+      width: auto;
+      height: auto;
+
+      object-fit: contain;
+
+      // WARNING: this disables hardware acceleration, but prevents blurring.
+      // https://github.com/timmywil/jquery.panzoom/issues/84
+      -webkit-backface-visibility: initial !important;
+      -webkit-transform-origin: 50% 50%;
+    }
+  }
+
+  .close {
+    z-index: index($elements, viewer-close);
+
+    position: absolute;
+    right: 10px;
+    top: 10px;
+
+    .material-icons {
+      font-size: 36px !important;
+      @include quickShadow;
+
+      cursor: pointer;
+    }
+  }
+}

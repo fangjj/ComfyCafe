@@ -1,0 +1,45 @@
+.dropzone, .cropzone {
+  position: relative;
+
+  padding: 24px;
+
+  font-size: 20px;
+  text-align: center;
+
+  border: 2px dashed rgba(64, 64, 64, 1);
+
+  cursor: pointer;
+
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+
+  input[type=file] {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+    cursor: pointer;
+  }
+}
+
+.cropzone {
+  margin: 0 auto;
+
+  padding: 0;
+
+  width: 512px;
+  height: 512px;
+
+  cursor: default;
+
+  &.active {
+    padding: 0;
+
+    border: 0;
+  }
+}

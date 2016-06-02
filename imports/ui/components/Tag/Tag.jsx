@@ -10,7 +10,7 @@ import TagEditFAB from "./TagEditFAB";
 import LoadingSpinner from "/imports/ui/components/Spinner/LoadingSpinner";
 import TextBody from "../TextBody";
 
-const Tag = React.createClass({
+export default React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     const name = FlowRouter.getParam("tagName");
@@ -82,9 +82,11 @@ const Tag = React.createClass({
     }
 
     const tag = this.data.tag;
+    const historyUrl = FlowRouter.path("tagHistory", { tagId: tag._id });
     return <article className="content">
       <header>
         <h2>{tag.name}</h2>
+        <a href={historyUrl}>History</a>
       </header>
       Type: {tag.type}
       <br />
@@ -99,5 +101,3 @@ const Tag = React.createClass({
     </article>;
   }
 });
-
-export default Tag;

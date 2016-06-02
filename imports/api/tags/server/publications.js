@@ -1,4 +1,5 @@
-import Tags from "../collection";
+import Tags from "/imports/api/tags/collection";
+import TagHistory from "/imports/api/tags/history/collection";
 
 Meteor.publish("allTags", function (type) {
 	check(type, Match.Optional(String));
@@ -27,4 +28,9 @@ Meteor.publish("tags", function (nameList) {
 			{ aliases: { $in: nameList || [] } }
 		] }
 	);
+});
+
+Meteor.publish("tagHistory", function (tagId) {
+	check(tagId, String);
+	return TagHistory.find({ tagId });
 });

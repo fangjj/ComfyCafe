@@ -345,5 +345,9 @@ Meteor.methods({
     );
 
     TagHistory.insert(docBuilder({ tagId }, _.omit(tag, "_id")));
+  },
+  revertTag(tagHistoryId) {
+    const tagHistory = TagHistory.findOne({ _id: tagHistoryId });
+    Meteor.call("updateTag", tagHistory.tagId, _.pick(tagHistory, _.keys(match)));
   }
 });

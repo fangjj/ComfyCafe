@@ -12,6 +12,7 @@ import checkReason from "/imports/api/common/checkReason";
 import ModLog from "/imports/api/modlog/collection";
 import { dmRoom } from "/imports/api/rooms/dmRoom";
 import { dmTopic, dmTopicBuilder } from "/imports/api/topics/dmTopic";
+import isBanned from "/imports/api/users/isBanned";
 
 const match = {
   body: String
@@ -118,6 +119,10 @@ Meteor.methods({
     const topic = Topics.findOne(topicId);
     const room = Rooms.findOne(topic.room._id);
 
+    if (isBanned() || isBanned(Meteor.user(), room._id)) {
+      throw new Meteor.Error("banned");
+    }
+
     if (room.membersOnlyPost && ! isMember(Meteor.userId(), "community_" + room.slug)) {
       throw new Meteor.Error("not-authorized");
     }
@@ -160,6 +165,10 @@ Meteor.methods({
     updateMessage(messageId, data, (msg) => {
       if (! isOwner(msg)) {
         throw new Meteor.Error("not-authorized");
+      }
+
+      if (isBanned() || isBanned(Meteor.user(), msg.topic.room._id)) {
+        throw new Meteor.Error("banned");
       }
     });
   },

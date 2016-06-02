@@ -11,6 +11,7 @@ import docBuilder from "/imports/api/common/docBuilder";
 import { isMod } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
 import ModLog from "/imports/api/modlog/collection";
+import isBanned from "/imports/api/users/isBanned";
 
 const match = {
 	name: String,
@@ -109,6 +110,10 @@ Meteor.methods({
 			throw new Meteor.Error("not-logged-in");
 		}
 
+		if (isBanned()) {
+      throw new Meteor.Error("banned");
+    }
+
 		let topicId;
 		if (Meteor.isServer) {
 			topicId = Meteor.call("addTopic", Meteor.user().room._id, { name: data.name }, true);
@@ -138,6 +143,10 @@ Meteor.methods({
 			if (! isOwner(post)) {
 				throw new Meteor.Error("not-authorized");
 			}
+
+			if (isBanned()) {
+	      throw new Meteor.Error("banned");
+	    }
 		});
 	},
 	modUpdateBlogPost(postId, data, reason) {

@@ -10,6 +10,7 @@ import { isMod, isMember } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
 import ModLog from "/imports/api/modlog/collection";
 import { dmTopic, dmTopicBuilder } from "/imports/api/topics/dmTopic";
+import isBanned from "/imports/api/users/isBanned";
 
 const match = {
   name: String
@@ -101,6 +102,10 @@ Meteor.methods({
 
     const room = Rooms.findOne(roomId);
 
+    if (isBanned() || isBanned(Meteor.user(), room._id)) {
+      throw new Meteor.Error("banned");
+    }
+
     if (room.membersOnlyCreate && ! isMember(Meteor.userId(), "community_" + room.slug)) {
       throw new Meteor.Error("not-authorized");
     }
@@ -145,6 +150,10 @@ Meteor.methods({
 		return updateTopic(topicId, data, (topic) => {
       if (! isOwner(topic)) {
         throw new Meteor.Error("not-authorized");
+      }
+
+      if (isBanned() || isBanned(Meteor.user(), topic.room._id)) {
+        throw new Meteor.Error("banned");
       }
     });
 	},

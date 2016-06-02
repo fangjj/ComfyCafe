@@ -18,7 +18,9 @@ Meteor.publish(null, function () {
       friends: 1,
       room: 1,
       defaultFilter: 1,
-      lastCelebrated: 1
+      lastCelebrated: 1,
+      bans: 1,
+      communityBans: 1
 		} }
 	);
 });

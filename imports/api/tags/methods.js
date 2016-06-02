@@ -6,6 +6,7 @@ import tagPatcher from "./patcher";
 import tagRenamer from "./renamer";
 import tagRegenerator from "./regenerator";
 import Posts from "../posts/collection";
+import isBanned from "/imports/api/users/isBanned";
 
 const match = {
   name: String,
@@ -200,6 +201,10 @@ Meteor.methods({
 			throw new Meteor.Error("not-logged-in");
 		}
 
+    if (isBanned()) {
+      throw new Meteor.Error("banned");
+    }
+
     // Keep tag name legal.
     var name = data.name.trim().toLowerCase().replace(" ", "-");
 
@@ -259,6 +264,10 @@ Meteor.methods({
 		if (! Meteor.userId()) {
 			throw new Meteor.Error("not-logged-in");
 		}
+
+    if (isBanned()) {
+      throw new Meteor.Error("banned");
+    }
 
     // Keep tag name legal.
     var name = data.name.toLowerCase().replace(" ", "-");

@@ -15,6 +15,7 @@ import { regenThumbs } from "/imports/api/media/methods";
 import { isMod } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
 import ModLog from "/imports/api/modlog/collection";
+import isBanned from "/imports/api/users/isBanned";
 
 function nameCycle() {
 	const name = generateName();
@@ -115,6 +116,10 @@ Meteor.methods({
 			throw new Meteor.Error("not-logged-in");
 		}
 
+		if (isBanned()) {
+      throw new Meteor.Error("banned");
+    }
+
 		if (Meteor.isServer) {
 			const name = nameCycle();
 
@@ -209,6 +214,10 @@ Meteor.methods({
 			if (! isOwner(post)) {
 				throw new Meteor.Error("not-authorized");
 			}
+
+			if (isBanned()) {
+	      throw new Meteor.Error("banned");
+	    }
 		});
 	},
 	modUpdatePost(postId, data, reason) {

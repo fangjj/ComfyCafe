@@ -1,10 +1,15 @@
 import Invites from "./collection";
+import isBanned from "/imports/api/users/isBanned";
 
 Meteor.methods({
 	addInvite: function () {
 		if (! Meteor.userId()) {
 			throw new Meteor.Error("not-logged-in");
 		}
+
+		if (isBanned()) {
+      throw new Meteor.Error("banned");
+    }
 
 		if (Meteor.isServer) {
 			Invites.insert(

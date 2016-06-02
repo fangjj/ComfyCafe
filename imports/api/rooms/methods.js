@@ -11,6 +11,7 @@ import { isAdmin, isMod, isPriveleged, isMember } from "/imports/api/common/pers
 import checkReason from "/imports/api/common/checkReason";
 import Reports from "/imports/api/reports/collection";
 import ModLog from "/imports/api/modlog/collection";
+import isBanned from "/imports/api/users/isBanned";
 
 const match = {
 	name: String,
@@ -134,6 +135,10 @@ Meteor.methods({
 			throw new Meteor.Error("not-logged-in");
 		}
 
+		if (isBanned()) {
+      throw new Meteor.Error("banned");
+    }
+
 		data.slug = slugCycle(null, data.name);
 
 		const doc = docBuilder({
@@ -158,6 +163,10 @@ Meteor.methods({
 			if (! isOwner(room)) {
 				throw new Meteor.Error("not-authorized");
 			}
+
+			if (isBanned()) {
+	      throw new Meteor.Error("banned");
+	    }
 		});
 	},
 	modUpdateCommunity(communityId, data, reason) {

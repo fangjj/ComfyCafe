@@ -5,9 +5,28 @@ function isBanned(user, communityId) {
     user = Meteor.user();
   }
   if (! communityId) {
-    return _.has(user, "ban");
+    const ban = _.get(user, "ban");
+    if (ban) {
+      if (ban <= new Date()) {
+        Meteor.users.update(
+          { _id: user._id },
+          { $unset: { ban: 1 } }
+        );
+        return null;
+      }
+    }
+    return ban;
   } else {
-    return _.get(user, "communityBans." + communityId);
+    const ban = _.get(user, "communityBans." + communityId);
+    if (ban) {
+      if (ban <= new Date()) {
+        const doc = { $unset: {} };
+        doc.$unset["communityBans." + communityId] = 1;
+        Meteor.users.update({ _id: user._id }, doc);
+        return null;
+      }
+    }
+    return ban;
   }
 }
 

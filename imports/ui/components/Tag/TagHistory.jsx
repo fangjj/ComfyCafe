@@ -3,7 +3,7 @@ import React from "react";
 import Content from "/imports/ui/components/Content";
 import List from "/imports/ui/components/List";
 import LoadingSpinner from "/imports/ui/components/Spinner/LoadingSpinner";
-import TagHistoryItem from "/imports/ui/components/Tag/TagHistoryItem";
+import TagHistoryListItem from "/imports/ui/components/Tag/TagHistoryListItem";
 
 export default React.createClass({
   renderList() {
@@ -12,7 +12,7 @@ export default React.createClass({
     }
 
     return _.map(this.props.history, (h) => {
-      return <TagHistoryItem item={h} key={h._id} />;
+      return <TagHistoryListItem item={h} key={h._id} />;
     });
   },
   render() {

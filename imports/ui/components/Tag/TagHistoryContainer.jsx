@@ -10,7 +10,7 @@ export default createContainer(({ params }) => {
     loading: ! handle.ready(),
     history: TagHistory.find(
       { tagId },
-      { sort: { createdAt: -1, name: 1 } }
+      { sort: { updatedAt: -1, name: 1 } }
     ).fetch()
   };
 }, TagHistoryCmp);

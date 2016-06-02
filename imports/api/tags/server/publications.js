@@ -34,3 +34,8 @@ Meteor.publish("tagHistory", function (tagId) {
 	check(tagId, String);
 	return TagHistory.find({ tagId });
 });
+
+Meteor.publish("tagHistoryItem", function (id) {
+	check(id, String);
+	return TagHistory.find({ _id: id });
+});

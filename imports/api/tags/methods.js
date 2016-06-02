@@ -6,6 +6,7 @@ import tagParser from "./parser";
 import tagPatcher from "./patcher";
 import tagRenamer from "./renamer";
 import tagRegenerator from "./regenerator";
+import condImplWrap from "/imports/api/tags/condImplWrap";
 import docBuilder from "/imports/api/common/docBuilder";
 import Posts from "/imports/api/posts/collection";
 import isBanned from "/imports/api/users/isBanned";
@@ -348,6 +349,13 @@ Meteor.methods({
   },
   revertTag(tagHistoryId) {
     const tagHistory = TagHistory.findOne({ _id: tagHistoryId });
-    Meteor.call("updateTag", tagHistory.tagId, _.pick(tagHistory, _.keys(match)));
+    if (tagHistory) {
+      const doc = _.pick(tagHistory, _.keys(match));
+      doc.aliases = tagHistory.aliasStr || "";
+      doc.extends = (doc.extends || []).join(", ");
+      doc.implications = tagHistory.implicationStr || "";
+      doc.condImplications = condImplWrap(doc.condImplications);
+      Meteor.call("updateTag", tagHistory.tagId, doc);
+    }
   }
 });

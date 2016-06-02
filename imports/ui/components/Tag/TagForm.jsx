@@ -3,6 +3,7 @@ import React from "react";
 
 import "/imports/api/tags/methods";
 import { tagSubjectTokenizer } from "/imports/api/tags/tokenizer";
+import condImplWrap from "/imports/api/tags/condImplWrap";
 import TagTypeSelector from "./TagTypeSelector";
 import TagInlineField from "./TagInlineField";
 import TagField from "./TagField";
@@ -12,14 +13,6 @@ import TextField from "/imports/ui/components/TextField";
 import TextArea from "/imports/ui/components/TextArea";
 import SafetySelector from "/imports/ui/components/SafetySelector";
 import Icon from "/imports/ui/components/Daikon/Icon";
-
-function condImplWrap(condImpl) {
-  const formatted = {};
-  _.each(condImpl, (impl, cond) => {
-    formatted[_.uniqueId()] = [cond, tagSubjectTokenizer(impl.text)[1]];
-  });
-  return formatted;
-}
 
 const defaultState = {
   name: "",

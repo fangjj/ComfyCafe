@@ -49,6 +49,7 @@ export default React.createClass({
   render() {
     return <Form actions={true} onSubmit={this.handleSubmit}>
       <TextField
+        id="userBadges"
         label="Badges (comma separated)"
         defaultValue={this.state.badges}
         onChange={this.handleBadges}

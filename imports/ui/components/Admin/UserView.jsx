@@ -5,13 +5,19 @@ import "/imports/api/users/adminMethods";
 import { isAdmin } from "/imports/api/common/persimmons";
 import DenseContent from "/imports/ui/components/DenseContent";
 import UserAdminForm from "/imports/ui/components/Admin/UserAdminForm";
+import UserBanForm from "/imports/ui/components/Admin/UserBanForm";
 import UserProfileForm from "/imports/ui/components/User/UserProfileForm";
 
 export default React.createClass({
   contextTypes: { currentUser: React.PropTypes.object },
   renderAdminForm(user) {
     if (isAdmin(this.context.currentUser._id)) {
-      return <UserAdminForm user={user} />;
+      return <section>
+        <header>
+          <h3>Roles</h3>
+        </header>
+        <UserAdminForm user={user} />
+      </section>;
     }
   },
   render() {
@@ -26,7 +32,18 @@ export default React.createClass({
       </header>
 
       {this.renderAdminForm(user)}
-      <UserProfileForm user={user} mod={true} actions={true} />
+      <section>
+        <header>
+          <h3>Ban</h3>
+        </header>
+        <UserBanForm user={user} />
+      </section>
+      <section>
+        <header>
+          <h3>Modify</h3>
+        </header>
+        <UserProfileForm user={user} mod={true} actions={true} />
+      </section>
     </DenseContent>;
   }
 });

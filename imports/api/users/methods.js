@@ -1,4 +1,5 @@
 import _ from "lodash";
+import "sugar";
 
 import {
 	ownerPrefixer,
@@ -538,5 +539,47 @@ Meteor.methods({
 			roles.push("member");
 		}
 		Roles.setUserRoles(userId, roles, group);
+	},
+
+	modBanUser(userId, data, reason) {
+		check(userId, String);
+		check(data, { ban: String });
+		checkReason(reason);
+
+		if (! isMod(Meteor.userId())) {
+			throw new Meteor.Error("not-authorized");
+		}
+
+		// http://sugarjs.com/dates
+		const duration = Date.create(data.ban);
+
+		Meteor.users.update(
+	    { _id: userId },
+	    { $set: { ban: duration } }
+	  );
+
+		const user = Meteor.users.findOne({ _id: userId });
+		const doc = docBuilder({
+			item: {
+				_id: userId,
+				ownerId: userId,
+				type: "user",
+				action: "banned",
+				url: FlowRouter.path("profile", { username: user.username })
+			}
+		}, reason);
+		ModLog.insert(doc);
+	},
+	modUnbanUser(userId) {
+		check(userId, String);
+
+		if (! isMod(Meteor.userId())) {
+			throw new Meteor.Error("not-authorized");
+		}
+
+		Meteor.users.update(
+	    { _id: userId },
+	    { $unset: { ban: 1 } }
+	  );
 	}
 });

@@ -20,7 +20,8 @@ Meteor.publish(null, function () {
       defaultFilter: 1,
       lastCelebrated: 1,
       bans: 1,
-      communityBans: 1
+      communityBans: 1,
+      blocking: 1
 		} }
 	);
 });

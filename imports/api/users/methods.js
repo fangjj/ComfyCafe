@@ -626,5 +626,30 @@ Meteor.methods({
 		const doc = { $unset: {} };
 		doc.$unset["communityBans." + community._id] = 1;
 		Meteor.users.update({ _id: userId }, doc);
+	},
+
+	blockUser(userId) {
+		check(userId, String);
+
+		if (! Meteor.userId()) {
+			throw new Meteor.Error("not-logged-in");
+		}
+
+		Meteor.users.update(
+			{ _id: Meteor.userId() },
+			{ $addToSet: { blocking: userId } }
+		);
+	},
+	unblockUser(userId) {
+		check(userId, String);
+
+		if (! Meteor.userId()) {
+			throw new Meteor.Error("not-logged-in");
+		}
+
+		Meteor.users.update(
+			{ _id: Meteor.userId() },
+			{ $pull: { blocking: userId } }
+		);
 	}
 });

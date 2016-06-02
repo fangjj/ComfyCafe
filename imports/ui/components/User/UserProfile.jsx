@@ -19,6 +19,7 @@ import CancelButton from "/imports/ui/components/Button/CancelButton";
 import FriendButton from "/imports/ui/components/Button/FriendButton";
 import DangerButton from "/imports/ui/components/Button/DangerButton";
 import ReportButton from "/imports/ui/components/Button/ReportButton";
+import BlockButton from "/imports/ui/components/Button/BlockButton";
 import ReportForm from "/imports/ui/components/Report/ReportForm";
 import ButtonGroup from "/imports/ui/components/Button/ButtonGroup";
 import DialogForm from "/imports/ui/components/DialogForm";
@@ -164,10 +165,7 @@ export default React.createClass({
     } else {
       return <ButtonGroup>
         <ReportButton onTouchTap={this.showReportForm} />
-        <SubmitButton
-          label="Send Good Vibes"
-          iconName="wb_sunny"
-        />
+        <BlockButton user={this.data.user} />
       </ButtonGroup>;
     }
   },

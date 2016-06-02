@@ -120,13 +120,16 @@ Meteor.publish("allPosts", function (state, page=0) {
 			if (this.userId) {
 				user = Meteor.users.findOne(this.userId, { fields: {
 					friends: 1,
-					defaultFilter: 1
+					defaultFilter: 1,
+					blocking: 1
 				} });
 
 				return privacyWrap(
 					{},
 					this.userId,
-					user.friends
+					user.friends,
+					undefined,
+					user.blocking
 				);
 			} else {
 				return { visibility: "public" };
@@ -155,13 +158,16 @@ Meteor.publish("imagesBy", function (username, state, page=0) {
 			if (this.userId) {
 				user = Meteor.users.findOne(this.userId, { fields: {
 					friends: 1,
-					defaultFilter: 1
+					defaultFilter: 1,
+					blocking: 1
 				} });
 
 				return privacyWrap(
 					{ "owner.username": username },
 					this.userId,
-					user.friends
+					user.friends,
+					undefined,
+					user.blocking
 				);
 			} else {
 				return {
@@ -193,7 +199,8 @@ Meteor.publish("postFeed", function (state, page=0) {
 			const user = Meteor.users.findOne(this.userId, { fields: {
 				subscriptions: 1,
 				friends: 1,
-				defaultFilter: 1
+				defaultFilter: 1,
+				blocking: 1
 			} });
 
 			const query = queryBuilder(
@@ -204,7 +211,9 @@ Meteor.publish("postFeed", function (state, page=0) {
 						{ "owner._id": { $in: user.subscriptions || [] } }
 					] },
 					this.userId,
-					user.friends
+					user.friends,
+					undefined,
+					user.blocking
 				),
 				state
 			);
@@ -246,9 +255,10 @@ Meteor.publish("searchPosts", function (tagStr, state, page=0) {
 			if (this.userId) {
 				user = Meteor.users.findOne(this.userId, { fields: {
 					friends: 1,
-					defaultFilter: 1
+					defaultFilter: 1,
+					blocking: 1
 				} });
-				return privacyWrap(innerQuery, this.userId, user.friends);
+				return privacyWrap(innerQuery, this.userId, user.friends, undefined, user.blocking);
 			} else {
 				return privacyWrap(innerQuery);
 			}
@@ -293,9 +303,16 @@ Meteor.publish("postAlbum", function (albumData, state, page=0) {
 			if (this.userId) {
 				user = Meteor.users.findOne(this.userId, { fields: {
 					friends: 1,
-					defaultFilter: 1
+					defaultFilter: 1,
+					blocking: 1
 				} });
-				return privacyWrap(innerQuery, this.userId, user.friends, { "owner._id": album.owner._id });
+				return privacyWrap(
+					innerQuery,
+					this.userId,
+					user.friends,
+					{ "owner._id": album.owner._id },
+					user.blocking
+				);
 			} else {
 				return privacyWrap(innerQuery);
 			}

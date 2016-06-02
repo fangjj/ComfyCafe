@@ -1,4 +1,4 @@
-export default function (doc, userId, friends, except) {
+export default function (doc, userId, friends, except, blocking) {
   let wrapped = {
     $and: [
       { $or: [
@@ -9,6 +9,9 @@ export default function (doc, userId, friends, except) {
   };
 
   if (userId) {
+    if (blocking && blocking.length) {
+      wrapped.$and.push({ "owner._id": { $nin: blocking || [] } });
+    }
     wrapped.$and[0].$or.push({ "owner._id": userId });
     wrapped.$and[0].$or.push({
       "owner._id": { $in: friends || [] },

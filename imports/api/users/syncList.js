@@ -9,6 +9,7 @@ import Notifications from "/imports/api/notifications/collection";
 import Reports from "/imports/api/reports/collection";
 import ModLog from "/imports/api/modlog/collection";
 import Invites from "/imports/api/invites/collection";
+import TagHistory from "/imports/api/tags/history/collection";
 
 export default [
   Posts,
@@ -21,5 +22,6 @@ export default [
   Notifications,
   Reports,
   ModLog,
-  Invites
+  Invites,
+  TagHistory
 ];

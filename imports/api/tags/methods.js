@@ -1,11 +1,13 @@
 import _ from "lodash";
 
 import Tags from "./collection";
+import TagHistory from "/imports/api/tags/history/collection";
 import tagParser from "./parser";
 import tagPatcher from "./patcher";
 import tagRenamer from "./renamer";
 import tagRegenerator from "./regenerator";
-import Posts from "../posts/collection";
+import docBuilder from "/imports/api/common/docBuilder";
+import Posts from "/imports/api/posts/collection";
 import isBanned from "/imports/api/users/isBanned";
 
 const match = {
@@ -341,5 +343,7 @@ Meteor.methods({
         condImplicationLookup: condImplLookupGen(condImplications)
       } }
     );
+
+    TagHistory.insert(docBuilder({ tagId }, _.omit(tag, "_id")));
   }
 });

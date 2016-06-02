@@ -581,5 +581,50 @@ Meteor.methods({
 	    { _id: userId },
 	    { $unset: { ban: 1 } }
 	  );
+	},
+	communityModBanUser(userId, communitySlug, data, reason) {
+		check(userId, String);
+		check(communitySlug, String);
+		check(data, { ban: String });
+		checkReason(reason);
+
+		const community = Rooms.findOne({ slug: communitySlug });
+
+		if (! isMod(Meteor.userId(), "community_" + community.slug)) {
+			throw new Meteor.Error("not-authorized");
+		}
+
+		const duration = Date.create(data.ban);
+
+		const doc = { $set: {} };
+		doc.$set["communityBans." + community._id] = duration;
+		Meteor.users.update({ _id: userId }, doc);
+
+		const user = Meteor.users.findOne({ _id: userId });
+		const logDoc = docBuilder({
+			item: {
+				_id: userId,
+				ownerId: userId,
+				type: "user",
+				action: "banned",
+				url: FlowRouter.path("profile", { username: user.username })
+			}
+		}, reason);
+		logDoc.community = _.pick(community, [ "_id", "slug" ]);
+		ModLog.insert(logDoc);
+	},
+	communityModUnbanUser(userId, communitySlug) {
+		check(userId, String);
+		check(communitySlug, String);
+
+		const community = Rooms.findOne({ slug: communitySlug });
+
+		if (! isMod(Meteor.userId(), "community_" + community.slug)) {
+			throw new Meteor.Error("not-authorized");
+		}
+
+		const doc = { $unset: {} };
+		doc.$unset["communityBans." + community._id] = 1;
+		Meteor.users.update({ _id: userId }, doc);
 	}
 });

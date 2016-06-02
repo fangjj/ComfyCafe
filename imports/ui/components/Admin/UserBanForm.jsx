@@ -39,22 +39,42 @@ export default React.createClass({
   handleSubmit() {
     const data = dataBuilder(this.state, defaultState);
     const reason = reasonBuilder(this.state);
-    Meteor.call("modBanUser", this.props.user._id, data, reason, (err) => {
-      if (err) {
-        prettyPrint(err);
-      } else {
-        this.setState({ snackbarOpen: true, snackbarMsg: "banned" });
-      }
-    });
+    if (! this.props.communitySlug) {
+      Meteor.call("modBanUser", this.props.user._id, data, reason, (err) => {
+        if (err) {
+          prettyPrint(err);
+        } else {
+          this.setState({ snackbarOpen: true, snackbarMsg: "banned" });
+        }
+      });
+    } else {
+      Meteor.call("communityModBanUser", this.props.user._id, this.props.communitySlug, data, reason, (err) => {
+        if (err) {
+          prettyPrint(err);
+        } else {
+          this.setState({ snackbarOpen: true, snackbarMsg: "banned" });
+        }
+      });
+    }
   },
   handleUnban() {
-    Meteor.call("modUnbanUser", this.props.user._id, (err) => {
-      if (err) {
-        prettyPrint(err);
-      } else {
-        this.setState({ snackbarOpen: true, snackbarMsg: "unbanned" });
-      }
-    });
+    if (! this.props.communitySlug) {
+      Meteor.call("modUnbanUser", this.props.user._id, (err) => {
+        if (err) {
+          prettyPrint(err);
+        } else {
+          this.setState({ snackbarOpen: true, snackbarMsg: "unbanned" });
+        }
+      });
+    } else {
+      Meteor.call("communityModUnbanUser", this.props.user._id, this.props.communitySlug, (err) => {
+        if (err) {
+          prettyPrint(err);
+        } else {
+          this.setState({ snackbarOpen: true, snackbarMsg: "unbanned" });
+        }
+      });
+    }
   },
   render() {
     const left = <CancelButton

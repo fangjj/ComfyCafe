@@ -6,6 +6,7 @@ import { isAdmin } from "/imports/api/common/persimmons";
 import DenseContent from "/imports/ui/components/DenseContent";
 import DenseLoadingSpinner from "/imports/ui/components/Spinner/DenseLoadingSpinner";
 import ChatRoleForm from "/imports/ui/components/Chat/Admin/ChatRoleForm";
+import UserBanForm from "/imports/ui/components/Admin/UserBanForm";
 import DangerButton from "/imports/ui/components/Button/DangerButton";
 
 export default React.createClass({
@@ -41,6 +42,12 @@ export default React.createClass({
         </h2>
       </header>
       {this.renderInner(user)}
+      <section>
+        <header>
+          <h3>Ban</h3>
+        </header>
+        <UserBanForm user={user} communitySlug={FlowRouter.getParam("roomSlug")} />
+      </section>
     </DenseContent>;
   }
 });

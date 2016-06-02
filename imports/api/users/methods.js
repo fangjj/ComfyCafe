@@ -17,6 +17,7 @@ import docBuilder from "/imports/api/common/docBuilder";
 import { isMod, isAdmin } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
 import ModLog from "/imports/api/modlog/collection";
+import isBlocked from "/imports/api/users/isBlocked";
 
 if (Meteor.isServer) {
 	mediumValidate = require("/imports/api/media/server/validate").default;
@@ -343,6 +344,11 @@ Meteor.methods({
 
 		if (! Meteor.userId()) {
 			throw new Meteor.Error("not-logged-in");
+		}
+
+		const otherUser = Meteor.users.findOne({ _id: userId });
+		if (isBlocked(otherUser, Meteor.userId())) {
+			throw new Meteor.Error("blocked");
 		}
 
 		Notifications.upsert(

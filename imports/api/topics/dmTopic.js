@@ -3,6 +3,7 @@ import _ from "lodash";
 import Topics from "/imports/api/topics/collection";
 import { dmRoom, dmRoomBuilder } from "/imports/api/rooms/dmRoom";
 import injectOwner from "/imports/api/users/injectOwner";
+import isBlocked from "/imports/api/users/isBlocked";
 
 function dmTopicBuilder(username) {
   check(username, String);
@@ -12,6 +13,9 @@ function dmTopicBuilder(username) {
   const otherUser = Meteor.users.findOne({ normalizedUsername: username.toLowerCase() });
   if (! otherUser) {
     throw new Meteor.Error("return-to-sender-address-unknown-no-such-number-no-such-zone");
+  }
+  if (isBlocked(otherUser, Meteor.userId())) {
+    throw new Meteor.Error("blocked");
   }
 
   const roomId = expr(() => {

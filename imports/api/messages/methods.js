@@ -13,6 +13,7 @@ import ModLog from "/imports/api/modlog/collection";
 import { dmRoom } from "/imports/api/rooms/dmRoom";
 import { dmTopic, dmTopicBuilder } from "/imports/api/topics/dmTopic";
 import isBanned from "/imports/api/users/isBanned";
+import isBlocked from "/imports/api/users/isBlocked";
 
 const match = {
   body: String
@@ -121,6 +122,13 @@ Meteor.methods({
 
     if (isBanned() || isBanned(Meteor.user(), room._id)) {
       throw new Meteor.Error("banned");
+    }
+
+    if (room.system && _.has(room, "owner")) {
+      const otherUser = Meteor.users.findOne({ _id: room.owner._id });
+      if (isBlocked(otherUser, Meteor.userId())) {
+        throw new Meteor.Error("blocked");
+      }
     }
 
     if (room.membersOnlyPost && ! isMember(Meteor.userId(), "community_" + room.slug)) {
@@ -259,6 +267,11 @@ Meteor.methods({
 
     if (! Meteor.userId()) {
       throw new Meteor.Error("not-logged-in");
+    }
+
+    const otherUser = Meteor.users.findOne({ username });
+    if (isBlocked(otherUser, Meteor.userId())) {
+      throw new Meteor.Error("blocked");
     }
 
     const topicId = expr(() => {

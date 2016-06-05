@@ -117,7 +117,7 @@ export default React.createClass({
       ];
     },
     blogCommented() {
-      const url = FlowRouter.path("blog", {
+      const url = FlowRouter.path("blogPost", {
         username: this.props.notification.blog.username,
         slug: this.props.notification.blog.slug
       }) + "#" + this.props.notification.message._id;
@@ -165,7 +165,7 @@ export default React.createClass({
       ];
     },
     blogCommentMentioned() {
-      const url = FlowRouter.path("blog", {
+      const url = FlowRouter.path("blogPost", {
         username: this.props.notification.blog.username,
         slug: this.props.notification.blog.slug
       }) + "#" + this.props.notification.message._id;

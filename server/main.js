@@ -28,7 +28,6 @@ import "/imports/api/users/server/registration";
 
 // Workers
 import "/imports/api/jobs/server/garbageCollection.js";
-import "/imports/api/media/server/garbageCollection.js";
 import "/imports/api/thumbnails/server/job.js";
 import "/imports/api/users/server/birthdayReminder.js";
 

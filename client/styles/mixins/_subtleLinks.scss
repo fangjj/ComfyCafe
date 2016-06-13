@@ -1,4 +1,4 @@
-@mixin subtleLinks() {
+@mixin subtleLinks {
   a:not(.btn) {
     &:link, &:visited {
       color: $text-color;

@@ -1,0 +1,5 @@
+---
+- name: start ComfyCafé
+  service: name=ComfyCafé state=started enabled=yes
+- name: restart ComfyCafé
+  service: name=ComfyCafé state=restarted

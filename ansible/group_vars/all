@@ -5,15 +5,15 @@ makej: 5
 domain: localhost
 ddp_domain: localhost
 default_server: true
-ssl_cert: /etc/letsencrypt/live/teru.sexy/fullchain.pem
-ssl_key: /etc/letsencrypt/live/teru.sexy/privkey.pem
+ssl_cert: /etc/letsencrypt/live/comfy.cafe/fullchain.pem
+ssl_key: /etc/letsencrypt/live/comfy.cafe/privkey.pem
 hsts_max_age: 31536000 # set to 0 to disable, 31536000 for 1 year, etc.
 
-root_url: http://localhost:9000 // use HTTPS if not local! i.e. https://teru.sexy
+root_url: http://localhost:9000 // use HTTPS if not local! i.e. https://comfy.cafe
 meteor_port: 3000
-mongo_url: mongodb://localhost:27017/TeruImages
+mongo_url: mongodb://localhost:27017/ComfyCafé
 mongo_oplog_url: mongodb://localhost:27017/local
 ddp_url: http://localhost
-meteor_settings: '{ \"public\": { \"requireInvite\": true } }'
+meteor_settings: '{ \"public\": { \"requireInvite\": false } }'
 
 ssh_port: 22

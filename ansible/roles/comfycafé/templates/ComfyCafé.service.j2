@@ -1,15 +1,15 @@
 [Unit]
-Description=TeruImages
+Description=ComfyCafé
 After=mongodb.service
 
 [Service]
-ExecStart=/usr/local/bin/node /srv/TeruImages/bundle/main.js
+ExecStart=/usr/local/bin/node /srv/ComfyCafé/bundle/main.js
 Restart=always
-User=teruimages
+User=comfycafe
 
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=TeruImages
+SyslogIdentifier=ComfyCafé
 
 Environment=ROOT_URL={{ root_url }}
 Environment=PORT={{ meteor_port }}

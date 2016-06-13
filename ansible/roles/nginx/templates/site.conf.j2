@@ -1,4 +1,4 @@
-upstream teru {
+upstream comfycafe {
   server 127.0.0.1:{{ meteor_port }};
 }
 
@@ -46,7 +46,7 @@ server {
   }
 
   location / {
-    proxy_pass http://teru;
+    proxy_pass http://comfycafe;
     proxy_http_version 1.1;
     proxy_set_header Host $host;
     proxy_set_header Upgrade $http_upgrade;
@@ -83,7 +83,7 @@ server {
   }
 
   location /sockjs/ {
-    proxy_pass http://teru;
+    proxy_pass http://comfycafe;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection $connection_upgrade;

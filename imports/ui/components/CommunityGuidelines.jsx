@@ -62,7 +62,7 @@ export default () => {
           <h3>Impersonation</h3>
         </header>
         <p>
-          Do not claim to be an individual (or organization) that you're not with the intention of deceiving others. Doing so for comedic or entertainment purposes is acceptable.
+          Do not claim to be an individual or organization that you're not with the intention of deceiving others. Doing so for comedic or entertainment purposes is acceptable.
         </p>
       </section>
 

@@ -20,7 +20,7 @@ For more guidance, reference the [Posting Help](HELP.md#posting) text.
 
 ## Impersonation
 
-Do not claim to be an individual (or organization) that you're not with the intention of deceiving others. Doing so for comedic or entertainment purposes is acceptable.
+Do not claim to be an individual or organization that you're not with the intention of deceiving others. Doing so for comedic or entertainment purposes is acceptable.
 
 ## Respect Boundaries
 

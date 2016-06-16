@@ -194,3 +194,24 @@ i.sigil {
 code, pre {
   font-family: "Ubuntu Mono";
 }
+
+.toc {
+  margin-left: 16px;
+}
+
+blockquote {
+  margin: 8px;
+  margin-left: 0;
+  margin-right: 0;
+
+  padding: 12px;
+  padding-left: 24px;
+
+  background: rgba($text-color, 0.15);
+
+  border-left: $border;
+}
+
+header + blockquote {
+  margin-top: 0;
+}

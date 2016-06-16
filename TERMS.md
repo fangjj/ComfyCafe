@@ -1,5 +1,7 @@
 # Terms of Service
 
+Last updated 16 June 2016
+
 ## The gist:
 
 We (the dudes at ComfySoft LLC) run an image sharing community called ComfyCafé that you should totally use. ComfyCafé basic service is free, and we don't offer paid upgrades for advanced features, since we haven't thought of any yet. Our service is designed to give you as much freedom and control in your expression as possible. However, be responsible in what you publish. In particular, make sure that none of the prohibited items (like spam, viruses, or serious threats of violence) appear in your content.

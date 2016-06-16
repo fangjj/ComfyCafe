@@ -2,7 +2,7 @@
 
 Last updated 16 June 2016
 
-Here at ComfyCafé, we pride ourselves in maintaining a higher standard of free speech than our competition. However, in order to assure that we can continue to provide this platform, we must adhere to United State law. Additionally, various quality of life concerns are taken into consideration; most notably, spam isn't allowed.
+Here at ComfyCafé, we pride ourselves in maintaining a higher standard of free speech than our competition. However, in order to assure that we can continue to provide this platform, we must adhere to United States law. Additionally, various quality of life concerns are taken into consideration; most notably, spam isn't allowed.
 
 ## Illegal Content
 

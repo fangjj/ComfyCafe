@@ -22,6 +22,7 @@ import Help from "/imports/ui/components/Help";
 import Rules from "/imports/ui/components/Rules";
 import About from "/imports/ui/components/About";
 import Legal from "/imports/ui/components/Legal";
+import Privacy from "/imports/ui/components/Privacy";
 import ModLogContainer from "/imports/ui/components/ModLog/ModLogContainer";
 import CommunityModLogContainer from "/imports/ui/components/ModLog/CommunityModLogContainer";
 import DummyComponent from "/imports/ui/components/DummyComponent";
@@ -98,7 +99,7 @@ FlowRouter.route("/privacy", {
   name: "privacy",
   action: function () {
     setTitle("Privacy");
-    render({ main: <Legal /> });
+    render({ main: <Privacy /> });
   }
 });
 

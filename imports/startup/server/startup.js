@@ -1,6 +1,6 @@
 //import { Email } from "meteor/email";
 
-Accounts.emailTemplates.from = "noreply@mail.teru.sexy";
+Accounts.emailTemplates.from = "noreply@comfy.cafe";
 
 Meteor.startup(function () {
   const timeInMillis = 1000 * 10; // 10 secs
@@ -13,13 +13,12 @@ Meteor.startup(function () {
 
     process.on("uncaughtException", function (er) {
       console.error(er.stack);
-      /*
       Email.send({
         from: "noreply@comfy.cafe",
         to: "admin@comfy.cafe",
         subject: er.message,
         text: er.stack
-      });*/
+      });
     });
   }
 });

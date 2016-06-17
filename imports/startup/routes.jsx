@@ -18,6 +18,11 @@ import Err404 from "/imports/ui/components/Err404";
 import PostFeed from "/imports/ui/components/Post/PostFeed";
 import PostBrowseAll from "/imports/ui/components/Post/PostBrowseAll";
 import BlogListContainer from "/imports/ui/components/Blog/BlogListContainer";
+import Help from "/imports/ui/components/Help";
+import About from "/imports/ui/components/About";
+import Legal from "/imports/ui/components/Legal";
+import Privacy from "/imports/ui/components/Privacy";
+import CommunityGuidelines from "/imports/ui/components/CommunityGuidelines";
 import ModLogContainer from "/imports/ui/components/ModLog/ModLogContainer";
 import CommunityModLogContainer from "/imports/ui/components/ModLog/CommunityModLogContainer";
 import DummyComponent from "/imports/ui/components/DummyComponent";
@@ -58,6 +63,46 @@ FlowRouter.route("/", {
   }
 });
 
+FlowRouter.route("/help", {
+  name: "help",
+  action: function () {
+    setTitle("Help");
+    render({ main: <Help /> });
+  }
+});
+
+FlowRouter.route("/about", {
+  name: "about",
+  action: function () {
+    setTitle("About");
+    render({ main: <About /> });
+  }
+});
+
+FlowRouter.route("/legal", {
+  name: "legal",
+  action: function () {
+    setTitle("Terms of Service");
+    render({ main: <Legal /> });
+  }
+});
+
+FlowRouter.route("/guidelines", {
+  name: "guidelines",
+  action: function () {
+    setTitle("Community Guidelines");
+    render({ main: <CommunityGuidelines /> });
+  }
+});
+
+FlowRouter.route("/privacy", {
+  name: "privacy",
+  action: function () {
+    setTitle("Privacy");
+    render({ main: <Privacy /> });
+  }
+});
+
 FlowRouter.route("/modlog", {
   name: "modlog",
   action: function () {
@@ -78,7 +123,7 @@ FlowRouter.route("/loading", {
   name: "loading",
   action: function () {
     setTitle("Loading");
-    renderView({ main: <LoadingSpinner /> });
+    render({ main: <LoadingSpinner /> });
   }
 });
 

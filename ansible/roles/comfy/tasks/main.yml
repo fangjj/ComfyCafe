@@ -4,34 +4,33 @@
 - name: ensure ffmpeg is at the latest version
   apt: pkg=ffmpeg state=latest
 
-- name: Add group "teruimages"
-  group: name=teruimages
-- name: Add user "teruimages"
-  user: name=teruimages group=teruimages home=/srv/TeruImages/
+- name: Add group "comfycafe"
+  group: name=comfycafe
+- name: Add user "comfycafe"
+  user: name=comfycafe group=comfycafe home=/srv/ComfyCafe/
 - name: load email config
   include_vars: ~/.mailgun.json
 - name: load kadira config
   include_vars: ~/.kadira.json
 
 - name: copy Meteor bundle
-  copy: src=../TeruImages.tar.gz dest=/srv/TeruImages/TeruImages.tar.gz
+  copy: src=../ComfyCafé.tar.gz dest=/srv/ComfyCafe/ComfyCafé.tar.gz
   register: bundle
-  when: local
 - name: unpack Meteor bundle
-  unarchive: src=/srv/TeruImages/TeruImages.tar.gz dest=/srv/TeruImages copy=false
+  unarchive: src=/srv/ComfyCafe/ComfyCafé.tar.gz dest=/srv/ComfyCafe copy=false
   when: bundle.changed
 
-- name: copy TeruImages systemd unit file
-  template: src=TeruImages.service.j2 dest=/etc/systemd/system/TeruImages.service
+- name: copy ComfyCafe systemd unit file
+  template: src=ComfyCafe.service.j2 dest=/etc/systemd/system/ComfyCafe.service
   register: service_file
   notify:
-  - start TeruImages
+  - start ComfyCafe
 - name: systemctl daemon-reload
   shell: systemctl daemon-reload
   when: service_file.changed
 - name: install nodejs packages
   command: /usr/local/bin/npm install
   args:
-    chdir: /srv/TeruImages/bundle/programs/server
+    chdir: /srv/ComfyCafe/bundle/programs/server
   notify:
-  - restart TeruImages
+  - restart ComfyCafe

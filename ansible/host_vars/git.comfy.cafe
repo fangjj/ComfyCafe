@@ -1,0 +1,10 @@
+local: false
+cores: 1
+makej: 2
+
+domain: comfy.cafe
+ddp_domain: comfy.cafe
+root_url: https://comfy.cafe
+ddp_url: https://comfy.cafe
+ssh_port: 22
+ansible_ssh_user: scottpleb

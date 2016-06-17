@@ -14,6 +14,7 @@ import muiTheme from "/imports/ui/utils/muiTheme";
 import UploadQueue from "/imports/ui/components/UploadQueue";
 import PseudoBodyContainer from "/imports/ui/components/PseudoBodyContainer";
 import TopBar from "/imports/ui/components/TopBar/TopBar";
+import Footer from "/imports/ui/components/Footer";
 import Dialog from "/imports/ui/components/Dialog";
 import PostForm from "/imports/ui/components/Post/PostForm";
 import ResetPassword from "/imports/ui/components/User/ResetPassword";
@@ -239,9 +240,7 @@ export default React.createClass({
   },
   renderFooter() {
     if (! this.props.dense) {
-      return <footer>
-        Help · About · Legal
-      </footer>;
+      return <Footer />;
     }
   },
   renderQueue() {

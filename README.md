@@ -23,7 +23,7 @@ ComfyCafé is designed to combine **content discovery** with **community cultiva
 - Images can be uploaded by **dragging and dropping anywhere**. Otherwise, you can simply click the floating action button, or even **paste to upload**.
 - **Quirky image names** are generated randomly using a unique algorithm that totally isn't a ripoff of gfycat. Most notably, ComfyCafé has a much higher chance of generating sexy names than gfycat.
 - **Advanced black magic** is used to generate background colors for images that best complement them, along with a nifty pattern. If you think you know better than the algorithm, you can also pick the color yourself.
-- **Our tag system has the most depth** of any website I've ever seen. Tag definitions are centralized and **community-driven**, featuring aliases, implications, conditional implications, and extensions. Confused? Here's the [tutorial](todo).
+- **Our tag system has the most depth** of any website I've ever seen. Tag definitions are centralized and **community-driven**, featuring aliases, implications, conditional implications, and extensions. Confused? Here's the [tutorial](HELP.md#tagging).
 - Create filters to **hide types of content you don't want to see**.
 - All images have an assigned safety of either Safe, Risqué, Nudity, or Explicit. Searching to only get results within a subset of these is easy!
 - You can **subscribe to other users**, and if you're feeling bold, you could even send a **friend request**.

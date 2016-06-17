@@ -1,8 +1,8 @@
 ---
-- hosts: git.teru.sexy
+- hosts: git.comfy.cafe
   become: yes
   roles:
     - meteor
     - mongodb
     - nginx
-    - teru_images
+    - comfy

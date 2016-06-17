@@ -9,7 +9,7 @@ export default () => {
         <h2>Community Guidelines</h2>
       </header>
 
-      Last updated 16 June 2016
+      Last updated 17 June 2016
 
       <ul className="toc">
         <li><a href="#illegal">Illegal Content</a></li>
@@ -87,9 +87,6 @@ export default () => {
         </p>
         <p>
           Do not use ComfyCafé to link to or distribute viruses, malware, or other forms of malicious software or code.
-        </p>
-        <p>
-          You may not use ComfyCafé for the discussion of malicious hacking activities, nor for the distribution or linking of tools for that purpose.
         </p>
       </section>
 

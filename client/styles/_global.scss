@@ -191,8 +191,32 @@ i.sigil {
   font-style: italic;
 }
 
-code, pre {
+code, pre, .snippet {
+  margin: 8px;
+  margin-left: 0;
+  margin-right: 0;
+
+  padding: 12px;
+
+  background: rgba($text-color, 0.15);
+
   font-family: "Ubuntu Mono";
+}
+
+pre > code {
+  margin: 0;
+
+  padding: 0;
+
+  background: none;
+}
+
+.snippet {
+  margin: 0;
+  margin-left: 1px;
+  margin-right: 1px;
+
+  padding: 2px;
 }
 
 .toc {

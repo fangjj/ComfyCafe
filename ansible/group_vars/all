@@ -4,7 +4,6 @@ cores: 4
 makej: 5
 
 domain: localhost
-ddp_domain: localhost
 default_server: true
 ssl_cert: /etc/letsencrypt/live/comfy.cafe/fullchain.pem
 ssl_key: /etc/letsencrypt/live/comfy.cafe/privkey.pem

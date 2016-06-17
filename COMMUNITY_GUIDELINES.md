@@ -1,6 +1,6 @@
 # Community Guidelines
 
-Last updated 16 June 2016
+Last updated 17 June 2016
 
 Here at ComfyCafé, we pride ourselves in maintaining a higher standard of free speech than our competition. However, in order to assure that we can continue to provide this platform, we must adhere to United States law. Additionally, various quality of life concerns are taken into consideration; most notably, spam isn't allowed.
 
@@ -33,8 +33,6 @@ If a user blocks you, do not attempt to circumvent the block.
 Don't do anything to intentionally disrupt the functionality of ComfyCafé or otherwise negatively impact the ability of users to access the site.
 
 Do not use ComfyCafé to link to or distribute viruses, malware, or other forms of malicious software or code.
-
-You may not use ComfyCafé for the discussion of malicious hacking activities, nor for the distribution or linking of tools for that purpose.
 
 ## Spam
 

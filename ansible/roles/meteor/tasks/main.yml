@@ -7,18 +7,13 @@
 - name: ensure build tools are at the latest version
   apt: pkg=build-essential state=latest
 
-- name: download nodejs 0.10 archive
-  get_url: url=https://data.teru.sexy/node-v0.10.41.tar.gz dest=/var/tmp/node-v0.10.41.tar.gz
-  register: node
-  when: not local
 - name: copy nodejs 0.10 archive
   copy: src=../../node-v0.10.41.tar.gz dest=/var/tmp/node-v0.10.41.tar.gz
   register: node
-  when: local
-
+  when: bootstrap
 - name: unpack nodejs 0.10 archive
   unarchive: src=/var/tmp/node-v0.10.41.tar.gz dest=/var/tmp/ copy=false
-  when: node.changed
+  when: bootstrap
 - name: configure, build, and install nodejs 0.10
   command: "/usr/bin/make install -j{{ makej }} chdir=/var/tmp/node-v0.10.41"
-  when: node.changed
+  when: bootstrap

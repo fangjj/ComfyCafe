@@ -1,4 +1,5 @@
 local: true
+bootstrap: false
 cores: 4
 makej: 5
 

@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
-meteor build .
+#meteor build .
 ansible-playbook ansible/site.yml

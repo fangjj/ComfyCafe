@@ -7,30 +7,30 @@
 - name: Add group "comfycafe"
   group: name=comfycafe
 - name: Add user "comfycafe"
-  user: name=comfycafe group=comfycafe home=/srv/ComfyCafé/
+  user: name=comfycafe group=comfycafe home=/srv/ComfyCafe/
 - name: load email config
   include_vars: ~/.mailgun.json
 - name: load kadira config
   include_vars: ~/.kadira.json
 
 - name: copy Meteor bundle
-  copy: src=../ComfyCafé.tar.gz dest=/srv/ComfyCafé/ComfyCafé.tar.gz
+  copy: src=../ComfyCafé.tar.gz dest=/srv/ComfyCafe/ComfyCafé.tar.gz
   register: bundle
 - name: unpack Meteor bundle
-  unarchive: src=/srv/ComfyCafé/ComfyCafé.tar.gz dest=/srv/ComfyCafé copy=false
+  unarchive: src=/srv/ComfyCafe/ComfyCafé.tar.gz dest=/srv/ComfyCafe copy=false
   when: bundle.changed
 
-- name: copy ComfyCafé systemd unit file
-  template: src=ComfyCafé.service.j2 dest=/etc/systemd/system/ComfyCafé.service
+- name: copy ComfyCafe systemd unit file
+  template: src=ComfyCafe.service.j2 dest=/etc/systemd/system/ComfyCafe.service
   register: service_file
   notify:
-  - start ComfyCafé
+  - start ComfyCafe
 - name: systemctl daemon-reload
   shell: systemctl daemon-reload
   when: service_file.changed
 - name: install nodejs packages
   command: /usr/local/bin/npm install
   args:
-    chdir: /srv/ComfyCafé/bundle/programs/server
+    chdir: /srv/ComfyCafe/bundle/programs/server
   notify:
-  - restart ComfyCafé
+  - restart ComfyCafe

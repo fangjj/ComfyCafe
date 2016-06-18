@@ -10,8 +10,6 @@
   user: name=comfycafe group=comfycafe home=/srv/ComfyCafe/
 - name: load email config
   include_vars: ~/.mailgun.json
-- name: load kadira config
-  include_vars: ~/.kadira.json
 
 - name: copy Meteor bundle
   copy: src=../ComfyCafé.tar.gz dest=/srv/ComfyCafe/ComfyCafé.tar.gz

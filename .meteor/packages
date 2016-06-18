@@ -1,5 +1,6 @@
 standard-app-packages
 ecmascript
+http
 reactive-var
 accounts-password
 email

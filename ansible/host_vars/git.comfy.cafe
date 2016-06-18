@@ -5,6 +5,7 @@ makej: 5
 domain: comfy.cafe
 root_url: https://comfy.cafe
 ddp_url: https://comfy.cafe
+bootstrap: true
 
 ssh_port: 222
 ansible_ssh_user: scottpleb

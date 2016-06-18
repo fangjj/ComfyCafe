@@ -13,8 +13,6 @@ peerlibrary:reactive-publish
 kadira:flow-router-ssr
 kadira:dochead
 meteorhacks:fast-render
-meteorhacks:kadira
-meteorhacks:zones
 chuangbo:cookie
 alanning:roles
 mizzao:user-status

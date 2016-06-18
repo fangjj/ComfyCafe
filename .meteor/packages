@@ -1,5 +1,5 @@
 standard-app-packages
-gadicc:ecmascript-hot
+ecmascript
 reactive-var
 accounts-password
 email

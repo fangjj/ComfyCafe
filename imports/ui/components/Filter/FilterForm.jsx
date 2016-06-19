@@ -59,7 +59,9 @@ export default React.createClass({
           if (this.props.onSuccess) {
             this.props.onSuccess();
           }
-          this.redirect(slugOrId);
+          if (! this.props.noRedirect) {
+            this.redirect(slugOrId);
+          }
         }
       });
     } else {
@@ -67,7 +69,7 @@ export default React.createClass({
         if (err) {
           prettyPrint(err);
         } else {
-          if (! this.props.global) {
+          if (! this.props.global && ! this.props.noRedirect) {
             this.redirect(slug);
           }
         }

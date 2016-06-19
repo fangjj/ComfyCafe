@@ -23,3 +23,28 @@
 .authLink {
   line-height: 2.5;
 }
+
+.acceptTosContainer {
+  display: flex;
+
+  > div {
+    width: auto !important;
+  }
+}
+
+#acceptTos + div {
+  width: auto !important;
+
+  label {
+    width: auto !important;
+  }
+}
+
+.acceptTosLabel {
+  z-index: 9001;
+
+  margin-left: 4px;
+
+  font-size: 20px;
+  line-height: 24px;
+}

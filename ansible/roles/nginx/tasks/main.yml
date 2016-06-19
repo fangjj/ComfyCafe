@@ -12,7 +12,7 @@
   notify:
   - reload nginx
 - name: copy nginx site configuration
-  template: src=site.conf.j2 dest=/etc/nginx/sites-enabled/teru-images.conf
+  template: src=site.conf.j2 dest=/etc/nginx/sites-enabled/comfy.conf
   notify:
   - reload nginx
 - name: remove nginx default site

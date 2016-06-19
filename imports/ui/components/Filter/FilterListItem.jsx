@@ -1,5 +1,7 @@
 import React from "react";
 
+import FilterMoreMenu from "/imports/ui/components/Filter/FilterMoreMenu";
+
 export default React.createClass({
   render() {
     const filter = this.props.filter;
@@ -11,6 +13,7 @@ export default React.createClass({
       <a href={path}>
         {filter.name}
       </a>
+      <FilterMoreMenu filter={filter} />
     </li>;
   }
 });

@@ -1,10 +1,10 @@
 upstream comfycafe {
-  server localhost:{{ meteor_port }};
+  server 127.0.0.1:{{ meteor_port }};
 }
 
 {% if not local %}
 server {
-  listen 80 {% if default_server %}default_server{% endif %};
+  listen 0.0.0.0:80 {% if default_server %}default_server{% endif %};
   server_name {{ domain }} www.{{ domain }};
   return 301 https://{{ domain }}$request_uri;
 }
@@ -12,7 +12,7 @@ server {
 
 server {
   {% if not local %}
-  listen 443 ssl http2 {% if default_server %}default_server{% endif %};
+  listen 0.0.0.0:443 ssl http2 {% if default_server %}default_server{% endif %};
   {% else %}
   listen 80 {% if default_server %}default_server{% endif %};
   {% endif %}

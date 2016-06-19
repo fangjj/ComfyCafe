@@ -3,6 +3,7 @@ cores: 4
 makej: 5
 
 domain: comfy.cafe
+default_server: false
 root_url: https://comfy.cafe
 ddp_url: https://comfy.cafe
 

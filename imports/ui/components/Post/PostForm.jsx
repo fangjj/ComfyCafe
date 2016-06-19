@@ -154,6 +154,11 @@ export default React.createClass({
       }
     });
   },
+  renderHelp() {
+    if (! this.props.mod) {
+      return <a className="helpLink" href={FlowRouter.path("help")}>Help</a>;
+    }
+  },
   renderMedium() {
     if (this.data.loading) {
       return <div className="medium center">
@@ -173,7 +178,7 @@ export default React.createClass({
         defaultValue={this.state.source}
         label="Source"
         rows={1}
-        
+
         onChange={this.handleSource}
       />;
     }
@@ -205,6 +210,7 @@ export default React.createClass({
       {this.renderReportForm()}
 
       {this.renderMedium()}
+      {this.renderHelp()}
       <VisibilitySelector
         visibility={this.state.visibility}
         onChange={this.handleVisibility}
@@ -218,7 +224,7 @@ export default React.createClass({
         defaultValue={this.state.description}
         label="Description"
         rows={3}
-        
+
         onChange={this.handleDescription}
       />
       <br />

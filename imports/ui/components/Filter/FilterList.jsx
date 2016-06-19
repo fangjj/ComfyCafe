@@ -37,21 +37,6 @@ export default React.createClass({
       </InlineUhoh>;
     }
   },
-  renderFavorites() {
-    if (this.props.favoritesLoading) {
-      return <InlineLoadingSpinner />;
-    }
-
-    if (this.props.favoriteFilters.length) {
-      return _.map(this.props.favoriteFilters, (filter) => {
-        return <FilterListItem filter={filter} key={filter._id} />;
-      });
-    } else {
-      return <InlineUhoh>
-        {FlowRouter.getParam("username") + " hasn't favorited any filters yet."}
-      </InlineUhoh>;
-    }
-  },
   renderForm() {
     if (this.state.showForm) {
       return <Dialog
@@ -73,22 +58,9 @@ export default React.createClass({
     }
 
     return <Content>
-      <section>
-        <header>
-          <h2>Created</h2>
-        </header>
-        <List>
-          {this.renderItems()}
-        </List>
-      </section>
-      <section>
-        <header>
-          <h2>Favorited</h2>
-        </header>
-        <List>
-          {this.renderFavorites()}
-        </List>
-      </section>
+      <List>
+        {this.renderItems()}
+      </List>
       <FAB iconName="add" onTouchTap={this.showForm} />
       {this.renderForm()}
     </Content>;

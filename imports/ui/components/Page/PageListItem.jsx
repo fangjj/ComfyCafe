@@ -1,6 +1,7 @@
 import React from "react";
 
 import VisibilityLink from "/imports/ui/components/VisibilityLink";
+import PageMoreMenu from "/imports/ui/components/Page/PageMoreMenu";
 
 export default React.createClass({
   render() {
@@ -13,6 +14,7 @@ export default React.createClass({
       <VisibilityLink href={path} visibility={page.visibility}>
         {page.name}
       </VisibilityLink>
+      <PageMoreMenu page={page} />
     </li>;
   }
 });

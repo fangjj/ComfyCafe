@@ -26,7 +26,8 @@ function errorBuilder(obj) {
     usernameError: undefined,
     passwordError: undefined,
     emailError: undefined,
-    betaKeyError: undefined
+    betaKeyError: undefined,
+    tosAcceptedError: undefined
   };
 
   _.each(obj, (v, k) => {
@@ -139,6 +140,13 @@ export default React.createClass({
       betaKeyError: undefined
     });
   },
+  handleAccept(e) {
+    this.setState({
+      tosAccepted: e.target.checked,
+      tosAcceptedError: undefined,
+      generalError: undefined
+    });
+  },
   handleCancel(e) {
     if (this.state.register) {
       FlowRouter.go(FlowRouter.path("login"));
@@ -216,6 +224,14 @@ export default React.createClass({
     });
   },
   handleSubmitRegister() {
+    if (! this.state.tosAccepted) {
+      this.setState(errorBuilder({
+        generalError: true,
+        tosAcceptedError: true
+      }));
+      return;
+    }
+
     const userObject = {
       username: this.state.username,
       password: this.state.password,
@@ -282,6 +298,8 @@ export default React.createClass({
     if (this.state.generalError) {
       if (this.state.waitError) {
         return this.renderWait();
+      } else if (this.state.tosAcceptedError) {
+        return this.renderTosAcceptedError();
       }
     }
   },
@@ -292,6 +310,11 @@ export default React.createClass({
       or do you just need to <a href={path}>reset your password?</a>
       <br />
       You have to wait <Countdown ms={this.error.details.timeToReset} /> before trying again.
+    </Error>;
+  },
+  renderTosAcceptedError() {
+    return <Error>
+      You need to accept the <a className="acceptTosLabel" href={FlowRouter.path("legal")}>Terms of Service</a>!
     </Error>;
   },
   renderForgot() {
@@ -319,6 +342,19 @@ export default React.createClass({
         errorText={this.state.betaKeyError}
         onChange={this.handleBetaKey}
       />;
+    }
+  },
+  renderAccept() {
+    if (this.state.register) {
+      return <div className="acceptTosContainer">
+        <Checkbox
+          id="acceptTos"
+          label="I accept the"
+          defaultChecked={this.state.tosAccepted}
+          onCheck={this.handleAccept}
+        />
+        <a className="acceptTosLabel" href={FlowRouter.path("legal")}>Terms of Service</a>
+      </div>;
     }
   },
   renderCancel() {
@@ -367,6 +403,7 @@ export default React.createClass({
         {this.renderForgot()}
         {this.renderEmail()}
         {this.renderBetaKey()}
+        {this.renderAccept()}
         <Actions left={left}>
           {this.renderCancel()}
           <SubmitButton

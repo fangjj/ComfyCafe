@@ -9,6 +9,16 @@ export default () => {
         <h2>Help</h2>
       </header>
 
+      <section id="markdown">
+        <header>
+          <h3>Markdown</h3>
+        </header>
+
+        <p>
+          Post descriptions, blog content, message bodies, and other such similarly lengthy and important text areas use <a href="http://commonmark.org/help/">Markdown</a> for formatting.
+        </p>
+      </section>
+
       <section id="posting">
         <header>
           <h3>Posting</h3>

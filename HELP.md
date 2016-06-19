@@ -1,5 +1,9 @@
 # Help
 
+## Markdown
+
+Post descriptions, blog content, message bodies, and other such similarly lengthy and important text areas use [Markdown](http://commonmark.org/help/) for formatting. 
+
 ## Posting
 
 Posting an image is easy! You can use the nice little (+) button in the bottom right, or just drag and drop an image to literally any part of any page. You can also paste images, but only in Chrome.

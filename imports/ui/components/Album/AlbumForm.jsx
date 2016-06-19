@@ -51,11 +51,13 @@ export default React.createClass({
     this.setState({ description: e.target.value });
   },
   redirect(slug) {
-    const path = FlowRouter.path("album", {
-      username: _.get(this.props, "album.owner.username", this.context.currentUser.username),
-      albumSlug: slug
-    });
-    FlowRouter.go(path);
+    if (! this.props.noRedirect) {
+      const path = FlowRouter.path("album", {
+        username: _.get(this.props, "album.owner.username", this.context.currentUser.username),
+        albumSlug: slug
+      });
+      FlowRouter.go(path);
+    }
   },
   handleSubmit() {
     const data = dataBuilder(this.state, defaultState);

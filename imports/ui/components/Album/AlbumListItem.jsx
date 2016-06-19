@@ -1,6 +1,7 @@
 import React from "react";
 
 import VisibilityLink from "/imports/ui/components/VisibilityLink";
+import AlbumMoreMenu from "/imports/ui/components/Album/AlbumMoreMenu";
 
 export default React.createClass({
   render() {
@@ -12,7 +13,8 @@ export default React.createClass({
     return <li>
       <VisibilityLink href={path} visibility={album.visibility}>
         {album.name}
-      </VisibilityLink>  
+      </VisibilityLink>
+      <AlbumMoreMenu album={album} />
     </li>;
   }
 });

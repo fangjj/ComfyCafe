@@ -47,12 +47,13 @@ export default React.createClass({
     this.setState({ body: e.target.value });
   },
   redirect(slug) {
-    console.log(this.props.currentUser);
-    const path = FlowRouter.path("page", {
-      username: _.get(this.props, "page.owner.username", this.props.currentUser.username),
-      slug: slug
-    });
-    FlowRouter.go(path);
+    if (! this.props.noRedirect) {
+      const path = FlowRouter.path("page", {
+        username: _.get(this.props, "page.owner.username", this.props.currentUser.username),
+        slug: slug
+      });
+      FlowRouter.go(path);
+    }
   },
   handleSubmit() {
     const data = dataBuilder(this.state, defaultState);
@@ -138,7 +139,7 @@ export default React.createClass({
         defaultValue={this.state.body}
         label="Body"
         rows={3}
-        
+
         onChange={this.handleBody}
       />
 

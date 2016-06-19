@@ -21,6 +21,9 @@ export default () => {
           When I say images, I actually mean images (PNG, JPG, GIF), videos (MP4, WEBM, OGV), and audio (MP3, OGG) of up to 32MB.
         </p>
         <p>
+          We allow most types of content, but if in doubt, be sure to reference the <a href="/guidelines">Community Guidelines</a>.
+        </p>
+        <p>
           You&#39;re given three visibility options: <em>Public</em>, <em>Friends only</em>, and <em>Unlisted</em>. Note that while this effects to whom posts are listed, anyone can still see any post if they have a link to it.
         </p>
         <p>

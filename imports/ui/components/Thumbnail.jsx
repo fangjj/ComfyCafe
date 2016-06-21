@@ -15,6 +15,10 @@ export default React.createClass({
   },
   render() {
     const medium = this.props.medium;
+    if (! medium) {
+      return null;
+    }
+
     const type = medium.contentType.split("/")[0];
     const size = this.props.size;
     const thumbComplete = _.includes(medium.thumbsComplete, size);

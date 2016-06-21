@@ -9,7 +9,8 @@ export default React.createClass({
     return { spoilered: this.props.spoilered };
   },
   handleTouch(event) {
-    if (event.nativeEvent.which === 1) {
+    // 1 = left; 0 = mobile tap
+    if (event.nativeEvent.which === 1 || event.nativeEvent.which === 0) {
       if (this.state.spoilered) {
         this.setState({ spoilered: false });
       }

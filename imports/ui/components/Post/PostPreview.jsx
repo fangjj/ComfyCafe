@@ -31,7 +31,7 @@ export default React.createClass({
   },
   buildTitle() {
     const post = this.props.post;
-    return `(${safetyLabels[post.safety]}) ${post.tags.text)}`;
+    return `(${safetyLabels[post.safety]}) ${post.tags.text}`;
   },
   renderMoreMenu() {
     const isOwner = _.get(this.props.currentUser, "_id") === this.props.post.owner._id;

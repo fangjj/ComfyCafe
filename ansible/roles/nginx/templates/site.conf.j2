@@ -7,6 +7,12 @@ server {
   listen 0.0.0.0:80 {% if default_server %}default_server{% endif %};
   server_name {{ domain }} www.{{ domain }};
   return 301 https://{{ domain }}$request_uri;
+}
+
+server {
+  listen 0.0.0.0:443 ssl http2;
+  server_name www.{{domain}};
+  return 301 https://{{ domain }}$request_uri;
 
   ssl on;
   ssl_certificate {{ ssl_cert }};
@@ -19,12 +25,6 @@ server {
   ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:ECDHE-RSA-RC4-SHA:ECDHE-ECDSA-RC4-SHA:RC4-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK';
 
   add_header Strict-Transport-Security "max-age={{ hsts_max_age }}; includeSubDomains; preload;";
-}
-
-server {
-  listen 0.0.0.0:443 ssl http2;
-  server_name www.{{domain}};
-  return 301 https://{{ domain }}$request_uri;
 }
 {% endif %}
 

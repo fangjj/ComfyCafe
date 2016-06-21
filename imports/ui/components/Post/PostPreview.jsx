@@ -31,7 +31,7 @@ export default React.createClass({
   },
   buildTitle() {
     const post = this.props.post;
-    return `(${safetyLabels[post.safety]}) ${post.tags.text}`;
+    return `(${safetyLabels[post.safety]}) ${_.get(post, "tags.text", "")}`;
   },
   renderMoreMenu() {
     const isOwner = _.get(this.props.currentUser, "_id") === this.props.post.owner._id;
@@ -54,6 +54,10 @@ export default React.createClass({
     </div>;
   },
   render() {
+    if (! this.props.post) {
+      return null;
+    }
+
     const postUrl = FlowRouter.path("post", {
       username: this.props.post.owner.username,
       postName: this.props.post.name

@@ -2,13 +2,7 @@ import _ from "lodash";
 
 import mongoid from "/imports/api/common/mongoid";
 
-const base = expr(() => {
-  if (process.env.NODE_ENV === "production") {
-    return "https://img.comfy.cafe/media/";
-  } else {
-    return "http://localhost:5000/media/";
-  }
-});
+const base = _.get(Meteor.settings, "public.imgUrl", "/gridfs/media/");
 
 function daysToSeconds(d) {
   // This constant isn't a perfect representation, but it's a highly suitable representation.

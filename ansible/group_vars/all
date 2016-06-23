@@ -14,6 +14,6 @@ meteor_port: 3000
 mongo_url: mongodb://localhost:27017/ComfyCafé
 mongo_oplog_url: mongodb://localhost:27017/local
 ddp_url: http://localhost
-meteor_settings: '{ \"public\": { \"requireInvite\": false } }'
+meteor_settings: '{ \"public\": { \"requireInvite\": false, \"imgUrl\": \"https://img.comfy.cafe/media/\" } }'
 
 ssh_port: 22

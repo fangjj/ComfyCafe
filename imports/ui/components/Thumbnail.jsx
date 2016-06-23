@@ -15,7 +15,7 @@ export default React.createClass({
   },
   render() {
     const medium = this.props.medium;
-    if (! medium) {
+    if (! medium || _.isEmpty(medium)) {
       return null;
     }
 

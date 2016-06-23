@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 import NoSSR from "react-no-ssr";
 import pluralize from "pluralize";
@@ -8,6 +9,10 @@ import Moment from "/imports/ui/components/Moment";
 
 export default (props) => {
   const room = props.room;
+  if (! room || _.isEmpty(room)) {
+    return null;
+  }
+
   const url = FlowRouter.path("room", { roomSlug: room.slug });
 
   return <li className="roomListItem">

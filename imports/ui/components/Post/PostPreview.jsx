@@ -54,7 +54,7 @@ export default React.createClass({
     </div>;
   },
   render() {
-    if (! this.props.post) {
+    if (! this.props.post || _.isEmpty(this.props.post)) {
       return null;
     }
 

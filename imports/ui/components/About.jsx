@@ -48,6 +48,14 @@ export default () => {
           Send questions, concerns, etc. to <a href='ma&#105;&#108;t&#111;&#58;adm%69n&#64;&#99;om&#102;&#37;79&#46;%&#54;3a%66e'>admin&#64;&#99;omfy&#46;&#99;afe</a>
         </p>
       </section>
+      <section id="attribution">
+        <header>
+          <h2>Attribution</h2>
+        </header>
+        <p>
+          Emoji provided free by <a href="http://emojione.com/">EmojiOne</a>.
+        </p>
+      </section>
     </div>
   </Content>;
 };

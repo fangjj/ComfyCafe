@@ -7,6 +7,6 @@ if [ "$1" != "--no-build" ]
 fi
 if [ "$1" != "--no-sync" ]
   then
-    rsync -azPAXvH -e 'ssh -p 22 -i ~/.ssh/id_rsa' --delete ../meteor-bundles/ComfyCafé/bundle root@git.comfy.cafe:/srv/ComfyCafé
+    rsync -azPAXvH -e 'ssh -p 22 -i ~/.ssh/id_rsa' --delete ../meteor-bundles/ComfyCafé/bundle root@git.comfy.cafe:/srv/ComfyCafe
 fi
 ansible-playbook ansible/site.yml

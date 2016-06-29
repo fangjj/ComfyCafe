@@ -7,5 +7,4 @@ default_server: false
 root_url: https://comfy.cafe
 ddp_url: https://comfy.cafe
 
-ssh_port: 222
 ansible_ssh_user: scottpleb

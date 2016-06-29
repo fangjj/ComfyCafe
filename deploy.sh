@@ -1,4 +1,7 @@
 #!/bin/bash
 set -e
-meteor build .
+if [ "$1" != "--no-build" ]
+  then
+    meteor build .
+fi
 ansible-playbook ansible/site.yml

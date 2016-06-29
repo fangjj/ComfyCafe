@@ -14,7 +14,12 @@ export default React.createClass({
   },
   handleTouch(event) {
     if (event.nativeEvent.which === 1) {
-      this.setState({ showMoonbox: true });
+      const $img = $(this.refs.image);
+      this.setState({
+        width: $img.width(),
+        height: $img.height(),
+        showMoonbox: true
+      });
     }
   },
   closeMoonbox() {

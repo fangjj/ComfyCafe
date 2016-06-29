@@ -11,13 +11,6 @@
 - name: load email config
   include_vars: ~/.mailgun.json
 
-- name: copy Meteor bundle
-  copy: src=../ComfyCafé.tar.gz dest=/srv/ComfyCafe/ComfyCafé.tar.gz
-  register: bundle
-- name: unpack Meteor bundle
-  unarchive: src=/srv/ComfyCafe/ComfyCafé.tar.gz dest=/srv/ComfyCafe copy=false
-  when: bundle.changed
-
 - name: copy ComfyCafe systemd unit file
   template: src=ComfyCafe.service.j2 dest=/etc/systemd/system/ComfyCafe.service
   register: service_file

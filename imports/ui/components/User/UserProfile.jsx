@@ -6,6 +6,8 @@ import "/imports/api/users/methods";
 import setTitle from "/imports/ui/utils/setTitle";
 import getOrdinal from "/imports/ui/utils/ordinal";
 import statusLabel from "/imports/ui/utils/statusLabel";
+import metaBuilder from "/imports/ui/utils/metaBuilder";
+import { getMediaUrlAvatar, getMediaUrlDjent } from "/imports/api/media/urls";
 import UserInfo from "/imports/ui/components/User/UserInfo";
 import UserStatus from "/imports/ui/components/User/UserStatus";
 import UserProfileForm from "/imports/ui/components/User/UserProfileForm";
@@ -47,6 +49,19 @@ export default React.createClass({
         { normalizedUsername: FlowRouter.getParam("username").toLowerCase() }
       )
     };
+  },
+  componentWillMount() {
+    metaBuilder({
+      title: _.get(this.data.user, "profile.displayName", this.data.user.username),
+      description: _.get(this.data.user, "profile.blurb"),
+      image: (size) => {
+        if (this.data.user.profile.avatar) {
+          return getMediaUrlAvatar(this.data.user._id, this.data.user.profile.avatar._id, size);
+        } else {
+          return getMediaUrlDjent(this.data.user._id);
+        };
+      }
+    });
   },
   startEditing(event) {
     this.setState({ isEditing: true });

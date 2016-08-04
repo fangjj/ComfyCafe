@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import setTitle from "/imports/ui/utils/setTitle";
+import metaBuilder from "/imports/ui/utils/metaBuilder";
 import Content from "/imports/ui/components/Content";
 import LoadingSpinner from "/imports/ui/components/Spinner/LoadingSpinner";
 import InlineLoadingSpinner from "/imports/ui/components/Spinner/InlineLoadingSpinner";
@@ -20,6 +21,12 @@ import ReportForm from "/imports/ui/components/Report/ReportForm";
 export default React.createClass({
   getInitialState() {
     return { showForm: false, showReportForm: false };
+  },
+  componentWillMount() {
+    metaBuilder({
+      title: this.props.album.name,
+      description: this.props.album.description
+    });
   },
   showForm() {
     this.setState({ showForm: true });

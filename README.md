@@ -2,7 +2,7 @@
 
 ## What is it?
 
-![](https://teru.sexy/gridfs/media/f9c366a3c50ae47b9379d8c1cc4e95d7.png?cache=2592000)
+![](https://img.comfy.cafe/media/f9c366a3c50ae47b9379d8c1cc4e95d7.png?cache=2592000)
 
 ComfyCafé is a site where you can upload images, tag images, like images, comment on images, filter images, and of course, report images for violating the rules.
 

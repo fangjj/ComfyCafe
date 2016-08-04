@@ -22,6 +22,7 @@ const adjectives = [
   "Flamboyant",
   "Gay",
   "Petite",
+  "Svelte",
   "Vociferous",
   "Bodacious",
   "Gushy",

@@ -1,9 +1,13 @@
 import React from "react";
 
+import defaultMeta from "/imports/ui/utils/defaultMeta";
 import PostGalleryContainer from "./PostGalleryContainer";
 import InlineUhoh from "/imports/ui/components/InlineUhoh";
 
 export default React.createClass({
+  componentWillMount() {
+    defaultMeta();
+  },
   render() {
     return <PostGalleryContainer
       subName="allPosts"

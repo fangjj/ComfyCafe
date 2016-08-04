@@ -166,6 +166,7 @@ export default React.createClass({
           safety={this.props.post.safety}
           spoilered={_.has(this.props.spoilered, this.props.post._id)}
           reason={_.get(this.props.spoilered, this.props.post._id)}
+          loop={this.props.post.loop}
         />
       </figure>
       <PostInfoBox

@@ -40,8 +40,8 @@ export default React.createClass({
   handleName(e) {
     this.setState({ name: e.target.value });
   },
-  handlePrivacy(value) {
-    this.setState({ privacy: value });
+  handleVisibility(value) {
+    this.setState({ visibility: value });
   },
   handleBody(e) {
     this.setState({ body: e.target.value });

@@ -21,10 +21,10 @@ export default React.createClass({
         spoilered={this.props.spoilered}
         reason={this.props.reason}
       />,
-      video: <video className="medium" id={"video" + medium._id} src={src} width="100%" controls>
+      video: <video className="medium" id={"video" + medium._id} src={src} width="100%" controls loop={this.props.loop}>
         <source src={src} type={medium.contentType} />
       </video>,
-      audio: <audio className="medium" id={"audio" + medium._id} src={src} controls>
+      audio: <audio className="medium" id={"audio" + medium._id} src={src} controls loop={this.props.loop}>
         <source src={src} type={medium.contentType} />
       </audio>
     }[type];

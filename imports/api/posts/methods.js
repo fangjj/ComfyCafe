@@ -46,7 +46,8 @@ const match = {
 	safety: Number,
 	tags: String,
 	tagsCondExpanded: Object,
-	bgColor: String
+	bgColor: String,
+	loop: Boolean
 };
 
 function updatePost(postId, data, auth) {

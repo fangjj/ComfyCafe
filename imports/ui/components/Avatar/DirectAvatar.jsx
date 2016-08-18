@@ -14,6 +14,7 @@ export default React.createClass({
     const size = thumbnailPolicies.avatar[this.props.size].size;
 
     const user = this.props.user;
+    if (! user) { return null; }
 
     const spoilered = _.includes(
       _.get(this.data.filter, "spoilers.safeties",

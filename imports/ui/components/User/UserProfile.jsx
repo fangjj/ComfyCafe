@@ -42,15 +42,18 @@ export default React.createClass({
     };
   },
   getMeteorData() {
-    const handle = Meteor.subscribe("user", FlowRouter.getParam("username"));
+    const username = FlowRouter.getParam("username") || "";
+    const handle = Meteor.subscribe("user", username);
+    const user = Meteor.users.findOne(
+      { normalizedUsername: username.toLowerCase() }
+    );
     return {
-      loading: ! handle.ready(),
-      user: Meteor.users.findOne(
-        { normalizedUsername: FlowRouter.getParam("username").toLowerCase() }
-      )
+      loading: ! handle.ready() || ! user,
+      user
     };
   },
   componentWillMount() {
+    if (! this.data.user) { return; }
     metaBuilder({
       title: _.get(this.data.user, "profile.displayName", this.data.user.username),
       description: _.get(this.data.user, "profile.blurb"),

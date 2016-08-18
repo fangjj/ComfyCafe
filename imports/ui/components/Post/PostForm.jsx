@@ -19,6 +19,7 @@ import BgColorSelector from "/imports/ui/components/BgColorSelector";
 import ReportFormGuts from "/imports/ui/components/Report/ReportFormGuts";
 import Snackbar from "/imports/ui/components/Snackbar";
 import DangerButton from "/imports/ui/components/Button/DangerButton";
+import Toggle from "/imports/ui/components/Toggle";
 
 const defaultState = {
   visibility: "public",
@@ -28,7 +29,8 @@ const defaultState = {
   safety: 0,
   tags: { text: "tagme" },
   tagsCondExpanded: {},
-  bgColor: "default"
+  bgColor: "default",
+  loop: false
 };
 
 export default React.createClass({
@@ -101,6 +103,9 @@ export default React.createClass({
   handleBgColor(value) {
     this.setState({ bgColor: value });
   },
+  handleLoop(e) {
+    this.setState({ loop: e.target.checked });
+  },
   handleSubmit() {
     const data = dataBuilder(this.state, defaultState);
 
@@ -172,6 +177,22 @@ export default React.createClass({
       </div>;
     }
   },
+  renderLoop() {
+    if (
+      _.get(this.props, "post.medium.contentType",
+        _.get(this.data, "medium.contentType")
+      ).split("/")[0] === "video"
+    ) {
+      return <div>
+        <br />
+        <Toggle
+          label="Loop video"
+          value={this.state.loop}
+          onChange={this.handleLoop}
+        />
+      </div>;
+    }
+  },
   renderSourceField() {
     if (this.props.originality !== "original") {
       return <TextArea
@@ -219,6 +240,7 @@ export default React.createClass({
         value={this.state.originality}
         onChange={this.handleOriginality}
       />
+      {this.renderLoop()}
       {this.renderSourceField()}
       <TextArea
         defaultValue={this.state.description}

@@ -9,7 +9,7 @@ import Moment from "/imports/ui/components/Moment";
 
 export default (props) => {
   const room = props.room;
-  if (! room || _.isEmpty(room)) {
+  if (! room || _.isEmpty(room) || ! room.name) {
     return null;
   }
 

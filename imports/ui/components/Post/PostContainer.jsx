@@ -10,8 +10,17 @@ import { tagOrTokenizer } from "/imports/api/tags/tokenizer";
 import Post from "./Post";
 
 export default createContainer(({ params }) => {
+  const username = FlowRouter.getParam("username");
+  if (! username) {
+    return {
+      loading: ! handle.ready(),
+      filterLoading: ! filterHandle.ready(),
+      currentUser: Meteor.user()
+    };
+  }
+
   const handle = Meteor.subscribe("post",
-    FlowRouter.getParam("username"),
+    username,
     FlowRouter.getParam("postName"),
   );
 
@@ -30,7 +39,7 @@ export default createContainer(({ params }) => {
     filterLoading: ! filterHandle.ready(),
     post: Posts.findOne(
       {
-        "owner.normalizedUsername": FlowRouter.getParam("username").toLowerCase(),
+        "owner.normalizedUsername": username.toLowerCase(),
         name: FlowRouter.getParam("postName")
       }
     ),

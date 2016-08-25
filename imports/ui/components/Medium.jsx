@@ -4,6 +4,7 @@ import { getMediaUrlMD5 } from "/imports/api/media/urls";
 import classConcat from "/imports/ui/utils/classConcat";
 
 import ZoomableImageProxy from "./ZoomableImageProxy";
+import VideoProxy from "./VideoProxy";
 
 export default React.createClass({
   render() {
@@ -21,9 +22,14 @@ export default React.createClass({
         spoilered={this.props.spoilered}
         reason={this.props.reason}
       />,
-      video: <video className="medium" id={"video" + medium._id} src={src} width="100%" controls loop={this.props.loop}>
-        <source src={src} type={medium.contentType} />
-      </video>,
+    video: <VideoProxy
+        medium={medium}
+        src={src}
+        loop={this.props.loop}
+        safety={this.props.safety}
+        spoilered={this.props.spoilered}
+        reason={this.props.reason}
+      />,
       audio: <audio className="medium" id={"audio" + medium._id} src={src} controls loop={this.props.loop}>
         <source src={src} type={medium.contentType} />
       </audio>

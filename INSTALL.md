@@ -2,7 +2,7 @@
 
 This assumes you're using a recent version of Ubuntu.
 
-Keep in mind that there are two main branches: develop, the default branch that contains the latest changes, and master, the branch used in production.
+Keep in mind that there are two main branches: develop, the default branch that contains the latest features, and master, the branch used in production.
 
 ```bash
 sudo apt-get install git build-essential pkg-config libvips-dev ffmpeg imagemagick

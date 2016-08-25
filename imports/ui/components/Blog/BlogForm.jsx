@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 
 import "/imports/api/blog/methods";
@@ -162,7 +163,7 @@ export default React.createClass({
         label="Body"
         defaultValue={this.state.body}
         rows={4}
-        
+
         onChange={this.handleBody}
       />
 

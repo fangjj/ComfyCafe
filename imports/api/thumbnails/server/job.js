@@ -1,3 +1,4 @@
+import _ from "lodash";
 import thumbnailWorker from "./worker";
 import thumbnailPolicies from "../policies";
 import jobs from "/imports/api/jobs/collection";

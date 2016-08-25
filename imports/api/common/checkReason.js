@@ -1,3 +1,4 @@
+import _ from "lodash";
 import violationMap from "/imports/api/common/violationMap";
 
 const matchReason = {

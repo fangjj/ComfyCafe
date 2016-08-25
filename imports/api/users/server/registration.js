@@ -2,6 +2,7 @@ import _ from "lodash";
 
 import Invites from "/imports/api/invites/collection";
 import Rooms from "/imports/api/rooms/collection";
+import Filters from "/imports/api/filters/collection";
 import generateDjenticon from "/imports/api/users/server/djenticon";
 import {
   validateUsername,
@@ -47,6 +48,20 @@ Accounts.onCreateUser(function (options, user) {
     };
 
     user.roles = {};
+    if (! Meteor.users.findOne()) {
+      // If this is the first user, give them ULTIMATE POWER.
+      user.roles["__global_roles__"] = [ "admin", "moderator" ];
+      // Use this opportunity to create a global default filter.
+      Filters.insert({
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        name: "Default",
+        slug: "Default",
+        spoilers: "safety nudity-explicit",
+        hides: "",
+        default: true
+      });
+    }
     user.roles["community_" + user._id] = [ "admin", "moderator", "member" ];
   }
   return user;

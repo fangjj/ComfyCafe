@@ -48,10 +48,25 @@ export default createContainer(({ params }) => {
     currentUser: Meteor.user()
   };
 
-  if (data.filter && data.filter.spoilers) {
-    const doc = tagQuery(data.filter.spoilers);
+  if (data.filter && (data.filter.spoilers || data.filter.hides)) {
+    const spoilers = _.reduce(
+      [data.filter.spoilers, data.filter.hides],
+      (result, v, k) => {
+        if (v) {
+          if (result) {
+            result += " || " + v;
+          } else {
+            result += v;
+          }
+        }
+        return result;
+      },
+      ""
+    );
+
+    const doc = tagQuery(spoilers);
     const allTags = _.reduce(
-      tagOrTokenizer(data.filter.spoilers),
+      tagOrTokenizer(spoilers),
       (result, v, k) => {
         return _.union(result, tagParser(v).allTags);
       },

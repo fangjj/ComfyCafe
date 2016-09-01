@@ -93,6 +93,8 @@ seba:minifiers-autoprefixer@0.0.2
 service-configuration@1.0.9
 session@1.1.5
 sha@1.0.7
+simple:json-routes@2.1.0
+simple:rest@1.1.1
 spacebars@1.0.11
 spacebars-compiler@1.0.11
 srp@1.0.8

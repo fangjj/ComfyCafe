@@ -61,14 +61,14 @@ export default React.createClass({
 
     return <ActionWell>
       <ButtonGroup>
-        <ReportButton onTouchTap={this.showReportForm} />
+        <ReportButton onClick={this.showReportForm} />
       </ButtonGroup>
       <div />
     </ActionWell>;
   },
   renderFab(isOwner) {
     if (isOwner) {
-      return <FAB iconName="edit" onTouchTap={this.showForm} />;
+      return <FAB iconName="edit" onClick={this.showForm} />;
     }
   },
   renderForm(album) {

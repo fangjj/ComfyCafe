@@ -13,7 +13,7 @@ export default React.createClass({
       <SubmitButton
         label="Apply Migration"
         iconName="cached"
-        onTouchTap={this.handleMigrate}
+        onClick={this.handleMigrate}
       />
     </DenseContent>;
   }

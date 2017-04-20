@@ -142,10 +142,10 @@ export default React.createClass({
   },
   renderFab(isOwner) {
     if (isOwner) {
-      return <FAB iconName="edit" onTouchTap={this.showForm} />;
+      return <FAB iconName="edit" onClick={this.showForm} />;
     } else if (this.props.currentUser && this.props.post.medium) {
       const liked = _.includes(this.props.post.likes, this.props.currentUser._id);
-      return <FAB iconName={liked ? "favorite" : "favorite_border"} onTouchTap={this.like} />;
+      return <FAB iconName={liked ? "favorite" : "favorite_border"} onClick={this.like} />;
     }
   },
   render() {

@@ -121,7 +121,7 @@ const Suggestions = React.createClass({
           className={this.state.selected === s._id ? "selected" : ""}
           key={s._id}
         >
-          <LinkButton primaryText={s.name} onTouchTap={() => {
+          <LinkButton primaryText={s.name} onClick={() => {
             this.props.onSelect(s);
           }} />
         </li>;

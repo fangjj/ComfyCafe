@@ -97,10 +97,10 @@ export default React.createClass({
 
     return <List ordered={true} className="topicList">
       <li className="roomHead">
-        <div className="closedog hide-on-med-and-up" onTouchTap={this.props.deactivateLeft}>
+        <div className="closedog hide-on-med-and-up" onClick={this.props.deactivateLeft}>
           <Icon>arrow_back</Icon>
         </div>
-        <a href={url} onTouchTap={this.props.deactivateLeft}>
+        <a href={url} onClick={this.props.deactivateLeft}>
           <header>
             <h2>{this.data.room.name}</h2>
           </header>

@@ -36,7 +36,7 @@ export default React.createClass({
         <SubmitButton
           label="Invite"
           iconName="vpn_key"
-          onTouchTap={this.sendInvites}
+          onClick={this.sendInvites}
         />
       </Actions>
 

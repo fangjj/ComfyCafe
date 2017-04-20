@@ -43,13 +43,13 @@ export default React.createClass({
     if (this.props.upload.progress === 100) {
       classes = "complete";
     }
-    return <li className={classes} onTouchTap={this.handleTouch}>
+    return <li className={classes} onClick={this.handleTouch}>
       <div className="row">
         <div className="preview">
           {this.renderPreview()}
         </div>
         <div className="label">{this.props.upload.name}</div>
-        <IconButton className="delete" onTouchTap={this.handleDelete}>
+        <IconButton className="delete" onClick={this.handleDelete}>
           <Icon>close</Icon>
         </IconButton>
       </div>

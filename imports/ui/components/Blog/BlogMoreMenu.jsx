@@ -54,8 +54,8 @@ export default React.createClass({
         anchorOrigin={{horizontal: "right", vertical: "top"}}
         targetOrigin={{horizontal: "right", vertical: "top"}}
       >
-        <MenuItem primaryText="Edit" onTouchTap={this.showForm} />
-        <MenuItem primaryText="Delete" onTouchTap={this.delete} />
+        <MenuItem primaryText="Edit" onClick={this.showForm} />
+        <MenuItem primaryText="Delete" onClick={this.delete} />
       </IconMenu>
       {this.renderForm()}
     </div>;

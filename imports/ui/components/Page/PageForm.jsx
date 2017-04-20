@@ -119,7 +119,7 @@ export default React.createClass({
         label="Delete"
         iconName="delete"
         subtle={true}
-        onTouchTap={this.handleModDelete}
+        onClick={this.handleModDelete}
       />}
       onSubmit={this.handleSubmit}
       onClose={this.props.onClose}

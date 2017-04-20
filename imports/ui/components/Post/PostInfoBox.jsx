@@ -56,16 +56,16 @@ export default React.createClass({
       id="albumBtn"
       label="Add to Album"
       iconName="collections"
-      onTouchTap={this.showAlbumSelector}
+      onClick={this.showAlbumSelector}
     />;
 
     let cropButton = <SubmitButton
       label="Set Avatar"
       iconName="crop"
-      onTouchTap={this.props.showAvatarCropper}
+      onClick={this.props.showAvatarCropper}
     />;
     if (this.props.isCropping) {
-      cropButton = <CancelButton width={149} onTouchTap={this.props.hideAvatarCropper} />;
+      cropButton = <CancelButton width={149} onClick={this.props.hideAvatarCropper} />;
     }
 
     const rightGroup = <ButtonGroup>
@@ -79,7 +79,7 @@ export default React.createClass({
       return <ActionWell>
         <ButtonGroup>
           <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />
-          <ReportButton onTouchTap={this.props.showReportForm} />
+          <ReportButton onClick={this.props.showReportForm} />
         </ButtonGroup>
         {rightGroup}
       </ActionWell>;
@@ -89,13 +89,13 @@ export default React.createClass({
           <SubmitButton
             label="Reroll"
             iconName="casino"
-            onTouchTap={this.reroll}
+            onClick={this.reroll}
           />
           <DangerButton
             label="Delete"
             iconName="delete"
             subtle={true}
-            onTouchTap={this.delete}
+            onClick={this.delete}
           />
         </ButtonGroup>
         {rightGroup}

@@ -360,7 +360,7 @@ export default React.createClass({
   renderCancel() {
     if (this.state.register) {
       return <CancelButton
-        onTouchTap={this.handleCancel}
+        onClick={this.handleCancel}
       />;
     }
   },
@@ -375,7 +375,7 @@ export default React.createClass({
     if (! this.state.register) {
       left = <FlatButton
         label="Register"
-        onTouchTap={this.handleRegister}
+        onClick={this.handleRegister}
       />;
     }
 

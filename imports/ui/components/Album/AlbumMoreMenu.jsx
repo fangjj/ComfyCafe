@@ -46,8 +46,8 @@ export default React.createClass({
     }
 
     return <MoreMenu form={this.renderForm()}>
-      <MenuItem primaryText="Edit" onTouchTap={this.showForm} />
-      <MenuItem primaryText="Delete" onTouchTap={this.delete} />
+      <MenuItem primaryText="Edit" onClick={this.showForm} />
+      <MenuItem primaryText="Delete" onClick={this.delete} />
     </MoreMenu>;
   }
 });

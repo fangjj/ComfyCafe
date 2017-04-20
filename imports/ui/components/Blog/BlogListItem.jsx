@@ -83,7 +83,7 @@ export default React.createClass({
       if (isMod(this.context.currentUser._id)) {
         return <ModButton item={post} itemType="blog" />;
       } else {
-        return <ReportButton icon={true} onTouchTap={this.showReportForm} />;
+        return <ReportButton icon={true} onClick={this.showReportForm} />;
       }
     }
   },
@@ -97,7 +97,7 @@ export default React.createClass({
   },
   renderReblogButton(post) {
     if (post.visibility === "public" || isOwner) {
-      return <Icon title="Reblog" onTouchTap={this.showReblogForm}>repeat</Icon>;
+      return <Icon title="Reblog" onClick={this.showReblogForm}>repeat</Icon>;
     }
   },
   render() {

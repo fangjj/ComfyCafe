@@ -89,7 +89,7 @@ export default React.createClass({
           <FlatButton
             label="Add Another"
             icon={<Icon>add</Icon>}
-            onTouchTap={this.handleAdd}
+            onClick={this.handleAdd}
           />
         </li>
       </ul>

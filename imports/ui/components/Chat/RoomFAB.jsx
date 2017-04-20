@@ -25,7 +25,7 @@ export default React.createClass({
     }
   },
   render() {
-    return <FAB iconName="add" onTouchTap={this.showForm}>
+    return <FAB iconName="add" onClick={this.showForm}>
       {this.renderForm()}
     </FAB>;
   }

@@ -7,7 +7,7 @@ export default React.createClass({
     return this.props.children.map((child) => {
       return React.cloneElement(child, {
         value: this.props.value,
-        onTouchTap: this.props.onChange,
+        onClick: this.props.onChange,
         key: child.props.name
       });
     });

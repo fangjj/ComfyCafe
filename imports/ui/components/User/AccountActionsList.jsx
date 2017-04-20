@@ -102,7 +102,7 @@ export default React.createClass({
         <TopMenuItem
           primaryText="Sign Out"
           leftIconName="directions_run"
-          onTouchTap={this.logOut}
+          onClick={this.logOut}
         />
       </Menu>
     </div>;

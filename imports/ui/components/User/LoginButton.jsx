@@ -9,7 +9,7 @@ export default React.createClass({
       <SubmitButton
         label="Login"
         iconName="directions_bike"
-        onTouchTap={this.goLogin}
+        onClick={this.goLogin}
       />
     </a>;
   }

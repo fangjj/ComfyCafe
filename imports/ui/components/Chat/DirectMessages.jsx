@@ -53,7 +53,7 @@ export default React.createClass({
 
     return <section className="msgList">
       <header>
-        <div className="hotdog hide-on-med-and-up" onTouchTap={this.props.activateLeft}>
+        <div className="hotdog hide-on-med-and-up" onClick={this.props.activateLeft}>
           <Icon>menu</Icon>
         </div>
         <h2>{this.props.dmWith}</h2>

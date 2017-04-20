@@ -68,7 +68,7 @@ export default React.createClass({
       <List>
         {this.renderList()}
       </List>
-      <FAB iconName="add" onTouchTap={this.showForm} />
+      <FAB iconName="add" onClick={this.showForm} />
       {this.renderForm()}
     </DenseContent>;
   }

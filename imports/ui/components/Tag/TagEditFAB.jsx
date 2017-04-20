@@ -31,7 +31,7 @@ export default React.createClass({
     }
   },
   render() {
-    return <FAB iconName="edit" onTouchTap={this.showTagForm}>
+    return <FAB iconName="edit" onClick={this.showTagForm}>
       {this.renderForm()}
     </FAB>;
   }

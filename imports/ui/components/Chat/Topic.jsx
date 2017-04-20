@@ -91,18 +91,18 @@ export default React.createClass({
         <SubmitButton
           label="Edit"
           iconName="edit"
-          onTouchTap={this.showForm}
+          onClick={this.showForm}
         />
         <DangerButton
           label="Delete"
           iconName="close"
           subtle={true}
-          onTouchTap={this.delete}
+          onClick={this.delete}
         />
       </ButtonGroup>;
     } else {
       return <ButtonGroup>
-        <ReportButton onTouchTap={this.showReportForm} />
+        <ReportButton onClick={this.showReportForm} />
       </ButtonGroup>;
     }
   },
@@ -149,7 +149,7 @@ export default React.createClass({
 
     return <section className="msgList">
       <header>
-        <div className="hotdog hide-on-med-and-up" onTouchTap={this.props.activateLeft}>
+        <div className="hotdog hide-on-med-and-up" onClick={this.props.activateLeft}>
           <Icon>menu</Icon>
         </div>
         <h2>{topic.name}</h2>

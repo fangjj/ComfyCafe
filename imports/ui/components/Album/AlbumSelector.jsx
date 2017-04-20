@@ -81,7 +81,7 @@ export default React.createClass({
       return <FlatButton
         label="New Album"
         icon={<Icon>add</Icon>}
-        onTouchTap={this.showForm}
+        onClick={this.showForm}
       />;
     } else {
       return <Form onSubmit={this.handleSubmit}>

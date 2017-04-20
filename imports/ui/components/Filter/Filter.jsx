@@ -29,7 +29,7 @@ export default React.createClass({
   },
   renderFab(isOwner) {
     if (isOwner) {
-      return <FAB iconName="edit" onTouchTap={this.showForm} />;
+      return <FAB iconName="edit" onClick={this.showForm} />;
     }
   },
   renderForm(filter) {

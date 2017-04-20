@@ -1,22 +1,16 @@
 import _ from "lodash";
 import React from "react";
-import hotkey from "react-hotkey";
 
 import Icon from "/imports/ui/components/Daikon/Icon";
 
 if (Meteor.isClient) {
   global.jQuery = require("jquery");
   require("jquery.panzoom");
+  require("jquery.hotkeys");
   require("jquery.mousewheel")(jQuery);
 }
 
-const Moonbox = React.createClass({
-  mixins: [hotkey.Mixin("handleHotkey")],
-  handleHotkey(event) {
-    if (event.keyCode === 27) {
-      this.handleClose();
-    }
-  },
+export default React.createClass({
   handleClose() {
     jQuery(this.refs.image).panzoom("reset");
     this.props.onClose();
@@ -34,6 +28,7 @@ const Moonbox = React.createClass({
         focal: event
       });
     });
+    jQuery(document).bind("keydown", "esc", this.handleClose);
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.open !== this.props.open) {
@@ -57,9 +52,9 @@ const Moonbox = React.createClass({
     return <div
       className="moonbox center"
       style={{display: this.props.open ? "flex" : "none"}}
-      onTouchTap={this.handleClose}
+      onClick={this.handleClose}
     >
-      <div className="close" onTouchTap={this.handleClose}>
+      <div className="close" onClick={this.handleClose}>
         <Icon>close</Icon>
       </div>
       <div className="container center" style={containerStyle}>
@@ -68,5 +63,3 @@ const Moonbox = React.createClass({
     </div>;
   }
 });
-
-export default Moonbox;

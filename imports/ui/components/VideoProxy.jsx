@@ -18,7 +18,7 @@ export default React.createClass({
   render() {
     if (this.state.spoilered) {
       return <div>
-        <ImageSpoiler {...this.props} onTouchTap={this.handleTouch} />
+        <ImageSpoiler {...this.props} onClick={this.handleTouch} />
       </div>;
     } else {
       const medium = this.props.medium;

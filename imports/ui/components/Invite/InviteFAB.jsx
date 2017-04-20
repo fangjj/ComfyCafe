@@ -8,6 +8,6 @@ export default React.createClass({
     Meteor.call("addInvite");
   },
   render() {
-    return <FAB iconName="add" onTouchTap={this.invite} />;
+    return <FAB iconName="add" onClick={this.invite} />;
   }
 });

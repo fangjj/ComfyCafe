@@ -85,7 +85,7 @@ export default React.createClass({
     return <article className="content">
       <header>
         <h2>{tag.name}</h2>
-        <a href="#" onTouchTap={this.revert}>Revert</a>
+        <a href="#" onClick={this.revert}>Revert</a>
       </header>
       Type: {tag.type}
       <br />

@@ -58,7 +58,7 @@ export default React.createClass({
       <SubmitButton
         label="Create Global Filter"
         iconName="filter_list"
-        onTouchTap={this.showForm}
+        onClick={this.showForm}
       />
       <List>
         {this.renderGlobalList()}

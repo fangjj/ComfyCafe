@@ -24,8 +24,8 @@ export default React.createClass({
     }
 
     return <MoreMenu>
-      <MenuItem primaryText="Edit" onTouchTap={this.props.onEdit} />
-      <MenuItem primaryText="Delete" onTouchTap={this.delete} />
+      <MenuItem primaryText="Edit" onClick={this.props.onEdit} />
+      <MenuItem primaryText="Delete" onClick={this.delete} />
     </MoreMenu>;
   }
 });

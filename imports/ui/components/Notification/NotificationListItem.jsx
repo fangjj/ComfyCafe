@@ -32,13 +32,13 @@ export default React.createClass({
         buttons: <ButtonGroup key={"fr_" + this.props.notification._id}>
           <DangerButton
             label="Reject"
-            onTouchTap={() => {
+            onClick={() => {
               Meteor.call("rejectFriendRequest", this.props.notification._id);
             }}
           />
           <SubmitButton
             label="Accept"
-            onTouchTap={() => {
+            onClick={() => {
               Meteor.call("acceptFriendRequest", this.props.notification._id);
             }}
           />
@@ -63,7 +63,7 @@ export default React.createClass({
       });
       return [
         "liked ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.post.name}
         </a>
       ];
@@ -75,7 +75,7 @@ export default React.createClass({
       });
       return [
         "mentioned you in ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.post.name}
         </a>
       ];
@@ -87,7 +87,7 @@ export default React.createClass({
       }) + "#" + this.props.notification.message._id;
       return [
         "commented on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.post.name}
         </a>
       ];
@@ -99,7 +99,7 @@ export default React.createClass({
       }) + "#" + this.props.notification.message._id;
       return [
         "commented on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.album.name}
         </a>
       ];
@@ -111,7 +111,7 @@ export default React.createClass({
       }) + "#" + this.props.notification.message._id;
       return [
         "commented on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.page.name}
         </a>
       ];
@@ -123,7 +123,7 @@ export default React.createClass({
       }) + "#" + this.props.notification.message._id;
       return [
         "commented on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.blog.name}
         </a>
       ];
@@ -135,7 +135,7 @@ export default React.createClass({
       }) + "#" + this.props.notification.message._id;
       return [
         "mentioned you in a comment on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.post.name}
         </a>
       ];
@@ -147,7 +147,7 @@ export default React.createClass({
       }) + "#" + this.props.notification.message._id;
       return [
         "mentioned you in a comment on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.album.name}
         </a>
       ];
@@ -159,7 +159,7 @@ export default React.createClass({
       }) + "#" + this.props.notification.message._id;
       return [
         "mentioned you in a comment on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.page.name}
         </a>
       ];
@@ -171,7 +171,7 @@ export default React.createClass({
       }) + "#" + this.props.notification.message._id;
       return [
         "mentioned you in a comment on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.blog.name}
         </a>
       ];
@@ -183,7 +183,7 @@ export default React.createClass({
       });
       return [
         "mentioned you in ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.album.name}
         </a>
       ];
@@ -195,7 +195,7 @@ export default React.createClass({
       });
       return [
         "mentioned you in ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.page.name}
         </a>
       ];
@@ -207,7 +207,7 @@ export default React.createClass({
       });
       return [
         "mentioned you in ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.blog.name}
         </a>
       ];
@@ -219,7 +219,7 @@ export default React.createClass({
       });
       return [
         "reblogged your post ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.blog.name}
         </a>
       ];
@@ -231,7 +231,7 @@ export default React.createClass({
       }) + "#" + this.props.notification.message._id;
       return [
         "posted in ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.topic.name}
         </a>
       ];
@@ -243,7 +243,7 @@ export default React.createClass({
       }) + "#" + this.props.notification.message._id;
       return [
         "mentioned you in ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.topic.name}
         </a>
       ];
@@ -252,7 +252,7 @@ export default React.createClass({
       const url = FlowRouter.path("room", { roomSlug: this.props.notification.room.slug });
       return [
         "invited you to join ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.room.name}
         </a>,
         "!"
@@ -262,7 +262,7 @@ export default React.createClass({
       const url = FlowRouter.path("room", { roomSlug: this.props.notification.room.slug });
       return [
         "joined ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.room.name}
         </a>,
         "!"
@@ -272,7 +272,7 @@ export default React.createClass({
       const url = FlowRouter.path("room", { roomSlug: this.props.notification.room.slug });
       return [
         "accepted your invite for ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.room.name}
         </a>,
         "!"
@@ -282,7 +282,7 @@ export default React.createClass({
       const url = FlowRouter.path("dm", { username: this.props.notification.owner.username });
       return [
         "sent you a ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           direct message
         </a>,
         "."
@@ -308,7 +308,7 @@ export default React.createClass({
             {label}
           </span>
         </div>
-        <IconButton className="dismiss" onTouchTap={this.dismiss}>
+        <IconButton className="dismiss" onClick={this.dismiss}>
           <Icon>close</Icon>
         </IconButton>
       </div>

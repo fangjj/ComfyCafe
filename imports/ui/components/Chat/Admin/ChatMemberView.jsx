@@ -23,7 +23,7 @@ export default React.createClass({
       return <DangerButton
         label="Kick"
         subtle={true}
-        onTouchTap={this.kick}
+        onClick={this.kick}
       />;
     }
   },

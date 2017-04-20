@@ -13,7 +13,7 @@ export default (props) => {
       label="Cancel"
       labelStyle={{ fontSize: "18px" }}
       primary={true}
-      onTouchTap={onClose}
+      onClick={onClose}
     />,
     <FlatButton
       type={formId ? "submit" : undefined}
@@ -21,7 +21,7 @@ export default (props) => {
       label="Submit"
       labelStyle={{ fontSize: "18px" }}
       secondary={true}
-      onTouchTap={formId ? undefined : onSubmit}
+      onClick={formId ? undefined : onSubmit}
     />,
   ];
 

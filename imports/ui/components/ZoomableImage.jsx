@@ -60,7 +60,7 @@ export default React.createClass({
     return <div>
       <img
         ref="image"
-        onTouchTap={this.handleTouch}
+        onClick={this.handleTouch}
         {...this.props}
       />
       {this.renderMoonbox()}

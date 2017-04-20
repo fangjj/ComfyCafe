@@ -136,12 +136,12 @@ export default React.createClass({
       let button = <SubmitButton
         label="Edit"
         iconName="edit"
-        onTouchTap={this.startEditing}
+        onClick={this.startEditing}
       />;
 
       if (this.state.isEditing) {
         button = <CancelButton
-          onTouchTap={this.stopEditing}
+          onClick={this.stopEditing}
         />;
       }
 
@@ -168,7 +168,7 @@ export default React.createClass({
           label="Delete Avatar"
           iconName="delete"
           subtle={true}
-          onTouchTap={this.deleteAvatar}
+          onClick={this.deleteAvatar}
         />;
       }
 
@@ -176,13 +176,13 @@ export default React.createClass({
         <SubmitButton
           label="Change Avatar"
           iconName="image"
-          onTouchTap={this.startChangingAvatar}
+          onClick={this.startChangingAvatar}
         />
         {deleteButton}
       </ButtonGroup>;
     } else {
       return <ButtonGroup>
-        <ReportButton onTouchTap={this.showReportForm} />
+        <ReportButton onClick={this.showReportForm} />
         <BlockButton user={this.data.user} />
       </ButtonGroup>;
     }

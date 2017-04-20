@@ -26,7 +26,7 @@ export default React.createClass({
   renderRemove(album) {
     if (_.includes(album.posts, this.props.postId)) {
       return <div className="remove">
-        <IconButton onTouchTap={this.remove}>
+        <IconButton onClick={this.remove}>
           <Icon>close</Icon>
         </IconButton>
       </div>;
@@ -38,13 +38,13 @@ export default React.createClass({
       username: album.owner.username,
       albumSlug: album.slug
     });
-    return <li onTouchTap={this.select}>
+    return <li onClick={this.select}>
       <Ripple>
         <div className="title">
           {album.name} {this.renderIndicator(album)}
         </div>
         <div className="undertitle">
-          <a href={path} onTouchTap={this.handleLink}>{album.slug}</a>
+          <a href={path} onClick={this.handleLink}>{album.slug}</a>
         </div>
         {this.renderRemove(album)}
       </Ripple>

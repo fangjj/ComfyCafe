@@ -190,11 +190,11 @@ export default React.createClass({
 
       <Actions>
         <CancelButton
-          onTouchTap={this.cancel}
+          onClick={this.cancel}
         />
         <SubmitButton
           label="Save"
-          onTouchTap={this.submit}
+          onClick={this.submit}
         />
       </Actions>
 

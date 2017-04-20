@@ -14,7 +14,7 @@ export default React.createClass({
   render() {
     return <li>
       <span className="key">{this.props.invite.key}</span>
-      <IconButton className="deleteInvite" onTouchTap={this.delete}>
+      <IconButton className="deleteInvite" onClick={this.delete}>
         <Icon>close</Icon>
       </IconButton>
     </li>;

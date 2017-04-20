@@ -224,7 +224,7 @@ export default React.createClass({
         label="Delete"
         iconName="delete"
         subtle={true}
-        onTouchTap={this.handleModDelete}
+        onClick={this.handleModDelete}
       />}
       onSubmit={this.handleSubmit}
       onClose={this.props.onClose}
@@ -261,7 +261,7 @@ export default React.createClass({
         </span>
         <FlatButton
           label="Apply"
-          onTouchTap={this.applyAutoSafety}
+          onClick={this.applyAutoSafety}
         />
       </div>
       <TagField

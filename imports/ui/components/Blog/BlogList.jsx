@@ -51,7 +51,7 @@ export default React.createClass({
   },
   renderFab() {
     if (this.context.currentUser && ! this.props.hideFab) {
-      return <FAB iconName="add" onTouchTap={this.showForm} />;
+      return <FAB iconName="add" onClick={this.showForm} />;
     }
   },
   renderForm() {

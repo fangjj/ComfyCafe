@@ -60,7 +60,7 @@ export default React.createClass({
         <FlatButton
           label="Add Conditional Implication"
           icon={<Icon>add</Icon>}
-          onTouchTap={this.handleAdd}
+          onClick={this.handleAdd}
         />
       </li>
     </ul>;

@@ -16,7 +16,6 @@ export default React.createClass({
       return this.props.notifications.map((notification) => {
         return <NotificationListItem
           notification={notification}
-          currentUser={this.props.currentUser}
           key={notification._id}
         />;
       });

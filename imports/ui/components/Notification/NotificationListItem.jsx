@@ -13,6 +13,7 @@ import ButtonGroup from "/imports/ui/components/Button/ButtonGroup";
 import UserLink from "/imports/ui/components/User/UserLink";
 
 export default React.createClass({
+  contextTypes: { currentUser: React.PropTypes.object },
   actionMap: {
     subscribed() {
       return "subscribed!";
@@ -58,7 +59,7 @@ export default React.createClass({
     },
     postLiked() {
       const url = FlowRouter.path("post", {
-        username: this.props.currentUser.username,
+        username: this.context.currentUser.username,
         postName: this.props.notification.post.name
       });
       return [

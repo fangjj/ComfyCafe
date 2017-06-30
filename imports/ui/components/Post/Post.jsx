@@ -18,6 +18,7 @@ import InlineTopic from "/imports/ui/components/Chat/InlineTopic";
 import ReportForm from "/imports/ui/components/Report/ReportForm";
 
 export default React.createClass({
+  contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
     return {
       avatarCropper: false,
@@ -52,7 +53,7 @@ export default React.createClass({
   },
   like() {
     const post = this.props.post;
-    Meteor.call("likePost", post._id, ! _.includes(post.likes, this.props.currentUser._id));
+    Meteor.call("likePost", post._id, ! _.includes(post.likes, this.context.currentUser._id));
   },
   showForm() {
     this.setState({ showForm: true });
@@ -115,8 +116,8 @@ export default React.createClass({
   renderFab(isOwner) {
     if (isOwner) {
       return <FAB iconName="edit" onClick={this.showForm} />;
-    } else if (this.props.currentUser && this.props.post.medium) {
-      const liked = _.includes(this.props.post.likes, this.props.currentUser._id);
+    } else if (this.context.currentUser && this.props.post.medium) {
+      const liked = _.includes(this.props.post.likes, this.context.currentUser._id);
       return <FAB iconName={liked ? "favorite" : "favorite_border"} onClick={this.like} />;
     }
   },
@@ -129,8 +130,8 @@ export default React.createClass({
       return <Err404 />;
     }
 
-    const isOwner = this.props.currentUser
-      && this.props.currentUser._id === this.props.post.owner._id;
+    const isOwner = this.context.currentUser
+      && this.context.currentUser._id === this.props.post.owner._id;
     return <article className="post contentLayout">
       <figure className="content">
         <Medium
@@ -143,7 +144,7 @@ export default React.createClass({
       </figure>
       <PostInfoBox
         post={this.props.post}
-        currentUser={this.props.currentUser}
+        currentUser={this.context.currentUser}
         isCropping={this.state.avatarCropper}
         showReportForm={this.showReportForm}
         showAvatarCropper={this.showAvatarCropper}
@@ -153,7 +154,7 @@ export default React.createClass({
       <section className="comments content">
         <InlineTopic
           topicId={this.props.post.topic._id}
-          currentUser={this.props.currentUser}
+          currentUser={this.context.currentUser}
         />
       </section>
       {this.renderLikes()}

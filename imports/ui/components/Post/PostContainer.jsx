@@ -8,10 +8,7 @@ import Post from "./Post";
 export default createContainer(({ params }) => {
   const username = FlowRouter.getParam("username");
   if (! username) {
-    return {
-      loading: ! handle.ready(),
-      currentUser: Meteor.user()
-    };
+    return { loading: true };
   }
 
   const handle = Meteor.subscribe("post",
@@ -26,8 +23,7 @@ export default createContainer(({ params }) => {
         "owner.normalizedUsername": username.toLowerCase(),
         name: FlowRouter.getParam("postName")
       }
-    ),
-    currentUser: Meteor.user()
+    )
   };
 
   return data;

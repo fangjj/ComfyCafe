@@ -276,22 +276,18 @@ Meteor.methods({
 			throw new Meteor.Error("not-logged-in");
 		}
 
-		const add = ! _.includes(Meteor.user().subscriptions, userId);
+		const is_subscribing = ! _.includes(Meteor.user().subscriptions, userId);
 
 		let op;
-		if (add) {
+		if (is_subscribing) {
 			op = "$push";
-			Notifications.upsert(
-				{
-					to: userId,
-					action: "subscribed",
-					owner: {
-						_id: Meteor.userId(),
-						username: Meteor.user().username,
-						profile: Meteor.user().profile
-					}
-				},
-				{ $set: {
+			const notification_exists = new Boolean(Notifications.findOne({
+				to: userId,
+				action: "subscribed",
+				"owner._id": Meteor.userId()
+			}));
+			if (! notification_exists) {
+				Notifications.insert({
 					createdAt: new Date(),
 					to: userId,
 					action: "subscribed",
@@ -300,14 +296,15 @@ Meteor.methods({
 						username: Meteor.user().username,
 						profile: Meteor.user().profile
 					}
-				} });
+				});
+			}
 		} else {
 			op = "$pull";
 			Notifications.remove(
 				{
-					"from._id": Meteor.userId(),
 					to: userId,
-					msg: "subscribed"
+					action: "subscribed",
+					"owner._id": Meteor.userId()
 				}
 			);
 		}
@@ -330,7 +327,7 @@ Meteor.methods({
 			);
 		}
 
-		return add;
+		return is_subscribing;
 	},
 
 	sendFriendRequest: function (userId) {

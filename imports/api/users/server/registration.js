@@ -17,6 +17,9 @@ Accounts.onCreateUser(function (options, user) {
     // Generate default avatar.
     generateDjenticon(user._id, CryptoJS.SHA256(user.emails[0].address).toString());
 
+    user.subscriptions = [];
+    user.subscribers = [];
+
     // Create system room for user.
     const roomId = Rooms.insert(
       {

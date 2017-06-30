@@ -27,14 +27,11 @@ Package.onUse(function(api) {
     "lib/lodash.js",
     "lib/expr.js",
     "lib/isOwner.js",
-    "lib/pushApply.js",
     "lib/jsonClone.js",
     "lib/whiteSplit.js",
     "lib/commaSplit.js",
     "lib/prettyPrint.js",
     "lib/slice.js",
-    "lib/arrayPercent.js",
-    "lib/arrayMerge.js",
     "lib/fancySplit.js"
   ], ["client", "server"]);
 

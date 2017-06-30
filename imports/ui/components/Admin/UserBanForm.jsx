@@ -80,7 +80,7 @@ export default React.createClass({
     const left = <CancelButton
       label="Unban"
       iconName="hourglass_empty"
-      onTouchTap={this.handleUnban}
+      onClick={this.handleUnban}
     />;
     return <Form actions={false} left={left} onSubmit={this.handleSubmit}>
       <ReportFormGuts

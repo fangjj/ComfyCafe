@@ -37,33 +37,6 @@ function watcherDispatch(messageId, topic, root, isComment) {
               name: item.name,
               username: item.owner.username
             };
-          },
-          album(item) {
-            doc.action = "albumCommented";
-            doc.album = {
-              _id: item._id,
-              name: item.name,
-              slug: item.slug,
-              username: item.owner.username
-            };
-          },
-          page(item) {
-            doc.action = "pageCommented";
-            doc.page = {
-              _id: item._id,
-              name: item.name,
-              slug: item.slug,
-              username: item.owner.username
-            };
-          },
-          blog(item) {
-            doc.action = "blogCommented";
-            doc.blog = {
-              _id: item._id,
-              name: item.name,
-              slug: item.slug,
-              username: item.owner.username
-            };
           }
         };
         commentedMap[root[1]](root[0]);

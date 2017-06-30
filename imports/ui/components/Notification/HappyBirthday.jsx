@@ -19,7 +19,7 @@ export default React.createClass({
               Happy birthday!
             </span>
           </div>
-          <IconButton className="dismiss" onTouchTap={this.dismiss}>
+          <IconButton className="dismiss" onClick={this.dismiss}>
             <Icon>close</Icon>
           </IconButton>
         </div>

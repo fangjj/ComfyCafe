@@ -1,8 +1,6 @@
 import _ from "lodash";
 import React from "react";
 
-import Filters from "/imports/api/filters/collection";
-import filtersFor from "/imports/api/filters/filtersFor";
 import UserSettings from "./UserSettings";
 
 export default React.createClass({
@@ -11,20 +9,8 @@ export default React.createClass({
     return {};
   },
   getMeteorData() {
-    const filterHandle = Meteor.subscribe("filtersFor");
-    const defaultFilter = Filters.findOne(
-      {
-        owner: { $exists: false },
-        default: true
-      }
-    );
-    const defaultFilterId = _.get(defaultFilter, "_id");
-
     const data = {
       loading: false,
-      filterLoading: ! filterHandle.ready(),
-      filters: filtersFor().fetch(),
-      defaultFilterId,
       currentUser: Meteor.user()
     };
 

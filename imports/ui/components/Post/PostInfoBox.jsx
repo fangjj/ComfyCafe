@@ -39,37 +39,21 @@ export default React.createClass({
       goBack();
     });
   },
-  showAlbumSelector() {
-    const $albumBtn = $("#albumBtn");
-    const offset = $albumBtn.offset();
-    this.props.showAlbumSelector({
-      left: offset.left,
-      top: offset.top + $albumBtn.height()
-    });
-  },
   renderButtons() {
     if (! this.props.currentUser) {
       return;
     }
 
-    const albumButton = <SubmitButton
-      id="albumBtn"
-      label="Add to Album"
-      iconName="collections"
-      onTouchTap={this.showAlbumSelector}
-    />;
-
     let cropButton = <SubmitButton
       label="Set Avatar"
       iconName="crop"
-      onTouchTap={this.props.showAvatarCropper}
+      onClick={this.props.showAvatarCropper}
     />;
     if (this.props.isCropping) {
-      cropButton = <CancelButton width={149} onTouchTap={this.props.hideAvatarCropper} />;
+      cropButton = <CancelButton width={149} onClick={this.props.hideAvatarCropper} />;
     }
 
     const rightGroup = <ButtonGroup>
-      {albumButton}
       {cropButton}
     </ButtonGroup>;
 
@@ -79,7 +63,7 @@ export default React.createClass({
       return <ActionWell>
         <ButtonGroup>
           <SubscriptionButton owner={owner} currentUser={this.props.currentUser} />
-          <ReportButton onTouchTap={this.props.showReportForm} />
+          <ReportButton onClick={this.props.showReportForm} />
         </ButtonGroup>
         {rightGroup}
       </ActionWell>;
@@ -89,13 +73,13 @@ export default React.createClass({
           <SubmitButton
             label="Reroll"
             iconName="casino"
-            onTouchTap={this.reroll}
+            onClick={this.reroll}
           />
           <DangerButton
             label="Delete"
             iconName="delete"
             subtle={true}
-            onTouchTap={this.delete}
+            onClick={this.delete}
           />
         </ButtonGroup>
         {rightGroup}

@@ -18,7 +18,7 @@ function addedFileJob(file) {
     if (err) {
       return console.error("Error locking file document in job creation: ", err);
     }
-    if (doc) {
+    if (doc.value) {
       const outputMetadata = _.clone(file.metadata);
       delete outputMetadata.thumbnails;
       delete outputMetadata.thumbnailPolicy;

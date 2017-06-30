@@ -22,7 +22,7 @@ export default React.createClass({
     if (actions) {
       return <Actions left={this.props.left}>
         <CancelButton
-          onTouchTap={this.handleCancel}
+          onClick={this.handleCancel}
         />
         <SubmitButton
           type="submit"
@@ -36,7 +36,8 @@ export default React.createClass({
 
     return <form
       onSubmit={this.handleSubmit}
-      {...leftoverProps}
+      id={this.props.id}
+      className={this.props.className}
     >
       {children}
       {this.renderActions(actions)}

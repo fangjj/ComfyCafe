@@ -6,14 +6,7 @@ import Icon from "/imports/ui/components/Daikon/Icon";
 const iconMap = {
   user: "person",
   image: "image",
-  blog: "weekend",
-  page: "import_contacts",
-  album: "collections",
-  community: "forum",
-  topic: "speaker_notes",
-  message: "chat_bubble",
-  tag: "style",
-  filter: "filter_list"
+  message: "chat_bubble"
 };
 
 export default (props) => {

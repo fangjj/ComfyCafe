@@ -110,7 +110,7 @@ export default React.createClass({
         label="Delete Avatar"
         iconName="delete"
         subtle={true}
-        onTouchTap={this.handleModDeleteAvatar}
+        onClick={this.handleModDeleteAvatar}
       />}
       onSubmit={this.handleSubmit}
       onClose={this.props.onClose}

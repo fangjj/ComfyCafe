@@ -33,33 +33,6 @@ function mentionDispatch(messageId, data, topic, root, isComment) {
           name: item.name,
           username: item.owner.username
         };
-      },
-      album(item) {
-        label = "albumComment";
-        doc.album = {
-          _id: item._id,
-          name: item.name,
-          slug: item.slug,
-          username: item.owner.username
-        };
-      },
-      page(item) {
-        label = "pageComment";
-        doc.page = {
-          _id: item._id,
-          name: item.name,
-          slug: item.slug,
-          username: item.owner.username
-        };
-      },
-      blog(item) {
-        label = "blogComment";
-        doc.blog = {
-          _id: item._id,
-          name: item.name,
-          slug: item.slug,
-          username: item.owner.username
-        };
       }
     };
     mentionedMap[root[1]](root[0]);

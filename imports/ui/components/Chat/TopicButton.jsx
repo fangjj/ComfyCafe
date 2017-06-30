@@ -40,7 +40,7 @@ export default React.createClass({
         iconName="add"
         label={this.props.dm ? "New Victim" : "New Topic"}
         style={{ width: "100%" }}
-        onTouchTap={this.showForm}
+        onClick={this.showForm}
       />
       {this.renderForm()}
     </div>;

@@ -13,16 +13,14 @@ import LoadingSpinner from "/imports/ui/components/Spinner/LoadingSpinner";
 import Err404 from "/imports/ui/components/Err404";
 import Content from "/imports/ui/components/Content";
 import FAB from "/imports/ui/components/FAB";
-import AlbumSelector from "/imports/ui/components/Album/AlbumSelector";
 import AvatarCropper from "/imports/ui/components/Avatar/AvatarCropper";
-import TagTree from "/imports/ui/components/Tag/TagTree";
 import InlineTopic from "/imports/ui/components/Chat/InlineTopic";
 import ReportForm from "/imports/ui/components/Report/ReportForm";
 
 export default React.createClass({
+  contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
     return {
-      showAlbumSelector: false,
       avatarCropper: false,
       showForm: false,
       showReportForm: false
@@ -47,15 +45,6 @@ export default React.createClass({
       setPattern(nextProps.post.name, nextProps.post.bgColor || nextProps.post.complement);
     }
   },
-  showAlbumSelector(offset) {
-    this.setState({
-      showAlbumSelector: true,
-      albumSelectorOffset: offset
-    });
-  },
-  hideAlbumSelector() {
-    this.setState({ showAlbumSelector: false });
-  },
   showAvatarCropper() {
     this.setState({ avatarCropper: true });
   },
@@ -64,7 +53,7 @@ export default React.createClass({
   },
   like() {
     const post = this.props.post;
-    Meteor.call("likePost", post._id, ! _.includes(post.likes, this.props.currentUser._id));
+    Meteor.call("likePost", post._id, ! _.includes(post.likes, this.context.currentUser._id));
   },
   showForm() {
     this.setState({ showForm: true });
@@ -111,25 +100,9 @@ export default React.createClass({
       </Dialog>;
     }
   },
-  renderTags() {
-    if (this.props.post.tags.text) {
-      return <section className="tagBox content">
-        <TagTree tags={this.props.post.tags} humanizedTags={this.props.post.humanizedTags} />
-      </section>;
-    }
-  },
   renderLikes() {
     if (this.props.post.likes && this.props.post.likes.length) {
       return <PostLikes id={"likes" + this.props.post._id} likes={this.props.post.likes} />;
-    }
-  },
-  renderAlbumSelector() {
-    if (this.state.showAlbumSelector) {
-      return <AlbumSelector
-        postId={this.props.post._id}
-        offset={this.state.albumSelectorOffset}
-        onClose={this.hideAlbumSelector}
-      />;
     }
   },
   renderAvatarCropper() {
@@ -142,14 +115,14 @@ export default React.createClass({
   },
   renderFab(isOwner) {
     if (isOwner) {
-      return <FAB iconName="edit" onTouchTap={this.showForm} />;
-    } else if (this.props.currentUser && this.props.post.medium) {
-      const liked = _.includes(this.props.post.likes, this.props.currentUser._id);
-      return <FAB iconName={liked ? "favorite" : "favorite_border"} onTouchTap={this.like} />;
+      return <FAB iconName="edit" onClick={this.showForm} />;
+    } else if (this.context.currentUser && this.props.post.medium) {
+      const liked = _.includes(this.props.post.likes, this.context.currentUser._id);
+      return <FAB iconName={liked ? "favorite" : "favorite_border"} onClick={this.like} />;
     }
   },
   render() {
-    if (this.props.loading || this.props.filterLoading) {
+    if (this.props.loading) {
       return <LoadingSpinner />;
     }
 
@@ -157,8 +130,8 @@ export default React.createClass({
       return <Err404 />;
     }
 
-    const isOwner = this.props.currentUser
-      && this.props.currentUser._id === this.props.post.owner._id;
+    const isOwner = this.context.currentUser
+      && this.context.currentUser._id === this.props.post.owner._id;
     return <article className="post contentLayout">
       <figure className="content">
         <Medium
@@ -171,20 +144,17 @@ export default React.createClass({
       </figure>
       <PostInfoBox
         post={this.props.post}
-        currentUser={this.props.currentUser}
+        currentUser={this.context.currentUser}
         isCropping={this.state.avatarCropper}
         showReportForm={this.showReportForm}
-        showAlbumSelector={this.showAlbumSelector}
         showAvatarCropper={this.showAvatarCropper}
         hideAvatarCropper={this.hideAvatarCropper}
       />
-      {this.renderAlbumSelector()}
       {this.renderAvatarCropper()}
-      {this.renderTags()}
       <section className="comments content">
         <InlineTopic
           topicId={this.props.post.topic._id}
-          currentUser={this.props.currentUser}
+          currentUser={this.context.currentUser}
         />
       </section>
       {this.renderLikes()}

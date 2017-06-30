@@ -9,7 +9,5 @@ export default {
   emailRequired: "Are you some sort of privacy nut?",
   emailTaken: "This email address is already taken!",
   emailUnused: "This email address isn't in use.",
-  betaKeyRequired: "You can't just barge in uninvited!",
-  betaKeyRejected: "That key doesn't exist. Are you trying to trick me?",
   tokenExpired: "Password reset token expired."
 };

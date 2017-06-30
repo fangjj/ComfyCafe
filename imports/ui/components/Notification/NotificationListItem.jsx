@@ -13,6 +13,7 @@ import ButtonGroup from "/imports/ui/components/Button/ButtonGroup";
 import UserLink from "/imports/ui/components/User/UserLink";
 
 export default React.createClass({
+  contextTypes: { currentUser: React.PropTypes.object },
   actionMap: {
     subscribed() {
       return "subscribed!";
@@ -32,13 +33,13 @@ export default React.createClass({
         buttons: <ButtonGroup key={"fr_" + this.props.notification._id}>
           <DangerButton
             label="Reject"
-            onTouchTap={() => {
+            onClick={() => {
               Meteor.call("rejectFriendRequest", this.props.notification._id);
             }}
           />
           <SubmitButton
             label="Accept"
-            onTouchTap={() => {
+            onClick={() => {
               Meteor.call("acceptFriendRequest", this.props.notification._id);
             }}
           />
@@ -58,12 +59,12 @@ export default React.createClass({
     },
     postLiked() {
       const url = FlowRouter.path("post", {
-        username: this.props.currentUser.username,
+        username: this.context.currentUser.username,
         postName: this.props.notification.post.name
       });
       return [
         "liked ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.post.name}
         </a>
       ];
@@ -75,7 +76,7 @@ export default React.createClass({
       });
       return [
         "mentioned you in ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.post.name}
         </a>
       ];
@@ -87,44 +88,8 @@ export default React.createClass({
       }) + "#" + this.props.notification.message._id;
       return [
         "commented on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.post.name}
-        </a>
-      ];
-    },
-    albumCommented() {
-      const url = FlowRouter.path("album", {
-        username: this.props.notification.album.username,
-        albumSlug: this.props.notification.album.slug
-      }) + "#" + this.props.notification.message._id;
-      return [
-        "commented on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
-          {this.props.notification.album.name}
-        </a>
-      ];
-    },
-    pageCommented() {
-      const url = FlowRouter.path("page", {
-        username: this.props.notification.page.username,
-        slug: this.props.notification.page.slug
-      }) + "#" + this.props.notification.message._id;
-      return [
-        "commented on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
-          {this.props.notification.page.name}
-        </a>
-      ];
-    },
-    blogCommented() {
-      const url = FlowRouter.path("blogPost", {
-        username: this.props.notification.blog.username,
-        slug: this.props.notification.blog.slug
-      }) + "#" + this.props.notification.message._id;
-      return [
-        "commented on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
-          {this.props.notification.blog.name}
         </a>
       ];
     },
@@ -135,92 +100,8 @@ export default React.createClass({
       }) + "#" + this.props.notification.message._id;
       return [
         "mentioned you in a comment on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.post.name}
-        </a>
-      ];
-    },
-    albumCommentMentioned() {
-      const url = FlowRouter.path("album", {
-        username: this.props.notification.album.username,
-        albumSlug: this.props.notification.album.slug
-      }) + "#" + this.props.notification.message._id;
-      return [
-        "mentioned you in a comment on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
-          {this.props.notification.album.name}
-        </a>
-      ];
-    },
-    pageCommentMentioned() {
-      const url = FlowRouter.path("page", {
-        username: this.props.notification.page.username,
-        slug: this.props.notification.page.slug
-      }) + "#" + this.props.notification.message._id;
-      return [
-        "mentioned you in a comment on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
-          {this.props.notification.page.name}
-        </a>
-      ];
-    },
-    blogCommentMentioned() {
-      const url = FlowRouter.path("blogPost", {
-        username: this.props.notification.blog.username,
-        slug: this.props.notification.blog.slug
-      }) + "#" + this.props.notification.message._id;
-      return [
-        "mentioned you in a comment on ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
-          {this.props.notification.blog.name}
-        </a>
-      ];
-    },
-    albumMentioned() {
-      const url = FlowRouter.path("album", {
-        username: this.props.notification.owner.username,
-        albumSlug: this.props.notification.album.slug || "???"
-      });
-      return [
-        "mentioned you in ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
-          {this.props.notification.album.name}
-        </a>
-      ];
-    },
-    pageMentioned() {
-      const url = FlowRouter.path("page", {
-        username: this.props.notification.owner.username,
-        slug: this.props.notification.page.slug
-      });
-      return [
-        "mentioned you in ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
-          {this.props.notification.page.name}
-        </a>
-      ];
-    },
-    blogMentioned() {
-      const url = FlowRouter.path("blogPost", {
-        username: this.props.notification.owner.username,
-        slug: this.props.notification.blog.slug
-      });
-      return [
-        "mentioned you in ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
-          {this.props.notification.blog.name}
-        </a>
-      ];
-    },
-    reblogged() {
-      const url = FlowRouter.path("blogPost", {
-        username: this.props.notification.owner.username,
-        slug: this.props.notification.blog.slug
-      });
-      return [
-        "reblogged your post ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
-          {this.props.notification.blog.name}
         </a>
       ];
     },
@@ -231,7 +112,7 @@ export default React.createClass({
       }) + "#" + this.props.notification.message._id;
       return [
         "posted in ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.topic.name}
         </a>
       ];
@@ -243,46 +124,16 @@ export default React.createClass({
       }) + "#" + this.props.notification.message._id;
       return [
         "mentioned you in ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           {this.props.notification.topic.name}
         </a>
-      ];
-    },
-    invited() {
-      const url = FlowRouter.path("room", { roomSlug: this.props.notification.room.slug });
-      return [
-        "invited you to join ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
-          {this.props.notification.room.name}
-        </a>,
-        "!"
-      ];
-    },
-    joined() {
-      const url = FlowRouter.path("room", { roomSlug: this.props.notification.room.slug });
-      return [
-        "joined ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
-          {this.props.notification.room.name}
-        </a>,
-        "!"
-      ];
-    },
-    inviteAccepted() {
-      const url = FlowRouter.path("room", { roomSlug: this.props.notification.room.slug });
-      return [
-        "accepted your invite for ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
-          {this.props.notification.room.name}
-        </a>,
-        "!"
       ];
     },
     directMessaged() {
       const url = FlowRouter.path("dm", { username: this.props.notification.owner.username });
       return [
         "sent you a ",
-        <a href={url} key={this.props.notification._id} onTouchTap={this.dismiss}>
+        <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
           direct message
         </a>,
         "."
@@ -308,7 +159,7 @@ export default React.createClass({
             {label}
           </span>
         </div>
-        <IconButton className="dismiss" onTouchTap={this.dismiss}>
+        <IconButton className="dismiss" onClick={this.dismiss}>
           <Icon>close</Icon>
         </IconButton>
       </div>

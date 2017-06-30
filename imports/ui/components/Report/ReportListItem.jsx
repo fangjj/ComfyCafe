@@ -20,7 +20,7 @@ export default (props) => {
   });
   return <ModLogItem ml={props.report}>
     <div className="delete">
-      <IconButton onTouchTap={() => Meteor.call("modDeleteReport", props.report._id)}>
+      <IconButton onClick={() => Meteor.call("modDeleteReport", props.report._id)}>
         <Icon>close</Icon>
       </IconButton>
     </div>

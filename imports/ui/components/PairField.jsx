@@ -45,7 +45,7 @@ export default React.createClass({
           onChange={this.handleValue}
         />
       </div>
-      <IconButton className="remove" tabIndex={-1} onTouchTap={this.handleRemove}>
+      <IconButton className="remove" tabIndex={-1} onClick={this.handleRemove}>
         <Icon>close</Icon>
       </IconButton>
     </li>;

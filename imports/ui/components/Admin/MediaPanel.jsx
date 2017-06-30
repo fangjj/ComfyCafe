@@ -16,12 +16,12 @@ export default React.createClass({
       <SubmitButton
         label="Update Colors"
         iconName="colorize"
-        onTouchTap={this.handleColors}
+        onClick={this.handleColors}
       />
       <SubmitButton
         label="Apply Migration"
         iconName="cached"
-        onTouchTap={this.handleMigrate}
+        onClick={this.handleMigrate}
       />
     </DenseContent>;
   }

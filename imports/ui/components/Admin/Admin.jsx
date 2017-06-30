@@ -6,27 +6,12 @@ import { isPriveleged } from "/imports/api/common/persimmons";
 import ReportPanel from "./ReportPanel";
 import UserPanelContainer from "./UserPanelContainer";
 import ImagePanelContainer from "./ImagePanelContainer";
-import BlogPanelContainer from "./BlogPanelContainer";
-import PagePanelContainer from "./PagePanelContainer";
-import AlbumPanelContainer from "./AlbumPanelContainer";
-import CommunityPanelContainer from "./CommunityPanelContainer";
-import TopicPanelContainer from "./TopicPanelContainer";
 import MessagePanelContainer from "./MessagePanelContainer";
-import BadgePanelContainer from "./BadgePanelContainer";
 import MediaPanel from "./MediaPanel";
-import FilterPanelContainer from "./FilterPanelContainer";
 import NotificationPanel from "./NotificationPanel";
-import TopicPanel from "./TopicPanel";
 import UserViewContainer from "./UserViewContainer";
 import ImageViewContainer from "./ImageViewContainer";
-import BlogViewContainer from "./BlogViewContainer";
-import PageViewContainer from "./PageViewContainer";
-import AlbumViewContainer from "./AlbumViewContainer";
-import CommunityViewContainer from "./CommunityViewContainer";
-import TopicViewContainer from "./TopicViewContainer";
 import MessageViewContainer from "./MessageViewContainer";
-import BadgeViewContainer from "./BadgeViewContainer";
-import FilterViewContainer from "./FilterViewContainer";
 import Err403 from "/imports/ui/components/Err403";
 import Content from "/imports/ui/components/Content";
 import List from "/imports/ui/components/List";
@@ -45,14 +30,7 @@ export default React.createClass({
           {
             users: <UserViewContainer />,
             images: <ImageViewContainer />,
-            blog: <BlogViewContainer />,
-            pages: <PageViewContainer />,
-            albums: <AlbumViewContainer />,
-            communities: <CommunityViewContainer />,
-            topics: <TopicViewContainer />,
-            messages: <MessageViewContainer />,
-            filters: <FilterViewContainer />,
-            badges: <BadgeViewContainer />
+            messages: <MessageViewContainer />
           },
           panel,
           <DenseContent>
@@ -64,16 +42,8 @@ export default React.createClass({
           {
             users: <UserPanelContainer />,
             images: <ImagePanelContainer />,
-            blog: <BlogPanelContainer />,
-            pages: <PagePanelContainer />,
-            albums: <AlbumPanelContainer />,
-            communities: <CommunityPanelContainer />,
-            topics: <TopicPanelContainer />,
             messages: <MessagePanelContainer />,
-            badges: <BadgePanelContainer />,
             media: <MediaPanel />,
-            tags: <DenseContent>nope</DenseContent>,
-            filters: <FilterPanelContainer />,
             notifications: <NotificationPanel />
           },
           panel,
@@ -91,16 +61,8 @@ export default React.createClass({
           <li><a href="/admin">Reports</a></li>
           <li><a href="/admin/users">Users</a></li>
           <li><a href="/admin/images">Images</a></li>
-          <li><a href="/admin/blog">Blog</a></li>
-          <li><a href="/admin/pages">Pages</a></li>
-          <li><a href="/admin/albums">Albums</a></li>
-          <li><a href="/admin/communities">Communities</a></li>
-          <li><a href="/admin/topics">Topics</a></li>
           <li><a href="/admin/messages">Messages</a></li>
-          <li><a href="/admin/tags">Tags</a></li>
-          <li><a href="/admin/filters">Filters</a></li>
           <li><a href="/admin/notifications">Notifications</a></li>
-          <li><a href="/admin/badges">Badges</a></li>
           <li><a href="/admin/media">Media</a></li>
         </List>
       </div>

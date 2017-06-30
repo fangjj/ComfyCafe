@@ -76,7 +76,7 @@ export default React.createClass({
           {(topic.messageCount || 0)}
         </span>
       </div>
-      <a className="fill" href={topicUrl} onTouchTap={this.props.deactivateLeft}></a>
+      <a className="fill" href={topicUrl} onClick={this.props.deactivateLeft}></a>
       <div className="pin">
         <a href={ownerUrl}>
           <Avatar size="icon" user={owner} />

@@ -22,7 +22,7 @@ export default React.createClass({
         label={this.props.labelActivate}
         iconName={this.props.iconActivate}
         width={this.props.width}
-        onTouchTap={this.props.activate}
+        onClick={this.props.activate}
       />;
     } else {
       let color = Colors.reassuringGray;
@@ -43,7 +43,7 @@ export default React.createClass({
         label={label}
         iconName={icon}
         width={this.props.width}
-        onTouchTap={this.props.deactivate}
+        onClick={this.props.deactivate}
         onMouseEnter={this.hoverOn}
         onMouseLeave={this.hoverOff}
       />;

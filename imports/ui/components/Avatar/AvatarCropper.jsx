@@ -90,12 +90,12 @@ export default React.createClass({
   renderActions() {
     return <Actions>
       <CancelButton
-        onTouchTap={this.cancel}
+        onClick={this.cancel}
       />
       <SubmitButton
         label="Crop"
         iconName="crop"
-        onTouchTap={this.save}
+        onClick={this.save}
       />
     </Actions>;
   },

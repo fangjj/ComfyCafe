@@ -6,9 +6,6 @@ import Notifications from "/imports/api/notifications/collection";
 import Posts from "/imports/api/posts/collection";
 import topColor from "/imports/ui/utils/topColor";
 import TopBarArtButton from "./TopBarArtButton";
-import TopBarBlogButton from "./TopBarBlogButton";
-import TopBarTagButton from "./TopBarTagButton";
-import TopBarChatButton from "./TopBarChatButton";
 import TopBarExploreButton from "./TopBarExploreButton";
 import TopBarMenu from "./TopBarMenu";
 import NavItem from "./NavItem";
@@ -20,6 +17,7 @@ import AccountActionsList from "../User/AccountActionsList";
 
 export default React.createClass({
   mixins: [ReactMeteorData],
+  contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
     return {
       showMobileMenu: false,
@@ -38,8 +36,7 @@ export default React.createClass({
           dismissed: { $ne: true }
         },
         { sort: { createdAt: -1 } }
-      ).fetch(),
-      currentUser: Meteor.user()
+      ).fetch()
     };
     {
       const username = FlowRouter.getParam("username");
@@ -65,7 +62,7 @@ export default React.createClass({
   },
   userReady() {
     return ! this.data.loading
-      && this.data.currentUser && _.has(this.data.currentUser, "profile");
+      && this.context.currentUser && _.has(this.context.currentUser, "profile");
   },
   genericHandleMenuButton(name) {
     var set = null;
@@ -87,17 +84,13 @@ export default React.createClass({
   },
   renderLeftSub() {
     if (this.userReady()) {
-      return [
-        <TopBarArtButton key="topBarArtBtn" />,
-        <TopBarBlogButton key="topBarBlogBtn" />,
-        <TopBarTagButton key="topBarTagBtn" />
-      ];
+      return <TopBarArtButton />;
     }
   },
   renderLeft() {
     return <ul className="leftSide topLevel">
       <NavItem className="hotdog ignore-react-onclickoutside hide-on-med-and-up">
-        <a onTouchTap={this.handleHotdog}>
+        <a onClick={this.handleHotdog}>
           <i className="material-icons">menu</i>
         </a>
       </NavItem>
@@ -110,14 +103,12 @@ export default React.createClass({
         <NoSSR key="notificationList">
           <NotificationList
             notifications={this.data.notifications}
-            currentUser={this.data.currentUser}
             visible={this.state.visibleMenu === "notifications"}
             action={this.toggleNotificationList}
           />
         </NoSSR>,
         <NoSSR key="accountActionsList">
           <AccountActionsList
-            currentUser={this.data.currentUser}
             visible={this.state.visibleMenu === "account"}
             action={this.toggleAccountActions}
           />
@@ -130,7 +121,7 @@ export default React.createClass({
       return;
     }
 
-    if (! this.data.currentUser) {
+    if (! this.context.currentUser) {
       return [
         <NavItem id="topLogin" key="topBarLoginBtn">
           <LoginButton />
@@ -138,12 +129,11 @@ export default React.createClass({
       ];
     }
 
-    if (! _.has(this.data.currentUser, "profile")) {
+    if (! _.has(this.context.currentUser, "profile")) {
       return;
     }
 
     return [
-      <TopBarChatButton key="topBarForumBtn" />,
       <NavItem key="topBarNotifBtn">
         <NotificationButton
           notifications={this.data.notifications}
@@ -153,20 +143,14 @@ export default React.createClass({
       <NavItem key="topBarAcctBtn">
         <AccountActionsButton
           action={this.toggleAccountActions}
-          currentUser={this.data.currentUser}
         />
       </NavItem>
     ];
   },
   renderRight() {
-    var notificationList;
-    var actionList;
-
     return <ul className="rightSide topLevel">
       <TopBarExploreButton />
       {this.renderRightSub()}
-      {notificationList}
-      {actionList}
     </ul>;
   },
   render() {
@@ -174,7 +158,6 @@ export default React.createClass({
     return <nav className="topNav" style={style}>
       <TopBarMenu
         open={this.state.visibleMenu === "hotdog"}
-        currentUser={this.data.currentUser}
         onClose={this.handleHotdog}
       />
       {this.renderSubMenus()}

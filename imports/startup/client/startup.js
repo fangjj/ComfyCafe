@@ -1,14 +1,12 @@
-import hotkey from "react-hotkey";
-import injectTapEventPlugin from "react-tap-event-plugin";
 import emojione from "emojione";
 import marked from "marked";
 import "blueimp-canvas-to-blob";
+import injectTapEventPlugin from "react-tap-event-plugin";
 
 import "/imports/startup/client/accounts";
 
 Meteor.startup(function () {
   injectTapEventPlugin();
-  hotkey.activate();
 
   emojione.imageType = "svg";
   emojione.imagePathSVG = "/images/emoji/svg/";
@@ -31,15 +29,4 @@ Tracker.autorun(function () {
 
 Tracker.autorun(function () {
   Cookie.set("X-Auth-Token", Accounts._storedLoginToken());
-});
-
-Tracker.autorun(function (c) {
-  try {
-    UserStatus.startMonitor({
-      threshold: 5*60000,
-      interval: 60000,
-      idleOnBlur: false
-    });
-    c.stop();
-  } catch (e) {}
 });

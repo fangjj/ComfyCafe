@@ -2,13 +2,11 @@ import _ from "lodash";
 import React from "react";
 
 import PostPreview from "./PostPreview";
-import PostFilters from "./PostFilters";
 import InlineLoadingSpinner from "/imports/ui/components/Spinner/InlineLoadingSpinner";
 import UploadFAB from "/imports/ui/components/UploadFAB";
 import InlineUhoh from "/imports/ui/components/InlineUhoh";
 import Infinite from "/imports/ui/components/Infinite";
 import Checkbox from "/imports/ui/components/Checkbox";
-import TagInlineField from "/imports/ui/components/Tag/TagInlineField";
 
 export default React.createClass({
   getInitialState() {
@@ -37,17 +35,12 @@ export default React.createClass({
       return this.props.posts.map((post) => {
         return <PostPreview
           post={post}
-          spoilered={_.has(this.props.spoilered, post._id)}
-          reason={_.get(this.props.spoilered, post._id)}
           currentUser={this.props.currentUser}
           key={post._id}
         />;
       });
     } else if (! this.props.loading) {
-      if (this.state.originalOnly
-        || this.state.tagStr
-        || this.state.filter
-      ) {
+      if (this.state.originalOnly) {
         return <InlineUhoh>
           No results.
         </InlineUhoh>;
@@ -84,24 +77,6 @@ export default React.createClass({
               label="Original only"
               defaultChecked={this.props.originalOnly}
               onCheck={this.props.handleOriginalOnly}
-            />
-          </div>
-          <div style={{flexGrow: 2}}>
-            <TagInlineField
-              id="gallerySearch"
-              delim=";"
-              defaultValue={this.props.tagStr}
-              hintText="Search"
-              onChange={_.debounce(this.props.handleSearch, 250)}
-            />
-          </div>
-          <div style={{flexGrow: 1}}>
-            <PostFilters
-              id="galleryFilters"
-              filters={this.props.filters}
-              globalFilters={this.props.globalFilters}
-              value={_.get(this.props.filter, "_id")}
-              onChange={this.props.handleFilter}
             />
           </div>
         </div>

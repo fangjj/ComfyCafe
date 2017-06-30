@@ -1,14 +1,13 @@
 standard-app-packages
-ecmascript
-http
-reactive-var
-accounts-password
-email
+ecmascript@0.8.0
+http@1.2.12
+reactive-var@1.0.11
+accounts-password@1.3.6
+email@1.2.1
 react-meteor-data
-force-ssl
+force-ssl@1.0.14
 fourseven:scss
 seba:minifiers-autoprefixer
-jaywon:meteor-node-uuid
 jparker:crypto-sha256
 peerlibrary:reactive-publish
 kadira:flow-router-ssr
@@ -16,7 +15,6 @@ kadira:dochead
 meteorhacks:fast-render
 chuangbo:cookie
 alanning:roles
-mizzao:user-status
 vsivsi:file-collection
 vsivsi:job-collection
 comfysoft:utility
@@ -24,3 +22,5 @@ comfysoft:sharp
 ongoworks:security
 practicalmeteor:mocha
 simple:rest
+shell-server
+dynamic-import

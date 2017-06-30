@@ -6,6 +6,6 @@ export default () => {
   const aboutUrl = FlowRouter.path("about");
   const legalUrl = FlowRouter.path("legal");
   return <footer className="mainFooter">
-    <a href={helpUrl}>Help</a> · <a href={rulesUrl}>Rules</a> · <a href={aboutUrl}>About</a> · <a href={legalUrl}>Legal</a> · <a href="https://github.com/ComfySoft/ComfyCafe">Source</a> · <a href="https://trello.com/b/IlpjYc9X/comfycafe">Roadmap</a> · <a href="https://twitter.com/comfy_cafe">Twitter</a>
+    <a href={helpUrl}>Help</a> · <a href={rulesUrl}>Rules</a> · <a href={aboutUrl}>About</a> · <a href={legalUrl}>Legal</a> · <a href="https://github.com/ComfySoft/ComfyCafe">Source</a> · <a href="https://twitter.com/comfy_cafe">Twitter</a>
   </footer>;
 };

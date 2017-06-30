@@ -4,7 +4,7 @@ import classConcat from "/imports/ui/utils/classConcat";
 
 export default React.createClass({
   handleTouch() {
-    this.props.onTouchTap(this.props.name);
+    this.props.onClick(this.props.name);
   },
   renderIcon() {
     if (this.props.icon) {
@@ -30,7 +30,7 @@ export default React.createClass({
     if (this.props.color) {
       style.backgroundColor = this.props.color;
     }
-    return <div className={classes} style={style} onTouchTap={this.handleTouch}>
+    return <div className={classes} style={style} onClick={this.handleTouch}>
       {this.renderIcon()}
       {this.renderLabel()}
       {this.props.children}

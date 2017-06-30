@@ -27,7 +27,7 @@ export default React.createClass({
   renderReportForm() {
     if (this.state.showReportForm) {
       return <DialogForm
-        title="Report Blog Post"
+        title="Report Message"
         id={"formReport" + this.props.message._id}
         onClose={this.hideReportForm}
         form={<ReportForm
@@ -83,7 +83,7 @@ export default React.createClass({
       } else if (isMod(this.context.currentUser._id, "community_" + msg.topic.room.slug)) {
         return <ModButton item={msg} itemType="message" community={msg.topic.room.slug} />;
       } else {
-        return <ReportButton icon={true} onTouchTap={this.showReportForm} />;
+        return <ReportButton icon={true} onClick={this.showReportForm} />;
       }
     }
   },

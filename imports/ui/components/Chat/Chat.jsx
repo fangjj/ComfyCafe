@@ -23,7 +23,7 @@ export default React.createClass({
     if (this.props.dmList) {
       return <section>
         <header>
-          <div className="hotdog hide-on-med-and-up" onTouchTap={this.activateLeft}>
+          <div className="hotdog hide-on-med-and-up" onClick={this.activateLeft}>
             <Icon>menu</Icon>
           </div>
           <h2>Direct Messages</h2>

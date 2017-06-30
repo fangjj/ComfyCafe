@@ -9,8 +9,6 @@ import Topics from "/imports/api/topics/collection";
 import Notifications from "/imports/api/notifications/collection";
 import docBuilder from "/imports/api/common/docBuilder";
 import processMentions from "/imports/api/common/processMentions";
-import tagParser from "/imports/api/tags/parser";
-import { tagFullResolver } from "/imports/api/tags/resolver";
 import { regenThumbs } from "/imports/api/media/methods";
 import { isMod } from "/imports/api/common/persimmons";
 import checkReason from "/imports/api/common/checkReason";
@@ -44,8 +42,6 @@ const match = {
 	source: String,
 	description: String,
 	safety: Number,
-	tags: String,
-	tagsCondExpanded: Object,
 	bgColor: String,
 	loop: Boolean
 };
@@ -54,11 +50,6 @@ function updatePost(postId, data, auth) {
 	const post = Posts.findOne(postId);
 
 	auth(post);
-
-	let tags = tagParser(data.tags, {reformat: true});
-	if (Meteor.isServer) {
-		tags = tagFullResolver(tags);
-	}
 
 	data.bgColor = validateColor(data.bgColor);
 
@@ -70,8 +61,7 @@ function updatePost(postId, data, auth) {
 	Posts.update(
 		{ _id: postId },
 		{ $set: _.defaults({
-			updatedAt: new Date(),
-			tags
+			updatedAt: new Date()
 		}, data) }
 	);
 
@@ -139,11 +129,6 @@ Meteor.methods({
 				throw new Meteor.Error("incomplete-medium", "Medium " + mediumId + " isn't complete.");
 			}
 
-			let tags = tagParser(data.tags, {reformat: true});
-			if (Meteor.isServer) {
-				tags = tagFullResolver(tags);
-			}
-
 			let topicId;
 			if (Meteor.isServer) {
 				topicId = Meteor.call("addTopic", Meteor.user().room._id, { name }, true);
@@ -175,8 +160,7 @@ Meteor.methods({
 				complement: medium.metadata.complement,
 				topic: {
 					_id: topicId
-				},
-				tags
+				}
 			}, data);
 			const postId = Posts.insert(doc);
 

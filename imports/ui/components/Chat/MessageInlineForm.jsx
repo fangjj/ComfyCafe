@@ -81,14 +81,14 @@ export default React.createClass({
   },
   renderBottomFAB() {
     if (! this.props.comments) {
-      return <BottomFAB onTouchTap={this.toBottom} />
+      return <BottomFAB onClick={this.toBottom} />
     }
   },
   render() {
     const left = <SubmitButton
       label="Send"
       iconName="send"
-      onTouchTap={this.handleSubmit}
+      onClick={this.handleSubmit}
     />;
     return <div ref="form">
       <MessageForm

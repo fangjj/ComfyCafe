@@ -5,26 +5,15 @@ import { getMediaUrlMD5, getMediaUrlDjent } from "/imports/api/media/urls";
 import thumbnailPolicies from "/imports/api/thumbnails/policies";
 
 export default React.createClass({
-  mixins: [ReactMeteorData],
   contextTypes: { currentUser: React.PropTypes.object },
-  getMeteorData() {
-    return { filter: Session.get("filter") };
-  },
   render() {
     const size = thumbnailPolicies.avatar[this.props.size].size;
 
     const user = this.props.user;
     if (! user) { return null; }
 
-    const spoilered = _.includes(
-      _.get(this.data.filter, "spoilers.safeties",
-        _.get(this.context.currentUser, "defaultFilter.spoilers.safeties", [2, 3])
-      ),
-      _.get(user, "profile.avatarSafety", 0)
-    );
-
     const hasAvatars = Boolean(user.avatars);
-    if (hasAvatars && ! spoilered) {
+    if (hasAvatars) {
       const avatar = user.avatars[this.props.size] || user.avatars.fullsize;
       if (avatar) {
         return <img

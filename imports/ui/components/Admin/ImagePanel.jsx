@@ -31,7 +31,7 @@ export default React.createClass({
       <SubmitButton
         label="Regenerate All Thumbnails"
         iconName="broken_image"
-        onTouchTap={this.handleRegen}
+        onClick={this.handleRegen}
       />
       <List>
         {this.renderList()}

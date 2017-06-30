@@ -26,7 +26,6 @@ function errorBuilder(obj) {
     usernameError: undefined,
     passwordError: undefined,
     emailError: undefined,
-    betaKeyError: undefined,
     tosAcceptedError: undefined
   };
 
@@ -82,8 +81,7 @@ export default React.createClass({
         this.state.generalError,
         this.state.usernameError,
         this.state.passwordError,
-        this.state.emailError,
-        this.state.betaKeyError
+        this.state.emailError
       ],
       (result, value) => {
         return result || Boolean(value);
@@ -134,12 +132,6 @@ export default React.createClass({
       });
     }
   },
-  handleBetaKey(e) {
-    this.setState({
-      betaKey: e.target.value,
-      betaKeyError: undefined
-    });
-  },
   handleAccept(e) {
     this.setState({
       tosAccepted: e.target.checked,
@@ -177,9 +169,6 @@ export default React.createClass({
     if (this.state.register) {
       if (! this.state.email) {
         errors.emailError = strings.emailRequired;
-      }
-      if (! this.state.betaKey && _.get(Meteor.settings, "public.requireInvite", false)) {
-        errors.betaKeyError = strings.betaKeyRequired;
       }
     }
     if (! _.isEmpty(errors)) {
@@ -236,9 +225,7 @@ export default React.createClass({
       username: this.state.username,
       password: this.state.password,
       email: this.state.email,
-      profile: {
-        key: this.state.betaKey
-      }
+      profile: {}
     };
 
     Accounts.createUser(userObject, (err) => {
@@ -263,11 +250,6 @@ export default React.createClass({
           },
           "invalid-email": () => {
             // Already handled by onChange validation.
-          },
-          "invalid-betakey": () => {
-            this.setState(errorBuilder({
-              betaKeyError: strings.betaKeyRejected
-            }));
           },
           "too-many-requests": () => {
             this.setState(errorBuilder({
@@ -334,16 +316,6 @@ export default React.createClass({
       />;
     }
   },
-  renderBetaKey() {
-    if (this.state.register && _.get(Meteor.settings, "public.requireInvite", false)) {
-      return <TextField
-        id="betaKey"
-        label="Beta Key"
-        errorText={this.state.betaKeyError}
-        onChange={this.handleBetaKey}
-      />;
-    }
-  },
   renderAccept() {
     if (this.state.register) {
       return <div className="acceptTosContainer">
@@ -360,7 +332,7 @@ export default React.createClass({
   renderCancel() {
     if (this.state.register) {
       return <CancelButton
-        onTouchTap={this.handleCancel}
+        onClick={this.handleCancel}
       />;
     }
   },
@@ -375,7 +347,7 @@ export default React.createClass({
     if (! this.state.register) {
       left = <FlatButton
         label="Register"
-        onTouchTap={this.handleRegister}
+        onClick={this.handleRegister}
       />;
     }
 
@@ -402,7 +374,6 @@ export default React.createClass({
         />
         {this.renderForgot()}
         {this.renderEmail()}
-        {this.renderBetaKey()}
         {this.renderAccept()}
         <Actions left={left}>
           {this.renderCancel()}

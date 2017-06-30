@@ -35,12 +35,12 @@ export default React.createClass({
       <SubmitButton
         label="Apply Migration"
         iconName="cached"
-        onTouchTap={this.handleMigrate}
+        onClick={this.handleMigrate}
       />
       <SubmitButton
         label="Regenerate Djenticons"
         iconName="broken_image"
-        onTouchTap={this.handleRegen}
+        onClick={this.handleRegen}
       />
       <List>
         {this.renderList()}

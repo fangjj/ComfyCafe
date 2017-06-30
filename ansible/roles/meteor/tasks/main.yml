@@ -3,17 +3,5 @@
   shell: curl https://install.meteor.com | /bin/sh
   args:
     creates: /usr/local/bin/meteor
-
-- name: ensure build tools are at the latest version
-  apt: pkg=build-essential state=latest
-
-- name: fetch nodejs 0.10 archive
-  get_url: url=https://nodejs.org/dist/v0.10.45/node-v0.10.45.tar.gz dest=/var/tmp/node-v0.10.45.tar.gz
-  register: node
-  when: bootstrap
-- name: unpack nodejs 0.10 archive
-  unarchive: src=/var/tmp/node-v0.10.45.tar.gz dest=/var/tmp/ copy=false
-  when: bootstrap
-- name: configure, build, and install nodejs 0.10
-  command: "/usr/bin/make install -j{{ makej }} chdir=/var/tmp/node-v0.10.45"
-  when: bootstrap
+- name: ensure nodejs is at the latest version
+  apt: pkg=nodejs state=latest

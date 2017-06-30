@@ -148,14 +148,9 @@ export default React.createClass({
     ];
   },
   renderRight() {
-    var notificationList;
-    var actionList;
-
     return <ul className="rightSide topLevel">
       <TopBarExploreButton />
       {this.renderRightSub()}
-      {notificationList}
-      {actionList}
     </ul>;
   },
   render() {

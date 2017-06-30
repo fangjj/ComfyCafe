@@ -191,8 +191,9 @@ const CropperComponent = React.createClass({
   },
 
   render() {
+    let { aspectRatio, dragMode, built, ...divProps } = this.props;
     return (
-      <div {...this.props} src={null} crossOrigin={null} alt={null} style={{}}>
+      <div {...divProps} src={null} crossOrigin={null} alt={null} style={{}}>
         <img
           crossOrigin={this.props.crossOrigin}
           ref='img'

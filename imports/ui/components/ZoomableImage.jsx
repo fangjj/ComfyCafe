@@ -61,7 +61,10 @@ export default React.createClass({
       <img
         ref="image"
         onClick={this.handleTouch}
-        {...this.props}
+        className={this.props.className}
+        src={this.props.src}
+        width={this.props.width}
+        height={this.props.height}
       />
       {this.renderMoonbox()}
     </div>;

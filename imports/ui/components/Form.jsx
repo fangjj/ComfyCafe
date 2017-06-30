@@ -36,7 +36,8 @@ export default React.createClass({
 
     return <form
       onSubmit={this.handleSubmit}
-      {...leftoverProps}
+      id={this.props.id}
+      className={this.props.className}
     >
       {children}
       {this.renderActions(actions)}

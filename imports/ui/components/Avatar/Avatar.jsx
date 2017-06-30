@@ -5,7 +5,6 @@ import { getMediaUrlAvatar, getMediaUrlDjent } from "/imports/api/media/urls";
 import thumbnailPolicies from "/imports/api/thumbnails/policies";
 
 export default React.createClass({
-  mixins: [ReactMeteorData],
   contextTypes: { currentUser: React.PropTypes.object },
   render() {
     const size = thumbnailPolicies.avatar[this.props.size].size;

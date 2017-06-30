@@ -1,17 +1,12 @@
-# mongod.conf
-# Note: this config is never used in the playbook, but may be used in the future.
-
 # for documentation of all options, see:
 #   http://docs.mongodb.org/manual/reference/configuration-options/
 
 # Where and how to store data.
 storage:
-  dbPath: /var/lib/mongodb
+  dbPath: /var/lib/tiger
   journal:
     enabled: true
-#  engine:
-#  mmapv1:
-#  wiredTiger:
+  engine: wiredTiger
 
 # where to write logging data.
 systemLog:

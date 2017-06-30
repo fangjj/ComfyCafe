@@ -1,5 +1,9 @@
 ---
-- name: ensure mongodb is at the latest version
-  apt: pkg=mongodb state=latest
+- name: ensure mongodb-org is at the latest version
+  apt: pkg=mongodb-org state=latest
   notify:
-  - restart mongodb
+  - restart mongod
+- name: copy mongod configuration
+  template: src=mongod.conf.j2 dest=/etc/mongod.conf
+  notify:
+  - reload mongod

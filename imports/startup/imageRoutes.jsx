@@ -3,11 +3,9 @@ import React from "react";
 import render from "/imports/ui/utils/render";
 import setTitle from "/imports/ui/utils/setTitle";
 
-import { tagStrFromUrl } from "/imports/api/tags/urlify";
 import PostBrowseAll from "/imports/ui/components/Post/PostBrowseAll";
 import PostBrowseLikes from "/imports/ui/components/Post/PostBrowseLikes";
 import PostFeed from "/imports/ui/components/Post/PostFeed";
-import PostSearch from "/imports/ui/components/Post/PostSearch";
 import PostBrowseUser from "/imports/ui/components/Post/PostBrowseUser";
 import PostContainer from "/imports/ui/components/Post/PostContainer";
 
@@ -24,15 +22,6 @@ FlowRouter.route("/likes", {
   action: function () {
     setTitle("Likes");
     render({ main: <PostBrowseLikes /> });
-  }
-});
-
-FlowRouter.route("/q/:rawTagStr", {
-  name: "search",
-  action: function () {
-    const tagStr = tagStrFromUrl(FlowRouter.getParam("rawTagStr"));
-    setTitle("Search: " + tagStr);
-    render({ main: <PostSearch /> });
   }
 });
 

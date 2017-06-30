@@ -39,25 +39,10 @@ export default React.createClass({
       goBack();
     });
   },
-  showAlbumSelector() {
-    const $albumBtn = $("#albumBtn");
-    const offset = $albumBtn.offset();
-    this.props.showAlbumSelector({
-      left: offset.left,
-      top: offset.top + $albumBtn.height()
-    });
-  },
   renderButtons() {
     if (! this.props.currentUser) {
       return;
     }
-
-    const albumButton = <SubmitButton
-      id="albumBtn"
-      label="Add to Album"
-      iconName="collections"
-      onClick={this.showAlbumSelector}
-    />;
 
     let cropButton = <SubmitButton
       label="Set Avatar"
@@ -69,7 +54,6 @@ export default React.createClass({
     }
 
     const rightGroup = <ButtonGroup>
-      {albumButton}
       {cropButton}
     </ButtonGroup>;
 

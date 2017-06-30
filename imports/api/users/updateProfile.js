@@ -2,7 +2,6 @@ import _ from "lodash";
 
 import profileSyncList from "/imports/api/users/syncList";
 import prefixer from "/imports/api/common/prefixer";
-import reblogSync from "/imports/api/blog/reblogSync";
 import { dmTopicSync } from "/imports/api/topics/dmTopic";
 
 function ownerPrefixer(doc) {
@@ -17,7 +16,6 @@ function updateOwnerDocs(query, update) {
       { multi: true }
     );
   });
-  reblogSync(query, update);
   dmTopicSync(query, update);
 }
 

@@ -14,7 +14,6 @@ import Actions from "/imports/ui/components/Actions";
 import CancelButton from "/imports/ui/components/Button/CancelButton";
 import SubmitButton from "/imports/ui/components/Button/SubmitButton";
 import FlatButton from "/imports/ui/components/Button/FlatButton";
-import PostFilters from "/imports/ui/components/Post/PostFilters";
 import VisibilitySelector from "/imports/ui/components/VisibilitySelector";
 import OriginalitySelector from "/imports/ui/components/OriginalitySelector";
 import TextField from "/imports/ui/components/TextField";
@@ -23,31 +22,21 @@ import Snackbar from "/imports/ui/components/Snackbar";
 
 const defaultState = {
   username: null,
-  defaultPage: "art",
-  defaultFilter: null,
   uploadAction: "redirect",
   autoWatch: true,
   defaultImageVisibility: "public",
-  defaultImageOriginality: "original",
-  defaultAlbumVisibility: "unlisted"
+  defaultImageOriginality: "original"
 };
 
 export default React.createClass({
   contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
-    defaultState.defaultFilter = this.props.defaultFilterId;
     const state = initialStateBuilder(this.context.currentUser.settings, defaultState);
     state.username = this.context.currentUser.username;
     state.snackbarOpen = false;
     return state;
   },
   componentWillReceiveProps(nextProps) {
-    if (nextProps.defaultFilterId !== this.props.defaultFilterId) {
-      if (! this.state.defaultFilter) {
-        this.setState({ defaultFilter: nextProps.defaultFilterId });
-      }
-    }
-
     if (! this.state.usernameError) {
       if (nextProps.user !== this.props.user) {
         if (nextProps.user) {
@@ -80,12 +69,6 @@ export default React.createClass({
       this.props.setUsername(doc.username);
     });
   },
-  handleDefaultPage(e, index, value) {
-    this.setState({ defaultPage: value });
-  },
-  handleDefaultFilter(e, index, value) {
-    this.setState({ defaultFilter: value });
-  },
   handleUploadAction(e, index, value) {
     this.setState({ uploadAction: value });
   },
@@ -97,9 +80,6 @@ export default React.createClass({
   },
   handleDefaultImageOriginality(value) {
     this.setState({ defaultImageOriginality: value });
-  },
-  handleDefaultAlbumVisibility(value) {
-    this.setState({ defaultAlbumVisibility: value });
   },
   submit() {
     const data = dataBuilder(this.state, defaultState);
@@ -131,22 +111,6 @@ export default React.createClass({
         href={FlowRouter.path("changePassword")}
       >Change Password</a>
 
-      <PostFilters
-        filters={this.props.filters}
-        value={this.state.defaultFilter}
-        floatingLabelText="Default Filter"
-        onChange={this.handleDefaultFilter}
-      />
-      <br />
-      <SelectField
-        value={this.state.defaultPage}
-        floatingLabelText="Default Page"
-        fullWidth={true}
-        onChange={this.handleDefaultPage}
-      >
-        <MenuItem value="art" primaryText="Images" />
-        <MenuItem value="blog" primaryText="Blog" />
-      </SelectField>
       <br />
       <SelectField
         value={this.state.uploadAction}
@@ -178,12 +142,6 @@ export default React.createClass({
         label="Default image originality"
         value={this.state.defaultImageOriginality}
         onChange={this.handleDefaultImageOriginality}
-      />
-
-      <VisibilitySelector
-        label="Default album visibility"
-        visibility={this.state.defaultAlbumVisibility}
-        onChange={this.handleDefaultAlbumVisibility}
       />
 
       <br />

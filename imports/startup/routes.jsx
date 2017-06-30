@@ -6,18 +6,10 @@ import setTitle from "/imports/ui/utils/setTitle";
 import "./adminRoutes";
 import "./userRoutes";
 import "./imageRoutes";
-import "./albumRoutes";
-import "./blogRoutes";
-import "./pageRoutes";
-import "./chatRoutes";
-import "./tagRoutes";
-import "./filterRoutes";
-import "./inviteRoutes";
 
 import Err404 from "/imports/ui/components/Err404";
 import PostFeed from "/imports/ui/components/Post/PostFeed";
 import PostBrowseAll from "/imports/ui/components/Post/PostBrowseAll";
-import BlogListContainer from "/imports/ui/components/Blog/BlogListContainer";
 import Help from "/imports/ui/components/Help";
 import About from "/imports/ui/components/About";
 import Legal from "/imports/ui/components/Legal";
@@ -50,13 +42,7 @@ FlowRouter.route("/", {
   action: function () {
     setTitle();
     if (Meteor.user()) {
-      const page = Meteor.user().settings.defaultPage || "art";
-
-      if (page === "blog") {
-        render({ main: <BlogListContainer /> });
-      } else {
-        render({ main: <PostFeed /> });
-      }
+      render({ main: <PostFeed /> });
     } else {
       render({ main: <PostBrowseAll /> });
     }

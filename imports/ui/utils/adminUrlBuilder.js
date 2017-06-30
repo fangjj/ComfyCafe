@@ -1,14 +1,7 @@
 const panelMap = {
   user: "users",
   image: "images",
-  blog: "blog",
-  page: "pages",
-  album: "albums",
-  community: "communities",
-  topic: "topics",
-  message: "messages",
-  tag: "tags",
-  filter: "filters"
+  message: "messages"
 };
 
 function adminUrlBuilder(item, community) {

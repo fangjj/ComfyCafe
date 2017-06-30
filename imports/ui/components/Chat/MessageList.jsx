@@ -3,7 +3,6 @@ import React from "react";
 
 import "/imports/api/topics/methods";
 import Messages from "/imports/api/messages/collection";
-import statusInjector from "/imports/ui/utils/statusInjector";
 import fancyCommaJoin from "/imports/api/common/fancyCommaJoin";
 import MessageListItem from "./MessageListItem";
 import MessageInlineForm from "./MessageInlineForm";
@@ -23,18 +22,7 @@ export default React.createClass({
       messages: Messages.find(
         { "topic._id": id },
         { sort: { createdAt: sort } }
-      ).fetch(),
-      userStatuses: _.reduce(
-        Meteor.users.find(
-          {},
-          { fields: { "status.online": 1, "status.idle": 1 } }
-        ).fetch(),
-        (result, v, k) => {
-          result[v._id] = v.status;
-          return result;
-        },
-        {}
-      )
+      ).fetch()
     };
   },
   getInitialState() {
@@ -81,7 +69,6 @@ export default React.createClass({
   renderMsg() {
     if (this.data.messages.length) {
       return this.data.messages.map((msg) => {
-        statusInjector(msg.owner, this.data.userStatuses || {});
         return <MessageListItem
           message={msg}
           key={msg._id}

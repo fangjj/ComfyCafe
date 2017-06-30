@@ -3,15 +3,10 @@ import _ from "lodash";
 import prefixer from "/imports/api/common/prefixer";
 import { ownerPrefixer, updateOwnerDocs, profilePrefixer  } from "/imports/api/users/updateProfile";
 import Posts from "/imports/api/posts/collection";
-import BlogPosts from "/imports/api/blog/collection";
-import Pages from "/imports/api/pages/collection";
-import Albums from "/imports/api/albums/collection";
-import Filters from "/imports/api/filters/collection";
 import Notifications from "/imports/api/notifications/collection";
 import Rooms from "/imports/api/rooms/collection";
 import Topics from "/imports/api/topics/collection";
 import Messages from "/imports/api/messages/collection";
-import "/imports/api/blog/methods";
 import "/imports/api/media/methods";
 import media from "/imports/api/media/collection";
 import createSlugCycler from "/imports/api/common/createSlugCycler";
@@ -158,68 +153,6 @@ Meteor.methods({
       }
     );
   }),
-  migrateUserFilters: migrationBuilder(function () {
-    Meteor.users.find().map((user) => {
-      const id = _.get(user, "settings.defaultFilter");
-      const defaultFilter = Filters.findOne({ _id: id });
-      Meteor.users.update(
-        { _id: user._id },
-        { $set: { defaultFilter } }
-      );
-      updateOwnerDocs(
-				{ "owner._id": user._id },
-				{ $set: ownerPrefixer({
-					"profile.avatarSafety": user.profile.avatarSafety
-				}) }
-			);
-    });
-  }),
-  migrateUsers: migrationBuilder(function () {
-    Meteor.users.find().map(function (user) {
-      const imageCount = Posts.find({ "owner._id": user._id }).count();
-      const blogCount = BlogPosts.find({ "owner._id": user._id }).count();
-      const pageCount = Pages.find({ "owner._id": user._id }).count();
-      const albumCount = Albums.find({ "owner._id": user._id }).count();
-      const doc = profilePrefixer({
-        imageCount,
-        blogCount,
-        pageCount,
-        albumCount
-      });
-      const normalizedUsername = user.username.toLowerCase();
-      doc.normalizedUsername = normalizedUsername;
-      Meteor.users.update(
-        { _id: user._id },
-        { $set: doc }
-      );
-      updateOwnerDocs(
-				{ "owner._id": user._id },
-				{ $set: ownerPrefixer({
-					normalizedUsername
-				}) }
-			);
-    });
-  }),
-  migrateBlog: migrationBuilder(function () {
-    const slugCycle = createSlugCycler(BlogPosts);
-    BlogPosts.find().map(function (post) {
-      const user = Meteor.users.findOne({ _id: post.owner._id });
-      if (! post.slug) {
-        post.name = "Untitled";
-        post.slug = slugCycle(post._id, post.name);
-      }
-      const topicId = Meteor.call("addTopic", user.room._id, { name: post.name }, true);
-      BlogPosts.update(
-        { _id: post._id },
-        { $set: {
-          name: post.name,
-          slug: post.slug,
-          "topic._id": topicId
-        } }
-      );
-      logMigrate(post.owner.username + "/" + post.name, post.slug);
-    });
-	}),
   migrateColor: migrationBuilder(function () {
     Posts.find().map(function (post) {
       if (media.findOne({ _id: post.medium._id })) {

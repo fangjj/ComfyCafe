@@ -2,7 +2,6 @@ import _ from "lodash";
 import React from "react";
 
 import "/imports/api/messages/methods";
-import generateMessageHint from "/imports/api/messages/nameGen/hintGenerator";
 import { initialStateBuilder, dataBuilder } from "/imports/ui/utils/forms";
 import Form from "/imports/ui/components/Form";
 import TextArea from "/imports/ui/components/TextArea";
@@ -169,7 +168,7 @@ export default React.createClass({
       <TextArea
         {...value}
         id={"msgBody" + _.get(this.props, "message._id", "New" + _.get(this.props, "topic._id"))}
-        hintText={generateMessageHint()}
+        hintText="Talk about your feelings"
         rows={3}
 
         onChange={this.handleBody}

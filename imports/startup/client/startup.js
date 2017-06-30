@@ -30,14 +30,3 @@ Tracker.autorun(function () {
 Tracker.autorun(function () {
   Cookie.set("X-Auth-Token", Accounts._storedLoginToken());
 });
-
-Tracker.autorun(function (c) {
-  try {
-    UserStatus.startMonitor({
-      threshold: 5*60000,
-      interval: 60000,
-      idleOnBlur: false
-    });
-    c.stop();
-  } catch (e) {}
-});

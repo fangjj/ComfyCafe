@@ -22,18 +22,6 @@ export default React.createClass({
           leftIconName="image"
           href={FlowRouter.path("art")}
         />,
-        <TopMenuItem
-          key="topMenuBlog"
-          primaryText="Blog"
-          leftIconName="weekend"
-          href={FlowRouter.path("blog")}
-        />,
-        <TopMenuItem
-          key="topMenuTags"
-          primaryText="Tags"
-          leftIconName="style"
-          href={FlowRouter.path("pizza")}
-        />,
         <Divider
           key="topMenuDivider"
         />

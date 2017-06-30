@@ -27,7 +27,7 @@ export default React.createClass({
   renderReportForm() {
     if (this.state.showReportForm) {
       return <DialogForm
-        title="Report Blog Post"
+        title="Report Message"
         id={"formReport" + this.props.message._id}
         onClose={this.hideReportForm}
         form={<ReportForm

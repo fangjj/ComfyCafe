@@ -17,11 +17,7 @@ function baseTopicPub(doc) {
 			if (room.membersOnlyView && ! isMember(this.userId, "community_" + room.slug)) {
 				return this.ready();
 			}
-			const users = Meteor.users.find(
-				{ _id: { $in: topics.fetch()[0].users || [] } },
-				{ fields: { "status.online": 1, "status.idle": 1 } }
-			);
-			return [ topics, users, rooms ];
+			return [ topics, rooms ];
 		} else {
 			return this.ready();
 		}

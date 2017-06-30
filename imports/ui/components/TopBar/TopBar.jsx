@@ -6,9 +6,6 @@ import Notifications from "/imports/api/notifications/collection";
 import Posts from "/imports/api/posts/collection";
 import topColor from "/imports/ui/utils/topColor";
 import TopBarArtButton from "./TopBarArtButton";
-import TopBarBlogButton from "./TopBarBlogButton";
-import TopBarTagButton from "./TopBarTagButton";
-import TopBarChatButton from "./TopBarChatButton";
 import TopBarExploreButton from "./TopBarExploreButton";
 import TopBarMenu from "./TopBarMenu";
 import NavItem from "./NavItem";
@@ -87,11 +84,7 @@ export default React.createClass({
   },
   renderLeftSub() {
     if (this.userReady()) {
-      return [
-        <TopBarArtButton key="topBarArtBtn" />,
-        <TopBarBlogButton key="topBarBlogBtn" />,
-        <TopBarTagButton key="topBarTagBtn" />
-      ];
+      return <TopBarArtButton />;
     }
   },
   renderLeft() {
@@ -143,7 +136,6 @@ export default React.createClass({
     }
 
     return [
-      <TopBarChatButton key="topBarForumBtn" />,
       <NavItem key="topBarNotifBtn">
         <NotificationButton
           notifications={this.data.notifications}

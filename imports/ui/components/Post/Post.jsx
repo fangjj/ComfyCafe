@@ -13,16 +13,13 @@ import LoadingSpinner from "/imports/ui/components/Spinner/LoadingSpinner";
 import Err404 from "/imports/ui/components/Err404";
 import Content from "/imports/ui/components/Content";
 import FAB from "/imports/ui/components/FAB";
-import AlbumSelector from "/imports/ui/components/Album/AlbumSelector";
 import AvatarCropper from "/imports/ui/components/Avatar/AvatarCropper";
-import TagTree from "/imports/ui/components/Tag/TagTree";
 import InlineTopic from "/imports/ui/components/Chat/InlineTopic";
 import ReportForm from "/imports/ui/components/Report/ReportForm";
 
 export default React.createClass({
   getInitialState() {
     return {
-      showAlbumSelector: false,
       avatarCropper: false,
       showForm: false,
       showReportForm: false
@@ -46,15 +43,6 @@ export default React.createClass({
     if (nextProps.post) {
       setPattern(nextProps.post.name, nextProps.post.bgColor || nextProps.post.complement);
     }
-  },
-  showAlbumSelector(offset) {
-    this.setState({
-      showAlbumSelector: true,
-      albumSelectorOffset: offset
-    });
-  },
-  hideAlbumSelector() {
-    this.setState({ showAlbumSelector: false });
   },
   showAvatarCropper() {
     this.setState({ avatarCropper: true });
@@ -111,25 +99,9 @@ export default React.createClass({
       </Dialog>;
     }
   },
-  renderTags() {
-    if (this.props.post.tags.text) {
-      return <section className="tagBox content">
-        <TagTree tags={this.props.post.tags} humanizedTags={this.props.post.humanizedTags} />
-      </section>;
-    }
-  },
   renderLikes() {
     if (this.props.post.likes && this.props.post.likes.length) {
       return <PostLikes id={"likes" + this.props.post._id} likes={this.props.post.likes} />;
-    }
-  },
-  renderAlbumSelector() {
-    if (this.state.showAlbumSelector) {
-      return <AlbumSelector
-        postId={this.props.post._id}
-        offset={this.state.albumSelectorOffset}
-        onClose={this.hideAlbumSelector}
-      />;
     }
   },
   renderAvatarCropper() {
@@ -149,7 +121,7 @@ export default React.createClass({
     }
   },
   render() {
-    if (this.props.loading || this.props.filterLoading) {
+    if (this.props.loading) {
       return <LoadingSpinner />;
     }
 
@@ -174,13 +146,10 @@ export default React.createClass({
         currentUser={this.props.currentUser}
         isCropping={this.state.avatarCropper}
         showReportForm={this.showReportForm}
-        showAlbumSelector={this.showAlbumSelector}
         showAvatarCropper={this.showAvatarCropper}
         hideAvatarCropper={this.hideAvatarCropper}
       />
-      {this.renderAlbumSelector()}
       {this.renderAvatarCropper()}
-      {this.renderTags()}
       <section className="comments content">
         <InlineTopic
           topicId={this.props.post.topic._id}

@@ -1,8 +1,6 @@
 import _ from "lodash";
 
-import Invites from "/imports/api/invites/collection";
 import Rooms from "/imports/api/rooms/collection";
-import Filters from "/imports/api/filters/collection";
 import generateDjenticon from "/imports/api/users/server/djenticon";
 import {
   validateUsername,
@@ -13,11 +11,6 @@ Accounts.onCreateUser(function (options, user) {
   if (options.profile) {
     user.profile = options.profile;
     user.settings = {};
-
-    if (options.profile.key) {
-      user.inviteKey = options.profile.key;
-      delete user.profile.key;
-    }
 
     user.normalizedUsername = user.username.toLowerCase();
 
@@ -51,16 +44,6 @@ Accounts.onCreateUser(function (options, user) {
     if (! Meteor.users.findOne()) {
       // If this is the first user, give them ULTIMATE POWER.
       user.roles["__global_roles__"] = [ "admin", "moderator" ];
-      // Use this opportunity to create a global default filter.
-      Filters.insert({
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        name: "Default",
-        slug: "Default",
-        spoilers: "safety nudity-explicit",
-        hides: "",
-        default: true
-      });
     }
     user.roles["community_" + user._id] = [ "admin", "moderator", "member" ];
   }
@@ -81,27 +64,11 @@ function checkEmail(user) {
   throw new Meteor.Error("invalid-email", "Email is invalid.");
 }
 
-function checkInvite(user) {
-  if (! Meteor.users.findOne()) {
-    // Always allow registration if this is the first user.
-    return true;
-  }
-  if (! _.get(Meteor.settings, "public.requireInvite", false)) {
-    return true;
-  }
-  if (Invites.findOne({ key: user.inviteKey })) {
-    Invites.remove({ key: user.inviteKey });
-    return true;
-  }
-  throw new Meteor.Error("invalid-betakey", "Registration key is invalid.");
-}
-
 Accounts.validateNewUser(function (user) {
   const valid = _.reduce(
     [
       checkUsername,
-      checkEmail,
-      checkInvite
+      checkEmail
     ],
     (result, func) => {
       return result && func(user)

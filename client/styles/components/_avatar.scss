@@ -69,17 +69,4 @@
 
 .avatarContainer {
 	position: relative;
-
-	.status {
-		position: absolute;
-		right: 0;
-		bottom: 0;
-	}
-
-	&.icon .status {
-		$size: 12px;
-		width: $size;
-		height: $size;
-		border-radius: $size/2;
-	}
 }

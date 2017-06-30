@@ -5,11 +5,9 @@ import moment from "moment";
 import "/imports/api/users/methods";
 import setTitle from "/imports/ui/utils/setTitle";
 import getOrdinal from "/imports/ui/utils/ordinal";
-import statusLabel from "/imports/ui/utils/statusLabel";
 import metaBuilder from "/imports/ui/utils/metaBuilder";
 import { getMediaUrlAvatar, getMediaUrlDjent } from "/imports/api/media/urls";
 import UserInfo from "/imports/ui/components/User/UserInfo";
-import UserStatus from "/imports/ui/components/User/UserStatus";
 import UserProfileForm from "/imports/ui/components/User/UserProfileForm";
 import UserSearch from "/imports/ui/components/User/UserSearch";
 import Content from "/imports/ui/components/Content";
@@ -28,7 +26,6 @@ import DialogForm from "/imports/ui/components/DialogForm";
 import ActionWell from "/imports/ui/components/ActionWell";
 import DirectAvatar from "/imports/ui/components/Avatar/DirectAvatar";
 import AvatarCropper from "/imports/ui/components/Avatar/AvatarCropper";
-import BadgeGroup from "/imports/ui/components/BadgeGroup";
 import TextBody from "/imports/ui/components/TextBody";
 
 export default React.createClass({
@@ -195,9 +192,6 @@ export default React.createClass({
       </span>;
     }
   },
-  renderBadges() {
-    return <BadgeGroup badges={_.get(this.data.user, "profile.badges", {})} />;
-  },
   renderBirthday(user) {
     const birthday = _.get(user, "profile.birthday");
     if (birthday) {
@@ -211,21 +205,9 @@ export default React.createClass({
     const path = (where) => FlowRouter.path(where, { username: user.username });
     const count = (what) => _.get(user.profile, what + "Count", 0);
     return <div className="genericCol">
-      <div className="stat">
-        <UserStatus user={user} /> {_.capitalize(statusLabel(user))}
-      </div>
       {this.renderBirthday(user)}
       <a href={path("imagesBy")}>
         <Icon className="sigil">image</Icon> {count("image")} Images
-      </a>
-      <a href={path("blogBy")}>
-        <Icon className="sigil">weekend</Icon> {count("blog")} Blog Posts
-      </a>
-      <a href={path("pagesBy")}>
-        <Icon className="sigil">import_contacts</Icon> {count("page")} Pages
-      </a>
-      <a href={path("albumsBy")}>
-        <Icon className="sigil">collections</Icon> {count("album")} Albums
       </a>
     </div>;
   },
@@ -250,7 +232,6 @@ export default React.createClass({
             <header>
               <h2>{displayName}</h2>
               {this.renderCatchphrase()}
-              {this.renderBadges()}
             </header>
             {this.renderStats(user)}
           </div>

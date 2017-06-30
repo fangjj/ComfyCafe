@@ -3,9 +3,6 @@ import _ from "lodash";
 import Posts from "../collection";
 import { postsPerPage } from "../constants";
 import privacyWrap from "/imports/api/common/privacyWrap";
-import Filters from "/imports/api/filters/collection";
-import tagQuery from "/imports/api/tags/query";
-import Albums from "/imports/api/albums/collection";
 import { isMod } from "/imports/api/common/persimmons";
 
 Meteor.startup(function () {
@@ -21,9 +18,7 @@ Meteor.startup(function () {
 function checkState(state) {
 	check(state, Match.Optional(
 		{
-			originalOnly: Boolean,
-			tagStr: String,
-			filterId: Match.Optional(String)
+			originalOnly: Boolean
 		}
 	));
 }
@@ -37,41 +32,7 @@ function queryBuilder(userId, doc, state) {
 		doc.originality = { $ne: "repost" };
 	}
 
-	if (state.tagStr) {
-		const parsed = tagQuery(state.tagStr);
-		_.each(parsed, (value, key) => {
-			if (_.has(doc, key)) {
-				if (_.includes(["$and", "$or", "$nor"], key)) {
-					doc[key].push.apply(doc[key], value);
-				} else {
-					console.error("PANIC: key " + key + " already present in doc.");
-				}
-			} else {
-				doc[key] = value;
-			}
-		});
-	}
-
-	if (state.filterId) {
-
-	}
-
 	return doc;
-}
-
-function filter(state, user, query) {
-	const filter = expr(() => {
-		if (state.filterId) {
-			return Filters.findOne({ _id: state.filterId }, { hides: 1 });
-		} else {
-			if (user) {
-				return user.defaultFilter;
-			} return;
-		}
-	});
-	if (filter && filter.hides) {
-		query.$nor = [ tagQuery(filter.hides) ];
-	}
 }
 
 function options(page) {
@@ -120,7 +81,6 @@ Meteor.publish("allPosts", function (state, page=0) {
 			if (this.userId) {
 				user = Meteor.users.findOne(this.userId, { fields: {
 					friends: 1,
-					defaultFilter: 1,
 					blocking: 1
 				} });
 
@@ -142,7 +102,6 @@ Meteor.publish("allPosts", function (state, page=0) {
 			state
 		);
 
-		filter(state, user, query);
 		return Posts.find(query, options(page));
 	});
 });
@@ -158,7 +117,6 @@ Meteor.publish("imagesBy", function (username, state, page=0) {
 			if (this.userId) {
 				user = Meteor.users.findOne(this.userId, { fields: {
 					friends: 1,
-					defaultFilter: 1,
 					blocking: 1
 				} });
 
@@ -183,7 +141,6 @@ Meteor.publish("imagesBy", function (username, state, page=0) {
 			state
 		);
 
-		filter(state, user, query);
 		return Posts.find(query, options(page));
 	});
 });
@@ -199,7 +156,6 @@ Meteor.publish("postFeed", function (state, page=0) {
 			const user = Meteor.users.findOne(this.userId, { fields: {
 				subscriptions: 1,
 				friends: 1,
-				defaultFilter: 1,
 				blocking: 1
 			} });
 
@@ -218,7 +174,6 @@ Meteor.publish("postFeed", function (state, page=0) {
 				state
 			);
 
-			filter(state, user, query);
 			return Posts.find(query, options(page));
 		}
 	});
@@ -255,7 +210,6 @@ Meteor.publish("searchPosts", function (tagStr, state, page=0) {
 			if (this.userId) {
 				user = Meteor.users.findOne(this.userId, { fields: {
 					friends: 1,
-					defaultFilter: 1,
 					blocking: 1
 				} });
 				return privacyWrap(innerQuery, this.userId, user.friends, undefined, user.blocking);
@@ -270,61 +224,6 @@ Meteor.publish("searchPosts", function (tagStr, state, page=0) {
 			state
 		);
 
-		filter(state, user, query);
-		return Posts.find(query, options(page));
-	});
-});
-
-Meteor.publish("postAlbum", function (albumData, state, page=0) {
-	check(albumData, {
-		username: String,
-		slug: String
-	});
-	checkState(state);
-	check(page, Number);
-
-	this.autorun(function (computation) {
-		const album = Albums.findOne(
-			{
-				"owner.username": albumData.username,
-				slug: albumData.slug
-			},
-			{ fields: { "owner._id": 1, posts: 1 } }
-		);
-
-		if (! album) {
-			return;
-		}
-
-		const innerQuery = { _id: { $in: album.posts } };
-
-		let user;
-		const doc = expr(() => {
-			if (this.userId) {
-				user = Meteor.users.findOne(this.userId, { fields: {
-					friends: 1,
-					defaultFilter: 1,
-					blocking: 1
-				} });
-				return privacyWrap(
-					innerQuery,
-					this.userId,
-					user.friends,
-					{ "owner._id": album.owner._id },
-					user.blocking
-				);
-			} else {
-				return privacyWrap(innerQuery);
-			}
-		});
-
-		const query = queryBuilder(
-			this.userId,
-			doc,
-			state
-		);
-
-		filter(state, user, query);
 		return Posts.find(query, options(page));
 	});
 });

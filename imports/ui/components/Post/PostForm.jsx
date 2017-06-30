@@ -15,7 +15,6 @@ import TextArea from "/imports/ui/components/TextArea";
 import VisibilitySelector from "/imports/ui/components/VisibilitySelector";
 import OriginalitySelector from "/imports/ui/components/OriginalitySelector";
 import SafetySelector from "/imports/ui/components/SafetySelector";
-import TagField from "/imports/ui/components/Tag/TagField";
 import BgColorSelector from "/imports/ui/components/BgColorSelector";
 import ReportFormGuts from "/imports/ui/components/Report/ReportFormGuts";
 import Snackbar from "/imports/ui/components/Snackbar";
@@ -28,8 +27,6 @@ const defaultState = {
   source: "",
   description: "",
   safety: 0,
-  tags: { text: "tagme" },
-  tagsCondExpanded: {},
   bgColor: "default",
   loop: false
 };
@@ -46,7 +43,6 @@ export default React.createClass({
     );
     const state = initialStateBuilder(this.props.post, defaultState);
     state.autoSafety = 0;
-    state.tags = state.tags.text;
     if (! state.bgColor) {
       state.bgColor = defaultState.bgColor;
     }
@@ -91,15 +87,6 @@ export default React.createClass({
   },
   handleSafety(value) {
     this.setState({ safety: parseInt(value) });
-  },
-  receiveAutoSafety(value) {
-    this.setState({ autoSafety: value });
-  },
-  applyAutoSafety() {
-    this.setState({ safety: this.state.autoSafety });
-  },
-  handleTags(tags, parsed, tagsCondExpanded) {
-    this.setState({ tags, tagsCondExpanded });
   },
   handleBgColor(value) {
     this.setState({ bgColor: value });
@@ -264,13 +251,6 @@ export default React.createClass({
           onClick={this.applyAutoSafety}
         />
       </div>
-      <TagField
-        defaultValue={this.state.tags}
-        condExpanded={this.state.tagsCondExpanded}
-        floatingLabelText="Tags"
-        onChange={this.handleTags}
-        receiveAutoSafety={this.receiveAutoSafety}
-      />
       <BgColorSelector
         value={this.state.bgColor}
         onChange={this.handleBgColor}

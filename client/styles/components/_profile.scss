@@ -31,23 +31,6 @@
     }
   }
 
-  .stat .status {
-    $size: 16px;
-
-    display: inline-block;
-
-    position: relative;
-    top: 2px;
-
-    margin-right: 2px;
-
-    width: $size;
-    height: $size;
-
-    border: 0;
-    border-radius: $size/2;
-  }
-
   .belowWell {
     margin-top: 36px;
 

@@ -25,7 +25,7 @@ const defaultState = {
   uploadAction: "redirect",
   autoWatch: true,
   defaultPublished: true,
-  defaultImageOriginality: "original"
+  defaultOriginal: true
 };
 
 export default React.createClass({
@@ -78,8 +78,8 @@ export default React.createClass({
   handleDefaultPublished(e) {
     this.setState({ defaultPublished: e.target.checked });
   },
-  handleDefaultImageOriginality(value) {
-    this.setState({ defaultImageOriginality: value });
+  handleDefaultOriginal(e) {
+    this.setState({ defaultOriginal: e.target.checked });
   },
   submit() {
     const data = dataBuilder(this.state, defaultState);
@@ -123,25 +123,26 @@ export default React.createClass({
         <MenuItem value="nothing" primaryText="Do nothing" />
       </SelectField>
       <br />
+
+      <br />
+      <VisibilitySelector
+        label="Images publicly visible by default"
+        value={this.state.defaultPublished}
+        onChange={this.handleDefaultPublished}
+      />
+
+      <br />
+      <OriginalitySelector
+        label="Images original content by default"
+        value={this.state.defaultOriginal}
+        onChange={this.handleDefaultOriginal}
+      />
+
       <br />
       <Toggle
         label="Auto-watch topics you post in"
         value={this.state.autoWatch}
         onChange={this.handleAutoWatch}
-      />
-
-      <br />
-
-      <VisibilitySelector
-        label="Default image visibility"
-        visibility={this.state.defaultPublished}
-        onChange={this.handleDefaultPublished}
-      />
-
-      <OriginalitySelector
-        label="Default image originality"
-        value={this.state.defaultImageOriginality}
-        onChange={this.handleDefaultImageOriginality}
       />
 
       <br />

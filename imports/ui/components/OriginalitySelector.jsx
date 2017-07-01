@@ -1,31 +1,15 @@
 import React from "react";
 
-import Meatball from "/imports/ui/components/Meatball";
-import MeatballSelector from "/imports/ui/components/MeatballSelector";
-import OriginalityIcon from "/imports/ui/components/Daikon/OriginalityIcon";
+import Toggle from "/imports/ui/components/Toggle";
 
 export default React.createClass({
   render() {
-    return <MeatballSelector
-      label={this.props.label || "Originality"}
-      value={this.props.value}
-      onChange={this.props.onChange}
-    >
-      <Meatball
-        name="original"
-        label="Your work"
-        icon={<OriginalityIcon originality="original" />}
+    return <div className="selector">
+      <Toggle
+        label={this.props.label || "Original content"}
+        value={this.props.value}
+        onChange={this.props.onChange}
       />
-      <Meatball
-        name="derivative"
-        label="Derivative work"
-        icon={<OriginalityIcon originality="derivative" />}
-      />
-      <Meatball
-        name="repost"
-        label="Repost"
-        icon={<OriginalityIcon originality="repost" />}
-      />
-    </MeatballSelector>;
+    </div>;
   }
 });

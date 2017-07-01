@@ -4,6 +4,7 @@ import React from "react";
 import "/imports/api/posts/methods";
 import goBack from "/imports/ui/utils/goBack";
 import setPattern from "/imports/ui/utils/setPattern";
+import originalMap from "/imports/ui/utils/originalMap";
 import safetyLabels from "/imports/api/common/safetyLabels";
 import SubmitButton from "/imports/ui/components/Button/SubmitButton";
 import CancelButton from "/imports/ui/components/Button/CancelButton";
@@ -19,7 +20,6 @@ import FlexHead from "/imports/ui/components/FlexHead";
 
 const verbMap = {
   original: "Created",
-  derivative: "Derived",
   repost: "Uploaded"
 };
 
@@ -105,7 +105,7 @@ export default React.createClass({
       className="content"
       item={this.props.post}
       itemType="image"
-      verb={verbMap[this.props.post.originality]}
+      verb={verbMap[originalMap(this.props.post.original)]}
       renderInfo={this.renderInfo}
       renderButtons={this.renderButtons}
       body={this.props.post.description}

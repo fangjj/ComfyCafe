@@ -156,7 +156,7 @@ Meteor.methods({
 			uploadAction: String,
 			autoWatch: Boolean,
 			defaultPublished: Boolean,
-			defaultImageOriginality: String
+			defaultOriginal: Boolean
 		});
 
 		if (! Meteor.userId()) {

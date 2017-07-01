@@ -38,7 +38,7 @@ function validateColor(color) {
 
 const match = {
 	published: Boolean,
-	originality: String,
+	original: Boolean,
 	source: String,
 	description: String,
 	safety: Number,

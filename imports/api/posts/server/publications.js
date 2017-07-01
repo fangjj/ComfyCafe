@@ -11,7 +11,7 @@ Meteor.startup(function () {
 		"owner.normalizedUsername": 1,
 		name: 1,
 		published: 1,
-		originality: 1
+		original: 1
 	});
 });
 
@@ -29,7 +29,7 @@ function queryBuilder(userId, doc, state) {
 	}
 
 	if (state.originalOnly) {
-		doc.originality = { $ne: "repost" };
+		doc.original = true;
 	}
 
 	return doc;

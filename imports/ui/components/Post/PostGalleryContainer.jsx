@@ -44,7 +44,7 @@ export default React.createClass({
 
     if (this.state.originalOnly) {
       queuedParams.originalOnly = this.state.originalOnly;
-      doc.originality = { $ne: "repost" };
+      doc.original = true;
     } else {
       queuedParams.originalOnly = null;
     }

@@ -35,10 +35,10 @@ export default React.createClass({
     }
   },
   renderSigil() {
-    if (_.has(this.props.item, "originality")) {
+    if (_.has(this.props.item, "original")) {
       return <OriginalityIcon
         className="sigil"
-        originality={this.props.item.originality}
+        value={this.props.item.original}
       />;
     } else {
       return <Icon className="sigil">{this.props.sigil}</Icon>;

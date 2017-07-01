@@ -50,7 +50,7 @@ export default React.createClass({
       repost: "repeat"
     };
     return <div className="star">
-      <OriginalityIcon originality={this.props.post.originality} />
+      <OriginalityIcon value={this.props.post.original} />
     </div>;
   },
   render() {

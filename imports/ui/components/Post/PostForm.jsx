@@ -23,7 +23,7 @@ import Toggle from "/imports/ui/components/Toggle";
 
 const defaultState = {
   published: true,
-  originality: "original",
+  original: true,
   source: "",
   description: "",
   safety: 0,
@@ -38,8 +38,8 @@ export default React.createClass({
     defaultState.published = _.get(this.context.currentUser,
       "settings.defaultPublished", defaultState.published
     );
-    defaultState.originality = _.get(this.context.currentUser,
-      "settings.defaultImageOriginality", defaultState.originality
+    defaultState.original = _.get(this.context.currentUser,
+      "settings.defaultOriginal", defaultState.original
     );
     const state = initialStateBuilder(this.props.post, defaultState);
     state.autoSafety = 0;
@@ -76,8 +76,8 @@ export default React.createClass({
   handlePublished(e) {
     this.setState({ published: e.target.checked });
   },
-  handleOriginality(value) {
-    this.setState({ originality: value });
+  handleOriginal(e) {
+    this.setState({ original: e.target.checked });
   },
   handleSource(e) {
     this.setState({ source: e.target.value });
@@ -179,7 +179,7 @@ export default React.createClass({
     }
   },
   renderSourceField() {
-    if (this.props.originality !== "original") {
+    if (! this.state.original) {
       return <TextArea
         defaultValue={this.state.source}
         label="Source"
@@ -221,9 +221,10 @@ export default React.createClass({
         value={this.state.published}
         onChange={this.handlePublished}
       />
+      <br />
       <OriginalitySelector
-        value={this.state.originality}
-        onChange={this.handleOriginality}
+        value={this.state.original}
+        onChange={this.handleOriginal}
       />
       {this.renderLoop()}
       {this.renderSourceField()}

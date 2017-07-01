@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import { isMod } from "/imports/api/common/persimmons";
+import publishedMap from "/imports/ui/utils/publishedMap";
 import InfoBox from "/imports/ui/components/InfoBox";
 import TextBody from "/imports/ui/components/TextBody";
 import Icon from "/imports/ui/components/Daikon/Icon";
@@ -44,12 +45,12 @@ export default React.createClass({
     }
   },
   renderVisibility() {
-    if (_.has(this.props.item, "visibility")) {
+    if (_.has(this.props.item, "published")) {
       return <div className="privacy">
         <PrivacyIcon
           className="sigil"
-          privacy={this.props.item.visibility}
-        /> {_.capitalize(this.props.item.visibility)}
+          published={this.props.item.published}
+        /> {_.capitalize(publishedMap(this.props.item.published))}
       </div>;
     }
   },

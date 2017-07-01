@@ -16,7 +16,6 @@ import LoadingSpinner from "/imports/ui/components/Spinner/LoadingSpinner";
 import SubscriptionButton from "/imports/ui/components/Button/SubscriptionButton";
 import SubmitButton from "/imports/ui/components/Button/SubmitButton";
 import CancelButton from "/imports/ui/components/Button/CancelButton";
-import FriendButton from "/imports/ui/components/Button/FriendButton";
 import DangerButton from "/imports/ui/components/Button/DangerButton";
 import ReportButton from "/imports/ui/components/Button/ReportButton";
 import BlockButton from "/imports/ui/components/Button/BlockButton";
@@ -148,10 +147,6 @@ export default React.createClass({
     } else {
       return <ButtonGroup>
         <SubscriptionButton owner={this.data.user} currentUser={this.context.currentUser} />
-        <FriendButton
-          user={this.data.user}
-          currentUser={this.context.currentUser}
-        />
       </ButtonGroup>;
     }
   },
@@ -245,9 +240,9 @@ export default React.createClass({
       return <AvatarCropper cancelAction={this.stopChangingAvatar} />;
     }
   },
-  renderFriends(user) {
-    if (user.friends.length) {
-      return <UserSearch id="friends" title="Friends" userIds={user.friends} />;
+  renderMutuals(user) {
+    if (user.mutuals.length) {
+      return <UserSearch id="mutuals" title="Mutuals" userIds={user.mutuals} />;
     }
   },
   renderSubscriptions(user) {
@@ -271,11 +266,11 @@ export default React.createClass({
     const displayName = user.profile.displayName || user.username;
     setTitle(displayName);
 
-    user.friends = _.get(user, "friends", []);
-    user.subscribers = _.get(user, "subscribers", []);
-    user.subscribers = _.difference(user.subscribers, user.friends);
     user.subscriptions = _.get(user, "subscriptions", []);
-    user.subscriptions = _.difference(user.subscriptions, user.friends);
+    user.subscribers = _.get(user, "subscribers", []);
+    user.mutuals = _.intersection(user.subscribers, user.subscriptions);
+    user.subscriptions = _.difference(user.subscriptions, user.mutuals);
+    user.subscribers = _.difference(user.subscribers, user.mutuals);
 
     return <article className="contentLayout">
       <Content className="profile">
@@ -284,7 +279,7 @@ export default React.createClass({
         {this.renderForm(isOwner)}
       </Content>
 
-      {this.renderFriends(user)}
+      {this.renderMutuals(user)}
       {this.renderSubscriptions(user)}
       {this.renderSubscribers(user)}
 

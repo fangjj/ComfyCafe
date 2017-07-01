@@ -27,36 +27,6 @@ export default React.createClass({
       const day = getOrdinal(birthday.day);
       return `was born on ${month} ${day}, which is probably tomorrow. Don't forget!`;
     },
-    friendRequest() {
-      return {
-        label: "wants to be friends! ",
-        buttons: <ButtonGroup key={"fr_" + this.props.notification._id}>
-          <DangerButton
-            label="Reject"
-            onClick={() => {
-              Meteor.call("rejectFriendRequest", this.props.notification._id);
-            }}
-          />
-          <SubmitButton
-            label="Accept"
-            onClick={() => {
-              Meteor.call("acceptFriendRequest", this.props.notification._id);
-            }}
-          />
-        </ButtonGroup>
-      };
-    },
-    friendAccepted() {
-      return "accepted your friend request!";
-    },
-    friendRejected() {
-      return [
-        "rejected your friend request. ",
-        <a href="https://youtu.be/W9A52UWmmrE" key={this.props.notification._id}>
-          Chin up!
-        </a>
-      ];
-    },
     postLiked() {
       const url = FlowRouter.path("post", {
         username: this.context.currentUser.username,

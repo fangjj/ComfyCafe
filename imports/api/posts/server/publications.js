@@ -10,7 +10,7 @@ Meteor.startup(function () {
 		"owner._id": 1,
 		"owner.normalizedUsername": 1,
 		name: 1,
-		visibility: 1,
+		published: 1,
 		originality: 1
 	});
 });
@@ -80,19 +80,17 @@ Meteor.publish("allPosts", function (state, page=0) {
 		const doc = expr(() => {
 			if (this.userId) {
 				user = Meteor.users.findOne(this.userId, { fields: {
-					friends: 1,
 					blocking: 1
 				} });
 
 				return privacyWrap(
 					{},
 					this.userId,
-					user.friends,
 					undefined,
 					user.blocking
 				);
 			} else {
-				return { visibility: "public" };
+				return { published: true };
 			}
 		});
 
@@ -116,21 +114,19 @@ Meteor.publish("imagesBy", function (username, state, page=0) {
 		const doc = expr(() => {
 			if (this.userId) {
 				user = Meteor.users.findOne(this.userId, { fields: {
-					friends: 1,
 					blocking: 1
 				} });
 
 				return privacyWrap(
 					{ "owner.username": username },
 					this.userId,
-					user.friends,
 					undefined,
 					user.blocking
 				);
 			} else {
 				return {
 					"owner.username": username,
-					visibility: "public"
+					published: true
 				};
 			}
 		});
@@ -155,7 +151,6 @@ Meteor.publish("postFeed", function (state, page=0) {
 		if (this.userId) {
 			const user = Meteor.users.findOne(this.userId, { fields: {
 				subscriptions: 1,
-				friends: 1,
 				blocking: 1
 			} });
 
@@ -164,10 +159,9 @@ Meteor.publish("postFeed", function (state, page=0) {
 				privacyWrap(
 					{ $or: [
 						{ "owner._id": this.userId },
-						{ "owner._id": { $in: user.subscriptions || [] } }
+						{ "owner._id": { $in: _.get(user, "subscriptions", []) } }
 					] },
 					this.userId,
-					user.friends,
 					undefined,
 					user.blocking
 				),
@@ -209,10 +203,9 @@ Meteor.publish("searchPosts", function (tagStr, state, page=0) {
 		const doc = expr(() => {
 			if (this.userId) {
 				user = Meteor.users.findOne(this.userId, { fields: {
-					friends: 1,
 					blocking: 1
 				} });
-				return privacyWrap(innerQuery, this.userId, user.friends, undefined, user.blocking);
+				return privacyWrap(innerQuery, this.userId, undefined, user.blocking);
 			} else {
 				return privacyWrap(innerQuery);
 			}

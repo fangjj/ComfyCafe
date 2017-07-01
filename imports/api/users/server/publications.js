@@ -13,7 +13,6 @@ Meteor.publish(null, function () {
 			avatars: 1,
 			subscriptions: 1,
 			subscribers: 1,
-      friends: 1,
       room: 1,
       lastCelebrated: 1,
       bans: 1,
@@ -30,8 +29,7 @@ const publicFields = {
   profile: 1,
   avatars: 1,
   subscriptions: 1,
-  subscribers: 1,
-  friends: 1
+  subscribers: 1
 };
 
 Meteor.publish("user", function (username) {

@@ -21,13 +21,13 @@ q = jobs.processJobs("birthdayReminder", {
       "profile.birthday.month": tomorrow.getMonth()+1,
       "profile.birthday.day": tomorrow.getDate(),
     },
-    { fields: { _id: 1, username: 1, profile: 1, friends: 1 } }
+    { fields: { _id: 1, username: 1, profile: 1, subscriptions: 1 } }
   ).map((user) => {
-    _.each(user.friends || [], (friendId) => {
+    _.each(user.subscriptions || [], (subId) => {
       Notifications.insert(
 				{
 					createdAt: new Date(),
-					to: friendId,
+					to: subId,
 					action: "birthdayReminder",
 					owner: {
 						_id: user._id,

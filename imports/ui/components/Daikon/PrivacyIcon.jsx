@@ -1,17 +1,18 @@
 import _ from "lodash";
 import React from "react";
 
+import publishedMap from "/imports/ui/utils/publishedMap";
 import Icon from "/imports/ui/components/Daikon/Icon";
 
 const iconMap = {
   public: "public",
-  friends: "people",
   unlisted: "visibility_off"
 };
 
 export default (props) => {
-  const { privacy, ...leftoverProps } = props;
-  return <Icon title={_.capitalize(privacy)} {...leftoverProps}>
-    {iconMap[privacy]}
+  const { published, ...leftoverProps } = props;
+  const label = publishedMap(published);
+  return <Icon title={_.capitalize(label)} {...leftoverProps}>
+    {iconMap[label]}
   </Icon>;
 };

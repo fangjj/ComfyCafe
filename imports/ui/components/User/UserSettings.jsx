@@ -24,7 +24,7 @@ const defaultState = {
   username: null,
   uploadAction: "redirect",
   autoWatch: true,
-  defaultImageVisibility: "public",
+  defaultPublished: true,
   defaultImageOriginality: "original"
 };
 
@@ -75,8 +75,8 @@ export default React.createClass({
   handleAutoWatch(e) {
     this.setState({ autoWatch: e.target.checked });
   },
-  handleDefaultImageVisibility(value) {
-    this.setState({ defaultImageVisibility: value });
+  handleDefaultPublished(e) {
+    this.setState({ defaultPublished: e.target.checked });
   },
   handleDefaultImageOriginality(value) {
     this.setState({ defaultImageOriginality: value });
@@ -134,8 +134,8 @@ export default React.createClass({
 
       <VisibilitySelector
         label="Default image visibility"
-        visibility={this.state.defaultImageVisibility}
-        onChange={this.handleDefaultImageVisibility}
+        visibility={this.state.defaultPublished}
+        onChange={this.handleDefaultPublished}
       />
 
       <OriginalitySelector

@@ -1,8 +1,8 @@
-export default function (doc, userId, friends, except, blocking) {
+export default function (doc, userId, except, blocking) {
   let wrapped = {
     $and: [
       { $or: [
-        { visibility: "public" }
+        { published: true }
       ] },
       doc
     ]
@@ -13,10 +13,6 @@ export default function (doc, userId, friends, except, blocking) {
       wrapped.$and.push({ "owner._id": { $nin: blocking || [] } });
     }
     wrapped.$and[0].$or.push({ "owner._id": userId });
-    wrapped.$and[0].$or.push({
-      "owner._id": { $in: friends || [] },
-      visibility: "friends"
-    });
   }
 
   if (typeof except !== "undefined") {

@@ -155,7 +155,7 @@ Meteor.methods({
 			username: String,
 			uploadAction: String,
 			autoWatch: Boolean,
-			defaultImageVisibility: String,
+			defaultPublished: Boolean,
 			defaultImageOriginality: String
 		});
 
@@ -330,169 +330,6 @@ Meteor.methods({
 		return is_subscribing;
 	},
 
-	sendFriendRequest: function (userId) {
-		check(userId, String);
-
-		if (! Meteor.userId()) {
-			throw new Meteor.Error("not-logged-in");
-		}
-
-		const otherUser = Meteor.users.findOne({ _id: userId });
-		if (isBlocked(otherUser, Meteor.userId())) {
-			throw new Meteor.Error("blocked");
-		}
-
-		Notifications.upsert(
-			{
-				to: userId,
-				action: "friendRequest",
-				"owner_.id": Meteor.userId()
-			},
-			{ $set: {
-				createdAt: new Date(),
-				to: userId,
-				action: "friendRequest",
-				owner: {
-					_id: Meteor.userId(),
-					username: Meteor.user().username,
-					profile: Meteor.user().profile
-				}
-			} }
-		);
-	},
-	cancelFriendRequest: function (reqId) {
-		check(reqId, String);
-
-		var req = Notifications.findOne({
-			_id: reqId,
-			action: "friendRequest"
-		});
-
-		if (! isOwner(req)) {
-			throw new Meteor.Error("not-authorized");
-		}
-
-		Notifications.remove({ _id: reqId });
-	},
-	acceptFriendRequest: function (reqId) {
-		check(reqId, String);
-
-		var req = Notifications.findOne(
-			{
-				_id: reqId,
-				action: "friendRequest"
-			});
-
-		if (req.to !== Meteor.userId()) {
-			throw new Meteor.Error("not-authorized");
-		}
-
-		Meteor.users.update(
-			{ _id: Meteor.userId() },
-			{ $addToSet: {
-				friends: req.owner._id
-			} }
-		);
-
-		Meteor.users.update(
-			{ _id: req.owner._id },
-			{ $addToSet: {
-				friends: Meteor.userId()
-			} }
-		);
-
-		Notifications.update(
-			{ _id: reqId },
-			{ $set: {
-				dismissed: true
-			} }
-		);
-
-		Notifications.insert(
-			{
-				createdAt: new Date(),
-				to: req.owner._id,
-				action: "friendAccepted",
-				owner: {
-					_id: Meteor.userId(),
-					username: Meteor.user().username,
-					profile: Meteor.user().profile
-				}
-			}
-		);
-	},
-	rejectFriendRequest: function (reqId) {
-		// This method isn't currently very useful...
-
-		check(reqId, String);
-
-		var req = Notifications.findOne({
-			_id: reqId,
-			action: "friendRequest"
-		});
-
-		if (req.to !== Meteor.userId()) {
-			throw new Meteor.Error("not-authorized");
-		}
-
-		Notifications.update(
-			{ _id: reqId },
-			{ $set: {
-				dismissed: true
-			} }
-		);
-
-		Notifications.insert(
-			{
-				createdAt: new Date(),
-				to: req.owner._id,
-				action: "friendRejected",
-				owner: {
-					_id: Meteor.userId(),
-					username: Meteor.user().username,
-					profile: Meteor.user().profile
-				}
-			}
-		);
-	},
-	unfriend: function (userId) {
-		check(userId, String);
-
-		if (! Meteor.userId()) {
-			throw new Meteor.Error("not-logged-in");
-		}
-
-		Meteor.users.update(
-			{ _id: Meteor.userId() },
-			{ $pull: {
-				friends: userId
-			} }
-		);
-
-		Meteor.users.update(
-			{ _id: userId },
-			{ $pull: {
-				friends: Meteor.userId()
-			} }
-		);
-
-		Notifications.remove(
-			{
-				action: "friendRequest",
-				$or: [
-					{
-						to: Meteor.userId(),
-						"owner._id": userId
-					},
-					{
-						to: userId,
-						"owner._id": Meteor.userId()
-					}
-				]
-			}
-		);
-	},
-
 	stopCelebrating(year) {
 		check(year, Number);
 
@@ -504,38 +341,6 @@ Meteor.methods({
 			{ _id: Meteor.userId() },
 			{ $set: { lastCelebrated: year } }
 		);
-	},
-
-	communityUpdateMemberRoles(slug, userId, data) {
-		check(slug, String);
-		check(userId, String);
-		check(data, {
-			isAdmin: Boolean,
-			isMod: Boolean,
-			isMember: Boolean
-		});
-
-		const group = "community_" + slug;
-
-    if (! Meteor.userId()) {
-      throw new Meteor.Error("not-logged-in");
-    }
-
-    if (! isAdmin(Meteor.userId(), group)) {
-      throw new Meteor.Error("not-authorized");
-    }
-
-		const roles = [];
-		if (data.isAdmin) {
-			roles.push("admin");
-		}
-		if (data.isMod) {
-			roles.push("moderator");
-		}
-		if (data.isMember) {
-			roles.push("member");
-		}
-		Roles.setUserRoles(userId, roles, group);
 	},
 
 	modBanUser(userId, data, reason) {
@@ -578,51 +383,6 @@ Meteor.methods({
 	    { _id: userId },
 	    { $unset: { ban: 1 } }
 	  );
-	},
-	communityModBanUser(userId, communitySlug, data, reason) {
-		check(userId, String);
-		check(communitySlug, String);
-		check(data, { ban: String });
-		checkReason(reason);
-
-		const community = Rooms.findOne({ slug: communitySlug });
-
-		if (! isMod(Meteor.userId(), "community_" + community.slug)) {
-			throw new Meteor.Error("not-authorized");
-		}
-
-		const duration = Date.create(data.ban);
-
-		const doc = { $set: {} };
-		doc.$set["communityBans." + community._id] = duration;
-		Meteor.users.update({ _id: userId }, doc);
-
-		const user = Meteor.users.findOne({ _id: userId });
-		const logDoc = docBuilder({
-			item: {
-				_id: userId,
-				ownerId: userId,
-				type: "user",
-				action: "banned",
-				url: FlowRouter.path("profile", { username: user.username })
-			}
-		}, reason);
-		logDoc.community = _.pick(community, [ "_id", "slug" ]);
-		ModLog.insert(logDoc);
-	},
-	communityModUnbanUser(userId, communitySlug) {
-		check(userId, String);
-		check(communitySlug, String);
-
-		const community = Rooms.findOne({ slug: communitySlug });
-
-		if (! isMod(Meteor.userId(), "community_" + community.slug)) {
-			throw new Meteor.Error("not-authorized");
-		}
-
-		const doc = { $unset: {} };
-		doc.$unset["communityBans." + community._id] = 1;
-		Meteor.users.update({ _id: userId }, doc);
 	},
 
 	blockUser(userId) {

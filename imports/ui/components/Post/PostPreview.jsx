@@ -69,7 +69,7 @@ export default React.createClass({
         <Avatar size="icon" user={owner} />
         {this.renderStar()}
       </a>
-      <VisibilityLink href={postUrl} visibility={this.props.post.visibility}>
+      <VisibilityLink href={postUrl} published={this.props.post.published}>
         <ThumbnailProxy
           medium={this.props.post.medium}
           size="list"

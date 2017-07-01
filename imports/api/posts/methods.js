@@ -37,7 +37,7 @@ function validateColor(color) {
 }
 
 const match = {
-	visibility: String,
+	published: Boolean,
 	originality: String,
 	source: String,
 	description: String,
@@ -67,7 +67,7 @@ function updatePost(postId, data, auth) {
 
 	Topics.update(
 		{ _id: post.topic._id },
-		{ $set: { visibility: data.visibility } }
+		{ $set: { published: data.published } }
 	);
 
 	if (Meteor.isServer) {

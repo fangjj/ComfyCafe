@@ -22,7 +22,7 @@ import DangerButton from "/imports/ui/components/Button/DangerButton";
 import Toggle from "/imports/ui/components/Toggle";
 
 const defaultState = {
-  visibility: "public",
+  published: true,
   originality: "original",
   source: "",
   description: "",
@@ -35,8 +35,8 @@ export default React.createClass({
   mixins: [ReactMeteorData],
   contextTypes: { currentUser: React.PropTypes.object },
   getInitialState() {
-    defaultState.visibility = _.get(this.context.currentUser,
-      "settings.defaultImageVisibility", defaultState.visibility
+    defaultState.published = _.get(this.context.currentUser,
+      "settings.defaultPublished", defaultState.published
     );
     defaultState.originality = _.get(this.context.currentUser,
       "settings.defaultImageOriginality", defaultState.originality
@@ -73,8 +73,8 @@ export default React.createClass({
   handleDetails(e) {
     this.setState({ details: e.target.value });
   },
-  handleVisibility(value) {
-    this.setState({ visibility: value });
+  handlePublished(e) {
+    this.setState({ published: e.target.checked });
   },
   handleOriginality(value) {
     this.setState({ originality: value });
@@ -221,8 +221,8 @@ export default React.createClass({
       {this.renderMedium()}
       {this.renderHelp()}
       <VisibilitySelector
-        visibility={this.state.visibility}
-        onChange={this.handleVisibility}
+        value={this.state.published}
+        onChange={this.handlePublished}
       />
       <OriginalitySelector
         value={this.state.originality}

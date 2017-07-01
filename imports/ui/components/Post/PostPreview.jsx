@@ -58,10 +58,7 @@ export default React.createClass({
       return null;
     }
 
-    const postUrl = FlowRouter.path("post", {
-      username: this.props.post.owner.username,
-      postName: this.props.post.name
-    });
+    const postUrl = FlowRouter.path("post", { name: this.props.post.name });
     const owner = this.props.post.owner;
     const ownerUrl = FlowRouter.path("profile", {username: owner.username});
     return <li className={"postPreview " + this.props.post.visibility} title={this.buildTitle()}>

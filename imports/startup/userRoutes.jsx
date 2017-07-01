@@ -9,6 +9,7 @@ import ForgotPassword from "/imports/ui/components/User/ForgotPassword";
 import UserSettingsContainer from "/imports/ui/components/User/UserSettingsContainer";
 import UserProfile from "/imports/ui/components/User/UserProfile";
 import UserSearch from "/imports/ui/components/User/UserSearch";
+import PostBrowseUser from "/imports/ui/components/Post/PostBrowseUser";
 
 FlowRouter.route("/login", {
   name: "login",
@@ -50,7 +51,7 @@ FlowRouter.route("/settings", {
   }
 });
 
-const userRoutes = FlowRouter.group({ prefix: "/u" });
+const userRoutes = FlowRouter.group({ prefix: "/@" });
 
 userRoutes.route("/", {
   name: "users",
@@ -65,5 +66,13 @@ userRoutes.route("/:username", {
   action: function () {
     setTitle(FlowRouter.getParam("username"));
     render({ main: <UserProfile /> });
+  }
+});
+
+userRoutes.route("/:username/images", {
+  name: "imagesBy",
+  action: function () {
+    setTitle(FlowRouter.getParam("username") + "'s Images");
+    render({ main: <PostBrowseUser /> });
   }
 });

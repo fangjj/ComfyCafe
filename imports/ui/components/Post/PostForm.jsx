@@ -118,10 +118,7 @@ export default React.createClass({
             this.props.onSuccess(this.props.mediumId);
           }
 
-          const path = FlowRouter.path("post", {
-            username: this.context.currentUser.username,
-            postName: name
-          });
+          const path = FlowRouter.path("post", { name });
           const actions = {
             redirect() { FlowRouter.go(path); },
             tab() { window.open(path); },

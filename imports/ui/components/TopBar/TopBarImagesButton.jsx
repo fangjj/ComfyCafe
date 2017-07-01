@@ -6,7 +6,7 @@ export default () => {
   return <NavItem
     label="Images"
     iconName="image"
-    href={FlowRouter.path("art")}
+    href={FlowRouter.path("home")}
     className="hide-on-small-only"
   />;
 };

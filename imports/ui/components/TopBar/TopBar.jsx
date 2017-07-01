@@ -5,7 +5,7 @@ import NoSSR from "react-no-ssr";
 import Notifications from "/imports/api/notifications/collection";
 import Posts from "/imports/api/posts/collection";
 import topColor from "/imports/ui/utils/topColor";
-import TopBarArtButton from "./TopBarArtButton";
+import TopBarImagesButton from "./TopBarImagesButton";
 import TopBarExploreButton from "./TopBarExploreButton";
 import TopBarMenu from "./TopBarMenu";
 import NavItem from "./NavItem";
@@ -42,7 +42,7 @@ export default React.createClass({
       const username = FlowRouter.getParam("username");
       const name = FlowRouter.getParam("postName");
       if (username && name) {
-        const handle = Meteor.subscribe("postColor", username, name);
+        const handle = Meteor.subscribe("postColor", name);
         const post = Posts.findOne(
           {
             "owner.normalizedUsername": username.toLowerCase(),
@@ -84,7 +84,7 @@ export default React.createClass({
   },
   renderLeftSub() {
     if (this.userReady()) {
-      return <TopBarArtButton />;
+      return <TopBarImagesButton />;
     }
   },
   renderLeft() {

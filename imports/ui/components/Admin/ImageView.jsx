@@ -21,10 +21,7 @@ export default React.createClass({
       return <Err404 />;
     }
 
-    const url = FlowRouter.path("post", {
-      username: image.owner.username,
-      postName: image.name
-    });
+    const url = FlowRouter.path("post", { name: image.name });
     const ownerUrl = FlowRouter.path("profile", { username: image.owner.username });
     return <DenseContent>
       <header>

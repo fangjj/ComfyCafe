@@ -226,10 +226,7 @@ Meteor.methods({
 				ownerId: post.owner._id,
 				type: "image",
 				action: "updated",
-				url: FlowRouter.path("post", {
-					username: post.owner.username,
-					postName: post.name
-				})
+				url: FlowRouter.path("post", { name: post.name })
 			}
 		}, reason);
 		ModLog.insert(doc);

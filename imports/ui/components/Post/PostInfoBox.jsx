@@ -27,10 +27,7 @@ export default React.createClass({
   reroll() {
     Meteor.call("rerollPost", this.props.post._id, (err, name) => {
       setPattern(name);
-      const path = FlowRouter.path("post", {
-        username: this.props.currentUser.username,
-        postName: name
-      });
+      const path = FlowRouter.path("post", { name });
       FlowRouter.go(path);
     });
   },

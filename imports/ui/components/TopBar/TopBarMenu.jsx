@@ -20,7 +20,7 @@ export default React.createClass({
           key="topMenuImages"
           primaryText="Images"
           leftIconName="image"
-          href={FlowRouter.path("art")}
+          href={FlowRouter.path("home")}
         />,
         <Divider
           key="topMenuDivider"

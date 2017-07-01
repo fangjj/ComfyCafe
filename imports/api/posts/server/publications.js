@@ -47,26 +47,16 @@ Meteor.publish("postPerma", function (postId) {
 	return Posts.find({ _id: postId });
 });
 
-Meteor.publish("post", function (username, postName) {
-	check(username, String);
-	check(postName, String);
-	return Posts.find(
-		{
-			"owner.normalizedUsername": username.toLowerCase(),
-			name: postName
-		}
-	);
+Meteor.publish("post", function (name) {
+	check(name, String);
+	return Posts.find({ name });
 });
 
-Meteor.publish("postColor", function (username, postName) {
-	check(username, String);
-	check(postName, String);
+Meteor.publish("postColor", function (name) {
+	check(name, String);
 	// We unfortunately have to publish owner in its entirety (thanks mergebox)
 	return Posts.find(
-		{
-			"owner.normalizedUsername": username.toLowerCase(),
-			name: postName
-		},
+		{ name },
 		{ fields: { name: 1, bgColor: 1, complement: 1, owner: 1 } }
 	);
 });

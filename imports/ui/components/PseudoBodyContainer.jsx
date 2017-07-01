@@ -7,7 +7,7 @@ export default createContainer(({ params }) => {
   const username = FlowRouter.getParam("username");
   const name = FlowRouter.getParam("postName");
   if (username && name) {
-    const handle = Meteor.subscribe("postColor", username, name);
+    const handle = Meteor.subscribe("postColor", name);
     const post = Posts.findOne(
       {
         "owner.normalizedUsername": username.toLowerCase(),

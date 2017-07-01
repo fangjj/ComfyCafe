@@ -28,10 +28,7 @@ export default React.createClass({
       return `was born on ${month} ${day}, which is probably tomorrow. Don't forget!`;
     },
     postLiked() {
-      const url = FlowRouter.path("post", {
-        username: this.context.currentUser.username,
-        postName: this.props.notification.post.name
-      });
+      const url = FlowRouter.path("post", { name: this.props.notification.post.name });
       return [
         "liked ",
         <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
@@ -40,10 +37,7 @@ export default React.createClass({
       ];
     },
     postMentioned() {
-      const url = FlowRouter.path("post", {
-        username: this.props.notification.owner.username,
-        postName: this.props.notification.post.name
-      });
+      const url = FlowRouter.path("post", { name: this.props.notification.post.name });
       return [
         "mentioned you in ",
         <a href={url} key={this.props.notification._id} onClick={this.dismiss}>
@@ -53,8 +47,7 @@ export default React.createClass({
     },
     postCommented() {
       const url = FlowRouter.path("post", {
-        username: this.props.notification.post.username,
-        postName: this.props.notification.post.name
+        name: this.props.notification.post.name
       }) + "#" + this.props.notification.message._id;
       return [
         "commented on ",
@@ -65,8 +58,7 @@ export default React.createClass({
     },
     postCommentMentioned() {
       const url = FlowRouter.path("post", {
-        username: this.props.notification.post.username,
-        postName: this.props.notification.post.name
+        name: this.props.notification.post.name
       }) + "#" + this.props.notification.message._id;
       return [
         "mentioned you in a comment on ",

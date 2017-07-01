@@ -6,24 +6,12 @@ import Posts from "/imports/api/posts/collection";
 import Post from "./Post";
 
 export default createContainer(({ params }) => {
-  const username = FlowRouter.getParam("username");
-  if (! username) {
-    return { loading: true };
-  }
-
-  const handle = Meteor.subscribe("post",
-    username,
-    FlowRouter.getParam("postName"),
-  );
+  const name = FlowRouter.getParam("name");
+  const handle = Meteor.subscribe("post", name);
 
   const data = {
     loading: ! handle.ready(),
-    post: Posts.findOne(
-      {
-        "owner.normalizedUsername": username.toLowerCase(),
-        name: FlowRouter.getParam("postName")
-      }
-    )
+    post: Posts.findOne({ name })
   };
 
   return data;

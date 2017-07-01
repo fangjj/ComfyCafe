@@ -10,6 +10,7 @@ import "./imageRoutes";
 import Err404 from "/imports/ui/components/Err404";
 import PostFeed from "/imports/ui/components/Post/PostFeed";
 import PostBrowseAll from "/imports/ui/components/Post/PostBrowseAll";
+import PostContainer from "/imports/ui/components/Post/PostContainer";
 import Help from "/imports/ui/components/Help";
 import About from "/imports/ui/components/About";
 import Legal from "/imports/ui/components/Legal";
@@ -41,7 +42,7 @@ FlowRouter.route("/", {
   name: "home",
   action: function () {
     setTitle();
-    if (Meteor.user()) {
+    if (Meteor.userId()) {
       render({ main: <PostFeed /> });
     } else {
       render({ main: <PostBrowseAll /> });
@@ -118,5 +119,13 @@ FlowRouter.route("/pizza", {
   action: function () {
     setTitle("Top Secret Pop Punk Pizza Party");
     render({ main: <DummyComponent /> });
+  }
+});
+
+FlowRouter.route("/:name", {
+  name: "post",
+  action: function () {
+    setTitle(FlowRouter.getParam("name"));
+    render({ main: <PostContainer /> });
   }
 });

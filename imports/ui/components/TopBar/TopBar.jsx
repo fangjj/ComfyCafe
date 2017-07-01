@@ -40,15 +40,11 @@ export default React.createClass({
       ).fetch()
     };
     {
-      const username = FlowRouter.getParam("username");
-      const name = FlowRouter.getParam("postName");
-      if (username && name) {
+      const name = FlowRouter.getParam("name");
+      if (name) {
         const handle = Meteor.subscribe("postColor", name);
         const post = Posts.findOne(
-          {
-            "owner.normalizedUsername": username.toLowerCase(),
-            name
-          },
+          { name },
           { fields: { bgColor: 1, complement: 1 } }
         );
         if (post) {

@@ -4,15 +4,11 @@ import Posts from "/imports/api/posts/collection";
 import PseudoBody from "./PseudoBody";
 
 export default createContainer(({ params }) => {
-  const username = FlowRouter.getParam("username");
-  const name = FlowRouter.getParam("postName");
-  if (username && name) {
+  const name = FlowRouter.getParam("name");
+  if (name) {
     const handle = Meteor.subscribe("postColor", name);
     const post = Posts.findOne(
-      {
-        "owner.normalizedUsername": username.toLowerCase(),
-        name
-      },
+      { name },
       { fields: { name: 1, bgColor: 1, complement: 1 } }
     );
     if (post) {

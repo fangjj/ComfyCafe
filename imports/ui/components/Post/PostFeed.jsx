@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 import defaultMeta from "/imports/ui/utils/defaultMeta";
+import legitBool from "/imports/ui/utils/legitBool";
 import PostGalleryContainer from "./PostGalleryContainer";
 import InlineUhoh from "/imports/ui/components/InlineUhoh";
 
@@ -13,12 +14,15 @@ export default React.createClass({
     return <PostGalleryContainer
       subName="postFeed"
       requireAuth={true}
-      generateDoc={function () {
+      generateDoc={() => {
         const subs = _.get(Meteor.user(), "subscriptions", []);
-        return { $or: [
-          { "owner._id": Meteor.userId() },
-          { "owner._id": { $in: subs } }
-        ] };
+        return {
+          legit: legitBool(this.props.legit),
+          $or: [
+            { "owner._id": Meteor.userId() },
+            { "owner._id": { $in: subs } }
+          ]
+        };
       }}
       ifEmpty={function () {
         let msg;

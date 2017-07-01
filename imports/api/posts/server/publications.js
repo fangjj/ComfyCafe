@@ -10,6 +10,7 @@ Meteor.startup(function () {
 		"owner._id": 1,
 		"owner.normalizedUsername": 1,
 		name: 1,
+		legit: 1,
 		published: 1,
 		original: 1
 	});

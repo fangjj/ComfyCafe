@@ -6,12 +6,14 @@ import FlatButton from "material-ui/FlatButton";
 import "/imports/api/posts/methods";
 import { initialStateBuilder, dataBuilder } from "/imports/ui/utils/forms";
 import reasonBuilder from "/imports/ui/utils/reasonBuilder";
+import dankMap from "/imports/ui/utils/dankMap";
 import media from "/imports/api/media/collection";
 import safetyLabels from "/imports/api/common/safetyLabels";
 import RainbowSpinner from "/imports/ui/components/Spinner/RainbowSpinner";
 import Medium from "/imports/ui/components/Medium";
 import Form from "/imports/ui/components/Form";
 import TextArea from "/imports/ui/components/TextArea";
+import DankMeatballs from "/imports/ui/components/DankMeatballs";
 import VisibilitySelector from "/imports/ui/components/VisibilitySelector";
 import OriginalitySelector from "/imports/ui/components/OriginalitySelector";
 import SafetySelector from "/imports/ui/components/SafetySelector";
@@ -22,6 +24,7 @@ import DangerButton from "/imports/ui/components/Button/DangerButton";
 import Toggle from "/imports/ui/components/Toggle";
 
 const defaultState = {
+  legit: true,
   published: true,
   original: true,
   source: "",
@@ -72,6 +75,9 @@ export default React.createClass({
   },
   handleDetails(e) {
     this.setState({ details: e.target.value });
+  },
+  handleLegit(value) {
+    this.setState({ legit: value === "legit" });
   },
   handlePublished(e) {
     this.setState({ published: e.target.checked });
@@ -217,6 +223,11 @@ export default React.createClass({
 
       {this.renderMedium()}
       {this.renderHelp()}
+      <DankMeatballs
+        value={dankMap(this.state.legit)}
+        onChange={this.handleLegit}
+      />
+      <br />
       <VisibilitySelector
         value={this.state.published}
         onChange={this.handlePublished}

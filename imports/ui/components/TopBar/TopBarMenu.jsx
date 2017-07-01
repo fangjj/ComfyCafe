@@ -17,13 +17,19 @@ export default React.createClass({
     if (this.props.currentUser) {
       return [
         <TopMenuItem
-          key="topMenuImages"
-          primaryText="Images"
-          leftIconName="image"
-          href={FlowRouter.path("home")}
+          key="topLegit"
+          primaryText="Legit"
+          leftIconName="work"
+          href={FlowRouter.path("legit")}
+        />,
+        <TopMenuItem
+          key="topDank"
+          primaryText="Dank"
+          leftIconName="local_pizza"
+          href={FlowRouter.path("dank")}
         />,
         <Divider
-          key="topMenuDivider"
+          key="topDivider"
         />
       ];
     }

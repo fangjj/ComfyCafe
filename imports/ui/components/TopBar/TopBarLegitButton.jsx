@@ -4,9 +4,9 @@ import NavItem from "./NavItem";
 
 export default () => {
   return <NavItem
-    label="Images"
-    iconName="image"
-    href={FlowRouter.path("home")}
+    label="Legit"
+    iconName="work"
+    href={FlowRouter.path("legit")}
     className="hide-on-small-only"
   />;
 };

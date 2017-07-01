@@ -5,11 +5,11 @@ import setTitle from "/imports/ui/utils/setTitle";
 
 import "./adminRoutes";
 import "./userRoutes";
-import "./imageRoutes";
 
 import Err404 from "/imports/ui/components/Err404";
 import PostFeed from "/imports/ui/components/Post/PostFeed";
-import PostBrowseAll from "/imports/ui/components/Post/PostBrowseAll";
+import PostBrowse from "/imports/ui/components/Post/PostBrowse";
+import PostBrowseLikes from "/imports/ui/components/Post/PostBrowseLikes";
 import PostContainer from "/imports/ui/components/Post/PostContainer";
 import Help from "/imports/ui/components/Help";
 import About from "/imports/ui/components/About";
@@ -45,8 +45,48 @@ FlowRouter.route("/", {
     if (Meteor.userId()) {
       render({ main: <PostFeed /> });
     } else {
-      render({ main: <PostBrowseAll /> });
+      render({ main: <PostBrowse /> });
     }
+  }
+});
+
+FlowRouter.route("/legit", {
+  name: "legit",
+  action: function () {
+    setTitle();
+    if (Meteor.userId()) {
+      render({ main: <PostFeed legit={true} /> });
+    } else {
+      render({ main: <PostBrowse legit={true} /> });
+    }
+  }
+});
+
+FlowRouter.route("/dank", {
+  name: "dank",
+  action: function () {
+    setTitle();
+    if (Meteor.userId()) {
+      render({ main: <PostFeed legit={false} /> });
+    } else {
+      render({ main: <PostBrowse legit={false} /> });
+    }
+  }
+});
+
+FlowRouter.route("/explore", {
+  name: "explore",
+  action: function () {
+    setTitle();
+    render({ main: <PostBrowse /> });
+  }
+});
+
+FlowRouter.route("/likes", {
+  name: "likes",
+  action: function () {
+    setTitle("Likes");
+    render({ main: <PostBrowseLikes /> });
   }
 });
 

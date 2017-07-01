@@ -5,7 +5,8 @@ import NoSSR from "react-no-ssr";
 import Notifications from "/imports/api/notifications/collection";
 import Posts from "/imports/api/posts/collection";
 import topColor from "/imports/ui/utils/topColor";
-import TopBarImagesButton from "./TopBarImagesButton";
+import TopBarLegitButton from "./TopBarLegitButton";
+import TopBarDankButton from "./TopBarDankButton";
 import TopBarExploreButton from "./TopBarExploreButton";
 import TopBarMenu from "./TopBarMenu";
 import NavItem from "./NavItem";
@@ -84,7 +85,10 @@ export default React.createClass({
   },
   renderLeftSub() {
     if (this.userReady()) {
-      return <TopBarImagesButton />;
+      return [
+        <TopBarLegitButton key="legitBtn" />,
+        <TopBarDankButton key="dankBtn" />
+      ];
     }
   },
   renderLeft() {

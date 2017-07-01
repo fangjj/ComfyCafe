@@ -1,6 +1,7 @@
 import React from "react";
 
 import defaultMeta from "/imports/ui/utils/defaultMeta";
+import legitBool from "/imports/ui/utils/legitBool";
 import PostGalleryContainer from "./PostGalleryContainer";
 import InlineUhoh from "/imports/ui/components/InlineUhoh";
 
@@ -12,7 +13,7 @@ export default React.createClass({
     return <PostGalleryContainer
       subName="allPosts"
       generateDoc={function () {
-        return {};
+        return { legit: legitBool(this.props.legit) };
       }}
       ifEmpty={function () {
         return <InlineUhoh>

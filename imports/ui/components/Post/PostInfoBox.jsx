@@ -5,6 +5,7 @@ import "/imports/api/posts/methods";
 import goBack from "/imports/ui/utils/goBack";
 import setPattern from "/imports/ui/utils/setPattern";
 import originalMap from "/imports/ui/utils/originalMap";
+import dankMap from "/imports/ui/utils/dankMap";
 import safetyLabels from "/imports/api/common/safetyLabels";
 import SubmitButton from "/imports/ui/components/Button/SubmitButton";
 import CancelButton from "/imports/ui/components/Button/CancelButton";
@@ -15,6 +16,7 @@ import DangerButton from "/imports/ui/components/Button/DangerButton";
 import ButtonGroup from "/imports/ui/components/Button/ButtonGroup";
 import ActionWell from "/imports/ui/components/ActionWell";
 import Icon from "/imports/ui/components/Daikon/Icon";
+import DankIcon from "/imports/ui/components/Daikon/DankIcon";
 import TextBody from "/imports/ui/components/TextBody";
 import FlexHead from "/imports/ui/components/FlexHead";
 
@@ -96,6 +98,10 @@ export default React.createClass({
     return <div>
       <div>
         <Icon className="sigil">flash_on</Icon> {safetyLabels[this.props.post.safety]}
+      </div>
+      <div>
+        <DankIcon className="sigil" value={this.props.post.legit} />
+        {_.capitalize(dankMap(this.props.post.legit))}
       </div>
       {source}
     </div>;

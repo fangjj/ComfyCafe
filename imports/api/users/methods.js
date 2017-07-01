@@ -281,7 +281,7 @@ Meteor.methods({
 		let op;
 		if (is_subscribing) {
 			op = "$push";
-			const notification_exists = new Boolean(Notifications.findOne({
+			const notification_exists = Boolean(Notifications.findOne({
 				to: userId,
 				action: "subscribed",
 				"owner._id": Meteor.userId()

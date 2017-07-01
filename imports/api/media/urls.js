@@ -4,14 +4,6 @@ import mongoid from "/imports/api/common/mongoid";
 
 const base = _.get(Meteor.settings, "public.imgUrl", "/gridfs/media/");
 
-function daysToSeconds(d) {
-  // This constant isn't a perfect representation, but it's a highly suitable representation.
-  // 86400 = 24 * 60 * 60
-  return d * 86400;
-}
-
-const oneMonth = daysToSeconds(30);
-
 function addExt(str, ext) {
   if (ext) {
     return str + "." + ext;
@@ -30,36 +22,23 @@ function queryBuilder(str, params) {
 }
 
 function getMediaUrlMD5(md5, ext) {
-  return queryBuilder(addExt(base + md5, ext), {
-    cache: oneMonth
-  });
+  return queryBuilder(addExt(base + md5, ext));
 }
 
 function getMediaUrlID(id, size, ext) {
-  return queryBuilder(addExt(base + "id/" + id, ext), {
-    size,
-    cache: oneMonth
-  });
+  return queryBuilder(addExt(base + "id/" + id, ext), { size });
 }
 
 function getMediaUrlPost(postId, size, ext) {
-  return queryBuilder(addExt(base + "post/" + postId, ext), {
-    size,
-    cache: daysToSeconds(1)
-  });
+  return queryBuilder(addExt(base + "post/" + postId, ext), { size });
 }
 
 function getMediaUrlAvatar(userId, avatarId, size, ext) {
-  return queryBuilder(addExt(base + "user/" + userId + "/" + mongoid.str(avatarId), ext), {
-    size,
-    cache: oneMonth
-  });
+  return queryBuilder(addExt(base + "user/" + userId + "/" + mongoid.str(avatarId), ext), { size });
 }
 
 function getMediaUrlDjent(userId) {
-  return queryBuilder(addExt(base + "djent/" + userId, "svg"), {
-    cache: oneMonth
-  });
+  return queryBuilder(addExt(base + "djent/" + userId, "svg"));
 }
 
 export {

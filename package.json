@@ -80,7 +80,7 @@
     "warning": "^2.1.0"
   },
   "devDependencies": {
-    "@kadira/storybook": "^1.17.1",
+    "@kadira/storybook": "1.17.1",
     "react-addons-perf": "^15.0.1"
   },
   "scripts": {

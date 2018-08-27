@@ -2,9 +2,9 @@
   "dependencies": {
   "nodeVersion": "4.9.0",
     "phantomJs": false,
-    "imageMagick": true
+    "imageMagick": false
   },
-  "preBuildCommands": [" apt-get update && apt-get install -y build-essential pkg-config libvips-dev ffmpeg && npm install"],
+  "preBuildCommands": [" apt-get update && apt-get install gcc-5 g++-5 && apt-get install -y build-essential pkg-config libvips-dev ffmpeg imagemagick && npm install"],
   "postBuildCommands": [],
   "buildOptions": {
     "mobileServerUrl": false,

@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+  "nodeVersion": "0.10.43",
+    "phantomJs": false,
+    "imageMagick": false
+  },
+  "preBuildCommands": [" apt-get update && apt-get install -y build-essential pkg-config libvips-dev ffmpeg imagemagick && npm install"],
+  "postBuildCommands": [],
+  "buildOptions": {
+    "mobileServerUrl": false,
+    "additionalFlags": "--server-only"
+  }
+}
